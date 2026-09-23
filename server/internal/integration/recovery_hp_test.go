@@ -44,10 +44,12 @@ func TestAccountRecoverySQL(t *testing.T) {
 	a := newAccount(t, ctx, repo)
 	now := time.Now().UTC()
 
+	// Hashes are unique per run so the test can be repeated on one database.
+	hash := func(plain string) []byte { return []byte((plain + a.ID.String())[:32]) }
 	issue := func(plain string) {
 		tok := auth.AccountToken{
 			ID: uuid.New(), AccountID: a.ID, Kind: auth.TokenPasswordReset,
-			TokenHash: []byte(plain + strings.Repeat("0", 32-len(plain))), ExpiresAt: now.Add(time.Hour), CreatedAt: now,
+			TokenHash: hash(plain), ExpiresAt: now.Add(time.Hour), CreatedAt: now,
 		}
 		require.NoError(t, repo.IssueAccountToken(ctx, tok, auth.OutboundEmail{To: a.Email, Subject: "s", Body: "b"}))
 	}
@@ -57,10 +59,10 @@ func TestAccountRecoverySQL(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, 2, n)
 
-	got, err := repo.ConsumeAccountToken(ctx, auth.TokenPasswordReset, []byte("second"+strings.Repeat("0", 26)), now)
+	got, err := repo.ConsumeAccountToken(ctx, auth.TokenPasswordReset, hash("second"), now)
 	require.NoError(t, err)
 	require.Equal(t, a.ID, got)
-	_, err = repo.ConsumeAccountToken(ctx, auth.TokenPasswordReset, []byte("first"+strings.Repeat("0", 27)), now)
+	_, err = repo.ConsumeAccountToken(ctx, auth.TokenPasswordReset, hash("first"), now)
 	require.ErrorIs(t, err, auth.ErrRecoveryTokenInvalid, "sibling token burned")
 
 	require.NoError(t, repo.UpdatePassword(ctx, a.ID, "new-hash", now))

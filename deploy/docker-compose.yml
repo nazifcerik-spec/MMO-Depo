@@ -115,6 +115,8 @@ services:
       HTTP_WRITE_TIMEOUT: 30s
       CONTENT_PATH: /content
       METRICS_ADDR: :9090
+      # Flutter web dev build served on :5173 (client/README).
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
     ports:
       - "8080:8080"

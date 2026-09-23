@@ -458,8 +458,8 @@ func buildSigner(cfg config.Config, logger *slog.Logger) (*auth.Signer, error) {
 		if err != nil {
 			return nil, fmt.Errorf("generate ephemeral seed: %w", err)
 		}
-		logger.Warn("JWT seed not configured — generated ephemeral key (all tokens invalidate on restart)",
-			"encoded_for_env", auth.EncodeSeed(seed))
+		// Never log the seed itself: it is the token-signing private key.
+		logger.Warn("JWT seed not configured — generated ephemeral key (all tokens invalidate on restart)")
 		return auth.NewSigner(seed, cfg.JWTIssuer, cfg.AuthAccessTTL)
 	}
 	seed, err := auth.DecodeSeed(cfg.JWTPrivateKeySeed)

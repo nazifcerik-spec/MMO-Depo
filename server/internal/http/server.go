@@ -198,10 +198,12 @@ func NewRouter(d Deps) http.Handler {
 		// --- Character endpoints + wallet read ---
 		r.Group(func(r chi.Router) {
 			r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
+			// docs/security/rate-limit.md §3: authenticated gameplay is loose per
+			// IP (players share carrier/NAT addresses) and capped per account.
 			r.Use(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
 				Endpoint:   "character.rw",
-				PerIP:      ptrBucket(ratelimit.PerMinute(60)),
-				PerAccount: ptrBucket(ratelimit.PerMinute(120)),
+				PerIP:      ptrBucket(ratelimit.PerMinute(300)),
+				PerAccount: ptrBucket(ratelimit.PerMinute(600)),
 			}, d.Logger))
 
 			r.Get("/character", charHandler.List)
@@ -443,8 +445,8 @@ func NewRouter(d Deps) http.Handler {
 				r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
 				r.Use(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
 					Endpoint:   "notification.rw",
-					PerIP:      ptrBucket(ratelimit.PerMinute(60)),
-					PerAccount: ptrBucket(ratelimit.PerMinute(120)),
+					PerIP:      ptrBucket(ratelimit.PerMinute(300)),
+					PerAccount: ptrBucket(ratelimit.PerMinute(600)),
 				}, d.Logger))
 				idem := appmw.Idempotency(d.IdempotencyStore, d.Logger)
 				r.With(idem).Post("/device/push-token", h.RegisterDevice)
@@ -484,8 +486,8 @@ func NewRouter(d Deps) http.Handler {
 			r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
 			r.Use(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
 				Endpoint:   "character.rw",
-				PerIP:      ptrBucket(ratelimit.PerMinute(60)),
-				PerAccount: ptrBucket(ratelimit.PerMinute(120)),
+				PerIP:      ptrBucket(ratelimit.PerMinute(300)),
+				PerAccount: ptrBucket(ratelimit.PerMinute(600)),
 			}, d.Logger))
 
 			// --- Activity (contract-scoped) ---
@@ -495,8 +497,10 @@ func NewRouter(d Deps) http.Handler {
 				Post("/activity/{contract_id}/stop", activityHandler.Stop)
 
 			// --- Vendor (Sprint 10) ---
-			r.Get("/vendor/{code}", vendorHandler.Info)
+			// GET must live inside the Route: chi's Route mounts a subrouter on
+			// the same pattern, which would shadow a sibling r.Get (404).
 			r.Route("/vendor/{code}", func(r chi.Router) {
+				r.Get("/", vendorHandler.Info)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/buy", vendorHandler.Buy)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
