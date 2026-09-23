@@ -21,6 +21,8 @@ import '../notifications/notification_repository.dart';
 import '../notifications/notifications_screen.dart';
 import '../progression/progression_repository.dart';
 import '../progression/progression_screen.dart';
+import '../quests/quest_repository.dart';
+import '../quests/quests_screen.dart';
 import '../social/social_repository.dart';
 import '../social/social_screen.dart';
 import '../workshop/workshop_repository.dart';
@@ -45,7 +47,9 @@ class _HomeShellState extends State<HomeShell> {
   final _visited = <int>{0};
   int _tab = 0;
   int _unread = 0;
+  int _questsReady = 0;
   late final _notifications = NotificationRepository(widget.auth.api);
+  late final _quests = QuestRepository(widget.auth.api, widget.initial.id);
 
   LiveEvents get _live => widget.auth.live;
   late final AppLifecycleListener _lifecycle;
@@ -57,10 +61,12 @@ class _HomeShellState extends State<HomeShell> {
     _sub = _live.events.listen(_onEvent);
     _live.start();
     _refreshUnread();
+    _refreshQuests();
     _lifecycle = AppLifecycleListener(
       onResume: () {
         _live.start();
         _refreshUnread();
+        _refreshQuests();
       },
       onPause: _live.stop,
       onHide: _live.stop,
@@ -77,7 +83,7 @@ class _HomeShellState extends State<HomeShell> {
     super.dispose();
   }
 
-  /// Badge count; failures keep the last value (the badge is a hint only).
+  /// Badge counts; failures keep the last value (badges are hints only).
   Future<void> _refreshUnread() async {
     try {
       final n = await _notifications.unreadCount();
@@ -87,9 +93,19 @@ class _HomeShellState extends State<HomeShell> {
     }
   }
 
+  Future<void> _refreshQuests() async {
+    try {
+      final n = (await _quests.board()).readyCount;
+      if (mounted && n != _questsReady) setState(() => _questsReady = n);
+    } on ApiError {
+      // ignore
+    }
+  }
+
   Future<void> _push(Widget screen) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
     _refreshUnread();
+    _refreshQuests();
   }
 
   void _onEvent(LiveEvent e) {
@@ -102,10 +118,12 @@ class _HomeShellState extends State<HomeShell> {
       'mail.received' => (l.evMailReceived, false),
       'party.invite' => (l.evPartyInvite, false),
       'guild.invite' => (l.evGuildInvite, false),
+      'quest.completed' => (l.evQuestComplete, false),
       'system.dev_broadcast' => (e.payload['message'] as String?, false),
       _ => (null, false),
     };
     if (refresh) _dataVersion.value++;
+    if (e.kind == 'quest.completed') _refreshQuests();
     if (message != null && mounted) {
       toast(context, Text(message));
       _refreshUnread(); // most toast kinds above also land in the inbox
@@ -156,6 +174,16 @@ class _HomeShellState extends State<HomeShell> {
         title: Text(s.name),
 
         actions: [
+          IconButton(
+            tooltip: l.quests,
+            icon: Badge(
+              isLabelVisible: _questsReady > 0,
+              backgroundColor: Palette.success,
+              label: Text('$_questsReady'),
+              child: const Icon(Icons.assignment_outlined),
+            ),
+            onPressed: () => _push(QuestsScreen(repo: _quests, dataVersion: _dataVersion)),
+          ),
           IconButton(
             tooltip: l.notifications,
             icon: Badge(

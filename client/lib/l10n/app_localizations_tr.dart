@@ -1434,4 +1434,97 @@ class AppLocalizationsTr extends AppLocalizations {
   String perHour(String value) {
     return '$value/sa';
   }
+
+  @override
+  String get quests => 'Görevler';
+
+  @override
+  String get questsInProgress => 'Devam eden';
+
+  @override
+  String get questsNoneOpen => 'Açık görev yok. Aşağıdan birini seç.';
+
+  @override
+  String get questsStory => 'Hikâye';
+
+  @override
+  String get questsSide => 'Yan görevler';
+
+  @override
+  String get questsDaily => 'Günlük';
+
+  @override
+  String resetsIn(String time) {
+    return '$time sonra yenilenir';
+  }
+
+  @override
+  String get turnIn => 'Teslim et';
+
+  @override
+  String questRewarded(String rewards) {
+    return 'Görev tamamlandı: $rewards';
+  }
+
+  @override
+  String get abandonQuestTitle => 'Görev bırakılsın mı?';
+
+  @override
+  String get abandonQuestBody => 'İlerleme kaybolur. Görevi daha sonra yeniden alabilirsin.';
+
+  @override
+  String get abandonDailyBody => 'İlerleme kaybolur ve bu günlük görev bugün yeniden alınamaz.';
+
+  @override
+  String objGather(String activity) {
+    return 'Topla ($activity)';
+  }
+
+  @override
+  String get objKillAny => 'Düşman yen';
+
+  @override
+  String objKill(String mob) {
+    return '$mob yen';
+  }
+
+  @override
+  String get objBoss => 'Bir boss yen';
+
+  @override
+  String get objDungeonAny => 'Bir zindan temizle';
+
+  @override
+  String objDungeon(String dungeon) {
+    return '$dungeon temizle';
+  }
+
+  @override
+  String get objCraftAny => 'Eşya üret';
+
+  @override
+  String objCraft(String item) {
+    return '$item üret';
+  }
+
+  @override
+  String get evQuestComplete => 'Görev hedefleri tamam — teslim et!';
+
+  @override
+  String get errQuestLocked => 'Önce önceki hikâye görevini bitir.';
+
+  @override
+  String get errQuestTaken => 'Bu görevi zaten aldın.';
+
+  @override
+  String get errQuestNotOffered => 'Bu günlük görev bugünkü panoda yok.';
+
+  @override
+  String get errQuestCap => 'Çok fazla açık görev var. Birini bitir ya da bırak.';
+
+  @override
+  String get errQuestNotActive => 'Bu görev açık değil.';
+
+  @override
+  String get errQuestIncomplete => 'Hedefler henüz tamamlanmadı.';
 }

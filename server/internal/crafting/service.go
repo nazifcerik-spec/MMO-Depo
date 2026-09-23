@@ -194,7 +194,8 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 	}
 
 	progression.RecordIf(ctx, s.progress, characterID,
-		progression.Event{Kind: progression.EventItemCrafted, Amount: 1})
+		progression.Event{Kind: progression.EventItemCrafted, Amount: 1},
+		progression.Event{Kind: progression.EventItemCrafted + ":" + out.TemplateCode, Amount: 1})
 
 	return &CraftResult{
 		OutputInstanceID:   out.ID,

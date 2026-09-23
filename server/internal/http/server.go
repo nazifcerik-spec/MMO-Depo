@@ -37,6 +37,7 @@ import (
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
 	"github.com/otter/server/internal/progression"
+	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/vendor"
@@ -75,6 +76,7 @@ type Deps struct {
 	MarketHandler     *market.Handler
 	NotifHandler      *notification.Handler
 	ProgHandler       *progression.Handler
+	QuestHandler      *quest.Handler
 	WorldEventHandler *worldevent.Handler
 	AdminHandler      *admin.Handler
 	Metrics           *observability.Metrics
@@ -353,6 +355,15 @@ func NewRouter(d Deps) http.Handler {
 					r.Get("/achievements", h.Achievements)
 					r.Get("/titles", h.Titles)
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/titles/active", h.SetActiveTitle)
+				}
+
+				// --- Quests (Sprint 41, DD-221) ---
+				if h := d.QuestHandler; h != nil {
+					idem := appmw.Idempotency(d.IdempotencyStore, d.Logger)
+					r.Get("/quests", h.List)
+					r.With(idem).Post("/quests/{code}/accept", h.Accept)
+					r.With(idem).Post("/quests/{code}/abandon", h.Abandon)
+					r.With(idem).Post("/quests/{code}/turn-in", h.TurnIn)
 				}
 
 				// --- Marketplace (Sprint 22) ---

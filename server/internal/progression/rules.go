@@ -17,6 +17,17 @@ type Recorder interface {
 	Record(ctx context.Context, characterID uuid.UUID, events ...Event)
 }
 
+// Recorders fans events out to several recorders (progression + quests).
+func Recorders(rs ...Recorder) Recorder { return recorders(rs) }
+
+type recorders []Recorder
+
+func (rs recorders) Record(ctx context.Context, characterID uuid.UUID, events ...Event) {
+	for _, r := range rs {
+		r.Record(ctx, characterID, events...)
+	}
+}
+
 // RecordIf is a nil-safe helper that drops zero-amount events.
 func RecordIf(ctx context.Context, r Recorder, characterID uuid.UUID, events ...Event) {
 	if r == nil {

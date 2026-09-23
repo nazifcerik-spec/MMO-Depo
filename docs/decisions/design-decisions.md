@@ -2026,6 +2026,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-221 — Görevler v1: Content Pack + Progression Olay Hattı + Deterministik Günlük Seçim
+**Karar:** Main/side/daily görevler `content/quests.yaml` → `content.quest_template` (contentpack validate: kategori, 1–5 hedef, `requires_quest` zinciri + döngü yok, dailies ön koşulsuz; hedef olay grameri `mob_killed[:mob]`, `boss_killed`, `dungeon_cleared[:dungeon]`, `gather_<kind>`, `item_crafted[:item]` ve kod referansları aynı paketteki mob/dungeon/item'a karşı doğrulanır). Karakter durumu `progression.character_quest` (active/completed/turned_in/abandoned/expired; açık örnek, main/side tek teslim ve günlük gün-başı tekliği partial UNIQUE ile). Hedefler mastery/başarımı besleyen aynı `progression.Recorder` hattından ilerler (`progression.Recorders` fan-out); hunt artık `mob_killed:<mob>`, crafting `item_crafted:<template>` olaylarını da yayar (mevcut eşleşmeler tam-eşleşme olduğu için çift sayım yok). İlerleme kabulden sonra başlar. Günlük teklif: seviyeye uygun havuzdan `fnv(karakter, UTC gün, kod)` en küçük 3 — saf fonksiyon, satır/scheduler yok; geçmiş günün açık günlüğü sayılmaz, bir sonraki kabulde `expired` olur (kaçan günlük = kaçan ödül). Teslim sırası: idempotent ledger (`quest-reward-<id>`, reward_source → karakter) → koşullu `completed→turned_in` UPDATE → yalnız kazanan istek XP verir (çift ödeme imkânsız; çok nadir çökme durumunda XP kaybı loglanır). NPC teslimi yok (v1 her yerden). Açık görev tavanı 25. WS `quest.completed`.
+**Reason:** docs/quests/* v1 kapsamı; ayrı tick yolu yazmak yerine mevcut olay hattı ve ledger/idempotency desenleri yeniden kullanıldı. Deterministik seçim cron + tablo gerektirmez ve yeniden başlatmada değişmez.
+**Alternatives:** Worker ile günlük satır üretimi (ek job + tablo + saat dilimi hataları), reveal içinde senkron görev güncelleme (reveal tx'ini büyütür), kabul öncesi ilerlemeyi saymak (geçmiş olayları saklamayı gerektirir).
+**Consequences:** Eşya ödülü, itibar ödülü, `discover`/`deliver`/`use_skill` hedefleri, haftalık/etkinlik/lonca görevleri, NPC teslimi ve görev isimlerinin yerelleştirmesi (şimdilik koddan türetiliyor) sonraki iş. `Record` diğer progression kayıtları gibi best-effort (hata loglanır).
+**Tarih:** 2026-09-23
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

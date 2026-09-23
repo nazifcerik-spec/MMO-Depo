@@ -904,7 +904,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pageBack();
     await tester.pumpAndSettle();
-    expect(find.byType(Badge), findsOneWidget);
+    expect(find.byTooltip('Notifications'), findsOneWidget);
     expect(find.descendant(of: find.byType(Badge), matching: find.text('2')), findsNothing);
   });
 
@@ -992,6 +992,48 @@ void main() {
 
     await tester.scrollUntilVisible(find.text('Your score 1800 · reward tier 2'), 200, scrollable: _list);
     expect(find.textContaining('World boss · Victory'), findsOneWidget);
+  });
+
+  testWidgets('quests: accept, live completion badge, turn in with reward + level up, abandon daily', (tester) async {
+    final (be, ws, _) = await _inGame(tester);
+    await tester.tap(find.byTooltip('Quests'));
+    await tester.pumpAndSettle();
+    expect(find.text('No open quests. Pick one below.'), findsOneWidget);
+    expect(find.text('First Hunt'), findsOneWidget);
+    expect(find.text('• Defeat Young Boar ×5'), findsOneWidget);
+    expect(find.textContaining('Resets in'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Accept').first);
+    await tester.pumpAndSettle();
+    expect(be.questCalls, ['accept main_01_first_hunt']);
+    expect(find.text('0/5'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Turn in'), findsNothing, reason: 'not complete yet');
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    be.completeQuest('main_01_first_hunt');
+    ws.last.push('quest.completed', {'code': 'main_01_first_hunt'});
+    await tester.pumpAndSettle();
+    expect(find.text('Quest objectives complete — turn it in!'), findsOneWidget);
+    expect(find.descendant(of: find.byType(Badge), matching: find.text('1')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Quests'));
+    await tester.pumpAndSettle();
+    final sheetsBefore = be.sheetGets;
+    await tester.tap(find.widgetWithText(FilledButton, 'Turn in'));
+    await tester.pumpAndSettle();
+    expect(find.text('Quest complete: +80 XP · +2s 0c\nLevel up! Now level 4'), findsOneWidget);
+    expect(be.sheetGets, greaterThan(sheetsBefore), reason: 'XP and gold refresh the sheet');
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Accept'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Abandon'));
+    await tester.pumpAndSettle();
+    expect(find.text("Progress is lost and this daily can't be taken again today."), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Abandon'));
+    await tester.pumpAndSettle();
+    expect(be.questCalls.last, 'abandon daily_miner');
+    expect(find.text('No open quests. Pick one below.'), findsOneWidget);
   });
 
   testWidgets('Turkish locale renders translated copy', (tester) async {

@@ -43,6 +43,7 @@ import (
 	"github.com/otter/server/internal/platform/log"
 	"github.com/otter/server/internal/platform/redis"
 	"github.com/otter/server/internal/progression"
+	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
@@ -283,7 +284,10 @@ func run() error {
 	progSvc := progression.NewService(pool, progCat, charSvc, txnSvc, logger).
 		WithPublisher(wsPub).WithNotifier(notifSvc)
 	progHandler := progression.NewHandler(progSvc)
-	activitySvc.WithRecorder(progSvc).WithGatherBonus(progSvc)
+	// Quests tick from the same event stream as mastery/achievements (DD-221).
+	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub)
+	recorder := progression.Recorders(progSvc, questSvc)
+	activitySvc.WithRecorder(recorder).WithGatherBonus(progSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).
 	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID) ([]skill.Modifier, error) {
 		effects, err := progSvc.ActiveBonuses(ctx, id)
@@ -296,9 +300,9 @@ func run() error {
 		}
 		return mods, nil
 	})
-	huntSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
-	dungSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
-	craftSvc.WithRecorder(progSvc)
+	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc)
+	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc)
+	craftSvc.WithRecorder(recorder)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
 	worldEventHandler := worldevent.NewHandler(worldevent.NewService(pool, charSvc, txnSvc,
@@ -343,12 +347,17 @@ func run() error {
 	contentLoader.Register(reloadFn(func(ctx context.Context) error {
 		return craftCatSvc.ReloadCatalog(ctx, pool)
 	}))
+	contentLoader.Register(questSvc)
 	if _, err := contentLoader.Load(rootCtx); err != nil {
 		// Missing directory or malformed YAML must not silently swallow — the
 		// migration seed is the fallback baseline; a failed loader still yields
 		// a working server but no YAML overrides applied.
 		logger.Warn("content pack load failed — falling back to migration seed",
 			"err", err.Error(), "path", cfg.ContentPath)
+		// Quests have no migration seed: serve whatever the last good load stored.
+		if err := questSvc.Reload(rootCtx); err != nil {
+			logger.Error("quest catalog load failed", "err", err.Error())
+		}
 	}
 
 	// HTTP
@@ -381,6 +390,7 @@ func run() error {
 		MarketHandler:     marketHandler,
 		NotifHandler:      notifHandler,
 		ProgHandler:       progHandler,
+		QuestHandler:      quest.NewHandler(questSvc),
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
 		AdminHandler:      adminHandler,

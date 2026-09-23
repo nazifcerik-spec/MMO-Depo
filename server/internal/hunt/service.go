@@ -324,7 +324,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}
 
 	progression.RecordIf(ctx, s.progress, c.CharacterID,
-		progression.Event{Kind: progression.EventMobKilled, Amount: int64(hr.Victories)})
+		progression.Event{Kind: progression.EventMobKilled, Amount: int64(hr.Victories)},
+		progression.Event{Kind: progression.EventMobKilled + ":" + c.MobCode, Amount: int64(hr.Victories)})
 
 	return &RevealResult{
 		Hunt: hr, Elapsed: elapsed, LedgerTxnID: txnID,

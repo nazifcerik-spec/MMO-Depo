@@ -9,7 +9,7 @@ internal/activity             58
 internal/admin                6
 internal/combat               51
 internal/consumable           1
-internal/contentpack          8
+internal/contentpack          26
 internal/crafting             18
 internal/domain/auth          56
 internal/domain/character     33
@@ -18,7 +18,7 @@ internal/economy              17
 internal/guild                1
 internal/http/apierr          85
 internal/http/middleware      82
-internal/hunt                 15
+internal/hunt                 17
 internal/inventory            21
 internal/item                 27
 internal/mail                 14
@@ -26,6 +26,7 @@ internal/market               3
 internal/notification         21
 internal/observability        59
 internal/progression          16
+internal/quest                38
 internal/ratelimit            42
 internal/skill                97
 internal/social               0

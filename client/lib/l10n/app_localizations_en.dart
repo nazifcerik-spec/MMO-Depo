@@ -1435,4 +1435,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String perHour(String value) {
     return '$value/h';
   }
+
+  @override
+  String get quests => 'Quests';
+
+  @override
+  String get questsInProgress => 'In progress';
+
+  @override
+  String get questsNoneOpen => 'No open quests. Pick one below.';
+
+  @override
+  String get questsStory => 'Story';
+
+  @override
+  String get questsSide => 'Side quests';
+
+  @override
+  String get questsDaily => 'Daily';
+
+  @override
+  String resetsIn(String time) {
+    return 'Resets in $time';
+  }
+
+  @override
+  String get turnIn => 'Turn in';
+
+  @override
+  String questRewarded(String rewards) {
+    return 'Quest complete: $rewards';
+  }
+
+  @override
+  String get abandonQuestTitle => 'Abandon quest?';
+
+  @override
+  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+
+  @override
+  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+
+  @override
+  String objGather(String activity) {
+    return 'Gather ($activity)';
+  }
+
+  @override
+  String get objKillAny => 'Defeat enemies';
+
+  @override
+  String objKill(String mob) {
+    return 'Defeat $mob';
+  }
+
+  @override
+  String get objBoss => 'Defeat a boss';
+
+  @override
+  String get objDungeonAny => 'Clear a dungeon';
+
+  @override
+  String objDungeon(String dungeon) {
+    return 'Clear $dungeon';
+  }
+
+  @override
+  String get objCraftAny => 'Craft items';
+
+  @override
+  String objCraft(String item) {
+    return 'Craft $item';
+  }
+
+  @override
+  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+
+  @override
+  String get errQuestLocked => 'Finish the previous story quest first.';
+
+  @override
+  String get errQuestTaken => 'You already took this quest.';
+
+  @override
+  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+
+  @override
+  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+
+  @override
+  String get errQuestNotActive => 'This quest isn\'t open.';
+
+  @override
+  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
 }

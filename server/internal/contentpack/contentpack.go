@@ -202,6 +202,7 @@ type LoadResult struct {
 	RegionLinksSeen int
 	ProfessionsSeen int
 	RecipesSeen     int
+	QuestsSeen      int
 	SourceDir       string
 }
 
@@ -293,6 +294,19 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	}
 	res.RecipesSeen = len(recipes)
 
+	quests, err := loadQuestsFile(filepath.Join(l.Dir, "quests.yaml"))
+	if err != nil {
+		return res, err
+	}
+	if err := validateQuests(quests, refs{
+		mobs:     codeSet(mobs, func(m Mob) string { return m.Code }),
+		dungeons: codeSet(dungeons, func(d Dungeon) string { return d.Code }),
+		items:    codeSet(items, func(i Item) string { return i.Code }),
+	}); err != nil {
+		return res, fmt.Errorf("validate quests.yaml: %w", err)
+	}
+	res.QuestsSeen = len(quests)
+
 	if len(items) > 0 {
 		if err := l.upsertItems(ctx, items); err != nil {
 			return res, fmt.Errorf("contentpack: upsert items: %w", err)
@@ -332,6 +346,12 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		}
 	}
 
+	if len(quests) > 0 {
+		if err := l.upsertQuests(ctx, quests); err != nil {
+			return res, fmt.Errorf("contentpack: upsert quests: %w", err)
+		}
+	}
+
 	for _, r := range l.reloaders {
 		if err := r.Reload(ctx); err != nil {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
@@ -348,6 +368,7 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		slog.Int("region_links", res.RegionLinksSeen),
 		slog.Int("professions", res.ProfessionsSeen),
 		slog.Int("recipes", res.RecipesSeen),
+		slog.Int("quests", res.QuestsSeen),
 	)
 	return res, nil
 }

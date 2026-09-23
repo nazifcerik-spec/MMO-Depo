@@ -1,0 +1,207 @@
+# Quests v1 (Sprint 41, DD-221). docs/quests/*.
+#
+#   category        main (sıralı zincir) | side (opsiyonel) | daily (günlük havuz)
+#   requires_quest  önce teslim edilmesi gereken görev (main zinciri)
+#   objectives      progression olay türleri:
+#                     mob_killed, mob_killed:<mob>, boss_killed,
+#                     dungeon_cleared, dungeon_cleared:<dungeon>,
+#                     gather_<mining|fishing|woodcutting|herbalism|hunting>,
+#                     item_crafted, item_crafted:<item>
+#   reward_*        teslimde: XP + altın (ledger, idempotent)
+#
+# Görev ilerlemesi kabulden sonra başlar (geriye dönük sayılmaz). Günlükler
+# her karakter için UTC gün başında havuzdan 3 tane (seviyeye uygun) seçilir.
+
+quests:
+  # --- Main chain ----------------------------------------------------------
+  - code: main_01_first_hunt
+    display_name_key: quest.main_01_first_hunt
+    category: main
+    min_level: 1
+    objectives:
+      - { event: "mob_killed:young_boar", count: 5 }
+    reward_xp: 80
+    reward_gold_copper: 200
+    sort_order: 10
+
+  - code: main_02_supplies
+    display_name_key: quest.main_02_supplies
+    category: main
+    min_level: 1
+    requires_quest: main_01_first_hunt
+    objectives:
+      - { event: gather_mining, count: 20 }
+      - { event: gather_woodcutting, count: 10 }
+    reward_xp: 150
+    reward_gold_copper: 400
+    sort_order: 20
+
+  - code: main_03_forge
+    display_name_key: quest.main_03_forge
+    category: main
+    min_level: 2
+    requires_quest: main_02_supplies
+    objectives:
+      - { event: item_crafted, count: 1 }
+    reward_xp: 200
+    reward_gold_copper: 500
+    sort_order: 30
+
+  - code: main_04_wolves
+    display_name_key: quest.main_04_wolves
+    category: main
+    min_level: 3
+    requires_quest: main_03_forge
+    objectives:
+      - { event: "mob_killed:grey_wolf", count: 15 }
+    reward_xp: 350
+    reward_gold_copper: 800
+    sort_order: 40
+
+  - code: main_05_crypt
+    display_name_key: quest.main_05_crypt
+    category: main
+    min_level: 3
+    requires_quest: main_04_wolves
+    objectives:
+      - { event: "dungeon_cleared:crypt_of_ashes", count: 1 }
+    reward_xp: 600
+    reward_gold_copper: 1500
+    sort_order: 50
+
+  - code: main_06_hollow
+    display_name_key: quest.main_06_hollow
+    category: main
+    min_level: 10
+    requires_quest: main_05_crypt
+    objectives:
+      - { event: "mob_killed:forest_troll", count: 10 }
+      - { event: "dungeon_cleared:forest_hollow", count: 1 }
+    reward_xp: 2000
+    reward_gold_copper: 5000
+    sort_order: 60
+
+  # --- Side ----------------------------------------------------------------
+  - code: side_bandit_trouble
+    display_name_key: quest.side_bandit_trouble
+    category: side
+    min_level: 5
+    objectives:
+      - { event: "mob_killed:bandit_scout", count: 20 }
+    reward_xp: 400
+    reward_gold_copper: 1200
+    sort_order: 110
+
+  - code: side_healers_stock
+    display_name_key: quest.side_healers_stock
+    category: side
+    min_level: 2
+    objectives:
+      - { event: gather_herbalism, count: 30 }
+      - { event: "item_crafted:potion_hp_small", count: 3 }
+    reward_xp: 250
+    reward_gold_copper: 900
+    sort_order: 120
+
+  - code: side_fishmonger
+    display_name_key: quest.side_fishmonger
+    category: side
+    min_level: 1
+    objectives:
+      - { event: gather_fishing, count: 40 }
+    reward_xp: 150
+    reward_gold_copper: 600
+    sort_order: 130
+
+  - code: side_goblin_menace
+    display_name_key: quest.side_goblin_menace
+    category: side
+    min_level: 8
+    objectives:
+      - { event: "mob_killed:goblin_raider", count: 25 }
+      - { event: boss_killed, count: 1 }
+    reward_xp: 900
+    reward_gold_copper: 2500
+    sort_order: 140
+
+  # --- Daily pool ----------------------------------------------------------
+  - code: daily_hunter
+    display_name_key: quest.daily_hunter
+    category: daily
+    min_level: 1
+    objectives:
+      - { event: mob_killed, count: 20 }
+    reward_xp: 120
+    reward_gold_copper: 300
+    sort_order: 200
+
+  - code: daily_miner
+    display_name_key: quest.daily_miner
+    category: daily
+    min_level: 1
+    objectives:
+      - { event: gather_mining, count: 40 }
+    reward_xp: 100
+    reward_gold_copper: 300
+    sort_order: 210
+
+  - code: daily_angler
+    display_name_key: quest.daily_angler
+    category: daily
+    min_level: 1
+    objectives:
+      - { event: gather_fishing, count: 30 }
+    reward_xp: 100
+    reward_gold_copper: 300
+    sort_order: 220
+
+  - code: daily_lumberjack
+    display_name_key: quest.daily_lumberjack
+    category: daily
+    min_level: 1
+    objectives:
+      - { event: gather_woodcutting, count: 50 }
+    reward_xp: 100
+    reward_gold_copper: 300
+    sort_order: 230
+
+  - code: daily_herbalist
+    display_name_key: quest.daily_herbalist
+    category: daily
+    min_level: 1
+    objectives:
+      - { event: gather_herbalism, count: 35 }
+    reward_xp: 100
+    reward_gold_copper: 300
+    sort_order: 240
+
+  - code: daily_artisan
+    display_name_key: quest.daily_artisan
+    category: daily
+    min_level: 2
+    objectives:
+      - { event: item_crafted, count: 3 }
+    reward_xp: 150
+    reward_gold_copper: 400
+    sort_order: 250
+
+  - code: daily_delver
+    display_name_key: quest.daily_delver
+    category: daily
+    min_level: 3
+    objectives:
+      - { event: dungeon_cleared, count: 1 }
+    reward_xp: 300
+    reward_gold_copper: 800
+    sort_order: 260
+
+  - code: daily_slayer
+    display_name_key: quest.daily_slayer
+    category: daily
+    min_level: 10
+    objectives:
+      - { event: mob_killed, count: 60 }
+      - { event: boss_killed, count: 1 }
+    reward_xp: 600
+    reward_gold_copper: 1500
+    sort_order: 270

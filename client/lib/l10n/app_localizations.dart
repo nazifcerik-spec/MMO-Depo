@@ -2659,6 +2659,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{value}/h'**
   String perHour(String value);
+
+  /// No description provided for @quests.
+  ///
+  /// In en, this message translates to:
+  /// **'Quests'**
+  String get quests;
+
+  /// No description provided for @questsInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get questsInProgress;
+
+  /// No description provided for @questsNoneOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'No open quests. Pick one below.'**
+  String get questsNoneOpen;
+
+  /// No description provided for @questsStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get questsStory;
+
+  /// No description provided for @questsSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Side quests'**
+  String get questsSide;
+
+  /// No description provided for @questsDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get questsDaily;
+
+  /// No description provided for @resetsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Resets in {time}'**
+  String resetsIn(String time);
+
+  /// No description provided for @turnIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn in'**
+  String get turnIn;
+
+  /// No description provided for @questRewarded.
+  ///
+  /// In en, this message translates to:
+  /// **'Quest complete: {rewards}'**
+  String questRewarded(String rewards);
+
+  /// No description provided for @abandonQuestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Abandon quest?'**
+  String get abandonQuestTitle;
+
+  /// No description provided for @abandonQuestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress is lost. You can take the quest again later.'**
+  String get abandonQuestBody;
+
+  /// No description provided for @abandonDailyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress is lost and this daily can\'t be taken again today.'**
+  String get abandonDailyBody;
+
+  /// No description provided for @objGather.
+  ///
+  /// In en, this message translates to:
+  /// **'Gather ({activity})'**
+  String objGather(String activity);
+
+  /// No description provided for @objKillAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Defeat enemies'**
+  String get objKillAny;
+
+  /// No description provided for @objKill.
+  ///
+  /// In en, this message translates to:
+  /// **'Defeat {mob}'**
+  String objKill(String mob);
+
+  /// No description provided for @objBoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Defeat a boss'**
+  String get objBoss;
+
+  /// No description provided for @objDungeonAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear a dungeon'**
+  String get objDungeonAny;
+
+  /// No description provided for @objDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear {dungeon}'**
+  String objDungeon(String dungeon);
+
+  /// No description provided for @objCraftAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft items'**
+  String get objCraftAny;
+
+  /// No description provided for @objCraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft {item}'**
+  String objCraft(String item);
+
+  /// No description provided for @evQuestComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Quest objectives complete — turn it in!'**
+  String get evQuestComplete;
+
+  /// No description provided for @errQuestLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the previous story quest first.'**
+  String get errQuestLocked;
+
+  /// No description provided for @errQuestTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'You already took this quest.'**
+  String get errQuestTaken;
+
+  /// No description provided for @errQuestNotOffered.
+  ///
+  /// In en, this message translates to:
+  /// **'That daily isn\'t on today\'s board.'**
+  String get errQuestNotOffered;
+
+  /// No description provided for @errQuestCap.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many open quests. Finish or abandon one.'**
+  String get errQuestCap;
+
+  /// No description provided for @errQuestNotActive.
+  ///
+  /// In en, this message translates to:
+  /// **'This quest isn\'t open.'**
+  String get errQuestNotActive;
+
+  /// No description provided for @errQuestIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Objectives aren\'t complete yet.'**
+  String get errQuestIncomplete;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

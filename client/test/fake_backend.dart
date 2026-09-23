@@ -144,6 +144,8 @@ class FakeBackend {
     if (gr != null) return gr;
     final meta = _meta(req, path, body);
     if (meta != null) return meta;
+    final qs = _quests(req, path);
+    if (qs != null) return qs;
     final so = _social(req, path, body);
     if (so != null) return so;
     final act = RegExp(r'^/v1/character/([^/]+)/activity(/active)?$').firstMatch(path);
@@ -496,6 +498,76 @@ class FakeBackend {
         return json(200, {});
     }
     return json(200, {});
+  }
+
+  // --- quests ------------------------------------------------------------------
+
+  final questsOpen = <Map<String, dynamic>>[];
+  final questsAvailable = <Map<String, dynamic>>[
+    {
+      'code': 'main_01_first_hunt',
+      'category': 'main',
+      'state': 'available',
+      'objectives': [
+        {'event': 'mob_killed:young_boar', 'count': 5, 'progress': 0},
+      ],
+      'reward_xp': 80,
+      'reward_gold_copper': 200,
+    },
+    {
+      'code': 'daily_miner',
+      'category': 'daily',
+      'state': 'available',
+      'objectives': [
+        {'event': 'gather_mining', 'count': 40, 'progress': 0},
+      ],
+      'reward_xp': 100,
+      'reward_gold_copper': 300,
+    },
+  ];
+  final questCalls = <String>[];
+
+  http.Response? _quests(http.Request req, String path) {
+    final m = RegExp(r'^/v1/character/[^/]+/quests(?:/([^/]+)/(accept|abandon|turn-in))?$').firstMatch(path);
+    if (m == null) return null;
+    if (m[1] == null) {
+      return json(200, {
+        'open': questsOpen,
+        'available': questsAvailable,
+        'open_cap': 25,
+        'daily_resets_at': DateTime.now().toUtc().add(const Duration(hours: 5)).toIso8601String(),
+      });
+    }
+    final code = m[1]!;
+    questCalls.add('${m[2]} $code');
+    switch (m[2]) {
+      case 'accept':
+        final q = questsAvailable.firstWhere((q) => q['code'] == code);
+        questsAvailable.remove(q);
+        questsOpen.add({...q, 'state': 'active'});
+        return json(200, questsOpen.last);
+      case 'abandon':
+        questsOpen.removeWhere((q) => q['code'] == code);
+        return json(200, {'abandoned': true});
+    }
+    final q = questsOpen.firstWhere((q) => q['code'] == code);
+    if (q['state'] != 'completed') return error(409, 'E_QUEST_INCOMPLETE');
+    questsOpen.remove(q);
+    return json(200, {
+      'code': code,
+      'reward_xp': q['reward_xp'],
+      'reward_gold_copper': q['reward_gold_copper'],
+      'xp': {'level': 4, 'xp': 10, 'leveled_up': true},
+    });
+  }
+
+  /// Server-side tick stand-in: finishes an open quest's objectives.
+  void completeQuest(String code) {
+    final q = questsOpen.firstWhere((q) => q['code'] == code);
+    q['state'] = 'completed';
+    for (final o in (q['objectives'] as List).cast<Map<String, dynamic>>()) {
+      o['progress'] = o['count'];
+    }
   }
 
   // --- notifications / progression / events ---------------------------------
