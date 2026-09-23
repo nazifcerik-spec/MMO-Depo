@@ -2035,6 +2035,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-222 — Sınıf Yetenekleri v1: Seviye ile Açılan Pasif + Otomatik Aktif
+**Karar:** `content/skills.yaml` → `content.class_skill` (sınıf başı 2 aktif + 2 pasif). Karakter başına durum yok: sahip olunanlar sınıf + seviyeden türetilir (öğrenme/respec/uzmanlık Phase 02). Pasifler `skill.CharacterAdapter` modifier kaynağı olarak DD-107 stack'ine girer (ModifierSource artık base sheet'i de alır → sınıf/seviye için DB sorgusu yok). Aktifler av/zindan başlangıç snapshot'ına dondurulur (DD-088) ve deterministik tur tabanlı savaşta oyuncu sırası geldiğinde öncelik sırasıyla cooldown'u dolmuş ve MP'si yeten ilk yetenek kullanılır; aksi hâlde temel saldırı. Etkiler: `strike` (normal isabet/kritik zarı, hasar × power/100) ve `heal` (HP max'ın power%'i; yalnız HP ≤ %50, zar çekmez). MP her karşılaşmada dolu başlar (kalıcı MP yok); cooldown tur cinsinden ve karşılaşma başına sıfırlanır. Yeteneği olmayan snapshot'larda RNG akışı ve sonuç birebir aynı (eski kontratlar etkilenmez). Roller'lar artık Combatant'ı `Clone()` ile kopyalar (alan alan kopya yeni alanları düşürürdü). Content doğrulaması modifier tür/hedeflerini `skill.KnownKinds/KnownTargets`'tan alır (tek doğruluk kaynağı; eski listedeki `en_max` yazım hatası kaldırıldı). Public `GET /v1/classes/{class}/skills`.
+**Reason:** docs/skill-engine/active-skills.md'deki tam cast pipeline'ı (GCD, kaynak türleri, interrupt, rotasyon editörü, manuel cast) AFK/analitik modelde karşılığı olmayan karmaşıklık; v1'de sınıf kimliğini ve güç artışını veren en küçük model seçildi, mevcut modifier stack ve snapshot yeniden kullanıldı.
+**Alternatives:** Karakter başına öğrenilen yetenek tablosu + yetenek puanı (şimdilik ekonomi/UX yükü), zar tabanlı yetenek seçimi (determinizm korunur ama dengelemesi zor), manuel cast endpoint'i (AFK oyunda anlamsız).
+**Consequences:** Denge (power/MP/cooldown) içerik pass'inde ayarlanacak. Mob yetenekleri, buff/debuff, DoT, kalıcı MP ve spec/respec Phase 02. Dünya etkinliği gücü pasifleri sheet üzerinden alır, aktifleri kullanmaz.
+**Tarih:** 2026-09-23
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

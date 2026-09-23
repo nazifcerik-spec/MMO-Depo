@@ -1036,6 +1036,16 @@ void main() {
     expect(find.text('No open quests. Pick one below.'), findsOneWidget);
   });
 
+  testWidgets('class skills: unlocked active + passive described, higher tier locked', (tester) async {
+    await _inGame(tester);
+    await tester.scrollUntilVisible(find.text('Eviscerate · Active'), 200, scrollable: _list);
+    expect(find.text('Backstab · Active'), findsOneWidget);
+    expect(find.text('200% damage · 12 MP · every 3 turns'), findsOneWidget);
+    expect(find.text('Precision · Passive'), findsOneWidget);
+    expect(find.text('+5 Crit'), findsOneWidget);
+    expect(find.text('Lvl 6+'), findsOneWidget, reason: 'level 3 rogue: eviscerate still locked');
+  });
+
   testWidgets('Turkish locale renders translated copy', (tester) async {
     await _boot(tester, FakeBackend(), locale: const Locale('tr'));
     expect(find.text('Giriş yap'), findsOneWidget);

@@ -33,10 +33,11 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 	}
 	r := rngNew(seed)
 	log := make([]TurnRecord, 0, 2*s.MaxTurns)
+	caster := newCaster(&s.Player)
 
 	for turn := 1; turn <= s.MaxTurns; turn++ {
-		// --- Player swings ---
-		log = append(log, resolveSwing(r, turn, &s.Player, &s.Mob))
+		// --- Player acts (skill if one fits, else basic attack) ---
+		log = append(log, caster.act(r, turn, &s.Player, &s.Mob))
 		if s.Mob.HPCurrent <= 0 {
 			return &Result{
 				Outcome:     OutcomeVictory,
@@ -67,10 +68,59 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 	}, nil
 }
 
+// caster tracks one combatant's MP and skill cooldowns for an encounter.
+type caster struct {
+	mp    int32
+	ready []int // turn from which skill i may be cast again
+}
+
+func newCaster(c *Combatant) *caster {
+	return &caster{mp: c.MPMax, ready: make([]int, len(c.Skills))}
+}
+
+// act picks the first usable skill (list order = priority) or attacks.
+func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
+	for i, sk := range self.Skills {
+		if turn < k.ready[i] || sk.MPCost > k.mp {
+			continue
+		}
+		switch sk.Effect {
+		case EffectHeal:
+			if self.HPCurrent*2 > self.HPMax {
+				continue // not worth it yet
+			}
+			heal := self.HPMax * sk.Power / 100
+			if heal > self.HPMax-self.HPCurrent {
+				heal = self.HPMax - self.HPCurrent
+			}
+			self.HPCurrent += heal
+			k.spend(i, turn, sk)
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
+				Heal: heal, TargetHPAft: self.HPCurrent}
+		case EffectStrike:
+			k.spend(i, turn, sk)
+			rec := swing(r, turn, self, target, sk.Power)
+			rec.Skill = sk.Code
+			return rec
+		}
+	}
+	return resolveSwing(r, turn, self, target)
+}
+
+func (k *caster) spend(i, turn int, sk Skill) {
+	k.mp -= sk.MPCost
+	k.ready[i] = turn + max(1, sk.CooldownTurns)
+}
+
 // resolveSwing is one attacker→defender exchange. Mutates defender.HPCurrent.
 // Split out so the loop above stays readable — this is the only piece where
 // TryHit + RollDamage are wired together.
 func resolveSwing(r RNG, turn int, attacker, defender *Combatant) TurnRecord {
+	return swing(r, turn, attacker, defender, 100)
+}
+
+// swing is an attack at powerPct% of normal damage (100 = basic attack).
+func swing(r RNG, turn int, attacker, defender *Combatant, powerPct int32) TurnRecord {
 	hit, crit := TryHit(r, attacker.HitPct, defender.EvasionPct, attacker.CritPct)
 	rec := TurnRecord{
 		Turn:   turn,
@@ -84,6 +134,9 @@ func resolveSwing(r RNG, turn int, attacker, defender *Combatant) TurnRecord {
 		return rec
 	}
 	dmg := RollDamage(r, attacker.Attack, defender.Defense, crit)
+	if powerPct != 100 {
+		dmg = max(1, dmg*powerPct/100)
+	}
 	defender.HPCurrent -= dmg
 	if defender.HPCurrent < 0 {
 		defender.HPCurrent = 0

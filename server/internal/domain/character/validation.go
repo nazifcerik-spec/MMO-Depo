@@ -59,3 +59,6 @@ func validateClass(raw string) (string, error) {
 	}
 	return s, nil
 }
+
+// KnownClass reports whether code is a playable class (content validation).
+func KnownClass(code string) bool { return knownClasses[code] }

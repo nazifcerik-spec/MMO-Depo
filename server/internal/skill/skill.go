@@ -52,6 +52,19 @@ const (
 	TargetStaMax  Target = "stamina_max"
 )
 
+// KnownKinds / KnownTargets are what ComputeSheet understands; content
+// validation uses them so a typo can never become a silently ignored bonus.
+var (
+	KnownKinds = map[ModifierKind]bool{
+		KindFlat: true, KindMultAdd: true, KindMultProd: true, KindClampMin: true, KindClampMax: true, KindSet: true,
+	}
+	KnownTargets = map[Target]bool{
+		TargetSTR: true, TargetAGI: true, TargetINT: true, TargetVIT: true, TargetCHA: true, TargetLuck: true,
+		TargetAttack: true, TargetDefense: true, TargetCritPct: true, TargetHitPct: true,
+		TargetHPMax: true, TargetMPMax: true, TargetEnMax: true, TargetStaMax: true,
+	}
+)
+
 // Modifier is one bonus/malus. Amount interpretation depends on Kind.
 type Modifier struct {
 	Kind   ModifierKind `json:"kind"`

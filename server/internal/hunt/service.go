@@ -67,6 +67,7 @@ type Service struct {
 	rngNew   func(seed int64) combat.RNG
 	progress progression.Recorder
 	hp       HPWriter
+	skills   SkillSource
 }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
@@ -80,6 +81,12 @@ type HPWriter interface {
 
 // WithHPWriter makes reveals write the final HP back to the character.
 func (s *Service) WithHPWriter(w HPWriter) *Service { s.hp = w; return s }
+
+// SkillSource yields the class actives a sheet has unlocked (DD-222).
+type SkillSource func(sheet *character.Sheet) []combat.Skill
+
+// WithSkills freezes unlocked class actives into the start snapshot.
+func (s *Service) WithSkills(src SkillSource) *Service { s.skills = src; return s }
 
 // NewService wires the service. rngNew is the RNG factory (activity.NewRNG in
 // prod; a stub in tests).
@@ -162,6 +169,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		return nil, ErrTooWounded
 	}
 	snapshot := combatantFromSheet(sheet)
+	if s.skills != nil {
+		snapshot.Skills = s.skills(sheet)
+	}
 	snapJSON, err := json.Marshal(snapshot)
 	if err != nil {
 		return nil, fmt.Errorf("hunt: marshal snapshot: %w", err)
@@ -400,6 +410,7 @@ func combatantFromSheet(s *character.Sheet) combat.Combatant {
 		CritPct:    int32(s.Derived.CritPct),
 		HitPct:     int32(s.Derived.HitPct),
 		EvasionPct: ev,
+		MPMax:      int32(s.Resources.MPMax),
 	}
 }
 

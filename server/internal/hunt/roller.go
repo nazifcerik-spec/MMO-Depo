@@ -66,16 +66,8 @@ func Roll(
 	}
 
 	for i := 0; i < planned; i++ {
-		enc := combat.Combatant{
-			Name:       "player",
-			HPMax:      player.HPMax,
-			HPCurrent:  player.HPCurrent, // carry over
-			Attack:     player.Attack,
-			Defense:    player.Defense,
-			CritPct:    player.CritPct,
-			HitPct:     player.HitPct,
-			EvasionPct: player.EvasionPct,
-		}
+		enc := player.Clone() // HP carries over; skills + MP (full each fight) too
+		enc.Name = "player"
 		mobC := mob.AsCombatant()
 
 		sess := &combat.Session{Player: enc, Mob: mobC, MaxTurns: maxTurnsPerEncounter}

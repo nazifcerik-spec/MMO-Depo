@@ -21,7 +21,7 @@
 #   use_effect         opsiyonel, yalnız consumable: { kind: heal_hp, amount: N } (DD-218)
 #   stat_bonuses       equip'te uygulanan modifier stack (DD-107)
 #     - kind:   flat | mult_add | mult_prod | clamp_min | clamp_max | set
-#       target: str | agi | int | vit | cha | luck | attack | defense | crit_pct | hit_pct | hp_max | mp_max | en_max
+#       target: str | agi | int | vit | cha | luck | attack | defense | crit_pct | hit_pct | hp_max | mp_max | energy_max | stamina_max
 #       amount: sayı (flat=int, mult=oran örn 0.10, clamp/set=int)
 
 items:

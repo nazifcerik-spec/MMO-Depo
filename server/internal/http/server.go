@@ -16,6 +16,7 @@ import (
 
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
+	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
@@ -77,6 +78,7 @@ type Deps struct {
 	NotifHandler      *notification.Handler
 	ProgHandler       *progression.Handler
 	QuestHandler      *quest.Handler
+	ClassSkills       *classskill.Service
 	WorldEventHandler *worldevent.Handler
 	AdminHandler      *admin.Handler
 	Metrics           *observability.Metrics
@@ -395,6 +397,10 @@ func NewRouter(d Deps) http.Handler {
 			// --- Public mob catalog (client hunt picker) ---
 			if d.CombatHandler != nil {
 				r.Get("/mobs", d.CombatHandler.Mobs)
+			}
+			// --- Public class skill catalog (DD-222) ---
+			if d.ClassSkills != nil {
+				r.Get("/classes/{class}/skills", d.ClassSkills.List)
 			}
 
 			// --- Dungeon contract-scoped + public catalog ---

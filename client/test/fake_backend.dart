@@ -608,6 +608,37 @@ class FakeBackend {
       case ('DELETE', '/v1/notification/preference/global-mute'):
         muteUntil = null;
         return json(200, {'global_mute_until': null});
+      case ('GET', '/v1/classes/rogue/skills'):
+        return json(200, {
+          'skills': [
+            {
+              'code': 'rogue_backstab',
+              'kind': 'active',
+              'unlock_level': 1,
+              'effect': 'strike',
+              'power': 200,
+              'mp_cost': 12,
+              'cooldown_turns': 3,
+            },
+            {
+              'code': 'rogue_precision',
+              'kind': 'passive',
+              'unlock_level': 3,
+              'modifiers': [
+                {'kind': 'flat', 'target': 'crit_pct', 'amount': 5},
+              ],
+            },
+            {
+              'code': 'rogue_eviscerate',
+              'kind': 'active',
+              'unlock_level': 6,
+              'effect': 'strike',
+              'power': 300,
+              'mp_cost': 25,
+              'cooldown_turns': 5,
+            },
+          ],
+        });
       case ('GET', '/v1/events/seasonal'):
         return json(200, {
           'events': [

@@ -145,11 +145,8 @@ func resolveOne(
 	wave int, isBoss bool, maxTurns int,
 	rngFactory func(seed int64) combat.RNG,
 ) (rec EncounterRecord, killed bool, ended bool) {
-	enc := combat.Combatant{
-		Name: "player", HPMax: player.HPMax, HPCurrent: player.HPCurrent,
-		Attack: player.Attack, Defense: player.Defense,
-		CritPct: player.CritPct, HitPct: player.HitPct, EvasionPct: player.EvasionPct,
-	}
+	enc := player.Clone() // HP carries over; skills + MP (full each fight) too
+	enc.Name = "player"
 	mobC := mob.AsCombatant()
 	sess := &combat.Session{Player: enc, Mob: mobC, MaxTurns: maxTurns}
 	out, err := sess.Resolve(rngFactory, baseSeed+int64(seq)+1)

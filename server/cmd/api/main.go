@@ -20,6 +20,7 @@ import (
 
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
+	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/config"
 	"github.com/otter/server/internal/consumable"
@@ -289,7 +290,7 @@ func run() error {
 	recorder := progression.Recorders(progSvc, questSvc)
 	activitySvc.WithRecorder(recorder).WithGatherBonus(progSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).
-	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID) ([]skill.Modifier, error) {
+	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
 		effects, err := progSvc.ActiveBonuses(ctx, id)
 		if err != nil {
 			return nil, err
@@ -300,8 +301,11 @@ func run() error {
 		}
 		return mods, nil
 	})
-	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc)
-	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc)
+	// Class skills (DD-222): passives → sheet stack, actives → combat snapshots.
+	classSkills := classskill.NewService(pool)
+	sheetAdapter.WithModifierSource(classSkills.PassiveModifiers)
+	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills)
+	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills)
 	craftSvc.WithRecorder(recorder)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
@@ -348,15 +352,20 @@ func run() error {
 		return craftCatSvc.ReloadCatalog(ctx, pool)
 	}))
 	contentLoader.Register(questSvc)
+	contentLoader.Register(classSkills)
 	if _, err := contentLoader.Load(rootCtx); err != nil {
 		// Missing directory or malformed YAML must not silently swallow — the
 		// migration seed is the fallback baseline; a failed loader still yields
 		// a working server but no YAML overrides applied.
 		logger.Warn("content pack load failed — falling back to migration seed",
 			"err", err.Error(), "path", cfg.ContentPath)
-		// Quests have no migration seed: serve whatever the last good load stored.
+		// Quests and class skills have no migration seed: serve whatever the
+		// last good load stored.
 		if err := questSvc.Reload(rootCtx); err != nil {
 			logger.Error("quest catalog load failed", "err", err.Error())
+		}
+		if err := classSkills.Reload(rootCtx); err != nil {
+			logger.Error("class skill catalog load failed", "err", err.Error())
 		}
 	}
 
@@ -391,6 +400,7 @@ func run() error {
 		NotifHandler:      notifHandler,
 		ProgHandler:       progHandler,
 		QuestHandler:      quest.NewHandler(questSvc),
+		ClassSkills:       classSkills,
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
 		AdminHandler:      adminHandler,

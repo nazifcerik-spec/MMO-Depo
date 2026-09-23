@@ -530,5 +530,16 @@
   "errQuestNotOffered": "That daily isn't on today's board.",
   "errQuestCap": "Too many open quests. Finish or abandon one.",
   "errQuestNotActive": "This quest isn't open.",
-  "errQuestIncomplete": "Objectives aren't complete yet."
+  "errQuestIncomplete": "Objectives aren't complete yet.",
+  "skills": "Skills",
+  "skillActive": "Active",
+  "skillPassive": "Passive",
+  "skillStrike": "{power}% damage",
+  "@skillStrike": {"placeholders": {"power": {"type": "int"}}},
+  "skillHeal": "Heals {power}% HP when below half",
+  "@skillHeal": {"placeholders": {"power": {"type": "int"}}},
+  "skillMp": "{mp} MP",
+  "@skillMp": {"placeholders": {"mp": {"type": "int"}}},
+  "skillCooldown": "{turns, plural, =1{every turn} other{every {turns} turns}}",
+  "@skillCooldown": {"placeholders": {"turns": {"type": "int"}}}
 }

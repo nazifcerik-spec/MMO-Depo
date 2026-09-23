@@ -34,7 +34,8 @@ type CharacterAdapter struct {
 // ModifierSource contributes non-gear modifiers (mastery bonuses, DD-220).
 // Targets the sheet does not know (e.g. gather_yield_*) are ignored by
 // ComputeSheet.
-type ModifierSource func(ctx context.Context, characterID uuid.UUID) ([]Modifier, error)
+// base is the pre-modifier sheet (class, level, ...).
+type ModifierSource func(ctx context.Context, characterID uuid.UUID, base character.Sheet) ([]Modifier, error)
 
 // WithModifierSource adds a source; its error fails the sheet like a gear
 // fetch error would (a silently missing bonus would skew combat snapshots).
@@ -70,7 +71,7 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		mods = append(mods, list...)
 	}
 	for _, src := range a.extra {
-		list, err := src(ctx, characterID)
+		list, err := src(ctx, characterID, base)
 		if err != nil {
 			return base, err
 		}

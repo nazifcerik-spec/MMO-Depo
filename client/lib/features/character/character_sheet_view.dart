@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
+import '../progression/progression_screen.dart' show bonusText;
 import 'character_repository.dart';
 import 'models.dart';
 
@@ -31,12 +32,24 @@ class CharacterSheetView extends StatefulWidget {
 class _CharacterSheetViewState extends State<CharacterSheetView> {
   late CharacterSheet _sheet = widget.initial;
   int? _gold;
+  List<ClassSkill>? _skills;
 
   @override
   void initState() {
     super.initState();
     widget.dataVersion.addListener(_reload);
     _reload();
+    _loadSkills();
+  }
+
+  /// Content only — a failure just hides the section.
+  Future<void> _loadSkills() async {
+    try {
+      final list = await widget.repo.classSkills(_sheet.classCode);
+      if (mounted) setState(() => _skills = list);
+    } on ApiError {
+      // keep hidden
+    }
   }
 
   @override
@@ -153,6 +166,13 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               ),
             ],
           ),
+          if (_skills?.isNotEmpty ?? false) ...[
+            const SizedBox(height: Space.lg),
+            _Section(
+              title: l.skills,
+              children: [for (final k in _skills!) _SkillRow(skill: k, level: s.level)],
+            ),
+          ],
           if (widget.onOpenProgress != null) ...[
             const SizedBox(height: Space.lg),
             OutlinedButton.icon(
@@ -162,6 +182,58 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// "mage_fire_bolt" → "Fire Bolt".
+String skillName(String code) => humanize(code.substring(code.indexOf('_') + 1));
+
+String skillDescription(AppLocalizations l, ClassSkill k) {
+  if (!k.active) return k.modifiers.map((m) => bonusText(l, m)).join(' · ');
+  final effect = k.effect == 'heal' ? l.skillHeal(k.power) : l.skillStrike(k.power);
+  return [effect, if (k.mpCost > 0) l.skillMp(k.mpCost), l.skillCooldown(k.cooldownTurns)].join(' · ');
+}
+
+class _SkillRow extends StatelessWidget {
+  const _SkillRow({required this.skill, required this.level});
+
+  final ClassSkill skill;
+  final int level;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final locked = skill.unlockLevel > level;
+    return Opacity(
+      opacity: locked ? 0.6 : 1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Space.xs),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              locked ? Icons.lock_outline : (skill.active ? Icons.flash_on : Icons.shield_moon_outlined),
+              size: 18,
+              color: locked ? Palette.textMuted : Palette.accent,
+            ),
+            const SizedBox(width: Space.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${skillName(skill.code)} · ${skill.active ? l.skillActive : l.skillPassive}',
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Text(skillDescription(l, skill), style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+            ),
+            if (locked) Text(l.levelReq(skill.unlockLevel), style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
       ),
     );
   }

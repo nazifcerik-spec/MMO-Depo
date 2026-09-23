@@ -454,5 +454,12 @@
   "errQuestNotOffered": "Bu günlük görev bugünkü panoda yok.",
   "errQuestCap": "Çok fazla açık görev var. Birini bitir ya da bırak.",
   "errQuestNotActive": "Bu görev açık değil.",
-  "errQuestIncomplete": "Hedefler henüz tamamlanmadı."
+  "errQuestIncomplete": "Hedefler henüz tamamlanmadı.",
+  "skills": "Yetenekler",
+  "skillActive": "Aktif",
+  "skillPassive": "Pasif",
+  "skillStrike": "%{power} hasar",
+  "skillHeal": "HP yarının altındayken %{power} iyileştirir",
+  "skillMp": "{mp} MP",
+  "skillCooldown": "{turns, plural, =1{her tur} other{{turns} turda bir}}"
 }

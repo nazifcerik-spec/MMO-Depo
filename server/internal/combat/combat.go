@@ -36,11 +36,34 @@ type Combatant struct {
 	CritPct    int32 // 0..100 (integer percent)
 	HitPct     int32 // 0..100 base to-hit before defender evasion
 	EvasionPct int32 // 0..100 subtracted from attacker HitPct
+
+	// Class skills (DD-222). MP starts full every encounter; mobs have none.
+	MPMax  int32
+	Skills []Skill
 }
 
-// Clone returns a deep copy — Resolve mutates HPCurrent, callers who want to
-// preserve inputs pass a clone.
-func (c Combatant) Clone() Combatant { return c }
+// Skill effects.
+const (
+	EffectStrike = "strike" // hit roll as usual, damage × Power/100
+	EffectHeal   = "heal"   // restore Power% of HPMax; only used at <= 50% HP
+)
+
+// Skill is one active class skill, auto-cast on the combatant's turn: the
+// first skill in list order that is off cooldown, affordable and useful is
+// cast; otherwise a basic attack.
+type Skill struct {
+	Code          string
+	Effect        string
+	Power         int32 // strike: damage percent (170 = 1.7×); heal: % of HPMax
+	MPCost        int32
+	CooldownTurns int // turns until it can be cast again (>= 1)
+}
+
+// Clone returns a copy whose Skills slice is not shared.
+func (c Combatant) Clone() Combatant {
+	c.Skills = append([]Skill(nil), c.Skills...)
+	return c
+}
 
 // TurnRecord is one line of the combat log — enough for the client to render
 // a play-by-play + enough for debugging.
@@ -50,6 +73,8 @@ type TurnRecord struct {
 	Target      string `json:"target"`
 	Hit         bool   `json:"hit"`
 	Crit        bool   `json:"crit,omitempty"`
+	Skill       string `json:"skill,omitempty"` // class skill used this swing
+	Heal        int32  `json:"heal,omitempty"`  // HP restored (heal skills)
 	Damage      int32  `json:"damage"`
 	TargetHPAft int32  `json:"target_hp_after"` // post-application, floored at 0
 }

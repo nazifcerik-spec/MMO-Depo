@@ -26,6 +26,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/skill"
 )
 
 // --- YAML shapes ------------------------------------------------------------
@@ -203,6 +204,7 @@ type LoadResult struct {
 	ProfessionsSeen int
 	RecipesSeen     int
 	QuestsSeen      int
+	SkillsSeen      int
 	SourceDir       string
 }
 
@@ -307,6 +309,12 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	}
 	res.QuestsSeen = len(quests)
 
+	skills, err := loadSkillsFile(filepath.Join(l.Dir, "skills.yaml"))
+	if err != nil {
+		return res, err
+	}
+	res.SkillsSeen = len(skills)
+
 	if len(items) > 0 {
 		if err := l.upsertItems(ctx, items); err != nil {
 			return res, fmt.Errorf("contentpack: upsert items: %w", err)
@@ -346,6 +354,11 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		}
 	}
 
+	if len(skills) > 0 {
+		if err := l.upsertSkills(ctx, skills); err != nil {
+			return res, fmt.Errorf("contentpack: upsert skills: %w", err)
+		}
+	}
 	if len(quests) > 0 {
 		if err := l.upsertQuests(ctx, quests); err != nil {
 			return res, fmt.Errorf("contentpack: upsert quests: %w", err)
@@ -369,6 +382,7 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		slog.Int("professions", res.ProfessionsSeen),
 		slog.Int("recipes", res.RecipesSeen),
 		slog.Int("quests", res.QuestsSeen),
+		slog.Int("skills", res.SkillsSeen),
 	)
 	return res, nil
 }
@@ -511,15 +525,8 @@ var (
 	// Must match what the equip service accepts, or equippable content can
 	// never be equipped (E_UNKNOWN_SLOT).
 	validEquipSlots    = inventory.KnownEquipSlots
-	validModifierKinds = map[string]bool{
-		"flat": true, "mult_add": true, "mult_prod": true,
-		"clamp_min": true, "clamp_max": true, "set": true,
-	}
-	validStatTargets = map[string]bool{
-		"str": true, "agi": true, "int": true, "vit": true, "cha": true, "luck": true,
-		"attack": true, "defense": true, "crit_pct": true, "hit_pct": true,
-		"hp_max": true, "mp_max": true, "en_max": true,
-	}
+	validModifierKinds = func(k string) bool { return skill.KnownKinds[skill.ModifierKind(k)] }
+	validStatTargets   = func(t string) bool { return skill.KnownTargets[skill.Target(t)] }
 )
 
 func validateItems(items []Item) error {
@@ -556,10 +563,10 @@ func validateItems(items []Item) error {
 			}
 		}
 		for j, sb := range it.StatBonuses {
-			if !validModifierKinds[sb.Kind] {
+			if !validModifierKinds(sb.Kind) {
 				return fmt.Errorf("item %s: stat_bonuses[%d] unknown kind %q", it.Code, j, sb.Kind)
 			}
-			if !validStatTargets[sb.Target] {
+			if !validStatTargets(sb.Target) {
 				return fmt.Errorf("item %s: stat_bonuses[%d] unknown target %q", it.Code, j, sb.Target)
 			}
 		}

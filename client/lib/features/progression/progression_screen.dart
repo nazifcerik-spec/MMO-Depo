@@ -179,6 +179,14 @@ String bonusText(AppLocalizations l, BonusEffect b) {
           'defense' => l.defense,
           'crit_pct' => l.crit,
           'hit_pct' => l.hit,
+          'str' => l.statStr,
+          'agi' => l.statAgi,
+          'int' => l.statInt,
+          'vit' => l.statVit,
+          'cha' => l.statCha,
+          'luck' => l.statLuck,
+          'hp_max' => l.hp,
+          'mp_max' => l.mp,
           _ => humanize(b.target),
         };
   final n = b.amount == b.amount.roundToDouble() ? b.amount.round().toString() : b.amount.toString();

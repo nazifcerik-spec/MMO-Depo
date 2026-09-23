@@ -1527,4 +1527,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errQuestIncomplete => 'Hedefler henüz tamamlanmadı.';
+
+  @override
+  String get skills => 'Yetenekler';
+
+  @override
+  String get skillActive => 'Aktif';
+
+  @override
+  String get skillPassive => 'Pasif';
+
+  @override
+  String skillStrike(int power) {
+    return '%$power hasar';
+  }
+
+  @override
+  String skillHeal(int power) {
+    return 'HP yarının altındayken %$power iyileştirir';
+  }
+
+  @override
+  String skillMp(int mp) {
+    return '$mp MP';
+  }
+
+  @override
+  String skillCooldown(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: '$turns turda bir', one: 'her tur');
+    return '$_temp0';
+  }
 }

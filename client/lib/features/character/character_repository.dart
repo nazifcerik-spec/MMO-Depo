@@ -1,5 +1,43 @@
 import '../../core/api_client.dart';
+import '../progression/progression_repository.dart';
 import 'models.dart';
+
+/// One class skill (DD-222): actives auto-cast in combat, passives are stat
+/// modifiers; both unlock by level.
+class ClassSkill {
+  const ClassSkill({
+    required this.code,
+    required this.active,
+    required this.unlockLevel,
+    this.effect = '',
+    this.power = 0,
+    this.mpCost = 0,
+    this.cooldownTurns = 0,
+    this.modifiers = const [],
+  });
+
+  factory ClassSkill.fromJson(Map<String, dynamic> j) => ClassSkill(
+    code: j['code'] as String,
+    active: j['kind'] == 'active',
+    unlockLevel: (j['unlock_level'] as num?)?.toInt() ?? 1,
+    effect: j['effect'] as String? ?? '',
+    power: (j['power'] as num?)?.toInt() ?? 0,
+    mpCost: (j['mp_cost'] as num?)?.toInt() ?? 0,
+    cooldownTurns: (j['cooldown_turns'] as num?)?.toInt() ?? 0,
+    modifiers: [
+      for (final m in (j['modifiers'] as List? ?? const []).cast<Map<String, dynamic>>()) BonusEffect.fromJson(m),
+    ],
+  );
+
+  final String code;
+  final bool active;
+  final int unlockLevel;
+  final String effect; // strike | heal
+  final int power;
+  final int mpCost;
+  final int cooldownTurns;
+  final List<BonusEffect> modifiers;
+}
 
 /// Character endpoints. Stateless; screens own their loading state.
 class CharacterRepository {
@@ -20,6 +58,16 @@ class CharacterRepository {
   }
 
   Future<CharacterSheet> sheet(String id) async => CharacterSheet.fromJson(await api.get('/v1/character/$id/sheet'));
+
+  static final _skills = <String, List<ClassSkill>>{};
+
+  /// Class skill catalog (content; cached for the app session).
+  Future<List<ClassSkill>> classSkills(String classCode) async => _skills[classCode] ??= [
+    for (final s
+        in ((await api.get('/v1/classes/$classCode/skills'))['skills'] as List? ?? const [])
+            .cast<Map<String, dynamic>>())
+      ClassSkill.fromJson(s),
+  ];
 
   Future<int> goldCopper(String id) async {
     final w = await api.get('/v1/character/$id/wallet');

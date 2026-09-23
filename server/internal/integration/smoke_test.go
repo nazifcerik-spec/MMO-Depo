@@ -20,6 +20,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/stretchr/testify/require"
 
+	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/crafting"
@@ -67,6 +68,10 @@ func TestContentPackAndCatalogs(t *testing.T) {
 	require.NotEmpty(t, regions.StartingCode())
 	_, err = crafting.LoadCatalog(ctx, p)
 	require.NoError(t, err)
+
+	skills := classskill.NewService(p)
+	require.NoError(t, skills.Reload(ctx))
+	require.NotEmpty(t, skills.Catalog().Actives("warrior", 1), "every class starts with an active")
 }
 
 // A system→system transfer goes through the real ledger path; the same

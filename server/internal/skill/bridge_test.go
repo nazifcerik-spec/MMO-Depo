@@ -27,7 +27,7 @@ func TestCharacterAdapter_AddsModifierSources(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, 23, plain.Derived.Attack) // STR×2 + gear 3
 
-	a.WithModifierSource(func(context.Context, uuid.UUID) ([]skill.Modifier, error) {
+	a.WithModifierSource(func(context.Context, uuid.UUID, character.Sheet) ([]skill.Modifier, error) {
 		return []skill.Modifier{
 			{Kind: skill.KindFlat, Target: skill.TargetAttack, Amount: 2},
 			{Kind: skill.KindFlat, Target: "gather_yield_mining", Amount: 1}, // not a sheet stat: ignored
@@ -38,7 +38,7 @@ func TestCharacterAdapter_AddsModifierSources(t *testing.T) {
 	require.Equal(t, 25, got.Derived.Attack)
 	require.Equal(t, plain.Primary, got.Primary)
 
-	a.WithModifierSource(func(context.Context, uuid.UUID) ([]skill.Modifier, error) {
+	a.WithModifierSource(func(context.Context, uuid.UUID, character.Sheet) ([]skill.Modifier, error) {
 		return nil, errors.New("db down")
 	})
 	_, err = a.ComputeSheet(context.Background(), uuid.New(), base)

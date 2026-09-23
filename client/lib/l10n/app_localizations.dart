@@ -2821,6 +2821,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Objectives aren\'t complete yet.'**
   String get errQuestIncomplete;
+
+  /// No description provided for @skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get skills;
+
+  /// No description provided for @skillActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get skillActive;
+
+  /// No description provided for @skillPassive.
+  ///
+  /// In en, this message translates to:
+  /// **'Passive'**
+  String get skillPassive;
+
+  /// No description provided for @skillStrike.
+  ///
+  /// In en, this message translates to:
+  /// **'{power}% damage'**
+  String skillStrike(int power);
+
+  /// No description provided for @skillHeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Heals {power}% HP when below half'**
+  String skillHeal(int power);
+
+  /// No description provided for @skillMp.
+  ///
+  /// In en, this message translates to:
+  /// **'{mp} MP'**
+  String skillMp(int mp);
+
+  /// No description provided for @skillCooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'{turns, plural, =1{every turn} other{every {turns} turns}}'**
+  String skillCooldown(int turns);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

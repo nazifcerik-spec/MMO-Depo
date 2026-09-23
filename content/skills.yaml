@@ -1,0 +1,183 @@
+# Class skills v1 (Sprint 42, DD-222). docs/skill-engine/*, docs/class/*.
+#
+#   kind           active (savaşta otomatik) | passive (sheet modifier)
+#   unlock_level   karakter bu seviyede otomatik açar (öğrenme/respec yok v1)
+#   sort_order     aktifler: kullanım önceliği (küçük önce)
+#   effect         strike: hasar × power/100 (normal isabet/kritik zarı)
+#                  heal:   HP max'ın power%'i kadar iyileştirme; yalnız HP <= %50
+#   mp_cost        her karşılaşma MP dolu başlar (MP = 50 + INT×5)
+#   cooldown_turns tekrar kullanılabilmesi için geçmesi gereken tur
+#   modifiers      pasifler: DD-107 stack (flat | mult_add | mult_prod), hedefler
+#                  str/agi/int/vit/cha/luck, attack/defense/crit_pct/hit_pct,
+#                  hp_max/mp_max/energy_max/stamina_max
+
+skills:
+  # --- Warrior ---------------------------------------------------------------
+  - code: warrior_cleave
+    display_name_key: skill.warrior_cleave
+    class: warrior
+    unlock_level: 1
+    kind: active
+    sort_order: 20
+    effect: strike
+    power: 160
+    mp_cost: 10
+    cooldown_turns: 3
+  - code: warrior_second_wind
+    display_name_key: skill.warrior_second_wind
+    class: warrior
+    unlock_level: 6
+    kind: active
+    sort_order: 10
+    effect: heal
+    power: 25
+    mp_cost: 25
+    cooldown_turns: 8
+  - code: warrior_iron_skin
+    display_name_key: skill.warrior_iron_skin
+    class: warrior
+    unlock_level: 3
+    kind: passive
+    modifiers: [{ kind: mult_add, target: defense, amount: 0.10 }]
+  - code: warrior_vigor
+    display_name_key: skill.warrior_vigor
+    class: warrior
+    unlock_level: 10
+    kind: passive
+    modifiers: [{ kind: flat, target: vit, amount: 3 }]
+
+  # --- Mage ------------------------------------------------------------------
+  - code: mage_fire_bolt
+    display_name_key: skill.mage_fire_bolt
+    class: mage
+    unlock_level: 1
+    kind: active
+    sort_order: 20
+    effect: strike
+    power: 220
+    mp_cost: 15
+    cooldown_turns: 2
+  - code: mage_arcane_blast
+    display_name_key: skill.mage_arcane_blast
+    class: mage
+    unlock_level: 6
+    kind: active
+    sort_order: 10
+    effect: strike
+    power: 350
+    mp_cost: 35
+    cooldown_turns: 5
+  - code: mage_arcane_mind
+    display_name_key: skill.mage_arcane_mind
+    class: mage
+    unlock_level: 3
+    kind: passive
+    modifiers: [{ kind: mult_add, target: mp_max, amount: 0.20 }]
+  - code: mage_focus
+    display_name_key: skill.mage_focus
+    class: mage
+    unlock_level: 10
+    kind: passive
+    modifiers: [{ kind: flat, target: crit_pct, amount: 5 }]
+
+  # --- Hunter ----------------------------------------------------------------
+  - code: hunter_aimed_shot
+    display_name_key: skill.hunter_aimed_shot
+    class: hunter
+    unlock_level: 1
+    kind: active
+    sort_order: 20
+    effect: strike
+    power: 180
+    mp_cost: 10
+    cooldown_turns: 3
+  - code: hunter_rapid_fire
+    display_name_key: skill.hunter_rapid_fire
+    class: hunter
+    unlock_level: 6
+    kind: active
+    sort_order: 10
+    effect: strike
+    power: 250
+    mp_cost: 20
+    cooldown_turns: 4
+  - code: hunter_keen_eye
+    display_name_key: skill.hunter_keen_eye
+    class: hunter
+    unlock_level: 3
+    kind: passive
+    modifiers: [{ kind: flat, target: hit_pct, amount: 5 }]
+  - code: hunter_survivalist
+    display_name_key: skill.hunter_survivalist
+    class: hunter
+    unlock_level: 10
+    kind: passive
+    modifiers: [{ kind: mult_add, target: hp_max, amount: 0.10 }]
+
+  # --- Priest ----------------------------------------------------------------
+  - code: priest_smite
+    display_name_key: skill.priest_smite
+    class: priest
+    unlock_level: 1
+    kind: active
+    sort_order: 20
+    effect: strike
+    power: 170
+    mp_cost: 10
+    cooldown_turns: 2
+  - code: priest_renew
+    display_name_key: skill.priest_renew
+    class: priest
+    unlock_level: 3
+    kind: active
+    sort_order: 10
+    effect: heal
+    power: 35
+    mp_cost: 20
+    cooldown_turns: 4
+  - code: priest_devotion
+    display_name_key: skill.priest_devotion
+    class: priest
+    unlock_level: 6
+    kind: passive
+    modifiers: [{ kind: flat, target: vit, amount: 2 }, { kind: flat, target: int, amount: 2 }]
+  - code: priest_blessed_ward
+    display_name_key: skill.priest_blessed_ward
+    class: priest
+    unlock_level: 10
+    kind: passive
+    modifiers: [{ kind: mult_add, target: defense, amount: 0.15 }]
+
+  # --- Rogue -----------------------------------------------------------------
+  - code: rogue_backstab
+    display_name_key: skill.rogue_backstab
+    class: rogue
+    unlock_level: 1
+    kind: active
+    sort_order: 20
+    effect: strike
+    power: 200
+    mp_cost: 12
+    cooldown_turns: 3
+  - code: rogue_eviscerate
+    display_name_key: skill.rogue_eviscerate
+    class: rogue
+    unlock_level: 6
+    kind: active
+    sort_order: 10
+    effect: strike
+    power: 300
+    mp_cost: 25
+    cooldown_turns: 5
+  - code: rogue_precision
+    display_name_key: skill.rogue_precision
+    class: rogue
+    unlock_level: 3
+    kind: passive
+    modifiers: [{ kind: flat, target: crit_pct, amount: 5 }]
+  - code: rogue_lethality
+    display_name_key: skill.rogue_lethality
+    class: rogue
+    unlock_level: 10
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.10 }]

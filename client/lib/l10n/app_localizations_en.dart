@@ -1528,4 +1528,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+
+  @override
+  String get skills => 'Skills';
+
+  @override
+  String get skillActive => 'Active';
+
+  @override
+  String get skillPassive => 'Passive';
+
+  @override
+  String skillStrike(int power) {
+    return '$power% damage';
+  }
+
+  @override
+  String skillHeal(int power) {
+    return 'Heals $power% HP when below half';
+  }
+
+  @override
+  String skillMp(int mp) {
+    return '$mp MP';
+  }
+
+  @override
+  String skillCooldown(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    return '$_temp0';
+  }
 }
