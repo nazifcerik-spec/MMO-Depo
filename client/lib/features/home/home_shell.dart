@@ -1,0 +1,165 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+import '../../app/theme.dart';
+import '../../core/live_events.dart';
+import '../../l10n/app_localizations.dart';
+import '../../shared/widgets.dart';
+import '../activity/activity_repository.dart';
+import '../activity/activity_view.dart';
+import '../adventure/adventure_repository.dart';
+import '../adventure/adventure_view.dart';
+import '../auth/auth_controller.dart';
+import '../character/character_repository.dart';
+import '../character/character_sheet_view.dart';
+import '../character/models.dart';
+import '../inventory/inventory_repository.dart';
+import '../inventory/inventory_view.dart';
+import '../social/social_repository.dart';
+import '../social/social_screen.dart';
+import '../workshop/workshop_repository.dart';
+import '../workshop/workshop_view.dart';
+
+/// In-game shell for one character: bottom navigation, the live event
+/// socket (foreground only), and push toasts. Tabs are built on first visit
+/// and kept alive afterwards so switching tabs never refetches.
+class HomeShell extends StatefulWidget {
+  const HomeShell({super.key, required this.auth, required this.characters, required this.initial});
+
+  final AuthController auth;
+  final CharacterRepository characters;
+  final CharacterSheet initial;
+
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  final _dataVersion = ValueNotifier(0);
+  final _visited = <int>{0};
+  int _tab = 0;
+
+  LiveEvents get _live => widget.auth.live;
+  late final AppLifecycleListener _lifecycle;
+  StreamSubscription<LiveEvent>? _sub;
+
+  @override
+  void initState() {
+    super.initState();
+    _sub = _live.events.listen(_onEvent);
+    _live.start();
+    _lifecycle = AppLifecycleListener(
+      onResume: _live.start,
+      onPause: _live.stop,
+      onHide: _live.stop,
+      onShow: _live.start,
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    _sub?.cancel();
+    _live.stop();
+    _dataVersion.dispose();
+    super.dispose();
+  }
+
+  void _onEvent(LiveEvent e) {
+    final l = AppLocalizations.of(context);
+    final (message, refresh) = switch (e.kind) {
+      'hunt.reveal' || 'dungeon.reveal' => (null, true),
+      'achievement.unlocked' => (l.evAchievement, true),
+      'mastery.tier_up' => (l.evMasteryTier, true),
+      'market.sold' => (l.evMarketSold, true),
+      'mail.received' => (l.evMailReceived, false),
+      'party.invite' => (l.evPartyInvite, false),
+      'guild.invite' => (l.evGuildInvite, false),
+      'system.dev_broadcast' => (e.payload['message'] as String?, false),
+      _ => (null, false),
+    };
+    if (refresh) _dataVersion.value++;
+    if (message != null && mounted) {
+      toast(context, Text(message));
+    }
+  }
+
+  Widget _page(int i) => switch (i) {
+    0 => CharacterSheetView(repo: widget.characters, initial: widget.initial, dataVersion: _dataVersion),
+    3 => AdventureView(
+      repo: AdventureRepository(widget.auth.api, widget.initial.id),
+      dataVersion: _dataVersion,
+      characterLevel: widget.initial.level,
+    ),
+    4 => WorkshopView(repo: WorkshopRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
+    2 => InventoryView(repo: InventoryRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
+    _ => ActivityView(
+      repo: ActivityRepository(widget.auth.api),
+      characterId: widget.initial.id,
+      dataVersion: _dataVersion,
+    ),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = widget.initial;
+    final tabs = [
+      (Icons.person_outline, Icons.person, l.navCharacter),
+      (Icons.hourglass_empty, Icons.hourglass_bottom, l.navActivity),
+      (Icons.backpack_outlined, Icons.backpack, l.navBag),
+      (Icons.explore_outlined, Icons.explore, l.navAdventure),
+      (Icons.handyman_outlined, Icons.handyman, l.navWorkshop),
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: l.switchCharacter,
+          icon: const Icon(Icons.people_alt_outlined),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(s.name),
+
+        actions: [
+          IconButton(
+            tooltip: l.social,
+            icon: const Icon(Icons.forum_outlined),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) =>
+                    SocialScreen(repo: SocialRepository(widget.auth.api, s.id), live: _live, dataVersion: _dataVersion),
+              ),
+            ),
+          ),
+          IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
+        ],
+      ),
+      body: SafeArea(
+        child: PageFrame(
+          child: IndexedStack(
+            index: _tab,
+            children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
+          ),
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _tab,
+        backgroundColor: Palette.bgSurface,
+        indicatorColor: Palette.accent.withValues(alpha: 0.18),
+        onDestinationSelected: (i) => setState(() {
+          _tab = i;
+          _visited.add(i);
+        }),
+        destinations: [
+          for (final (icon, selected, label) in tabs)
+            NavigationDestination(
+              icon: Icon(icon),
+              selectedIcon: Icon(selected, color: Palette.accent),
+              label: label,
+            ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,42 @@
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Go
+server/bin/
+server/vendor/
+*.exe
+*.test
+*.out
+coverage.txt
+coverage.html
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+deploy/.data/
+
+# Logs
+*.log
+
+# Client (Flutter — future)
+client/.dart_tool/
+client/build/
+client/.flutter-plugins*
+client/ios/Pods/
+client/android/.gradle/
+
+# Local scratchpad
+.scratchpad/
+tmp/
+
+# Local Claude Code tooling (machine-specific paths, worktrees)
+.claude/

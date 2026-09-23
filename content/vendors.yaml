@@ -1,0 +1,27 @@
+# Otter — Vendor Template Catalog (Sprint 12)
+#
+# Alan sözleşmesi:
+#   code               PK, snake_case
+#   display_name_key   i18n key
+#   vendor_type        general | weapon | armor | alchemy | craft_supply
+#   buy_multiplier     vendor→player fiyat çarpanı (default 1.000)
+#   sell_multiplier    player→vendor fiyat çarpanı (DD-139 default 0.250)
+#   sells              satılan template listesi. Boş [] => sadece alıcı.
+#     - template_code:            item_template.code (var olması zorunlu)
+#       price_override_copper:    opsiyonel (default: base × buy_mult)
+
+vendors:
+  - code: general_ironhold
+    display_name_key: vendor.general_ironhold
+    vendor_type: general
+    buy_multiplier: 1.000
+    sell_multiplier: 0.250
+    sells:
+      - { template_code: potion_hp_small }
+      - { template_code: potion_mp_small }
+      - { template_code: sword_iron }
+      - { template_code: bow_yew }
+      - { template_code: staff_apprentice }
+      - { template_code: chest_leather }
+      - { template_code: helm_iron }
+      - { template_code: boots_iron }

@@ -1,0 +1,34 @@
+# Per-package coverage floor (scripts/coverage_gate.sh, DD-216).
+# Ratchet: ~2 points under the last measured value. Raise when coverage
+# improves; lowering needs a DD. Faz 01 exit target for core domain is 80%
+# (docs/testing/README.md) — the Postgres-backed paths get there through the
+# integration suite (internal/integration, run in CI against a real DB).
+#
+# package                     min%
+internal/activity             55
+internal/admin                6
+internal/combat               51
+internal/contentpack          7
+internal/crafting             18
+internal/domain/auth          56
+internal/domain/character     33
+internal/dungeon              17
+internal/economy              17
+internal/guild                1
+internal/http/apierr          85
+internal/http/middleware      82
+internal/hunt                 14
+internal/inventory            21
+internal/item                 27
+internal/market               3
+internal/notification         21
+internal/observability        59
+internal/progression          10
+internal/ratelimit            42
+internal/skill                80
+internal/social               0
+internal/vendor               6
+internal/worker               35
+internal/world                10
+internal/worldevent           9
+internal/wsgateway            37

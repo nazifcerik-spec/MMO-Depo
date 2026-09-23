@@ -1,0 +1,11 @@
+# Dev scrape config (Sprint 27). /metrics listens on private ports only.
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: otter-api
+    static_configs:
+      - targets: ["api:9090"]
+  - job_name: otter-worker
+    static_configs:
+      - targets: ["worker:9091"]

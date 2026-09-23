@@ -1,0 +1,1930 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otter — Dev Console</title>
+<style>
+  :root {
+    --ground:      #0F1013;
+    --surface:     #16181E;
+    --surface-2:   #1E2129;
+    --line:        #2A2E3A;
+    --line-strong: #3A3F4E;
+    --ink:         #ECEAE0;
+    --ink-quiet:   #A8ACB8;
+    --ink-mute:    #6C7080;
+    --gold:        #E4A756;
+    --forest:      #5FB973;
+    --cerulean:    #5DA9E9;
+    --ember:       #E68B3A;
+    --crimson:     #E85B62;
+    --font-sans:   'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono:   'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --font-serif:  'Fraunces', ui-serif, Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0;
+    padding: 32px 24px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  header h1 .accent { color: var(--gold); font-style: italic; }
+  header .server-status {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-mute);
+    display: flex; gap: 12px; align-items: center;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-mute); }
+  .dot.ok { background: var(--forest); box-shadow: 0 0 0 3px rgba(95,185,115,.15); }
+  .dot.fail { background: var(--crimson); }
+
+  section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  section h2 {
+    margin: 0 0 6px;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+  }
+  section .step {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  section .hint {
+    color: var(--ink-quiet);
+    font-size: 13px;
+    margin: 0 0 16px;
+  }
+
+  .row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .row + .row { margin-top: 10px; }
+
+  input, select {
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    outline: none;
+    min-width: 140px;
+  }
+  input:focus, select:focus { border-color: var(--gold); }
+
+  button {
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.12s ease;
+  }
+  button:hover { border-color: var(--gold); }
+  button.primary { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
+  button.primary:hover { filter: brightness(1.1); }
+  button.danger { border-color: var(--crimson); color: var(--crimson); }
+  button.danger:hover { background: rgba(232,91,98,.1); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .status-line {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-quiet);
+    padding: 8px 12px;
+    background: var(--surface-2);
+    border-radius: 6px;
+    border-left: 3px solid var(--gold);
+    margin-top: 12px;
+    word-break: break-all;
+  }
+  .status-line.err { border-left-color: var(--crimson); color: var(--crimson); }
+  .status-line.ok  { border-left-color: var(--forest); color: var(--ink); }
+
+  .char-card {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .char-card.active { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(228,167,86,.3); }
+  .char-card .name { font-family: var(--font-serif); font-weight: 500; font-size: 15px; }
+  .char-card .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+
+  .wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .wallet-cell {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .wallet-cell .label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .wallet-cell .value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--gold);
+  }
+  .wallet-cell .sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  #log {
+    background: #0a0b0f;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    max-height: 320px;
+    overflow-y: auto;
+    color: var(--ink-quiet);
+  }
+  #log .entry { padding: 4px 0; border-bottom: 1px dashed #1a1c25; }
+  #log .entry:last-child { border-bottom: 0; }
+  #log .ts { color: var(--ink-mute); margin-right: 8px; }
+  #log .meth { color: var(--gold); }
+  #log .code-2 { color: var(--forest); }
+  #log .code-4 { color: var(--ember); }
+  #log .code-5 { color: var(--crimson); }
+  #log .path { color: var(--ink); }
+
+  .token-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--ink-quiet);
+  }
+  .token-badge.active { border-color: var(--forest); color: var(--forest); }
+
+  .flex-fill { flex: 1; }
+  h3.section-sub {
+    margin: 20px 0 10px;
+    font-size: 13px;
+    color: var(--ink-quiet);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 640px) {
+    .wallet-grid { grid-template-columns: 1fr 1fr; }
+    header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Otter <span class="accent">Dev Console</span></h1>
+    <div class="server-status">
+      <span id="server-dot" class="dot"></span>
+      <span id="server-text">checking…</span>
+      <span id="token-badge" class="token-badge">no session</span>
+    </div>
+  </header>
+
+  <!-- 1. Auth -->
+  <section>
+    <div class="step">1 · Auth</div>
+    <h2>Register veya Login</h2>
+    <p class="hint">Yeni bir hesap oluştur (register) veya var olan hesabı ile giriş yap. Token localStorage'da saklanır.</p>
+    <div class="row">
+      <input id="email" value="grim@ex.com" placeholder="email">
+      <input id="username" value="grim" placeholder="username (register için)">
+      <input id="password" type="password" value="hunter22-strong" placeholder="password">
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <button class="primary" onclick="doRegister()">Register</button>
+      <button class="primary" onclick="doLogin()">Login</button>
+      <button class="danger" onclick="doLogout()">Logout</button>
+      <span class="flex-fill"></span>
+      <button onclick="clearAll()">🗑 Reset local storage</button>
+    </div>
+    <div id="auth-status" class="status-line">Anonymous</div>
+  </section>
+
+  <!-- 2. Character -->
+  <section>
+    <div class="step">2 · Character</div>
+    <h2>Karakter Yarat / Seç</h2>
+    <p class="hint">Slot cap: 2. Silinen karakter 48 saat grace'te (isim tekrar kullanılamaz).</p>
+    <div class="row">
+      <input id="char-name" value="Grimlock" placeholder="isim (3-16 chars)">
+      <select id="char-race">
+        <option value="human">human</option>
+        <option value="elf">elf</option>
+        <option value="dwarf">dwarf</option>
+        <option value="orc">orc</option>
+      </select>
+      <select id="char-class">
+        <option value="warrior">warrior</option>
+        <option value="mage">mage</option>
+        <option value="hunter">hunter</option>
+        <option value="priest">priest</option>
+        <option value="rogue">rogue</option>
+      </select>
+      <button class="primary" onclick="createChar()">+ Create</button>
+      <button onclick="refreshChars()">↻ Reload</button>
+    </div>
+    <div id="char-list"></div>
+    <div id="char-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3. Wallet + Mint -->
+  <section>
+    <div class="step">3 · Economy</div>
+    <h2>Wallet + Mint</h2>
+    <p class="hint">Aktif karakterin cüzdanı. Mint dev-only (`POST /v1/dev/mint`) — ledger'a doğrudan yazılır.</p>
+    <div id="wallet-panel"><em style="color:var(--ink-mute);">Önce yukarıdan karakter seç.</em></div>
+    <div class="row" style="margin-top:14px;">
+      <input id="mint-amount" type="number" value="500000" min="1" step="100">
+      <select id="mint-currency">
+        <option value="gold">gold</option>
+      </select>
+      <button class="primary" onclick="doMint()">Mint (dev)</button>
+      <button onclick="refreshWallet()">↻ Reload wallet</button>
+      <span class="flex-fill"></span>
+      <button onclick="doMint(true)">Mint same key (replay test)</button>
+    </div>
+    <div id="wallet-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3b. Activity -->
+  <section>
+    <div class="step">3b · Activity (AFK)</div>
+    <h2>Contract Start → Reveal</h2>
+    <p class="hint">Karakteri AFK aktiviteye sok. Reveal analitik hesap (Poisson/Binomial) — deterministic seed. Slot cap 1.</p>
+    <div id="activity-active"><em style="color:var(--ink-mute);">Aktif contract yok.</em></div>
+    <div class="row" style="margin-top:12px;">
+      <select id="act-kind">
+        <option value="mining">mining</option>
+        <option value="fishing">fishing</option>
+        <option value="woodcutting">woodcutting</option>
+        <option value="herbalism">herbalism</option>
+        <option value="hunting">hunting</option>
+      </select>
+      <select id="act-duration">
+        <option value="60">1 dk</option>
+        <option value="300">5 dk</option>
+        <option value="1800">30 dk</option>
+        <option value="3600" selected>1 saat</option>
+        <option value="14400">4 saat</option>
+        <option value="28800">8 saat</option>
+        <option value="43200">12 saat</option>
+      </select>
+      <button class="primary" onclick="startActivity()">Start</button>
+      <button onclick="refreshActivity()">↻ Reload</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="primary" onclick="revealActivity()">Reveal (partial ok)</button>
+      <button class="danger" onclick="stopActivity()">Stop (forfeit)</button>
+    </div>
+    <div id="activity-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3c. Inventory (grid + weight + move/split/delete) -->
+  <section>
+    <div class="step">3c · Inventory</div>
+    <h2>Bag (6×10 slot)</h2>
+    <p class="hint">Activity reveal → otomatik slot atanır (stackable → merge). Slot'a tıkla → detay + move/split/delete.</p>
+    <div class="row">
+      <button onclick="refreshInventory()">↻ Reload</button>
+      <span id="inv-summary" style="color:var(--ink-mute); font-family:var(--font-mono); font-size:12px;"></span>
+    </div>
+    <div id="inv-grid" style="margin-top:12px;"></div>
+    <div id="inv-selected" style="margin-top:12px;"></div>
+    <div id="inv-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3d-eq. Equipment -->
+  <section>
+    <div class="step">3d · Equipment (Sprint 11)</div>
+    <h2>Equip / Unequip — 7 slot</h2>
+    <p class="hint">Bag'de bir item seç → Equip. Class restriction + min level kontrol edilir. Sheet açıp modifier stack sonucunu gör.</p>
+    <div class="row">
+      <button onclick="refreshEquipment()">↻ Reload equipment</button>
+      <button onclick="equipSelected()" class="primary">Equip selected item</button>
+      <span class="flex-fill"></span>
+      <span style="color:var(--ink-mute); font-family:var(--font-mono); font-size:11px;">Bag'den item seç, sonra Equip.</span>
+    </div>
+    <div id="equipment-grid" style="margin-top:12px;"></div>
+    <div id="equipment-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3e. Vendor -->
+  <section>
+    <div class="step">3e · Vendor (general_ironhold)</div>
+    <h2>NPC Merchant — Buy / Sell / Buyback</h2>
+    <p class="hint">Sat: envanterden item seç → "Sell selected". Al: aşağıdaki listede "Buy" tıkla. 2 saat içinde buyback ile geri alabilirsin.</p>
+    <div class="row">
+      <button onclick="refreshVendor()">↻ Reload vendor</button>
+      <button onclick="sellSelected()" class="primary">Sell selected item</button>
+    </div>
+    <div id="vendor-info" style="margin-top:12px;"></div>
+    <div id="vendor-status" class="status-line" style="display:none;"></div>
+    <h3 style="margin-top:20px; font-size:14px;">Aktif Buybacks (2h TTL)</h3>
+    <div class="row">
+      <button onclick="refreshBuybacks()">↻ Reload buybacks</button>
+    </div>
+    <div id="buybacks-list" style="margin-top:8px;"></div>
+  </section>
+
+  <!-- 3d. Items (raw list, debug) -->
+  <section>
+    <div class="step">3d · Items (raw list)</div>
+    <h2>Tüm Item Instance (slot dahil değil)</h2>
+    <p class="hint">Debug view — detached (slot=null, overflow) itemleri de gösterir.</p>
+    <div class="row">
+      <button onclick="refreshItems()">↻ Reload</button>
+      <span id="items-count" style="color:var(--ink-mute); font-family:var(--font-mono); font-size:12px;"></span>
+    </div>
+    <div id="items-list" style="margin-top:12px;"></div>
+  </section>
+
+  <!-- 4. Sheet -->
+  <section>
+    <div class="step">4 · Character Sheet</div>
+    <h2>Stats + Resources</h2>
+    <p class="hint">Placeholder base stats (class'a göre). Full modifier stack skill-engine sprint'te.</p>
+    <div id="sheet-panel"><em style="color:var(--ink-mute);">Karakter seç ve refresh sheet.</em></div>
+    <div class="row" style="margin-top:12px;">
+      <button onclick="refreshSheet()">↻ Reload sheet</button>
+    </div>
+  </section>
+
+  <!-- 3h. Crafting + Professions (Sprint 17) -->
+  <section>
+    <div class="step">3h · Crafting + Professions (Sprint 17)</div>
+    <h2>Meslekler + Reçeteler</h2>
+    <p class="hint">Bir meslek öğren → reçete seç → craft. Materyaller envanterden düşülür, gold ledger'a yazılır, çıktı bag'e mint edilir, meslek XP'si eklenir.</p>
+    <div id="prof-panel"><em style="color:var(--ink-mute);">Karakter seç.</em></div>
+    <div class="row" style="margin-top:12px;">
+      <select id="prof-learn"><option value="">— pick profession to learn —</option></select>
+      <button class="primary" onclick="learnProf()">Learn</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <select id="recipe-code"><option value="">— pick recipe —</option></select>
+      <button class="primary" onclick="doCraft()">Craft</button>
+      <button onclick="refreshCraftingCatalog()">↻ Reload catalog</button>
+    </div>
+    <div id="craft-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3e. World / Travel (Sprint 16) -->
+  <section>
+    <div class="step">3e · World / Travel (Sprint 16)</div>
+    <h2>Region + Travel</h2>
+    <p class="hint">Karakterin bulunduğu bölge + komşular. Bir komşuya tıklayıp travel başlat; sayaç dolunca Complete edilir (character.location güncellenir).</p>
+    <div id="location-panel"><em style="color:var(--ink-mute);">Karakter seç.</em></div>
+    <div id="travel-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3f. Hunt (Sprint 14) — AFK combat adventure -->
+  <section>
+    <div class="step">3f · Hunt (Sprint 14 — AFK combat)</div>
+    <h2>Hunting Adventure</h2>
+    <p class="hint">Karakter seçili mob'a karşı N encounter'lık AFK avlanmaya çıkar. Reveal'da encounter'lar deterministic çözülür (kombat pipeline), gold + xp + item drop grant edilir. Ölürsen zincir orada biter.</p>
+    <div id="hunt-active" style="margin-bottom:12px;"><em style="color:var(--ink-mute);">Aktif hunt yok.</em></div>
+    <div class="row">
+      <select id="hunt-mob"><option value="">— pick mob —</option></select>
+      <select id="hunt-duration">
+        <option value="600">10 dk</option>
+        <option value="1800" selected>30 dk</option>
+        <option value="3600">1 saat</option>
+        <option value="14400">4 saat</option>
+        <option value="28800">8 saat</option>
+      </select>
+      <select id="hunt-cadence">
+        <option value="60">1 encounter / 1 dk</option>
+        <option value="120" selected>1 encounter / 2 dk</option>
+        <option value="300">1 encounter / 5 dk</option>
+      </select>
+      <button class="primary" onclick="startHunt()">Start hunt</button>
+      <button onclick="refreshHunt()">↻ Reload</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="primary" onclick="revealHunt()">Reveal (grant rewards)</button>
+      <button class="danger" onclick="stopHunt()">Stop (forfeit)</button>
+    </div>
+    <div id="hunt-result" style="margin-top:12px;"></div>
+    <div id="hunt-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 3g. Dungeon (Sprint 15) — AFK run + boss + weekly lockout -->
+  <section>
+    <div class="step">3g · Dungeon (Sprint 15 — AFK run + boss)</div>
+    <h2>Dungeon Run — Weekly Lockout</h2>
+    <p class="hint">Dungeon = wave'ler + boss. Duration dolduğunda reveal edilir; başarıyla temizlersen o dungeon için haftalık lockout yazılır (aynı hafta tekrar giremezsin). Ölürsen zincir orada biter, lockout yazılmaz.</p>
+    <div id="dungeon-active" style="margin-bottom:12px;"><em style="color:var(--ink-mute);">Aktif dungeon run yok.</em></div>
+    <div class="row">
+      <select id="dungeon-code"><option value="">— pick dungeon —</option></select>
+      <button class="primary" onclick="startDungeon()">Start run</button>
+      <button onclick="refreshDungeon()">↻ Reload</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="primary" onclick="revealDungeon()">Reveal (grant rewards)</button>
+      <button class="danger" onclick="stopDungeon()">Stop (forfeit)</button>
+    </div>
+    <div id="dungeon-result" style="margin-top:12px;"></div>
+    <div id="dungeon-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 4c. Combat Simulator (Sprint 13) -->
+  <section>
+    <div class="step">4c · Combat (Sprint 13)</div>
+    <h2>Simulate Encounter</h2>
+    <p class="hint">Karakterin gerçek sheet'ini (equipped bonuses dahil) alıp seçilen mob ile deterministic bir encounter koşar. Grant / persist yok — pure pipeline testi.</p>
+    <div class="row">
+      <select id="combat-mob"><option value="">— pick mob —</option></select>
+      <input id="combat-seed" type="number" placeholder="seed (boş = rastgele)" style="width:180px;">
+      <button class="primary" onclick="runCombat()">Simulate</button>
+      <button onclick="runCombat(true)">Replay same seed</button>
+    </div>
+    <div id="combat-summary" style="margin-top:12px;"></div>
+    <div id="combat-log" style="margin-top:12px;"></div>
+    <div id="combat-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 4b. Content Pack (Sprint 12) -->
+  <section>
+    <div class="step">4b · Content Pack (Sprint 12)</div>
+    <h2>YAML Hot Reload</h2>
+    <p class="hint">Sunucudaki <code>./content/*.yaml</code> dosyalarını okur, DB'yi upsert eder, item + vendor cataloglarını yeniler. Restart gerekmez.</p>
+    <div class="row">
+      <button class="primary" onclick="reloadContent()">↻ Reload content pack</button>
+      <span class="flex-fill"></span>
+      <span style="color:var(--ink-mute); font-family:var(--font-mono); font-size:11px;">POST /v1/dev/content/reload</span>
+    </div>
+    <div id="content-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 4e. Party + Guild (Sprint 20) -->
+  <section>
+    <div class="step">4e · Party + Guild (Sprint 20)</div>
+    <h2>Party + Guild</h2>
+    <p class="hint">Party: 5 kişi, 60 sn davet. Guild: kuruluş 100.000c (10g) ledger'dan düşer; davetler 48 saat; dağılma 48 saat sonra worker ile kesinleşir.</p>
+    <div class="row">
+      <input id="soc-target" placeholder="hedef karakter adı">
+      <button onclick="soc('POST','/party',{})">Party kur</button>
+      <button onclick="soc('POST','/party/invite',{target_name:socTarget()})">Party davet</button>
+      <button onclick="socAcceptFirst('party')">Party daveti kabul</button>
+      <button onclick="soc('POST','/party/leave',{})">Party ayrıl</button>
+      <button onclick="soc('GET','/party')">Party göster</button>
+    </div>
+    <div class="row">
+      <input id="guild-name" placeholder="guild adı">
+      <input id="guild-tag" placeholder="tag" style="min-width:70px;width:70px;">
+      <button onclick="soc('POST','/guild',{name:val('guild-name'),tag:val('guild-tag')})">Guild kur</button>
+      <button onclick="soc('POST','/guild/invite',{target_name:socTarget()})">Guild davet</button>
+      <button onclick="socAcceptFirst('guild')">Guild daveti kabul</button>
+      <button onclick="soc('POST','/guild/leave',{})">Guild ayrıl</button>
+      <button onclick="soc('GET','/guild')">Guild göster</button>
+    </div>
+    <pre id="soc-out" style="margin-top:12px; max-height:260px; overflow:auto; background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:8px; font-family:var(--font-mono); font-size:11px;"></pre>
+  </section>
+
+  <!-- 4d. WebSocket (Sprint 18) -->
+  <section>
+    <div class="step">4d · WebSocket Gateway (Sprint 18)</div>
+    <h2>Live Presence + Fanout</h2>
+    <p class="hint">Bağlan → sunucu `system.welcome` yollar. Hunt/Dungeon reveal ettikçe otomatik olarak event akar. Dev broadcast ile hub'ı hemen test edebilirsin.</p>
+    <div class="row">
+      <button class="primary" onclick="wsConnect()">Connect WS</button>
+      <button class="danger" onclick="wsDisconnect()">Disconnect</button>
+      <button onclick="fetchPresence()">↻ Presence</button>
+      <button onclick="devBroadcast()">Dev broadcast (self)</button>
+      <span id="ws-badge" class="token-badge">disconnected</span>
+    </div>
+    <div id="ws-events" style="margin-top:12px; max-height:280px; overflow-y:auto; background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:8px; font-family:var(--font-mono); font-size:11px;"></div>
+    <div id="ws-status" class="status-line" style="display:none;"></div>
+  </section>
+
+  <!-- 5. Log -->
+  <section>
+    <div class="step">5 · Log</div>
+    <h2>HTTP Trace</h2>
+    <p class="hint">Bu console'dan yapılan isteklerin özeti. Sıfırla → console reload.</p>
+    <div id="log"></div>
+    <div class="row" style="margin-top:12px;">
+      <button onclick="clearLog()">🗑 Clear log</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ---------- state ----------
+const S = {
+  token: localStorage.getItem('otter.token') || null,
+  refresh: localStorage.getItem('otter.refresh') || null,
+  accountId: localStorage.getItem('otter.account') || null,
+  sessionId: localStorage.getItem('otter.session') || null,
+  characterId: localStorage.getItem('otter.character') || null,
+  characters: [],
+};
+
+// ---------- utility ----------
+function newIdemKey(prefix) {
+  const rand = Math.random().toString(36).slice(2, 14);
+  return `${prefix || 'k'}-${Date.now().toString(36)}-${rand}`.padEnd(16, 'x').slice(0, 32);
+}
+function fmtGold(copper) {
+  const g = Math.floor(copper / 10000);
+  const s = Math.floor((copper % 10000) / 100);
+  const c = copper % 100;
+  return `${g.toLocaleString('tr-TR')}g ${s}s ${c}c`;
+}
+function saveState() {
+  ['token','refresh','account','session','character'].forEach(k => {
+    const v = S[k === 'account' ? 'accountId' : k === 'session' ? 'sessionId' : k === 'character' ? 'characterId' : k];
+    if (v) localStorage.setItem('otter.' + k, v);
+    else localStorage.removeItem('otter.' + k);
+  });
+  renderAuth();
+}
+function log(method, path, code, body) {
+  const el = document.getElementById('log');
+  const ts = new Date().toISOString().slice(11, 23);
+  const codeClass = code >= 500 ? 'code-5' : code >= 400 ? 'code-4' : 'code-2';
+  const bodyPreview = typeof body === 'string' ? body : JSON.stringify(body);
+  el.insertAdjacentHTML('afterbegin',
+    `<div class="entry">
+       <span class="ts">${ts}</span>
+       <span class="meth">${method}</span>
+       <span class="path">${path}</span>
+       <span class="${codeClass}"> · ${code}</span>
+       <div style="margin-top:2px; color:var(--ink-mute); font-size:11px;">${(bodyPreview || '').slice(0, 200)}</div>
+     </div>`);
+}
+function clearLog() { document.getElementById('log').innerHTML = ''; }
+function setStatus(el, msg, kind) {
+  const node = document.getElementById(el);
+  node.style.display = 'block';
+  node.className = 'status-line' + (kind ? ' ' + kind : '');
+  node.textContent = msg;
+}
+
+async function api(method, path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (S.token && opts.auth !== false) headers['Authorization'] = 'Bearer ' + S.token;
+  if (opts.idem !== false) headers['Idempotency-Key'] = opts.idemKey || newIdemKey('c');
+  if (opts.characterId) headers['X-Character-Id'] = opts.characterId;
+  const res = await fetch(path, {
+    method,
+    headers,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  let bodyText = await res.text();
+  let bodyJson = null;
+  try { bodyJson = JSON.parse(bodyText); } catch {}
+  log(method, path, res.status, bodyText);
+  return { res, body: bodyJson, text: bodyText };
+}
+
+// ---------- server status ----------
+async function checkServer() {
+  try {
+    const { res } = await api('GET', '/live', { auth: false, idem: false });
+    if (res.ok) {
+      document.getElementById('server-dot').classList.add('ok');
+      document.getElementById('server-text').textContent = 'API up';
+    } else throw 0;
+  } catch {
+    document.getElementById('server-dot').classList.add('fail');
+    document.getElementById('server-text').textContent = 'API down';
+  }
+}
+
+// ---------- auth ----------
+async function doRegister() {
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const { res, body } = await api('POST', '/v1/auth/register', {
+    body: { email, username, password },
+  });
+  if (res.ok && body.access_token) {
+    S.token = body.access_token; S.refresh = body.refresh_token;
+    S.accountId = body.account_id; S.sessionId = body.session_id;
+    saveState();
+    setStatus('auth-status', 'Registered + logged in as ' + username, 'ok');
+    await refreshChars();
+  } else {
+    setStatus('auth-status', body?.error?.code + ': ' + (body?.error?.message || 'failed'), 'err');
+  }
+}
+async function doLogin() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const { res, body } = await api('POST', '/v1/auth/login', {
+    body: { email_or_username: email, password },
+  });
+  if (res.ok && body.access_token) {
+    S.token = body.access_token; S.refresh = body.refresh_token;
+    S.accountId = body.account_id; S.sessionId = body.session_id;
+    saveState();
+    setStatus('auth-status', 'Logged in as ' + email, 'ok');
+    await refreshChars();
+  } else {
+    setStatus('auth-status', body?.error?.code + ': ' + (body?.error?.message || 'failed'), 'err');
+  }
+}
+async function doLogout() {
+  if (!S.token) return;
+  await api('POST', '/v1/auth/logout', { idem: false });
+  S.token = S.refresh = S.accountId = S.sessionId = S.characterId = null;
+  S.characters = [];
+  saveState();
+  renderChars();
+  document.getElementById('wallet-panel').innerHTML = '<em style="color:var(--ink-mute);">Logged out.</em>';
+  document.getElementById('sheet-panel').innerHTML = '<em style="color:var(--ink-mute);">Logged out.</em>';
+  setStatus('auth-status', 'Logged out', 'ok');
+}
+function clearAll() {
+  localStorage.clear();
+  location.reload();
+}
+
+// ---------- characters ----------
+async function refreshChars() {
+  if (!S.token) return;
+  const { res, body } = await api('GET', '/v1/character', { idem: false });
+  if (res.ok) {
+    S.characters = body.characters || [];
+    renderChars();
+    if (S.characterId) {
+      await refreshWallet();
+      await refreshSheet();
+    }
+  }
+}
+function renderChars() {
+  const el = document.getElementById('char-list');
+  if (!S.characters.length) {
+    el.innerHTML = '<em style="color:var(--ink-mute); display:block; margin-top:12px;">Karakter yok. Yukarıdan Create.</em>';
+    return;
+  }
+  el.innerHTML = S.characters.map(c => `
+    <div class="char-card ${c.id === S.characterId ? 'active' : ''}">
+      <div>
+        <div class="name">${escape(c.name)} <span style="color:var(--ink-mute); font-weight:normal; font-size:12px;">lvl ${c.level}</span></div>
+        <div class="meta">${c.race_code} · ${c.class_code} · ${c.state} · ${c.id.slice(0,8)}…</div>
+      </div>
+      <div class="row" style="flex-wrap:nowrap;">
+        <button onclick="selectChar('${c.id}')">${c.id === S.characterId ? '✓ selected' : 'select'}</button>
+        ${c.state === 'active' ? `<button class="danger" onclick="requestDelete('${c.id}')">delete</button>` : ''}
+        ${c.state === 'delete_grace' ? `<button onclick="cancelDelete('${c.id}')">cancel del</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+async function createChar() {
+  const name = document.getElementById('char-name').value;
+  const race_code = document.getElementById('char-race').value;
+  const class_code = document.getElementById('char-class').value;
+  const { res, body } = await api('POST', '/v1/character', {
+    body: { name, race_code, class_code },
+  });
+  if (res.status === 201) {
+    S.characterId = body.id; saveState();
+    setStatus('char-status', 'Created: ' + body.name, 'ok');
+    await refreshChars();
+  } else {
+    setStatus('char-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || res.statusText), 'err');
+  }
+}
+function selectChar(id) {
+  S.characterId = id; saveState();
+  renderChars();
+  refreshWallet();
+  refreshSheet();
+  refreshActivity();
+  refreshInventory();
+  refreshItems();
+  refreshEquipment();
+  refreshVendor();
+  refreshBuybacks();
+  refreshHunt();
+  refreshDungeon();
+  refreshLocation();
+  refreshProfessions();
+}
+async function requestDelete(id) {
+  const { res, body } = await api('POST', `/v1/character/${id}/delete-request`);
+  if (res.ok) {
+    setStatus('char-status', 'Delete requested — 48h grace to cancel', 'ok');
+    await refreshChars();
+  } else setStatus('char-status', body?.error?.code || 'failed', 'err');
+}
+async function cancelDelete(id) {
+  const { res, body } = await api('POST', `/v1/character/${id}/delete-cancel`);
+  if (res.ok) {
+    setStatus('char-status', 'Delete cancelled', 'ok');
+    await refreshChars();
+  } else setStatus('char-status', body?.error?.code || 'failed', 'err');
+}
+
+// ---------- wallet + mint ----------
+async function refreshWallet() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/wallet`, { idem: false });
+  const el = document.getElementById('wallet-panel');
+  if (res.ok) {
+    el.innerHTML = `
+      <div class="wallet-grid">
+        <div class="wallet-cell">
+          <div class="label">Gold</div>
+          <div class="value">${fmtGold(body.gold_copper)}</div>
+          <div class="sub">${body.gold_copper.toLocaleString('tr-TR')} copper</div>
+        </div>
+        <div class="wallet-cell">
+          <div class="label">Honor</div>
+          <div class="value">${body.honor || 0}</div>
+          <div class="sub">character-scope</div>
+        </div>
+        <div class="wallet-cell">
+          <div class="label">Gem</div>
+          <div class="value">${body.gem || 0}</div>
+          <div class="sub">account-scope</div>
+        </div>
+      </div>`;
+  } else {
+    el.innerHTML = '<div class="status-line err">' + (body?.error?.code || 'failed') + '</div>';
+  }
+}
+
+let lastMintKey = null;
+async function doMint(replay) {
+  if (!S.characterId) { setStatus('wallet-status', 'Select a character first', 'err'); return; }
+  const amount = parseInt(document.getElementById('mint-amount').value, 10);
+  const currency = document.getElementById('mint-currency').value;
+  const key = replay && lastMintKey ? lastMintKey : newIdemKey('mint');
+  lastMintKey = key;
+  const { res, body } = await api('POST', '/v1/dev/mint', {
+    idemKey: key,
+    body: { character_id: S.characterId, amount, currency },
+  });
+  if (res.ok) {
+    setStatus('wallet-status',
+      `${replay ? '↻ Replayed' : '✓ Minted'} — txn ${body.txn_id?.slice(0,8)}… · entries ${body.entries} · replayed=${body.replayed}`,
+      body.replayed ? 'ok' : 'ok');
+    await refreshWallet();
+  } else {
+    setStatus('wallet-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- sheet ----------
+async function refreshSheet() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/sheet`, { idem: false });
+  const el = document.getElementById('sheet-panel');
+  if (res.ok) {
+    const r = body.resources || {};
+    const d = body.derived || {};
+    const p = body.primary || {};
+    el.innerHTML = `
+      <div class="wallet-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="wallet-cell"><div class="label">HP</div><div class="value">${r.hp_current}<span style="color:var(--ink-mute); font-size:14px;">/${r.hp_max}</span></div></div>
+        <div class="wallet-cell"><div class="label">MP</div><div class="value">${r.mp_current}<span style="color:var(--ink-mute); font-size:14px;">/${r.mp_max}</span></div></div>
+        <div class="wallet-cell"><div class="label">Energy</div><div class="value">${r.energy_current}</div><div class="sub">/ ${r.energy_max}</div></div>
+        <div class="wallet-cell"><div class="label">Stamina</div><div class="value">${r.stamina_current}</div><div class="sub">/ ${r.stamina_max}</div></div>
+      </div>
+      <h3 class="section-sub">Primary Stats</h3>
+      <div class="wallet-grid">
+        <div class="wallet-cell"><div class="label">STR / AGI / INT</div><div class="value" style="font-size:16px;">${p.str} / ${p.agi} / ${p.int}</div></div>
+        <div class="wallet-cell"><div class="label">VIT / CHA / LUCK</div><div class="value" style="font-size:16px;">${p.vit} / ${p.cha} / ${p.luck}</div></div>
+        <div class="wallet-cell"><div class="label">Level · XP</div><div class="value" style="font-size:16px;">${body.level} · ${body.xp}/${body.xp_to_next}</div></div>
+      </div>
+      <h3 class="section-sub">Derived</h3>
+      <div class="wallet-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="wallet-cell"><div class="label">Attack</div><div class="value">${d.attack}</div></div>
+        <div class="wallet-cell"><div class="label">Defense</div><div class="value">${d.defense}</div></div>
+        <div class="wallet-cell"><div class="label">Crit</div><div class="value">${d.crit_pct}%</div></div>
+        <div class="wallet-cell"><div class="label">Hit</div><div class="value">${d.hit_pct}%</div></div>
+      </div>`;
+  } else {
+    el.innerHTML = '<div class="status-line err">' + (body?.error?.code || 'failed') + '</div>';
+  }
+}
+
+function escape(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---------- activity ----------
+let currentContractId = null;
+
+async function refreshActivity() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/activity/active`, { idem: false });
+  const el = document.getElementById('activity-active');
+  if (res.ok && body.contract) {
+    currentContractId = body.contract.id;
+    const c = body.contract;
+    const y = body.current_yield || {};
+    const pct = Math.round((y.completion_ratio || 0) * 100);
+    const remaining = Math.max(0, c.duration_seconds - (y.elapsed_seconds || 0));
+    el.innerHTML = `
+      <div class="wallet-cell" style="padding:14px;">
+        <div class="label">Kind · ${c.kind}</div>
+        <div style="margin-top:4px; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px; color:var(--ink-quiet);">
+          <span>ID ${c.id.slice(0,8)}…</span>
+          <span>elapsed ${y.elapsed_seconds}s / ${c.duration_seconds}s (${pct}%)</span>
+        </div>
+        <div style="height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden; margin-top:8px;">
+          <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--gold), var(--forest));"></div>
+        </div>
+        <div style="margin-top:10px; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; font-family:var(--font-mono); font-size:12px;">
+          <div><span style="color:var(--ink-mute);">gold</span><br><span style="color:var(--gold); font-size:14px;">${(y.gold_copper || 0).toLocaleString('tr-TR')}c</span></div>
+          <div><span style="color:var(--ink-mute);">common</span><br>${y.common_count || 0}</div>
+          <div><span style="color:var(--ink-mute);">rare</span><br><span style="color:var(--cerulean);">${y.rare_count || 0}</span></div>
+          <div><span style="color:var(--ink-mute);">legendary</span><br><span style="color:var(--gold);">${y.legendary_count || 0}</span></div>
+        </div>
+        ${y.highlights && y.highlights.length ? '<div style="margin-top:8px; color:var(--gold); font-size:12px;">'+y.highlights.map(escape).join(' · ')+'</div>' : ''}
+      </div>`;
+  } else {
+    currentContractId = null;
+    el.innerHTML = '<em style="color:var(--ink-mute);">Aktif contract yok. Aşağıdan Start.</em>';
+  }
+}
+
+async function startActivity() {
+  if (!S.characterId) { setStatus('activity-status', 'Select a character first', 'err'); return; }
+  const kind = document.getElementById('act-kind').value;
+  const duration = parseInt(document.getElementById('act-duration').value, 10);
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/activity`, {
+    body: { kind, duration_seconds: duration },
+  });
+  if (res.status === 201) {
+    currentContractId = body.contract.id;
+    const y = body.full_yield_peek;
+    setStatus('activity-status',
+      `Started ${kind} · ${duration}s · full-duration peek: ~${y.gold_copper.toLocaleString('tr-TR')}c gold (${y.common_count} common, ${y.rare_count} rare, ${y.legendary_count} legendary)`,
+      'ok');
+    await refreshActivity();
+  } else {
+    setStatus('activity-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function revealActivity() {
+  if (!currentContractId) { setStatus('activity-status', 'No active contract', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/activity/${currentContractId}/reveal`);
+  if (res.ok) {
+    const y = body.yield;
+    const itemsText = (y.items && y.items.length)
+      ? ` · ${y.items.length} item drop${y.items.length === 1 ? '' : 's'}`
+      : '';
+    setStatus('activity-status',
+      `${body.replayed ? '↻ Replayed' : '✓ Revealed'} — ${y.gold_copper.toLocaleString('tr-TR')}c gold${itemsText} · elapsed ${y.elapsed_seconds}/${y.duration_seconds}s · ledger ${body.ledger_txn_id?.slice(0,8)}…`,
+      'ok');
+    await refreshActivity();
+    await refreshWallet();
+    await refreshInventory();
+    await refreshItems();
+  } else {
+    setStatus('activity-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- inventory ----------
+const BAG_SLOTS = 60;
+const BAG_COLS = 6;
+let selectedItemId = null;
+
+async function refreshInventory() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/inventory`, { idem: false });
+  const grid = document.getElementById('inv-grid');
+  const summary = document.getElementById('inv-summary');
+  if (!res.ok) { grid.innerHTML = '<em style="color:var(--danger);">Failed.</em>'; return; }
+  const items = body.items || [];
+  const bySlot = {};
+  for (const it of items) bySlot[it.slot] = it;
+  const wKg = (body.weight_grams / 1000).toFixed(2);
+  const wCapKg = (body.weight_cap_grams / 1000).toFixed(0);
+  summary.textContent = `${body.slots_used}/${body.slot_cap} slot · ${wKg}/${wCapKg} kg`;
+
+  const cells = [];
+  for (let s = 0; s < BAG_SLOTS; s++) {
+    const it = bySlot[s];
+    if (it) {
+      const color = RARITY_COLOR[it.rarity] || '#9E9E9E';
+      const stack = it.stack_quantity > 1 ? `<span style="position:absolute; bottom:2px; right:4px; font-size:10px; font-family:var(--font-mono); color:#fff; text-shadow:0 0 3px #000;">×${it.stack_quantity}</span>` : '';
+      const lockIcon = it.is_locked ? '<span style="position:absolute; top:2px; right:2px; font-size:10px;">🔒</span>' : '';
+      const affixDot = (it.prefix || it.suffix) ? `<span style="position:absolute; top:2px; left:2px; width:6px; height:6px; border-radius:50%; background:${color};"></span>` : '';
+      cells.push(`
+        <div onclick="selectInvItem('${it.instance_id}')" style="position:relative; aspect-ratio:1; background:var(--surface); border:1px solid ${selectedItemId===it.instance_id ? 'var(--gold)' : color}; border-left:3px solid ${color}; border-radius:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; text-align:center; overflow:hidden;" title="${escape(it.template_code)}${it.prefix?' ('+escape(it.prefix)+')':''}${it.suffix?' '+escape(it.suffix):''}">
+          <span style="color:${color}; padding:2px;">${escape(it.template_code.slice(0,8))}</span>
+          ${stack}${lockIcon}${affixDot}
+        </div>`);
+    } else {
+      cells.push(`<div onclick="moveSelectedTo(${s})" style="aspect-ratio:1; background:var(--surface-2); border:1px dashed var(--line); border-radius:4px; opacity:${selectedItemId?0.7:0.3}; cursor:${selectedItemId?'pointer':'default'};"></div>`);
+    }
+  }
+  grid.innerHTML = `<div style="display:grid; grid-template-columns:repeat(${BAG_COLS}, 1fr); gap:4px; max-width:480px;">${cells.join('')}</div>`;
+}
+
+function selectInvItem(id) {
+  selectedItemId = (selectedItemId === id) ? null : id;
+  refreshInventory();
+  renderSelectedItemPanel();
+}
+
+function renderSelectedItemPanel() {
+  const el = document.getElementById('inv-selected');
+  if (!selectedItemId) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div style="padding:12px; background:var(--surface); border:1px solid var(--gold); border-radius:6px; font-family:var(--font-mono); font-size:12px;">
+      <div style="margin-bottom:8px;">Selected: <code>${selectedItemId.slice(0,8)}…</code></div>
+      <div class="row">
+        <span style="color:var(--ink-mute);">Move: click empty slot in grid ↑</span>
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <input id="split-amount" type="number" min="1" placeholder="split amount" style="width:120px;">
+        <input id="split-slot" type="number" min="0" max="59" placeholder="target slot" style="width:100px;">
+        <button onclick="splitSelected()">Split</button>
+        <button class="danger" onclick="deleteSelected()">🗑 Delete</button>
+      </div>
+    </div>`;
+}
+
+async function moveSelectedTo(slot) {
+  if (!selectedItemId) return;
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/inventory/${selectedItemId}/move`, {
+    body: { target_slot: slot },
+  });
+  if (res.ok) {
+    setStatus('inv-status', `✓ Moved to slot ${slot}`, 'ok');
+    selectedItemId = null;
+    await refreshInventory();
+    renderSelectedItemPanel();
+  } else {
+    setStatus('inv-status', (body?.error?.code || res.status), 'err');
+  }
+}
+
+async function splitSelected() {
+  if (!selectedItemId) return;
+  const amount = parseInt(document.getElementById('split-amount').value, 10);
+  const slot = parseInt(document.getElementById('split-slot').value, 10);
+  if (!amount || isNaN(slot)) { setStatus('inv-status', 'Amount + slot required', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/inventory/${selectedItemId}/split`, {
+    body: { amount, target_slot: slot },
+  });
+  if (res.ok) {
+    setStatus('inv-status', `✓ Split — new instance ${body.new_instance_id.slice(0,8)}…`, 'ok');
+    selectedItemId = null;
+    await refreshInventory();
+    renderSelectedItemPanel();
+  } else {
+    setStatus('inv-status', (body?.error?.code || res.status), 'err');
+  }
+}
+
+async function deleteSelected() {
+  if (!selectedItemId) return;
+  if (!confirm('Item silinsin mi? (Geri alınamaz)')) return;
+  const { res, body } = await api('DELETE', `/v1/character/${S.characterId}/inventory/${selectedItemId}`);
+  if (res.ok) {
+    setStatus('inv-status', '✓ Deleted', 'ok');
+    selectedItemId = null;
+    await refreshInventory();
+    renderSelectedItemPanel();
+  } else {
+    setStatus('inv-status', (body?.error?.code || res.status), 'err');
+  }
+}
+
+// ---------- equipment ----------
+const EQUIP_SLOTS = ['mainhand', 'offhand', 'helm', 'chest', 'legs', 'boots', 'gloves', 'necklace', 'ring1', 'ring2', 'trinket1', 'trinket2'];
+
+async function refreshEquipment() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/equipment`, { idem: false });
+  const el = document.getElementById('equipment-grid');
+  if (!res.ok) { el.innerHTML = '<em style="color:var(--crimson);">Failed.</em>'; return; }
+  const slots = body.slots || {};
+  const cells = EQUIP_SLOTS.map(slot => {
+    const it = slots[slot];
+    if (it) {
+      const color = RARITY_COLOR[it.rarity] || '#9E9E9E';
+      const name = [it.prefix, it.template_code, it.suffix].filter(Boolean).join(' ');
+      return `
+        <div style="padding:10px; background:var(--surface-2); border:1px solid ${color}; border-left:3px solid ${color}; border-radius:6px;">
+          <div style="font-size:10px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:0.1em;">${slot}</div>
+          <div style="margin-top:4px; font-family:var(--font-mono); font-size:12px; color:${color};">${escape(name)}</div>
+          <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:10px; color:var(--ink-mute);">${escape(it.item_class || '')} · ${escape(it.rarity || '')}${it.is_bound ? ' · BOUND' : ''}</span>
+            <button onclick="unequipSlot('${slot}')" style="padding:2px 8px; font-size:11px;">Unequip</button>
+          </div>
+        </div>`;
+    }
+    return `
+      <div style="padding:10px; background:var(--surface-2); border:1px dashed var(--line); border-radius:6px; opacity:0.5;">
+        <div style="font-size:10px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:0.1em;">${slot}</div>
+        <div style="margin-top:4px; font-family:var(--font-mono); font-size:12px; color:var(--ink-mute); font-style:italic;">— empty —</div>
+      </div>`;
+  });
+  el.innerHTML = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:8px;">${cells.join('')}</div>`;
+}
+
+async function equipSelected() {
+  if (!S.characterId) { setStatus('equipment-status', 'Select character first', 'err'); return; }
+  if (!selectedItemId) { setStatus('equipment-status', 'Select an item in inventory grid first', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/equip/${selectedItemId}`, { body: {} });
+  if (res.ok) {
+    setStatus('equipment-status', `✓ Equipped to ${body.equipped_slot}`, 'ok');
+    selectedItemId = null;
+    await refreshEquipment();
+    await refreshInventory();
+    await refreshSheet();
+    renderSelectedItemPanel();
+  } else {
+    setStatus('equipment-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function unequipSlot(slot) {
+  if (!S.characterId) return;
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/unequip/${slot}`, { body: {} });
+  if (res.ok) {
+    setStatus('equipment-status', `✓ Unequipped ${slot} → bag`, 'ok');
+    await refreshEquipment();
+    await refreshInventory();
+    await refreshSheet();
+  } else {
+    setStatus('equipment-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- vendor ----------
+const VENDOR_CODE = 'general_ironhold';
+
+async function refreshVendor() {
+  const { res, body } = await api('GET', `/v1/vendor/${VENDOR_CODE}`, { idem: false });
+  const el = document.getElementById('vendor-info');
+  if (!res.ok) {
+    el.innerHTML = '<em style="color:var(--danger);">Vendor unavailable.</em>';
+    return;
+  }
+  const rows = (body.sells || []).map(s => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--surface); border-radius:4px; margin-bottom:4px; font-family:var(--font-mono); font-size:12px;">
+      <div>
+        <b>${escape(s.template_code)}</b>
+        <span style="color:var(--ink-mute); margin-left:8px;">${escape(s.item_class || '')} · ${escape(s.item_subclass || '')}</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <span style="color:var(--gold);">${s.buy_price_copper}c</span>
+        <button class="primary" onclick="vendorBuy('${escape(s.template_code)}', ${s.buy_price_copper})">Buy</button>
+      </div>
+    </div>`);
+  el.innerHTML = `
+    <div style="padding:12px; background:var(--surface-2); border-radius:6px;">
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-mute); margin-bottom:8px;">
+        Vendor: <b style="color:var(--gold);">${escape(body.code)}</b> · type: ${escape(body.vendor_type)} · sell rate: ${(body.sell_multiplier * 100).toFixed(0)}% of base
+      </div>
+      ${rows.join('') || '<em>No items for sale.</em>'}
+    </div>`;
+}
+
+async function vendorBuy(templateCode, expectedPrice) {
+  if (!S.characterId) { setStatus('vendor-status', 'Select character first', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/vendor/${VENDOR_CODE}/buy`, {
+    body: {
+      character_id: S.characterId,
+      template_code: templateCode,
+      expected_price_copper: expectedPrice,
+    },
+  });
+  if (res.ok) {
+    setStatus('vendor-status', `✓ Bought ${templateCode} for ${body.price_paid_copper}c (instance ${body.instance_id.slice(0,8)}…)`, 'ok');
+    await refreshWallet();
+    await refreshInventory();
+  } else {
+    setStatus('vendor-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function sellSelected() {
+  if (!selectedItemId) { setStatus('vendor-status', 'Select an item in inventory grid first', 'err'); return; }
+  if (!confirm('Item satılsın mı? (2 saat içinde buyback ile geri alabilirsin)')) return;
+  const { res, body } = await api('POST', `/v1/vendor/${VENDOR_CODE}/sell`, {
+    body: {
+      character_id: S.characterId,
+      item_instance_id: selectedItemId,
+    },
+  });
+  if (res.ok) {
+    setStatus('vendor-status', `✓ Sold — received ${body.received_copper}c · buyback expires ${new Date(body.buyback_expires_at).toLocaleTimeString('tr-TR')}`, 'ok');
+    selectedItemId = null;
+    await refreshWallet();
+    await refreshInventory();
+    await refreshBuybacks();
+    renderSelectedItemPanel();
+  } else {
+    setStatus('vendor-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function refreshBuybacks() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/buybacks`, { idem: false });
+  const el = document.getElementById('buybacks-list');
+  if (!res.ok) { el.innerHTML = '<em style="color:var(--danger);">Failed.</em>'; return; }
+  if (!body.count) {
+    el.innerHTML = '<em style="color:var(--ink-mute); font-family:var(--font-mono); font-size:12px;">Aktif buyback yok.</em>';
+    return;
+  }
+  const rows = body.buybacks.map(b => {
+    const expiresIn = Math.max(0, Math.round((new Date(b.expires_at) - Date.now()) / 60000));
+    const color = RARITY_COLOR[b.rarity] || '#9E9E9E';
+    return `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--surface); border-left:3px solid ${color}; border-radius:4px; margin-bottom:4px; font-family:var(--font-mono); font-size:12px;">
+        <div>
+          <b>${escape(b.template_code)}</b> ×${b.stack_quantity}
+          <span style="color:${color}; margin-left:8px; text-transform:uppercase; font-size:10px;">${escape(b.rarity)}</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span style="color:var(--ink-mute);">${expiresIn}dk kaldı</span>
+          <span style="color:var(--gold);">${b.sold_price_copper}c</span>
+          <button class="primary" onclick="doBuyback('${b.id}', '${escape(b.vendor_code)}')">Buyback</button>
+        </div>
+      </div>`;
+  });
+  el.innerHTML = rows.join('');
+}
+
+async function doBuyback(buybackId, vendorCode) {
+  const { res, body } = await api('POST', `/v1/vendor/${vendorCode}/buyback/${buybackId}`, {
+    body: { character_id: S.characterId },
+  });
+  if (res.ok) {
+    setStatus('vendor-status', `✓ Bought back — new instance ${body.instance_id.slice(0,8)}… (paid ${body.price_paid_copper}c)`, 'ok');
+    await refreshWallet();
+    await refreshInventory();
+    await refreshBuybacks();
+  } else {
+    setStatus('vendor-status', (body?.error?.code || res.status), 'err');
+  }
+}
+
+// ---------- items ----------
+const RARITY_COLOR = {
+  common:    '#9E9E9E',
+  uncommon:  '#4CAF50',
+  rare:      '#2196F3',
+  epic:      '#9C27B0',
+  legendary: '#FF9800',
+  mythic:    '#F44336',
+};
+
+async function refreshItems() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/items`, { idem: false });
+  const listEl = document.getElementById('items-list');
+  const countEl = document.getElementById('items-count');
+  if (!res.ok) {
+    listEl.innerHTML = '<em style="color:var(--danger);">Failed to load items.</em>';
+    countEl.textContent = '';
+    return;
+  }
+  countEl.textContent = `${body.count} item${body.count === 1 ? '' : 's'}`;
+  if (body.count === 0) {
+    listEl.innerHTML = '<em style="color:var(--ink-mute);">Hiç item yok. Aktivite başlat + reveal.</em>';
+    return;
+  }
+  const rows = body.items.map(it => {
+    const color = RARITY_COLOR[it.rarity] || '#9E9E9E';
+    const nameParts = [];
+    if (it.prefix) nameParts.push(`<span style="color:${color};">${escape(it.prefix)}</span>`);
+    nameParts.push(`<b>${escape(it.template_code)}</b>`);
+    if (it.suffix) nameParts.push(`<span style="color:${color};">${escape(it.suffix)}</span>`);
+    const stack = it.stack_quantity > 1 ? ` ×${it.stack_quantity}` : '';
+    return `
+      <div style="padding:8px 12px; margin-bottom:4px; background:var(--surface); border-left:3px solid ${color}; border-radius:4px; font-family:var(--font-mono); font-size:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <div>${nameParts.join(' ')}${stack}</div>
+          <span style="color:${color}; text-transform:uppercase; font-size:10px; letter-spacing:0.1em;">${escape(it.rarity)}</span>
+        </div>
+        <div style="color:var(--ink-mute); font-size:10px; margin-top:2px;">
+          ${escape(it.item_class || '')} · ${escape(it.item_subclass || '')} · ${it.base_value_copper || 0}c
+          ${it.source_kind ? ' · ' + escape(it.source_kind) : ''}
+          ${it.is_bound ? ' · BOUND' : ''}
+        </div>
+      </div>`;
+  });
+  listEl.innerHTML = rows.join('');
+}
+
+async function stopActivity() {
+  if (!currentContractId) { setStatus('activity-status', 'No active contract', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/activity/${currentContractId}/stop`);
+  if (res.ok) {
+    setStatus('activity-status', '✓ Cancelled (yield forfeited)', 'ok');
+    await refreshActivity();
+  } else {
+    setStatus('activity-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+function renderAuth() {
+  const el = document.getElementById('token-badge');
+  if (S.token) {
+    el.classList.add('active');
+    el.textContent = 'session ' + (S.sessionId || '').slice(0, 8) + '…';
+  } else {
+    el.classList.remove('active');
+    el.textContent = 'no session';
+  }
+}
+
+// ---------- crafting / professions (Sprint 17) ----------
+let PROF_CATALOG = [];
+let RECIPE_CATALOG = [];
+
+async function refreshCraftingCatalog() {
+  const [profRes, recRes] = await Promise.all([
+    api('GET', '/v1/professions', { idem: false, auth: false }),
+    api('GET', '/v1/recipes', { idem: false, auth: false }),
+  ]);
+  if (profRes.res.ok) PROF_CATALOG = profRes.body.professions || [];
+  if (recRes.res.ok)  RECIPE_CATALOG = recRes.body.recipes || [];
+  const learnSel = document.getElementById('prof-learn');
+  const recSel = document.getElementById('recipe-code');
+  if (learnSel) {
+    while (learnSel.options.length > 1) learnSel.remove(1);
+    for (const p of PROF_CATALOG) {
+      const opt = document.createElement('option');
+      opt.value = p.code; opt.textContent = `${p.code} (max ${p.max_level})`;
+      learnSel.appendChild(opt);
+    }
+  }
+  if (recSel) {
+    while (recSel.options.length > 1) recSel.remove(1);
+    for (const r of RECIPE_CATALOG) {
+      const opt = document.createElement('option');
+      const inputs = (r.inputs || []).map(i => `${i.template_code}×${i.quantity}`).join(' + ');
+      opt.value = r.code;
+      opt.textContent = `${r.profession_code} lvl${r.min_skill}: ${r.code} — ${inputs} → ${r.output_template_code}×${r.output_stack}`;
+      recSel.appendChild(opt);
+    }
+  }
+}
+
+async function refreshProfessions() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/professions`, { idem: false });
+  const el = document.getElementById('prof-panel');
+  if (!res.ok) { el.innerHTML = '<em style="color:var(--crimson);">Failed.</em>'; return; }
+  const rows = (body.professions || []).map(p => `
+    <div style="display:flex; justify-content:space-between; padding:6px 10px; background:var(--surface); border-radius:4px; margin-bottom:4px; font-family:var(--font-mono); font-size:12px;">
+      <span><b style="color:var(--gold);">${escape(p.profession_code)}</b> · lvl <b>${p.level}</b></span>
+      <span style="color:var(--ink-mute);">${p.xp} / ${p.xp_to_next} xp</span>
+    </div>`).join('');
+  el.innerHTML = rows || '<em style="color:var(--ink-mute);">Henüz meslek öğrenilmedi.</em>';
+}
+
+async function learnProf() {
+  if (!S.characterId) { setStatus('craft-status', 'Select character first', 'err'); return; }
+  const code = document.getElementById('prof-learn').value;
+  if (!code) { setStatus('craft-status', 'Pick a profession', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/professions/learn`, {
+    body: { profession_code: code },
+  });
+  if (res.ok) {
+    setStatus('craft-status', `✓ Learned ${code} · level ${body.level}`, 'ok');
+    await refreshProfessions();
+  } else {
+    setStatus('craft-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function doCraft() {
+  if (!S.characterId) { setStatus('craft-status', 'Select character first', 'err'); return; }
+  const code = document.getElementById('recipe-code').value;
+  if (!code) { setStatus('craft-status', 'Pick a recipe', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/craft`, {
+    body: { recipe_code: code },
+  });
+  if (res.ok) {
+    const lvlBadge = body.leveled_up ? ' <b style="color:var(--gold);">LEVEL UP → ' + body.skill_after + '</b>' : '';
+    setStatus('craft-status',
+      `✓ Crafted ${body.output_template_code}×${body.output_stack} · +${body.xp_gained} ${body.profession_code} xp${lvlBadge}`,
+      'ok');
+    await refreshProfessions();
+    await refreshWallet();
+    await refreshInventory();
+    await refreshItems();
+  } else {
+    setStatus('craft-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- world / travel (Sprint 16) ----------
+let currentTravelId = null;
+
+async function refreshLocation() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/location`, { idem: false });
+  const el = document.getElementById('location-panel');
+  if (!res.ok) { el.innerHTML = '<em style="color:var(--crimson);">Failed.</em>'; return; }
+  const region = body.region || {};
+  const kindClr = { city: 'var(--gold)', wilderness: 'var(--forest)', dungeon: 'var(--crimson)',
+                    zone: 'var(--cerulean)', continent: 'var(--ink-mute)' }[region.kind] || 'var(--ink)';
+  let travelBlock = '';
+  if (body.travel) {
+    currentTravelId = body.travel.id;
+    const arrives = new Date(body.travel.arrives_at).getTime();
+    const now = Date.now();
+    const remaining = Math.max(0, Math.floor((arrives - now) / 1000));
+    const ready = remaining === 0;
+    travelBlock = `
+      <div class="wallet-cell" style="padding:12px; margin-top:8px; border-color:${ready ? 'var(--forest)' : 'var(--cerulean)'};">
+        <div class="label">Travel${ready ? ' <span style="color:var(--forest);">[READY — Complete]</span>' : ''}</div>
+        <div style="margin-top:4px;">From <b>${escape(body.travel.from_region_code)}</b> → <b>${escape(body.travel.to_region_code)}</b> · remaining ${remaining}s</div>
+        <div class="row" style="margin-top:8px;">
+          <button class="primary" onclick="completeTravel()">Complete</button>
+          <button class="danger" onclick="cancelTravel()">Cancel</button>
+        </div>
+      </div>`;
+  } else {
+    currentTravelId = null;
+  }
+  const neighborRows = (body.neighbors || []).map(n => {
+    const nClr = { city: 'var(--gold)', wilderness: 'var(--forest)', dungeon: 'var(--crimson)',
+                    zone: 'var(--cerulean)', continent: 'var(--ink-mute)' }[n.kind] || 'var(--ink)';
+    const disabled = body.travel ? 'disabled' : '';
+    return `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:var(--surface); border-left:3px solid ${nClr}; border-radius:4px; margin-bottom:4px;">
+      <div>
+        <b style="color:${nClr};">${escape(n.code)}</b> <span style="color:var(--ink-mute); font-size:11px; text-transform:uppercase;">${escape(n.kind)}${n.min_level > 1 ? ' · lvl '+n.min_level+'+' : ''}</span>
+        <span style="color:var(--ink-mute); font-size:11px; margin-left:8px;">${n.travel_seconds}s via ${n.via}</span>
+      </div>
+      <button ${disabled} class="primary" onclick="startTravel('${escape(n.code)}')">Travel</button>
+    </div>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="wallet-cell" style="padding:12px; border-left:3px solid ${kindClr};">
+      <div class="label">Current region</div>
+      <div style="margin-top:4px;"><b style="color:${kindClr}; font-size:16px;">${escape(region.code || '—')}</b> <span style="color:var(--ink-mute); font-size:11px; text-transform:uppercase;">${escape(region.kind || '')}${region.safe ? ' · SAFE' : ''}</span></div>
+      ${region.parent_code ? '<div style="color:var(--ink-mute); font-size:11px; margin-top:2px;">parent: '+escape(region.parent_code)+'</div>' : ''}
+    </div>
+    ${travelBlock}
+    <h3 class="section-sub" style="margin:12px 0 6px;">Neighbors — pick to travel</h3>
+    ${neighborRows || '<em style="color:var(--ink-mute);">No neighbors.</em>'}`;
+}
+
+async function startTravel(toCode) {
+  if (!S.characterId) return;
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/travel`, {
+    body: { to_region_code: toCode },
+  });
+  if (res.status === 201) {
+    setStatus('travel-status', `Traveling to ${toCode} — ${body.duration_seconds}s`, 'ok');
+    await refreshLocation();
+  } else {
+    setStatus('travel-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function completeTravel() {
+  if (!currentTravelId) return;
+  const { res, body } = await api('POST', `/v1/travel/${currentTravelId}/complete`);
+  if (res.ok) {
+    setStatus('travel-status', `✓ Arrived at ${body.travel.to_region_code}`, 'ok');
+    currentTravelId = null;
+    await refreshLocation();
+  } else {
+    setStatus('travel-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function cancelTravel() {
+  if (!currentTravelId) return;
+  if (!confirm('Travel iptal edilsin mi? (kaynağa dönersin)')) return;
+  const { res, body } = await api('POST', `/v1/travel/${currentTravelId}/cancel`);
+  if (res.ok) {
+    setStatus('travel-status', '✓ Travel cancelled — stayed at origin', 'ok');
+    currentTravelId = null;
+    await refreshLocation();
+  } else {
+    setStatus('travel-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- dungeon (Sprint 15) ----------
+let currentDungeonId = null;
+let DUNGEON_CATALOG = [];
+
+async function loadDungeonCatalog() {
+  const { res, body } = await api('GET', '/v1/dungeon/catalog', { idem: false, auth: false });
+  if (!res.ok) return;
+  DUNGEON_CATALOG = body.dungeons || [];
+  const sel = document.getElementById('dungeon-code');
+  if (!sel) return;
+  // Clear all but the placeholder
+  while (sel.options.length > 1) sel.remove(1);
+  for (const d of DUNGEON_CATALOG) {
+    const opt = document.createElement('option');
+    opt.value = d.code;
+    opt.textContent = `${d.code} (lvl ${d.min_level}+, ${d.encounters} enc, ${Math.round(d.duration_seconds/60)}m)`;
+    sel.appendChild(opt);
+  }
+}
+
+async function refreshDungeon() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/dungeon/active`, { idem: false });
+  const el = document.getElementById('dungeon-active');
+  if (res.ok && body.contract) {
+    currentDungeonId = body.contract.id;
+    const c = body.contract;
+    const startedAt = new Date(c.started_at).getTime();
+    const now = Date.now();
+    const elapsedSec = Math.max(0, Math.floor((now - startedAt) / 1000));
+    const totalSec = c.duration_seconds;
+    const pct = Math.min(100, Math.round((elapsedSec / totalSec) * 100));
+    const ready = elapsedSec >= totalSec;
+    el.innerHTML = `
+      <div class="wallet-cell" style="padding:14px;">
+        <div class="label">Running · ${escape(c.dungeon_code)}${ready ? ' <span style="color:var(--forest);">[READY]</span>' : ''}</div>
+        <div style="margin-top:4px; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px; color:var(--ink-quiet);">
+          <span>${c.id.slice(0,8)}…</span>
+          <span>${elapsedSec}s / ${totalSec}s (${pct}%)</span>
+        </div>
+        <div style="height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden; margin-top:8px;">
+          <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--cerulean), var(--gold));"></div>
+        </div>
+      </div>`;
+  } else {
+    currentDungeonId = null;
+    el.innerHTML = '<em style="color:var(--ink-mute);">Aktif dungeon run yok.</em>';
+  }
+}
+
+async function startDungeon() {
+  if (!S.characterId) { setStatus('dungeon-status', 'Select character first', 'err'); return; }
+  const code = document.getElementById('dungeon-code').value;
+  if (!code) { setStatus('dungeon-status', 'Pick a dungeon', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/dungeon`, {
+    body: { dungeon_code: code },
+  });
+  if (res.status === 201) {
+    currentDungeonId = body.contract.id;
+    setStatus('dungeon-status',
+      `Started ${code} — ${body.planned_encounters} encounters, ready in ${body.contract.duration_seconds}s (week ${body.week_key})`,
+      'ok');
+    await refreshDungeon();
+  } else {
+    setStatus('dungeon-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function revealDungeon() {
+  if (!currentDungeonId) { setStatus('dungeon-status', 'No active dungeon', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/dungeon/${currentDungeonId}/reveal`);
+  if (!res.ok) {
+    setStatus('dungeon-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+    return;
+  }
+  const run = body.run;
+  const xpLine = body.xp ? ` · +${run.total_xp} XP${body.xp.leveled_up ? ' <b style="color:var(--gold);">LEVEL UP!</b>' : ''}` : '';
+  const clearedBadge = run.cleared ? '<span style="color:var(--gold);">CLEARED · lockout ' + body.week_key + '</span>'
+                                    : (run.stopped_on_death ? '<span style="color:var(--crimson);">WIPED</span>' : '<span style="color:var(--ember);">timeout</span>');
+  setStatus('dungeon-status',
+    `${body.replayed ? '↻ Replayed' : '✓ Revealed'} — ${clearedBadge} · ${run.victories}V / ${run.defeats}D · ${run.total_gold_copper}c${xpLine}`,
+    'ok');
+  const dropRow = run.common_drops + run.rare_drops + run.legendary_drops > 0
+    ? `<div style="margin-top:6px; font-family:var(--font-mono); font-size:12px;">
+         Drops: <span style="color:#9E9E9E;">${run.common_drops} common</span>
+              · <span style="color:#2196F3;">${run.rare_drops} rare</span>
+              · <span style="color:#FF9800;">${run.legendary_drops} legendary</span>
+       </div>` : '';
+  const encRows = run.encounters.map(e => {
+    const clr = e.outcome === 'victory' ? 'var(--forest)'
+              : e.outcome === 'defeat'  ? 'var(--crimson)' : 'var(--ember)';
+    const bossTag = e.is_boss ? ' <span style="color:var(--gold);">[BOSS]</span>' : '';
+    const waveTag = e.is_boss ? '' : ` · wave ${e.wave}`;
+    return `<div style="display:flex; justify-content:space-between; padding:3px 8px; font-family:var(--font-mono); font-size:11px; border-bottom:1px dashed var(--line);">
+      <span>#${e.index}${bossTag} · ${escape(e.mob_code)}${waveTag} · <span style="color:${clr}; text-transform:uppercase;">${e.outcome}</span></span>
+      <span style="color:var(--ink-mute);">HP: p=${e.player_hp_after} m=${e.mob_hp_after}${e.xp_gained ? ' · +'+e.xp_gained+'xp' : ''}${e.gold_copper ? ' · '+e.gold_copper+'c' : ''}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('dungeon-result').innerHTML = `
+    <div class="wallet-cell" style="padding:12px;">
+      <div class="label">Result — ${run.victories + run.defeats + run.timeouts} encounters resolved</div>
+      <div style="margin-top:4px;">Player HP final: <b>${run.player_hp_final}</b> · Gold: <b>${run.total_gold_copper}c</b> · XP: <b>${run.total_xp}</b> · Boss: <b>${run.boss_killed ? 'killed' : '—'}</b></div>
+      ${dropRow}
+      <div style="margin-top:10px; max-height:280px; overflow-y:auto; background:var(--surface); border:1px solid var(--line); border-radius:4px;">
+        ${encRows}
+      </div>
+    </div>`;
+  await refreshDungeon();
+  await refreshWallet();
+  await refreshInventory();
+  await refreshSheet();
+  await refreshItems();
+}
+
+async function stopDungeon() {
+  if (!currentDungeonId) { setStatus('dungeon-status', 'No active dungeon', 'err'); return; }
+  if (!confirm('Dungeon run iptal edilsin mi? (ödül yok, lockout yazılmaz)')) return;
+  const { res, body } = await api('POST', `/v1/dungeon/${currentDungeonId}/stop`);
+  if (res.ok) {
+    setStatus('dungeon-status', '✓ Cancelled', 'ok');
+    currentDungeonId = null;
+    await refreshDungeon();
+  } else {
+    setStatus('dungeon-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- hunt (Sprint 14) ----------
+let currentHuntId = null;
+
+function populateHuntMobs() {
+  const sel = document.getElementById('hunt-mob');
+  if (!sel || sel.options.length > 1) return;
+  for (const code of COMBAT_MOBS) {
+    const opt = document.createElement('option');
+    opt.value = code; opt.textContent = code;
+    sel.appendChild(opt);
+  }
+}
+
+async function refreshHunt() {
+  if (!S.characterId) return;
+  const { res, body } = await api('GET', `/v1/character/${S.characterId}/hunt/active`, { idem: false });
+  const el = document.getElementById('hunt-active');
+  if (res.ok && body.contract) {
+    currentHuntId = body.contract.id;
+    const c = body.contract;
+    const startedAt = new Date(c.started_at).getTime();
+    const now = Date.now();
+    const elapsedSec = Math.max(0, Math.floor((now - startedAt) / 1000));
+    const totalSec = c.duration_seconds;
+    const pct = Math.min(100, Math.round((elapsedSec / totalSec) * 100));
+    const doneEnc = Math.floor(elapsedSec / c.encounter_seconds);
+    const totalEnc = Math.floor(totalSec / c.encounter_seconds);
+    el.innerHTML = `
+      <div class="wallet-cell" style="padding:14px;">
+        <div class="label">Hunting · ${escape(c.mob_code)}</div>
+        <div style="margin-top:4px; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px; color:var(--ink-quiet);">
+          <span>${c.id.slice(0,8)}…</span>
+          <span>encounters ${doneEnc}/${totalEnc} · elapsed ${elapsedSec}s / ${totalSec}s (${pct}%)</span>
+        </div>
+        <div style="height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden; margin-top:8px;">
+          <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--crimson), var(--gold));"></div>
+        </div>
+      </div>`;
+  } else {
+    currentHuntId = null;
+    el.innerHTML = '<em style="color:var(--ink-mute);">Aktif hunt yok. Aşağıdan Start.</em>';
+  }
+}
+
+async function startHunt() {
+  if (!S.characterId) { setStatus('hunt-status', 'Select character first', 'err'); return; }
+  const mob = document.getElementById('hunt-mob').value;
+  if (!mob) { setStatus('hunt-status', 'Pick a mob', 'err'); return; }
+  const duration = parseInt(document.getElementById('hunt-duration').value, 10);
+  const cadence = parseInt(document.getElementById('hunt-cadence').value, 10);
+  const { res, body } = await api('POST', `/v1/character/${S.characterId}/hunt`, {
+    body: { mob_code: mob, duration_seconds: duration, encounter_seconds: cadence },
+  });
+  if (res.status === 201) {
+    currentHuntId = body.contract.id;
+    setStatus('hunt-status',
+      `Started hunt vs ${mob} — ${body.planned_encounters_full} encounters planned in ${duration}s`,
+      'ok');
+    await refreshHunt();
+  } else {
+    setStatus('hunt-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function revealHunt() {
+  if (!currentHuntId) { setStatus('hunt-status', 'No active hunt', 'err'); return; }
+  const { res, body } = await api('POST', `/v1/hunt/${currentHuntId}/reveal`);
+  if (!res.ok) {
+    setStatus('hunt-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+    return;
+  }
+  const hr = body.hunt;
+  const xpLine = body.xp ? ` · +${hr.total_xp} XP${body.xp.leveled_up ? ' <b style="color:var(--gold);">LEVEL UP!</b>' : ''}` : '';
+  setStatus('hunt-status',
+    `${body.replayed ? '↻ Replayed' : '✓ Revealed'} — ${hr.victories}V / ${hr.defeats}D / ${hr.timeouts}T · ${hr.total_gold_copper}c gold${xpLine}${hr.stopped_on_death ? ' · <b>DIED</b>' : ''}`,
+    'ok');
+  const dropRow = hr.common_drops + hr.rare_drops + hr.legendary_drops > 0
+    ? `<div style="margin-top:6px; font-family:var(--font-mono); font-size:12px;">
+         Drops: <span style="color:#9E9E9E;">${hr.common_drops} common</span>
+              · <span style="color:#2196F3;">${hr.rare_drops} rare</span>
+              · <span style="color:#FF9800;">${hr.legendary_drops} legendary</span>
+       </div>` : '';
+  const encRows = hr.encounters.slice(0, 30).map(e => {
+    const clr = e.outcome === 'victory' ? 'var(--forest)'
+              : e.outcome === 'defeat'  ? 'var(--crimson)' : 'var(--ember)';
+    return `<div style="display:flex; justify-content:space-between; padding:3px 8px; font-family:var(--font-mono); font-size:11px; border-bottom:1px dashed var(--line);">
+      <span>#${e.index} · <span style="color:${clr}; text-transform:uppercase;">${e.outcome}</span> · ${e.duration_turns}t</span>
+      <span style="color:var(--ink-mute);">HP end: player=${e.player_hp_after} · mob=${e.mob_hp_after}${e.xp_gained ? ' · +'+e.xp_gained+'xp' : ''}${e.gold_copper ? ' · '+e.gold_copper+'c' : ''}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('hunt-result').innerHTML = `
+    <div class="wallet-cell" style="padding:12px;">
+      <div class="label">Result — ${hr.completed_encounters}/${hr.planned_encounters} encounters</div>
+      <div style="margin-top:4px;">Player HP final: <b>${hr.player_hp_final}</b> · Gold: <b>${hr.total_gold_copper}c</b> · XP: <b>${hr.total_xp}</b></div>
+      ${dropRow}
+      <div style="margin-top:10px; max-height:220px; overflow-y:auto; background:var(--surface); border:1px solid var(--line); border-radius:4px;">
+        ${encRows}
+      </div>
+    </div>`;
+  await refreshHunt();
+  await refreshWallet();
+  await refreshInventory();
+  await refreshSheet();
+  await refreshItems();
+}
+
+async function stopHunt() {
+  if (!currentHuntId) { setStatus('hunt-status', 'No active hunt', 'err'); return; }
+  if (!confirm('Hunt iptal edilsin mi? (ödül yok)')) return;
+  const { res, body } = await api('POST', `/v1/hunt/${currentHuntId}/stop`);
+  if (res.ok) {
+    setStatus('hunt-status', '✓ Cancelled (no reward)', 'ok');
+    currentHuntId = null;
+    await refreshHunt();
+  } else {
+    setStatus('hunt-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- combat (Sprint 13) ----------
+let COMBAT_MOBS = [
+  'young_boar','grey_wolf','bandit_scout','cave_bat','goblin_raider',
+  'forest_troll','dire_wolf','cultist_acolyte','rock_ogre','shadow_stalker',
+  'elder_wyrm','ashen_lich'
+];
+let lastCombatSeed = null;
+
+function populateCombatMobs() {
+  const sel = document.getElementById('combat-mob');
+  if (!sel || sel.options.length > 1) return;
+  for (const code of COMBAT_MOBS) {
+    const opt = document.createElement('option');
+    opt.value = code; opt.textContent = code;
+    sel.appendChild(opt);
+  }
+}
+
+async function runCombat(replay) {
+  if (!S.characterId) { setStatus('combat-status', 'Select character first', 'err'); return; }
+  const mob = document.getElementById('combat-mob').value;
+  if (!mob) { setStatus('combat-status', 'Pick a mob', 'err'); return; }
+  let seedRaw = document.getElementById('combat-seed').value;
+  let seed = 0;
+  if (replay && lastCombatSeed) seed = lastCombatSeed;
+  else if (seedRaw) seed = parseInt(seedRaw, 10);
+  const { res, body } = await api('POST', '/v1/dev/combat/simulate', {
+    body: { character_id: S.characterId, mob_code: mob, seed },
+  });
+  if (!res.ok) {
+    setStatus('combat-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+    return;
+  }
+  lastCombatSeed = body.seed;
+  document.getElementById('combat-seed').value = body.seed;
+
+  const outcomeColor = body.outcome === 'victory' ? 'var(--forest)'
+                     : body.outcome === 'defeat' ? 'var(--crimson)' : 'var(--ember)';
+
+  document.getElementById('combat-summary').innerHTML = `
+    <div class="wallet-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="wallet-cell"><div class="label">Outcome</div><div class="value" style="color:${outcomeColor}; text-transform:uppercase;">${body.outcome}</div></div>
+      <div class="wallet-cell"><div class="label">Duration</div><div class="value">${body.duration}<span style="color:var(--ink-mute); font-size:14px;"> turns</span></div></div>
+      <div class="wallet-cell"><div class="label">Player HP end</div><div class="value">${body.player_hp}<span style="color:var(--ink-mute); font-size:14px;">/${body.player.hp_max}</span></div></div>
+      <div class="wallet-cell"><div class="label">Mob HP end</div><div class="value">${body.mob_hp}<span style="color:var(--ink-mute); font-size:14px;">/${body.mob.hp_max}</span></div></div>
+    </div>
+    <div style="margin-top:8px; font-family:var(--font-mono); font-size:11px; color:var(--ink-mute);">
+      mob=${body.mob.code} (lvl ${body.mob.level}) · player atk ${body.player.attack} def ${body.player.defense} hit ${body.player.hit_pct}% crit ${body.player.crit_pct}% ev ${body.player.evasion_pct}% · seed ${body.seed}
+    </div>`;
+
+  const rows = body.turns.slice(0, 80).map(t => {
+    const isPlayer = t.actor === 'player';
+    const color = t.hit ? (t.crit ? 'var(--gold)' : (isPlayer ? 'var(--forest)' : 'var(--crimson)')) : 'var(--ink-mute)';
+    const verb = !t.hit ? 'MISS' : (t.crit ? 'CRIT' : 'hit');
+    return `<div style="padding:3px 8px; font-family:var(--font-mono); font-size:11px; color:${color}; display:flex; justify-content:space-between;">
+      <span>T${String(t.turn).padStart(2,' ')} · ${t.actor} → ${t.target} · ${verb}${t.hit ? ' · '+t.damage+' dmg' : ''}</span>
+      <span style="color:var(--ink-mute);">${t.target} HP=${t.target_hp_after}</span>
+    </div>`;
+  });
+  document.getElementById('combat-log').innerHTML = `
+    <div style="background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:8px; max-height:300px; overflow-y:auto;">
+      ${rows.join('')}
+      ${body.turns.length > 80 ? '<div style="color:var(--ink-mute); font-size:10px; padding:4px 8px;">('+ (body.turns.length - 80) +' more turns trimmed)</div>' : ''}
+    </div>`;
+  setStatus('combat-status', `✓ ${body.outcome} in ${body.duration} turns (seed ${body.seed})`, 'ok');
+}
+
+// ---------- content pack (Sprint 12) ----------
+async function reloadContent() {
+  const { res, body } = await api('POST', '/v1/dev/content/reload', { body: {} });
+  if (res.ok) {
+    setStatus('content-status',
+      `✓ Reloaded — ${body.items_seen} items, ${body.vendors_seen} vendors from ${body.source_dir}`,
+      'ok');
+    // Refresh downstream views so any name/price changes show up.
+    await refreshVendor();
+    await refreshItems();
+    await refreshInventory();
+    await refreshEquipment();
+    await refreshSheet();
+  } else {
+    setStatus('content-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- party + guild (Sprint 20) ----------
+function val(id) { return document.getElementById(id).value; }
+function socTarget() { return val('soc-target'); }
+
+async function soc(method, path, body) {
+  const out = document.getElementById('soc-out');
+  if (!S.characterId) { out.textContent = 'Önce karakter seç.'; return null; }
+  const { res, body: resp } = await api(method, `/v1/character/${S.characterId}${path}`,
+    method === 'GET' ? { idem: false } : { body });
+  out.textContent = `${method} ${path} → ${res.status}\n` + JSON.stringify(resp, null, 2);
+  if (path === '/guild' && method === 'POST' && res.ok) refreshWallet();
+  return res.ok ? resp : null;
+}
+
+async function socAcceptFirst(kind) {
+  const list = await soc('GET', `/${kind}/invites`);
+  if (!list || !list.count) return;
+  await soc('POST', `/${kind}/invites/${list.invites[0].id}/accept`, {});
+}
+
+// ---------- websocket (Sprint 18) ----------
+let wsConn = null;
+
+function appendWsEvent(color, text) {
+  const el = document.getElementById('ws-events');
+  const ts = new Date().toISOString().slice(11, 19);
+  el.insertAdjacentHTML('afterbegin',
+    `<div style="padding:3px 6px; border-bottom:1px dashed var(--line); color:${color};">
+       <span style="color:var(--ink-mute);">${ts}</span> · ${text}
+     </div>`);
+}
+
+function wsConnect() {
+  if (!S.token) { setStatus('ws-status', 'Login first — token required', 'err'); return; }
+  if (wsConn && wsConn.readyState === WebSocket.OPEN) {
+    setStatus('ws-status', 'Already connected', 'err');
+    return;
+  }
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  const url = `${proto}://${location.host}/v1/ws?token=${encodeURIComponent(S.token)}`;
+  wsConn = new WebSocket(url);
+  wsConn.addEventListener('open', () => {
+    document.getElementById('ws-badge').textContent = 'connected';
+    document.getElementById('ws-badge').classList.add('active');
+    appendWsEvent('var(--forest)', 'connected');
+    setStatus('ws-status', '✓ WS open', 'ok');
+  });
+  wsConn.addEventListener('message', ev => {
+    try {
+      const msg = JSON.parse(ev.data);
+      const kindColor = msg.kind && msg.kind.startsWith('hunt.') ? 'var(--gold)'
+                     : msg.kind && msg.kind.startsWith('dungeon.') ? 'var(--cerulean)'
+                     : msg.kind && msg.kind.startsWith('system.') ? 'var(--ink-quiet)'
+                     : 'var(--ink)';
+      appendWsEvent(kindColor,
+        `<b>${escape(msg.kind || '?')}</b> · ${escape(JSON.stringify(msg.payload || {}))}`);
+    } catch (e) {
+      appendWsEvent('var(--crimson)', 'parse error: ' + ev.data.slice(0, 200));
+    }
+  });
+  wsConn.addEventListener('close', ev => {
+    document.getElementById('ws-badge').textContent = 'disconnected';
+    document.getElementById('ws-badge').classList.remove('active');
+    appendWsEvent('var(--ink-mute)', `closed code=${ev.code}${ev.reason ? ' · '+escape(ev.reason) : ''}`);
+  });
+  wsConn.addEventListener('error', () => {
+    appendWsEvent('var(--crimson)', 'ws error');
+  });
+}
+
+function wsDisconnect() {
+  if (wsConn) {
+    wsConn.close();
+    wsConn = null;
+  }
+}
+
+async function fetchPresence() {
+  const { res, body } = await api('GET', '/v1/ws/presence', { idem: false });
+  if (res.ok) {
+    setStatus('ws-status', `✓ ${body.count} accounts online · ${body.clients} clients`, 'ok');
+    appendWsEvent('var(--gold)', `presence: ${body.count} accounts, ${body.clients} clients`);
+  } else {
+    setStatus('ws-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+async function devBroadcast() {
+  if (!S.accountId) { setStatus('ws-status', 'Login first', 'err'); return; }
+  const url = `/v1/dev/ws/broadcast?message=hello%20from%20dev%20console&account_id=${encodeURIComponent(S.accountId)}`;
+  const { res, body } = await api('POST', url);
+  if (res.ok) {
+    setStatus('ws-status', `✓ Broadcast delivered to ${body.delivered} clients`, 'ok');
+  } else {
+    setStatus('ws-status', (body?.error?.code || res.status) + ': ' + (body?.error?.message || ''), 'err');
+  }
+}
+
+// ---------- init ----------
+populateCombatMobs();
+populateHuntMobs();
+loadDungeonCatalog();
+refreshCraftingCatalog();
+checkServer().then(() => setInterval(checkServer, 10000));
+renderAuth();
+if (S.token) refreshChars();
+
+// Auto-refresh active activity every 10s (progress bar advances).
+setInterval(() => { if (S.characterId) refreshActivity(); }, 10000);
+// Refresh buybacks every 30s (TTL countdown).
+setInterval(() => { if (S.characterId) refreshBuybacks(); }, 30000);
+if (S.characterId) { refreshInventory(); refreshItems(); refreshEquipment(); refreshVendor(); refreshBuybacks(); refreshHunt(); refreshDungeon(); refreshLocation(); refreshProfessions(); }
+// Auto-refresh active hunt + dungeon + travel every 15s (progress bars).
+setInterval(() => { if (S.characterId) { refreshHunt(); refreshDungeon(); refreshLocation(); } }, 15000);
+</script>
+</body>
+</html>

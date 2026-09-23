@@ -1,0 +1,71 @@
+# Otter — Recipe Catalog (Sprint 17)
+#
+# Alan sözleşmesi:
+#   code                  PK, snake_case
+#   display_name_key      i18n key
+#   profession_code       hangi meslek gerekli
+#   min_skill             minimum meslek seviyesi
+#   inputs                [{template_code, quantity}, ...] — hepsi consume edilir
+#   gold_cost_copper      craft başına harcanan gold (0 olabilir)
+#   output_template_code  üretilen item template
+#   output_stack          üretilen stack miktarı
+#   profession_xp_reward  başarılı craft'ta verilen meslek XP'si
+
+recipes:
+  # --- Alchemy ---
+  - code: recipe_potion_hp_small
+    display_name_key: recipe.potion_hp_small
+    profession_code: alchemy
+    min_skill: 1
+    inputs:
+      - { template_code: linseed, quantity: 2 }
+    gold_cost_copper: 5
+    output_template_code: potion_hp_small
+    output_stack: 1
+    profession_xp_reward: 15
+
+  - code: recipe_potion_mp_small
+    display_name_key: recipe.potion_mp_small
+    profession_code: alchemy
+    min_skill: 3
+    inputs:
+      - { template_code: mandrake, quantity: 2 }
+    gold_cost_copper: 5
+    output_template_code: potion_mp_small
+    output_stack: 1
+    profession_xp_reward: 20
+
+  # --- Blacksmithing ---
+  - code: recipe_sword_iron
+    display_name_key: recipe.sword_iron
+    profession_code: blacksmithing
+    min_skill: 5
+    inputs:
+      - { template_code: iron_ore, quantity: 5 }
+      - { template_code: oak_log,  quantity: 1 }
+    gold_cost_copper: 25
+    output_template_code: sword_iron
+    output_stack: 1
+    profession_xp_reward: 40
+
+  - code: recipe_helm_iron
+    display_name_key: recipe.helm_iron
+    profession_code: blacksmithing
+    min_skill: 5
+    inputs:
+      - { template_code: iron_ore, quantity: 4 }
+    gold_cost_copper: 20
+    output_template_code: helm_iron
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_boots_iron
+    display_name_key: recipe.boots_iron
+    profession_code: blacksmithing
+    min_skill: 5
+    inputs:
+      - { template_code: iron_ore, quantity: 3 }
+    gold_cost_copper: 15
+    output_template_code: boots_iron
+    output_stack: 1
+    profession_xp_reward: 30

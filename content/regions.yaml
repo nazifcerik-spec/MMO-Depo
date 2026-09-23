@@ -1,0 +1,74 @@
+# Otter — World Region Catalog (Sprint 16)
+#
+# Alan sözleşmesi:
+#   code                        PK, snake_case
+#   display_name_key            i18n key
+#   kind                        continent | zone | city | wilderness | dungeon
+#   parent_code                 üst region (root için null)
+#   min_level                   karakterin bu bölgeye girmesi için minimum seviye
+#   travel_seconds_from_parent  parent'tan buraya seyahat süresi
+#   safe                        güvenli bölge mi (Phase 02 PvP flag)
+#   is_starting                 yeni karakter spawn'u (tam bir tane)
+#
+# Adjacencies (region_link) ayrı bir listede — non-parent shortcut'lar için.
+
+regions:
+  - code: sundermere
+    display_name_key: region.sundermere
+    kind: continent
+    min_level: 1
+    travel_seconds_from_parent: 0
+    safe: true
+
+  - code: ironhold_city
+    display_name_key: region.ironhold_city
+    kind: city
+    parent_code: sundermere
+    min_level: 1
+    travel_seconds_from_parent: 60
+    safe: true
+    is_starting: true
+
+  - code: greenwood
+    display_name_key: region.greenwood
+    kind: wilderness
+    parent_code: sundermere
+    min_level: 1
+    travel_seconds_from_parent: 120
+    safe: false
+
+  - code: whispering_reach
+    display_name_key: region.whispering_reach
+    kind: wilderness
+    parent_code: sundermere
+    min_level: 8
+    travel_seconds_from_parent: 240
+    safe: false
+
+  - code: crypt_gates
+    display_name_key: region.crypt_gates
+    kind: dungeon
+    parent_code: greenwood
+    min_level: 3
+    travel_seconds_from_parent: 180
+    safe: false
+
+  - code: emberpeak
+    display_name_key: region.emberpeak
+    kind: zone
+    parent_code: sundermere
+    min_level: 18
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: ashen_hollow
+    display_name_key: region.ashen_hollow
+    kind: dungeon
+    parent_code: emberpeak
+    min_level: 24
+    travel_seconds_from_parent: 300
+    safe: false
+
+# Non-parent shortcuts. (a, b) canonical order: a < b lexically.
+region_links:
+  - { region_a_code: greenwood, region_b_code: whispering_reach, travel_seconds: 300 }

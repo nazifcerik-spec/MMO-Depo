@@ -1,0 +1,23 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+docs/
+README.md
+CLAUDE.md
+
+# Development
+.env.example
+.editorconfig
+.vscode
+.idea
+.DS_Store
+
+# Build artifacts
+bin/
+dist/
+
+# Compose state
+.data/

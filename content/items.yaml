@@ -1,0 +1,402 @@
+# Otter — Item Template Catalog (Sprint 12)
+#
+# Bu dosya server başlatıldığında content-pack loader tarafından okunur ve
+# content.item_template tablosuna UPSERT edilir. Migration seed baseline; bu
+# dosya authoritative source of truth.
+#
+# Alan sözleşmesi:
+#   code               PK, snake_case, immutable (rename => new code)
+#   display_name_key   i18n key (translations layer sprint 21+)
+#   item_class         weapon | armor | consumable | material | misc
+#   item_subclass      alt tip (sword, ore, potion, ...)
+#   min_level          equip/use için minimum karakter seviyesi
+#   base_value_copper  vendor sell reference (× vendor.sell_multiplier)
+#   base_weight_g      envanter ağırlık cap'ine katkı (Sprint 9)
+#   stackable          true => aynı slot'ta birikir
+#   max_stack          stackable => max miktar
+#   bind_kind          boe | bop | boa
+#   affixable          true => rare+ item roll'unda prefix/suffix alır
+#   equip_slot         opsiyonel: mainhand | offhand | helm | chest | legs | boots | gloves | necklace | ring1 | ring2 | trinket1 | trinket2 (inventory.KnownEquipSlots)
+#   class_restriction  opsiyonel: yalnızca bu class equip edebilir
+#   stat_bonuses       equip'te uygulanan modifier stack (DD-107)
+#     - kind:   flat | mult_add | mult_prod | clamp_min | clamp_max | set
+#       target: str | agi | int | vit | cha | luck | attack | defense | crit_pct | hit_pct | hp_max | mp_max | en_max
+#       amount: sayı (flat=int, mult=oran örn 0.10, clamp/set=int)
+
+items:
+  # --- Mining ---
+  - code: iron_ore
+    display_name_key: item.iron_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: copper_ore
+    display_name_key: item.copper_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 5
+    base_value_copper: 8
+    base_weight_g: 200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: tin_ore
+    display_name_key: item.tin_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 5
+    base_value_copper: 7
+    base_weight_g: 200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: silver_ore
+    display_name_key: item.silver_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 15
+    base_value_copper: 25
+    base_weight_g: 200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: gold_ore
+    display_name_key: item.gold_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 20
+    base_value_copper: 40
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: mythril_ore
+    display_name_key: item.mythril_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 40
+    base_value_copper: 250
+    base_weight_g: 300
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  # --- Fishing ---
+  - code: salmon
+    display_name_key: item.salmon
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: bass
+    display_name_key: item.bass
+    item_class: material
+    item_subclass: fish
+    min_level: 5
+    base_value_copper: 12
+    base_weight_g: 400
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: golden_carp
+    display_name_key: item.golden_carp
+    item_class: material
+    item_subclass: fish
+    min_level: 15
+    base_value_copper: 50
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: ancient_leviathan_scale
+    display_name_key: item.leviathan_scale
+    item_class: material
+    item_subclass: fish
+    min_level: 35
+    base_value_copper: 300
+    base_weight_g: 100
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  # --- Woodcutting ---
+  - code: oak_log
+    display_name_key: item.oak_log
+    item_class: material
+    item_subclass: wood
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: elm_log
+    display_name_key: item.elm_log
+    item_class: material
+    item_subclass: wood
+    min_level: 8
+    base_value_copper: 9
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: yew_log
+    display_name_key: item.yew_log
+    item_class: material
+    item_subclass: wood
+    min_level: 20
+    base_value_copper: 30
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: ironwood_log
+    display_name_key: item.ironwood_log
+    item_class: material
+    item_subclass: wood
+    min_level: 40
+    base_value_copper: 200
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  # --- Herbalism ---
+  - code: linseed
+    display_name_key: item.linseed
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: mandrake
+    display_name_key: item.mandrake
+    item_class: material
+    item_subclass: herb
+    min_level: 5
+    base_value_copper: 12
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: king_bloom
+    display_name_key: item.king_bloom
+    item_class: material
+    item_subclass: herb
+    min_level: 20
+    base_value_copper: 60
+    base_weight_g: 60
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: phoenix_petal
+    display_name_key: item.phoenix_petal
+    item_class: material
+    item_subclass: herb
+    min_level: 40
+    base_value_copper: 500
+    base_weight_g: 30
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  # --- Hunting ---
+  - code: boar_hide
+    display_name_key: item.boar_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 15
+    base_weight_g: 800
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: wolf_pelt
+    display_name_key: item.wolf_pelt
+    item_class: material
+    item_subclass: hide
+    min_level: 8
+    base_value_copper: 25
+    base_weight_g: 700
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: dire_bear_hide
+    display_name_key: item.dire_bear_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 20
+    base_value_copper: 90
+    base_weight_g: 1500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  - code: dragon_scale
+    display_name_key: item.dragon_scale
+    item_class: material
+    item_subclass: hide
+    min_level: 45
+    base_value_copper: 800
+    base_weight_g: 300
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+
+  # --- Weapons ---
+  - code: sword_iron
+    display_name_key: item.sword_iron
+    item_class: weapon
+    item_subclass: sword
+    min_level: 5
+    base_value_copper: 100
+    base_weight_g: 2500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 10 }
+      - { kind: flat, target: str,    amount: 3 }
+
+  - code: sword_steel
+    display_name_key: item.sword_steel
+    item_class: weapon
+    item_subclass: sword
+    min_level: 15
+    base_value_copper: 400
+    base_weight_g: 2700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    stat_bonuses:
+      - { kind: flat, target: attack,   amount: 18 }
+      - { kind: flat, target: str,      amount: 6 }
+      - { kind: flat, target: crit_pct, amount: 2 }
+
+  - code: bow_yew
+    display_name_key: item.bow_yew
+    item_class: weapon
+    item_subclass: bow
+    min_level: 10
+    base_value_copper: 250
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: hunter
+    stat_bonuses:
+      - { kind: flat, target: attack,  amount: 8 }
+      - { kind: flat, target: agi,     amount: 3 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: staff_apprentice
+    display_name_key: item.staff_apprentice
+    item_class: weapon
+    item_subclass: staff
+    min_level: 3
+    base_value_copper: 80
+    base_weight_g: 1800
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: mage
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 5 }
+      - { kind: flat, target: int,    amount: 5 }
+      - { kind: flat, target: mp_max, amount: 20 }
+
+  # --- Armor ---
+  - code: helm_iron
+    display_name_key: item.helm_iron
+    item_class: armor
+    item_subclass: helm
+    min_level: 5
+    base_value_copper: 80
+    base_weight_g: 2000
+    bind_kind: boe
+    affixable: true
+    equip_slot: helm
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 5 }
+      - { kind: flat, target: vit,     amount: 2 }
+
+  - code: chest_leather
+    display_name_key: item.chest_leather
+    item_class: armor
+    item_subclass: chest
+    min_level: 1
+    base_value_copper: 60
+    base_weight_g: 3000
+    bind_kind: boe
+    affixable: true
+    equip_slot: chest
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 8 }
+      - { kind: flat, target: vit,     amount: 1 }
+      - { kind: flat, target: hp_max,  amount: 25 }
+
+  - code: boots_iron
+    display_name_key: item.boots_iron
+    item_class: armor
+    item_subclass: boots
+    min_level: 5
+    base_value_copper: 50
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: boots
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 3 }
+      - { kind: flat, target: agi,     amount: 2 }
+
+  # --- Consumables ---
+  - code: potion_hp_small
+    display_name_key: item.potion_hp_small
+    item_class: consumable
+    item_subclass: potion
+    min_level: 1
+    base_value_copper: 20
+    base_weight_g: 200
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+
+  - code: potion_mp_small
+    display_name_key: item.potion_mp_small
+    item_class: consumable
+    item_subclass: potion
+    min_level: 1
+    base_value_copper: 20
+    base_weight_g: 200
+    stackable: true
+    max_stack: 20
+    bind_kind: boe

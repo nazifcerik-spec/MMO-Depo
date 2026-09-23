@@ -1,0 +1,18 @@
+# Otter — Profession Catalog (Sprint 17)
+#
+# code            PK, snake_case
+# display_name_key i18n key
+# max_level       max meslek seviyesi (skill cap)
+
+professions:
+  - code: blacksmithing
+    display_name_key: profession.blacksmithing
+    max_level: 60
+
+  - code: alchemy
+    display_name_key: profession.alchemy
+    max_level: 60
+
+  - code: cooking
+    display_name_key: profession.cooking
+    max_level: 60

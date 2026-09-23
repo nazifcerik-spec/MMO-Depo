@@ -1,0 +1,188 @@
+# Otter — development environment
+# Usage (from project root):
+#   cd deploy && docker compose up -d
+#
+# Services:
+#   postgres  — PostgreSQL 16, port 5432, volume ./.data/postgres
+#   redis     — Redis 7, port 6379, volume ./.data/redis
+#   migrator  — golang-migrate, runs once on startup
+#   api       — Otter API server, port 8080
+#   worker    — Background job worker (metrics :9091)
+#   prometheus, jaeger — only with `--profile observability` (Sprint 27)
+
+name: otter-dev
+
+x-shared-env: &shared_env
+  ENV: dev
+  LOG_LEVEL: debug
+
+x-db-env: &db_env
+  <<: *shared_env
+  DATABASE_URL: postgres://otter:otter@postgres:5432/otter?sslmode=disable
+  REDIS_ADDR: redis:6379
+
+networks:
+  otter:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: otter_postgres
+    restart: unless-stopped
+    networks:
+      - otter
+    environment:
+      POSTGRES_USER: otter
+      POSTGRES_PASSWORD: otter
+      POSTGRES_DB: otter
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U otter -d otter"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    command:
+      - -c
+      - log_statement=all
+      - -c
+      - log_duration=on
+
+  redis:
+    image: redis:7-alpine
+    container_name: otter_redis
+    restart: unless-stopped
+    networks:
+      - otter
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+      - --loglevel
+      - debug
+
+  migrator:
+    image: migrate/migrate:v4.17.0
+    container_name: otter_migrator
+    networks:
+      - otter
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../server/migrations:/migrations
+    command:
+      - -path=/migrations
+      - -database=postgres://otter:otter@postgres:5432/otter?sslmode=disable
+      - up
+    restart: on-failure
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/api.Dockerfile
+      args:
+        COMMIT_SHA: dev
+    image: otter/api:dev
+    container_name: otter_api
+    networks:
+      - otter
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    environment:
+      <<: *db_env
+      HTTP_ADDR: :8080
+      HTTP_READ_TIMEOUT: 15s
+      HTTP_WRITE_TIMEOUT: 30s
+      CONTENT_PATH: /content
+      METRICS_ADDR: :9090
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    ports:
+      - "8080:8080"
+      - "127.0.0.1:9090:9090"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/live"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    volumes:
+      # Sprint 12 content pack — mount read-only so hot-reload (POST /v1/dev/content/reload)
+      # picks up local edits without rebuilding the image.
+      - ../content:/content:ro
+
+  # Background jobs (Sprint 19): activity_expire, travel_arrive, idempotency_gc,
+  # buyback_gc, character_delete_expire, economy_reconciler.
+  worker:
+    build:
+      context: ..
+      dockerfile: deploy/worker.Dockerfile
+      args:
+        COMMIT_SHA: dev
+    image: otter/worker:dev
+    container_name: otter_worker
+    networks:
+      - otter
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    environment:
+      <<: *db_env
+      WORKER_METRICS_ADDR: :9091
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    ports:
+      - "127.0.0.1:9091:9091"
+    restart: unless-stopped
+
+  # Observability (Sprint 27, DD-214). Start with:
+  #   OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318 docker compose --profile observability up -d
+  # Prometheus UI http://localhost:9095 · Jaeger UI http://localhost:16686
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: otter_prometheus
+    profiles: ["observability"]
+    networks:
+      - otter
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "127.0.0.1:9095:9090"
+    restart: unless-stopped
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.60
+    container_name: otter_jaeger
+    profiles: ["observability"]
+    networks:
+      - otter
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "127.0.0.1:16686:16686"
+      - "127.0.0.1:4318:4318"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:

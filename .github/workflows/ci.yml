@@ -1,0 +1,97 @@
+# Otter CI (Sprint 32, DD-216). Runs on every push and pull request.
+#   server       gofmt + vet + race tests + per-package coverage ratchet
+#   migrations   every migration up → down → up on real Postgres, then the
+#                integration suite (content pack, catalogs, ledger) against it
+#   client       format + analyze + widget/unit tests + coverage gate
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then echo "gofmt needed:"; echo "$unformatted"; exit 1; fi
+      - name: vet
+        run: go vet ./... && go vet -tags integration ./internal/integration/
+      - name: test (race + coverage)
+        run: |
+          set -o pipefail
+          go test -race -count=1 -cover ./... | tee ../server-cover.txt
+      - name: coverage gate
+        run: sh ../scripts/coverage_gate.sh go coverage-thresholds.txt < ../server-cover.txt
+
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: otter
+          POSTGRES_PASSWORD: otter
+          POSTGRES_DB: otter
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U otter -d otter"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      # Throwaway CI database; not a secret.
+      DATABASE_URL: postgres://otter:otter@localhost:5432/otter?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - name: migrate up → down → up
+        run: |
+          migrate() {
+            docker run --rm --network host -v "$PWD/server/migrations:/migrations:ro" \
+              migrate/migrate:v4.17.0 -path=/migrations -database "$DATABASE_URL" "$@"
+          }
+          migrate up
+          migrate down -all
+          migrate up
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+      - name: integration tests
+        working-directory: server
+        run: go test -tags integration -count=1 -v ./internal/integration/
+
+  client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.5
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: format (generated l10n excluded)
+        run: dart format --output=none --set-exit-if-changed $(find lib test -name '*.dart' ! -path 'lib/l10n/*')
+      - run: flutter analyze
+      - run: flutter test --coverage
+      - name: coverage gate
+        run: sh ../scripts/coverage_gate.sh lcov coverage/lcov.info 80
