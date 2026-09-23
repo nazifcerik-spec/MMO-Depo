@@ -603,7 +603,7 @@ void main() {
     expect(find.textContaining('live one', findRichText: true), findsOneWidget);
     expect(find.textContaining('spam', findRichText: true), findsNothing, reason: 'blocked sender');
 
-    await tester.tap(find.text('Guild'));
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Guild'));
     await tester.pumpAndSettle();
     expect(find.text("You're not in that group."), findsOneWidget);
   });
@@ -760,6 +760,98 @@ void main() {
     await tester.pumpAndSettle();
     expect(be.passwordChangedTo, 'new-horse-1');
     expect(find.text('Password changed. Your other devices were signed out.'), findsOneWidget);
+  });
+
+  testWidgets('party: accept invite, then create/invite/promote as leader; push reloads', (tester) async {
+    final (be, ws, _) = await _inGame(tester);
+    be.partyInvites.add({'id': 'pi-1', 'invited_by_name': 'Aria'});
+    await tester.tap(find.byTooltip('Social'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(Tab, 'Party'));
+    await tester.tap(find.widgetWithText(Tab, 'Party'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Invitations'), findsOneWidget);
+    await tester.tap(find.byTooltip('Accept'));
+    await tester.pumpAndSettle();
+    expect(find.text('Party (2/5)'), findsOneWidget);
+    expect(find.byTooltip('More'), findsNothing, reason: 'members cannot manage the party');
+
+    await tester.tap(find.text('Leave'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Leave'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Create party'));
+    await tester.pumpAndSettle();
+    expect(find.text('Party (1/5)'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'Brak');
+    await tester.tap(find.widgetWithText(FilledButton, 'Invite'));
+    await tester.pumpAndSettle();
+    expect(be.groupCalls, contains('party/invite {"target_name":"Brak"}'));
+
+    // Someone joins: the server pushes party.changed and the panel reloads.
+    (be.party!['members'] as List).add({'character_id': 'char-7', 'name': 'Brak', 'level': 2, 'class_code': 'mage'});
+    ws.last.push('party.changed');
+    await tester.pumpAndSettle();
+    expect(find.text('Party (2/5)'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('More'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Make leader'));
+    await tester.pumpAndSettle();
+    expect(be.party!['leader_character_id'], 'char-7');
+    expect(find.byTooltip('More'), findsNothing, reason: 'no longer leader');
+  });
+
+  testWidgets('guild: found with fee confirm, MOTD, rank change within permissions, schedule + cancel disband', (
+    tester,
+  ) async {
+    final (be, _, _) = await _inGame(tester);
+    await tester.tap(find.byTooltip('Social'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(Tab, 'Guild'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(Tab, 'Guild'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextField, 'Guild name'), 'Iron Wolves');
+    await tester.enterText(find.widgetWithText(TextField, 'Tag'), 'iwf');
+    await tester.tap(find.text('Found guild (10g 0s 0c)'));
+    await tester.pumpAndSettle();
+    expect(find.text('Founding a guild costs 10g 0s 0c.'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Create'));
+    await tester.pumpAndSettle();
+    expect(be.groupCalls.last, 'guild {"name":"Iron Wolves","tag":"IWF"}');
+    expect(find.text('Iron Wolves [IWF]'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Edit message of the day'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.descendant(of: find.byType(AlertDialog), matching: find.byType(TextField)),
+      'Raid at 9',
+    );
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Raid at 9'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('More'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Change rank'));
+    await tester.pumpAndSettle();
+    expect(find.text('Leader'), findsNothing, reason: 'leadership only moves via transfer');
+    await tester.tap(find.text('Officer'));
+    await tester.pumpAndSettle();
+    expect(be.groupCalls.last, 'guild/rank {"target_character_id":"char-7","rank_index":1}');
+
+    await tester.tap(find.text('Disband'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Disband'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Guild disbands in'), findsOneWidget);
+    await tester.tap(find.text('Cancel disbanding'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Guild disbands in'), findsNothing);
   });
 
   testWidgets('Turkish locale renders translated copy', (tester) async {

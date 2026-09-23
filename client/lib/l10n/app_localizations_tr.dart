@@ -1048,4 +1048,175 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errAlreadyVerified => 'E-postan zaten doğrulanmış.';
+
+  @override
+  String get tabParty => 'Grup';
+
+  @override
+  String get tabGuild => 'Lonca';
+
+  @override
+  String get invite => 'Davet et';
+
+  @override
+  String invitedBy(String name) {
+    return 'Davet eden: $name';
+  }
+
+  @override
+  String get noParty => 'Bir grupta değilsin. Grup kur ve arkadaşlarını davet et — dövüşler birlikte daha kolay.';
+
+  @override
+  String get createParty => 'Grup kur';
+
+  @override
+  String get pendingInvites => 'Davetler';
+
+  @override
+  String partyMembers(int count, int cap) {
+    return 'Grup ($count/$cap)';
+  }
+
+  @override
+  String get makeLeader => 'Lider yap';
+
+  @override
+  String get kick => 'Çıkar';
+
+  @override
+  String get leave => 'Ayrıl';
+
+  @override
+  String get disband => 'Dağıt';
+
+  @override
+  String get leavePartyTitle => 'Gruptan ayrılınsın mı?';
+
+  @override
+  String get leavePartyBody => 'Liderse, grupta en uzun süredir olan üye liderliği devralır.';
+
+  @override
+  String get disbandPartyTitle => 'Grup dağıtılsın mı?';
+
+  @override
+  String get disbandPartyBody => 'Herkes gruptan çıkarılır.';
+
+  @override
+  String get rankLeader => 'Lider';
+
+  @override
+  String get rankOfficer => 'Subay';
+
+  @override
+  String get rankVeteran => 'Kıdemli';
+
+  @override
+  String get rankMember => 'Üye';
+
+  @override
+  String get rankInitiate => 'Acemi';
+
+  @override
+  String get createGuild => 'Lonca kur';
+
+  @override
+  String createGuildBody(String fee) {
+    return 'Lonca kurmanın bedeli $fee.';
+  }
+
+  @override
+  String createGuildFee(String fee) {
+    return 'Lonca kur ($fee)';
+  }
+
+  @override
+  String get guildName => 'Lonca adı';
+
+  @override
+  String get guildTag => 'Etiket';
+
+  @override
+  String get guildTagHint => '2–5 harf veya rakam';
+
+  @override
+  String guildMembers(int count, int cap) {
+    return '$count/$cap üye';
+  }
+
+  @override
+  String disbandScheduled(String time) {
+    return 'Lonca $time sonra dağılacak';
+  }
+
+  @override
+  String get motd => 'Günün mesajı';
+
+  @override
+  String get editMotd => 'Günün mesajını düzenle';
+
+  @override
+  String get setRank => 'Rütbe değiştir';
+
+  @override
+  String setRankFor(String name) {
+    return '$name için yeni rütbe';
+  }
+
+  @override
+  String transferTitle(String name) {
+    return '$name lonca lideri yapılsın mı?';
+  }
+
+  @override
+  String get transferBody => 'Sen subay olursun. Bunu sen geri alamazsın.';
+
+  @override
+  String kickTitle(String name) {
+    return '$name loncadan çıkarılsın mı?';
+  }
+
+  @override
+  String get leaveGuildTitle => 'Loncadan ayrılınsın mı?';
+
+  @override
+  String get leaveGuildBody => 'Geri dönmek için yeni bir davet gerekir.';
+
+  @override
+  String get disbandGuildTitle => 'Lonca dağıtılsın mı?';
+
+  @override
+  String get disbandGuildBody => 'Lonca 48 saat sonra dağılır; o zamana kadar iptal edebilirsin.';
+
+  @override
+  String get cancelDisband => 'Dağıtmayı iptal et';
+
+  @override
+  String get errAlreadyInGroup => 'Zaten bir grupta.';
+
+  @override
+  String get errNotLeader => 'Bunu yalnızca lider yapabilir.';
+
+  @override
+  String get errGroupFull => 'Grup dolu.';
+
+  @override
+  String get errInviteInvalid => 'Bu davetin süresi dolmuş.';
+
+  @override
+  String get errAlreadyInvited => 'Bekleyen bir davet zaten var.';
+
+  @override
+  String get errGuildForbidden => 'Rütben bunun için yeterli değil.';
+
+  @override
+  String get errLeaderCannotLeave => 'Önce liderliği devret ya da loncayı dağıt.';
+
+  @override
+  String get errInvalidGuildName => '3–24 harf veya rakam.';
+
+  @override
+  String get errInvalidTag => 'Etiket 2–5 harf veya rakam olmalı.';
+
+  @override
+  String get errTagTaken => 'Bu etiket alınmış.';
 }

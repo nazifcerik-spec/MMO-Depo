@@ -140,6 +140,8 @@ class FakeBackend {
     if (ws != null) return ws;
     final mk = _market(req, path, body);
     if (mk != null) return mk;
+    final gr = _groups(req, path, body);
+    if (gr != null) return gr;
     final so = _social(req, path, body);
     if (so != null) return so;
     final act = RegExp(r'^/v1/character/([^/]+)/activity(/active)?$').firstMatch(path);
@@ -401,6 +403,97 @@ class FakeBackend {
       return json(200, {'price_paid_copper': 12});
     }
     return null;
+  }
+
+  Map<String, dynamic>? party;
+  final partyInvites = <Map<String, dynamic>>[];
+  Map<String, dynamic>? guild;
+  final groupCalls = <String>[]; // "action body" log for assertions
+
+  Map<String, dynamic> _member(String id, String name, [int? rank]) => {
+    'character_id': id,
+    'name': name,
+    'level': 3,
+    'class_code': 'rogue',
+    'rank_index': ?rank,
+  };
+
+  http.Response? _groups(http.Request req, String path, Map body) {
+    final m = RegExp(r'^/v1/character/[^/]+/(party|guild)(/.*)?$').firstMatch(path);
+    if (m == null) return null;
+    final kind = m[1]!, sub = m[2] ?? '';
+    final me = characters.first['id'] as String;
+    if (req.method == 'POST') groupCalls.add('$kind$sub ${jsonEncode(body)}');
+    if (kind == 'party') {
+      switch (sub) {
+        case '' when req.method == 'GET':
+          return json(200, {'party': party});
+        case '/invites':
+          return json(200, {'invites': partyInvites});
+        case '':
+          party = {
+            'id': 'p-1',
+            'leader_character_id': me,
+            'size_cap': 5,
+            'members': [_member(me, 'Grim')],
+          };
+          return json(201, {'party': party});
+        case '/invite':
+          return json(201, {'id': 'inv-9'});
+        case '/promote':
+          party!['leader_character_id'] = body['target_character_id'];
+          return json(200, {});
+        case '/leave' || '/disband':
+          party = null;
+          return json(200, {});
+      }
+      if (sub.startsWith('/invites/') && sub.endsWith('/accept')) {
+        partyInvites.clear();
+        party = {
+          'id': 'p-2',
+          'leader_character_id': 'char-5',
+          'size_cap': 5,
+          'members': [_member('char-5', 'Aria'), _member(me, 'Grim')],
+        };
+        return json(200, {'party': party});
+      }
+      return json(200, {});
+    }
+    switch (sub) {
+      case '' when req.method == 'GET':
+        return json(200, {'guild': guild});
+      case '/invites':
+        return json(200, {'invites': <Object>[]});
+      case '':
+        guild = {
+          'id': 'g-1',
+          'name': body['name'],
+          'tag': body['tag'],
+          'leader_character_id': me,
+          'motd': '',
+          'level': 1,
+          'member_count': 2,
+          'member_cap': 50,
+          'my_rank': 0,
+          'members': [_member(me, 'Grim', 0), _member('char-7', 'Brak', 3)],
+        };
+        return json(201, {'guild': guild, 'fee_copper': 100000});
+      case '/motd':
+        guild!['motd'] = body['motd'];
+        return json(200, {'motd': body['motd']});
+      case '/rank':
+        for (final mem in (guild!['members'] as List).cast<Map<String, dynamic>>()) {
+          if (mem['character_id'] == body['target_character_id']) mem['rank_index'] = body['rank_index'];
+        }
+        return json(200, {});
+      case '/disband':
+        guild!['disband_scheduled_at'] = DateTime.now().toUtc().add(const Duration(hours: 48)).toIso8601String();
+        return json(200, {});
+      case '/disband/cancel':
+        guild!.remove('disband_scheduled_at');
+        return json(200, {});
+    }
+    return json(200, {});
   }
 
   final friends = <Map<String, dynamic>>[];

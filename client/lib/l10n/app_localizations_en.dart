@@ -1049,4 +1049,175 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+
+  @override
+  String get tabParty => 'Party';
+
+  @override
+  String get tabGuild => 'Guild';
+
+  @override
+  String get invite => 'Invite';
+
+  @override
+  String invitedBy(String name) {
+    return 'Invited by $name';
+  }
+
+  @override
+  String get noParty => 'You\'re not in a party. Create one and invite friends — fights go better together.';
+
+  @override
+  String get createParty => 'Create party';
+
+  @override
+  String get pendingInvites => 'Invitations';
+
+  @override
+  String partyMembers(int count, int cap) {
+    return 'Party ($count/$cap)';
+  }
+
+  @override
+  String get makeLeader => 'Make leader';
+
+  @override
+  String get kick => 'Remove';
+
+  @override
+  String get leave => 'Leave';
+
+  @override
+  String get disband => 'Disband';
+
+  @override
+  String get leavePartyTitle => 'Leave the party?';
+
+  @override
+  String get leavePartyBody => 'If you are the leader, the longest-standing member takes over.';
+
+  @override
+  String get disbandPartyTitle => 'Disband the party?';
+
+  @override
+  String get disbandPartyBody => 'Everyone is removed from the party.';
+
+  @override
+  String get rankLeader => 'Leader';
+
+  @override
+  String get rankOfficer => 'Officer';
+
+  @override
+  String get rankVeteran => 'Veteran';
+
+  @override
+  String get rankMember => 'Member';
+
+  @override
+  String get rankInitiate => 'Initiate';
+
+  @override
+  String get createGuild => 'Found a guild';
+
+  @override
+  String createGuildBody(String fee) {
+    return 'Founding a guild costs $fee.';
+  }
+
+  @override
+  String createGuildFee(String fee) {
+    return 'Found guild ($fee)';
+  }
+
+  @override
+  String get guildName => 'Guild name';
+
+  @override
+  String get guildTag => 'Tag';
+
+  @override
+  String get guildTagHint => '2–5 letters or digits';
+
+  @override
+  String guildMembers(int count, int cap) {
+    return '$count/$cap members';
+  }
+
+  @override
+  String disbandScheduled(String time) {
+    return 'Guild disbands in $time';
+  }
+
+  @override
+  String get motd => 'Message of the day';
+
+  @override
+  String get editMotd => 'Edit message of the day';
+
+  @override
+  String get setRank => 'Change rank';
+
+  @override
+  String setRankFor(String name) {
+    return 'New rank for $name';
+  }
+
+  @override
+  String transferTitle(String name) {
+    return 'Make $name guild leader?';
+  }
+
+  @override
+  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+
+  @override
+  String kickTitle(String name) {
+    return 'Remove $name from the guild?';
+  }
+
+  @override
+  String get leaveGuildTitle => 'Leave the guild?';
+
+  @override
+  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+
+  @override
+  String get disbandGuildTitle => 'Disband the guild?';
+
+  @override
+  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+
+  @override
+  String get cancelDisband => 'Cancel disbanding';
+
+  @override
+  String get errAlreadyInGroup => 'They\'re already in a group.';
+
+  @override
+  String get errNotLeader => 'Only the leader can do that.';
+
+  @override
+  String get errGroupFull => 'The group is full.';
+
+  @override
+  String get errInviteInvalid => 'That invitation has expired.';
+
+  @override
+  String get errAlreadyInvited => 'An invitation is already pending.';
+
+  @override
+  String get errGuildForbidden => 'Your rank can\'t do that.';
+
+  @override
+  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+
+  @override
+  String get errInvalidGuildName => '3–24 letters or digits.';
+
+  @override
+  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+
+  @override
+  String get errTagTaken => 'That tag is taken.';
 }

@@ -1993,6 +1993,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your e-mail is already confirmed.'**
   String get errAlreadyVerified;
+
+  /// No description provided for @tabParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Party'**
+  String get tabParty;
+
+  /// No description provided for @tabGuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild'**
+  String get tabGuild;
+
+  /// No description provided for @invite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get invite;
+
+  /// No description provided for @invitedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Invited by {name}'**
+  String invitedBy(String name);
+
+  /// No description provided for @noParty.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re not in a party. Create one and invite friends — fights go better together.'**
+  String get noParty;
+
+  /// No description provided for @createParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Create party'**
+  String get createParty;
+
+  /// No description provided for @pendingInvites.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitations'**
+  String get pendingInvites;
+
+  /// No description provided for @partyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Party ({count}/{cap})'**
+  String partyMembers(int count, int cap);
+
+  /// No description provided for @makeLeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Make leader'**
+  String get makeLeader;
+
+  /// No description provided for @kick.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get kick;
+
+  /// No description provided for @leave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get leave;
+
+  /// No description provided for @disband.
+  ///
+  /// In en, this message translates to:
+  /// **'Disband'**
+  String get disband;
+
+  /// No description provided for @leavePartyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the party?'**
+  String get leavePartyTitle;
+
+  /// No description provided for @leavePartyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If you are the leader, the longest-standing member takes over.'**
+  String get leavePartyBody;
+
+  /// No description provided for @disbandPartyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disband the party?'**
+  String get disbandPartyTitle;
+
+  /// No description provided for @disbandPartyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone is removed from the party.'**
+  String get disbandPartyBody;
+
+  /// No description provided for @rankLeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Leader'**
+  String get rankLeader;
+
+  /// No description provided for @rankOfficer.
+  ///
+  /// In en, this message translates to:
+  /// **'Officer'**
+  String get rankOfficer;
+
+  /// No description provided for @rankVeteran.
+  ///
+  /// In en, this message translates to:
+  /// **'Veteran'**
+  String get rankVeteran;
+
+  /// No description provided for @rankMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get rankMember;
+
+  /// No description provided for @rankInitiate.
+  ///
+  /// In en, this message translates to:
+  /// **'Initiate'**
+  String get rankInitiate;
+
+  /// No description provided for @createGuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Found a guild'**
+  String get createGuild;
+
+  /// No description provided for @createGuildBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Founding a guild costs {fee}.'**
+  String createGuildBody(String fee);
+
+  /// No description provided for @createGuildFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Found guild ({fee})'**
+  String createGuildFee(String fee);
+
+  /// No description provided for @guildName.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild name'**
+  String get guildName;
+
+  /// No description provided for @guildTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag'**
+  String get guildTag;
+
+  /// No description provided for @guildTagHint.
+  ///
+  /// In en, this message translates to:
+  /// **'2–5 letters or digits'**
+  String get guildTagHint;
+
+  /// No description provided for @guildMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/{cap} members'**
+  String guildMembers(int count, int cap);
+
+  /// No description provided for @disbandScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild disbands in {time}'**
+  String disbandScheduled(String time);
+
+  /// No description provided for @motd.
+  ///
+  /// In en, this message translates to:
+  /// **'Message of the day'**
+  String get motd;
+
+  /// No description provided for @editMotd.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit message of the day'**
+  String get editMotd;
+
+  /// No description provided for @setRank.
+  ///
+  /// In en, this message translates to:
+  /// **'Change rank'**
+  String get setRank;
+
+  /// No description provided for @setRankFor.
+  ///
+  /// In en, this message translates to:
+  /// **'New rank for {name}'**
+  String setRankFor(String name);
+
+  /// No description provided for @transferTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Make {name} guild leader?'**
+  String transferTitle(String name);
+
+  /// No description provided for @transferBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You become an officer. This can\'t be undone by you.'**
+  String get transferBody;
+
+  /// No description provided for @kickTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from the guild?'**
+  String kickTitle(String name);
+
+  /// No description provided for @leaveGuildTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the guild?'**
+  String get leaveGuildTitle;
+
+  /// No description provided for @leaveGuildBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll need a new invitation to rejoin.'**
+  String get leaveGuildBody;
+
+  /// No description provided for @disbandGuildTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disband the guild?'**
+  String get disbandGuildTitle;
+
+  /// No description provided for @disbandGuildBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The guild disbands in 48 hours; you can cancel until then.'**
+  String get disbandGuildBody;
+
+  /// No description provided for @cancelDisband.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel disbanding'**
+  String get cancelDisband;
+
+  /// No description provided for @errAlreadyInGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'They\'re already in a group.'**
+  String get errAlreadyInGroup;
+
+  /// No description provided for @errNotLeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the leader can do that.'**
+  String get errNotLeader;
+
+  /// No description provided for @errGroupFull.
+  ///
+  /// In en, this message translates to:
+  /// **'The group is full.'**
+  String get errGroupFull;
+
+  /// No description provided for @errInviteInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That invitation has expired.'**
+  String get errInviteInvalid;
+
+  /// No description provided for @errAlreadyInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'An invitation is already pending.'**
+  String get errAlreadyInvited;
+
+  /// No description provided for @errGuildForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rank can\'t do that.'**
+  String get errGuildForbidden;
+
+  /// No description provided for @errLeaderCannotLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand over leadership or disband the guild first.'**
+  String get errLeaderCannotLeave;
+
+  /// No description provided for @errInvalidGuildName.
+  ///
+  /// In en, this message translates to:
+  /// **'3–24 letters or digits.'**
+  String get errInvalidGuildName;
+
+  /// No description provided for @errInvalidTag.
+  ///
+  /// In en, this message translates to:
+  /// **'The tag must be 2–5 letters or digits.'**
+  String get errInvalidTag;
+
+  /// No description provided for @errTagTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'That tag is taken.'**
+  String get errTagTaken;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

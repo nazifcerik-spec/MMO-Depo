@@ -10,6 +10,8 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import 'group_panels.dart';
+import 'group_repository.dart';
 import 'social_repository.dart';
 
 /// Chat, friends and mail for one character (opened from the home app bar).
@@ -27,7 +29,8 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderStateMixin {
-  late final _tabs = TabController(length: 3, vsync: this);
+  late final _tabs = TabController(length: 5, vsync: this);
+  late final _groups = GroupRepository(widget.repo.api, widget.repo.characterId);
   final _chat = GlobalKey<_ChatPanelState>();
 
   @override
@@ -49,12 +52,16 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
         title: Text(l.social),
         bottom: TabBar(
           controller: _tabs,
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
           indicatorColor: Palette.accent,
           labelColor: Palette.accent,
           tabs: [
             Tab(text: l.tabChat),
             Tab(text: l.tabFriends),
             Tab(text: l.tabMail),
+            Tab(text: l.tabParty),
+            Tab(text: l.tabGuild),
           ],
         ),
       ),
@@ -66,6 +73,8 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
               _ChatPanel(key: _chat, repo: widget.repo, live: widget.live),
               _FriendsPanel(repo: widget.repo, onWhisper: _whisper),
               _MailPanel(repo: widget.repo, dataVersion: widget.dataVersion),
+              PartyPanel(repo: _groups, live: widget.live),
+              GuildPanel(repo: _groups, live: widget.live),
             ],
           ),
         ),
