@@ -28,6 +28,11 @@ func PerMinute(n int64) Bucket {
 	return Bucket{Capacity: n, RefillPerSec: float64(n) / 60.0}
 }
 
+// PerHour returns a Bucket for "X requests per hour" (account recovery, DD-219).
+func PerHour(n int64) Bucket {
+	return Bucket{Capacity: n, RefillPerSec: float64(n) / 3600.0}
+}
+
 // PerSecond returns a Bucket for burstable X requests/second.
 func PerSecond(n int64) Bucket {
 	return Bucket{Capacity: n, RefillPerSec: float64(n)}

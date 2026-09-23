@@ -345,5 +345,20 @@
   "errHpFull": "Your health is already full.",
   "errInCombat": "Finish your hunt or dungeon run first.",
   "errNotUsable": "This item can't be used.",
-  "errTooWounded": "You're too wounded to fight. Rest or drink a potion."
+  "errTooWounded": "You're too wounded to fight. Rest or drink a potion.",
+  "forgotPassword": "Forgot password?",
+  "resetHint": "Enter your account e-mail and we'll send you a link to set a new password.",
+  "resetSent": "If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.",
+  "sendLink": "Send link",
+  "close": "Close",
+  "changePassword": "Change password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "save": "Save",
+  "passwordChanged": "Password changed. Your other devices were signed out.",
+  "verifyEmailBanner": "Please confirm your e-mail address.",
+  "resend": "Resend",
+  "verificationSent": "Verification e-mail sent.",
+  "errEmailNotVerified": "Confirm your e-mail before creating a character.",
+  "errAlreadyVerified": "Your e-mail is already confirmed."
 }

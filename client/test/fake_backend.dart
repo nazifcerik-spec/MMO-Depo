@@ -18,6 +18,10 @@ class FakeBackend {
   int failNextGets503 = 0;
 
   final characters = <Map<String, dynamic>>[];
+  bool emailVerified = true;
+  final resetRequestedFor = <String>[];
+  int verificationResends = 0;
+  String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
@@ -50,6 +54,7 @@ class FakeBackend {
       'access_expires_at': DateTime.now().toUtc().add(const Duration(minutes: 15)).toIso8601String(),
       'refresh_token': validRefresh,
       'refresh_expires_at': DateTime.now().toUtc().add(const Duration(days: 30)).toIso8601String(),
+      'email_verified': emailVerified,
     };
   }
 
@@ -81,6 +86,10 @@ class FakeBackend {
       return json(200, _session());
     }
     if (path == '/v1/auth/register') return json(201, _session());
+    if (path == '/v1/auth/password/reset-request') {
+      resetRequestedFor.add(body['email'] as String);
+      return json(202, {'status': 'queued'});
+    }
     if (path == '/v1/auth/refresh') {
       refreshCalls++;
       await Future<void>.delayed(Duration.zero);
@@ -99,6 +108,15 @@ class FakeBackend {
       return error(503, 'E_UNAVAILABLE');
     }
     if (path == '/v1/auth/logout') return json(200, {'ok': true});
+    if (path == '/v1/auth/resend-verification') {
+      verificationResends++;
+      return json(202, {'status': 'queued'});
+    }
+    if (path == '/v1/auth/password/change') {
+      if (body['current_password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
+      passwordChangedTo = body['new_password'] as String;
+      return http.Response('', 204);
+    }
     if (path == '/v1/character' && req.method == 'GET') {
       return json(200, {'characters': characters, 'slot_cap': slotCap});
     }

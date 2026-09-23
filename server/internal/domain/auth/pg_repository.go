@@ -188,3 +188,81 @@ func (r *PgRepo) RevokeRefreshTokensForSession(ctx context.Context, sessionID uu
 	_, err := r.pool.Exec(ctx, q, sessionID, reason, at)
 	return err
 }
+
+// --- Account recovery (DD-219) -----------------------------------------------
+
+func (r *PgRepo) CountAccountTokens(ctx context.Context, accountID uuid.UUID, kind TokenKind, since time.Time) (int, error) {
+	var n int
+	err := r.pool.QueryRow(ctx, `
+		SELECT count(*) FROM auth.account_token
+		 WHERE account_id = $1 AND kind = $2 AND created_at >= $3`, accountID, string(kind), since).Scan(&n)
+	return n, err
+}
+
+func (r *PgRepo) IssueAccountToken(ctx context.Context, t AccountToken, mail OutboundEmail) error {
+	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		if _, err := tx.Exec(ctx, `
+			INSERT INTO auth.account_token (id, account_id, kind, token_hash, expires_at, created_at)
+			VALUES ($1, $2, $3, $4, $5, $6)`,
+			t.ID, t.AccountID, string(t.Kind), t.TokenHash, t.ExpiresAt, t.CreatedAt); err != nil {
+			return err
+		}
+		_, err := tx.Exec(ctx, `INSERT INTO ops.email_outbox (to_address, subject, body) VALUES ($1, $2, $3)`,
+			mail.To, mail.Subject, mail.Body)
+		return err
+	})
+}
+
+func (r *PgRepo) ConsumeAccountToken(ctx context.Context, kind TokenKind, hash []byte, now time.Time) (uuid.UUID, error) {
+	var accountID uuid.UUID
+	err := pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		err := tx.QueryRow(ctx, `
+			UPDATE auth.account_token SET used_at = $3
+			 WHERE token_hash = $1 AND kind = $2 AND used_at IS NULL AND expires_at > $3
+			RETURNING account_id`, hash, string(kind), now).Scan(&accountID)
+		if errors.Is(err, pgx.ErrNoRows) {
+			return ErrRecoveryTokenInvalid
+		}
+		if err != nil {
+			return err
+		}
+		// Older links of the same kind stop working too.
+		_, err = tx.Exec(ctx, `
+			UPDATE auth.account_token SET used_at = $3
+			 WHERE account_id = $1 AND kind = $2 AND used_at IS NULL`, accountID, string(kind), now)
+		return err
+	})
+	return accountID, err
+}
+
+func (r *PgRepo) UpdatePassword(ctx context.Context, accountID uuid.UUID, hash string, at time.Time) error {
+	_, err := r.pool.Exec(ctx, `
+		UPDATE auth.account
+		   SET password_hash = $2, password_updated_at = $3, updated_at = $3, version = version + 1
+		 WHERE id = $1`, accountID, hash, at)
+	return err
+}
+
+func (r *PgRepo) MarkEmailVerified(ctx context.Context, accountID uuid.UUID, at time.Time) error {
+	_, err := r.pool.Exec(ctx, `
+		UPDATE auth.account
+		   SET email_verified_at = COALESCE(email_verified_at, $2), updated_at = $2, version = version + 1
+		 WHERE id = $1`, accountID, at)
+	return err
+}
+
+func (r *PgRepo) RevokeAccountSessions(ctx context.Context, accountID, keep uuid.UUID, reason string, at time.Time) error {
+	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		if _, err := tx.Exec(ctx, `
+			UPDATE auth.refresh_token rt SET revoked_at = $3, revoke_reason = $4
+			  FROM auth.session s
+			 WHERE rt.session_id = s.id AND s.account_id = $1 AND s.id <> $2
+			   AND rt.revoked_at IS NULL`, accountID, keep, at, reason); err != nil {
+			return err
+		}
+		_, err := tx.Exec(ctx, `
+			UPDATE auth.session SET revoked_at = $3, revoke_reason = $4
+			 WHERE account_id = $1 AND id <> $2 AND revoked_at IS NULL`, accountID, keep, at, reason)
+		return err
+	})
+}

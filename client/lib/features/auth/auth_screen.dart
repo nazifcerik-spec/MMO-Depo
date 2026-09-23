@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
+import 'account_dialogs.dart';
 import 'auth_controller.dart';
 
 final _emailPattern = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
@@ -200,6 +201,17 @@ class _AuthScreenState extends State<AuthScreen> {
                       onPressed: _busy ? null : _toggleMode,
                       child: Text(_registering ? l.haveAccount : l.noAccount),
                     ),
+                    if (!_registering)
+                      TextButton(
+                        onPressed: _busy
+                            ? null
+                            : () => showForgotPasswordDialog(
+                                context,
+                                widget.auth,
+                                initialEmail: _id.text.contains('@') ? _id.text.trim() : '',
+                              ),
+                        child: Text(l.forgotPassword),
+                      ),
                   ],
                 ),
               ),

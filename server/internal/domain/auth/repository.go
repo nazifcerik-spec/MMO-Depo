@@ -30,6 +30,19 @@ type Repository interface {
 	RefreshTokenByHash(ctx context.Context, hash []byte) (*RefreshToken, error)
 	MarkRefreshTokenUsed(ctx context.Context, id uuid.UUID, at time.Time) error
 	RevokeRefreshTokensForSession(ctx context.Context, sessionID uuid.UUID, reason string, at time.Time) error
+
+	// --- Account recovery (DD-219)
+	CountAccountTokens(ctx context.Context, accountID uuid.UUID, kind TokenKind, since time.Time) (int, error)
+	// IssueAccountToken stores the hashed token and queues its e-mail atomically.
+	IssueAccountToken(ctx context.Context, t AccountToken, mail OutboundEmail) error
+	// ConsumeAccountToken marks a live token used (and burns the account's other
+	// open tokens of that kind); ErrRecoveryTokenInvalid when none matches.
+	ConsumeAccountToken(ctx context.Context, kind TokenKind, hash []byte, now time.Time) (uuid.UUID, error)
+	UpdatePassword(ctx context.Context, accountID uuid.UUID, hash string, at time.Time) error
+	MarkEmailVerified(ctx context.Context, accountID uuid.UUID, at time.Time) error
+	// RevokeAccountSessions revokes every live session (+ refresh tokens) of the
+	// account except `keep` (uuid.Nil = revoke all).
+	RevokeAccountSessions(ctx context.Context, accountID, keep uuid.UUID, reason string, at time.Time) error
 }
 
 // --- MemoryRepo (tests) ------------------------------------------------------
@@ -41,6 +54,10 @@ type MemoryRepo struct {
 	sessions map[uuid.UUID]Session
 	tokens   map[uuid.UUID]RefreshToken
 	tokIdx   map[string]uuid.UUID // sha-hex → token id
+
+	// Account recovery (DD-219).
+	acctTokens []memAccountToken
+	Outbox     []OutboundEmail // exported for tests: what would be mailed
 }
 
 func NewMemoryRepo() *MemoryRepo {
@@ -196,6 +213,85 @@ func (r *MemoryRepo) RevokeRefreshTokensForSession(_ context.Context, sessionID 
 			t.RevokedAt = &at
 			t.RevokeReason = reason
 			r.tokens[id] = t
+		}
+	}
+	return nil
+}
+
+type memAccountToken struct {
+	AccountToken
+	used bool
+}
+
+func (r *MemoryRepo) CountAccountTokens(_ context.Context, accountID uuid.UUID, kind TokenKind, since time.Time) (int, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	n := 0
+	for _, t := range r.acctTokens {
+		if t.AccountID == accountID && t.Kind == kind && !t.CreatedAt.Before(since) {
+			n++
+		}
+	}
+	return n, nil
+}
+
+func (r *MemoryRepo) IssueAccountToken(_ context.Context, t AccountToken, mail OutboundEmail) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.acctTokens = append(r.acctTokens, memAccountToken{AccountToken: t})
+	r.Outbox = append(r.Outbox, mail)
+	return nil
+}
+
+func (r *MemoryRepo) ConsumeAccountToken(_ context.Context, kind TokenKind, hash []byte, now time.Time) (uuid.UUID, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for i, t := range r.acctTokens {
+		if t.Kind == kind && !t.used && t.ExpiresAt.After(now) && string(t.TokenHash) == string(hash) {
+			for j := range r.acctTokens { // burn the account's other open tokens of this kind
+				if r.acctTokens[j].AccountID == t.AccountID && r.acctTokens[j].Kind == kind {
+					r.acctTokens[j].used = true
+				}
+			}
+			return r.acctTokens[i].AccountID, nil
+		}
+	}
+	return uuid.Nil, ErrRecoveryTokenInvalid
+}
+
+func (r *MemoryRepo) UpdatePassword(_ context.Context, accountID uuid.UUID, hash string, at time.Time) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	a, ok := r.accounts[accountID]
+	if !ok {
+		return ErrInvalidCredentials
+	}
+	a.PasswordHash, a.UpdatedAt = hash, at
+	r.accounts[accountID] = a
+	return nil
+}
+
+func (r *MemoryRepo) MarkEmailVerified(_ context.Context, accountID uuid.UUID, at time.Time) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	a, ok := r.accounts[accountID]
+	if !ok {
+		return ErrInvalidCredentials
+	}
+	if a.EmailVerifiedAt == nil {
+		a.EmailVerifiedAt = &at
+	}
+	r.accounts[accountID] = a
+	return nil
+}
+
+func (r *MemoryRepo) RevokeAccountSessions(_ context.Context, accountID, keep uuid.UUID, reason string, at time.Time) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for id, s := range r.sessions {
+		if s.AccountID == accountID && id != keep && s.RevokedAt == nil {
+			s.RevokedAt, s.RevokeReason = &at, reason
+			r.sessions[id] = s
 		}
 	}
 	return nil

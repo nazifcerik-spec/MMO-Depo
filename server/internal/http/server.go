@@ -111,6 +111,12 @@ func NewRouter(d Deps) http.Handler {
 	equipHandler := inventory.NewEquipmentHandler(d.EquipmentService, d.Logger)
 	vendorHandler := vendor.NewHandler(d.VendorService, d.CharacterService, d.Logger)
 
+	// Links from recovery e-mails (DD-219); outside /v1 like the dev console.
+	r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+		Endpoint: "GET /verify-email", PerIP: ptrBucket(ratelimit.PerMinute(20)),
+	}, d.Logger)).Get("/verify-email", authHandler.VerifyEmailPage)
+	r.Get("/reset-password", authHandler.ResetPasswordPage)
+
 	// Admin / ops surface (DD-213) — outside /v1, own bearer sessions.
 	if h := d.AdminHandler; h != nil {
 		h.Routes(r,
@@ -162,6 +168,27 @@ func NewRouter(d Deps) http.Handler {
 				PerAccount: ptrBucket(ratelimit.PerMinute(30)),
 			}, d.Logger))
 			r.Post("/auth/logout", authHandler.Logout)
+		})
+
+		// --- Account recovery (DD-219) ---
+		recovery := func(endpoint string, perIP ratelimit.Bucket, h http.HandlerFunc) {
+			r.With(
+				appmw.RateLimit(d.RateLimitStore, appmw.Policy{Endpoint: endpoint, PerIP: ptrBucket(perIP)}, d.Logger),
+				appmw.Idempotency(d.IdempotencyStore, d.Logger),
+			).Post(endpoint[len("POST /v1"):], h)
+		}
+		recovery("POST /v1/auth/password/reset-request", ratelimit.PerHour(5), authHandler.RequestPasswordReset)
+		recovery("POST /v1/auth/password/reset-confirm", ratelimit.PerHour(10), authHandler.ConfirmPasswordReset)
+		recovery("POST /v1/auth/verify-email", ratelimit.PerMinute(20), authHandler.VerifyEmail)
+		r.Group(func(r chi.Router) {
+			r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
+			r.Use(appmw.Idempotency(d.IdempotencyStore, d.Logger))
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "POST /v1/auth/resend-verification", PerAccount: ptrBucket(ratelimit.PerHour(3)),
+			}, d.Logger)).Post("/auth/resend-verification", authHandler.ResendVerification)
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "POST /v1/auth/password/change", PerAccount: ptrBucket(ratelimit.PerHour(5)),
+			}, d.Logger)).Post("/auth/password/change", authHandler.ChangePassword)
 		})
 
 		// --- Character endpoints + wallet read ---

@@ -13,6 +13,7 @@ import (
 
 	"github.com/otter/server/internal/config"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/platform/db"
@@ -57,6 +58,7 @@ func run() error {
 		Notifier:        notification.NewService(pool, logger),
 		Senders:         pushSenders(cfg, logger),
 		ReconcileFreeze: cfg.WorkerReconcileFreeze,
+		Mailer:          mailSender(cfg, logger),
 		Log:             logger,
 	})
 	for _, j := range jobs {
@@ -104,4 +106,22 @@ func pushSenders(cfg config.Config, logger *slog.Logger) map[string]notification
 		}
 	}
 	return senders
+}
+
+// mailSender picks SMTP when configured; otherwise mail is only logged in dev
+// and refused (kept in the outbox, retried) elsewhere.
+func mailSender(cfg config.Config, logger *slog.Logger) mail.Sender {
+	if cfg.SMTPHost == "" {
+		logger.Warn("SMTP_HOST not set — e-mails are only logged (dev) or held in the outbox")
+		return mail.LogSender{Dev: cfg.Env == "dev", Log: logger}
+	}
+	if cfg.SMTPFrom == "" {
+		logger.Error("SMTP_FROM is required when SMTP_HOST is set — e-mail disabled")
+		return mail.LogSender{Log: logger}
+	}
+	logger.Info("smtp mail enabled", "host", cfg.SMTPHost, "port", cfg.SMTPPort)
+	return mail.SMTPSender{
+		Host: cfg.SMTPHost, Port: cfg.SMTPPort,
+		Username: cfg.SMTPUsername, Password: cfg.SMTPPassword, From: cfg.SMTPFrom,
+	}
 }

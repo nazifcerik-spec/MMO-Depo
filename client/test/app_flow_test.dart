@@ -713,6 +713,55 @@ void main() {
     semantics.dispose();
   });
 
+  testWidgets('forgot password: dialog prefills e-mail and shows the neutral confirmation', (tester) async {
+    final be = FakeBackend();
+    await _boot(tester, be);
+    await tester.enterText(find.byType(TextFormField).at(0), 'grim@example.com');
+    await tester.tap(find.text('Forgot password?'));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(of: find.byType(AlertDialog), matching: find.widgetWithText(TextField, 'grim@example.com')),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Send link'));
+    await tester.pumpAndSettle();
+    expect(be.resetRequestedFor, ['grim@example.com']);
+    expect(find.textContaining('If an account exists'), findsOneWidget);
+  });
+
+  testWidgets('unverified e-mail banner resends; change password rejects wrong current without refreshing', (
+    tester,
+  ) async {
+    final be = FakeBackend()..emailVerified = false;
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+
+    expect(find.text('Please confirm your e-mail address.'), findsOneWidget);
+    await tester.tap(find.text('Resend'));
+    await tester.pumpAndSettle();
+    expect(be.verificationResends, 1);
+    expect(find.text('Verification e-mail sent.'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Change password'));
+    await tester.pumpAndSettle();
+    final fields = find.byType(TextField);
+    await tester.enterText(fields.at(0), 'wrong-horse');
+    await tester.enterText(fields.at(1), 'new-horse-1');
+    await tester.enterText(fields.at(2), 'new-horse-1');
+    final refreshesBefore = be.refreshCalls;
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Wrong email/username or password.'), findsOneWidget);
+    expect(be.refreshCalls, refreshesBefore, reason: 'credential 401 must not trigger a token refresh');
+
+    await tester.enterText(fields.at(0), 'correct-horse');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(be.passwordChangedTo, 'new-horse-1');
+    expect(find.text('Password changed. Your other devices were signed out.'), findsOneWidget);
+  });
+
   testWidgets('Turkish locale renders translated copy', (tester) async {
     await _boot(tester, FakeBackend(), locale: const Locale('tr'));
     expect(find.text('Giriş yap'), findsOneWidget);

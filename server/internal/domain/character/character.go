@@ -76,6 +76,8 @@ var (
 	// ErrSlotCap is returned when the account is already at the character-slot
 	// cap (DD-OPEN-8; v1 default = 2).
 	ErrSlotCap = errors.New("character: slot cap reached")
+	// ErrEmailNotVerified: character creation needs a verified e-mail (DD-219).
+	ErrEmailNotVerified = errors.New("character: e-mail not verified")
 
 	// ErrNotPlayable is returned for enter/mutation attempts against a frozen
 	// or delete_grace character.

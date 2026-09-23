@@ -40,6 +40,18 @@ class AuthController extends ChangeNotifier {
     _set(AuthStatus.signedIn);
   }
 
+  bool get emailVerified => api.emailVerified;
+
+  /// Always "succeeds" (202) — the server never reveals whether the e-mail exists.
+  Future<void> requestPasswordReset(String email) =>
+      api.post('/v1/auth/password/reset-request', {'email': email.trim()}, auth: false);
+
+  Future<void> resendVerification() => api.post('/v1/auth/resend-verification', const {});
+
+  /// Other devices are signed out; this one stays.
+  Future<void> changePassword(String current, String next) =>
+      api.post('/v1/auth/password/change', {'current_password': current, 'new_password': next});
+
   Future<void> logout() async {
     await api.logout();
     _set(AuthStatus.signedOut);

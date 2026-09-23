@@ -118,7 +118,11 @@ func run() error {
 		SessionTTL:     cfg.AuthSessionTTL,
 		Now:            time.Now,
 		MinPasswordLen: cfg.AuthMinPasswordLen,
+		PublicBaseURL:  cfg.PublicBaseURL,
 	}, logger)
+	if cfg.AuthRequireVerifiedEmail {
+		logger.Info("character creation requires a verified e-mail")
+	}
 	logger.Info("auth wired", "access_ttl", cfg.AuthAccessTTL, "refresh_ttl", cfg.AuthRefreshTTL)
 
 	// --- Character ---
@@ -128,6 +132,9 @@ func run() error {
 		DeleteGrace: cfg.CharacterDeleteGrace,
 		Now:         time.Now,
 	}, logger)
+	if cfg.AuthRequireVerifiedEmail {
+		charSvc.WithEmailVerification(authSvc.EmailVerified)
+	}
 	logger.Info("character wired", "slot_cap", cfg.CharacterSlotCap)
 
 	// --- Economy (DD-135) ---

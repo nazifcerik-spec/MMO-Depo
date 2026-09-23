@@ -59,6 +59,8 @@ String errorText(AppLocalizations l, Object error) {
     'E_IN_COMBAT' => l.errInCombat,
     'E_NOT_USABLE' => l.errNotUsable,
     'E_TOO_WOUNDED' => l.errTooWounded,
+    'E_EMAIL_NOT_VERIFIED' => l.errEmailNotVerified,
+    'E_ALREADY_VERIFIED' => l.errAlreadyVerified,
     'E_NOTHING_TO_CLAIM' => l.errNotActive,
     'E_SESSION_EXPIRED' || 'E_SESSION_REVOKED' || 'E_REFRESH_TOKEN_REUSE' => l.errSessionExpired,
     'E_VALIDATION' when error.message.isNotEmpty => error.message,

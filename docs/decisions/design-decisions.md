@@ -2007,6 +2007,16 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Tarih:** 2026-09-23
 
 ---
+
+## DD-219 — Hesap Kurtarma: Tek Token Tablosu + E-posta Outbox + Server Sayfaları
+**Karar:** Şifre sıfırlama (1 sa) ve e-posta doğrulama (24 sa) tek `auth.account_token` tablosunda (`kind`), yalnız SHA-256 hash saklanır; tüketim koşullu UPDATE (tek kullanım) ve aynı türdeki açık kardeş token'ları da yakar. E-postalar `ops.email_outbox` → worker `email_dispatch` (stdlib net/smtp, 587 STARTTLS zorunlu / 465 TLS; `SMTP_HOST` yoksa dev'de log, prod'da gönderilmez) ile gider; gövde (tek kullanımlık link) gönderimden/vazgeçilmeden sonra NULL'lanır. Uç noktalar: `password/reset-request` (her durumda 202 + 400ms taban süre → hesap sızdırmaz; saatte hesap başı 3 e-posta, IP başı 5 istek), `password/reset-confirm` (tüm oturumları kapatır), `verify-email`, `resend-verification`, `password/change` (bu oturum hariç hepsini kapatır). Deep link henüz olmadığı için e-postadaki bağlantılar server'daki `/verify-email` ve `/reset-password` sayfalarını açar (dış kaynaksız, nonce'lı sıkı CSP, `no-referrer`, `no-store`). Doğrulanmamış hesabın karakter oluşturması `AUTH_REQUIRE_VERIFIED_EMAIL` ile açılır (varsayılan kapalı; SMTP kurulunca açılmalı).
+**Reason:** docs/auth/password.md §5–8 ve register.md §7–8 gereksinimleri; iki ayrı tablo aynı yaşam döngüsünü tekrar ederdi. Outbox, API yolunda SMTP gecikmesi/hatası olmadan kalıcı yeniden deneme sağlar.
+**Alternatives:** API'den senkron SMTP (gecikme + zamanlama sızıntısı + kayıp), harici e-posta SDK'sı (gereksiz bağımlılık), mobil deep link (henüz yok — Phase 01 sonu).
+**Consequences:** Prod'da `PUBLIC_BASE_URL`, `SMTP_*` secret manager'dan verilmeli. `password/change` docs'taki "logout-all" yerine mevcut oturumu korur (UX; saldırgan oturumları yine kapanır). OTP/2FA ve yaygın şifre kara listesi (password.md §9) Phase 02.
+**Tarih:** 2026-09-23
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

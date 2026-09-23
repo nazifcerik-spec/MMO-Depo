@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
+import '../auth/account_dialogs.dart';
 import '../auth/auth_controller.dart';
 import 'character_repository.dart';
 import '../home/home_shell.dart';
@@ -80,7 +81,14 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l.characters),
-        actions: [IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout)],
+        actions: [
+          IconButton(
+            tooltip: l.changePassword,
+            icon: const Icon(Icons.key_outlined),
+            onPressed: () => showChangePasswordDialog(context, widget.auth),
+          ),
+          IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
+        ],
       ),
       floatingActionButton: list == null || list.full
           ? null
@@ -95,6 +103,7 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, 96),
                 children: [
+                  if (!widget.auth.emailVerified) _VerifyBanner(auth: widget.auth),
                   Text(l.slotsUsed(list.characters.length, list.slotCap), style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: Space.md),
                   if (list.characters.isEmpty)
@@ -175,6 +184,43 @@ class _CharacterCard extends StatelessWidget {
                 const Icon(Icons.chevron_right, color: Palette.textMuted),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown until the account confirms its e-mail (DD-219).
+class _VerifyBanner extends StatelessWidget {
+  const _VerifyBanner({required this.auth});
+
+  final AuthController auth;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Card(
+      margin: const EdgeInsets.only(bottom: Space.md),
+      color: Palette.warning.withValues(alpha: 0.12),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(Space.lg, Space.md, Space.sm, Space.md),
+        child: Row(
+          children: [
+            const Icon(Icons.mark_email_unread_outlined, color: Palette.warning),
+            const SizedBox(width: Space.md),
+            Expanded(child: Text(l.verifyEmailBanner)),
+            TextButton(
+              onPressed: () async {
+                try {
+                  await auth.resendVerification();
+                  if (context.mounted) toast(context, Text(l.verificationSent));
+                } on ApiError catch (e) {
+                  if (context.mounted) toast(context, Text(errorText(l, e)));
+                }
+              },
+              child: Text(l.resend),
+            ),
+          ],
         ),
       ),
     );

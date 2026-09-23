@@ -55,6 +55,10 @@ class ApiClient {
   /// Account of the current session, null when signed out.
   String? accountId;
 
+  /// False until the account confirms its e-mail (DD-219); refreshed with
+  /// every session response.
+  bool emailVerified = true;
+
   /// Sent as `X-Character-Id` once a character has been entered.
   String? characterId;
 
@@ -120,6 +124,7 @@ class ApiClient {
     _accessExpires = DateTime.parse(body['access_expires_at'] as String);
     _refresh = body['refresh_token'] as String;
     accountId = body['account_id'] as String?;
+    emailVerified = body['email_verified'] as bool? ?? true;
     await store.writeRefreshToken(_refresh!);
   }
 
@@ -188,7 +193,9 @@ class ApiClient {
         rethrow;
       }
 
-      if (res.statusCode == 401 && auth && !refreshed && _refresh != null) {
+      // A 401 about the request itself (wrong current password) is not a
+      // token problem: refreshing would only rotate tokens for nothing.
+      if (res.statusCode == 401 && auth && !refreshed && _refresh != null && !_isCredentialError(res)) {
         refreshed = true;
         await _refreshSession();
         continue;
@@ -253,6 +260,15 @@ class ApiClient {
       );
     }
     throw ApiError(res.statusCode, 'E_HTTP_${res.statusCode}');
+  }
+
+  static bool _isCredentialError(http.Response res) {
+    try {
+      final j = jsonDecode(res.body);
+      return j is Map && j['error'] is Map && (j['error'] as Map)['code'] == 'E_INVALID_CREDENTIALS';
+    } on FormatException {
+      return false;
+    }
   }
 
   static bool _retryable(int status) => status == 502 || status == 503 || status == 504;

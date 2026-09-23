@@ -161,6 +161,7 @@ type sessionResp struct {
 	AccessExpiresAt string `json:"access_expires_at"`
 	RefreshToken    string `json:"refresh_token"`
 	RefreshExpires  string `json:"refresh_expires_at"`
+	EmailVerified   bool   `json:"email_verified"`
 }
 
 func sessionResponse(r *LoginResult) sessionResp {
@@ -171,6 +172,7 @@ func sessionResponse(r *LoginResult) sessionResp {
 		AccessExpiresAt: r.AccessExpiresAt.UTC().Format(time.RFC3339),
 		RefreshToken:    r.RefreshToken,
 		RefreshExpires:  r.RefreshExpires.UTC().Format(time.RFC3339),
+		EmailVerified:   r.EmailVerified,
 	}
 }
 
@@ -211,6 +213,10 @@ func writeAuthError(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusUnauthorized, "E_SESSION_REVOKED", "session revoked")
 	case errors.Is(err, ErrSessionExpired):
 		apierr.Write(w, r, http.StatusUnauthorized, "E_SESSION_EXPIRED", "session expired")
+	case errors.Is(err, ErrRecoveryTokenInvalid):
+		apierr.Write(w, r, http.StatusBadRequest, "E_RECOVERY_TOKEN_INVALID", "link is invalid or expired")
+	case errors.Is(err, ErrEmailAlreadyVerified):
+		apierr.Write(w, r, http.StatusConflict, "E_ALREADY_VERIFIED", "e-mail already verified")
 	default:
 		apierr.Write(w, r, http.StatusInternalServerError, "E_INTERNAL", "internal error")
 	}

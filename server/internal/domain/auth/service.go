@@ -27,6 +27,9 @@ type ServiceConfig struct {
 
 	// MinPasswordLen: hard minimum per NIST — no complexity mandate.
 	MinPasswordLen int
+
+	// PublicBaseURL prefixes links in recovery e-mails (DD-219).
+	PublicBaseURL string
 }
 
 // DefaultServiceConfig returns Faz 00 baseline values.
@@ -118,6 +121,11 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*LoginResu
 	}
 	if err := s.repo.CreateAccount(ctx, account); err != nil {
 		return nil, err
+	}
+	// Verification mail is best effort: the account works regardless and the
+	// player can resend from the app (DD-219).
+	if err := s.issueToken(ctx, &account, TokenEmailVerify, now); err != nil {
+		s.log.WarnContext(ctx, "auth: verification mail not queued", "err", err.Error())
 	}
 
 	return s.issueSession(ctx, account, req.IPHash, req.UserAgent, now)
@@ -327,6 +335,7 @@ func (s *Service) issueTokensForSession(ctx context.Context, session Session, ac
 		AccessExpiresAt: accessExp,
 		RefreshToken:    refreshPlain,
 		RefreshExpires:  refreshExpires,
+		EmailVerified:   account.EmailVerifiedAt != nil,
 	}, nil
 }
 

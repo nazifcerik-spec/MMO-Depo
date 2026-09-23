@@ -86,6 +86,7 @@ type LoginResult struct {
 	AccessExpiresAt time.Time
 	RefreshToken    string
 	RefreshExpires  time.Time
+	EmailVerified   bool // DD-219: client shows a verify banner when false
 }
 
 // --- Errors ------------------------------------------------------------------

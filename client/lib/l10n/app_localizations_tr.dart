@@ -1003,4 +1003,49 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errTooWounded => 'Savaşamayacak kadar yaralısın. Dinlen ya da iksir iç.';
+
+  @override
+  String get forgotPassword => 'Şifremi unuttum';
+
+  @override
+  String get resetHint => 'Hesabının e-posta adresini gir; yeni şifre belirlemen için bir bağlantı gönderelim.';
+
+  @override
+  String get resetSent => 'Bu e-postaya ait bir hesap varsa sıfırlama bağlantısı gönderildi. Bağlantı 1 saat geçerli.';
+
+  @override
+  String get sendLink => 'Bağlantı gönder';
+
+  @override
+  String get close => 'Kapat';
+
+  @override
+  String get changePassword => 'Şifre değiştir';
+
+  @override
+  String get currentPassword => 'Mevcut şifre';
+
+  @override
+  String get newPassword => 'Yeni şifre';
+
+  @override
+  String get save => 'Kaydet';
+
+  @override
+  String get passwordChanged => 'Şifren değişti. Diğer cihazlarındaki oturumlar kapatıldı.';
+
+  @override
+  String get verifyEmailBanner => 'Lütfen e-posta adresini doğrula.';
+
+  @override
+  String get resend => 'Tekrar gönder';
+
+  @override
+  String get verificationSent => 'Doğrulama e-postası gönderildi.';
+
+  @override
+  String get errEmailNotVerified => 'Karakter oluşturmadan önce e-postanı doğrula.';
+
+  @override
+  String get errAlreadyVerified => 'E-postan zaten doğrulanmış.';
 }

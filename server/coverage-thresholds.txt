@@ -21,6 +21,7 @@ internal/http/middleware      82
 internal/hunt                 15
 internal/inventory            21
 internal/item                 27
+internal/mail                 14
 internal/market               3
 internal/notification         21
 internal/observability        59

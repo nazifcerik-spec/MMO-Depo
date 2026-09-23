@@ -121,5 +121,5 @@ func TestAll_UniqueNamesAndPositiveIntervals(t *testing.T) {
 		seen[j.Name()] = true
 		require.Positive(t, j.Interval())
 	}
-	require.Len(t, seen, 14)
+	require.Len(t, seen, 15)
 }

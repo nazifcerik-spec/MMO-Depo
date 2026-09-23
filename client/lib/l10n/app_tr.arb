@@ -301,5 +301,20 @@
   "errHpFull": "Canın zaten dolu.",
   "errInCombat": "Önce avını ya da zindanını bitir.",
   "errNotUsable": "Bu eşya kullanılamaz.",
-  "errTooWounded": "Savaşamayacak kadar yaralısın. Dinlen ya da iksir iç."
+  "errTooWounded": "Savaşamayacak kadar yaralısın. Dinlen ya da iksir iç.",
+  "forgotPassword": "Şifremi unuttum",
+  "resetHint": "Hesabının e-posta adresini gir; yeni şifre belirlemen için bir bağlantı gönderelim.",
+  "resetSent": "Bu e-postaya ait bir hesap varsa sıfırlama bağlantısı gönderildi. Bağlantı 1 saat geçerli.",
+  "sendLink": "Bağlantı gönder",
+  "close": "Kapat",
+  "changePassword": "Şifre değiştir",
+  "currentPassword": "Mevcut şifre",
+  "newPassword": "Yeni şifre",
+  "save": "Kaydet",
+  "passwordChanged": "Şifren değişti. Diğer cihazlarındaki oturumlar kapatıldı.",
+  "verifyEmailBanner": "Lütfen e-posta adresini doğrula.",
+  "resend": "Tekrar gönder",
+  "verificationSent": "Doğrulama e-postası gönderildi.",
+  "errEmailNotVerified": "Karakter oluşturmadan önce e-postanı doğrula.",
+  "errAlreadyVerified": "E-postan zaten doğrulanmış."
 }

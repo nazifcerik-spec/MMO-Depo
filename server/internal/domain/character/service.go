@@ -34,10 +34,11 @@ type SheetComputer interface {
 
 // Service is the character business logic.
 type Service struct {
-	repo    Repository
-	sheeter SheetComputer
-	cfg     ServiceConfig
-	log     *slog.Logger
+	repo     Repository
+	sheeter  SheetComputer
+	verified func(ctx context.Context, accountID uuid.UUID) (bool, error) // nil = no e-mail gate
+	cfg      ServiceConfig
+	log      *slog.Logger
 }
 
 func NewService(repo Repository, cfg ServiceConfig, logger *slog.Logger) *Service {
@@ -59,6 +60,13 @@ func NewService(repo Repository, cfg ServiceConfig, logger *slog.Logger) *Servic
 // WithSheetComputer wires an external stat-computer (Sprint 11 skill engine).
 func (s *Service) WithSheetComputer(sc SheetComputer) *Service {
 	s.sheeter = sc
+	return s
+}
+
+// WithEmailVerification makes Create refuse accounts whose e-mail is not
+// verified yet (docs/auth/register.md §7, DD-219).
+func (s *Service) WithEmailVerification(check func(ctx context.Context, accountID uuid.UUID) (bool, error)) *Service {
+	s.verified = check
 	return s
 }
 
@@ -88,6 +96,16 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 	class, err := validateClass(req.ClassCode)
 	if err != nil {
 		return nil, err
+	}
+
+	if s.verified != nil {
+		ok, err := s.verified(ctx, req.AccountID)
+		if err != nil {
+			return nil, err
+		}
+		if !ok {
+			return nil, ErrEmailNotVerified
+		}
 	}
 
 	// Slot cap check.

@@ -1903,6 +1903,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You\'re too wounded to fight. Rest or drink a potion.'**
   String get errTooWounded;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPassword;
+
+  /// No description provided for @resetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your account e-mail and we\'ll send you a link to set a new password.'**
+  String get resetHint;
+
+  /// No description provided for @resetSent.
+  ///
+  /// In en, this message translates to:
+  /// **'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.'**
+  String get resetSent;
+
+  /// No description provided for @sendLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send link'**
+  String get sendLink;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePassword;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get currentPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPassword;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed. Your other devices were signed out.'**
+  String get passwordChanged;
+
+  /// No description provided for @verifyEmailBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your e-mail address.'**
+  String get verifyEmailBanner;
+
+  /// No description provided for @resend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resend;
+
+  /// No description provided for @verificationSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification e-mail sent.'**
+  String get verificationSent;
+
+  /// No description provided for @errEmailNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your e-mail before creating a character.'**
+  String get errEmailNotVerified;
+
+  /// No description provided for @errAlreadyVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Your e-mail is already confirmed.'**
+  String get errAlreadyVerified;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

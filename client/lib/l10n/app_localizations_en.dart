@@ -1004,4 +1004,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+
+  @override
+  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+
+  @override
+  String get sendLink => 'Send link';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get changePassword => 'Change password';
+
+  @override
+  String get currentPassword => 'Current password';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+
+  @override
+  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+
+  @override
+  String get resend => 'Resend';
+
+  @override
+  String get verificationSent => 'Verification e-mail sent.';
+
+  @override
+  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+
+  @override
+  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
 }

@@ -63,6 +63,21 @@ type Config struct {
 	// dev additionally accepts any http://localhost:<port>.
 	CORSAllowedOrigins []string `envconfig:"CORS_ALLOWED_ORIGINS" default:""`
 
+	// --- Account recovery (Sprint 37, DD-219) ---
+	// Base URL of the links in recovery e-mails (the API host serving
+	// /verify-email and /reset-password).
+	PublicBaseURL string `envconfig:"PUBLIC_BASE_URL" default:"http://localhost:8080"`
+	// When true, characters can only be created after the e-mail is verified
+	// (docs/auth/register.md §7). Enable once SMTP delivery is configured.
+	AuthRequireVerifiedEmail bool `envconfig:"AUTH_REQUIRE_VERIFIED_EMAIL" default:"false"`
+	// SMTP for the email_dispatch worker. Empty host = e-mails are only logged
+	// (dev). Port 587 uses STARTTLS; 465 implicit TLS.
+	SMTPHost     string `envconfig:"SMTP_HOST" default:""`
+	SMTPPort     int    `envconfig:"SMTP_PORT" default:"587"`
+	SMTPUsername string `envconfig:"SMTP_USERNAME" default:""`
+	SMTPPassword string `envconfig:"SMTP_PASSWORD" default:""`
+	SMTPFrom     string `envconfig:"SMTP_FROM" default:""`
+
 	// --- Observability (Sprint 27, DD-214) ---
 	// /metrics listens on its own port so it is never exposed through the
 	// public reverse proxy. Empty disables it.

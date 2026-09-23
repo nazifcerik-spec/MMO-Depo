@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/social"
@@ -179,6 +180,21 @@ func (PushDispatch) Name() string            { return "push_dispatch" }
 func (PushDispatch) Interval() time.Duration { return 10 * time.Second }
 func (j PushDispatch) Run(ctx context.Context) (int64, error) {
 	return notification.Dispatch(ctx, j.Pool, j.Senders, 100)
+}
+
+// EmailDispatch delivers the transactional e-mail outbox (DD-219).
+type EmailDispatch struct {
+	Pool   *pgxpool.Pool
+	Sender mail.Sender
+}
+
+func (EmailDispatch) Name() string            { return "email_dispatch" }
+func (EmailDispatch) Interval() time.Duration { return 15 * time.Second }
+func (j EmailDispatch) Run(ctx context.Context) (int64, error) {
+	if j.Sender == nil {
+		return 0, nil
+	}
+	return mail.Dispatch(ctx, j.Pool, j.Sender, 50)
 }
 
 // WorldEvents schedules, opens, closes and pays world boss / invasion spawns.
@@ -467,6 +483,7 @@ type Deps struct {
 	Notifier        Notifier
 	Senders         map[string]notification.Sender
 	ReconcileFreeze bool
+	Mailer          mail.Sender // nil → email_dispatch is a no-op
 	Log             *slog.Logger
 }
 
@@ -479,6 +496,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 		ActivityExpire{Pool: pool, Notifier: d.Notifier, Log: logger},
 		TravelArrive{Pool: pool, Notifier: d.Notifier, Log: logger},
 		PushDispatch{Pool: pool, Senders: d.Senders},
+		EmailDispatch{Pool: pool, Sender: d.Mailer},
 		WorldEvents{Pool: pool, Txn: txn, Notifier: d.Notifier, Log: logger},
 		NotificationGC(pool),
 		SanctionExpire(pool),

@@ -249,6 +249,8 @@ func writeCharErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_NAME_TAKEN", "name already taken")
 	case errors.Is(err, ErrSlotCap):
 		apierr.Write(w, r, http.StatusConflict, "E_SLOT_CAP", "character slot cap reached")
+	case errors.Is(err, ErrEmailNotVerified):
+		apierr.Write(w, r, http.StatusForbidden, "E_EMAIL_NOT_VERIFIED", "verify your e-mail first")
 	case errors.Is(err, ErrNotPlayable):
 		apierr.Write(w, r, http.StatusConflict, "E_NOT_PLAYABLE", "character is not in an active state")
 	case errors.Is(err, ErrNotInDeleteGrace):
