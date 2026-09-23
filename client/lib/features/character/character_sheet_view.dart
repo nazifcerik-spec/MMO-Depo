@@ -11,11 +11,18 @@ import 'models.dart';
 /// attributes, combat stats, gold. Reloads on pull-to-refresh and whenever
 /// [dataVersion] changes (after a reveal or a relevant push event).
 class CharacterSheetView extends StatefulWidget {
-  const CharacterSheetView({super.key, required this.repo, required this.initial, required this.dataVersion});
+  const CharacterSheetView({
+    super.key,
+    required this.repo,
+    required this.initial,
+    required this.dataVersion,
+    this.onOpenProgress,
+  });
 
   final CharacterRepository repo;
   final CharacterSheet initial;
   final ValueNotifier<int> dataVersion;
+  final VoidCallback? onOpenProgress;
 
   @override
   State<CharacterSheetView> createState() => _CharacterSheetViewState();
@@ -146,6 +153,14 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               ),
             ],
           ),
+          if (widget.onOpenProgress != null) ...[
+            const SizedBox(height: Space.lg),
+            OutlinedButton.icon(
+              onPressed: widget.onOpenProgress,
+              icon: const Icon(Icons.emoji_events_outlined),
+              label: Text(l.progress),
+            ),
+          ],
         ],
       ),
     );

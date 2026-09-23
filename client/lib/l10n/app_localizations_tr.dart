@@ -1219,4 +1219,209 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errTagTaken => 'Bu etiket alınmış.';
+
+  @override
+  String get progress => 'Başarımlar ve ustalık';
+
+  @override
+  String get tabAchievements => 'Başarımlar';
+
+  @override
+  String get tabMastery => 'Ustalık';
+
+  @override
+  String get tabReputation => 'İtibar';
+
+  @override
+  String get tabTitles => 'Unvanlar';
+
+  @override
+  String achievementPoints(int points) {
+    return '$points başarım puanı';
+  }
+
+  @override
+  String pointsShort(int points) {
+    return '$points puan';
+  }
+
+  @override
+  String rewardTitle(String title) {
+    return 'Unvan: $title';
+  }
+
+  @override
+  String masteryTier(int tier, int max) {
+    return 'Kademe $tier/$max';
+  }
+
+  @override
+  String repDailyLeft(int amount) {
+    return 'Bugün +$amount';
+  }
+
+  @override
+  String get noTitle => 'Unvan yok';
+
+  @override
+  String get noTitlesYet => 'Unvanlar başarımlarla açılır.';
+
+  @override
+  String get errTitleNotOwned => 'Bu unvanı henüz açmadın.';
+
+  @override
+  String get notifications => 'Bildirimler';
+
+  @override
+  String get markAllRead => 'Tümünü okundu say';
+
+  @override
+  String get inboxNothing => 'Henüz bildirim yok.';
+
+  @override
+  String get notifSettings => 'Bildirim ayarları';
+
+  @override
+  String get muteAll => 'Anlık bildirimleri duraklat';
+
+  @override
+  String get muteHint => '24 saatliğine. Bildirim kutusu dolmaya devam eder.';
+
+  @override
+  String mutedFor(String time) {
+    return '$time daha duraklatıldı';
+  }
+
+  @override
+  String get modePushInbox => 'Anlık + kutu';
+
+  @override
+  String get modeInbox => 'Yalnız kutu';
+
+  @override
+  String get modeSilent => 'Sessiz';
+
+  @override
+  String get modeOff => 'Kapalı';
+
+  @override
+  String get nkActivity => 'Etkinlik tamamlandı';
+
+  @override
+  String get nkDungeon => 'Zindan koşusu bitti';
+
+  @override
+  String get nkTravel => 'Varış';
+
+  @override
+  String get nkWorldEvent => 'Dünya etkinliği başladı';
+
+  @override
+  String get nkMarketSold => 'Eşya satıldı';
+
+  @override
+  String get nkMail => 'Yeni posta';
+
+  @override
+  String get nkPartyInvite => 'Parti daveti';
+
+  @override
+  String get nkGuildInvite => 'Lonca daveti';
+
+  @override
+  String get nkAchievement => 'Başarım açıldı';
+
+  @override
+  String get nkSystem => 'Duyuru';
+
+  @override
+  String timeAgo(String time) {
+    return '$time önce';
+  }
+
+  @override
+  String get segEvents => 'Etkinlik';
+
+  @override
+  String get eventsEmpty => 'Şu an planlı dünya etkinliği yok.';
+
+  @override
+  String get worldBoss => 'Dünya bossu';
+
+  @override
+  String get invasion => 'İstila';
+
+  @override
+  String startsIn(String time) {
+    return '$time sonra başlar';
+  }
+
+  @override
+  String endsIn(String time) {
+    return '$time sonra biter';
+  }
+
+  @override
+  String regionOnly(String region) {
+    return 'Yalnız $region';
+  }
+
+  @override
+  String get eventGoal => 'Hedef';
+
+  @override
+  String get enlist => 'Katıl';
+
+  @override
+  String get enlistHint =>
+      'Katıldığın andaki gücün sabitlenir. Etkinlik sürdükçe her dakika puan kazanırsın; ödüller bitince gelir.';
+
+  @override
+  String enlistedPower(int power) {
+    return 'Katıldın · güç $power';
+  }
+
+  @override
+  String myContribution(int score, int tier) {
+    return 'Puanın $score · ödül kademesi $tier';
+  }
+
+  @override
+  String get eventSucceeded => 'Zafer';
+
+  @override
+  String get eventFailed => 'Başarısız';
+
+  @override
+  String tokenBalance(int tokens) {
+    return '$tokens etkinlik jetonu';
+  }
+
+  @override
+  String claimDaily(int tokens) {
+    return '$tokens al';
+  }
+
+  @override
+  String get claimedToday => 'Alındı';
+
+  @override
+  String eventTokensGained(int tokens) {
+    return '+$tokens etkinlik jetonu';
+  }
+
+  @override
+  String get errEventNotOpen => 'Bu etkinliğe katılım kapandı.';
+
+  @override
+  String get errWrongRegion => 'Önce etkinliğin bölgesine git.';
+
+  @override
+  String get errAlreadyEnlisted => 'Zaten katıldın.';
+
+  @override
+  String get errAlreadyClaimed => 'Bugün zaten aldın.';
+
+  @override
+  String get errEventNotActive => 'Bu etkinlik şu an sürmüyor.';
 }

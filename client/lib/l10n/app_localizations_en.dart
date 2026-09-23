@@ -1220,4 +1220,209 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errTagTaken => 'That tag is taken.';
+
+  @override
+  String get progress => 'Achievements & mastery';
+
+  @override
+  String get tabAchievements => 'Achievements';
+
+  @override
+  String get tabMastery => 'Mastery';
+
+  @override
+  String get tabReputation => 'Reputation';
+
+  @override
+  String get tabTitles => 'Titles';
+
+  @override
+  String achievementPoints(int points) {
+    return '$points achievement points';
+  }
+
+  @override
+  String pointsShort(int points) {
+    return '$points pts';
+  }
+
+  @override
+  String rewardTitle(String title) {
+    return 'Title: $title';
+  }
+
+  @override
+  String masteryTier(int tier, int max) {
+    return 'Tier $tier/$max';
+  }
+
+  @override
+  String repDailyLeft(int amount) {
+    return '+$amount today';
+  }
+
+  @override
+  String get noTitle => 'No title';
+
+  @override
+  String get noTitlesYet => 'Titles unlock through achievements.';
+
+  @override
+  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get markAllRead => 'Mark all as read';
+
+  @override
+  String get inboxNothing => 'No notifications yet.';
+
+  @override
+  String get notifSettings => 'Notification settings';
+
+  @override
+  String get muteAll => 'Pause push notifications';
+
+  @override
+  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+
+  @override
+  String mutedFor(String time) {
+    return 'Paused for $time';
+  }
+
+  @override
+  String get modePushInbox => 'Push + inbox';
+
+  @override
+  String get modeInbox => 'Inbox only';
+
+  @override
+  String get modeSilent => 'Silent';
+
+  @override
+  String get modeOff => 'Off';
+
+  @override
+  String get nkActivity => 'Activity finished';
+
+  @override
+  String get nkDungeon => 'Dungeon run finished';
+
+  @override
+  String get nkTravel => 'Arrived';
+
+  @override
+  String get nkWorldEvent => 'World event started';
+
+  @override
+  String get nkMarketSold => 'Item sold';
+
+  @override
+  String get nkMail => 'New mail';
+
+  @override
+  String get nkPartyInvite => 'Party invitation';
+
+  @override
+  String get nkGuildInvite => 'Guild invitation';
+
+  @override
+  String get nkAchievement => 'Achievement unlocked';
+
+  @override
+  String get nkSystem => 'Announcement';
+
+  @override
+  String timeAgo(String time) {
+    return '$time ago';
+  }
+
+  @override
+  String get segEvents => 'Events';
+
+  @override
+  String get eventsEmpty => 'No world events scheduled right now.';
+
+  @override
+  String get worldBoss => 'World boss';
+
+  @override
+  String get invasion => 'Invasion';
+
+  @override
+  String startsIn(String time) {
+    return 'Starts in $time';
+  }
+
+  @override
+  String endsIn(String time) {
+    return 'Ends in $time';
+  }
+
+  @override
+  String regionOnly(String region) {
+    return '$region only';
+  }
+
+  @override
+  String get eventGoal => 'Goal';
+
+  @override
+  String get enlist => 'Enlist';
+
+  @override
+  String get enlistHint =>
+      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+
+  @override
+  String enlistedPower(int power) {
+    return 'Enlisted · power $power';
+  }
+
+  @override
+  String myContribution(int score, int tier) {
+    return 'Your score $score · reward tier $tier';
+  }
+
+  @override
+  String get eventSucceeded => 'Victory';
+
+  @override
+  String get eventFailed => 'Failed';
+
+  @override
+  String tokenBalance(int tokens) {
+    return '$tokens event tokens';
+  }
+
+  @override
+  String claimDaily(int tokens) {
+    return 'Claim $tokens';
+  }
+
+  @override
+  String get claimedToday => 'Claimed';
+
+  @override
+  String eventTokensGained(int tokens) {
+    return '+$tokens event tokens';
+  }
+
+  @override
+  String get errEventNotOpen => 'Enlistment for this event is closed.';
+
+  @override
+  String get errWrongRegion => 'Travel to the event\'s region first.';
+
+  @override
+  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+
+  @override
+  String get errAlreadyClaimed => 'Already claimed today.';
+
+  @override
+  String get errEventNotActive => 'This event isn\'t running.';
 }

@@ -47,6 +47,9 @@ Future<(FakeBackend, FakeSocketServer, MemoryTokenStore)> _inGame(WidgetTester t
   return (be, ws, store);
 }
 
+/// The vertical list inside the visible panel (tab views also scroll sideways).
+final _list = find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).last;
+
 void main() {
   testWidgets('login validates, shows server errors, then lands on character select', (tester) async {
     final be = FakeBackend();
@@ -854,10 +857,169 @@ void main() {
     expect(find.textContaining('Guild disbands in'), findsNothing);
   });
 
+  testWidgets('notifications: badge, read one / all, live bump, settings keep quiet hours', (tester) async {
+    Map<String, dynamic> note(String id, String kind, Map<String, dynamic> vars) => {
+      'id': id,
+      'kind': kind,
+      'body': {'kind': kind, 'body_vars': vars},
+      'created_at': DateTime.now().toUtc().subtract(const Duration(minutes: 5)).toIso8601String(),
+    };
+    final (be, ws, _) = await _inGame(tester);
+    be.inbox.addAll([
+      note('n-1', 'market_sold', {'template_code': 'sword_iron', 'net_copper': 12000}),
+      note('n-2', 'guild_invite', {'guild_name': 'Iron Wolves'}),
+    ]);
+    ws.last.push('mail.received'); // any inbox-backed push refreshes the badge
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: find.byType(Badge), matching: find.text('2')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Notifications'));
+    await tester.pumpAndSettle();
+    expect(find.text('Item sold'), findsOneWidget);
+    expect(find.textContaining('Sword Iron · +1g 20s 0c'), findsOneWidget);
+    expect(find.textContaining('Iron Wolves'), findsOneWidget);
+
+    await tester.tap(find.text('Item sold'));
+    await tester.pumpAndSettle();
+    expect(be.inbox.first['read_at'], isNotNull);
+    await tester.tap(find.byTooltip('Mark all as read'));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Mark all as read'), findsNothing);
+
+    await tester.tap(find.byTooltip('Notification settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pause push notifications'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Paused for'), findsOneWidget);
+    await tester.tap(
+      find.descendant(of: find.widgetWithText(ListTile, 'Item sold'), matching: find.text('Push + inbox')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Inbox only').last);
+    await tester.pumpAndSettle();
+    expect(be.notifKinds['market_sold'], 'inbox_only');
+    expect(be.lastPrefsPut!['quiet_hours_start'], '22:00', reason: 'PUT replaces quiet hours wholesale');
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.byType(Badge), findsOneWidget);
+    expect(find.descendant(of: find.byType(Badge), matching: find.text('2')), findsNothing);
+  });
+
+  testWidgets('progression: achievements sorted, mastery bonus, reputation, title select + clear', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    await tester.scrollUntilVisible(find.text('Achievements & mastery'), 200);
+    await tester.tap(find.text('Achievements & mastery'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('5 achievement points'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('First Blood')).dy,
+      lessThan(tester.getTopLeft(find.text('Slayer 100')).dy),
+      reason: 'unlocked first',
+    );
+    expect(find.text('37/100'), findsOneWidget);
+    await tester.scrollUntilVisible(find.textContaining('Title: Prospector'), 200, scrollable: _list);
+
+    await tester.tap(find.text('Mastery'));
+    await tester.pumpAndSettle();
+    expect(find.text('Tier 1/10'), findsOneWidget);
+    expect(find.text('150 / 500'), findsOneWidget);
+    expect(find.text('+1 Gather Yield Mining'), findsOneWidget);
+
+    await tester.tap(find.text('Reputation'));
+    await tester.pumpAndSettle();
+    expect(find.text('Neutral · 40'), findsOneWidget);
+    expect(find.text('+1460 today'), findsOneWidget);
+
+    await tester.tap(find.text('Titles'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prospector'));
+    await tester.pumpAndSettle();
+    expect(be.activeTitle, 'prospector');
+    await tester.tap(find.text('No title'));
+    await tester.pumpAndSettle();
+    expect(be.activeTitle, isNull);
+  });
+
+  testWidgets('events: seasonal claim once, enlist with confirm, level gate, closed result', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    DateTime at(Duration d) => DateTime.now().toUtc().add(d);
+    Map<String, dynamic> spawn(String id, String code, String kind, String state, int minLevel, Duration start) => {
+      'id': id,
+      'template_code': code,
+      'kind': kind,
+      'min_level': minLevel,
+      'goal_score': 500000,
+      'total_score': 125000,
+      'starts_at': at(start).toIso8601String(),
+      'ends_at': at(start + const Duration(hours: 1)).toIso8601String(),
+      'state': state,
+      'tiers': <Object>[],
+      'enlisted': false,
+    };
+    be.worldEvents.addAll([
+      spawn('s-1', 'ashen_colossus', 'world_boss', 'active', 1, const Duration(minutes: -10)),
+      spawn('s-2', 'greenwood_incursion', 'invasion', 'scheduled', 30, const Duration(hours: 5))
+        ..['region_code'] = 'greenwood',
+      spawn('s-3', 'ashen_colossus', 'world_boss', 'succeeded', 1, const Duration(days: -1))
+        ..addAll({'enlisted': true, 'my_power': 300, 'my_score': 1800, 'my_reward_tier': 2}),
+    ]);
+    await tester.tap(find.text('Adventure'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Events'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Claim 15'));
+    await tester.pumpAndSettle();
+    expect(find.text('+15 event tokens'), findsOneWidget);
+    expect(find.text('Claimed'), findsOneWidget);
+    expect(find.text('15 event tokens'), findsOneWidget);
+
+    expect(find.textContaining('Invasion · Greenwood only · Starts in'), findsOneWidget);
+    final enlist = find.widgetWithText(FilledButton, 'Enlist');
+    expect(enlist, findsNWidgets(2));
+    expect(tester.widget<FilledButton>(enlist.last).onPressed, isNull, reason: 'level 30 gate');
+
+    await tester.tap(enlist.first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(AlertDialog), matching: find.text('Enlist')));
+    await tester.pumpAndSettle();
+    expect(be.worldEvents.first['enlisted'], isTrue);
+    expect(find.text('Enlisted · power 420'), findsOneWidget);
+
+    await tester.scrollUntilVisible(find.text('Your score 1800 · reward tier 2'), 200, scrollable: _list);
+    expect(find.textContaining('World boss · Victory'), findsOneWidget);
+  });
+
   testWidgets('Turkish locale renders translated copy', (tester) async {
     await _boot(tester, FakeBackend(), locale: const Locale('tr'));
     expect(find.text('Giriş yap'), findsOneWidget);
     expect(find.text('E-posta veya kullanıcı adı'), findsOneWidget);
+  });
+
+  testWidgets('Turkish in-game chrome fits a phone (4 adventure segments, progress button)', (tester) async {
+    final be = FakeBackend()
+      ..characters.add({
+        'id': 'char-1',
+        'name': 'Grim',
+        'race_code': 'orc',
+        'class_code': 'rogue',
+        'level': 3,
+        'state': 'active',
+      });
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store, locale: const Locale('tr'));
+    await tester.tap(find.text('Grim'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Macera'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Etkinlik'));
+    await tester.pumpAndSettle();
+    expect(find.text('Şu an planlı dünya etkinliği yok.'), findsOneWidget); // layout overflow would fail the test
   });
 
   test('splitCopper', () {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
+import '../../core/api_client.dart';
 import '../../core/live_events.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
@@ -16,6 +17,10 @@ import '../character/character_sheet_view.dart';
 import '../character/models.dart';
 import '../inventory/inventory_repository.dart';
 import '../inventory/inventory_view.dart';
+import '../notifications/notification_repository.dart';
+import '../notifications/notifications_screen.dart';
+import '../progression/progression_repository.dart';
+import '../progression/progression_screen.dart';
 import '../social/social_repository.dart';
 import '../social/social_screen.dart';
 import '../workshop/workshop_repository.dart';
@@ -39,6 +44,8 @@ class _HomeShellState extends State<HomeShell> {
   final _dataVersion = ValueNotifier(0);
   final _visited = <int>{0};
   int _tab = 0;
+  int _unread = 0;
+  late final _notifications = NotificationRepository(widget.auth.api);
 
   LiveEvents get _live => widget.auth.live;
   late final AppLifecycleListener _lifecycle;
@@ -49,8 +56,12 @@ class _HomeShellState extends State<HomeShell> {
     super.initState();
     _sub = _live.events.listen(_onEvent);
     _live.start();
+    _refreshUnread();
     _lifecycle = AppLifecycleListener(
-      onResume: _live.start,
+      onResume: () {
+        _live.start();
+        _refreshUnread();
+      },
       onPause: _live.stop,
       onHide: _live.stop,
       onShow: _live.start,
@@ -64,6 +75,21 @@ class _HomeShellState extends State<HomeShell> {
     _live.stop();
     _dataVersion.dispose();
     super.dispose();
+  }
+
+  /// Badge count; failures keep the last value (the badge is a hint only).
+  Future<void> _refreshUnread() async {
+    try {
+      final n = await _notifications.unreadCount();
+      if (mounted && n != _unread) setState(() => _unread = n);
+    } on ApiError {
+      // ignore
+    }
+  }
+
+  Future<void> _push(Widget screen) async {
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
+    _refreshUnread();
   }
 
   void _onEvent(LiveEvent e) {
@@ -82,11 +108,19 @@ class _HomeShellState extends State<HomeShell> {
     if (refresh) _dataVersion.value++;
     if (message != null && mounted) {
       toast(context, Text(message));
+      _refreshUnread(); // most toast kinds above also land in the inbox
     }
   }
 
   Widget _page(int i) => switch (i) {
-    0 => CharacterSheetView(repo: widget.characters, initial: widget.initial, dataVersion: _dataVersion),
+    0 => CharacterSheetView(
+      repo: widget.characters,
+      initial: widget.initial,
+      dataVersion: _dataVersion,
+      onOpenProgress: () => _push(
+        ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
+      ),
+    ),
     3 => AdventureView(
       repo: AdventureRepository(widget.auth.api, widget.initial.id),
       dataVersion: _dataVersion,
@@ -123,13 +157,19 @@ class _HomeShellState extends State<HomeShell> {
 
         actions: [
           IconButton(
+            tooltip: l.notifications,
+            icon: Badge(
+              isLabelVisible: _unread > 0,
+              label: Text(_unread > 99 ? '99+' : '$_unread'),
+              child: const Icon(Icons.notifications_outlined),
+            ),
+            onPressed: () => _push(NotificationsScreen(repo: _notifications)),
+          ),
+          IconButton(
             tooltip: l.social,
             icon: const Icon(Icons.forum_outlined),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) =>
-                    SocialScreen(repo: SocialRepository(widget.auth.api, s.id), live: _live, dataVersion: _dataVersion),
-              ),
+            onPressed: () => _push(
+              SocialScreen(repo: SocialRepository(widget.auth.api, s.id), live: _live, dataVersion: _dataVersion),
             ),
           ),
           IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),

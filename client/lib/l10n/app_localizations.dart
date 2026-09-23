@@ -2299,6 +2299,354 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That tag is taken.'**
   String get errTagTaken;
+
+  /// No description provided for @progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements & mastery'**
+  String get progress;
+
+  /// No description provided for @tabAchievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get tabAchievements;
+
+  /// No description provided for @tabMastery.
+  ///
+  /// In en, this message translates to:
+  /// **'Mastery'**
+  String get tabMastery;
+
+  /// No description provided for @tabReputation.
+  ///
+  /// In en, this message translates to:
+  /// **'Reputation'**
+  String get tabReputation;
+
+  /// No description provided for @tabTitles.
+  ///
+  /// In en, this message translates to:
+  /// **'Titles'**
+  String get tabTitles;
+
+  /// No description provided for @achievementPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} achievement points'**
+  String achievementPoints(int points);
+
+  /// No description provided for @pointsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} pts'**
+  String pointsShort(int points);
+
+  /// No description provided for @rewardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title: {title}'**
+  String rewardTitle(String title);
+
+  /// No description provided for @masteryTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier {tier}/{max}'**
+  String masteryTier(int tier, int max);
+
+  /// No description provided for @repDailyLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'+{amount} today'**
+  String repDailyLeft(int amount);
+
+  /// No description provided for @noTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No title'**
+  String get noTitle;
+
+  /// No description provided for @noTitlesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Titles unlock through achievements.'**
+  String get noTitlesYet;
+
+  /// No description provided for @errTitleNotOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t unlocked that title.'**
+  String get errTitleNotOwned;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get markAllRead;
+
+  /// No description provided for @inboxNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet.'**
+  String get inboxNothing;
+
+  /// No description provided for @notifSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get notifSettings;
+
+  /// No description provided for @muteAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause push notifications'**
+  String get muteAll;
+
+  /// No description provided for @muteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For 24 hours. The inbox keeps filling.'**
+  String get muteHint;
+
+  /// No description provided for @mutedFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused for {time}'**
+  String mutedFor(String time);
+
+  /// No description provided for @modePushInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Push + inbox'**
+  String get modePushInbox;
+
+  /// No description provided for @modeInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox only'**
+  String get modeInbox;
+
+  /// No description provided for @modeSilent.
+  ///
+  /// In en, this message translates to:
+  /// **'Silent'**
+  String get modeSilent;
+
+  /// No description provided for @modeOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get modeOff;
+
+  /// No description provided for @nkActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity finished'**
+  String get nkActivity;
+
+  /// No description provided for @nkDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeon run finished'**
+  String get nkDungeon;
+
+  /// No description provided for @nkTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived'**
+  String get nkTravel;
+
+  /// No description provided for @nkWorldEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'World event started'**
+  String get nkWorldEvent;
+
+  /// No description provided for @nkMarketSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Item sold'**
+  String get nkMarketSold;
+
+  /// No description provided for @nkMail.
+  ///
+  /// In en, this message translates to:
+  /// **'New mail'**
+  String get nkMail;
+
+  /// No description provided for @nkPartyInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Party invitation'**
+  String get nkPartyInvite;
+
+  /// No description provided for @nkGuildInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild invitation'**
+  String get nkGuildInvite;
+
+  /// No description provided for @nkAchievement.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievement unlocked'**
+  String get nkAchievement;
+
+  /// No description provided for @nkSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Announcement'**
+  String get nkSystem;
+
+  /// No description provided for @timeAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} ago'**
+  String timeAgo(String time);
+
+  /// No description provided for @segEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get segEvents;
+
+  /// No description provided for @eventsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No world events scheduled right now.'**
+  String get eventsEmpty;
+
+  /// No description provided for @worldBoss.
+  ///
+  /// In en, this message translates to:
+  /// **'World boss'**
+  String get worldBoss;
+
+  /// No description provided for @invasion.
+  ///
+  /// In en, this message translates to:
+  /// **'Invasion'**
+  String get invasion;
+
+  /// No description provided for @startsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts in {time}'**
+  String startsIn(String time);
+
+  /// No description provided for @endsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ends in {time}'**
+  String endsIn(String time);
+
+  /// No description provided for @regionOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{region} only'**
+  String regionOnly(String region);
+
+  /// No description provided for @eventGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get eventGoal;
+
+  /// No description provided for @enlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Enlist'**
+  String get enlist;
+
+  /// No description provided for @enlistHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.'**
+  String get enlistHint;
+
+  /// No description provided for @enlistedPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Enlisted · power {power}'**
+  String enlistedPower(int power);
+
+  /// No description provided for @myContribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score {score} · reward tier {tier}'**
+  String myContribution(int score, int tier);
+
+  /// No description provided for @eventSucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Victory'**
+  String get eventSucceeded;
+
+  /// No description provided for @eventFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get eventFailed;
+
+  /// No description provided for @tokenBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'{tokens} event tokens'**
+  String tokenBalance(int tokens);
+
+  /// No description provided for @claimDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim {tokens}'**
+  String claimDaily(int tokens);
+
+  /// No description provided for @claimedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed'**
+  String get claimedToday;
+
+  /// No description provided for @eventTokensGained.
+  ///
+  /// In en, this message translates to:
+  /// **'+{tokens} event tokens'**
+  String eventTokensGained(int tokens);
+
+  /// No description provided for @errEventNotOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enlistment for this event is closed.'**
+  String get errEventNotOpen;
+
+  /// No description provided for @errWrongRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel to the event\'s region first.'**
+  String get errWrongRegion;
+
+  /// No description provided for @errAlreadyEnlisted.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re already enlisted.'**
+  String get errAlreadyEnlisted;
+
+  /// No description provided for @errAlreadyClaimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Already claimed today.'**
+  String get errAlreadyClaimed;
+
+  /// No description provided for @errEventNotActive.
+  ///
+  /// In en, this message translates to:
+  /// **'This event isn\'t running.'**
+  String get errEventNotActive;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

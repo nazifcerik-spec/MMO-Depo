@@ -165,6 +165,8 @@ class ApiClient {
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool auth = true}) =>
       _send('POST', path, body, auth: auth);
 
+  Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body) => _send('PUT', path, body, auth: true);
+
   Future<Map<String, dynamic>> delete(String path) => _send('DELETE', path, null, auth: true);
 
   Future<Map<String, dynamic>> _send(

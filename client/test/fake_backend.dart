@@ -142,6 +142,8 @@ class FakeBackend {
     if (mk != null) return mk;
     final gr = _groups(req, path, body);
     if (gr != null) return gr;
+    final meta = _meta(req, path, body);
+    if (meta != null) return meta;
     final so = _social(req, path, body);
     if (so != null) return so;
     final act = RegExp(r'^/v1/character/([^/]+)/activity(/active)?$').firstMatch(path);
@@ -494,6 +496,151 @@ class FakeBackend {
         return json(200, {});
     }
     return json(200, {});
+  }
+
+  // --- notifications / progression / events ---------------------------------
+
+  final inbox = <Map<String, dynamic>>[];
+  final notifKinds = <String, String>{'market_sold': 'push_and_inbox', 'mail_received': 'push_and_inbox'};
+  Map<String, dynamic> quietHours = {'quiet_hours_start': '22:00', 'quiet_hours_end': '07:00', 'quiet_hours_tz': 'UTC'};
+  String? muteUntil;
+  Map<String, dynamic>? lastPrefsPut;
+  String? activeTitle;
+  final ownedTitles = <String>['prospector'];
+  final worldEvents = <Map<String, dynamic>>[];
+  bool seasonalClaimed = false;
+
+  int get _unread => inbox.where((n) => n['read_at'] == null).length;
+
+  Map<String, dynamic> _prefs() => {...quietHours, 'global_mute_until': muteUntil, 'kinds': notifKinds};
+
+  http.Response? _meta(http.Request req, String path, Map body) {
+    final now = DateTime.now().toUtc().toIso8601String();
+    switch ((req.method, path)) {
+      case ('GET', '/v1/notifications'):
+        return json(200, {'count': inbox.length, 'unread': _unread, 'notifications': inbox});
+      case ('POST', '/v1/notifications/read-all'):
+        for (final n in inbox) {
+          n['read_at'] ??= now;
+        }
+        return json(200, {'marked': 1});
+      case ('GET', '/v1/notification/preference'):
+        return json(200, _prefs());
+      case ('PUT', '/v1/notification/preference'):
+        lastPrefsPut = Map<String, dynamic>.from(body);
+        notifKinds.addAll((body['kinds'] as Map).cast<String, String>());
+        return json(200, _prefs());
+      case ('POST', '/v1/notification/preference/global-mute'):
+        muteUntil = DateTime.now().toUtc().add(Duration(hours: body['hours'] as int)).toIso8601String();
+        return json(200, {'global_mute_until': muteUntil});
+      case ('DELETE', '/v1/notification/preference/global-mute'):
+        muteUntil = null;
+        return json(200, {'global_mute_until': null});
+      case ('GET', '/v1/events/seasonal'):
+        return json(200, {
+          'events': [
+            {
+              'code': 'harvest_festival_2026',
+              'starts_at': now,
+              'ends_at': DateTime.now().toUtc().add(const Duration(days: 3)).toIso8601String(),
+              'daily_login_tokens': 15,
+              'claimed_today': seasonalClaimed,
+              'event_token_balance': seasonalClaimed ? 15 : 0,
+            },
+          ],
+        });
+      case ('POST', '/v1/events/seasonal/harvest_festival_2026/claim'):
+        if (seasonalClaimed) return error(409, 'E_ALREADY_CLAIMED');
+        seasonalClaimed = true;
+        return json(200, {'event_tokens': 15});
+    }
+    final read = RegExp(r'^/v1/notifications/([^/]+)/read$').firstMatch(path);
+    if (read != null) {
+      for (final n in inbox) {
+        if (n['id'] == read[1]) n['read_at'] ??= now;
+      }
+      return json(200, {'marked': 1});
+    }
+    final m = RegExp(r'^/v1/character/[^/]+/(progression|achievements|titles|titles/active|world-events.*)$')
+        .firstMatch(path);
+    if (m == null) return null;
+    switch (m[1]!) {
+      case 'progression':
+        return json(200, {
+          'achievement_points': 5,
+          'active_title_code': activeTitle,
+          'mastery': [
+            {
+              'track': 'mining',
+              'category': 'gathering',
+              'xp': 150,
+              'tier': 1,
+              'max_tier': 10,
+              'next_tier_xp': 500,
+              'active_bonuses': [
+                {'kind': 'flat', 'target': 'gather_yield_mining', 'amount': 1},
+              ],
+            },
+          ],
+          'reputation': [
+            {'faction': 'ironhold_guard', 'rep_xp': 40, 'tier': 3, 'tier_name': 'neutral', 'daily_gain_left': 1460},
+          ],
+        });
+      case 'achievements':
+        return json(200, {
+          'achievements': [
+            {
+              'code': 'slayer_100',
+              'category': 'combat',
+              'points': 10,
+              'progress': 37,
+              'target': 100,
+              'reward_gold_copper': 5000,
+            },
+            {
+              'code': 'first_blood',
+              'category': 'combat',
+              'points': 5,
+              'progress': 1,
+              'target': 1,
+              'reward_gold_copper': 500,
+              'unlocked_at': now,
+            },
+            {
+              'code': 'miner_500',
+              'category': 'gathering',
+              'points': 10,
+              'progress': 500,
+              'target': 500,
+              'reward_gold_copper': 5000,
+              'reward_title_code': 'prospector',
+              'unlocked_at': now,
+            },
+          ],
+        });
+      case 'titles':
+        return json(200, {
+          'titles': [
+            for (final t in ownedTitles) {'code': t, 'unlocked_at': now, 'active': t == activeTitle},
+          ],
+        });
+      case 'titles/active':
+        final code = body['title_code'] as String;
+        if (code.isNotEmpty && !ownedTitles.contains(code)) return error(409, 'E_TITLE_NOT_OWNED');
+        activeTitle = code.isEmpty ? null : code;
+        return json(200, {'active_title_code': code});
+      case 'world-events':
+        return json(200, {'events': worldEvents});
+    }
+    final attend = RegExp(r'world-events/([^/]+)/attend$').firstMatch(m[1]!);
+    if (attend != null) {
+      final e = worldEvents.firstWhere((e) => e['id'] == attend[1]);
+      if (e['enlisted'] == true) return error(409, 'E_ALREADY_ENLISTED');
+      e['enlisted'] = true;
+      e['my_power'] = 420;
+      return json(200, e);
+    }
+    return null;
   }
 
   final friends = <Map<String, dynamic>>[];

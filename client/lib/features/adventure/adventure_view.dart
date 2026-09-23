@@ -8,10 +8,12 @@ import '../../shared/contract_progress.dart';
 import '../../shared/loot_sheet.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../events/event_repository.dart';
+import '../events/events_panel.dart';
 import 'adventure_models.dart';
 import 'adventure_repository.dart';
 
-/// Adventure tab: hunts, dungeons and travel behind one segmented control.
+/// Adventure tab: hunts, dungeons, travel and events behind one segmented control.
 /// Panels are built on first selection and kept alive.
 class AdventureView extends StatefulWidget {
   const AdventureView({super.key, required this.repo, required this.dataVersion, required this.characterLevel});
@@ -35,6 +37,7 @@ class _AdventureViewState extends State<AdventureView> {
       () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.characterLevel),
       () => _DungeonPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.characterLevel),
       () => _TravelPanel(repo: widget.repo, level: widget.characterLevel),
+      () => EventsPanel(repo: EventRepository(widget.repo.api, widget.repo.characterId), level: widget.characterLevel),
     ];
     return Column(
       children: [
@@ -48,6 +51,7 @@ class _AdventureViewState extends State<AdventureView> {
                 ButtonSegment(value: 0, label: Text(l.segHunt), icon: const Icon(Icons.gps_fixed, size: 18)),
                 ButtonSegment(value: 1, label: Text(l.segDungeon), icon: const Icon(Icons.castle_outlined, size: 18)),
                 ButtonSegment(value: 2, label: Text(l.segTravel), icon: const Icon(Icons.map_outlined, size: 18)),
+                ButtonSegment(value: 3, label: Text(l.segEvents), icon: const Icon(Icons.public, size: 18)),
               ],
               selected: {_seg},
               onSelectionChanged: (s) => setState(() {
