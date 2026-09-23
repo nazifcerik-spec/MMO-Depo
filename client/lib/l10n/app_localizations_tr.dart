@@ -978,4 +978,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errHasAttachments => 'Silmeden önce ekleri al.';
+
+  @override
+  String get useItem => 'Kullan';
+
+  @override
+  String restoresHp(int amount) {
+    return '$amount can yeniler';
+  }
+
+  @override
+  String usedItem(String name, int hp, int max) {
+    return '$name kullanıldı · Can $hp/$max';
+  }
+
+  @override
+  String get errHpFull => 'Canın zaten dolu.';
+
+  @override
+  String get errInCombat => 'Önce avını ya da zindanını bitir.';
+
+  @override
+  String get errNotUsable => 'Bu eşya kullanılamaz.';
+
+  @override
+  String get errTooWounded => 'Savaşamayacak kadar yaralısın. Dinlen ya da iksir iç.';
 }

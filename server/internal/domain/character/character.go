@@ -49,6 +49,10 @@ type Character struct {
 	LastPlayedAt       *time.Time
 	DeleteGraceAt      *time.Time
 	Version            int32
+
+	// HP persistence (DD-218). HPStored nil = full. See EffectiveHP.
+	HPStored    *int32
+	HPUpdatedAt *time.Time
 }
 
 // IsPlayable returns true when the character can be used in-game. Frozen or

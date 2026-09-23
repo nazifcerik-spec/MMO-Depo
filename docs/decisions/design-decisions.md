@@ -1999,6 +1999,14 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-218 — Kalıcı HP + Analitik Yenilenme + Tüketimlik Etkileri
+**Karar:** HP artık karakterde saklanır (`hp_current`, `hp_updated_at`; NULL = dolu). Yenilenme tick'lenmez: okuyan taraf `min(max, kayıtlı + ⌊geçen_sn/2⌋ × (1 + 0.1×VIT))` hesaplar (docs/character/health.md §3.2 formülü; STA yerine VIT). Av/zindan güncel HP ile başlar (0 HP → `E_TOO_WOUNDED`), reveal'da savaşın bittiği an (av: `started_at + tamamlanan × cadence`, zindan: `expires_at`) sonucu HP'si geri yazılır — değer deterministik olduğu için MarkRevealed'dan önce yazılır ve tekrar güvenlidir. Tüketimlikler `content.item_template.use_effect` (`{kind: heal_hp, amount}`) ile tanımlanır; `POST /character/{id}/items/{item_id}/use` tek transaction'da eşya + karakter satırını kilitler, etkiyi uygular, stack'ten 1 düşer; aktif av/zindanda (`E_IN_COMBAT`) ve can doluyken (`E_HP_FULL`) reddeder. Idempotency middleware tekrar denemede ikinci birimi tüketmez.
+**Reason:** DD-084 (AFK analitik) ve CLAUDE.md (timer/polling yok) ile uyumlu; Redis + 2sn tick modeli (health.md §2) AFK oyunda binlerce karakter için gereksiz yük. İksirler ve can barı bu karara kadar işlevsizdi.
+**Alternatives:** Redis ephemeral HP + worker tick (sürekli iş, çökme anında kayıp), her savaşın tam canla başlaması (mevcut hal — iksir/ölüm anlamsız).
+**Consequences:** MP/enerji/dayanıklılık henüz saklanmıyor (oynanışta kullanılmıyor); `potion_mp_small` bu yüzden kullanılamaz. Ölüm cezası (XP borcu, dayanıklılık kaybı, diriliş) Phase 02; şimdilik 0 HP'den analitik yenilenme. Aktif savaş sırasında sheet'teki HP yenilenmiş görünür, reveal'da savaş sonucu yazılır.
+**Tarih:** 2026-09-23
+
+---
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

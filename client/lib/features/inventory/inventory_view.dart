@@ -11,7 +11,7 @@ import 'inventory_models.dart';
 import 'inventory_repository.dart';
 import 'item_widgets.dart';
 
-enum _ItemAction { equip, unequip, sell, list, destroy }
+enum _ItemAction { use, equip, unequip, sell, list, destroy }
 
 /// Bag + equipment tab: 12 equipment slots above the positional bag grid.
 /// Tapping an item opens its detail sheet; the chosen action runs here and
@@ -84,6 +84,11 @@ class _InventoryViewState extends State<InventoryView> {
     final l = AppLocalizations.of(context);
     final name = displayName(item);
     switch (action) {
+      case _ItemAction.use:
+        await _run(() async {
+          final (hp, max) = await widget.repo.use(item.instanceId);
+          if (mounted) toast(context, Text(l.usedItem(name, hp, max)));
+        });
       case _ItemAction.equip:
         await _run(() => widget.repo.equip(item.instanceId));
       case _ItemAction.sell:
@@ -326,6 +331,14 @@ class _ItemDetail extends StatelessWidget {
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
                   ),
                 ),
+              if (item.usable)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.md),
+                  child: Text(
+                    l.restoresHp(item.healHp),
+                    style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
+                  ),
+                ),
               if (bonuses.isNotEmpty) const SizedBox(height: Space.md),
               if (item.stack > 1) row(l.quantity, Text('${item.stack} / ${item.maxStack}')),
               if (item.minLevel > 1) row(l.requiresLevel, Text('${item.minLevel}')),
@@ -341,6 +354,8 @@ class _ItemDetail extends StatelessWidget {
                   style: const TextStyle(color: Palette.warning),
                 )
               else ...[
+                if (item.usable)
+                  FilledButton(onPressed: () => Navigator.pop(context, _ItemAction.use), child: Text(l.useItem)),
                 if (item.equippable)
                   FilledButton(onPressed: () => Navigator.pop(context, _ItemAction.equip), child: Text(l.equip)),
                 if (!item.isBound) ...[

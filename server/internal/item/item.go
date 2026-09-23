@@ -57,6 +57,14 @@ type Template struct {
 	EquipSlot        *string // 'mainhand'|'helm'|'chest'|'boots'|... nil for non-equippable
 	ClassRestriction *string // 'warrior'|... nil for universal
 	StatBonuses      []byte  // JSONB — parsed via skill.DecodeModifiers on demand
+	UseEffect        *UseEffect
+}
+
+// UseEffect is what consuming one unit does (content use_effect, DD-218).
+// Templates without one cannot be used.
+type UseEffect struct {
+	Kind   string `json:"kind"` // heal_hp
+	Amount int    `json:"amount"`
 }
 
 // IsEquippable returns true when the template has an equip_slot.

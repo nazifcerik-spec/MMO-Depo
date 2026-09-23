@@ -170,3 +170,16 @@ func TestShippedItemsValidate(t *testing.T) {
 		}
 	}
 }
+
+func TestValidateItems_UseEffect(t *testing.T) {
+	ok := []Item{{Code: "pot", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 60}}}
+	require.NoError(t, validateItems(ok))
+
+	for name, it := range map[string]Item{
+		"non-consumable": {Code: "x", ItemClass: "weapon", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 5}},
+		"unknown kind":   {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "restore_mp", Amount: 5}},
+		"zero amount":    {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp"}},
+	} {
+		require.Error(t, validateItems([]Item{it}), name)
+	}
+}

@@ -17,6 +17,7 @@ import (
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
 	"github.com/otter/server/internal/combat"
+	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/crafting"
 	"github.com/otter/server/internal/domain/auth"
@@ -78,6 +79,7 @@ type Deps struct {
 	AdminHandler      *admin.Handler
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
+	ConsumableHandler *consumable.Handler
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -196,6 +198,10 @@ func NewRouter(d Deps) http.Handler {
 
 				// --- Items (character-scoped, raw list) ---
 				r.Get("/items", itemHandler.Items)
+				if h := d.ConsumableHandler; h != nil {
+					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+						Post("/items/{item_id}/use", h.Use)
+				}
 
 				// --- Buybacks (character-scoped) ---
 				r.Get("/buybacks", vendorHandler.ListBuybacks)

@@ -30,7 +30,7 @@ const bagSelect = `
 	       i.stack_quantity, t.max_stack, i.rarity,
 	       i.prefix_code, i.suffix_code, i.is_bound, i.is_locked, i.lock_owner,
 	       t.base_weight_g, t.base_value_copper,
-	       t.stat_bonuses, t.equip_slot, t.class_restriction, t.min_level
+	       t.stat_bonuses, t.equip_slot, t.class_restriction, t.min_level, t.use_effect
 	  FROM inventory.item_instance i
 	  JOIN content.item_template t ON t.code = i.template_code`
 
@@ -42,7 +42,7 @@ func (r *PgRepo) scanBagItem(row pgx.Row) (BagItem, error) {
 		&b.StackQuantity, &b.MaxStack, &b.Rarity,
 		&b.Prefix, &b.Suffix, &b.IsBound, &b.IsLocked, &b.LockOwner,
 		&b.WeightGramsPer, &b.BaseValueCopper,
-		&b.StatBonusesRaw, &b.EquipSlotOnTmpl, &b.ClassRestriction, &b.MinLevel,
+		&b.StatBonusesRaw, &b.EquipSlotOnTmpl, &b.ClassRestriction, &b.MinLevel, &b.UseEffect,
 	)
 	return b, err
 }

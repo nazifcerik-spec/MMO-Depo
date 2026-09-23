@@ -44,6 +44,10 @@ type Repository interface {
 	// unset (fresh character before first travel completion — caller should
 	// treat as "at the starting region" configured in the world catalog).
 	GetLocation(ctx context.Context, id uuid.UUID) (string, error)
+
+	// SetHP stores current HP as of `at` (DD-218). Regen from then on is
+	// computed by readers (EffectiveHP); nothing ticks.
+	SetHP(ctx context.Context, id uuid.UUID, hp int32, at time.Time) error
 }
 
 // --- MemoryRepo (tests) ------------------------------------------------------
@@ -227,6 +231,18 @@ func (r *MemoryRepo) CancelDeleteGrace(_ context.Context, id uuid.UUID) error {
 	c.DeleteGraceAt = nil
 	c.UpdatedAt = time.Now().UTC()
 	c.Version++
+	r.rows[id] = c
+	return nil
+}
+
+func (r *MemoryRepo) SetHP(_ context.Context, id uuid.UUID, hp int32, at time.Time) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	c, ok := r.rows[id]
+	if !ok {
+		return ErrNotFound
+	}
+	c.HPStored, c.HPUpdatedAt = &hp, &at
 	r.rows[id] = c
 	return nil
 }

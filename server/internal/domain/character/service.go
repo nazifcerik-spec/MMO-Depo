@@ -163,13 +163,7 @@ func (s *Service) Enter(ctx context.Context, characterID, accountID uuid.UUID) (
 		return nil, ErrNotPlayable
 	}
 	_ = s.repo.TouchLastPlayed(ctx, c.ID, s.cfg.Now().UTC())
-	sheet := buildSheet(c)
-	if s.sheeter != nil {
-		if computed, err := s.sheeter.ComputeSheet(ctx, c.ID, sheet); err == nil {
-			return &computed, nil
-		}
-	}
-	return &sheet, nil
+	return s.liveSheet(ctx, c), nil
 }
 
 // Sheet returns the compound character view without touching last_played_at.
@@ -179,16 +173,30 @@ func (s *Service) Sheet(ctx context.Context, characterID, accountID uuid.UUID) (
 	if err != nil {
 		return nil, err
 	}
+	return s.liveSheet(ctx, c), nil
+}
+
+// liveSheet applies the modifier stack (equipped bonuses) and then resolves
+// current HP against the final max (DD-218: stored HP + analytical regen).
+func (s *Service) liveSheet(ctx context.Context, c *Character) *Sheet {
 	sheet := buildSheet(c)
 	if s.sheeter != nil {
 		if computed, err := s.sheeter.ComputeSheet(ctx, c.ID, sheet); err == nil {
-			return &computed, nil
+			sheet = computed
 		} else {
 			s.log.WarnContext(ctx, "character sheet compute failed — falling back to placeholder",
 				slog.String("err", err.Error()))
 		}
 	}
-	return &sheet, nil
+	sheet.Resources.HPCurrent = EffectiveHP(c.HPStored, c.HPUpdatedAt, sheet.Resources.HPMax,
+		sheet.Primary.Vitality, s.cfg.Now())
+	return &sheet
+}
+
+// SetHP records current HP as of `at` (hunt/dungeon reveal, consumables).
+// Internal: callers have already verified ownership.
+func (s *Service) SetHP(ctx context.Context, characterID uuid.UUID, hp int32, at time.Time) error {
+	return s.repo.SetHP(ctx, characterID, hp, at)
 }
 
 // --- Delete grace flow ------------------------------------------------------

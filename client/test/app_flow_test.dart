@@ -678,6 +678,41 @@ void main() {
     expect(find.text('Mail sent (postage 7c)'), findsOneWidget);
   });
 
+  testWidgets('use a potion: effect shown, HP toast, stack shrinks, refused at full HP', (tester) async {
+    final semantics = tester.ensureSemantics();
+    final (be, _, _) = await _inGame(tester);
+    be.bag.add({
+      'instance_id': 'pot',
+      'template_code': 'potion_hp_small',
+      'item_class': 'consumable',
+      'item_subclass': 'potion',
+      'slot': 0,
+      'stack_quantity': 3,
+      'max_stack': 20,
+      'rarity': 'common',
+      'use_effect': {'kind': 'heal_hp', 'amount': 60},
+    });
+    await tester.tap(find.byIcon(Icons.backpack_outlined));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Potion Hp Small ×3'));
+    await tester.pumpAndSettle();
+    expect(find.text('Restores 60 HP'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Use'));
+    await tester.pumpAndSettle();
+    expect(find.text('Used Potion Hp Small · HP 90/120'), findsOneWidget);
+    expect(be.bag.single['stack_quantity'], 2);
+
+    be.hp = 120;
+    await tester.tap(find.bySemanticsLabel('Potion Hp Small ×2'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Use'));
+    await tester.pumpAndSettle();
+    expect(find.text('Your health is already full.'), findsOneWidget);
+    expect(be.bag.single['stack_quantity'], 2, reason: 'refused use consumes nothing');
+    semantics.dispose();
+  });
+
   testWidgets('Turkish locale renders translated copy', (tester) async {
     await _boot(tester, FakeBackend(), locale: const Locale('tr'));
     expect(find.text('Giriş yap'), findsOneWidget);

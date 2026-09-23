@@ -66,10 +66,20 @@ type Service struct {
 	log      *slog.Logger
 	rngNew   func(seed int64) combat.RNG
 	progress progression.Recorder
+	hp       HPWriter
 }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
+
+// HPWriter persists post-fight HP (character.Service). Optional: nil keeps
+// the pre-DD-218 behaviour of HP never leaving the contract.
+type HPWriter interface {
+	SetHP(ctx context.Context, characterID uuid.UUID, hp int32, at time.Time) error
+}
+
+// WithHPWriter makes reveals write the final HP back to the character.
+func (s *Service) WithHPWriter(w HPWriter) *Service { s.hp = w; return s }
 
 // NewService wires the service. rngNew is the RNG factory (activity.NewRNG in
 // prod; a stub in tests).
@@ -147,6 +157,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	sheet, err := s.chars.Sheet(ctx, req.CharacterID, req.AccountID)
 	if err != nil {
 		return nil, err
+	}
+	if sheet.Resources.HPCurrent < 1 {
+		return nil, ErrTooWounded
 	}
 	snapshot := combatantFromSheet(sheet)
 	snapJSON, err := json.Marshal(snapshot)
@@ -274,6 +287,18 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	if err != nil {
 		return nil, err
 	}
+	// HP write-back before MarkRevealed: the value and timestamp are
+	// deterministic (same roll on retry), so repeating it is harmless, and a
+	// crash in between never leaves a revealed hunt with stale HP.
+	if s.hp != nil {
+		fightEnd := c.StartedAt.Add(time.Duration(hr.Completed) * time.Duration(c.EncounterSecs) * time.Second)
+		if fightEnd.After(now) {
+			fightEnd = now
+		}
+		if err := s.hp.SetHP(ctx, c.CharacterID, hr.PlayerHPFinal, fightEnd); err != nil {
+			return nil, fmt.Errorf("hunt reveal hp: %w", err)
+		}
+	}
 	if err := s.repo.MarkRevealed(ctx, c.ID, resultJSON, txnID, now); err != nil {
 		// Race: someone else revealed. Refetch + return cached.
 		refreshed, gerr := s.repo.GetByID(ctx, c.ID)
@@ -368,7 +393,7 @@ func combatantFromSheet(s *character.Sheet) combat.Combatant {
 	return combat.Combatant{
 		Name:       "player",
 		HPMax:      int32(s.Resources.HPMax),
-		HPCurrent:  int32(s.Resources.HPMax),
+		HPCurrent:  int32(s.Resources.HPCurrent), // DD-218: fights start at current HP
 		Attack:     int32(s.Derived.Attack),
 		Defense:    int32(s.Derived.Defense),
 		CritPct:    int32(s.Derived.CritPct),

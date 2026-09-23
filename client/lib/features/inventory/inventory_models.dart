@@ -48,6 +48,7 @@ class BagItem {
     this.equipSlot,
     this.classRestriction,
     this.bonuses = const [],
+    this.healHp = 0,
   });
 
   factory BagItem.fromJson(Map<String, dynamic> j) {
@@ -71,6 +72,10 @@ class BagItem {
       suffix: j['suffix'] as String?,
       equipSlot: j['equip_slot'] as String?,
       classRestriction: j['class_restriction'] as String?,
+      healHp: switch (j['use_effect']) {
+        {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -99,6 +104,11 @@ class BagItem {
   final String? equipSlot;
   final String? classRestriction;
   final List<StatBonus> bonuses;
+
+  /// HP restored by using one unit (content use_effect heal_hp); 0 = not usable.
+  final int healHp;
+
+  bool get usable => healHp > 0;
 
   bool get equippable => equipSlot != null && equipSlot!.isNotEmpty;
 }

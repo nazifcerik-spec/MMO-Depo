@@ -1861,6 +1861,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take the attachments before deleting.'**
   String get errHasAttachments;
+
+  /// No description provided for @useItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get useItem;
+
+  /// No description provided for @restoresHp.
+  ///
+  /// In en, this message translates to:
+  /// **'Restores {amount} HP'**
+  String restoresHp(int amount);
+
+  /// No description provided for @usedItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Used {name} · HP {hp}/{max}'**
+  String usedItem(String name, int hp, int max);
+
+  /// No description provided for @errHpFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Your health is already full.'**
+  String get errHpFull;
+
+  /// No description provided for @errInCombat.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your hunt or dungeon run first.'**
+  String get errInCombat;
+
+  /// No description provided for @errNotUsable.
+  ///
+  /// In en, this message translates to:
+  /// **'This item can\'t be used.'**
+  String get errNotUsable;
+
+  /// No description provided for @errTooWounded.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re too wounded to fight. Rest or drink a potion.'**
+  String get errTooWounded;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

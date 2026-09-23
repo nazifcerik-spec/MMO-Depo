@@ -2,6 +2,7 @@ package item
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -52,7 +53,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		SELECT code, display_name_key, item_class, item_subclass, min_level,
 		       base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
 		       no_trade, no_sell, affixable,
-		       equip_slot, class_restriction, stat_bonuses
+		       equip_slot, class_restriction, stat_bonuses, use_effect
 		  FROM content.item_template`
 	rows, err := pool.Query(ctx, q)
 	if err != nil {
@@ -65,16 +66,23 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		var t Template
 		var bind string
 		var bonuses []byte
+		var useEffect []byte
 		if err := rows.Scan(
 			&t.Code, &t.DisplayNameKey, &t.ItemClass, &t.ItemSubclass, &t.MinLevel,
 			&t.BaseValueCopper, &t.BaseWeightG, &t.Stackable, &t.MaxStack, &bind,
 			&t.NoTrade, &t.NoSell, &t.Affixable,
-			&t.EquipSlot, &t.ClassRestriction, &bonuses,
+			&t.EquipSlot, &t.ClassRestriction, &bonuses, &useEffect,
 		); err != nil {
 			return nil, fmt.Errorf("scan item template: %w", err)
 		}
 		t.BindKind = BindKind(bind)
 		t.StatBonuses = bonuses
+		if len(useEffect) > 0 {
+			t.UseEffect = new(UseEffect)
+			if err := json.Unmarshal(useEffect, t.UseEffect); err != nil {
+				return nil, fmt.Errorf("item %s: bad use_effect: %w", t.Code, err)
+			}
+		}
 		list = append(list, t)
 	}
 	if err := rows.Err(); err != nil {

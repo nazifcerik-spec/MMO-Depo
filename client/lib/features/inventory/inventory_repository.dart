@@ -36,5 +36,11 @@ class InventoryRepository {
     return (j['received_copper'] as num?)?.toInt() ?? 0;
   }
 
+  /// Consumes one unit; returns (hp, max) after the effect.
+  Future<(int, int)> use(String itemId) async {
+    final j = await api.post('$_base/items/$itemId/use', const {});
+    return ((j['hp_current'] as num).toInt(), (j['hp_max'] as num).toInt());
+  }
+
   Future<void> destroy(String itemId) => api.delete('$_base/inventory/$itemId');
 }

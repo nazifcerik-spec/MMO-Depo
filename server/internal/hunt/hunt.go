@@ -94,6 +94,7 @@ var (
 	ErrSlotBusy   = errors.New("hunt: character already has an active hunt")
 	ErrNotActive  = errors.New("hunt: contract not active")
 	ErrUnknownMob = errors.New("hunt: unknown mob_code")
+	ErrTooWounded = errors.New("hunt: character has no hp left")
 	ErrValidation = errors.New("hunt: validation")
 )
 

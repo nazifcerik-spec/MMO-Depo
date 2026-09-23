@@ -20,6 +20,7 @@ class FakeBackend {
   final characters = <Map<String, dynamic>>[];
   Map<String, dynamic>? activeActivity;
   final bag = <Map<String, dynamic>>[];
+  int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
   Map<String, dynamic>? activeDungeon;
   Map<String, dynamic>? travel;
@@ -565,6 +566,24 @@ class FakeBackend {
       bag.remove(item);
       return json(200, {
         'received_copper': ((item['base_value_copper'] as int) * 0.25 * (item['stack_quantity'] as int)).floor(),
+      });
+    }
+    final use = RegExp(r'/items/([^/]+)/use$').firstMatch(path);
+    if (use != null) {
+      if (hp >= 120) return error(409, 'E_HP_FULL');
+      final item = bag.firstWhere((i) => i['instance_id'] == use[1]);
+      hp = (hp + 60).clamp(0, 120);
+      final left = (item['stack_quantity'] as int) - 1;
+      if (left == 0) {
+        bag.remove(item);
+      } else {
+        item['stack_quantity'] = left;
+      }
+      return json(200, {
+        'template_code': item['template_code'],
+        'hp_current': hp,
+        'hp_max': 120,
+        'stack_remaining': left,
       });
     }
     final del = RegExp(r'/inventory/([^/]+)$').firstMatch(path);

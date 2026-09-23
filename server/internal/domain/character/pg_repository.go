@@ -52,6 +52,7 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 		&c.ID, &c.AccountID, &c.Name, &c.NameNormalized, &c.RaceCode, &c.ClassCode,
 		&c.SpecCode, &c.Level, &c.XP, &state, &c.LocationID, &locRegion,
 		&c.CreatedAt, &c.UpdatedAt, &c.LastPlayedAt, &c.DeleteGraceAt, &c.Version,
+		&c.HPStored, &c.HPUpdatedAt,
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -68,7 +69,8 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 
 const baseSelect = `SELECT id, account_id, name, name_normalized, race_code, class_code,
 	                       spec_code, level, xp, state, location_id, location_region_code,
-	                       created_at, updated_at, last_played_at, delete_grace_at, version
+	                       created_at, updated_at, last_played_at, delete_grace_at, version,
+	                       hp_current, hp_updated_at
 	                  FROM character.character`
 
 func (r *PgRepo) Get(ctx context.Context, id uuid.UUID) (*Character, error) {
@@ -265,6 +267,20 @@ func (r *PgRepo) CancelDeleteGrace(ctx context.Context, id uuid.UUID) error {
 	}
 	if tag.RowsAffected() == 0 {
 		return ErrNotInDeleteGrace
+	}
+	return nil
+}
+
+func (r *PgRepo) SetHP(ctx context.Context, id uuid.UUID, hp int32, at time.Time) error {
+	tag, err := r.pool.Exec(ctx, `
+		UPDATE character.character
+		   SET hp_current = $2, hp_updated_at = $3, updated_at = now(), version = version + 1
+		 WHERE id = $1`, id, max(hp, 0), at)
+	if err != nil {
+		return err
+	}
+	if tag.RowsAffected() == 0 {
+		return ErrNotFound
 	}
 	return nil
 }

@@ -336,5 +336,14 @@
   "errEmpty": "Write something first.",
   "errNotInChannel": "You're not in that group.",
   "errMuted": "You are muted and can't chat right now.",
-  "errHasAttachments": "Take the attachments before deleting."
+  "errHasAttachments": "Take the attachments before deleting.",
+  "useItem": "Use",
+  "restoresHp": "Restores {amount} HP",
+  "@restoresHp": {"placeholders": {"amount": {"type": "int"}}},
+  "usedItem": "Used {name} · HP {hp}/{max}",
+  "@usedItem": {"placeholders": {"name": {"type": "String"}, "hp": {"type": "int"}, "max": {"type": "int"}}},
+  "errHpFull": "Your health is already full.",
+  "errInCombat": "Finish your hunt or dungeon run first.",
+  "errNotUsable": "This item can't be used.",
+  "errTooWounded": "You're too wounded to fight. Rest or drink a potion."
 }

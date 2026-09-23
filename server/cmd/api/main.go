@@ -22,6 +22,7 @@ import (
 	"github.com/otter/server/internal/admin"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/config"
+	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/crafting"
 	"github.com/otter/server/internal/domain/auth"
@@ -275,8 +276,8 @@ func run() error {
 		WithPublisher(wsPub).WithNotifier(notifSvc)
 	progHandler := progression.NewHandler(progSvc)
 	activitySvc.WithRecorder(progSvc)
-	huntSvc.WithRecorder(progSvc)
-	dungSvc.WithRecorder(progSvc)
+	huntSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
+	dungSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
 	craftSvc.WithRecorder(progSvc)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
@@ -361,6 +362,7 @@ func run() error {
 		NotifHandler:      notifHandler,
 		ProgHandler:       progHandler,
 		WorldEventHandler: worldEventHandler,
+		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
 		AdminHandler:      adminHandler,
 		Metrics:           metrics,
 		CORSOrigins:       cfg.CORSAllowedOrigins,

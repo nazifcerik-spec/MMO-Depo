@@ -48,7 +48,17 @@ type Item struct {
 	EquipSlot        string      `yaml:"equip_slot"`
 	ClassRestriction string      `yaml:"class_restriction"`
 	StatBonuses      []StatBonus `yaml:"stat_bonuses"`
+	UseEffect        *UseEffect  `yaml:"use_effect"`
 }
+
+// UseEffect is what consuming one unit of a consumable does (DD-218).
+type UseEffect struct {
+	Kind   string `yaml:"kind"   json:"kind"`
+	Amount int    `yaml:"amount" json:"amount"`
+}
+
+// validUseEffects: only effects with persisted state (HP, DD-218) exist yet.
+var validUseEffects = map[string]bool{"heal_hp": true}
 
 // StatBonus is one entry of an item's equipped modifier stack.
 type StatBonus struct {
@@ -513,6 +523,17 @@ func validateItems(items []Item) error {
 		if it.Stackable && it.MaxStack < 1 {
 			return fmt.Errorf("item %s: stackable requires max_stack >= 1", it.Code)
 		}
+		if ue := it.UseEffect; ue != nil {
+			if it.ItemClass != "consumable" {
+				return fmt.Errorf("item %s: use_effect only allowed on consumables", it.Code)
+			}
+			if !validUseEffects[ue.Kind] {
+				return fmt.Errorf("item %s: unknown use_effect kind %q", it.Code, ue.Kind)
+			}
+			if ue.Amount <= 0 || ue.Amount > 100_000 {
+				return fmt.Errorf("item %s: use_effect amount out of (0, 100000]", it.Code)
+			}
+		}
 		for j, sb := range it.StatBonuses {
 			if !validModifierKinds[sb.Kind] {
 				return fmt.Errorf("item %s: stat_bonuses[%d] unknown kind %q", it.Code, j, sb.Kind)
@@ -756,8 +777,8 @@ func (l *Loader) upsertItems(ctx context.Context, items []Item) error {
 INSERT INTO content.item_template (
   code, display_name_key, item_class, item_subclass, min_level,
   base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
-  no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+  no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   item_class         = EXCLUDED.item_class,
@@ -774,6 +795,7 @@ ON CONFLICT (code) DO UPDATE SET
   equip_slot         = EXCLUDED.equip_slot,
   class_restriction  = EXCLUDED.class_restriction,
   stat_bonuses       = EXCLUDED.stat_bonuses,
+  use_effect         = EXCLUDED.use_effect,
   version            = content.item_template.version + 1`
 
 	for _, it := range items {
@@ -789,11 +811,17 @@ ON CONFLICT (code) DO UPDATE SET
 		if err != nil {
 			return fmt.Errorf("item %s: marshal stat_bonuses: %w", it.Code, err)
 		}
+		var useEffect []byte // nil → SQL NULL (not usable)
+		if it.UseEffect != nil {
+			if useEffect, err = json.Marshal(it.UseEffect); err != nil {
+				return fmt.Errorf("item %s: marshal use_effect: %w", it.Code, err)
+			}
+		}
 		_, err = tx.Exec(ctx, q,
 			it.Code, it.DisplayNameKey, it.ItemClass, it.ItemSubclass, it.MinLevel,
 			it.BaseValueCopper, it.BaseWeightG, it.Stackable, maxStack, bindKind,
 			it.NoTrade, it.NoSell, it.Affixable,
-			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses,
+			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses, useEffect,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert item %s: %w", it.Code, err)

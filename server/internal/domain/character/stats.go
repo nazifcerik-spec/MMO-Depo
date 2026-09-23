@@ -1,5 +1,7 @@
 package character
 
+import "time"
+
 // PrimaryStats are the six per-character attributes. Full modifier stack (flat
 // → mult_add → mult_prod → clamp) lands with the skill-engine sprint (Faz 01
 // sprint 9). For now these come purely from the class base.
@@ -119,4 +121,23 @@ func buildSheet(c *Character) Sheet {
 		Resources: deriveResources(p),
 		State:     string(c.State),
 	}
+}
+
+// HPRegenPer2s is the out-of-combat regen per 2-second step
+// (docs/character/health.md §3.2, VIT standing in for STA).
+func HPRegenPer2s(vitality int) float64 { return 1 + 0.1*float64(vitality) }
+
+// EffectiveHP resolves a character's current HP at `now` without any ticking:
+// the stored value plus analytical regen since it was written, capped at max.
+// A nil stored value means the character has never been damaged (full HP).
+func EffectiveHP(stored *int32, updatedAt *time.Time, maxHP, vitality int, now time.Time) int {
+	if stored == nil || updatedAt == nil {
+		return maxHP
+	}
+	hp := int(*stored)
+	if elapsed := now.Sub(*updatedAt); elapsed > 0 {
+		steps := int64(elapsed / (2 * time.Second))
+		hp += int(float64(steps) * HPRegenPer2s(vitality))
+	}
+	return max(0, min(hp, maxHP))
 }

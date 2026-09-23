@@ -979,4 +979,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errHasAttachments => 'Take the attachments before deleting.';
+
+  @override
+  String get useItem => 'Use';
+
+  @override
+  String restoresHp(int amount) {
+    return 'Restores $amount HP';
+  }
+
+  @override
+  String usedItem(String name, int hp, int max) {
+    return 'Used $name · HP $hp/$max';
+  }
+
+  @override
+  String get errHpFull => 'Your health is already full.';
+
+  @override
+  String get errInCombat => 'Finish your hunt or dungeon run first.';
+
+  @override
+  String get errNotUsable => 'This item can\'t be used.';
+
+  @override
+  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
 }

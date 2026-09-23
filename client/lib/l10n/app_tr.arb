@@ -294,5 +294,12 @@
   "errEmpty": "Önce bir şey yaz.",
   "errNotInChannel": "Bu grubun üyesi değilsin.",
   "errMuted": "Susturuldun, şu an sohbet edemezsin.",
-  "errHasAttachments": "Silmeden önce ekleri al."
+  "errHasAttachments": "Silmeden önce ekleri al.",
+  "useItem": "Kullan",
+  "restoresHp": "{amount} can yeniler",
+  "usedItem": "{name} kullanıldı · Can {hp}/{max}",
+  "errHpFull": "Canın zaten dolu.",
+  "errInCombat": "Önce avını ya da zindanını bitir.",
+  "errNotUsable": "Bu eşya kullanılamaz.",
+  "errTooWounded": "Savaşamayacak kadar yaralısın. Dinlen ya da iksir iç."
 }

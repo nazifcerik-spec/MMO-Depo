@@ -59,6 +59,7 @@ type BagItem struct {
 	EquipSlotOnTmpl  *string         `json:"equip_slot,omitempty"`        // template.equip_slot (for equip validation, character sheet compute)
 	ClassRestriction *string         `json:"class_restriction,omitempty"` // template.class_restriction
 	MinLevel         int16           `json:"min_level"`                   // template.min_level
+	UseEffect        json.RawMessage `json:"use_effect,omitempty"`        // template.use_effect (DD-218); nil = not usable
 }
 
 // TotalWeight returns the item's total contribution to bag weight.
