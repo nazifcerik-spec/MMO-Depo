@@ -132,3 +132,40 @@ func SameUTCDay(a, b time.Time) bool {
 var (
 	ErrTitleNotOwned = errors.New("progression: title not unlocked")
 )
+
+// effects lists the bonuses unlocked at `tier` (every tier entry <= tier).
+func (t track) effects(tier int16) []BonusEffect {
+	out := []BonusEffect{}
+	for _, b := range t.Bonuses {
+		if b.Tier <= tier {
+			out = append(out, b.Effects...)
+		}
+	}
+	return out
+}
+
+// ActiveEffects flattens the unlocked bonuses of every track for the given
+// per-track XP.
+func (c *Catalog) ActiveEffects(xp map[string]int64) []BonusEffect {
+	out := []BonusEffect{}
+	for _, t := range c.tracks {
+		out = append(out, t.effects(MasteryTier(xp[t.Code], t.Curve, t.MaxTier))...)
+	}
+	return out
+}
+
+// SumTarget adds up the flat and mult_add amounts aimed at one target.
+func SumTarget(effects []BonusEffect, target string) (flat, multAdd float64) {
+	for _, e := range effects {
+		if e.Target != target {
+			continue
+		}
+		switch e.Kind {
+		case "flat":
+			flat += e.Amount
+		case "mult_add":
+			multAdd += e.Amount
+		}
+	}
+	return flat, multAdd
+}

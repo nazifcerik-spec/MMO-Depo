@@ -61,6 +61,7 @@ type Service struct {
 	txn      economy.TxnService
 	items    ItemGranter // optional — nil during transition sprints
 	progress progression.Recorder
+	bonus    GatherBonusSource
 	cfg      ServiceConfig
 	log      *slog.Logger
 }
@@ -78,6 +79,19 @@ func NewService(repo Repository, chars CharacterFetcher, txn economy.TxnService,
 // WithRecorder feeds reveal yields into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service {
 	s.progress = r
+	return s
+}
+
+// GatherBonusSource reports the character's unlocked mastery gather bonus for
+// one kind (progression.Service satisfies it).
+type GatherBonusSource interface {
+	GatherBonus(ctx context.Context, characterID uuid.UUID, kind string) (flat, mult float64, err error)
+}
+
+// WithGatherBonus freezes mastery gather bonuses into each new contract's
+// snapshot (DD-220).
+func (s *Service) WithGatherBonus(b GatherBonusSource) *Service {
+	s.bonus = b
 	return s
 }
 
@@ -138,6 +152,13 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	now := s.cfg.Now().UTC()
 	id := uuid.New()
 	snapshot := TakeSnapshot(char)
+	if s.bonus != nil {
+		flat, mult, err := s.bonus.GatherBonus(ctx, req.CharacterID, string(req.Kind))
+		if err != nil {
+			return nil, fmt.Errorf("activity: gather bonus: %w", err)
+		}
+		snapshot.YieldFlatPerHour, snapshot.YieldMult = flat, mult
+	}
 
 	contract := Contract{
 		ID:              id,

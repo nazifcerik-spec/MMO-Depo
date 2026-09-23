@@ -493,5 +493,9 @@
   "errWrongRegion": "Travel to the event's region first.",
   "errAlreadyEnlisted": "You're already enlisted.",
   "errAlreadyClaimed": "Already claimed today.",
-  "errEventNotActive": "This event isn't running."
+  "errEventNotActive": "This event isn't running.",
+  "gatherYield": "{activity} yield",
+  "@gatherYield": {"placeholders": {"activity": {"type": "String"}}},
+  "perHour": "{value}/h",
+  "@perHour": {"placeholders": {"value": {"type": "String"}}}
 }

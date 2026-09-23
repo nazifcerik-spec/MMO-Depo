@@ -76,7 +76,8 @@ var yieldProfiles = map[Kind]yieldProfile{
 //
 //	ratio = elapsed / duration              (0..1)
 //	hours = elapsed / 3600
-//	commons  = Poisson(base × hours)
+//	rate     = (base + mastery_flat) × (1 + mastery_mult)   (DD-220)
+//	commons  = Poisson(rate × hours)
 //	rares    = Binomial(commons, rare_p)    (rare given commons)
 //	legendaries = Binomial(ceil(hours), legendary_chance_per_hour)
 //	gold = commons×v_common + rares×v_rare + legendaries×v_legendary
@@ -101,8 +102,9 @@ func ComputeYield(c *Contract, elapsedSec int32) YieldSummary {
 
 	rng := NewRNG(c.Seed)
 
-	// Common resource count (Poisson).
-	lambda := prof.BasePerHour * hours
+	// Common resource count (Poisson) on the mastery-adjusted hourly rate.
+	snap := parseSnapshot(c.Snapshot)
+	lambda := (prof.BasePerHour + snap.YieldFlatPerHour) * (1 + snap.YieldMult) * hours
 	commons := Poisson(rng, lambda)
 
 	// Rare drops (Binomial on commons).

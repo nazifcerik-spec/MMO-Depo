@@ -2647,6 +2647,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This event isn\'t running.'**
   String get errEventNotActive;
+
+  /// No description provided for @gatherYield.
+  ///
+  /// In en, this message translates to:
+  /// **'{activity} yield'**
+  String gatherYield(String activity);
+
+  /// No description provided for @perHour.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}/h'**
+  String perHour(String value);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

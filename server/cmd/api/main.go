@@ -175,7 +175,8 @@ func run() error {
 	})
 	equipSvc := inventory.NewEquipmentService(invSvc, itemSvc, charFetch)
 	// Wire sheet computer: character.Sheet now uses skill.ComputeSheet with equipped bonuses.
-	charSvc.WithSheetComputer(skill.NewCharacterAdapter(equipSvc, logger))
+	sheetAdapter := skill.NewCharacterAdapter(equipSvc, logger)
+	charSvc.WithSheetComputer(sheetAdapter)
 	logger.Info("skill engine wired — character sheets use equipped stat_bonuses")
 
 	// --- Vendor (Sprint 10) ---
@@ -282,7 +283,19 @@ func run() error {
 	progSvc := progression.NewService(pool, progCat, charSvc, txnSvc, logger).
 		WithPublisher(wsPub).WithNotifier(notifSvc)
 	progHandler := progression.NewHandler(progSvc)
-	activitySvc.WithRecorder(progSvc)
+	activitySvc.WithRecorder(progSvc).WithGatherBonus(progSvc)
+	// Mastery bonuses feed the sheet's modifier stack (DD-220).
+	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID) ([]skill.Modifier, error) {
+		effects, err := progSvc.ActiveBonuses(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		mods := make([]skill.Modifier, len(effects))
+		for i, e := range effects {
+			mods[i] = skill.Modifier{Kind: skill.ModifierKind(e.Kind), Target: skill.Target(e.Target), Amount: e.Amount}
+		}
+		return mods, nil
+	})
 	huntSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
 	dungSvc.WithRecorder(progSvc).WithHPWriter(charSvc)
 	craftSvc.WithRecorder(progSvc)

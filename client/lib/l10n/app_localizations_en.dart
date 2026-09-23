@@ -1425,4 +1425,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errEventNotActive => 'This event isn\'t running.';
+
+  @override
+  String gatherYield(String activity) {
+    return '$activity yield';
+  }
+
+  @override
+  String perHour(String value) {
+    return '$value/h';
+  }
 }

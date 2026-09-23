@@ -1424,4 +1424,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errEventNotActive => 'Bu etkinlik şu an sürmüyor.';
+
+  @override
+  String gatherYield(String activity) {
+    return '$activity verimi';
+  }
+
+  @override
+  String perHour(String value) {
+    return '$value/sa';
+  }
 }

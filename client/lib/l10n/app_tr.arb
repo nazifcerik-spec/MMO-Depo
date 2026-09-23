@@ -425,5 +425,7 @@
   "errWrongRegion": "Önce etkinliğin bölgesine git.",
   "errAlreadyEnlisted": "Zaten katıldın.",
   "errAlreadyClaimed": "Bugün zaten aldın.",
-  "errEventNotActive": "Bu etkinlik şu an sürmüyor."
+  "errEventNotActive": "Bu etkinlik şu an sürmüyor.",
+  "gatherYield": "{activity} verimi",
+  "perHour": "{value}/sa"
 }

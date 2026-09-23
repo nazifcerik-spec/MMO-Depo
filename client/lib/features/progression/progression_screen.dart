@@ -120,10 +120,7 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
                   valueText: m.tier >= m.maxTier ? '${m.xp}' : l.xpValue(m.xp, m.nextTierXp),
                 ),
                 for (final b in m.bonuses)
-                  Text(
-                    '${b.percent ? '+${(b.amount * 100).round()}%' : '+${_num(b.amount)}'} ${humanize(b.target)}',
-                    style: const TextStyle(color: Palette.success, fontSize: 13),
-                  ),
+                  Text(bonusText(l, b), style: const TextStyle(color: Palette.success, fontSize: 13)),
               ],
             ),
           ),
@@ -169,8 +166,24 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
         ),
     ];
   }
+}
 
-  static String _num(double v) => v == v.roundToDouble() ? v.round().toString() : v.toString();
+/// "+2 Attack", "+5% Mining yield", "+1/h Mining yield" (DD-220 targets).
+String bonusText(AppLocalizations l, BonusEffect b) {
+  const gather = 'gather_yield_';
+  final isGather = b.target.startsWith(gather);
+  final name = isGather
+      ? l.gatherYield(activityName(l, b.target.substring(gather.length)))
+      : switch (b.target) {
+          'attack' => l.attack,
+          'defense' => l.defense,
+          'crit_pct' => l.crit,
+          'hit_pct' => l.hit,
+          _ => humanize(b.target),
+        };
+  final n = b.amount == b.amount.roundToDouble() ? b.amount.round().toString() : b.amount.toString();
+  final value = b.percent ? '+${(b.amount * 100).round()}%' : (isGather ? '+${l.perHour(n)}' : '+$n');
+  return '$value $name';
 }
 
 class _AchievementTile extends StatelessWidget {

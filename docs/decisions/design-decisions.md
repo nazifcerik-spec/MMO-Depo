@@ -2017,6 +2017,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-220 — Ustalık Bonusları Oyuna Etki Eder: Sheet Modifier Stack + Aktivite Snapshot'ı
+**Karar:** Açılmış ustalık kademe bonusları (`content.mastery_track.tier_bonuses`, her kademe ≤ mevcut) iki yoldan etkili olur. (1) Sheet hedefleri (`attack`, `defense`, `crit_pct`, `hit_pct`, primary, kaynak max) `skill.CharacterAdapter.WithModifierSource` ile ekipman bonuslarıyla aynı DD-107 stack'ine girer; bu yüzden av/zindan combatant'ı, dünya etkinliği güç snapshot'ı ve sheet otomatik yansıtır. (2) `gather_yield_<kind>` hedefleri aktivite başlangıcında `progression.GatherBonus` ile okunup contract snapshot'ına dondurulur (DD-088): `yield_flat_per_hour` (saatlik ek kaynak) + `yield_mult` (additive yüzde). `ComputeYield` oranı `(base + flat) × (1 + mult)` olarak kullanır. Bonus kaynağı hata verirse sheet hesabı/aktivite başlangıcı hata döner (sessizce bonussuz snapshot üretilmez). Eski contract'larda alan yok → sıfır bonus, reveal deterministik kalır.
+**Reason:** Sprint 24'te bonuslar yalnız API'de gösteriliyordu; oyuncuya vaat edilen ilerleme etkisizdi. Mevcut modifier stack ve snapshot mekanizması yeniden kullanıldı — yeni hesap yolu yok.
+**Alternatives:** Reveal anında güncel ustalığı okumak (AFK sırasında kademe atlayınca geçmiş süreye geriye dönük bonus → DD-088 ihlali), bonusu gold çarpanı olarak uygulamak (item drop sayısını etkilemezdi).
+**Consequences:** Her sheet hesabı bir ek indexli sorgu (`progression.character_mastery` by character_id). Bonus hedefleri migration seed'inde; content pack'e taşınınca target allowlist'i (`skill` target'ları + `gather_yield_*`) validate edilmeli.
+**Tarih:** 2026-09-23
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

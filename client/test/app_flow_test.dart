@@ -927,7 +927,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Tier 1/10'), findsOneWidget);
     expect(find.text('150 / 500'), findsOneWidget);
-    expect(find.text('+1 Gather Yield Mining'), findsOneWidget);
+    expect(find.text('+1/h Mining yield'), findsOneWidget);
 
     await tester.tap(find.text('Reputation'));
     await tester.pumpAndSettle();

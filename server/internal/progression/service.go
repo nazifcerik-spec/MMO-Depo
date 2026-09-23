@@ -401,6 +401,45 @@ type Summary struct {
 	Reputation        []ReputationView `json:"reputation"`
 }
 
+func (s *Service) masteryXP(ctx context.Context, char uuid.UUID) (map[string]int64, error) {
+	xp := map[string]int64{}
+	rows, err := s.pool.Query(ctx, `SELECT track_code, xp FROM progression.character_mastery WHERE character_id = $1`, char)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var code string
+		var v int64
+		if err := rows.Scan(&code, &v); err != nil {
+			return nil, err
+		}
+		xp[code] = v
+	}
+	return xp, rows.Err()
+}
+
+// ActiveBonuses returns every mastery bonus the character has unlocked
+// (DD-220). Internal callers only — no ownership check.
+func (s *Service) ActiveBonuses(ctx context.Context, char uuid.UUID) ([]BonusEffect, error) {
+	xp, err := s.masteryXP(ctx, char)
+	if err != nil {
+		return nil, err
+	}
+	return s.cat.ActiveEffects(xp), nil
+}
+
+// GatherBonus sums the unlocked `gather_yield_<kind>` bonuses: flat is extra
+// resources per hour, mult is the additive percentage (0.05 = +5%).
+func (s *Service) GatherBonus(ctx context.Context, char uuid.UUID, kind string) (flat, mult float64, err error) {
+	effects, err := s.ActiveBonuses(ctx, char)
+	if err != nil {
+		return 0, 0, err
+	}
+	flat, mult = SumTarget(effects, "gather_yield_"+kind)
+	return flat, mult, nil
+}
+
 func (s *Service) Summary(ctx context.Context, char, account uuid.UUID) (*Summary, error) {
 	if err := s.chars.Owns(ctx, char, account); err != nil {
 		return nil, err
@@ -411,31 +450,15 @@ func (s *Service) Summary(ctx context.Context, char, account uuid.UUID) (*Summar
 		Scan(&sum.AchievementPoints, &sum.ActiveTitle); err != nil {
 		return nil, err
 	}
-	xp := map[string]int64{}
-	rows, err := s.pool.Query(ctx, `SELECT track_code, xp FROM progression.character_mastery WHERE character_id = $1`, char)
+	xp, err := s.masteryXP(ctx, char)
 	if err != nil {
 		return nil, err
 	}
-	for rows.Next() {
-		var code string
-		var v int64
-		if err := rows.Scan(&code, &v); err != nil {
-			rows.Close()
-			return nil, err
-		}
-		xp[code] = v
-	}
-	rows.Close()
 	for _, t := range s.cat.tracks {
 		tier := MasteryTier(xp[t.Code], t.Curve, t.MaxTier)
-		v := MasteryView{Track: t.Code, NameKey: t.NameKey, Category: t.Category, XP: xp[t.Code],
-			Tier: tier, MaxTier: t.MaxTier, NextTierXP: NextTierXP(tier, t.Curve, t.MaxTier), ActiveBonus: []BonusEffect{}}
-		for _, b := range t.Bonuses {
-			if b.Tier <= tier {
-				v.ActiveBonus = append(v.ActiveBonus, b.Effects...)
-			}
-		}
-		sum.Mastery = append(sum.Mastery, v)
+		sum.Mastery = append(sum.Mastery, MasteryView{Track: t.Code, NameKey: t.NameKey, Category: t.Category,
+			XP: xp[t.Code], Tier: tier, MaxTier: t.MaxTier, NextTierXP: NextTierXP(tier, t.Curve, t.MaxTier),
+			ActiveBonus: t.effects(tier)})
 	}
 
 	type repRow struct {
@@ -443,7 +466,7 @@ func (s *Service) Summary(ctx context.Context, char, account uuid.UUID) (*Summar
 		resetOn   time.Time
 	}
 	reps := map[string]repRow{}
-	rows, err = s.pool.Query(ctx, `
+	rows, err := s.pool.Query(ctx, `
 		SELECT faction_code, rep_xp, daily_gain_used, daily_reset_on FROM progression.character_reputation
 		 WHERE character_id = $1`, char)
 	if err != nil {

@@ -5,7 +5,7 @@
 # integration suite (internal/integration, run in CI against a real DB).
 #
 # package                     min%
-internal/activity             55
+internal/activity             58
 internal/admin                6
 internal/combat               51
 internal/consumable           1
@@ -25,9 +25,9 @@ internal/mail                 14
 internal/market               3
 internal/notification         21
 internal/observability        59
-internal/progression          10
+internal/progression          16
 internal/ratelimit            42
-internal/skill                80
+internal/skill                97
 internal/social               0
 internal/vendor               6
 internal/worker               35

@@ -27,7 +27,20 @@ type EquippedBonus struct {
 // character.Service.WithSheetComputer(charAdapter) wires this in main.go.
 type CharacterAdapter struct {
 	fetch EquippedFetcher
+	extra []ModifierSource
 	log   *slog.Logger
+}
+
+// ModifierSource contributes non-gear modifiers (mastery bonuses, DD-220).
+// Targets the sheet does not know (e.g. gather_yield_*) are ignored by
+// ComputeSheet.
+type ModifierSource func(ctx context.Context, characterID uuid.UUID) ([]Modifier, error)
+
+// WithModifierSource adds a source; its error fails the sheet like a gear
+// fetch error would (a silently missing bonus would skew combat snapshots).
+func (a *CharacterAdapter) WithModifierSource(src ModifierSource) *CharacterAdapter {
+	a.extra = append(a.extra, src)
+	return a
 }
 
 func NewCharacterAdapter(f EquippedFetcher, logger *slog.Logger) *CharacterAdapter {
@@ -53,6 +66,13 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 			a.log.WarnContext(ctx, "skill: bad stat_bonuses row — skipped",
 				slog.String("err", err.Error()))
 			continue
+		}
+		mods = append(mods, list...)
+	}
+	for _, src := range a.extra {
+		list, err := src(ctx, characterID)
+		if err != nil {
+			return base, err
 		}
 		mods = append(mods, list...)
 	}

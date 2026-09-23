@@ -18,11 +18,19 @@ type Snapshot struct {
 	ClassCode      string `json:"class_code"`
 	RaceCode       string `json:"race_code"`
 
-	// Future (Sprint 11+):
-	// GearScore     int            `json:"gear_score,omitempty"`
-	// MasteryTier   int            `json:"mastery_tier,omitempty"`
-	// ActiveBuffs   []string       `json:"active_buffs,omitempty"`
-	// GatherBonus   float64        `json:"gather_bonus,omitempty"`
+	// Mastery gather bonus frozen at start (DD-220): extra resources per
+	// hour, then an additive percentage on the hourly rate. Absent on
+	// contracts started before Sprint 40 → zero.
+	YieldFlatPerHour float64 `json:"yield_flat_per_hour,omitempty"`
+	YieldMult        float64 `json:"yield_mult,omitempty"`
+}
+
+// parseSnapshot reads a stored snapshot; a malformed one yields zero bonuses
+// (reveal must stay possible).
+func parseSnapshot(raw json.RawMessage) Snapshot {
+	var s Snapshot
+	_ = json.Unmarshal(raw, &s)
+	return s
 }
 
 // TakeSnapshot builds a snapshot from a live character.

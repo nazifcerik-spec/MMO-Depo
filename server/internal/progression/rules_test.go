@@ -74,3 +74,33 @@ func TestRecordIf_DropsZeroAndNil(t *testing.T) {
 	RecordIf(context.Background(), s, uuid.New(), Event{Kind: "a", Amount: 0})
 	require.Empty(t, s.got, "nothing recorded when all amounts are zero")
 }
+
+func TestActiveEffectsAndSumTarget(t *testing.T) {
+	curve := []int64{100, 500, 2000}
+	cat := &Catalog{tracks: []track{
+		{Code: "mining", MaxTier: 3, Curve: curve, Bonuses: []tierBonus{
+			{Tier: 1, Effects: []BonusEffect{{Kind: "flat", Target: "gather_yield_mining", Amount: 1}}},
+			{Tier: 3, Effects: []BonusEffect{{Kind: "mult_add", Target: "gather_yield_mining", Amount: 0.1}}},
+		}},
+		{Code: "combat", MaxTier: 3, Curve: curve, Bonuses: []tierBonus{
+			{Tier: 2, Effects: []BonusEffect{{Kind: "flat", Target: "attack", Amount: 2}}},
+		}},
+	}}
+
+	require.Empty(t, cat.ActiveEffects(nil), "no xp → nothing unlocked")
+
+	got := cat.ActiveEffects(map[string]int64{"mining": 2600, "combat": 599})
+	require.Len(t, got, 2, "mining tier 3 unlocks both entries; combat tier 1 none")
+	flat, mult := SumTarget(got, "gather_yield_mining")
+	require.Equal(t, 1.0, flat)
+	require.InDelta(t, 0.1, mult, 1e-9)
+
+	got = cat.ActiveEffects(map[string]int64{"mining": 150, "combat": 600})
+	flat, mult = SumTarget(got, "gather_yield_mining")
+	require.Equal(t, 1.0, flat)
+	require.Zero(t, mult)
+	flat, _ = SumTarget(got, "attack")
+	require.Equal(t, 2.0, flat)
+	flat, _ = SumTarget(got, "gather_yield_fishing")
+	require.Zero(t, flat)
+}
