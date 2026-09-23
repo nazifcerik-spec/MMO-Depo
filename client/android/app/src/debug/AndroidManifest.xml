@@ -4,4 +4,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Local dev API over plain HTTP (docker compose on the LAN). Release
+         builds keep Android's cleartext block: production is HTTPS only. -->
+    <application android:usesCleartextTraffic="true"/>
 </manifest>

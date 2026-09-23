@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The app talks to the Otter API; release builds need this too. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="otter"
         android:name="${applicationName}"
