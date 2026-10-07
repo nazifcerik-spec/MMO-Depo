@@ -88,19 +88,6 @@ type Travel struct {
 	Version        int32
 }
 
-// IsInProgress helper for the reveal/complete guards.
-func (t *Travel) IsInProgress() bool { return t.State == TravelInProgress }
-
-// RemainingSeconds — how many seconds until arrival at `now`. Zero when the
-// arrival time has passed. Negative floors are clamped to 0.
-func (t *Travel) RemainingSeconds(now time.Time) int32 {
-	dt := int32(t.ArrivesAt.Sub(now).Seconds())
-	if dt < 0 {
-		return 0
-	}
-	return dt
-}
-
 // --- Errors -----------------------------------------------------------------
 
 var (

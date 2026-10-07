@@ -263,13 +263,6 @@ func (s *Service) Cancel(ctx context.Context, travelID, accountID uuid.UUID) (*T
 
 // --- Active / History ------------------------------------------------------
 
-func (s *Service) Active(ctx context.Context, characterID, accountID uuid.UUID) (*Travel, error) {
-	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
-		return nil, err
-	}
-	return s.repo.Active(ctx, characterID)
-}
-
 func (s *Service) History(ctx context.Context, characterID, accountID uuid.UUID, limit int) ([]Travel, error) {
 	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
 		return nil, err

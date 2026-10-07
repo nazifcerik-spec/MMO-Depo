@@ -82,9 +82,6 @@ type Contract struct {
 	Version   int32
 }
 
-// IsActive returns true when the contract can be revealed or stopped.
-func (c *Contract) IsActive() bool { return c.State == StateActive }
-
 // ElapsedSeconds computes how many seconds of the contract have run at `now`,
 // clamped to [0, DurationSeconds].
 func (c *Contract) ElapsedSeconds(now time.Time) int32 {

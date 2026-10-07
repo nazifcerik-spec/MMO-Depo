@@ -52,9 +52,6 @@ func (c *Catalog) All() []Region {
 // StartingCode returns the code marked is_starting=true, or empty when none.
 func (c *Catalog) StartingCode() string { return c.starting }
 
-// LinksFor returns every non-parent link touching `code`.
-func (c *Catalog) LinksFor(code string) []RegionLink { return c.linksBy[code] }
-
 // TravelDuration returns the direct-edge duration between two region codes,
 // or (0, false) when no direct edge exists.
 //

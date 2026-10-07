@@ -109,7 +109,4 @@ var (
 	// their bag. No partial consumption happens — the whole operation is
 	// atomic-or-nothing.
 	ErrInsufficient = errors.New("inventory: insufficient quantity")
-
-	// ErrValidation wraps generic shape rejection.
-	ErrValidation = errors.New("inventory: validation")
 )

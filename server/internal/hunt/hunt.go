@@ -59,9 +59,6 @@ type Contract struct {
 	Version        int32           `json:"-"`
 }
 
-// IsActive returns true when the contract can be revealed or stopped.
-func (c *Contract) IsActive() bool { return c.State == StateActive }
-
 // ElapsedSeconds is how many seconds of the contract have run at `now`,
 // clamped to [0, DurationSecs].
 func (c *Contract) ElapsedSeconds(now time.Time) int32 {

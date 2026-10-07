@@ -62,10 +62,6 @@ func (c *Catalog) AllRecipes() []Recipe {
 	return out
 }
 
-func (c *Catalog) RecipesFor(professionCode string) []Recipe {
-	return c.recipesByProfession[professionCode]
-}
-
 // --- CatalogService ---------------------------------------------------------
 
 type CatalogService struct {

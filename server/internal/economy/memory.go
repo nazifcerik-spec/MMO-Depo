@@ -47,9 +47,6 @@ func NewMemoryTxnService(currencies map[string]Currency) *MemoryTxnService {
 	}
 }
 
-// SetClock overrides the clock (test-only).
-func (m *MemoryTxnService) SetClock(now func() time.Time) { m.now = now }
-
 func (m *MemoryTxnService) Balance(_ context.Context, kind AccountKind, ref uuid.UUID, currency string) (int64, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -125,13 +122,4 @@ func (m *MemoryTxnService) Write(_ context.Context, intent Intent) (Result, erro
 	result := Result{TxnID: txnID, Rows: rows, Replayed: false}
 	m.txnByIdem[intent.IdempotencyKey] = result
 	return result, nil
-}
-
-// Entries returns a copy of the ledger for assertion in tests.
-func (m *MemoryTxnService) Entries() []LedgerRow {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	out := make([]LedgerRow, len(m.entries))
-	copy(out, m.entries)
-	return out
 }

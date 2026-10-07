@@ -63,8 +63,6 @@ type Contract struct {
 	Version        int32           `json:"-"`
 }
 
-func (c *Contract) IsActive() bool { return c.State == StateActive }
-
 // ElapsedSeconds clamped to [0, DurationSecs].
 func (c *Contract) ElapsedSeconds(now time.Time) int32 {
 	dt := int32(now.Sub(c.StartedAt).Seconds())

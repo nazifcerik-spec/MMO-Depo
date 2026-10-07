@@ -32,12 +32,6 @@ func (c *Catalog) Get(code string) (Template, error) {
 	return t, nil
 }
 
-// Has returns true when the code is in the catalog.
-func (c *Catalog) Has(code string) bool {
-	_, ok := c.byCode[code]
-	return ok
-}
-
 // All returns a copy of the templates slice.
 func (c *Catalog) All() []Template {
 	out := make([]Template, 0, len(c.byCode))
