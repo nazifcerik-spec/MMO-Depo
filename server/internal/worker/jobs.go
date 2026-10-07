@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
@@ -457,14 +458,15 @@ DELETE FROM social.chat_message
 
 // MailExpire returns unclaimed mail value to senders after 30 days.
 type MailExpire struct {
-	Pool *pgxpool.Pool
-	Txn  economy.TxnService
+	Pool  *pgxpool.Pool
+	Txn   economy.TxnService
+	Slots social.SlotAssigner // re-slots returned items (they travel unslotted)
 }
 
 func (MailExpire) Name() string            { return "mail_expire" }
 func (MailExpire) Interval() time.Duration { return 10 * time.Minute }
 func (j MailExpire) Run(ctx context.Context) (int64, error) {
-	return social.ExpireMail(ctx, j.Pool, j.Txn, BatchSize)
+	return social.ExpireMail(ctx, j.Pool, j.Txn, j.Slots, BatchSize)
 }
 
 // MarketExpire expires overdue listings and resolves abandoned pending sales.
@@ -491,7 +493,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 	txn, logger, reconcileFreeze := d.Txn, d.Log, d.ReconcileFreeze
 	return []Job{
 		ChatGC(pool),
-		MailExpire{Pool: pool, Txn: txn},
+		MailExpire{Pool: pool, Txn: txn, Slots: inventory.NewService(inventory.NewPgRepo(pool), nil)},
 		MarketExpire{Pool: pool},
 		ActivityExpire{Pool: pool, Notifier: d.Notifier, Log: logger},
 		TravelArrive{Pool: pool, Notifier: d.Notifier, Log: logger},

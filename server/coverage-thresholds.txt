@@ -30,7 +30,7 @@ internal/progression          14
 internal/quest                84
 internal/ratelimit            42
 internal/skill                95
-internal/social               0
+internal/social               63
 internal/vendor               6
 internal/worker               35
 internal/world                15

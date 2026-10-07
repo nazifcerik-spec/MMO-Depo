@@ -388,9 +388,11 @@ func (s *Service) DeleteMail(ctx context.Context, actor, account, mailID uuid.UU
 }
 
 // ExpireMail is the worker entry point: mails past expires_at that still hold
-// value go back to the sender (gold via ledger, items unlocked in place);
-// value-less mails are marked expired. One short tx per mail.
-func ExpireMail(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService, batch int) (int64, error) {
+// value go back to the sender (gold via ledger, items unlocked and re-slotted);
+// value-less mails are marked expired. One short tx per mail. A mail whose
+// claim already paid out in the ledger (claim tx died after the ledger write)
+// is finished as a claim instead, so its items are never stranded.
+func ExpireMail(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService, slots SlotAssigner, batch int) (int64, error) {
 	rows, err := pool.Query(ctx, `
 		SELECT id FROM social.mail
 		 WHERE state IN ('sent','read') AND expires_at <= now()
@@ -404,7 +406,7 @@ func ExpireMail(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService,
 	}
 	var n int64
 	for _, id := range ids {
-		done, err := expireOne(ctx, pool, txn, id)
+		done, err := expireOne(ctx, pool, txn, slots, id)
 		if err != nil {
 			return n, err
 		}
@@ -415,16 +417,20 @@ func ExpireMail(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService,
 	return n, nil
 }
 
-func expireOne(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService, mailID uuid.UUID) (bool, error) {
+func expireOne(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService, slots SlotAssigner, mailID uuid.UUID) (bool, error) {
 	done := false
+	var moved []item.Instance
+	var newOwner uuid.UUID
 	err := pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error {
 		var sender *uuid.UUID
+		var recipient uuid.UUID
 		var gold int64
 		var items int16
 		err := tx.QueryRow(ctx, `
-			SELECT sender_character_id, gold_attachment_copper, item_attachment_count FROM social.mail
+			SELECT sender_character_id, recipient_character_id, gold_attachment_copper, item_attachment_count
+			  FROM social.mail
 			 WHERE id = $1 AND state IN ('sent','read') AND expires_at <= now()
-			   FOR UPDATE SKIP LOCKED`, mailID).Scan(&sender, &gold, &items)
+			   FOR UPDATE SKIP LOCKED`, mailID).Scan(&sender, &recipient, &gold, &items)
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil // claimed or locked by a claim in flight
 		}
@@ -436,37 +442,62 @@ func expireOne(ctx context.Context, pool *pgxpool.Pool, txn economy.TxnService, 
 			_, err := tx.Exec(ctx, `UPDATE social.mail SET state = 'expired' WHERE id = $1`, mailID)
 			return err
 		}
-		// A claim whose ledger write committed but whose mail update did not.
+		// A claim whose ledger write committed but whose mail update did not:
+		// the recipient was paid, so complete the claim for the items too.
 		var claimedInLedger bool
 		if err := tx.QueryRow(ctx, `
 			SELECT EXISTS (SELECT 1 FROM economy.ledger_entry WHERE idempotency_key = $1)`,
 			"mail-claim-"+mailID.String()).Scan(&claimedInLedger); err != nil {
 			return err
 		}
-		if claimedInLedger || sender == nil {
+		state := "returned"
+		switch {
+		case claimedInLedger:
+			newOwner, state = recipient, "claimed"
+		case sender == nil:
 			_, err := tx.Exec(ctx, `UPDATE social.mail SET state = 'expired' WHERE id = $1`, mailID)
 			return err
-		}
-		if gold > 0 {
-			if _, err := txn.Write(ctx, economy.Intent{
-				Kind: "mail_return", RefKind: "mail", RefID: mailID,
-				IdempotencyKey: "mail-return-" + mailID.String(),
-				Entries: []economy.Entry{
-					{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemMailEscrow, Delta: -gold},
-					{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: *sender, Delta: gold},
-				},
-			}); err != nil {
-				return err
+		default:
+			newOwner = *sender
+			if gold > 0 {
+				if _, err := txn.Write(ctx, economy.Intent{
+					Kind: "mail_return", RefKind: "mail", RefID: mailID,
+					IdempotencyKey: "mail-return-" + mailID.String(),
+					Entries: []economy.Entry{
+						{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemMailEscrow, Delta: -gold},
+						{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: *sender, Delta: gold},
+					},
+				}); err != nil {
+					return err
+				}
 			}
 		}
-		if _, err := tx.Exec(ctx, `
+		rows, err := tx.Query(ctx, `
 			UPDATE inventory.item_instance
-			   SET is_locked = false, lock_owner = NULL, locked_ref_id = NULL, updated_at = now(), version = version + 1
-			 WHERE locked_ref_id = $1 AND lock_owner = 'mail'`, mailID); err != nil {
+			   SET owner_character_id = $2, is_locked = false, lock_owner = NULL, locked_ref_id = NULL,
+			       updated_at = now(), version = version + 1
+			 WHERE locked_ref_id = $1 AND lock_owner = 'mail'
+			RETURNING id, template_code, stack_quantity`, mailID, newOwner)
+		if err != nil {
 			return err
 		}
-		_, err = tx.Exec(ctx, `UPDATE social.mail SET state = 'returned' WHERE id = $1`, mailID)
+		if moved, err = pgx.CollectRows(rows, func(r pgx.CollectableRow) (item.Instance, error) {
+			var in item.Instance
+			err := r.Scan(&in.ID, &in.TemplateCode, &in.StackQuantity)
+			return in, err
+		}); err != nil {
+			return err
+		}
+		_, err = tx.Exec(ctx, `
+			UPDATE social.mail SET state = $2::text,
+			       attachments_claimed_at = CASE WHEN $2::text = 'claimed' THEN now() ELSE attachments_claimed_at END
+			 WHERE id = $1`, mailID, state)
 		return err
 	})
+	// Items travel with slot = NULL while in the mail; put them back in a bag
+	// slot (best effort, as on claim — a full bag keeps them unslotted).
+	if err == nil && len(moved) > 0 && slots != nil {
+		_ = slots.AssignSlots(ctx, newOwner, moved)
+	}
 	return done, err
 }
