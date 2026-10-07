@@ -3,6 +3,7 @@ package vendor
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"sync"
@@ -27,6 +28,7 @@ type InventoryDeleter interface {
 type ItemFetcher interface {
 	Get(ctx context.Context, id uuid.UUID) (*item.Instance, error)
 	Catalog() *item.Catalog
+	BySource(ctx context.Context, sourceRefID uuid.UUID) ([]item.Instance, error)
 	MaterializeDrops(
 		ctx context.Context,
 		characterID uuid.UUID,
@@ -236,13 +238,13 @@ func (s *Service) Buy(ctx context.Context, req BuyRequest) (*BuyResult, error) {
 		return nil, err
 	}
 
-	// Materialize the item using the ledger txn id as source_ref (item.Grant
-	// is idempotent by source_ref_id — replay returns existing instances).
+	// Materialize the item once per ledger txn: a replay of the same key gets
+	// the same txn back and must not mint a second (free) item.
 	drops := []item.DropSpec{{
 		TemplateCode: req.TemplateCode,
 		Rarity:       item.RarityCommon, // vendor stock is base rarity in v1
 	}}
-	instances, err := s.items.MaterializeDrops(ctx, req.CharacterID, "vendor_buy", ledgerRes.TxnID, drops)
+	instances, err := s.mintOnce(ctx, req.CharacterID, "vendor_buy", ledgerRes.TxnID, drops)
 	if err != nil {
 		return nil, fmt.Errorf("vendor buy materialize: %w", err)
 	}
@@ -257,27 +259,26 @@ func (s *Service) Buy(ctx context.Context, req BuyRequest) (*BuyResult, error) {
 	}, nil
 }
 
-// --- Sell -------------------------------------------------------------------
-
-// Rarity value multiplier is duplicated inline to avoid importing item's rarity
-// helper (would create a small friction). Kept in sync manually — Phase 02
-// content pack unifies these.
-func rarityValueMultiplier(r string) float64 {
-	switch r {
-	case "uncommon":
-		return 1.5
-	case "rare":
-		return 3.0
-	case "epic":
-		return 8.0
-	case "legendary":
-		return 25.0
-	case "mythic":
-		return 100.0
-	default:
-		return 1.0 // common
+// mintOnce materializes the drops for a source reference exactly once: a
+// replay (or a concurrent twin, which loses on the partial unique index of
+// migration 0028) gets the instances already minted for that reference.
+func (s *Service) mintOnce(ctx context.Context, characterID uuid.UUID, kind string, ref uuid.UUID, drops []item.DropSpec) ([]item.Instance, error) {
+	if existing, err := s.items.BySource(ctx, ref); err != nil {
+		return nil, err
+	} else if len(existing) > 0 {
+		return existing, nil
 	}
+	instances, err := s.items.MaterializeDrops(ctx, characterID, kind, ref, drops)
+	if err != nil {
+		if existing, lerr := s.items.BySource(ctx, ref); lerr == nil && len(existing) > 0 {
+			return existing, nil
+		}
+		return nil, err
+	}
+	return instances, nil
 }
+
+// --- Sell -------------------------------------------------------------------
 
 type SellRequest struct {
 	VendorCode     string
@@ -331,7 +332,7 @@ func (s *Service) Sell(ctx context.Context, req SellRequest) (*SellResult, error
 	}
 
 	// Price per unit × stack.
-	pricePerUnit := SellPrice(itemTmpl.BaseValueCopper, tmpl.SellMultiplier, rarityValueMultiplier(string(inst.Rarity)))
+	pricePerUnit := SellPrice(itemTmpl.BaseValueCopper, tmpl.SellMultiplier, item.ValueMultiplier(inst.Rarity))
 	totalPrice := pricePerUnit * int64(inst.StackQuantity)
 	if totalPrice <= 0 {
 		totalPrice = 1 // minimum 1 copper for non-worthless items
@@ -422,12 +423,13 @@ func (s *Service) Buyback(ctx context.Context, characterID, buybackID uuid.UUID,
 		return nil, ErrBuybackExpired
 	}
 
-	// Debit gold from player (reverse the sell credit).
+	// Debit gold once per buyback entry (not per request): two concurrent
+	// requests with different keys must not both charge.
 	ledgerRes, err := s.txn.Write(ctx, economy.Intent{
 		Kind:           "vendor_buyback",
 		RefKind:        "vendor_buyback",
 		RefID:          entry.ID,
-		IdempotencyKey: "vendor-buyback-" + idemKey,
+		IdempotencyKey: "vendor-buyback-" + entry.ID.String(),
 		Entries: []economy.Entry{
 			{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: characterID, Delta: -entry.SoldPriceCopper},
 			{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemRewardSource, Delta: entry.SoldPriceCopper},
@@ -437,30 +439,28 @@ func (s *Service) Buyback(ctx context.Context, characterID, buybackID uuid.UUID,
 		return nil, err
 	}
 
-	// Mark claimed.
-	if err := s.repo.ClaimBuyback(ctx, entry.ID, now); err != nil {
-		return nil, err
-	}
-
-	// Recreate item from snapshot.
+	// Recreate the item from its snapshot (once per entry; auto-slots via the
+	// inventory SlotAssigner wired to item.Service), then mark the entry
+	// claimed last so a failed mint can be retried.
 	var snap ItemSnapshot
 	if err := json.Unmarshal(entry.ItemSnapshot, &snap); err != nil {
 		return nil, fmt.Errorf("buyback snapshot decode: %w", err)
 	}
-	// Use item.DropSpec + Materialize path so the new instance auto-slots via
-	// the inventory SlotAssigner wired to item.Service.
 	drops := []item.DropSpec{{
 		TemplateCode: snap.TemplateCode,
 		Rarity:       item.Rarity(snap.Rarity),
 		Prefix:       snap.Prefix,
 		Suffix:       snap.Suffix,
 	}}
-	instances, err := s.items.MaterializeDrops(ctx, characterID, "vendor_buyback", entry.ID, drops)
+	instances, err := s.mintOnce(ctx, characterID, "vendor_buyback", entry.ID, drops)
 	if err != nil {
 		return nil, fmt.Errorf("buyback materialize: %w", err)
 	}
 	if len(instances) == 0 {
 		return nil, fmt.Errorf("buyback: item materialization returned no instances")
+	}
+	if err := s.repo.ClaimBuyback(ctx, entry.ID, now); err != nil && !errors.Is(err, ErrBuybackClaimed) {
+		return nil, err
 	}
 	return &BuybackResult{
 		InstanceID:   instances[0].ID,

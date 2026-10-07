@@ -82,6 +82,12 @@ func (s *Service) Get(ctx context.Context, id uuid.UUID) (*Instance, error) {
 // the caller's job — activity reveal already dedupes at contract level.
 //
 // Returns the created Instance list (with fresh IDs + timestamps).
+// BySource returns the instances already minted for a source reference
+// (idempotent mints check it before creating anything).
+func (s *Service) BySource(ctx context.Context, sourceRefID uuid.UUID) ([]Instance, error) {
+	return s.repo.ListBySource(ctx, sourceRefID)
+}
+
 func (s *Service) MaterializeDrops(
 	ctx context.Context,
 	characterID uuid.UUID,

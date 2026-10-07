@@ -13,26 +13,6 @@ const (
 	RarityMythic    Rarity = "mythic"
 )
 
-// RarityOrder returns a comparable ordinal (0 = common … 5 = mythic).
-func RarityOrder(r Rarity) int {
-	switch r {
-	case RarityCommon:
-		return 0
-	case RarityUncommon:
-		return 1
-	case RarityRare:
-		return 2
-	case RarityEpic:
-		return 3
-	case RarityLegendary:
-		return 4
-	case RarityMythic:
-		return 5
-	default:
-		return 0
-	}
-}
-
 // ValueMultiplier scales the template's base value for rarity. Placeholder v1
 // numbers — balance pass Phase 02.
 func ValueMultiplier(r Rarity) float64 {

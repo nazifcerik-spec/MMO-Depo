@@ -2053,6 +2053,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-224 — Vendor Alım/Geri Alımı Kaynak Başına Tek Eşya Üretir (DB Tekilliği)
+**Karar:** Vendor alımı ve geri alımı eşyayı kaynak referansı başına bir kez üretir: alımda ledger txn'i, geri alımda buyback kaydı. Migration 0028 `inventory.item_instance(source_ref_id)` üzerinde `source_kind IN ('vendor_buy','vendor_buyback')` için partial UNIQUE index ekler; servis önce aynı kaynaktan üretilmiş eşyayı arar, eşzamanlı ikiz index'e takılırsa mevcut eşyayı döndürür (`item.Service.BySource`). Geri alımın ledger anahtarı istek değil kayıt başınadır (`vendor-buyback-<entry>`), "claimed" işareti en son atılır.
+**Reason:** Gerçek DB testleri iki hata buldu: (1) aynı Idempotency-Key ile tekrarlanan alım ledger'da bir kez ücretlendirip her seferinde yeni eşya üretiyordu (`MaterializeDrops` idempotent değildi; yorum `Grant`'in idempotent olduğunu söylüyordu) — üretimden sonra/yanıt kaydından önce çökme ya da eşzamanlı çift gönderim bedava eşya demekti. (2) Geri alımda farklı anahtarlı iki eşzamanlı istek iki kez ücret alıp tek eşya veriyordu; claim üretimden önce olduğu için başarısız üretim ödenmiş ama verilmemiş eşya bırakıyordu.
+**Alternatives:** `MaterializeDrops`'u genel olarak kaynak başına idempotent yapmak (avlar aynı kaynak için birden çok eşya üretir — bozar), yalnız uygulama düzeyinde kontrol (eşzamanlılıkta yarış kalır), advisory lock (DB index'inden daha karmaşık).
+**Consequences:** 0028 mevcut bir yinelenmiş vendor eşyası varsa uygulanamaz (prod'da yok; dev DB'de testin ürettiği tek kopya silindi). Eşzamanlı ikizler hata yerine aynı sonucu alır. Regresyon: `TestVendorRules`, `TestVendorConcurrentMintsOnce`.
+**Tarih:** 2026-10-08
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
