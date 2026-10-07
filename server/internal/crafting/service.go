@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/progression"
 )
@@ -23,7 +24,8 @@ type CatalogLookup interface {
 
 // InventoryConsumer is the material-eating capability. inventory.Service.ConsumeByTemplate satisfies.
 type InventoryConsumer interface {
-	ConsumeByTemplate(ctx context.Context, characterID uuid.UUID, templateCode string, quantity int32) error
+	Available(ctx context.Context, characterID uuid.UUID, templateCode string) (int32, error)
+	ConsumeAll(ctx context.Context, characterID uuid.UUID, needs []inventory.Need) error
 }
 
 // ItemMinter is the output-producing capability. item.Service.MintExact satisfies.
@@ -131,23 +133,34 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 		return nil, ErrSkillTooLow
 	}
 
-	// --- Debit gold first (idempotent ledger key = "craft-<recipe>-<char>-<now>")
-	// v1 uses a fresh key per attempt; retries within the same HTTP request are
-	// deduped one layer higher via the Idempotency middleware.
+	// --- Pre-check inputs so a craft that cannot run never touches gold.
+	needs := make([]inventory.Need, 0, len(recipe.Inputs))
+	for _, in := range recipe.Inputs {
+		have, err := s.inv.Available(ctx, characterID, in.TemplateCode)
+		if err != nil {
+			return nil, err
+		}
+		if have < in.Quantity {
+			return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, in.Quantity, have, inventory.ErrInsufficient)
+		}
+		needs = append(needs, inventory.Need{TemplateCode: in.TemplateCode, Quantity: in.Quantity})
+	}
+
+	// --- Debit gold (fresh key per attempt; HTTP retries are deduped one
+	// layer higher by the Idempotency middleware).
 	now := s.cfg.Now().UTC()
 	var goldTxnID uuid.UUID
+	goldEntries := []economy.Entry{
+		{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: characterID, Delta: -recipe.GoldCostCopper},
+		{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemVendorSink, Delta: recipe.GoldCostCopper},
+	}
 	if recipe.GoldCostCopper > 0 {
 		res, err := s.txn.Write(ctx, economy.Intent{
 			Kind:           "crafting_craft",
 			RefKind:        "recipe",
 			RefID:          uuid.New(), // per-craft unique ref
 			IdempotencyKey: fmt.Sprintf("craft-%s-%s-%d", recipe.Code, characterID.String(), now.UnixNano()),
-			Entries: []economy.Entry{
-				{Currency: "gold", AccountKind: economy.AccountCharacter,
-					AccountRef: characterID, Delta: -recipe.GoldCostCopper},
-				{Currency: "gold", AccountKind: economy.AccountSystem,
-					AccountRef: economy.SystemVendorSink, Delta: recipe.GoldCostCopper},
-			},
+			Entries:        goldEntries,
 		})
 		if err != nil {
 			if errors.Is(err, economy.ErrInsufficientBalance) {
@@ -158,15 +171,24 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 		goldTxnID = res.TxnID
 	}
 
-	// --- Consume inputs (atomic; refuses if any shortfall).
-	// If a shortfall triggers after gold was already debited, we have a stuck
-	// state: gold gone, no output. Sprint 17 v1 accepts this as a known edge
-	// (the ledger keeps the audit trail; support tools can refund). Phase 02
-	// wraps the whole flow in a single transaction across services.
-	for _, in := range recipe.Inputs {
-		if err := s.inv.ConsumeByTemplate(ctx, characterID, in.TemplateCode, in.Quantity); err != nil {
-			return nil, fmt.Errorf("craft consume %s x%d: %w", in.TemplateCode, in.Quantity, err)
+	// --- Consume every input in one transaction. Losing a race with another
+	// spend after the pre-check refunds the gold, so a failed craft is free.
+	if err := s.inv.ConsumeAll(ctx, characterID, needs); err != nil {
+		if goldTxnID != uuid.Nil {
+			refund := make([]economy.Entry, len(goldEntries))
+			for i, e := range goldEntries {
+				e.Delta = -e.Delta
+				refund[i] = e
+			}
+			if _, rerr := s.txn.Write(ctx, economy.Intent{
+				Kind: "crafting_refund", RefKind: "ledger_txn", RefID: goldTxnID,
+				IdempotencyKey: "craft-refund-" + goldTxnID.String(), Entries: refund,
+			}); rerr != nil {
+				s.log.ErrorContext(ctx, "crafting: gold refund failed — manual reconcile needed",
+					slog.String("txn", goldTxnID.String()), slog.String("err", rerr.Error()))
+			}
 		}
+		return nil, fmt.Errorf("craft consume: %w", err)
 	}
 
 	// --- Mint output.

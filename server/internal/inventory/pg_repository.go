@@ -385,78 +385,72 @@ func (r *PgRepo) DeleteInstance(ctx context.Context, itemID, ownerID uuid.UUID) 
 //
 // Selection order: smallest stacks first (asc stack_quantity). This drains
 // fragments before touching pristine full stacks, keeping bag layout tidy.
-func (r *PgRepo) ConsumeByTemplate(ctx context.Context, ownerID uuid.UUID, templateCode string, quantity int32) error {
-	if quantity <= 0 {
-		return nil
-	}
-	tx, err := r.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
-	if err != nil {
-		return err
-	}
-	defer func() { _ = tx.Rollback(ctx) }()
+const consumableWhere = `
+	 WHERE owner_character_id = $1 AND template_code = $2
+	   AND is_locked = false AND equipment_slot IS NULL AND slot IS NOT NULL`
 
-	// Lock candidate rows FOR UPDATE so two concurrent crafts don't over-eat.
-	rows, err := tx.Query(ctx, `
-		SELECT id, stack_quantity
-		  FROM inventory.item_instance
-		 WHERE owner_character_id = $1
-		   AND template_code = $2
-		   AND is_locked = false
-		   AND equipment_slot IS NULL
-		   AND slot IS NOT NULL
-		 ORDER BY stack_quantity ASC
-		 FOR UPDATE`, ownerID, templateCode)
-	if err != nil {
-		return err
-	}
-	type row struct {
-		id  uuid.UUID
-		qty int32
-	}
-	var picks []row
-	var total int32
-	for rows.Next() {
-		var pr row
-		if err := rows.Scan(&pr.id, &pr.qty); err != nil {
-			rows.Close()
-			return err
-		}
-		picks = append(picks, pr)
-		total += pr.qty
-	}
-	rows.Close()
-	if err := rows.Err(); err != nil {
-		return err
-	}
-	if total < quantity {
-		return ErrInsufficient
-	}
-	remaining := quantity
-	for _, p := range picks {
-		if remaining <= 0 {
-			break
-		}
-		take := p.qty
-		if take > remaining {
-			take = remaining
-		}
-		if take == p.qty {
-			// Stack fully drained → delete.
-			if _, err := tx.Exec(ctx,
-				`DELETE FROM inventory.item_instance WHERE id = $1`, p.id); err != nil {
+func (r *PgRepo) Available(ctx context.Context, ownerID uuid.UUID, templateCode string) (int32, error) {
+	var n int32
+	err := r.pool.QueryRow(ctx,
+		`SELECT COALESCE(sum(stack_quantity), 0)::int FROM inventory.item_instance`+consumableWhere,
+		ownerID, templateCode).Scan(&n)
+	return n, err
+}
+
+func (r *PgRepo) ConsumeAll(ctx context.Context, ownerID uuid.UUID, needs []Need) error {
+	return pgx.BeginTxFunc(ctx, r.pool, pgx.TxOptions{IsoLevel: pgx.ReadCommitted}, func(tx pgx.Tx) error {
+		for _, n := range needs {
+			if n.Quantity <= 0 {
+				continue
+			}
+			// Lock candidate rows so two concurrent crafts don't over-eat.
+			rows, err := tx.Query(ctx,
+				`SELECT id, stack_quantity FROM inventory.item_instance`+consumableWhere+
+					` ORDER BY stack_quantity ASC FOR UPDATE`, ownerID, n.TemplateCode)
+			if err != nil {
 				return err
 			}
-		} else {
-			if _, err := tx.Exec(ctx, `
-				UPDATE inventory.item_instance
-				   SET stack_quantity = stack_quantity - $2, updated_at = now(), version = version + 1
-				 WHERE id = $1`, p.id, take); err != nil {
+			type pick struct {
+				id  uuid.UUID
+				qty int32
+			}
+			picks, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (pick, error) {
+				var p pick
+				err := r.Scan(&p.id, &p.qty)
+				return p, err
+			})
+			if err != nil {
 				return err
 			}
+			var total int32
+			for _, p := range picks {
+				total += p.qty
+			}
+			if total < n.Quantity {
+				return ErrInsufficient // rolls back every earlier need too
+			}
+			remaining := n.Quantity
+			for _, p := range picks {
+				if remaining <= 0 {
+					break
+				}
+				take := min(p.qty, remaining)
+				if take == p.qty {
+					_, err = tx.Exec(ctx, `DELETE FROM inventory.item_instance WHERE id = $1`, p.id)
+				} else {
+					_, err = tx.Exec(ctx, `
+						UPDATE inventory.item_instance
+						   SET stack_quantity = stack_quantity - $2, updated_at = now(), version = version + 1
+						 WHERE id = $1`, p.id, take)
+				}
+				if err != nil {
+					return err
+				}
+				remaining -= take
+			}
 		}
-		remaining -= take
-	}
-	return tx.Commit(ctx)
+		return nil
+	})
 }
 
 func notFoundOrErr(err error) error {

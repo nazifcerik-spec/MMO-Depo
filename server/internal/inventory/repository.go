@@ -3,6 +3,7 @@ package inventory
 import (
 	"context"
 	"errors"
+	"sort"
 	"sync"
 
 	"github.com/google/uuid"
@@ -58,12 +59,21 @@ type Repository interface {
 	// DeleteInstance removes an owned + unlocked item.
 	DeleteInstance(ctx context.Context, itemID, ownerID uuid.UUID) error
 
-	// ConsumeByTemplate reduces `quantity` units of `templateCode` from the
-	// character's unlocked, un-equipped bag stacks in a single transaction.
-	// Order-independent (fewest-first minimises fragmentation). Returns
-	// ErrInsufficient when the total available is < quantity; the transaction
-	// is rolled back on that path so no partial consumption occurs.
-	ConsumeByTemplate(ctx context.Context, ownerID uuid.UUID, templateCode string, quantity int32) error
+	// ConsumeAll removes every need from the character's unlocked,
+	// un-equipped bag stacks in ONE transaction (fewest-first per template to
+	// limit fragmentation). Returns ErrInsufficient when any template falls
+	// short; nothing is consumed on that path.
+	ConsumeAll(ctx context.Context, ownerID uuid.UUID, needs []Need) error
+
+	// Available counts the consumable units of a template (same filter as
+	// ConsumeAll). Read-only pre-check.
+	Available(ctx context.Context, ownerID uuid.UUID, templateCode string) (int32, error)
+}
+
+// Need is a quantity of one template to consume.
+type Need struct {
+	TemplateCode string
+	Quantity     int32
 }
 
 // --- MemoryRepo (tests) ------------------------------------------------------
@@ -285,53 +295,49 @@ func (r *MemoryRepo) DeleteInstance(_ context.Context, itemID, ownerID uuid.UUID
 	return nil
 }
 
-func (r *MemoryRepo) ConsumeByTemplate(_ context.Context, ownerID uuid.UUID, templateCode string, quantity int32) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	if quantity <= 0 {
-		return nil
-	}
-	// Collect candidates deterministically (fewest first so we drain small
-	// stacks before touching bigger ones — leaves the bag less fragmented).
+func (r *MemoryRepo) consumable(ownerID uuid.UUID, templateCode string) ([]*memItem, int32) {
 	var cands []*memItem
 	var total int32
 	for _, it := range r.items {
-		if it.OwnerID != ownerID || it.TemplateCode != templateCode {
-			continue
-		}
-		if it.IsLocked || it.BagItem.EquipmentSlot != nil {
-			continue
-		}
-		if it.Slot < 0 {
+		if it.OwnerID != ownerID || it.TemplateCode != templateCode || it.IsLocked ||
+			it.BagItem.EquipmentSlot != nil || it.Slot < 0 {
 			continue
 		}
 		cands = append(cands, it)
 		total += it.StackQuantity
 	}
-	if total < quantity {
-		return ErrInsufficient
+	sort.Slice(cands, func(i, j int) bool { return cands[i].StackQuantity < cands[j].StackQuantity })
+	return cands, total
+}
+
+func (r *MemoryRepo) Available(_ context.Context, ownerID uuid.UUID, templateCode string) (int32, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	_, total := r.consumable(ownerID, templateCode)
+	return total, nil
+}
+
+func (r *MemoryRepo) ConsumeAll(_ context.Context, ownerID uuid.UUID, needs []Need) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for _, n := range needs {
+		if _, total := r.consumable(ownerID, n.TemplateCode); total < n.Quantity {
+			return ErrInsufficient
+		}
 	}
-	// Simple selection sort by StackQuantity asc — count is tiny (bag ≤60).
-	for i := 0; i < len(cands); i++ {
-		for j := i + 1; j < len(cands); j++ {
-			if cands[j].StackQuantity < cands[i].StackQuantity {
-				cands[i], cands[j] = cands[j], cands[i]
+	for _, n := range needs {
+		cands, _ := r.consumable(ownerID, n.TemplateCode)
+		remaining := n.Quantity
+		for _, it := range cands {
+			if remaining <= 0 {
+				break
 			}
-		}
-	}
-	remaining := quantity
-	for _, it := range cands {
-		if remaining <= 0 {
-			break
-		}
-		take := it.StackQuantity
-		if take > remaining {
-			take = remaining
-		}
-		it.StackQuantity -= take
-		remaining -= take
-		if it.StackQuantity == 0 {
-			delete(r.items, it.InstanceID)
+			take := min(it.StackQuantity, remaining)
+			it.StackQuantity -= take
+			remaining -= take
+			if it.StackQuantity == 0 {
+				delete(r.items, it.InstanceID)
+			}
 		}
 	}
 	return nil

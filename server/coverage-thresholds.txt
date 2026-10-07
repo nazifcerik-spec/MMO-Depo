@@ -20,7 +20,7 @@ internal/guild                64
 internal/http/apierr          98
 internal/http/middleware      90
 internal/hunt                 69
-internal/inventory            61
+internal/inventory            62
 internal/item                 71
 internal/mail                 38
 internal/market               76

@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
 )
 
@@ -92,10 +93,16 @@ type fakeInv struct {
 	shortage map[string]bool
 }
 
-func (f *fakeInv) ConsumeByTemplate(_ context.Context, _ uuid.UUID, tmpl string, qty int32) error {
-	f.calls = append(f.calls, consumeCall{tmpl, qty})
+func (f *fakeInv) Available(_ context.Context, _ uuid.UUID, tmpl string) (int32, error) {
 	if f.shortage[tmpl] {
-		return errShortage
+		return 0, nil
+	}
+	return 1 << 20, nil
+}
+
+func (f *fakeInv) ConsumeAll(_ context.Context, _ uuid.UUID, needs []inventory.Need) error {
+	for _, n := range needs {
+		f.calls = append(f.calls, consumeCall{n.TemplateCode, n.Quantity})
 	}
 	return nil
 }
@@ -220,8 +227,9 @@ func TestCraft_InventoryShortageBubblesUpBeforeMint(t *testing.T) {
 	inv.shortage = map[string]bool{"linseed": true}
 
 	_, err = svc.Craft(ctx, charID, acct, "recipe_potion")
-	require.Error(t, err)
+	require.ErrorIs(t, err, inventory.ErrInsufficient)
 	require.Nil(t, minter.lastMint, "mint must not run when inputs failed")
+	require.Empty(t, inv.calls, "the pre-check stops before anything is consumed (or charged)")
 }
 
 func TestProfessionXPToNext_MonotonicByLevel(t *testing.T) {
