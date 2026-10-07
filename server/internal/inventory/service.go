@@ -25,8 +25,17 @@ func NewService(repo Repository, logger *slog.Logger) *Service {
 
 // --- View -------------------------------------------------------------------
 
-// View returns the compound bag snapshot for GET /inventory.
+// View returns the compound bag snapshot for GET /inventory. Overflow items
+// (unslotted: bag was full on arrival, or returned from mail/market escrow)
+// are slotted first, so they show up as soon as there is room.
 func (s *Service) View(ctx context.Context, characterID uuid.UUID) (*View, error) {
+	if overflow, err := s.repo.Unslotted(ctx, characterID); err != nil {
+		return nil, err
+	} else if len(overflow) > 0 {
+		if err := s.AssignSlots(ctx, characterID, overflow); err != nil {
+			return nil, err
+		}
+	}
 	items, err := s.repo.Bag(ctx, characterID)
 	if err != nil {
 		return nil, err
@@ -95,6 +104,9 @@ func (s *Service) assignOne(ctx context.Context, ownerID uuid.UUID, inst item.In
 	if err == nil && len(candidates) > 0 {
 		remaining := inst.StackQuantity
 		for _, c := range candidates {
+			if c.InstanceID == inst.ID {
+				continue // already slotted (e.g. by a concurrent View): never merge into itself
+			}
 			space := c.MaxStack - c.StackQuantity
 			if space <= 0 {
 				continue

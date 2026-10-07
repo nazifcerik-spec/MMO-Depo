@@ -254,6 +254,56 @@ func TestAssignSlots_BagFullOverflow(t *testing.T) {
 	require.Equal(t, 60, view.SlotsUsed, "overflow item stays unslotted")
 }
 
+// Overflow (unslotted, unlocked, unequipped) shows up in the bag as soon as a
+// slot is free; escrowed and equipped items are left alone.
+func TestView_SlotsOverflowWhenRoom(t *testing.T) {
+	svc, repo := newSvc()
+	owner := uuid.New()
+	for s := inventory.Slot(0); s < inventory.BagSlotCap; s++ {
+		seedItem(repo, owner, "sword_iron", 1, 1, s, false)
+	}
+	overflow := seedItem(repo, owner, "helm_iron", 1, 1, -1, false)
+	escrow := uuid.New()
+	repo.Seed(inventory.BagItem{InstanceID: escrow, TemplateCode: "boots_iron", Slot: -1, StackQuantity: 1, MaxStack: 1,
+		IsLocked: true}, owner, false)
+	worn := "chest"
+	repo.Seed(inventory.BagItem{InstanceID: uuid.New(), TemplateCode: "chest_leather", Slot: -1, StackQuantity: 1,
+		MaxStack: 1, EquipmentSlot: &worn}, owner, false)
+
+	view, err := svc.View(context.Background(), owner)
+	require.NoError(t, err)
+	require.Equal(t, 60, view.SlotsUsed, "bag full: overflow waits")
+
+	view, err = svc.View(context.Background(), owner)
+	require.NoError(t, err)
+	require.NoError(t, svc.Delete(context.Background(), owner, view.Items[0].InstanceID))
+	view, err = svc.View(context.Background(), owner)
+	require.NoError(t, err)
+	require.Equal(t, 60, view.SlotsUsed)
+	ids := map[uuid.UUID]bool{}
+	for _, it := range view.Items {
+		ids[it.InstanceID] = true
+	}
+	require.True(t, ids[overflow], "freed slot is taken by the overflow item")
+	require.False(t, ids[escrow], "escrowed items stay out of the bag")
+}
+
+// A stack that a concurrent View already slotted must not merge into itself
+// (that would delete the item).
+func TestAssignSlots_NeverMergesIntoItself(t *testing.T) {
+	svc, repo := newSvc()
+	owner := uuid.New()
+	id := seedItem(repo, owner, "iron_ore", 5, 99, 3, true)
+	inst := mkInstance(owner, "iron_ore", 5)
+	inst.ID = id
+
+	require.NoError(t, svc.AssignSlots(context.Background(), owner, []item.Instance{inst}))
+	view, err := svc.View(context.Background(), owner)
+	require.NoError(t, err)
+	require.Len(t, view.Items, 1, "the item still exists")
+	require.Equal(t, int32(5), view.Items[0].StackQuantity, "and was not doubled")
+}
+
 // --- helpers ---------------------------------------------------------------
 
 func mkInstance(owner uuid.UUID, tmpl string, stack int32) item.Instance {

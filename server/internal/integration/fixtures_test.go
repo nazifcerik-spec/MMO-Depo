@@ -161,3 +161,11 @@ func (e *events) has(kind string) bool {
 	}
 	return false
 }
+
+func bagIDs(items []inventory.BagItem) []uuid.UUID {
+	out := make([]uuid.UUID, len(items))
+	for i, it := range items {
+		out[i] = it.InstanceID
+	}
+	return out
+}

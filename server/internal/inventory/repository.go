@@ -6,6 +6,8 @@ import (
 	"sync"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/item"
 )
 
 // Repository is the persistence contract. Every mutation is a single SQL
@@ -24,6 +26,10 @@ type Repository interface {
 	// given template — same template + not locked + not at max_stack + in bag.
 	// Ordered by slot ascending so merge is deterministic.
 	StackableMergeCandidates(ctx context.Context, characterID uuid.UUID, templateCode string) ([]BagItem, error)
+
+	// Unslotted returns the character's overflow: owned items with no bag
+	// slot that are neither locked (mail/market escrow) nor equipped.
+	Unslotted(ctx context.Context, characterID uuid.UUID) ([]item.Instance, error)
 
 	// AssignSlot atomically sets slot on the item, checking:
 	//   - owner_character_id matches
@@ -104,6 +110,18 @@ func (r *MemoryRepo) Bag(_ context.Context, characterID uuid.UUID) ([]BagItem, e
 			if out[j].Slot < out[i].Slot {
 				out[i], out[j] = out[j], out[i]
 			}
+		}
+	}
+	return out, nil
+}
+
+func (r *MemoryRepo) Unslotted(_ context.Context, characterID uuid.UUID) ([]item.Instance, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	out := []item.Instance{}
+	for _, it := range r.items {
+		if it.OwnerID == characterID && it.Slot < 0 && !it.IsLocked && it.EquipmentSlot == nil {
+			out = append(out, item.Instance{ID: it.InstanceID, TemplateCode: it.TemplateCode, StackQuantity: it.StackQuantity})
 		}
 	}
 	return out, nil

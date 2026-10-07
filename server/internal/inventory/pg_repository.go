@@ -8,6 +8,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"github.com/otter/server/internal/item"
 )
 
 // PgRepo persists inventory operations on inventory.item_instance.
@@ -63,6 +65,26 @@ func (r *PgRepo) Bag(ctx context.Context, characterID uuid.UUID) ([]BagItem, err
 			return nil, err
 		}
 		out = append(out, b)
+	}
+	return out, rows.Err()
+}
+
+func (r *PgRepo) Unslotted(ctx context.Context, characterID uuid.UUID) ([]item.Instance, error) {
+	rows, err := r.pool.Query(ctx, `
+		SELECT id, template_code, stack_quantity FROM inventory.item_instance
+		 WHERE owner_character_id = $1 AND slot IS NULL AND equipment_slot IS NULL AND is_locked = false
+		 ORDER BY created_at`, characterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	out := []item.Instance{}
+	for rows.Next() {
+		var in item.Instance
+		if err := rows.Scan(&in.ID, &in.TemplateCode, &in.StackQuantity); err != nil {
+			return nil, err
+		}
+		out = append(out, in)
 	}
 	return out, rows.Err()
 }

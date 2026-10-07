@@ -23,7 +23,7 @@ internal/hunt                 27
 internal/inventory            21
 internal/item                 34
 internal/mail                 38
-internal/market               3
+internal/market               60
 internal/notification         21
 internal/observability        60
 internal/progression          14
