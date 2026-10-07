@@ -2044,6 +2044,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-223 — Kapsam Kapısı Birim + Entegrasyon Testlerinin Birleşik Profilinden Ölçülür
+**Karar:** CI'daki paket başı kapsam ratchet'i (DD-216) artık yalnız birim testlerinin `go test -cover` çıktısını değil, Postgres'li job'da koşan birim + entegrasyon testlerinin `-coverpkg=./...` ile birleşik coverprofile'ını ölçer (`scripts/coverage_gate.sh profile`). Bir kod bloğu herhangi bir test binary'sinde çalıştıysa kapsanmış sayılır. Server job'u hızlı geri bildirim için race testlerini koşmaya devam eder; kapı Postgres job'unda. Eşikler ölçülen değerin ~2 puan altında tutulur ve yalnız yükselir; `go` modu yerel hızlı kontrol için kalır.
+**Reason:** Domain servislerinin çoğu SQL'dir ve yalnız entegrasyon testlerinde çalışır; eski kapı bu kodu hiç saymıyordu (ör. quest birimde %38.9, birleşik %86.5). CLAUDE.md'deki "%80 çekirdek kapsam integration suite büyütülerek karşılanacak" hedefi ancak birleşik ölçümle izlenebilir. Ayrıca 846fa4d'deki CI düşüşü, eşiklerin Go 1.27 ile ölçülüp CI'da Go 1.25 ile değerlendirilmesinden ve 2 puan payın bırakılmamasından kaynaklandı.
+**Alternatives:** Entegrasyon testlerini her pakete `_integration_test.go` olarak dağıtmak (her paket kendi kapsamını raporlar ama ortak fixture'lar kopyalanır), testcontainers ile birim job'unda DB açmak (CI süresi + Docker-in-Docker).
+**Consequences:** Kapı Postgres'siz yerelde birebir üretilemez; yerel komut: `DATABASE_URL=... go test -tags integration -coverpkg=./... -coverprofile=cover.out ./... && sh scripts/coverage_gate.sh profile server/coverage-thresholds.txt cover.out`. %80 hedefi paket paket entegrasyon testleriyle kapatılacak.
+**Tarih:** 2026-10-08
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

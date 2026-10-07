@@ -48,8 +48,8 @@ cd server && make migrate-up
 # Integration suite (migrated DB gerekir)
 cd server && DATABASE_URL=postgres://otter:otter@localhost:5432/otter?sslmode=disable go test -tags integration ./internal/integration/
 
-# Coverage gate (CI ile aynı)
-(cd server && go test -cover ./...) | sh scripts/coverage_gate.sh go server/coverage-thresholds.txt
+# Coverage gate (CI ile aynı — birim + entegrasyon birleşik profil, DD-223; migrated DB gerekir)
+cd server && DATABASE_URL=postgres://otter:otter@localhost:5432/otter?sslmode=disable go test -tags integration -coverpkg=./... -coverprofile=../cover.out ./... && sh ../scripts/coverage_gate.sh profile coverage-thresholds.txt ../cover.out
 
 # Client
 cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://localhost:8080

@@ -1,7 +1,8 @@
 # Otter CI (Sprint 32, DD-216). Runs on every push and pull request.
-#   server       gofmt + vet + race tests + per-package coverage ratchet
-#   migrations   every migration up → down → up on real Postgres, then the
-#                integration suite (content pack, catalogs, ledger) against it
+#   server       gofmt + vet + race tests
+#   migrations   every migration up → down → up on real Postgres, then unit +
+#                integration tests together and the per-package coverage
+#                ratchet on their merged profile (DD-223)
 #   client       format + analyze + widget/unit tests + coverage gate
 name: ci
 
@@ -34,12 +35,8 @@ jobs:
           if [ -n "$unformatted" ]; then echo "gofmt needed:"; echo "$unformatted"; exit 1; fi
       - name: vet
         run: go vet ./... && go vet -tags integration ./internal/integration/
-      - name: test (race + coverage)
-        run: |
-          set -o pipefail
-          go test -race -count=1 -cover ./... | tee ../server-cover.txt
-      - name: coverage gate
-        run: sh ../scripts/coverage_gate.sh go coverage-thresholds.txt < ../server-cover.txt
+      - name: test (race)
+        run: go test -race -count=1 ./...
 
   migrations:
     runs-on: ubuntu-latest
@@ -72,9 +69,12 @@ jobs:
         with:
           go-version-file: server/go.mod
           cache-dependency-path: server/go.sum
-      - name: integration tests
+      - name: unit + integration tests (merged coverage)
         working-directory: server
-        run: go test -tags integration -count=1 -v ./internal/integration/
+        run: go test -tags integration -count=1 -coverpkg=./... -coverprofile=../cover.out ./...
+      - name: coverage gate
+        working-directory: server
+        run: sh ../scripts/coverage_gate.sh profile coverage-thresholds.txt ../cover.out
 
   client:
     runs-on: ubuntu-latest
