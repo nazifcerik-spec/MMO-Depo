@@ -3,6 +3,7 @@
 package integration
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/google/uuid"
@@ -121,7 +122,7 @@ func TestGuildLifecycle(t *testing.T) {
 	ev := &events{}
 	svc := guild.NewService(w.p, w.chars, w.txn, nil).WithPublisher(ev)
 	lead, off, mem := w.player("warrior", 5), w.player("mage", 5), w.player("rogue", 5)
-	name, tag := "Wolves "+randHex(3), "W"+randHex(2)[:3]
+	name, tag := "Wolves "+randHex(3), strings.ToUpper("W"+randHex(2)[:3]) // the server stores tags upper-case
 
 	create := func(p player, n, tg, key string) (*guild.Guild, error) {
 		return svc.Create(w.ctx, p.ID, p.Account, guild.CreateRequest{Name: n, Tag: tg, IdempotencyKey: key})
@@ -146,7 +147,7 @@ func TestGuildLifecycle(t *testing.T) {
 	require.Equal(t, int64(500), w.balance(lead), "fee charged once")
 
 	w.gold(off, guild.CreationFeeCopper)
-	_, err = create(off, name, "Z"+randHex(2)[:3], uuid.NewString())
+	_, err = create(off, name, strings.ToUpper("Z"+randHex(2)[:3]), uuid.NewString())
 	require.ErrorIs(t, err, guild.ErrNameTaken)
 	require.Equal(t, int64(guild.CreationFeeCopper), w.balance(off), "a lost name race refunds the fee")
 
