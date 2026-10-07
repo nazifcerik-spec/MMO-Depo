@@ -16,7 +16,7 @@ internal/domain/auth          61
 internal/domain/character     41
 internal/dungeon              21
 internal/economy              57
-internal/guild                1
+internal/guild                48
 internal/http/apierr          85
 internal/http/middleware      82
 internal/hunt                 27
