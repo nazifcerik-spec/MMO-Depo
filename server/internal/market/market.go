@@ -75,7 +75,7 @@ type Listing struct {
 	ID               uuid.UUID  `json:"id"`
 	SellerID         uuid.UUID  `json:"seller_character_id"`
 	SellerName       string     `json:"seller_name"`
-	ItemInstanceID   uuid.UUID  `json:"item_instance_id"`
+	ItemInstanceID   *uuid.UUID `json:"item_instance_id"` // nil once the item merged into another stack
 	TemplateCode     string     `json:"template_code"`
 	ItemClass        string     `json:"item_class"`
 	Rarity           string     `json:"rarity"`

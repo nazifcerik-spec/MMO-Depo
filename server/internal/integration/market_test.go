@@ -110,10 +110,10 @@ func TestMarketSellBuyFlow(t *testing.T) {
 	cut := market.SaleCut(2_000)
 	require.Equal(t, int64(48_000), w.balance(buyer))
 	require.Equal(t, int64(10_000)-fee+2_000-cut, w.balance(seller), "seller nets total minus the 5% cut")
-	owner, locked := w.owner(l.ItemInstanceID)
+	owner, locked := w.owner(*l.ItemInstanceID)
 	require.Equal(t, buyer.ID, owner)
 	require.False(t, locked)
-	require.True(t, w.slotted(l.ItemInstanceID), "bought item is visible in the bag")
+	require.True(t, w.slotted(*l.ItemInstanceID), "bought item is visible in the bag")
 	require.True(t, ev.has("market.sold"))
 
 	_, err = svc.Buy(w.ctx, buyer.ID, buyer.Account, l.ID, &right)

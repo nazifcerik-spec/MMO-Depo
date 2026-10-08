@@ -2067,6 +2067,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Prod LB/ingress arkasında `TRUSTED_PROXIES` ayarlanmazsa tüm istemciler LB adresinden tek IP görünür (IP sınırları ortaklaşır) — deploy kontrol listesinde. Testler: `TestRealIP` (sahte önek, güvenilen hop, bozuk girdi, IPv6).
 **Tarih:** 2026-10-08
 
+## DD-226 — Pazar İlanı Eşya Kaydından Bağımsız Yaşar
+**Karar:** Migration 0029: `market.listing.item_instance_id` nullable, FK `ON DELETE SET NULL` (önceden `NOT NULL ... ON DELETE CASCADE`). `Listing.ItemInstanceID` `*uuid.UUID`.
+**Reason:** Eşya emanetten çıktıktan sonra (iptal ya da satış) çantadaki aynı türden yığına birleşip silinebiliyor; CASCADE ilan satırını da siliyordu. Sonuç: iptal başarılı olduğu hâlde 404 `E_LISTING_NOT_FOUND` dönüyordu (istemci hata gösteriyordu), alıcı yığını birleşince satış kaydı satıcının listesinden yok oluyordu. İlan şablon/adet/fiyatı zaten kendi kolonlarında tutuyor; eşya referansı yalnız aktifken gerekli.
+**Alternatives:** Birleşmeyi emanetten dönen eşyada kapatmak (çantada parçalı yığınlar), soft delete (tüm eşya sorgularına filtre).
+**Consequences:** Kapanmış ilanların `item_instance_id`'si null olabilir (istemci kullanmıyor). Regresyon: `TestHTTPInventoryOps` (iptal + alıcı birleşmesi).
+**Tarih:** 2026-10-08
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
