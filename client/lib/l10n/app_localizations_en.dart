@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Otter';
+  String get appTitle => 'New World MMO';
 
   @override
   String get tagline => 'Adventures that keep going while you\'re away.';

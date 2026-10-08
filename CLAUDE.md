@@ -4,7 +4,7 @@ Bu dosya Claude Code oturumları için proje kılavuzudur.
 
 ## Proje
 
-**Otter** — Persistent Idle MMORPG. Flutter (client) + Go (server) + PostgreSQL + Redis.
+**New World MMO** (kod adı **Otter**, DD-228) — Persistent Idle MMORPG. Flutter (client) + Go (server) + PostgreSQL + Redis.
 
 Tasarım Faz 00'da tamamlandı; şu an **Faz 01: Implementation** aktif.
 

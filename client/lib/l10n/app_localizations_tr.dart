@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Otter';
+  String get appTitle => 'New World MMO';
 
   @override
   String get tagline => 'Sen yokken de süren maceralar.';

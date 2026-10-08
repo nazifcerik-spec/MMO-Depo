@@ -107,7 +107,7 @@ func (h *Handler) ChangePassword(w http.ResponseWriter, r *http.Request) {
 
 var pageTmpl = template.Must(template.New("page").Parse(`<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Otter</title><style>
+<title>New World MMO</title><style>
 body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0F1013;color:#E8EAEE;font:15px/1.5 system-ui,sans-serif}
 main{width:min(360px,90vw);padding:24px;background:#1A1C22;border:1px solid #2E3240;border-radius:16px}
 h1{font-size:20px;margin:0 0 12px}p{color:#A8ACB8}input,button{width:100%;box-sizing:border-box;padding:12px;margin:6px 0;border-radius:10px;font:inherit}

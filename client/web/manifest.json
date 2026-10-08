@@ -1,6 +1,6 @@
 {
-    "name": "otter",
-    "short_name": "otter",
+    "name": "New World MMO",
+    "short_name": "New World MMO",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

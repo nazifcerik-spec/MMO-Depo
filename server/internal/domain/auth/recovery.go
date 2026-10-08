@@ -182,7 +182,7 @@ func recoveryEmail(baseURL string, a *Account, kind TokenKind, token string) Out
 		link := base + "/reset-password?" + q
 		return OutboundEmail{
 			To:      a.Email,
-			Subject: "Otter — Şifre sıfırlama / Password reset",
+			Subject: "New World MMO — Şifre sıfırlama / Password reset",
 			Body: fmt.Sprintf("Merhaba %s,\n\nHesabın için şifre sıfırlama istendi. Yeni şifre belirlemek için:\n%s\n\n"+
 				"Bağlantı 1 saat geçerlidir. Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.\n\n---\n\n"+
 				"Hi %s,\n\nA password reset was requested for your account. Set a new password here:\n%s\n\n"+
@@ -193,7 +193,7 @@ func recoveryEmail(baseURL string, a *Account, kind TokenKind, token string) Out
 		link := base + "/verify-email?" + q
 		return OutboundEmail{
 			To:      a.Email,
-			Subject: "Otter — E-posta doğrulama / Verify your e-mail",
+			Subject: "New World MMO — E-posta doğrulama / Verify your e-mail",
 			Body: fmt.Sprintf("Merhaba %s,\n\nE-posta adresini doğrulamak için:\n%s\n\nBağlantı 24 saat geçerlidir.\n\n---\n\n"+
 				"Hi %s,\n\nConfirm your e-mail address here:\n%s\n\nThis link expires in 24 hours.\n",
 				a.Username, link, a.Username, link),

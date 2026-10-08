@@ -2081,6 +2081,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Yoğun çakışmada istek gecikmesi en fazla ~0.8 sn artar. Bütçe yine tükenirse hata loglanır (aynı davranış). Regresyon: `TestMarketConcurrentSellSameItem`.
 **Tarih:** 2026-10-08
 
+## DD-228 — Ürün Adı: New World MMO (Kod Adı Otter Kalır)
+**Karar:** Oyuncuya görünen ad "New World MMO": uygulama başlığı (TR/EN), Android etiketi, iOS görünen ad, web manifest/başlık, kurtarma e-postalarının konusu ve sayfaları, admin TOTP issuer, dev console. İç kod adı Otter kalır (Go modülü, paket/sınıf adları, veritabanı, Docker servisleri, dokümanlar).
+**Reason:** Ürün sahibinin kararı. İç adı değiştirmek yüzlerce dosyaya dokunur, oyuncuya hiçbir şey göstermez.
+**Alternatives:** Tam yeniden adlandırma (yüksek risk, sıfır kullanıcı faydası).
+**Consequences:** "New World", Amazon Games'in yayımlanmış MMO'sunun tescilli markasıdır; mağaza yayını öncesi hukuki marka kontrolü gerekir (store/legal adımı). Ad tek yerden (l10n `appTitle` + platform dosyaları) değiştiği için gerekirse kolayca güncellenir.
+**Tarih:** 2026-10-08
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
