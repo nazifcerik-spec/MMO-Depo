@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"errors"
-	"net"
 	"net/http"
 	"strconv"
 	"strings"
@@ -17,6 +16,7 @@ import (
 
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/http/apierr"
+	"github.com/otter/server/internal/httpctx"
 	"github.com/otter/server/internal/market"
 )
 
@@ -125,8 +125,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	host, _, _ := net.SplitHostPort(r.RemoteAddr)
-	sum := sha256.Sum256([]byte(host))
+	sum := sha256.Sum256([]byte(httpctx.ClientIP(r)))
 	token, err := h.svc.Login(r.Context(), b.Email, b.Password, b.Code, r.UserAgent(), sum[:])
 	reply(w, r, map[string]any{"token": token, "expires_in": int(SessionTTL.Seconds())}, err)
 }

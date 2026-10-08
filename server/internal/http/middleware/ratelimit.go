@@ -3,10 +3,8 @@ package middleware
 import (
 	"fmt"
 	"log/slog"
-	"net"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	chimw "github.com/go-chi/chi/v5/middleware"
@@ -90,7 +88,7 @@ func collectDimensions(r *http.Request, p Policy) []dimension {
 	dims := make([]dimension, 0, 3)
 
 	if p.PerIP != nil {
-		ip := ClientIP(r)
+		ip := httpctx.ClientIP(r)
 		dims = append(dims, dimension{
 			scope:  "ip",
 			key:    fmt.Sprintf("rl:ip:%s:%s", p.Endpoint, ip),
@@ -137,25 +135,4 @@ func max0(n int64) int64 {
 		return 0
 	}
 	return n
-}
-
-// ClientIP extracts the caller IP from X-Forwarded-For (first entry) or
-// X-Real-IP, falling back to RemoteAddr. When operating behind a trusted LB
-// these headers are authoritative; direct-exposed deployments should strip
-// forwarded headers at the edge before this middleware runs.
-func ClientIP(r *http.Request) string {
-	if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
-		if idx := strings.Index(xff, ","); idx > 0 {
-			return strings.TrimSpace(xff[:idx])
-		}
-		return strings.TrimSpace(xff)
-	}
-	if xri := r.Header.Get("X-Real-IP"); xri != "" {
-		return strings.TrimSpace(xri)
-	}
-	host, _, err := net.SplitHostPort(r.RemoteAddr)
-	if err != nil {
-		return r.RemoteAddr
-	}
-	return host
 }

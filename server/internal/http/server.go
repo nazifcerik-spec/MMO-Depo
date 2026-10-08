@@ -7,6 +7,7 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"net/netip"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -83,6 +84,7 @@ type Deps struct {
 	AdminHandler      *admin.Handler
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
+	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
 	ConsumableHandler *consumable.Handler
 }
 
@@ -92,6 +94,7 @@ func NewRouter(d Deps) http.Handler {
 
 	r.Use(observability.HTTP(d.Metrics))
 	r.Use(appmw.CORS(d.CORSOrigins, d.Env == "dev"))
+	r.Use(appmw.RealIP(d.TrustedProxies))
 	r.Use(chimw.RequestID)
 	r.Use(appmw.Logger(d.Logger))
 	r.Use(appmw.Recoverer(d.Logger))

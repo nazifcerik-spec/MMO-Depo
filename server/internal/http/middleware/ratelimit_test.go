@@ -39,7 +39,7 @@ func buildRateRouter(store ratelimit.Store, policy appmw.Policy) (http.Handler, 
 func doPing(t *testing.T, h http.Handler, ip string, acct uuid.UUID) *httptest.ResponseRecorder {
 	t.Helper()
 	req := httptest.NewRequest(http.MethodGet, "/ping", nil)
-	req.Header.Set("X-Forwarded-For", ip)
+	req.RemoteAddr = ip + ":40000"
 	if acct != uuid.Nil {
 		req = req.WithContext(httpctx.WithAccountID(req.Context(), acct))
 	}
@@ -180,24 +180,6 @@ func TestRateLimit_HeadersOnSuccess(t *testing.T) {
 	require.Equal(t, "10", rr.Header().Get("X-RateLimit-Limit"))
 	require.Equal(t, "9", rr.Header().Get("X-RateLimit-Remaining"))
 	require.Empty(t, rr.Header().Get("Retry-After"), "no retry-after when allowed")
-}
-
-func TestClientIP_ForwardedForFirst(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	req.Header.Set("X-Forwarded-For", "203.0.113.1, 10.0.0.1")
-	require.Equal(t, "203.0.113.1", appmw.ClientIP(req))
-}
-
-func TestClientIP_RealIPFallback(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	req.Header.Set("X-Real-IP", "203.0.113.9")
-	require.Equal(t, "203.0.113.9", appmw.ClientIP(req))
-}
-
-func TestClientIP_RemoteAddrFallback(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	req.RemoteAddr = "10.0.0.5:54321"
-	require.Equal(t, "10.0.0.5", appmw.ClientIP(req))
 }
 
 // Guard: verify the assertion helpers compile against strings we care about.

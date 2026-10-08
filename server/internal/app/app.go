@@ -28,6 +28,7 @@ import (
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/guild"
 	httpapi "github.com/otter/server/internal/http"
+	appmw "github.com/otter/server/internal/http/middleware"
 	"github.com/otter/server/internal/hunt"
 	"github.com/otter/server/internal/idempotency"
 	"github.com/otter/server/internal/inventory"
@@ -333,6 +334,10 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	}
 
 	// HTTP
+	trusted, err := appmw.ParseTrustedProxies(cfg.TrustedProxies)
+	if err != nil {
+		return nil, err
+	}
 	router := httpapi.NewRouter(httpapi.Deps{
 		Logger:            logger,
 		DB:                pool,
@@ -369,6 +374,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		AdminHandler:      adminHandler,
 		Metrics:           metrics,
 		CORSOrigins:       cfg.CORSAllowedOrigins,
+		TrustedProxies:    trusted,
 	})
 	return router, nil
 }

@@ -20,6 +20,7 @@ RequestID → RealIP → Recover → OtelTrace → Logger → Metrics → Compre
 ### 3.2 RealIP
 - Proxy arkasında `X-Forwarded-For` / `X-Real-IP` parse.
 - Config allowlist (proxy IP'leri); dışarıdan spoofing engel.
+- Uygulama (DD-225): `TRUSTED_PROXIES` (IP/CIDR). Başlıklar yalnız güvenilen peer'dan okunur; XFF sağdan sola, güvenilen hop'lar atlanır. Sonuç `httpctx.ClientIP`.
 
 ### 3.3 Recover
 ```go

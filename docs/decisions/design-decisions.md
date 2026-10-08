@@ -2060,6 +2060,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** 0028 mevcut bir yinelenmiş vendor eşyası varsa uygulanamaz (prod'da yok; dev DB'de testin ürettiği tek kopya silindi). Eşzamanlı ikizler hata yerine aynı sonucu alır. Regresyon: `TestVendorRules`, `TestVendorConcurrentMintsOnce`.
 **Tarih:** 2026-10-08
 
+## DD-225 — İstemci IP'si Yalnız Güvenilen Proxy'den Gelen X-Forwarded-For ile Belirlenir
+**Karar:** `RealIP` middleware'i (CORS'tan hemen sonra) istemci IP'sini istek başına bir kez çözer ve `httpctx.ClientIP` ile sunar; oran sınırı, auth oturum IP hash'i ve admin girişi bunu kullanır. Forwarded başlıklar yalnızca bağlantının karşı ucu `TRUSTED_PROXIES` (IP/CIDR listesi) içindeyse okunur; `X-Forwarded-For` sağdan sola gezilir, güvenilen hop'lar atlanır, ilk güvenilmeyen adres istemcidir. Liste boşsa (varsayılan) her zaman bağlantı adresi kullanılır.
+**Reason:** Eski `ClientIP` XFF'nin ilk girdisine koşulsuz güveniyordu: istemci her istekte farklı bir değer yazarak IP başı sınırları (login 5/dk kaba kuvvet koruması, kayıt, şifre sıfırlama, admin login) tamamen aşabiliyordu. LB'ler XFF'ye ekleme yaptığı için ilk girdi LB arkasında da istemcinin uydurduğu değerdir. docs/backend/middleware.md §3.2 zaten proxy allowlist'i öngörüyordu; auth paketindeki kopya `clientIP` de kaldırıldı.
+**Alternatives:** Sabit "sağdan N hop" sayısı (topoloji değişince sessizce bozulur), chi `RealIP` (başlıklara koşulsuz güvenir), başlıkları edge'de silmeyi operasyona bırakmak (unutulursa açık).
+**Consequences:** Prod LB/ingress arkasında `TRUSTED_PROXIES` ayarlanmazsa tüm istemciler LB adresinden tek IP görünür (IP sınırları ortaklaşır) — deploy kontrol listesinde. Testler: `TestRealIP` (sahte önek, güvenilen hop, bozuk girdi, IPv6).
+**Tarih:** 2026-10-08
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

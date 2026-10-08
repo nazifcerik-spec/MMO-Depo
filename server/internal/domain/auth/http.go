@@ -73,7 +73,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		Email:     body.Email,
 		Username:  body.Username,
 		Password:  body.Password,
-		IPHash:    h.ipHash(clientIP(r)),
+		IPHash:    h.ipHash(httpctx.ClientIP(r)),
 		UserAgent: r.UserAgent(),
 	})
 	if err != nil {
@@ -100,7 +100,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	res, err := h.svc.Login(r.Context(), LoginRequest{
 		EmailOrUsername: body.EmailOrUsername,
 		Password:        body.Password,
-		IPHash:          h.ipHash(clientIP(r)),
+		IPHash:          h.ipHash(httpctx.ClientIP(r)),
 		UserAgent:       r.UserAgent(),
 	})
 	if err != nil {
@@ -220,37 +220,4 @@ func writeAuthError(w http.ResponseWriter, r *http.Request, err error) {
 	default:
 		apierr.Write(w, r, http.StatusInternalServerError, "E_INTERNAL", "internal error")
 	}
-}
-
-// clientIP mirrors middleware.ClientIP without importing it (would cycle).
-func clientIP(r *http.Request) string {
-	if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
-		for i := 0; i < len(xff); i++ {
-			if xff[i] == ',' {
-				return trimSpace(xff[:i])
-			}
-		}
-		return trimSpace(xff)
-	}
-	if xri := r.Header.Get("X-Real-IP"); xri != "" {
-		return trimSpace(xri)
-	}
-	// RemoteAddr = host:port
-	for i := len(r.RemoteAddr) - 1; i >= 0; i-- {
-		if r.RemoteAddr[i] == ':' {
-			return r.RemoteAddr[:i]
-		}
-	}
-	return r.RemoteAddr
-}
-
-func trimSpace(s string) string {
-	start, end := 0, len(s)
-	for start < end && (s[start] == ' ' || s[start] == '\t') {
-		start++
-	}
-	for end > start && (s[end-1] == ' ' || s[end-1] == '\t') {
-		end--
-	}
-	return s[start:end]
 }

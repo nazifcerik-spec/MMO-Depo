@@ -63,6 +63,10 @@ type Config struct {
 	// dev additionally accepts any http://localhost:<port>.
 	CORSAllowedOrigins []string `envconfig:"CORS_ALLOWED_ORIGINS" default:""`
 
+	// Load balancers / reverse proxies (IPs or CIDRs, comma-separated) whose
+	// X-Forwarded-For is honoured. Empty = use the peer address (direct exposure).
+	TrustedProxies []string `envconfig:"TRUSTED_PROXIES" default:""`
+
 	// --- Account recovery (Sprint 37, DD-219) ---
 	// Base URL of the links in recovery e-mails (the API host serving
 	// /verify-email and /reset-password).

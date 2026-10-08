@@ -4,6 +4,8 @@ package httpctx
 
 import (
 	"context"
+	"net"
+	"net/http"
 
 	"github.com/google/uuid"
 )
@@ -14,6 +16,7 @@ const (
 	accountIDKey ctxKey = iota + 1
 	sessionIDKey
 	characterIDKey
+	clientIPKey
 )
 
 // WithAccountID stores the authenticated account id in ctx. Auth middleware
@@ -57,4 +60,22 @@ func CharacterID(ctx context.Context) uuid.UUID {
 		return v
 	}
 	return uuid.Nil
+}
+
+// WithClientIP stores the caller IP resolved by the RealIP middleware.
+func WithClientIP(ctx context.Context, ip string) context.Context {
+	return context.WithValue(ctx, clientIPKey, ip)
+}
+
+// ClientIP returns the caller IP: the one RealIP resolved (forwarded headers
+// honoured only from trusted proxies), else the connection's peer address.
+func ClientIP(r *http.Request) string {
+	if v, ok := r.Context().Value(clientIPKey).(string); ok && v != "" {
+		return v
+	}
+	host, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		return r.RemoteAddr
+	}
+	return host
 }
