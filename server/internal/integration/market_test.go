@@ -92,7 +92,7 @@ func TestMarketSellBuyFlow(t *testing.T) {
 	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT stack_quantity FROM inventory.item_instance WHERE id = $1`, potions.ID).Scan(&left))
 	require.Equal(t, int32(6), left)
 
-	found, err := svc.Search(w.ctx, market.SearchQuery{TemplateCode: "potion_hp_small", Sort: "price_asc"})
+	found, err := svc.Search(w.ctx, market.SearchQuery{TemplateCode: "potion_hp_small", MinPrice: 500, MaxPrice: 500, Sort: "newest"})
 	require.NoError(t, err)
 	require.Contains(t, listingIDs(found), l.ID)
 	mine, err := svc.MyListings(w.ctx, seller.ID, seller.Account)
@@ -254,4 +254,12 @@ func TestMarketConcurrentSellSameItem(t *testing.T) {
 	require.Equal(t, int32(10), units, "no units created or lost")
 	fees := market.ListingFee(1000, 1, 12) + int64(won)*market.ListingFee(100, 4, 12)
 	require.Equal(t, int64(100_000)-fees, w.balance(a), "losers are refunded")
+
+	// Leave no cheap listings behind for other tests' searches.
+	mine, err := svc.MyListings(w.ctx, a.ID, a.Account)
+	require.NoError(t, err)
+	for _, l := range mine {
+		_, err := svc.Cancel(w.ctx, a.ID, a.Account, l.ID)
+		require.NoError(t, err)
+	}
 }
