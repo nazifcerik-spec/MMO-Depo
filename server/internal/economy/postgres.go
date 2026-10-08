@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"math/rand/v2"
 	"time"
 
 	"github.com/google/uuid"
@@ -24,7 +25,6 @@ type PgTxnService struct {
 }
 
 // NewPgTxnService constructs the service with a loaded currency catalog.
-// maxRetries defaults to 3 when 0 is passed.
 func NewPgTxnService(pool *pgxpool.Pool, currencies map[string]Currency, logger *slog.Logger) *PgTxnService {
 	if logger == nil {
 		logger = slog.Default()
@@ -34,7 +34,7 @@ func NewPgTxnService(pool *pgxpool.Pool, currencies map[string]Currency, logger 
 		currencies: currencies,
 		log:        logger,
 		now:        time.Now,
-		maxRetries: 3,
+		maxRetries: 8,
 	}
 }
 
@@ -104,7 +104,7 @@ func safeCurrency(code string) string {
 }
 
 // Write is the SERIALIZABLE ledger-write path. Retries up to maxRetries on
-// serialization_failure. Returns Result with Replayed=true when the
+// serialization_failure with jittered backoff. Returns Result with Replayed=true when the
 // idempotency_key matches an existing txn.
 func (s *PgTxnService) Write(ctx context.Context, intent Intent) (Result, error) {
 	if err := ValidateIntent(intent, s.currencies); err != nil {
@@ -121,6 +121,17 @@ func (s *PgTxnService) Write(ctx context.Context, intent Intent) (Result, error)
 
 	var lastErr error
 	for attempt := 0; attempt < s.maxRetries; attempt++ {
+		if attempt > 0 {
+			// Jittered exponential backoff (4ms, 8ms, … ×1–2): writers that
+			// collided on one account spread out instead of colliding again.
+			d := time.Duration(2<<attempt) * time.Millisecond
+			d += time.Duration(rand.Int64N(int64(d)))
+			select {
+			case <-ctx.Done():
+				return Result{}, ctx.Err()
+			case <-time.After(d):
+			}
+		}
 		res, err := s.writeOnce(ctx, intent)
 		if err == nil {
 			return res, nil

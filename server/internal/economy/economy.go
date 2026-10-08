@@ -5,7 +5,7 @@
 //   - Double-entry: SUM(delta) per currency == 0 across every Intent.
 //   - Idempotency: (idempotency_key, entry_seq) UNIQUE in the ledger.
 //   - SERIALIZABLE: PgTxnService wraps writes in SERIALIZABLE isolation with
-//     up-to-3 retry on serialization_failure.
+//     up to 8 attempts with jittered backoff on serialization_failure.
 //   - Cap + non-negative: character/account/guild scope balances are clamped
 //     [0, currency.cap]; system-scope is unbounded (source/sink accounting).
 //

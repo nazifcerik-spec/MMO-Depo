@@ -2074,6 +2074,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Kapanmış ilanların `item_instance_id`'si null olabilir (istemci kullanmıyor). Regresyon: `TestHTTPInventoryOps` (iptal + alıcı birleşmesi).
 **Tarih:** 2026-10-08
 
+## DD-227 — Ledger Yazımı Çakışmada Rastgele Gecikmeli Geri Çekilmeyle 8 Kez Dener
+**Karar:** `PgTxnService.Write` SERIALIZABLE çakışmasında (40001) en fazla 8 kez dener; denemeler arasında üstel + rastgele gecikme (4 ms, 8 ms, … ×1–2; en kötü durumda toplam ≈ 0.8 sn), ctx iptaline uyar. DD-135'teki "3 deneme" bunun yerini aldı.
+**Reason:** Gerçek DB yarış testi (aynı eşyayı 8 eşzamanlı listeleme) ücret iadelerinin kaybolduğunu gösterdi: denemeler beklemeden yapıldığı için aynı hesaba yazan istekler her turda yeniden çakışıyor, 3 deneme bitince telafi yazımı ("market: fee refund failed — manual reconcile needed") düşüyor ve oyuncu altın kaybediyordu. Aynı risk tüm telafi yazımlarında (lonca kuruluş iadesi, üretim iadesi) vardı.
+**Alternatives:** Hesap başına advisory lock (tüm yazımları seri hâle getirir, kilitlenme riski), telafileri kuyruğa alıp worker'la yeniden denemek (yeni tablo + iş; şimdilik gereksiz), READ COMMITTED + satır kilidi (ledger değişmezlerini zayıflatır).
+**Consequences:** Yoğun çakışmada istek gecikmesi en fazla ~0.8 sn artar. Bütçe yine tükenirse hata loglanır (aynı davranış). Regresyon: `TestMarketConcurrentSellSameItem`.
+**Tarih:** 2026-10-08
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

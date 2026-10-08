@@ -3,6 +3,8 @@
 package integration
 
 import (
+	"sync"
+	"sync/atomic"
 	"testing"
 
 	"github.com/google/uuid"
@@ -210,4 +212,46 @@ func TestMarketCancelExpireAndAdmin(t *testing.T) {
 	require.ErrorIs(t, err, market.ErrUnavailable)
 	_, err = svc.AdminCancel(w.ctx, uuid.New(), false)
 	require.ErrorIs(t, err, market.ErrNotFound)
+}
+
+// Racing listings of the same item: no duplicated units, and every listing
+// that lost the race gets its fee back.
+func TestMarketConcurrentSellSameItem(t *testing.T) {
+	w := newWorld(t)
+	svc := newMarket(w, &events{})
+	a := w.player("warrior", 1)
+	w.gold(a, 100_000)
+	sword := w.give(a, "sword_iron", 1)
+	potions := w.give(a, "potion_hp_small", 10)
+
+	race := func(itemID uuid.UUID, qty int32, unit int64) int {
+		const n = 8
+		var wg sync.WaitGroup
+		var ok atomic.Int32
+		for i := 0; i < n; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				if _, err := svc.Sell(w.ctx, a.ID, a.Account, market.SellRequest{ItemID: itemID, Quantity: qty,
+					UnitPrice: unit, DurationHours: 12, IdempotencyKey: uuid.NewString()}); err == nil {
+					ok.Add(1)
+				}
+			}()
+		}
+		wg.Wait()
+		return int(ok.Load())
+	}
+
+	require.Equal(t, 1, race(sword.ID, 1, 1000), "a single item lists once")
+	won := race(potions.ID, 4, 100)
+	require.LessOrEqual(t, won, 2, "10 potions hold at most two lots of 4")
+	require.GreaterOrEqual(t, won, 1)
+
+	var units int32
+	require.NoError(t, w.p.QueryRow(w.ctx, `
+		SELECT coalesce(sum(stack_quantity), 0) FROM inventory.item_instance
+		 WHERE owner_character_id = $1 AND template_code = 'potion_hp_small'`, a.ID).Scan(&units))
+	require.Equal(t, int32(10), units, "no units created or lost")
+	fees := market.ListingFee(1000, 1, 12) + int64(won)*market.ListingFee(100, 4, 12)
+	require.Equal(t, int64(100_000)-fees, w.balance(a), "losers are refunded")
 }
