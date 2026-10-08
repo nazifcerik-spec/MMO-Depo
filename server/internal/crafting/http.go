@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 	"github.com/otter/server/internal/inventory"
@@ -172,7 +173,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 	switch {
 	case errors.Is(err, ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "not found")
-	case errors.Is(err, ErrForbidden):
+	case errors.Is(err, ErrForbidden), errors.Is(err, character.ErrForbidden), errors.Is(err, character.ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "not found")
 	case errors.Is(err, ErrUnknownProfession):
 		apierr.Write(w, r, http.StatusNotFound, "E_UNKNOWN_PROFESSION", "profession_code not in catalog")

@@ -145,8 +145,8 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	if req.EncounterSecs <= 0 {
 		req.EncounterSecs = DefaultEncounterSeconds
 	}
-	if req.EncounterSecs < MinEncounterSeconds {
-		return nil, ErrValidation
+	if req.EncounterSecs < MinEncounterSeconds || req.DurationSeconds < req.EncounterSecs {
+		return nil, ErrValidation // a hunt shorter than one encounter can't yield anything
 	}
 
 	// Ownership check via SheetFetcher.Owns — leak-safe.

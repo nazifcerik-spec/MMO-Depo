@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/otter/server/internal/domain/character"
 )
 
 // Every domain error must map to a client status: an unmapped one reaches
@@ -13,16 +15,18 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
-		"ErrForbidden":        ErrForbidden,
-		"ErrLevelRequirement": ErrLevelRequirement,
-		"ErrNotActive":        ErrNotActive,
-		"ErrNotFound":         ErrNotFound,
-		"ErrNotReady":         ErrNotReady,
-		"ErrSlotBusy":         ErrSlotBusy,
-		"ErrTooWounded":       ErrTooWounded,
-		"ErrUnknownDungeon":   ErrUnknownDungeon,
-		"ErrValidation":       ErrValidation,
-		"ErrWeeklyLockout":    ErrWeeklyLockout,
+		"character.ErrForbidden": character.ErrForbidden, // service ownership checks
+		"character.ErrNotFound":  character.ErrNotFound,
+		"ErrForbidden":           ErrForbidden,
+		"ErrLevelRequirement":    ErrLevelRequirement,
+		"ErrNotActive":           ErrNotActive,
+		"ErrNotFound":            ErrNotFound,
+		"ErrNotReady":            ErrNotReady,
+		"ErrSlotBusy":            ErrSlotBusy,
+		"ErrTooWounded":          ErrTooWounded,
+		"ErrUnknownDungeon":      ErrUnknownDungeon,
+		"ErrValidation":          ErrValidation,
+		"ErrWeeklyLockout":       ErrWeeklyLockout,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

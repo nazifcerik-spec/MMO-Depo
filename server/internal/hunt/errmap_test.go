@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/otter/server/internal/domain/character"
 )
 
 // Every domain error must map to a client status: an unmapped one reaches
@@ -13,13 +15,15 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
-		"ErrForbidden":  ErrForbidden,
-		"ErrNotActive":  ErrNotActive,
-		"ErrNotFound":   ErrNotFound,
-		"ErrSlotBusy":   ErrSlotBusy,
-		"ErrTooWounded": ErrTooWounded,
-		"ErrUnknownMob": ErrUnknownMob,
-		"ErrValidation": ErrValidation,
+		"character.ErrForbidden": character.ErrForbidden, // service ownership checks
+		"character.ErrNotFound":  character.ErrNotFound,
+		"ErrForbidden":           ErrForbidden,
+		"ErrNotActive":           ErrNotActive,
+		"ErrNotFound":            ErrNotFound,
+		"ErrSlotBusy":            ErrSlotBusy,
+		"ErrTooWounded":          ErrTooWounded,
+		"ErrUnknownMob":          ErrUnknownMob,
+		"ErrValidation":          ErrValidation,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

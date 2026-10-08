@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 )
@@ -227,7 +228,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 	switch {
 	case errors.Is(err, ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "travel not found")
-	case errors.Is(err, ErrForbidden):
+	case errors.Is(err, ErrForbidden), errors.Is(err, character.ErrForbidden), errors.Is(err, character.ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "travel not found")
 	case errors.Is(err, ErrUnknownRegion):
 		apierr.Write(w, r, http.StatusNotFound, "E_UNKNOWN_REGION", "region_code not in catalog")
