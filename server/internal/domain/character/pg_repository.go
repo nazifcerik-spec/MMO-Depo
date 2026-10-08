@@ -185,7 +185,7 @@ func (r *PgRepo) AddXP(ctx context.Context, id uuid.UUID, delta int64) (*Charact
 	leveled := false
 	xp += delta
 	for {
-		needed := xpToNext(int(level))
+		needed := XPToNext(int(level))
 		if xp < needed || int(level) >= LevelCap {
 			break
 		}

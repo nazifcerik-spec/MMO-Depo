@@ -205,21 +205,6 @@ func (s *Service) ListBySource(ctx context.Context, sourceRefID uuid.UUID) ([]In
 	return s.repo.ListBySource(ctx, sourceRefID)
 }
 
-// DropRoller wraps loot table roll + materialize into a single call — the
-// activity reveal path uses this.
-func (s *Service) DropRoller(
-	ctx context.Context,
-	characterID uuid.UUID,
-	sourceKind string,
-	sourceRefID uuid.UUID,
-	seed int64,
-	kind activity.Kind,
-	commonCount, rareCount, legendaryCount int,
-) ([]Instance, error) {
-	drops := RollDrops(s.catPtr.Load(), seed, kind, commonCount, rareCount, legendaryCount)
-	return s.MaterializeDrops(ctx, characterID, sourceKind, sourceRefID, drops)
-}
-
 // Grant satisfies activity.ItemGranter. Idempotent by sourceRefID — if any
 // items are already tagged with this source_ref_id, they are returned as-is
 // (no new mint). This guarantees reveal replay never double-creates loot.
@@ -228,6 +213,7 @@ func (s *Service) Grant(
 	characterID, sourceRefID uuid.UUID,
 	seed int64, kind activity.Kind,
 	commonCount, rareCount, legendaryCount int,
+	gear activity.GearDrop,
 ) ([]activity.GrantedItem, error) {
 	// Idempotency check: if this source already produced items, return them.
 	existing, err := s.repo.ListBySource(ctx, sourceRefID)
@@ -238,8 +224,9 @@ func (s *Service) Grant(
 		return toGrantedItems(existing), nil
 	}
 	// Fresh mint.
-	instances, err := s.DropRoller(ctx, characterID, "activity_reveal", sourceRefID,
-		seed, kind, commonCount, rareCount, legendaryCount)
+	cat := s.catPtr.Load()
+	drops := append(RollDrops(cat, seed, kind, commonCount, rareCount, legendaryCount), RollGear(cat, seed, gear)...)
+	instances, err := s.MaterializeDrops(ctx, characterID, "activity_reveal", sourceRefID, drops)
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@ func TestHTTPContractEdges(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
 	other := newHTTPPlayer(t, "mage")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 3 WHERE id = $1`, p.char)
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 6 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 
 	for _, kind := range []string{"hunt", "dungeon"} {

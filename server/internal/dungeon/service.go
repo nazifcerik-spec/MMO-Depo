@@ -28,6 +28,9 @@ type MobsLookup interface {
 	Catalog() *combat.Catalog
 }
 
+// GearDropPct is the chance (percent) of a gear drop per wave kill (DD-229).
+const GearDropPct = 4
+
 // ItemGranter — item.Service.Grant satisfies exactly this shape.
 type ItemGranter interface {
 	Grant(
@@ -36,6 +39,7 @@ type ItemGranter interface {
 		sourceRefID uuid.UUID,
 		seed int64, kind activity.Kind,
 		common, rare, legendary int,
+		gear activity.GearDrop,
 	) ([]activity.GrantedItem, error)
 }
 
@@ -187,7 +191,11 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	if sheet.Resources.HPCurrent < 1 {
 		return nil, ErrTooWounded
 	}
-	snap := combatantFromSheet(sheet)
+	snap := combat.FromSheet(sheet)
+	// Short rests between packs: a third of the out-of-combat regen over the
+	// run time per encounter (DD-229).
+	snap.RegenPerEncounter = int32(float64(tmpl.DurationSecs/int32(tmpl.TotalEncounters())/6) *
+		character.HPRegenPer2s(sheet.Primary.Vitality))
 	if s.skills != nil {
 		snap.Skills = s.skills(sheet)
 	}
@@ -278,11 +286,26 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	run := Roll(c.Seed, snapshot, tmpl, s.mobs.Catalog(), combat.DefaultMaxTurns, s.rngNew)
 
 	// Item mint — same idempotency pattern as hunt (source_ref_id = contract.ID).
+	// Gear (DD-229): a GearDropPct chance per wave kill, and a guaranteed,
+	// better piece from the boss — the boss's tier, the character's class.
+	var gear activity.GearDrop
+	if run.Victories > 0 {
+		sheet, err := s.chars.Sheet(ctx, c.CharacterID, accountID)
+		if err != nil {
+			return nil, err
+		}
+		boss, _ := s.mobs.Catalog().Get(tmpl.BossMobCode)
+		gear = activity.GearDrop{Class: sheet.Class, Level: int(boss.Level), Rolls: run.Victories, Pct: GearDropPct}
+		if run.BossKilled {
+			gear.Rolls--
+			gear.Guaranteed, gear.Boss = 1, true
+		}
+	}
 	var granted []activity.GrantedItem
-	if s.items != nil && (run.CommonDrops+run.RareDrops+run.LegendaryDrops) > 0 {
+	if s.items != nil && (run.CommonDrops+run.RareDrops+run.LegendaryDrops+gear.Rolls+gear.Guaranteed) > 0 {
 		granted, err = s.items.Grant(ctx,
 			c.CharacterID, c.ID, c.Seed, activity.KindHunting,
-			run.CommonDrops, run.RareDrops, run.LegendaryDrops,
+			run.CommonDrops, run.RareDrops, run.LegendaryDrops, gear,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("dungeon reveal item grant: %w", err)
@@ -437,25 +460,6 @@ func (s *Service) History(ctx context.Context, characterID, accountID uuid.UUID,
 func (s *Service) ListCatalog() []Template { return s.dungeons.Catalog().All() }
 
 // --- Helpers ----------------------------------------------------------------
-
-func combatantFromSheet(s *character.Sheet) combat.Combatant {
-	agi := int32(s.Primary.Agility)
-	ev := agi / 2
-	if ev > 40 {
-		ev = 40
-	}
-	return combat.Combatant{
-		Name:       "player",
-		HPMax:      int32(s.Resources.HPMax),
-		HPCurrent:  int32(s.Resources.HPCurrent), // DD-218: fights start at current HP
-		Attack:     int32(s.Derived.Attack),
-		Defense:    int32(s.Derived.Defense),
-		CritPct:    int32(s.Derived.CritPct),
-		HitPct:     int32(s.Derived.HitPct),
-		EvasionPct: ev,
-		MPMax:      int32(s.Resources.MPMax),
-	}
-}
 
 func seedFromIDs(runID, characterID uuid.UUID) int64 {
 	var acc uint64 = 1469598103934665603

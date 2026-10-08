@@ -13,48 +13,48 @@
 dungeons:
   - code: crypt_of_ashes
     display_name_key: dungeon.crypt_of_ashes
-    min_level: 3
+    min_level: 6
     duration_seconds: 900         # 15 minutes
     waves:
-      - { mob_code: cave_bat,     count: 4 }
       - { mob_code: grey_wolf,    count: 3 }
-      - { mob_code: bandit_scout, count: 2 }
+      - { mob_code: bandit_scout, count: 3 }
+      - { mob_code: cave_bat,     count: 3 }
     boss_mob_code: goblin_raider
     bonus_gold_copper: 250
-    bonus_xp: 120
+    bonus_xp: 300
 
   - code: forest_hollow
     display_name_key: dungeon.forest_hollow
-    min_level: 10
+    min_level: 11
     duration_seconds: 1200        # 20 minutes
     waves:
-      - { mob_code: dire_wolf,      count: 3 }
-      - { mob_code: goblin_raider,  count: 4 }
-      - { mob_code: cultist_acolyte, count: 2 }
-    boss_mob_code: forest_troll
+      - { mob_code: goblin_raider,  count: 3 }
+      - { mob_code: marsh_lurker,   count: 3 }
+      - { mob_code: forest_troll,   count: 2 }
+    boss_mob_code: dire_wolf
     bonus_gold_copper: 700
-    bonus_xp: 340
+    bonus_xp: 1200
 
   - code: shadowfen_ruins
     display_name_key: dungeon.shadowfen_ruins
-    min_level: 18
+    min_level: 17
     duration_seconds: 1800        # 30 minutes
     waves:
-      - { mob_code: shadow_stalker, count: 3 }
-      - { mob_code: cultist_acolyte, count: 4 }
-      - { mob_code: rock_ogre,      count: 2 }
-    boss_mob_code: elder_wyrm
+      - { mob_code: dire_wolf,       count: 3 }
+      - { mob_code: cultist_acolyte, count: 3 }
+      - { mob_code: rock_ogre,       count: 2 }
+    boss_mob_code: shadow_stalker
     bonus_gold_copper: 2500
-    bonus_xp: 1400
+    bonus_xp: 4000
 
   - code: obsidian_spire
     display_name_key: dungeon.obsidian_spire
-    min_level: 24
+    min_level: 23
     duration_seconds: 2400        # 40 minutes
     waves:
-      - { mob_code: shadow_stalker, count: 4 }
-      - { mob_code: rock_ogre,      count: 3 }
+      - { mob_code: shadow_stalker, count: 3 }
+      - { mob_code: frost_giant,    count: 3 }
       - { mob_code: elder_wyrm,     count: 1 }
     boss_mob_code: ashen_lich
     bonus_gold_copper: 5000
-    bonus_xp: 2800
+    bonus_xp: 9000

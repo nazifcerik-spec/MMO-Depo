@@ -14,163 +14,188 @@
 #   gold_copper_min    kill başına gold aralığı (min, max) — copper
 #   gold_copper_max
 #
-# Balance notu: attack/defense/hp ölçekleri Sprint 11 skill engine base stats'e
-# göre kalibre edildi (base HP 100 lvl 1, +25 per level; sword_iron sonrası
-# attack ~20). Sprint 14 hunt tuning'de bu tablo yeniden ayarlanacak.
+# Balance (DD-229): stats come from one level curve (hp 150+25L, attack
+# 28+2.1L, defense 1+0.8L, xp 10·L^1.6) × archetype (tank/glass/evasive/crit),
+# tuned with the balance simulation (server/internal/balance).
 
 mobs:
   - code: young_boar
     display_name_key: mob.young_boar
     level: 1
-    hp_max: 40
-    attack: 6
-    defense: 1
-    crit_pct: 3
-    hit_pct: 80
-    evasion_pct: 3
-    xp_reward: 12
-    gold_copper_min: 5
-    gold_copper_max: 15
+    hp_max: 172
+    attack: 29
+    defense: 2
+    crit_pct: 5
+    hit_pct: 82
+    evasion_pct: 5
+    xp_reward: 10
+    gold_copper_min: 7
+    gold_copper_max: 18
 
   - code: grey_wolf
     display_name_key: mob.grey_wolf
     level: 3
-    hp_max: 60
-    attack: 9
-    defense: 2
-    crit_pct: 5
+    hp_max: 212
+    attack: 35
+    defense: 4
+    crit_pct: 17
     hit_pct: 82
-    evasion_pct: 6
-    xp_reward: 22
-    gold_copper_min: 10
-    gold_copper_max: 25
+    evasion_pct: 10
+    xp_reward: 64
+    gold_copper_min: 24
+    gold_copper_max: 60
 
   - code: bandit_scout
     display_name_key: mob.bandit_scout
     level: 5
-    hp_max: 90
-    attack: 14
-    defense: 3
-    crit_pct: 8
-    hit_pct: 85
-    evasion_pct: 10
-    xp_reward: 45
-    gold_copper_min: 20
-    gold_copper_max: 60
+    hp_max: 300
+    attack: 41
+    defense: 6
+    crit_pct: 5
+    hit_pct: 83
+    evasion_pct: 5
+    xp_reward: 131
+    gold_copper_min: 48
+    gold_copper_max: 120
 
   - code: cave_bat
     display_name_key: mob.cave_bat
     level: 6
-    hp_max: 50
-    attack: 12
-    defense: 1
-    crit_pct: 12
-    hit_pct: 82
+    hp_max: 266
+    attack: 42
+    defense: 6
+    crit_pct: 9
+    hit_pct: 83
     evasion_pct: 20
-    xp_reward: 40
-    gold_copper_min: 15
-    gold_copper_max: 40
+    xp_reward: 193
+    gold_copper_min: 62
+    gold_copper_max: 155
 
   - code: goblin_raider
     display_name_key: mob.goblin_raider
     level: 8
-    hp_max: 120
-    attack: 18
-    defense: 5
-    crit_pct: 7
-    hit_pct: 84
-    evasion_pct: 8
-    xp_reward: 70
-    gold_copper_min: 40
-    gold_copper_max: 100
+    hp_max: 396
+    attack: 50
+    defense: 9
+    crit_pct: 5
+    hit_pct: 83
+    evasion_pct: 5
+    xp_reward: 279
+    gold_copper_min: 94
+    gold_copper_max: 235
 
   - code: forest_troll
     display_name_key: mob.forest_troll
     level: 12
-    hp_max: 260
-    attack: 24
-    defense: 10
+    hp_max: 760
+    attack: 53
+    defense: 21
     crit_pct: 5
-    hit_pct: 82
-    evasion_pct: 4
-    xp_reward: 160
-    gold_copper_min: 90
-    gold_copper_max: 220
+    hit_pct: 84
+    evasion_pct: 2
+    xp_reward: 640
+    gold_copper_min: 169
+    gold_copper_max: 422
 
   - code: dire_wolf
     display_name_key: mob.dire_wolf
     level: 14
-    hp_max: 220
-    attack: 30
-    defense: 6
-    crit_pct: 15
-    hit_pct: 86
-    evasion_pct: 12
-    xp_reward: 200
-    gold_copper_min: 120
-    gold_copper_max: 260
+    hp_max: 529
+    attack: 68
+    defense: 14
+    crit_pct: 17
+    hit_pct: 84
+    evasion_pct: 10
+    xp_reward: 750
+    gold_copper_min: 213
+    gold_copper_max: 532
 
   - code: cultist_acolyte
     display_name_key: mob.cultist_acolyte
     level: 15
-    hp_max: 200
-    attack: 34
-    defense: 5
-    crit_pct: 8
+    hp_max: 465
+    attack: 85
+    defense: 10
+    crit_pct: 11
     hit_pct: 85
-    evasion_pct: 8
-    xp_reward: 240
-    gold_copper_min: 150
-    gold_copper_max: 320
+    evasion_pct: 5
+    xp_reward: 800
+    gold_copper_min: 235
+    gold_copper_max: 588
 
   - code: rock_ogre
     display_name_key: mob.rock_ogre
     level: 18
-    hp_max: 480
-    attack: 42
-    defense: 18
+    hp_max: 1038
+    attack: 68
+    defense: 30
     crit_pct: 5
-    hit_pct: 80
-    evasion_pct: 3
-    xp_reward: 380
-    gold_copper_min: 250
-    gold_copper_max: 500
+    hit_pct: 85
+    evasion_pct: 2
+    xp_reward: 1224
+    gold_copper_min: 308
+    gold_copper_max: 770
 
   - code: shadow_stalker
     display_name_key: mob.shadow_stalker
     level: 20
-    hp_max: 350
-    attack: 55
-    defense: 8
-    crit_pct: 22
-    hit_pct: 88
-    evasion_pct: 25
-    xp_reward: 500
-    gold_copper_min: 400
-    gold_copper_max: 700
+    hp_max: 624
+    attack: 82
+    defense: 17
+    crit_pct: 9
+    hit_pct: 86
+    evasion_pct: 20
+    xp_reward: 1328
+    gold_copper_min: 361
+    gold_copper_max: 902
 
   - code: elder_wyrm
     display_name_key: mob.elder_wyrm
     level: 24
-    hp_max: 800
-    attack: 65
-    defense: 22
-    crit_pct: 12
+    hp_max: 1317
+    attack: 83
+    defense: 40
+    crit_pct: 5
     hit_pct: 86
-    evasion_pct: 8
-    xp_reward: 900
-    gold_copper_min: 1000
-    gold_copper_max: 2000
+    evasion_pct: 2
+    xp_reward: 1939
+    gold_copper_min: 473
+    gold_copper_max: 1182
 
   - code: ashen_lich
     display_name_key: mob.ashen_lich
     level: 25
-    hp_max: 700
-    attack: 75
-    defense: 12
-    crit_pct: 20
-    hit_pct: 90
-    evasion_pct: 15
-    xp_reward: 1200
-    gold_copper_min: 1500
-    gold_copper_max: 3000
+    hp_max: 705
+    attack: 121
+    defense: 16
+    crit_pct: 11
+    hit_pct: 87
+    evasion_pct: 5
+    xp_reward: 1811
+    gold_copper_min: 503
+    gold_copper_max: 1258
+  - code: marsh_lurker
+    display_name_key: mob.marsh_lurker
+    level: 10
+    hp_max: 460
+    attack: 56
+    defense: 11
+    crit_pct: 5
+    hit_pct: 84
+    evasion_pct: 5
+    xp_reward: 398
+    gold_copper_min: 129
+    gold_copper_max: 322
+
+  - code: frost_giant
+    display_name_key: mob.frost_giant
+    level: 22
+    hp_max: 1224
+    attack: 78
+    defense: 37
+    crit_pct: 5
+    hit_pct: 86
+    evasion_pct: 2
+    xp_reward: 1687
+    gold_copper_min: 416
+    gold_copper_max: 1040

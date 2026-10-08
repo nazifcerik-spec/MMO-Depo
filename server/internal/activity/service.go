@@ -33,6 +33,18 @@ type CharacterFetcher interface {
 // Populated from the item service (Sprint 8). Kept as a plain struct here so
 // the activity package doesn't import item (which would cycle — item already
 // imports activity for Kind).
+// GearDrop asks Grant for equipment on top of the material roll (DD-229):
+// Guaranteed pieces plus one Pct% chance per roll, from the gear Class can use
+// in the tier at Level. Boss improves the rarity odds. Zero value: no gear.
+type GearDrop struct {
+	Class      string
+	Level      int
+	Rolls      int
+	Pct        int
+	Guaranteed int
+	Boss       bool
+}
+
 type GrantedItem struct {
 	InstanceID   uuid.UUID `json:"instance_id"`
 	TemplateCode string    `json:"template_code"`
@@ -51,6 +63,7 @@ type ItemGranter interface {
 		characterID, sourceRefID uuid.UUID,
 		seed int64, kind Kind,
 		commonCount, rareCount, legendaryCount int,
+		gear GearDrop,
 	) ([]GrantedItem, error)
 }
 
@@ -234,7 +247,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		granted, err := s.items.Grant(ctx,
 			contract.CharacterID, contract.ID,
 			contract.Seed, contract.Kind,
-			yield.CommonCount, yield.RareCount, yield.LegendaryCount,
+			yield.CommonCount, yield.RareCount, yield.LegendaryCount, GearDrop{},
 		)
 		if err != nil {
 			return nil, fmt.Errorf("reveal item grant: %w", err)

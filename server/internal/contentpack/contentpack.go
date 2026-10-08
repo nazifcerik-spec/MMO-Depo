@@ -242,78 +242,17 @@ func (l *Loader) Register(r Reloader) { l.reloaders = append(l.reloaders, r) }
 // etc).
 func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	res := LoadResult{SourceDir: l.Dir}
-	if l.Dir == "" {
-		return res, errors.New("contentpack: empty directory")
-	}
-	info, err := os.Stat(l.Dir)
-	if err != nil {
-		return res, fmt.Errorf("contentpack: stat %s: %w", l.Dir, err)
-	}
-	if !info.IsDir() {
-		return res, fmt.Errorf("contentpack: %s is not a directory", l.Dir)
-	}
-
-	items, err := loadItemsFile(filepath.Join(l.Dir, "items.yaml"))
+	p, err := Read(l.Dir)
 	if err != nil {
 		return res, err
 	}
-	res.ItemsSeen = len(items)
-
-	vendors, err := loadVendorsFile(filepath.Join(l.Dir, "vendors.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.VendorsSeen = len(vendors)
-
-	mobs, err := loadMobsFile(filepath.Join(l.Dir, "mobs.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.MobsSeen = len(mobs)
-
-	dungeons, err := loadDungeonsFile(filepath.Join(l.Dir, "dungeons.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.DungeonsSeen = len(dungeons)
-
-	regions, regionLinks, err := loadRegionsFile(filepath.Join(l.Dir, "regions.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.RegionsSeen = len(regions)
-	res.RegionLinksSeen = len(regionLinks)
-
-	professions, err := loadProfessionsFile(filepath.Join(l.Dir, "professions.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.ProfessionsSeen = len(professions)
-
-	recipes, err := loadRecipesFile(filepath.Join(l.Dir, "recipes.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.RecipesSeen = len(recipes)
-
-	quests, err := loadQuestsFile(filepath.Join(l.Dir, "quests.yaml"))
-	if err != nil {
-		return res, err
-	}
-	if err := validateQuests(quests, refs{
-		mobs:     codeSet(mobs, func(m Mob) string { return m.Code }),
-		dungeons: codeSet(dungeons, func(d Dungeon) string { return d.Code }),
-		items:    codeSet(items, func(i Item) string { return i.Code }),
-	}); err != nil {
-		return res, fmt.Errorf("validate quests.yaml: %w", err)
-	}
-	res.QuestsSeen = len(quests)
-
-	skills, err := loadSkillsFile(filepath.Join(l.Dir, "skills.yaml"))
-	if err != nil {
-		return res, err
-	}
-	res.SkillsSeen = len(skills)
+	items, vendors, mobs, dungeons := p.Items, p.Vendors, p.Mobs, p.Dungeons
+	regions, regionLinks, professions, recipes := p.Regions, p.RegionLinks, p.Professions, p.Recipes
+	quests, skills := p.Quests, p.Skills
+	res.ItemsSeen, res.VendorsSeen, res.MobsSeen, res.DungeonsSeen = len(items), len(vendors), len(mobs), len(dungeons)
+	res.RegionsSeen, res.RegionLinksSeen = len(regions), len(regionLinks)
+	res.ProfessionsSeen, res.RecipesSeen = len(professions), len(recipes)
+	res.QuestsSeen, res.SkillsSeen = len(quests), len(skills)
 
 	if len(items) > 0 {
 		if err := l.upsertItems(ctx, items); err != nil {
@@ -385,6 +324,124 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		slog.Int("skills", res.SkillsSeen),
 	)
 	return res, nil
+}
+
+// Pack is a parsed and validated content directory.
+type Pack struct {
+	Items       []Item
+	Vendors     []Vendor
+	Mobs        []Mob
+	Dungeons    []Dungeon
+	Regions     []Region
+	RegionLinks []RegionLink
+	Professions []Profession
+	Recipes     []Recipe
+	Quests      []Quest
+	Skills      []ClassSkill
+}
+
+// Read parses and validates every file in dir, including the references
+// between files, without touching the database. Load uses it; tests and the
+// balance simulation use it directly.
+func Read(dir string) (*Pack, error) {
+	if dir == "" {
+		return nil, errors.New("contentpack: empty directory")
+	}
+	info, err := os.Stat(dir)
+	if err != nil {
+		return nil, fmt.Errorf("contentpack: stat %s: %w", dir, err)
+	}
+	if !info.IsDir() {
+		return nil, fmt.Errorf("contentpack: %s is not a directory", dir)
+	}
+	p := &Pack{}
+	f := func(name string) string { return filepath.Join(dir, name) }
+	if p.Items, err = loadItemsFile(f("items.yaml")); err != nil {
+		return nil, err
+	}
+	// Equipment lives in its own file (gear ladder, DD-229); codes are unique
+	// across both.
+	gear, err := loadItemsFile(f("gear.yaml"))
+	if err != nil {
+		return nil, err
+	}
+	p.Items = append(p.Items, gear...)
+	if err := validateItems(p.Items); err != nil {
+		return nil, fmt.Errorf("validate items + gear: %w", err)
+	}
+	if p.Vendors, err = loadVendorsFile(f("vendors.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Mobs, err = loadMobsFile(f("mobs.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Dungeons, err = loadDungeonsFile(f("dungeons.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Regions, p.RegionLinks, err = loadRegionsFile(f("regions.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Professions, err = loadProfessionsFile(f("professions.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Recipes, err = loadRecipesFile(f("recipes.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Quests, err = loadQuestsFile(f("quests.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Skills, err = loadSkillsFile(f("skills.yaml")); err != nil {
+		return nil, err
+	}
+	r := refs{
+		mobs:     codeSet(p.Mobs, func(m Mob) string { return m.Code }),
+		dungeons: codeSet(p.Dungeons, func(d Dungeon) string { return d.Code }),
+		items:    codeSet(p.Items, func(i Item) string { return i.Code }),
+	}
+	if err := validateQuests(p.Quests, r); err != nil {
+		return nil, fmt.Errorf("validate quests.yaml: %w", err)
+	}
+	if err := validateRefs(p, r); err != nil {
+		return nil, err
+	}
+	return p, nil
+}
+
+// validateRefs checks the references between files: a typo would otherwise
+// load fine and fail only when a player buys, crafts or enters.
+func validateRefs(p *Pack, r refs) error {
+	for _, v := range p.Vendors {
+		for _, s := range v.Sells {
+			if !r.items[s.TemplateCode] {
+				return fmt.Errorf("vendor %s: sells unknown item %q", v.Code, s.TemplateCode)
+			}
+		}
+	}
+	profs := codeSet(p.Professions, func(x Profession) string { return x.Code })
+	for _, rc := range p.Recipes {
+		if !profs[rc.ProfessionCode] {
+			return fmt.Errorf("recipe %s: unknown profession %q", rc.Code, rc.ProfessionCode)
+		}
+		if !r.items[rc.OutputTemplateCode] {
+			return fmt.Errorf("recipe %s: unknown output %q", rc.Code, rc.OutputTemplateCode)
+		}
+		for _, in := range rc.Inputs {
+			if !r.items[in.TemplateCode] {
+				return fmt.Errorf("recipe %s: unknown input %q", rc.Code, in.TemplateCode)
+			}
+		}
+	}
+	for _, d := range p.Dungeons {
+		if !r.mobs[d.BossMobCode] {
+			return fmt.Errorf("dungeon %s: unknown boss %q", d.Code, d.BossMobCode)
+		}
+		for _, w := range d.Waves {
+			if !r.mobs[w.MobCode] {
+				return fmt.Errorf("dungeon %s: unknown wave mob %q", d.Code, w.MobCode)
+			}
+		}
+	}
+	return nil
 }
 
 // --- File I/O ---------------------------------------------------------------

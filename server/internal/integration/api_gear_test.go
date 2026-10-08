@@ -27,13 +27,14 @@ func TestHTTPGearAffectsSheet(t *testing.T) {
 	second := w.give(me, "sword_iron", 1).ID.String()
 	p.ok("POST", p.path("/equip/"+first), map[string]any{})
 	require.Greater(t, stat("derived", "attack"), attack, "sword adds attack")
-	require.Equal(t, str+3, stat("primary", "str"), "sword_iron: +3 str")
+	withSword := stat("primary", "str")
+	require.Greater(t, withSword, str, "sword_iron adds str")
 
 	p.ok("POST", p.path("/equip/"+second), map[string]any{})
 	eq := p.ok("GET", p.path("/equipment"), nil)["slots"].(map[string]any)
 	require.Equal(t, second, eq["mainhand"].(map[string]any)["instance_id"])
 	require.NotEqual(t, -1.0, p.slotOf(first), "the replaced sword is back in the bag")
-	require.Equal(t, str+3, stat("primary", "str"), "bonuses don't stack across swaps")
+	require.Equal(t, withSword, stat("primary", "str"), "bonuses don't stack across swaps")
 
 	p.ok("POST", p.path("/unequip/mainhand"), map[string]any{})
 	require.Equal(t, attack, stat("derived", "attack"))
@@ -95,4 +96,36 @@ func TestHTTPDungeonConcurrentReveal(t *testing.T) {
 	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT coalesce(sum(delta), 0) FROM economy.ledger_entry
 		 WHERE idempotency_key = $1 AND account_ref = $2`, "dungeon-reveal-"+id, p.char).Scan(&paid))
 	require.Equal(t, int64(gold[0]), paid, "the reported gold is what was credited")
+}
+
+// A cleared dungeon's boss always drops gear from its tier, usable by the
+// character's class, never common (DD-229).
+func TestHTTPDungeonBossDropsGear(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "warrior")
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 16 WHERE id = $1`, p.char)
+	require.NoError(t, err)
+	id := p.ok("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"})["contract"].(map[string]any)["id"].(string)
+	_, err = w.p.Exec(w.ctx, `
+		UPDATE dungeon.contract SET started_at = now() - interval '2 hours', expires_at = now() - interval '1 hour'
+		 WHERE id = $1`, id)
+	require.NoError(t, err)
+	res := p.ok("POST", "/v1/dungeon/"+id+"/reveal", map[string]any{})
+	require.Equal(t, true, res["run"].(map[string]any)["cleared"], "level 16 clears a level 6 dungeon")
+
+	// Boss goblin_raider is level 8: the level-5 tier (iron).
+	tier := map[string]bool{"sword_iron": true, "helm_iron": true, "chest_iron": true, "legs_iron": true,
+		"boots_iron": true, "gloves_iron": true}
+	var gear []map[string]any
+	for _, it := range items(res, "items") {
+		if tier[it["template_code"].(string)] {
+			gear = append(gear, it)
+		}
+	}
+	require.NotEmpty(t, gear, "%v", res["items"])
+	rare := false
+	for _, g := range gear {
+		rare = rare || g["rarity"] != "common"
+	}
+	require.True(t, rare, "the boss piece is uncommon or better")
 }

@@ -130,19 +130,19 @@ func TestService_MaterializeDrops_PersistsInstances(t *testing.T) {
 	}
 }
 
-func TestService_DropRoller_EndToEnd(t *testing.T) {
+func TestService_Grant_EndToEnd(t *testing.T) {
 	svc, _ := newTestService()
 	char := uuid.New()
 	src := uuid.New()
 
-	instances, err := svc.DropRoller(context.Background(), char, "activity_reveal", src,
-		1234, activity.KindMining, 2, 1, 0)
+	instances, err := svc.Grant(context.Background(), char, src,
+		1234, activity.KindMining, 2, 1, 0, activity.GearDrop{})
 	require.NoError(t, err)
 	require.Len(t, instances, 3)
 
 	// Deterministic — same seed => same TemplateCode / Rarity sequence.
-	instances2, err := svc.DropRoller(context.Background(), char, "activity_reveal", uuid.New(),
-		1234, activity.KindMining, 2, 1, 0)
+	instances2, err := svc.Grant(context.Background(), char, uuid.New(),
+		1234, activity.KindMining, 2, 1, 0, activity.GearDrop{})
 	require.NoError(t, err)
 	for i := range instances {
 		require.Equal(t, instances[i].TemplateCode, instances2[i].TemplateCode)
@@ -156,8 +156,8 @@ func TestService_ListBySource(t *testing.T) {
 	srcA := uuid.New()
 	srcB := uuid.New()
 
-	_, _ = svc.DropRoller(context.Background(), char, "activity_reveal", srcA, 1, activity.KindMining, 2, 0, 0)
-	_, _ = svc.DropRoller(context.Background(), char, "activity_reveal", srcB, 2, activity.KindMining, 3, 0, 0)
+	_, _ = svc.Grant(context.Background(), char, srcA, 1, activity.KindMining, 2, 0, 0, activity.GearDrop{})
+	_, _ = svc.Grant(context.Background(), char, srcB, 2, activity.KindMining, 3, 0, 0, activity.GearDrop{})
 
 	a, _ := svc.ListBySource(context.Background(), srcA)
 	require.Len(t, a, 2)

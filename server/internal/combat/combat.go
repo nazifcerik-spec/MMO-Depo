@@ -40,6 +40,14 @@ type Combatant struct {
 	// Class skills (DD-222). MP starts full every encounter; mobs have none.
 	MPMax  int32
 	Skills []Skill
+
+	// RegenPerEncounter is the HP a hunter recovers resting between
+	// encounters (DD-229); Session ignores it. Zero in old snapshots.
+	RegenPerEncounter int32 `json:",omitempty"`
+
+	// Level drives the level-gap rule (DD-229). Zero = unknown (old
+	// snapshots): no gap applies, so their replays stay identical.
+	Level int16 `json:",omitempty"`
 }
 
 // Skill effects.

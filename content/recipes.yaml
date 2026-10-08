@@ -35,7 +35,120 @@ recipes:
     output_stack: 1
     profession_xp_reward: 20
 
-  # --- Blacksmithing ---
+  # --- Blacksmithing (DD-229): leather set from skill 1, iron set + iron
+  # weapons, scale set at skill 10. Higher tiers drop from hunts/dungeons. ---
+
+  - code: recipe_helm_leather
+    display_name_key: recipe.helm_leather
+    profession_code: blacksmithing
+    min_skill: 1
+    inputs:
+      - { template_code: boar_hide, quantity: 2 }
+    gold_cost_copper: 5
+    output_template_code: helm_leather
+    output_stack: 1
+    profession_xp_reward: 15
+
+  - code: recipe_chest_leather
+    display_name_key: recipe.chest_leather
+    profession_code: blacksmithing
+    min_skill: 1
+    inputs:
+      - { template_code: boar_hide, quantity: 4 }
+    gold_cost_copper: 8
+    output_template_code: chest_leather
+    output_stack: 1
+    profession_xp_reward: 25
+
+  - code: recipe_legs_leather
+    display_name_key: recipe.legs_leather
+    profession_code: blacksmithing
+    min_skill: 1
+    inputs:
+      - { template_code: boar_hide, quantity: 3 }
+    gold_cost_copper: 6
+    output_template_code: legs_leather
+    output_stack: 1
+    profession_xp_reward: 20
+
+  - code: recipe_boots_leather
+    display_name_key: recipe.boots_leather
+    profession_code: blacksmithing
+    min_skill: 1
+    inputs:
+      - { template_code: boar_hide, quantity: 2 }
+    gold_cost_copper: 5
+    output_template_code: boots_leather
+    output_stack: 1
+    profession_xp_reward: 15
+
+  - code: recipe_gloves_leather
+    display_name_key: recipe.gloves_leather
+    profession_code: blacksmithing
+    min_skill: 1
+    inputs:
+      - { template_code: boar_hide, quantity: 1 }
+    gold_cost_copper: 4
+    output_template_code: gloves_leather
+    output_stack: 1
+    profession_xp_reward: 12
+
+  - code: recipe_helm_iron
+    display_name_key: recipe.helm_iron
+    profession_code: blacksmithing
+    min_skill: 3
+    inputs:
+      - { template_code: iron_ore, quantity: 4 }
+    gold_cost_copper: 20
+    output_template_code: helm_iron
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_chest_iron
+    display_name_key: recipe.chest_iron
+    profession_code: blacksmithing
+    min_skill: 3
+    inputs:
+      - { template_code: iron_ore,  quantity: 6 }
+      - { template_code: boar_hide, quantity: 2 }
+    gold_cost_copper: 30
+    output_template_code: chest_iron
+    output_stack: 1
+    profession_xp_reward: 45
+
+  - code: recipe_legs_iron
+    display_name_key: recipe.legs_iron
+    profession_code: blacksmithing
+    min_skill: 3
+    inputs:
+      - { template_code: iron_ore, quantity: 5 }
+    gold_cost_copper: 25
+    output_template_code: legs_iron
+    output_stack: 1
+    profession_xp_reward: 40
+
+  - code: recipe_boots_iron
+    display_name_key: recipe.boots_iron
+    profession_code: blacksmithing
+    min_skill: 3
+    inputs:
+      - { template_code: iron_ore, quantity: 3 }
+    gold_cost_copper: 15
+    output_template_code: boots_iron
+    output_stack: 1
+    profession_xp_reward: 30
+
+  - code: recipe_gloves_iron
+    display_name_key: recipe.gloves_iron
+    profession_code: blacksmithing
+    min_skill: 3
+    inputs:
+      - { template_code: iron_ore, quantity: 2 }
+    gold_cost_copper: 12
+    output_template_code: gloves_iron
+    output_stack: 1
+    profession_xp_reward: 25
+
   - code: recipe_sword_iron
     display_name_key: recipe.sword_iron
     profession_code: blacksmithing
@@ -48,24 +161,111 @@ recipes:
     output_stack: 1
     profession_xp_reward: 40
 
-  - code: recipe_helm_iron
-    display_name_key: recipe.helm_iron
+  - code: recipe_mace_iron
+    display_name_key: recipe.mace_iron
     profession_code: blacksmithing
     min_skill: 5
     inputs:
-      - { template_code: iron_ore, quantity: 4 }
-    gold_cost_copper: 20
-    output_template_code: helm_iron
+      - { template_code: iron_ore, quantity: 5 }
+      - { template_code: oak_log,  quantity: 2 }
+    gold_cost_copper: 25
+    output_template_code: mace_iron
     output_stack: 1
-    profession_xp_reward: 35
+    profession_xp_reward: 40
 
-  - code: recipe_boots_iron
-    display_name_key: recipe.boots_iron
+  - code: recipe_dagger_iron
+    display_name_key: recipe.dagger_iron
     profession_code: blacksmithing
     min_skill: 5
     inputs:
       - { template_code: iron_ore, quantity: 3 }
-    gold_cost_copper: 15
-    output_template_code: boots_iron
+      - { template_code: oak_log,  quantity: 1 }
+    gold_cost_copper: 20
+    output_template_code: dagger_iron
     output_stack: 1
-    profession_xp_reward: 30
+    profession_xp_reward: 35
+
+  - code: recipe_bow_hunting
+    display_name_key: recipe.bow_hunting
+    profession_code: blacksmithing
+    min_skill: 5
+    inputs:
+      - { template_code: oak_log,   quantity: 4 }
+      - { template_code: boar_hide, quantity: 2 }
+    gold_cost_copper: 20
+    output_template_code: bow_hunting
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_staff_apprentice
+    display_name_key: recipe.staff_apprentice
+    profession_code: blacksmithing
+    min_skill: 5
+    inputs:
+      - { template_code: oak_log, quantity: 4 }
+      - { template_code: linseed, quantity: 2 }
+    gold_cost_copper: 20
+    output_template_code: staff_apprentice
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_helm_scale
+    display_name_key: recipe.helm_scale
+    profession_code: blacksmithing
+    min_skill: 10
+    inputs:
+      - { template_code: copper_ore, quantity: 4 }
+      - { template_code: tin_ore,    quantity: 2 }
+    gold_cost_copper: 80
+    output_template_code: helm_scale
+    output_stack: 1
+    profession_xp_reward: 60
+
+  - code: recipe_chest_scale
+    display_name_key: recipe.chest_scale
+    profession_code: blacksmithing
+    min_skill: 10
+    inputs:
+      - { template_code: copper_ore, quantity: 6 }
+      - { template_code: tin_ore,    quantity: 3 }
+      - { template_code: wolf_pelt,  quantity: 2 }
+    gold_cost_copper: 140
+    output_template_code: chest_scale
+    output_stack: 1
+    profession_xp_reward: 80
+
+  - code: recipe_legs_scale
+    display_name_key: recipe.legs_scale
+    profession_code: blacksmithing
+    min_skill: 10
+    inputs:
+      - { template_code: copper_ore, quantity: 5 }
+      - { template_code: tin_ore,    quantity: 3 }
+    gold_cost_copper: 110
+    output_template_code: legs_scale
+    output_stack: 1
+    profession_xp_reward: 70
+
+  - code: recipe_boots_scale
+    display_name_key: recipe.boots_scale
+    profession_code: blacksmithing
+    min_skill: 10
+    inputs:
+      - { template_code: copper_ore, quantity: 3 }
+      - { template_code: wolf_pelt,  quantity: 1 }
+    gold_cost_copper: 70
+    output_template_code: boots_scale
+    output_stack: 1
+    profession_xp_reward: 55
+
+  - code: recipe_gloves_scale
+    display_name_key: recipe.gloves_scale
+    profession_code: blacksmithing
+    min_skill: 10
+    inputs:
+      - { template_code: copper_ore, quantity: 2 }
+      - { template_code: wolf_pelt,  quantity: 1 }
+    gold_cost_copper: 60
+    output_template_code: gloves_scale
+    output_stack: 1
+    profession_xp_reward: 50

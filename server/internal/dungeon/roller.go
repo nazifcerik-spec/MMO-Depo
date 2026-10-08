@@ -87,7 +87,8 @@ func Roll(
 				res.TotalXP += int64(rec.XPGained)
 				res.TotalGoldCopper += rec.GoldCopper
 				accumulateDrop(res, rngFactory(baseSeed+int64(seq)+8001))
-				player.HPCurrent = rec.PlayerHPAft
+				// A breather before the next pack (DD-229).
+				player.HPCurrent = min(player.HPMax, rec.PlayerHPAft+player.RegenPerEncounter)
 			case combat.OutcomeDefeat:
 				res.Defeats++
 				res.StoppedOnDeath = true
@@ -139,6 +140,12 @@ func Roll(
 
 // resolveOne runs one encounter and returns its record + control flags. `wave`
 // is 0 for the boss to match EncounterRecord.Wave semantics.
+// Boss scaling over the mob template (percent).
+const (
+	BossHPPct     = 200
+	BossAttackPct = 120
+)
+
 func resolveOne(
 	baseSeed int64, seq int,
 	player combat.Combatant, mob combat.Mob,
@@ -148,6 +155,11 @@ func resolveOne(
 	enc := player.Clone() // HP carries over; skills + MP (full each fight) too
 	enc.Name = "player"
 	mobC := mob.AsCombatant()
+	if isBoss { // a dungeon boss outclasses the same mob in the wild (DD-229)
+		mobC.HPMax = mobC.HPMax * BossHPPct / 100
+		mobC.HPCurrent = mobC.HPMax
+		mobC.Attack = mobC.Attack * BossAttackPct / 100
+	}
 	sess := &combat.Session{Player: enc, Mob: mobC, MaxTurns: maxTurns}
 	out, err := sess.Resolve(rngFactory, baseSeed+int64(seq)+1)
 	if err != nil {

@@ -15,7 +15,7 @@ import (
 func TestRoll_UsesSnapshotSkills(t *testing.T) {
 	sheet := &character.Sheet{Resources: character.Resources{HPCurrent: 500, HPMax: 500, MPMax: 40},
 		Derived: character.DerivedStats{Attack: 40, Defense: 15, CritPct: 10, HitPct: 90}}
-	p := combatantFromSheet(sheet)
+	p := combat.FromSheet(sheet)
 	require.Equal(t, int32(40), p.MPMax)
 	p.Skills = []combat.Skill{{Code: "cleave", Effect: combat.EffectStrike, Power: 180, MPCost: 10, CooldownTurns: 2}}
 

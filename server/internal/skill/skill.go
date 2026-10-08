@@ -117,10 +117,13 @@ type Sheet struct {
 	Resources Resources `json:"resources"`
 }
 
-// ComputeSheet applies the modifier stack to base primary stats.
-// Formulas for derived / resource maxes are placeholder v1 (Faz 00 spec —
-// balance pass Phase 02). Content-driven formulas later.
-func ComputeSheet(base Primary, mods []Modifier) Sheet {
+// ComputeSheet is ComputeSheetFor with attack driven by STR.
+func ComputeSheet(base Primary, mods []Modifier) Sheet { return ComputeSheetFor(base, TargetSTR, mods) }
+
+// ComputeSheetFor applies the modifier stack to base primary stats; attack
+// comes from the class's main stat (DD-229: TargetSTR, TargetAGI or TargetINT).
+// Formulas for derived / resource maxes are placeholder v1.
+func ComputeSheetFor(base Primary, main Target, mods []Modifier) Sheet {
 	// 1. Primary stats.
 	str := applyStack(float64(base.STR), filterTarget(mods, TargetSTR))
 	agi := applyStack(float64(base.AGI), filterTarget(mods, TargetAGI))
@@ -142,7 +145,13 @@ func ComputeSheet(base Primary, mods []Modifier) Sheet {
 	// Base formulas use integer division to give predictable half-values
 	// (e.g. Luck 5 → +2 crit, not +2.5 that rounds to +3).
 	attackBase := float64(primary.STR * 2)
-	defenseBase := float64(primary.VIT * 2)
+	switch main {
+	case TargetAGI:
+		attackBase = float64(primary.AGI * 2)
+	case TargetINT:
+		attackBase = float64(primary.INT * 2)
+	}
+	defenseBase := float64(primary.VIT)
 	critBase := float64(5 + primary.Luck/2)
 	hitBase := float64(90 + primary.AGI/2)
 

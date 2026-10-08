@@ -13,7 +13,7 @@ import (
 func TestHTTPCombatRewind(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 3 WHERE id = $1`, p.char)
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 6 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 
 	p.ok("POST", p.path("/quests/main_01_first_hunt/accept"), map[string]any{})

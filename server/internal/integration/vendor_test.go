@@ -35,10 +35,10 @@ func TestVendorRules(t *testing.T) {
 	_, err = svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: shop, CharacterID: a.ID, TemplateCode: "potion_hp_small"})
 	require.Error(t, err, "idempotency key is mandatory")
 	key := uuid.NewString()
-	first, err := svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: shop, CharacterID: a.ID, TemplateCode: "sword_iron", IdempotencyKey: key})
+	first, err := svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: shop, CharacterID: a.ID, TemplateCode: "sword_training", IdempotencyKey: key})
 	require.NoError(t, err)
 	balance := w.balance(a)
-	again, err := svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: shop, CharacterID: a.ID, TemplateCode: "sword_iron", IdempotencyKey: key})
+	again, err := svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: shop, CharacterID: a.ID, TemplateCode: "sword_training", IdempotencyKey: key})
 	require.NoError(t, err)
 	require.Equal(t, first.InstanceID, again.InstanceID, "replay mints nothing new")
 	require.Equal(t, balance, w.balance(a), "and charges nothing")
@@ -112,7 +112,7 @@ func TestVendorConcurrentMintsOnce(t *testing.T) {
 	var mu sync.Mutex
 	parallel(8, func() error {
 		r, err := svc.Buy(w.ctx, vendor.BuyRequest{VendorCode: "general_ironhold", CharacterID: p.ID,
-			TemplateCode: "sword_iron", IdempotencyKey: key})
+			TemplateCode: "sword_training", IdempotencyKey: key})
 		if err == nil {
 			mu.Lock()
 			txn = r.LedgerTxnID

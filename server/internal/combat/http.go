@@ -82,7 +82,8 @@ func (h *Handler) Simulate(w http.ResponseWriter, r *http.Request) {
 		apierr.Write(w, r, http.StatusInternalServerError, "E_SHEET", err.Error())
 		return
 	}
-	player := combatantFromSheet(sheet)
+	player := FromSheet(sheet)
+	player.HPCurrent = player.HPMax // a simulation starts fresh
 
 	mob, ok := h.mobs.Catalog().Get(req.MobCode)
 	if !ok {
@@ -123,27 +124,21 @@ func (h *Handler) Simulate(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// combatantFromSheet converts a character.Sheet into a Combatant for the
-// pipeline. Player name is a stable label ("player") so turn logs don't leak
-// character names between accounts.
-func combatantFromSheet(s *character.Sheet) Combatant {
-	// EvasionPct is not currently on the sheet (Sprint 11 didn't expose it);
-	// derive as agi/2 clamped 0..40 so agile builds gain SOMETHING before
-	// Sprint 14 balances properly.
-	agi := int32(s.Primary.Agility)
-	ev := agi / 2
-	if ev > 40 {
-		ev = 40
-	}
+// FromSheet is the player combatant for a computed sheet (hunts, dungeons,
+// simulate). Fights start at the current HP (DD-218); evasion is agi/2
+// capped at 40; Level feeds the level-gap rule (DD-229).
+func FromSheet(s *character.Sheet) Combatant {
 	return Combatant{
-		Name:       "player",
+		Name:       "player", // stable label: turn logs never carry character names
 		HPMax:      int32(s.Resources.HPMax),
-		HPCurrent:  int32(s.Resources.HPMax),
+		HPCurrent:  int32(s.Resources.HPCurrent),
 		Attack:     int32(s.Derived.Attack),
 		Defense:    int32(s.Derived.Defense),
 		CritPct:    int32(s.Derived.CritPct),
 		HitPct:     int32(s.Derived.HitPct),
-		EvasionPct: ev,
+		EvasionPct: min(int32(s.Primary.Agility)/2, 40),
+		MPMax:      int32(s.Resources.MPMax),
+		Level:      int16(s.Level),
 	}
 }
 

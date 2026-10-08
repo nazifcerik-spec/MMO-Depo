@@ -23,6 +23,9 @@ type MobLookup interface {
 	Catalog() *combat.Catalog
 }
 
+// GearDropPct is the chance (percent) of a gear drop per victory (DD-229).
+const GearDropPct = 4
+
 // ItemGranter is the drop-side capability. item.Service.Grant already
 // satisfies exactly this signature (used by activity too).
 type ItemGranter interface {
@@ -32,6 +35,7 @@ type ItemGranter interface {
 		sourceRefID uuid.UUID,
 		seed int64, kind activity.Kind,
 		common, rare, legendary int,
+		gear activity.GearDrop,
 	) ([]activity.GrantedItem, error)
 }
 
@@ -168,7 +172,10 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	if sheet.Resources.HPCurrent < 1 {
 		return nil, ErrTooWounded
 	}
-	snapshot := combatantFromSheet(sheet)
+	snapshot := combat.FromSheet(sheet)
+	// Resting between encounters: the out-of-combat regen (DD-218) over the
+	// encounter interval (DD-229).
+	snapshot.RegenPerEncounter = int32(float64(req.EncounterSecs/2) * character.HPRegenPer2s(sheet.Primary.Vitality))
 	if s.skills != nil {
 		snapshot.Skills = s.skills(sheet)
 	}
@@ -258,11 +265,21 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	hr := Roll(c.Seed, snapshot, mob, planned, combat.DefaultMaxTurns, s.rngNew)
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------
+	// Each victory has a GearDropPct chance of gear from the mob's tier,
+	// usable by the character's class (DD-229).
+	var gear activity.GearDrop
+	if hr.Victories > 0 {
+		sheet, err := s.chars.Sheet(ctx, c.CharacterID, accountID)
+		if err != nil {
+			return nil, err
+		}
+		gear = activity.GearDrop{Class: sheet.Class, Level: int(mob.Level), Rolls: hr.Victories, Pct: GearDropPct}
+	}
 	var granted []activity.GrantedItem
-	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops) > 0 {
+	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops+gear.Rolls) > 0 {
 		granted, err = s.items.Grant(ctx,
 			c.CharacterID, c.ID, c.Seed, activity.KindHunting,
-			hr.CommonDrops, hr.RareDrops, hr.LegendaryDrops,
+			hr.CommonDrops, hr.RareDrops, hr.LegendaryDrops, gear,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("hunt reveal item grant: %w", err)
@@ -391,28 +408,6 @@ func (s *Service) History(ctx context.Context, characterID, accountID uuid.UUID,
 }
 
 // --- Helpers ----------------------------------------------------------------
-
-// combatantFromSheet mirrors combat/http.go's builder so hunt has no HTTP dep.
-// Kept in sync manually — Sprint 15+ can extract to a shared helper if a
-// third consumer appears.
-func combatantFromSheet(s *character.Sheet) combat.Combatant {
-	agi := int32(s.Primary.Agility)
-	ev := agi / 2
-	if ev > 40 {
-		ev = 40
-	}
-	return combat.Combatant{
-		Name:       "player",
-		HPMax:      int32(s.Resources.HPMax),
-		HPCurrent:  int32(s.Resources.HPCurrent), // DD-218: fights start at current HP
-		Attack:     int32(s.Derived.Attack),
-		Defense:    int32(s.Derived.Defense),
-		CritPct:    int32(s.Derived.CritPct),
-		HitPct:     int32(s.Derived.HitPct),
-		EvasionPct: ev,
-		MPMax:      int32(s.Resources.MPMax),
-	}
-}
 
 // seedFromIDs derives a deterministic 64-bit seed from a fresh hunt id + the
 // character id. Same shape as activity.SeedFromContract — namespaces the

@@ -392,15 +392,15 @@ func TestHTTPSocialAndEconomy(t *testing.T) {
 	// Market.
 	var swordPrice float64
 	for _, o := range items(a.ok("GET", "/v1/vendor/general_ironhold", nil), "sells") {
-		if o["template_code"] == "sword_iron" {
+		if o["template_code"] == "sword_training" {
 			swordPrice = o["buy_price_copper"].(float64)
 		}
 	}
-	a.ok("POST", "/v1/vendor/general_ironhold/buy", map[string]any{"template_code": "sword_iron",
+	a.ok("POST", "/v1/vendor/general_ironhold/buy", map[string]any{"template_code": "sword_training",
 		"expected_price_copper": swordPrice, "character_id": a.char})
 	var sword string
 	for _, it := range items(a.ok("GET", a.path("/inventory"), nil), "items") {
-		if it["template_code"] == "sword_iron" {
+		if it["template_code"] == "sword_training" {
 			sword = it["instance_id"].(string)
 		}
 	}
@@ -409,8 +409,8 @@ func TestHTTPSocialAndEconomy(t *testing.T) {
 		"unit_price_copper": 5000, "duration_hours": 12})
 	lid := l["id"].(string)
 	a.ok("GET", a.path("/market/listings"), nil)
-	b.ok("GET", "/v1/market/listings?template_code=sword_iron&sort=price_asc", nil)
-	b.ok("GET", "/v1/market/history/sword_iron", nil)
+	b.ok("GET", "/v1/market/listings?template_code=sword_training&sort=price_asc", nil)
+	b.ok("GET", "/v1/market/history/sword_training", nil)
 	a.fail("POST", a.path("/market/buy/"+lid), map[string]any{"expected_unit_price_copper": 5000}, 409, "")
 	a.ok("POST", a.path("/market/cancel/"+lid), map[string]any{})
 

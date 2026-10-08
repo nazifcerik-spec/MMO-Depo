@@ -133,7 +133,7 @@ func (r *MemoryRepo) AddXP(_ context.Context, id uuid.UUID, delta int64) (*Chara
 	leveledUp := false
 	c.XP += delta
 	for {
-		needed := xpToNext(int(c.Level))
+		needed := XPToNext(int(c.Level))
 		if c.XP < needed || c.Level >= LevelCap {
 			break
 		}

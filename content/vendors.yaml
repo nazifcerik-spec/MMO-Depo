@@ -19,9 +19,13 @@ vendors:
     sells:
       - { template_code: potion_hp_small }
       - { template_code: potion_mp_small }
-      - { template_code: sword_iron }
-      - { template_code: bow_yew }
-      - { template_code: staff_apprentice }
+      - { template_code: sword_training }
+      - { template_code: staff_willow }
+      - { template_code: bow_short }
+      - { template_code: mace_wooden }
+      - { template_code: dagger_rusty }
+      - { template_code: helm_leather }
       - { template_code: chest_leather }
-      - { template_code: helm_iron }
-      - { template_code: boots_iron }
+      - { template_code: legs_leather }
+      - { template_code: boots_leather }
+      - { template_code: gloves_leather }

@@ -17,9 +17,9 @@ func TestComputeSheet_NoModifiers_ProducesBaseStats(t *testing.T) {
 	require.Equal(t, 8, s.Primary.INT)
 	require.Equal(t, 15, s.Primary.VIT)
 
-	// Derived: attack = STR*2, defense = VIT*2, crit = 5+Luck/2, hit = 90+AGI/2
+	// Derived: attack = STR*2, defense = VIT, crit = 5+Luck/2, hit = 90+AGI/2 (DD-229)
 	require.Equal(t, 30, s.Derived.Attack)
-	require.Equal(t, 30, s.Derived.Defense)
+	require.Equal(t, 15, s.Derived.Defense)
 	require.Equal(t, 7, s.Derived.CritPct) // 5 + 5/2 = 7 (int round)
 	require.Equal(t, 95, s.Derived.HitPct) // 90 + 10/2 = 95
 
@@ -136,8 +136,8 @@ func TestComputeSheet_FullEquipmentLoadout(t *testing.T) {
 
 	// Attack: 18*2 + 10 = 46
 	require.Equal(t, 46, s.Derived.Attack)
-	// Defense: 18*2 + (5+8+3) = 52
-	require.Equal(t, 52, s.Derived.Defense)
+	// Defense: 18 + (5+8+3) = 34
+	require.Equal(t, 34, s.Derived.Defense)
 	// HP: 100 + 18*10 + 25 = 305
 	require.Equal(t, 305, s.Resources.HPMax)
 }

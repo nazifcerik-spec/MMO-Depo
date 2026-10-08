@@ -87,7 +87,7 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		CHA:  base.Primary.Charisma,
 		Luck: base.Primary.Luck,
 	}
-	computed := ComputeSheet(basePrimary, mods)
+	computed := ComputeSheetFor(basePrimary, Target(character.MainStat(base.Class)), mods)
 
 	// Merge computed back into character.Sheet's shape.
 	base.Primary = character.PrimaryStats{

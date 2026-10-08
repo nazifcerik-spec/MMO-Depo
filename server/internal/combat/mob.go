@@ -38,6 +38,7 @@ func (m Mob) AsCombatant() Combatant {
 		CritPct:    m.CritPct,
 		HitPct:     m.HitPct,
 		EvasionPct: m.EvasionPct,
+		Level:      m.Level,
 	}
 }
 

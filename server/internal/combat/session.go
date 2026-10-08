@@ -31,6 +31,7 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 	if s.MaxTurns <= 0 {
 		s.MaxTurns = DefaultMaxTurns
 	}
+	applyLevelGap(&s.Player, s.Mob.Level)
 	r := rngNew(seed)
 	log := make([]TurnRecord, 0, 2*s.MaxTurns)
 	caster := newCaster(&s.Player)
@@ -66,6 +67,22 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 		MobHPEnd:    s.Mob.HPCurrent,
 		Duration:    s.MaxTurns,
 	}, nil
+}
+
+// Level-gap rule (DD-229): fighting a mob above your level costs accuracy
+// and armor, so out-levelled content is dangerous whatever the gear.
+const (
+	GapHitPerLevel     = 4 // hit chance points lost per level of gap
+	GapDefensePerLevel = 6 // defense percent lost per level of gap
+)
+
+func applyLevelGap(p *Combatant, mobLevel int16) {
+	if p.Level <= 0 || mobLevel <= p.Level {
+		return
+	}
+	gap := int32(mobLevel - p.Level)
+	p.HitPct -= GapHitPerLevel * gap
+	p.Defense = p.Defense * max(0, 100-GapDefensePerLevel*gap) / 100
 }
 
 // caster tracks one combatant's MP and skill cooldowns for an encounter.

@@ -105,8 +105,8 @@ func Roll(
 			case d < 69:
 				res.LegendaryDrops++
 			}
-			// Carry over the surviving player HP.
-			player.HPCurrent = out.PlayerHPEnd
+			// Carry over the surviving player HP, plus the rest before the next one.
+			player.HPCurrent = min(player.HPMax, out.PlayerHPEnd+player.RegenPerEncounter)
 		case combat.OutcomeDefeat:
 			res.Defeats++
 			res.StoppedOnDeath = true

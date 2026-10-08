@@ -1,6 +1,9 @@
 package character
 
-import "time"
+import (
+	"math"
+	"time"
+)
 
 // PrimaryStats are the six per-character attributes. Full modifier stack (flat
 // → mult_add → mult_prod → clamp) lands with the skill-engine sprint (Faz 01
@@ -52,22 +55,63 @@ type Sheet struct {
 	State     string       `json:"state"`
 }
 
-// basePrimaryForClass — v1 hardcoded per class. Content-driven (content.class)
-// replaces this in Faz 01 sprint 8. Numbers are placeholder for balance.
-func basePrimaryForClass(classCode string) PrimaryStats {
-	switch classCode {
-	case "warrior":
-		return PrimaryStats{Strength: 15, Agility: 10, Intelligence: 8, Vitality: 15, Charisma: 10, Luck: 5}
-	case "mage":
-		return PrimaryStats{Strength: 8, Agility: 10, Intelligence: 15, Vitality: 10, Charisma: 12, Luck: 5}
-	case "hunter":
-		return PrimaryStats{Strength: 12, Agility: 15, Intelligence: 8, Vitality: 10, Charisma: 10, Luck: 5}
-	case "priest":
-		return PrimaryStats{Strength: 8, Agility: 8, Intelligence: 12, Vitality: 12, Charisma: 15, Luck: 5}
-	case "rogue":
-		return PrimaryStats{Strength: 10, Agility: 15, Intelligence: 10, Vitality: 10, Charisma: 8, Luck: 12}
+// classBase is each class's level-1 primary block; growthPerLevel is what
+// every level after the first adds, in half points (3 = +1.5/level; DD-229). Placeholder numbers tuned with
+// the balance simulation (internal/balance).
+var classBase = map[string]PrimaryStats{
+	"warrior": {Strength: 15, Agility: 10, Intelligence: 8, Vitality: 15, Charisma: 10, Luck: 5},
+	"mage":    {Strength: 8, Agility: 10, Intelligence: 15, Vitality: 10, Charisma: 12, Luck: 5},
+	"hunter":  {Strength: 12, Agility: 15, Intelligence: 8, Vitality: 10, Charisma: 10, Luck: 5},
+	"priest":  {Strength: 8, Agility: 8, Intelligence: 12, Vitality: 12, Charisma: 15, Luck: 5},
+	"rogue":   {Strength: 10, Agility: 15, Intelligence: 10, Vitality: 10, Charisma: 8, Luck: 12},
+}
+
+var growthPerLevel = map[string]PrimaryStats{
+	"warrior": {Strength: 4, Agility: 1, Vitality: 2},
+	"mage":    {Intelligence: 5, Agility: 1, Vitality: 1, Charisma: 1},
+	"hunter":  {Agility: 4, Strength: 1, Vitality: 2, Luck: 1},
+	"priest":  {Intelligence: 4, Vitality: 2, Charisma: 2},
+	"rogue":   {Agility: 4, Vitality: 1, Luck: 2},
+}
+
+// BasePrimary is a class's primary stats at a level, before gear and skills.
+func BasePrimary(class string, level int) PrimaryStats {
+	b, ok := classBase[class]
+	if !ok {
+		b = PrimaryStats{Strength: 10, Agility: 10, Intelligence: 10, Vitality: 10, Charisma: 10, Luck: 10}
+	}
+	g, n := growthPerLevel[class], max(level, 1)-1 // half points: g*n/2
+	return PrimaryStats{
+		Strength:     b.Strength + g.Strength*n/2,
+		Agility:      b.Agility + g.Agility*n/2,
+		Intelligence: b.Intelligence + g.Intelligence*n/2,
+		Vitality:     b.Vitality + g.Vitality*n/2,
+		Charisma:     b.Charisma + g.Charisma*n/2,
+		Luck:         b.Luck + g.Luck*n/2,
+	}
+}
+
+// MainStat names the primary stat behind a class's attack (DD-229):
+// "str", "agi" or "int".
+func MainStat(class string) string {
+	switch class {
+	case "mage", "priest":
+		return "int"
+	case "hunter", "rogue":
+		return "agi"
 	default:
-		return PrimaryStats{Strength: 10, Agility: 10, Intelligence: 10, Vitality: 10, Charisma: 10, Luck: 10}
+		return "str"
+	}
+}
+
+func mainStatValue(class string, p PrimaryStats) int {
+	switch MainStat(class) {
+	case "agi":
+		return p.Agility
+	case "int":
+		return p.Intelligence
+	default:
+		return p.Strength
 	}
 }
 
@@ -84,29 +128,29 @@ func deriveResources(p PrimaryStats) Resources {
 	}
 }
 
-// deriveStats computes attack/defense/crit/hit from PrimaryStats.
-func deriveStats(p PrimaryStats) DerivedStats {
+// deriveStats computes attack/defense/crit/hit from PrimaryStats (mirrors
+// skill.ComputeSheetFor without modifiers).
+func deriveStats(class string, p PrimaryStats) DerivedStats {
 	return DerivedStats{
-		Attack:  p.Strength * 2,
-		Defense: p.Vitality * 2,
+		Attack:  mainStatValue(class, p) * 2,
+		Defense: p.Vitality,
 		CritPct: 5 + p.Luck/2,
 		HitPct:  90 + p.Agility/2,
 	}
 }
 
-// xpToNext returns the XP required to hit level+1. Placeholder linear curve
-// (`level × 100`) — real curve is content.xp_curve in Faz 01 sprint 6+.
-func xpToNext(level int) int64 {
+// XPToNext returns the XP required to reach level+1.
+func XPToNext(level int) int64 {
 	if level < 1 {
 		level = 1
 	}
-	return int64(level) * 100
+	return int64(math.Round(50 * math.Pow(float64(level), 2.2)))
 }
 
 // buildSheet renders a Sheet from the stored Character. Stateless — no repo
 // lookups; caller passes the resolved character in.
 func buildSheet(c *Character) Sheet {
-	p := basePrimaryForClass(c.ClassCode)
+	p := BasePrimary(c.ClassCode, int(c.Level))
 	return Sheet{
 		ID:        c.ID.String(),
 		Name:      c.Name,
@@ -115,9 +159,9 @@ func buildSheet(c *Character) Sheet {
 		Spec:      c.SpecCode,
 		Level:     int(c.Level),
 		XP:        c.XP,
-		XPToNext:  xpToNext(int(c.Level)),
+		XPToNext:  XPToNext(int(c.Level)),
 		Primary:   p,
-		Derived:   deriveStats(p),
+		Derived:   deriveStats(c.ClassCode, p),
 		Resources: deriveResources(p),
 		State:     string(c.State),
 	}

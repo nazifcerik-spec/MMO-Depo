@@ -132,9 +132,9 @@ skills:
     kind: active
     sort_order: 10
     effect: heal
-    power: 35
+    power: 25
     mp_cost: 20
-    cooldown_turns: 4
+    cooldown_turns: 6
   - code: priest_devotion
     display_name_key: skill.priest_devotion
     class: priest
