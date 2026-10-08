@@ -205,9 +205,6 @@ func (s *Service) Delete(ctx context.Context, characterID, itemID uuid.UUID) err
 	return s.repo.DeleteInstance(ctx, itemID, characterID)
 }
 
-// ConsumeByTemplate is the crafting-side hook: atomically remove `quantity`
-// units of `templateCode` from the character's unlocked bag stacks. Sprint 17
-// crafting.Service calls this before minting the output.
 // ConsumeAll removes all needs atomically (crafting inputs).
 func (s *Service) ConsumeAll(ctx context.Context, characterID uuid.UUID, needs []Need) error {
 	return s.repo.ConsumeAll(ctx, characterID, needs)

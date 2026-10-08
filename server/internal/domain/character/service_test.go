@@ -255,3 +255,22 @@ func TestOwns(t *testing.T) {
 	require.ErrorIs(t, svc.Owns(context.Background(), c.ID, stranger), character.ErrForbidden)
 	require.ErrorIs(t, svc.Owns(context.Background(), uuid.New(), owner), character.ErrNotFound)
 }
+
+func TestCreate_EmailVerificationGate(t *testing.T) {
+	svc, _ := newTestService(t)
+	verified := map[uuid.UUID]bool{}
+	svc.WithEmailVerification(func(_ context.Context, id uuid.UUID) (bool, error) { return verified[id], nil })
+	acct := uuid.New()
+	req := character.CreateRequest{AccountID: acct, Name: "Gated", RaceCode: "human", ClassCode: "mage"}
+	_, err := svc.Create(context.Background(), req)
+	require.ErrorIs(t, err, character.ErrEmailNotVerified)
+	verified[acct] = true
+	_, err = svc.Create(context.Background(), req)
+	require.NoError(t, err)
+}
+
+func TestValidationError_WrapsSentinel(t *testing.T) {
+	err := error(&character.ValidationError{Field: "name", Message: "too short"})
+	require.ErrorIs(t, err, character.ErrValidation)
+	require.Contains(t, err.Error(), "name too short")
+}

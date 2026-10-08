@@ -25,15 +25,6 @@ const insertQ = `
 	   created_at, updated_at)
 	VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`
 
-func (r *PgRepo) CreateInstance(ctx context.Context, i Instance) error {
-	_, err := r.pool.Exec(ctx, insertQ,
-		i.ID, i.TemplateCode, i.OwnerCharacterID, i.StackQuantity, string(i.Rarity),
-		i.PrefixCode, i.SuffixCode, i.IsBound, i.SourceKind, i.SourceRefID,
-		i.CreatedAt, i.UpdatedAt,
-	)
-	return err
-}
-
 // CreateInstancesBatch uses pgx.Batch to insert many rows in a single round
 // trip — critical for activity reveal which may create 10-50 items at once.
 func (r *PgRepo) CreateInstancesBatch(ctx context.Context, instances []Instance) error {
