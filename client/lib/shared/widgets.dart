@@ -4,6 +4,7 @@ import '../app/theme.dart';
 import '../core/api_client.dart';
 import '../features/character/models.dart';
 import '../l10n/app_localizations.dart';
+import 'content_names.dart';
 
 /// Maps a server/transport error to player-facing copy.
 String errorText(AppLocalizations l, Object error) {
@@ -126,10 +127,9 @@ String activityName(AppLocalizations l, String kind) => switch (kind) {
   _ => kind,
 };
 
-/// "iron_ore" → "Iron Ore". Content-pack display names are not served yet, so
-/// template codes are humanised; affixes wrap the base name.
+/// An item's display name with its affixes (content names, DD-230).
 String itemName(String templateCode, [String? prefix, String? suffix]) =>
-    [if (prefix != null) humanize(prefix), humanize(templateCode), if (suffix != null) humanize(suffix)].join(' ');
+    ContentNames.item(templateCode, prefix, suffix);
 
 /// Content code → display text ("ironhold_city" → "Ironhold City").
 String humanize(String code) =>

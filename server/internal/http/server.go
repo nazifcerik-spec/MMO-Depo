@@ -399,6 +399,11 @@ func NewRouter(d Deps) http.Handler {
 					Post("/hunt/{contract_id}/stop", d.HuntHandler.Stop)
 			}
 
+			// --- Content names (DD-230): cacheable ---
+			if d.ContentLoader != nil {
+				r.Get("/content/strings", contentStringsHandler(d.ContentLoader))
+			}
+
 			// --- Public mob catalog (client hunt picker) ---
 			if d.CombatHandler != nil {
 				r.Get("/mobs", d.CombatHandler.Mobs)
@@ -566,6 +571,30 @@ func contentReloadHandler(loader *contentpack.Loader) http.HandlerFunc {
 			"vendors_seen": res.VendorsSeen,
 			"source_dir":   res.SourceDir,
 		})
+	}
+}
+
+// contentStringsHandler serves the content names for ?lang= (default and
+// unknown languages: English). The version doubles as ETag.
+func contentStringsHandler(loader *contentpack.Loader) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		s := loader.Strings()
+		if s == nil {
+			apierr.Write(w, r, http.StatusServiceUnavailable, "E_CONTENT_NOT_LOADED", "content not loaded yet")
+			return
+		}
+		lang := r.URL.Query().Get("lang")
+		if _, ok := s.ByLang[lang]; !ok {
+			lang = contentpack.DefaultLang
+		}
+		etag := `"` + s.Version + "-" + lang + `"`
+		w.Header().Set("ETag", etag)
+		w.Header().Set("Cache-Control", "public, max-age=300")
+		if r.Header.Get("If-None-Match") == etag {
+			w.WriteHeader(http.StatusNotModified)
+			return
+		}
+		apierr.WriteJSON(w, http.StatusOK, map[string]any{"lang": lang, "version": s.Version, "strings": s.Lookup(lang)})
 	}
 }
 

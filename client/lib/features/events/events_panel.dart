@@ -6,6 +6,7 @@ import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import 'event_repository.dart';
+import '../../shared/content_names.dart';
 
 /// Adventure → Events: seasonal daily token claim + world boss / invasion
 /// spawns (enlist snapshots power; score accrues per minute server-side).
@@ -44,7 +45,12 @@ class _EventsPanelState extends State<EventsPanel> with PanelState {
 
   Future<void> _enlist(WorldEvent e) async {
     final l = AppLocalizations.of(context);
-    final ok = await confirmAction(context, title: humanize(e.code), body: l.enlistHint, action: l.enlist);
+    final ok = await confirmAction(
+      context,
+      title: ContentNames.of('worldevent', e.code),
+      body: l.enlistHint,
+      action: l.enlist,
+    );
     if (ok) {
       await run(() async {
         await widget.repo.enlist(e.id);
@@ -95,7 +101,7 @@ class _SeasonalCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(humanize(s.code), style: text.titleMedium),
+                  Text(ContentNames.of('seasonal', s.code), style: text.titleMedium),
                   Text(l.endsIn(shortDuration(l, s.endsAt.difference(DateTime.now()))), style: text.bodySmall),
                   Text(l.tokenBalance(s.balance), style: text.bodySmall),
                 ],
@@ -141,7 +147,7 @@ class _WorldEventCard extends StatelessWidget {
               children: [
                 Icon(e.kind == 'world_boss' ? Icons.whatshot : Icons.flag_outlined, color: color, size: 20),
                 const SizedBox(width: Space.sm),
-                Expanded(child: Text(humanize(e.code), style: text.titleMedium)),
+                Expanded(child: Text(ContentNames.of('worldevent', e.code), style: text.titleMedium)),
                 Text(l.levelReq(e.minLevel), style: text.bodySmall),
               ],
             ),
@@ -149,7 +155,7 @@ class _WorldEventCard extends StatelessWidget {
             Text(
               [
                 e.kind == 'world_boss' ? l.worldBoss : l.invasion,
-                if (e.region != null) l.regionOnly(humanize(e.region!)),
+                if (e.region != null) l.regionOnly(ContentNames.of('region', e.region!)),
                 status,
               ].join(' · '),
               style: text.bodySmall?.copyWith(color: color),

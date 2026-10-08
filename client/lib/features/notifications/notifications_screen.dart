@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import 'notification_repository.dart';
+import '../../shared/content_names.dart';
 
 String notificationKindName(AppLocalizations l, String kind) => switch (kind) {
   'activity_completed' => l.nkActivity,
@@ -36,9 +37,9 @@ String? _detail(InboxItem n) {
       '${itemName(s('template_code')!)} · +${goldString((v['net_copper'] as num?)?.toInt() ?? 0)}',
     'mail_received' => s('subject'),
     'guild_invite' => s('guild_name'),
-    'travel_completed' when s('region') != null => humanize(s('region')!),
-    'world_event_active' when s('event') != null => humanize(s('event')!),
-    'achievement_unlocked' when s('code') != null => humanize(s('code')!),
+    'travel_completed' when s('region') != null => ContentNames.of('region', s('region')!),
+    'world_event_active' when s('event') != null => ContentNames.of('worldevent', s('event')!),
+    'achievement_unlocked' when s('code') != null => ContentNames.of('achievement', s('code')!),
     _ => null,
   };
 }

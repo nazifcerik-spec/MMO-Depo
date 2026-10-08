@@ -6,10 +6,12 @@ import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import 'quest_repository.dart';
+import '../../shared/content_names.dart';
 
 /// "main_04_wolves" → "Wolves", "daily_miner" → "Miner" (content names are
 /// derived from codes until content localisation lands).
-String questName(String code) => humanize(code.replaceFirst(RegExp(r'^(main_\d+|side|daily)_'), ''));
+String questName(String code) =>
+    ContentNames.of('quest', code, humanize(code.replaceFirst(RegExp(r'^(main_\d+|side|daily)_'), '')));
 
 /// Objective line from its progression event kind (DD-221 grammar).
 String objectiveText(AppLocalizations l, String event) {
@@ -18,9 +20,9 @@ String objectiveText(AppLocalizations l, String event) {
   final target = i < 0 ? null : event.substring(i + 1);
   if (kind.startsWith('gather_')) return l.objGather(activityName(l, kind.substring(7)));
   return switch (kind) {
-    'mob_killed' => target == null ? l.objKillAny : l.objKill(humanize(target)),
+    'mob_killed' => target == null ? l.objKillAny : l.objKill(ContentNames.of('mob', target)),
     'boss_killed' => l.objBoss,
-    'dungeon_cleared' => target == null ? l.objDungeonAny : l.objDungeon(humanize(target)),
+    'dungeon_cleared' => target == null ? l.objDungeonAny : l.objDungeon(ContentNames.of('dungeon', target)),
     'item_crafted' => target == null ? l.objCraftAny : l.objCraft(itemName(target)),
     _ => humanize(event),
   };

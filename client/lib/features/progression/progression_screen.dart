@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import 'progression_repository.dart';
+import '../../shared/content_names.dart';
 
 /// Achievements, mastery tracks, faction reputation and title selection.
 /// One load fills every tab; [dataVersion] is bumped when the active title
@@ -108,7 +109,7 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text(humanize(m.track), style: text.titleMedium)),
+                    Expanded(child: Text(ContentNames.of('track', m.track), style: text.titleMedium)),
                     Text(l.masteryTier(m.tier, m.maxTier), style: text.bodySmall),
                   ],
                 ),
@@ -135,8 +136,8 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
         Card(
           margin: const EdgeInsets.only(bottom: Space.md),
           child: ListTile(
-            title: Text(humanize(r.faction)),
-            subtitle: Text('${humanize(r.tierName)} · ${r.rep}'),
+            title: Text(ContentNames.of('faction', r.faction)),
+            subtitle: Text('${ContentNames.of('reptier', r.tierName)} · ${r.rep}'),
             trailing: Text(l.repDailyLeft(r.dailyLeft), style: Theme.of(context).textTheme.bodySmall),
           ),
         ),
@@ -155,7 +156,8 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
         child: Column(
           children: [
             RadioListTile<String>(value: '', title: Text(l.noTitle)),
-            for (final t in _titles) RadioListTile<String>(value: t.code, title: Text(humanize(t.code))),
+            for (final t in _titles)
+              RadioListTile<String>(value: t.code, title: Text(ContentNames.of('title', t.code))),
           ],
         ),
       ),
@@ -205,7 +207,7 @@ class _AchievementTile extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final rewards = [
       if (a.rewardGold > 0) goldString(a.rewardGold),
-      if (a.rewardTitle != null) l.rewardTitle(humanize(a.rewardTitle!)),
+      if (a.rewardTitle != null) l.rewardTitle(ContentNames.of('title', a.rewardTitle!)),
     ].join(' · ');
     return Card(
       margin: const EdgeInsets.only(bottom: Space.md),
@@ -222,14 +224,14 @@ class _AchievementTile extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: Space.sm),
-                Expanded(child: Text(humanize(a.code), style: text.titleSmall)),
+                Expanded(child: Text(ContentNames.of('achievement', a.code), style: text.titleSmall)),
                 Text(l.pointsShort(a.points), style: text.bodySmall),
               ],
             ),
             if (!a.unlocked) ...[
               const SizedBox(height: Space.sm),
               StatBar(
-                label: humanize(a.category),
+                label: ContentNames.of('category', a.category),
                 value: a.target == 0 ? 0 : (a.progress / a.target).clamp(0, 1).toDouble(),
                 color: Palette.accent,
                 valueText: '${a.progress}/${a.target}',

@@ -2095,6 +2095,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Tüm sayılar yer tutucu; hedefler değişirse önce test, sonra içerik. Eski seviye-farksız anlık görüntüler eski kurallarla oynar. Yeni içerik (ekipman, mob, zindan) `TestBalanceTargets`'tan geçmek zorunda. İçerik adları hâlâ koddan türetiliyor (sonraki adım: TR/EN adlar).
 **Tarih:** 2026-10-08
 
+## DD-230 — İçerik Adları İçerikte Yaşar, Sunucu Dile Göre Verir
+**Karar:** Oyuncuya görünen içerik adları `content/i18n/<dil>.yaml` dosyalarında `tür.kod: Ad` biçiminde tutulur (eşya, ek, mob, zindan, bölge, meslek, dükkân, görev, yetenek, başarım, kategori, unvan, grup, ustalık, itibar kademesi, dünya/sezon etkinliği; `affix.format` eklerin dile göre dizilişi, TR: `{prefix} {name} ({suffix})`). `contentpack.Read` dosyaları okur ve doğrular: tüm diller İngilizceyle aynı anahtarlara sahip, boş ad yok, YAML'daki her eşya/mob/zindan/bölge/meslek/dükkân/görev/yetenek kodunun adı var. Sunucu son başarılı yüklemeyi bellekte tutar ve `GET /v1/content/strings?lang=` (oturumlu, diğer kataloglar gibi; ETag = içerik sürümü + dil, `max-age=300`; bilinmeyen dil → İngilizce) ile verir. İstemci oyuna girişte cihaz dilinde bir kez çeker (`ContentNames`); tablo yoksa ya da ad eksikse koddan türetilen ad (`humanize`) gösterilir.
+**Reason:** İstemci tüm içerik adlarını koddan türetiyordu ("Iron Ore", "Main 01 First Hunt") — Türkçe arayüzde İngilizce, bazen anlamsız adlar. Adlar istemciye gömülseydi her içerik eklemesi uygulama sürümü isterdi; içerikte tutulunca içerik ve adı birlikte yayımlanır.
+**Alternatives:** Her API yanıtına ad alanı eklemek (onlarca uç nokta, Accept-Language her yerde), istemci ARB dosyaları (içerik başına uygulama sürümü), içeriği DB'de çok dilli tutmak (gereksiz şema; içerik zaten YAML'dan geliyor).
+**Consequences:** DB'de tohumlanan kodlar (başarım, unvan, grup, ustalık, etkinlik) için tamlığı entegrasyon testi, ek havuzları için `item` testi denetler. Türkçe ek dizilişi parantezli ("Keskin Demir Kılıç (Ayı)"); tam dil bilgisi uyumu sonraki iş. Yeni dil = yeni YAML dosyası.
+**Tarih:** 2026-10-08
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

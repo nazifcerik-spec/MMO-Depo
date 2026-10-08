@@ -24,6 +24,7 @@ import 'package:otter/features/quests/quest_repository.dart';
 import 'package:otter/features/social/group_repository.dart';
 import 'package:otter/features/social/social_repository.dart';
 import 'package:otter/features/workshop/workshop_repository.dart';
+import 'package:otter/shared/content_names.dart';
 
 const base = String.fromEnvironment('E2E_API');
 
@@ -141,6 +142,8 @@ void main() {
 
   test('vendor buy/sell, bag, equip, use potion, professions + craft gate', () async {
     await mint(a, 500000);
+    await ContentNames.load(a.api, 'tr');
+    expect(ContentNames.of('item', 'sword_iron'), 'Demir Kılıç');
     final shop = WorkshopRepository(a.api, a.id);
     final stock = await shop.stock();
     final potion = stock.firstWhere((o) => o.templateCode == 'potion_hp_small');

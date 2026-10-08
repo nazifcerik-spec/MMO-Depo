@@ -12,6 +12,7 @@ import '../events/event_repository.dart';
 import '../events/events_panel.dart';
 import 'adventure_models.dart';
 import 'adventure_repository.dart';
+import '../../shared/content_names.dart';
 
 /// Adventure tab: hunts, dungeons, travel and events behind one segmented control.
 /// Panels are built on first selection and kept alive.
@@ -206,7 +207,12 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
       if (!mounted) return;
       setState(() => _active = null);
       widget.dataVersion.value++;
-      await showLootSheet(context, title: humanize(c.target), subtitle: _resultSubtitle(l, r), loot: r.loot);
+      await showLootSheet(
+        context,
+        title: ContentNames.of('mob', c.target),
+        subtitle: _resultSubtitle(l, r),
+        loot: r.loot,
+      );
     });
   }
 
@@ -235,7 +241,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
         return [
           _RunningCard(
             icon: Icons.gps_fixed,
-            title: humanize(a.target),
+            title: ContentNames.of('mob', a.target),
             startedAt: a.startedAt,
             endsAt: a.expiresAt,
             doneLabel: l.huntDone,
@@ -330,7 +336,7 @@ class _MobTile extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(humanize(mob.code), style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Text(ContentNames.of('mob', mob.code), style: const TextStyle(fontWeight: FontWeight.w600)),
                       Text(
                         l.mobStats(mob.hpMax, mob.attack, mob.defense),
                         style: const TextStyle(fontSize: 11, color: Palette.textMuted, fontFeatures: numeric),
@@ -392,7 +398,12 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
     if (!mounted) return;
     setState(() => _active = null);
     widget.dataVersion.value++;
-    await showLootSheet(context, title: humanize(c.target), subtitle: _resultSubtitle(l, r), loot: r.loot);
+    await showLootSheet(
+      context,
+      title: ContentNames.of('dungeon', c.target),
+      subtitle: _resultSubtitle(l, r),
+      loot: r.loot,
+    );
   });
 
   Future<void> _abandon(CombatContract c) async {
@@ -420,7 +431,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
         return [
           _RunningCard(
             icon: Icons.castle_outlined,
-            title: humanize(a.target),
+            title: ContentNames.of('dungeon', a.target),
             startedAt: a.startedAt,
             endsAt: a.expiresAt,
             doneLabel: l.dungeonDone,
@@ -443,7 +454,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text(humanize(d.code), style: text.titleMedium)),
+                      Expanded(child: Text(ContentNames.of('dungeon', d.code), style: text.titleMedium)),
                       Text(
                         l.levelReq(d.minLevel),
                         style: TextStyle(
@@ -456,7 +467,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
                   ),
                   const SizedBox(height: Space.xs),
                   Text(
-                    '${l.dungeonEncounters(d.encounters, humanize(d.bossMobCode))} · ${shortDuration(l, d.duration)}',
+                    '${l.dungeonEncounters(d.encounters, ContentNames.of('mob', d.bossMobCode))} · ${shortDuration(l, d.duration)}',
                     style: text.bodySmall,
                   ),
                   const SizedBox(height: Space.sm),
@@ -545,7 +556,7 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
           children: [
             const Icon(Icons.place, color: Palette.accent),
             const SizedBox(width: Space.sm),
-            Expanded(child: Text(humanize(loc.region.code), style: text.titleLarge)),
+            Expanded(child: Text(ContentNames.of('region', loc.region.code), style: text.titleLarge)),
             _KindChip(kind: loc.region.kind, safe: loc.region.safe),
           ],
         ),
@@ -557,7 +568,7 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(l.travelling(humanize(t.to)), style: text.titleMedium),
+                  Text(l.travelling(ContentNames.of('region', t.to)), style: text.titleMedium),
                   const SizedBox(height: Space.md),
                   ContractProgress(
                     startedAt: t.startedAt,
@@ -583,7 +594,7 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
           for (final n in loc.neighbors) ...[
             Card(
               child: ListTile(
-                title: Text(humanize(n.region.code)),
+                title: Text(ContentNames.of('region', n.region.code)),
                 subtitle: Text(
                   [shortDuration(l, n.travel), if (n.region.minLevel > 1) l.levelReq(n.region.minLevel)].join(' · '),
                 ),

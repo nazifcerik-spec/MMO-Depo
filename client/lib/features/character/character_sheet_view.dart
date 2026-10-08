@@ -7,6 +7,7 @@ import '../../shared/widgets.dart';
 import '../progression/progression_screen.dart' show bonusText;
 import 'character_repository.dart';
 import 'models.dart';
+import '../../shared/content_names.dart';
 
 /// Character sheet tab (docs/ui/character-sheet.md): resource bars, XP,
 /// attributes, combat stats, gold. Reloads on pull-to-refresh and whenever
@@ -188,7 +189,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
 }
 
 /// "mage_fire_bolt" → "Fire Bolt".
-String skillName(String code) => humanize(code.substring(code.indexOf('_') + 1));
+String skillName(String code) => ContentNames.of('skill', code, humanize(code.substring(code.indexOf('_') + 1)));
 
 String skillDescription(AppLocalizations l, ClassSkill k) {
   if (!k.active) return k.modifiers.map((m) => bonusText(l, m)).join(' · ');

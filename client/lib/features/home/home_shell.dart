@@ -6,6 +6,7 @@ import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/live_events.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
 import '../activity/activity_repository.dart';
 import '../activity/activity_view.dart';
@@ -72,6 +73,19 @@ class _HomeShellState extends State<HomeShell> {
       onHide: _live.stop,
       onShow: _live.start,
     );
+  }
+
+  bool _namesRequested = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_namesRequested) return;
+    _namesRequested = true;
+    // Content names in the device language (DD-230); tabs rebuild with them.
+    ContentNames.load(widget.auth.api, Localizations.localeOf(context).languageCode).then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   @override

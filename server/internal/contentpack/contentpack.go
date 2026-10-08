@@ -21,6 +21,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sync/atomic"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"gopkg.in/yaml.v3"
@@ -224,7 +225,11 @@ type Loader struct {
 	DB        *pgxpool.Pool
 	Log       *slog.Logger
 	reloaders []Reloader
+	strings   atomic.Pointer[Strings]
 }
+
+// Strings returns the content names of the last successful Load (nil before).
+func (l *Loader) Strings() *Strings { return l.strings.Load() }
 
 func New(dir string, pool *pgxpool.Pool, logger *slog.Logger) *Loader {
 	if logger == nil {
@@ -309,6 +314,7 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
 		}
 	}
+	l.strings.Store(p.Strings)
 
 	l.Log.InfoContext(ctx, "content pack loaded",
 		slog.String("dir", l.Dir),
@@ -338,6 +344,7 @@ type Pack struct {
 	Recipes     []Recipe
 	Quests      []Quest
 	Skills      []ClassSkill
+	Strings     *Strings
 }
 
 // Read parses and validates every file in dir, including the references
@@ -402,6 +409,12 @@ func Read(dir string) (*Pack, error) {
 		return nil, fmt.Errorf("validate quests.yaml: %w", err)
 	}
 	if err := validateRefs(p, r); err != nil {
+		return nil, err
+	}
+	if p.Strings, err = loadStrings(f("i18n")); err != nil {
+		return nil, err
+	}
+	if err := validateStrings(p.Strings, p); err != nil {
 		return nil, err
 	}
 	return p, nil

@@ -9,12 +9,13 @@ import '../market/market_view.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_widgets.dart';
 import 'workshop_repository.dart';
+import '../../shared/content_names.dart';
 
 String professionName(AppLocalizations l, String code) => switch (code) {
   'blacksmithing' => l.profBlacksmithing,
   'alchemy' => l.profAlchemy,
   'cooking' => l.profCooking,
-  _ => humanize(code),
+  _ => ContentNames.of('profession', code),
 };
 
 /// Workshop tab: crafting and the general vendor behind one segmented control.
@@ -336,7 +337,7 @@ class _ShopPanelState extends State<_ShopPanel> with PanelState {
       () => [
         Row(
           children: [
-            Expanded(child: Text(humanize(generalVendor), style: text.titleMedium)),
+            Expanded(child: Text(ContentNames.of('vendor', generalVendor), style: text.titleMedium)),
             Semantics(label: l.gold, child: GoldText(_gold)),
           ],
         ),
