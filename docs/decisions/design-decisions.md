@@ -2116,6 +2116,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** RPO 24 saat (günlük döküm) — oyuncu ilerlemesinin en fazla bir günü kaybolabilir; `deploy/prod/backups` sunucu dışına kopyalanmadıkça felaket kurtarma yok. Tatbikat aylık koşulmalı. Tek sunucu = tek arıza noktası; ölçek ihtiyacında docs/infra hedef mimarisine geçilir.
 **Tarih:** 2026-10-10
 
+## DD-233 — Android Sürüm İmzalama Depo Dışında
+**Karar:** Sürüm derlemesi `android/key.properties` (+ yükleme keystore'u) varsa onunla imzalanır; ikisi de git dışıdır (`key.properties.example` nasıl oluşturulacağını gösterir). Yoksa yerel derlemeler hata ayıklama anahtarına düşer (bu derlemeler mağazaya yüklenemez). Play App Signing kullanılır: Google yayın anahtarını tutar, bizdeki yalnız yükleme anahtarıdır. `applicationId` (`com.otter.otter`, kod adı) mağazaya ilk yüklemeden önce kalıcı bir değere çevrilmelidir — ürün kararı.
+**Reason:** Mağaza yayını imzalı derleme ister; anahtar ve şifreleri depoya girmemeli (Kritik Kural 6).
+**Alternatives:** Anahtarı CI gizlisinde tutmak (CI'dan yayın kurulunca eklenebilir), her geliştiricinin kendi anahtarı (mağazada tek yükleme anahtarı olmalı).
+**Consequences:** Yükleme anahtarı kaybolursa Play Console'dan sıfırlama gerekir — güvenli yedeklenmeli.
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
