@@ -66,6 +66,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Wrong email/username or password.'), findsOneWidget);
 
+    await tester.enterText(find.byType(TextFormField).at(1), 'busy-horse');
+    await tester.tap(find.text('Log in'));
+    await tester.pumpAndSettle();
+    expect(find.text('The server is busy right now. Try again in a few seconds.'), findsOneWidget);
+
     await tester.enterText(find.byType(TextFormField).at(1), 'correct-horse');
     await tester.tap(find.text('Log in'));
     await tester.pumpAndSettle();

@@ -144,13 +144,21 @@ func (s *Service) Login(ctx context.Context, email, password, code, userAgent st
 	if errors.Is(err, pgx.ErrNoRows) {
 		// Burn comparable time so account existence does not leak via timing.
 		dummyOnce.Do(func() { dummyHash, _ = auth.HashPassword("otter-dummy", auth.DefaultArgon2Params) })
-		_ = auth.VerifyPassword(password, dummyHash)
+		if errors.Is(auth.VerifyPassword(password, dummyHash), auth.ErrBusy) {
+			return "", auth.ErrBusy
+		}
 		return "", ErrBadCredentials
 	}
 	if err != nil {
 		return "", err
 	}
-	if !active || auth.VerifyPassword(password, hash) != nil {
+	if active {
+		err = auth.VerifyPassword(password, hash)
+	}
+	if errors.Is(err, auth.ErrBusy) {
+		return "", err
+	}
+	if !active || err != nil {
 		return "", ErrBadCredentials
 	}
 	if err := s.consumeTOTP(ctx, id, code); err != nil {

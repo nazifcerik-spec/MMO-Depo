@@ -124,7 +124,7 @@ New device login → 2FA challenge zorunlu (opsiyonel remember-device 30d).
 
 ## 11. Password Storage
 
-- **Argon2id** — memory 64MB, iterations 3, parallelism 1 (v1 tune Phase 01).
+- **Argon2id** — memory 19 MiB, iterations 2, parallelism 1 (OWASP tabanı; Phase 01 benchmark'ı DD-238).
 - Salt per user (16 byte).
 - Pepper server-side (Phase 02 opt).
 - No plaintext log EVER.

@@ -1651,4 +1651,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nkSupport => 'Destek yanıtı';
+
+  @override
+  String get errServerBusy => 'Sunucu şu an çok yoğun. Birkaç saniye sonra tekrar dene.';
 }

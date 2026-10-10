@@ -25,7 +25,7 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Anomaly detection rule config live.
 - [ ] Bug bounty policy legal reviewed (Phase 02 launch).
 - [ ] PII audit + redaction verified.
-- [ ] Argon2id parameters benchmarked prod-scale.
+- [ ] Argon2id parameters benchmarked prod-scale. (Dev donanımında ölçüldü + eşzamanlılık sınırı — DD-238; prod sunucusunda `scripts/loadtest.sh login` tekrar.)
 
 ### Infra
 - [ ] Terraform apply prod clean (dev + staging + perf + prod).

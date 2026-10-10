@@ -5,14 +5,15 @@
 
 ## 2. Hash Politikası
 - **Algoritma**: argon2id (Argon2 v1.3, tip=id).
-- **Parametreler (v1 baseline)**:
-  - Memory: 64 MB
-  - Iterations (time): 3
+- **Parametreler (v1 — DD-238 benchmark sonrası OWASP tabanı)**:
+  - Memory: 19 MiB (önceki taslak 64 MB)
+  - Iterations (time): 2 (önceki 3)
   - Parallelism: 1
   - Salt: 16 byte random
   - Key length: 32 byte
 - **Ayarlanabilir**: config'de (upgrade path için).
-- Hash format: PHC string (`$argon2id$v=19$m=65536,t=3,p=1$<salt>$<hash>`).
+- Hash format: PHC string (`$argon2id$v=19$m=19456,t=2,p=1$<salt>$<hash>`). Parametreler hash'in içinde; eski hash'ler kendi parametreleriyle doğrulanır.
+- **Eşzamanlılık sınırı (DD-238)**: aynı anda en fazla `AUTH_HASH_CONCURRENCY` (varsayılan CPU sayısı) argon2id; 500 ms içinde yer açılmazsa 503 `E_BUSY` + `Retry-After: 1`.
 
 ## 3. Verify
 - Argon2 lib `VerifyEncoded(hash, password)`.

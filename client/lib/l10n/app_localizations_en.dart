@@ -1652,4 +1652,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nkSupport => 'Support reply';
+
+  @override
+  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
 }

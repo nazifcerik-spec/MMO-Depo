@@ -15,6 +15,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/clienterr"
+	"github.com/otter/server/internal/domain/auth"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -408,6 +409,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 	}
 	for _, c := range []m{
 		{ErrBadCredentials, 401, "E_BAD_CREDENTIALS"},
+		{auth.ErrBusy, 503, "E_BUSY"},
 		{ErrUnauthorized, 401, "E_UNAUTHENTICATED"},
 		{ErrForbidden, 403, "E_FORBIDDEN"},
 		{ErrStepUpRequired, 403, "E_STEPUP_REQUIRED"},

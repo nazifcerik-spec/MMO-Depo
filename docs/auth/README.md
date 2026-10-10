@@ -72,7 +72,7 @@ DELETE /v1/me      (account deletion request)
 - **Blocklist**: Redis `sess:blk:<jti>` — logout / password change / revoke sonrası.
 
 ### 4.3 Password Model
-- **argon2id** hash (m=64MB, t=3, p=1).
+- **argon2id** hash (m=19MiB, t=2, p=1 — DD-238).
 - Length min 10, max 128; unicode allowed.
 - Common-password list check (top-1M blacklist).
 - Reset flow: token-hash + 1h TTL + single-use.

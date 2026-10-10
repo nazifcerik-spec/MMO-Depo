@@ -40,6 +40,8 @@ type Config struct {
 	AuthRefreshTTL     time.Duration `envconfig:"AUTH_REFRESH_TTL" default:"720h"` // 30 days
 	AuthSessionTTL     time.Duration `envconfig:"AUTH_SESSION_TTL" default:"720h"`
 	AuthMinPasswordLen int           `envconfig:"AUTH_MIN_PASSWORD_LEN" default:"8"`
+	// Concurrent argon2id runs (64 MiB each); 0 = CPU count (DD-238).
+	AuthHashConcurrency int `envconfig:"AUTH_HASH_CONCURRENCY" default:"0"`
 
 	// --- Character (DD-OPEN-8 slot cap; DD-134 pattern for delete grace) ---
 	CharacterSlotCap     int           `envconfig:"CHARACTER_SLOT_CAP" default:"2"`

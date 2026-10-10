@@ -3043,6 +3043,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support reply'**
   String get nkSupport;
+
+  /// No description provided for @errServerBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is busy right now. Try again in a few seconds.'**
+  String get errServerBusy;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

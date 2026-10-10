@@ -158,6 +158,9 @@ func (s *Service) ChangePassword(ctx context.Context, accountID, currentSession 
 		return err
 	}
 	if err := VerifyPassword(current, a.PasswordHash); err != nil {
+		if errors.Is(err, ErrBusy) {
+			return err
+		}
 		return ErrInvalidCredentials
 	}
 	if err := validatePassword(next, s.cfg.MinPasswordLen); err != nil {

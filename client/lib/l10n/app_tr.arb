@@ -491,5 +491,6 @@
   "supportAnswered": "Yanıtlandı",
   "supportClosed": "Kapandı",
   "supportReply": "Ekibin yanıtı",
-  "nkSupport": "Destek yanıtı"
+  "nkSupport": "Destek yanıtı",
+  "errServerBusy": "Sunucu şu an çok yoğun. Birkaç saniye sonra tekrar dene."
 }

@@ -72,6 +72,7 @@ Password verify CPU-bound; concurrent limit:
 - **memory 64 MB × 500 concurrent = 32 GB** → dev server RAM aşabilir.
 - Çözüm: **thread pool** (max 100 concurrent Argon2 verify); queue overflow → 503 briefly veya rate limit friendly reject.
 - Parametreleri Phase 01 benchmark ile ayarla (memory/iterations trade-off).
+- **Uygulama (DD-238):** slot sınırı `AUTH_HASH_CONCURRENCY` (varsayılan CPU sayısı), 500 ms bekleme → 503 `E_BUSY` + `Retry-After`. Parametreler m=19 MiB, t=2 (hash ~27 ms, 64 MiB×3'te ~140 ms idi). Ölçüm: `scripts/loadtest.sh login` (`perf/k6/login.js`).
 
 ## 7. DB Pool Sağlığı
 

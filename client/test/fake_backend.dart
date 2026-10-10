@@ -84,6 +84,7 @@ class FakeBackend {
     final body = req.body.isEmpty ? const {} : jsonDecode(req.body) as Map;
 
     if (path == '/v1/auth/login') {
+      if (body['password'] == 'busy-horse') return error(503, 'E_BUSY'); // argon2 slots full (DD-238)
       if (body['password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
       return json(200, _session());
     }

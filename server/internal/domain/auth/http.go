@@ -223,6 +223,9 @@ func writeAuthError(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusBadRequest, "E_RECOVERY_TOKEN_INVALID", "link is invalid or expired")
 	case errors.Is(err, ErrExportLimit):
 		apierr.Write(w, r, http.StatusTooManyRequests, "E_RATE_LIMITED", "too many export links, try again later")
+	case errors.Is(err, ErrBusy):
+		w.Header().Set("Retry-After", "1")
+		apierr.Write(w, r, http.StatusServiceUnavailable, "E_BUSY", "server busy, retry shortly")
 	case errors.Is(err, ErrEmailAlreadyVerified):
 		apierr.Write(w, r, http.StatusConflict, "E_ALREADY_VERIFIED", "e-mail already verified")
 	default:

@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/mail"
@@ -56,6 +57,10 @@ type Service struct {
 	signer *Signer
 	cfg    ServiceConfig
 	log    *slog.Logger
+	// dummyHash burns the same argon2id cost as a real account on
+	// unknown-account logins, so timing does not reveal which names exist.
+	// Built from cfg's parameters: a fixed-cost dummy would drift from them.
+	dummyHash string
 }
 
 func NewService(repo Repository, signer *Signer, cfg ServiceConfig, logger *slog.Logger) *Service {
@@ -68,7 +73,7 @@ func NewService(repo Repository, signer *Signer, cfg ServiceConfig, logger *slog
 	if logger == nil {
 		logger = slog.Default()
 	}
-	return &Service{repo: repo, signer: signer, cfg: cfg, log: logger}
+	return &Service{repo: repo, signer: signer, cfg: cfg, log: logger, dummyHash: dummyHashFor(cfg.Argon2Params)}
 }
 
 // --- Requests / results ------------------------------------------------------
@@ -169,7 +174,9 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*LoginResult, er
 	if err != nil {
 		// Constant-time-ish: still spend an Argon2 verify against a dummy hash
 		// so the response time doesn't leak "unknown account" vs "wrong pw".
-		_ = VerifyPassword(req.Password, dummyHash)
+		if errors.Is(VerifyPassword(req.Password, s.dummyHash), ErrBusy) {
+			return nil, ErrBusy // same answer as a known account under load
+		}
 		return nil, ErrInvalidCredentials
 	}
 
@@ -183,6 +190,9 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*LoginResult, er
 	}
 
 	if err := VerifyPassword(req.Password, account.PasswordHash); err != nil {
+		if errors.Is(err, ErrBusy) {
+			return nil, err
+		}
 		return nil, ErrInvalidCredentials
 	}
 
@@ -203,12 +213,6 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*LoginResult, er
 	}
 	return res, err
 }
-
-// dummyHash is a pre-computed valid Argon2id hash used only to burn CPU on
-// unknown-account login attempts, keeping login timing similar in both branches.
-// The plaintext is unknowable; verify always fails.
-const dummyHash = "$argon2id$v=19$m=65536,t=3,p=1$YWFhYWFhYWFhYWFhYWFhYQ$" +
-	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 // --- Refresh ----------------------------------------------------------------
 

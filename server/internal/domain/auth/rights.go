@@ -34,6 +34,9 @@ func (s *Service) RequestDeletion(ctx context.Context, accountID uuid.UUID, pass
 		return time.Time{}, err
 	}
 	if err := VerifyPassword(password, a.PasswordHash); err != nil {
+		if errors.Is(err, ErrBusy) {
+			return time.Time{}, err
+		}
 		return time.Time{}, ErrInvalidCredentials
 	}
 	now := s.cfg.Now().UTC()

@@ -68,7 +68,7 @@ Kullanıcı `active:afk = 3:7` oranı MMO idle genre benchmark; Phase 02 balance
 | Profile | pprof (Go), async-profiler (Phase 02) |
 | Report | Grafana dashboard export + Markdown summary |
 
-k6 script'leri repo `perf/k6/` altında; scenarios YAML config; runner Docker.
+k6 script'leri repo `perf/k6/` altında (`mix.js`, `login.js`); runner Docker — `scripts/loadtest.sh [smoke|t1|login]` (DD-238).
 
 ## 7. Test Ortamı
 

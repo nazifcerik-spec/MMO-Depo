@@ -16,6 +16,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_ACCOUNT_BANNED' => l.errAccountBanned,
     'E_ACCOUNT_EXISTS' => l.errAccountExists,
     'E_RATE_LIMIT' => l.errRateLimited,
+    'E_BUSY' => l.errServerBusy,
     'E_NAME_TAKEN' => l.errNameTaken,
     'E_SLOT_CAP' => l.errSlotCap,
     'E_NOT_PLAYABLE' => l.errNotPlayable,

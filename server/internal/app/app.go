@@ -79,6 +79,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
+	auth.SetKDFConcurrency(cfg.AuthHashConcurrency)
 	authRepo := auth.NewPgRepo(pool)
 	authSvc := auth.NewService(authRepo, signer, auth.ServiceConfig{
 		Argon2Params:   auth.DefaultArgon2Params,
