@@ -10,7 +10,7 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Ledger + RNG coverage ≥ 90-95%.
 - [ ] Property-based tests: nightly 10k iteration passing.
 - [ ] Golden fixture snapshot regression suite green.
-- [ ] Lint (staticcheck + golangci-lint) zero critical.
+- [x] Lint (staticcheck) zero bulgu + govulncheck erişilebilir açık sıfır — CI `lint` + `server` işleri (DD-237).
 - [ ] Contract test schema stable (breaking change guard).
 
 ### Performance
@@ -20,7 +20,7 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Auto-scaling policies configured.
 
 ### Security
-- [ ] All security kural aktif (rate limit, idempotency, validation, session).
+- [x] All security kural aktif (rate limit DD-187/225, idempotency DD-188, validation, session DD-189).
 - [ ] Threat model reviewed.
 - [ ] Anomaly detection rule config live.
 - [ ] Bug bounty policy legal reviewed (Phase 02 launch).
@@ -67,15 +67,15 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Terms of Service published.
 - [ ] Privacy Policy published (GDPR/KVKK compliant).
 - [ ] EULA final.
-- [ ] Age gate (13+) enforcement.
+- [x] Age gate (13+) enforcement — kayıtta beyan (DD-231).
 - [ ] Region compliance (KVKK for TR, GDPR for EU).
 - [ ] Community Code of Conduct.
-- [ ] Support email + ticket system live.
+- [ ] Support email + ticket system live. (Talep sistemi hazır — DD-234; `SUPPORT_EMAIL` adresi bekliyor.)
 - [ ] Beta NDA (opsiyonel closed beta için).
 
 ### Ops Support
 - [ ] Admin panel operational + SSO + WebAuthn.
-- [ ] RBAC 6 rol tanımlı + admin kullanıcı listesi.
+- [x] RBAC 6 rol tanımlı + admin kullanıcı listesi (DD-213, `cmd/adminctl`).
 - [ ] Support runbook (mute, ban, reversal, item restore) hazır.
 - [ ] Incident response runbook (P0-P3).
 - [ ] Post-mortem template.
@@ -94,13 +94,13 @@ Production Readiness sonu — cross-functional review:
 ## 4. Kritik Checklist (Zorunlu %100)
 
 Bu maddeler eksik → NO-GO:
-- [ ] Backup + restore drill success.
+- [x] Backup + restore drill success (DD-232; prod sunucusunda tekrar koşulmalı).
 - [ ] Rollback procedure tested.
-- [ ] Ledger reconciler operational.
+- [x] Ledger reconciler operational (`economy_reconciler` + `OtterLedgerDrift` uyarısı, DD-236).
 - [ ] Security anomaly rules active.
 - [ ] Legal (ToS + Privacy) published.
-- [ ] Age gate enforcement.
-- [ ] Support ticket flow.
+- [x] Age gate enforcement.
+- [x] Support ticket flow (DD-234).
 - [ ] On-call rotation.
 - [ ] PagerDuty alerts.
 - [ ] Monitoring dashboards.

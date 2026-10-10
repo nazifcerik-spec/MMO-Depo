@@ -25,7 +25,7 @@ internal/item                 86
 internal/mail                 38
 internal/market               80
 internal/notification         83
-internal/observability        60
+internal/observability        63
 internal/party                81
 internal/privacy              78
 internal/support              80

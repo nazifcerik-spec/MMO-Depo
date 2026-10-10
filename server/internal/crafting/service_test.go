@@ -111,12 +111,6 @@ type fakeItemMinter struct {
 	lastMint *item.Instance
 }
 
-var errShortage = &fakeErr{"insufficient quantity"}
-
-type fakeErr struct{ msg string }
-
-func (e *fakeErr) Error() string { return e.msg }
-
 func (f *fakeItemMinter) MintExact(_ context.Context, ownerID uuid.UUID, tmpl string, qty int32, srcKind string, srcRef uuid.UUID) (*item.Instance, error) {
 	inst := &item.Instance{
 		ID: uuid.New(), TemplateCode: tmpl, OwnerCharacterID: &ownerID,

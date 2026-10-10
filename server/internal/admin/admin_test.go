@@ -78,6 +78,6 @@ func TestMaskEmailAndGoldMoved(t *testing.T) {
 	require.Equal(t, "***", MaskEmail("broken"))
 	require.Equal(t, int64(900), GoldMoved([]LedgerEntry{
 		{Currency: "gold", Delta: -1000}, {Currency: "gold", Delta: 900},
-		{Currency: "gold", Delta: 100 - 100}, {Currency: "gem", Delta: 50},
+		{Currency: "gold", Delta: 0}, {Currency: "gem", Delta: 50},
 	}))
 }

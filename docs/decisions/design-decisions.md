@@ -2144,6 +2144,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Sunucu/disk/Postgres/Redis düzeyi metrikler yok (node/postgres exporter eklenince disk >%85, yedek tazeliği, sertifika süresi uyarıları eklenecek). Eşikler lansman varsayılanı; gerçek trafikle ayarlanmalı. Prometheus sunucunun kendisi çökerse uyarı da gelmez — dış uptime kontrolü (ör. `/live`) ayrıca önerilir.
 **Tarih:** 2026-10-10
 
+## DD-237 — Bağımlılık Açık Taraması ve Desteklenen Go Sürümü
+**Karar:** CI her push'ta `govulncheck` (v1.8.0) koşar ve yalnız kodumuzun gerçekten çağırdığı açıklarda kırılır; derleme ve CI desteklenen en yeni Go ana sürümünün son yamasıyla yapılır (imaj `golang:1.27-alpine`, CI `go-version: 1.27.x` + `check-latest`), `go.mod` `go` satırı bağımlılıkların istediği asgari sürümdür. Statik analiz staticcheck (v0.8.1) ile ayrı `lint` işinde; staticcheck Go 1.27 export verisini okuyana kadar o iş Go 1.26 ile koşar.
+**Reason:** İlk taramada 21 erişilebilir açık vardı (JWT başlık ayrıştırmada bellek, pgx, go-redis, OTel, x/net HTTP/2, grpc, stdlib net/http · crypto/tls · html/template); imajlar artık güvenlik yaması almayan Go 1.25'e bağlıydı. Yeni açık yayımlanınca CI'ın kırılması güncellemeyi zorunlu kılar.
+**Alternatives:** Dependabot/Renovate (GitHub ayarı — kullanıcı açabilir; bu karar CI kapısıyla çelişmez), golangci-lint (tek ikili ama yapılandırma yükü; staticcheck kontrolleri yeterli), Go sürümünü sabit yamaya kilitlemek (yamaları kaçırır).
+**Consequences:** Upstream'de yeni açık çıktığında ilgisiz bir push da kırmızı olabilir — beklenen davranış (önce güncelle). Yerel geliştirme Go sürümü de güncel tutulmalı (taramalar yerel toolchain'in stdlib'ini değerlendirir).
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -7,7 +7,7 @@
 # Build context: project root (.dockerignore keeps it to server/ + content/).
 
 # ---- dependencies ----
-FROM golang:1.25-alpine AS deps
+FROM golang:1.27-alpine AS deps
 
 WORKDIR /src/server
 

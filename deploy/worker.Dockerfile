@@ -4,7 +4,7 @@
 # go.sum-pinned dependencies and a self-probing HEALTHCHECK (DD-232).
 # Build context: project root.
 
-FROM golang:1.25-alpine AS deps
+FROM golang:1.27-alpine AS deps
 
 WORKDIR /src/server
 

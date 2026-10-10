@@ -57,7 +57,7 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 ## Kod Konvansiyonları
 
-- Go 1.22+. `log/slog` stdlib logger.
+- Go 1.26+ (`go.mod`); derleme/CI Go 1.27 son yama (DD-237). `log/slog` stdlib logger.
 - Router: `chi` (thin).
 - DB: `pgx/v5` (native, no ORM).
 - Redis: `go-redis/v9`.
@@ -121,6 +121,7 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 50. **Destek talepleri (bitti)** — Sprint 50, DD-234. Migration 0031 (`ops.support_ticket`). Yeni `internal/support`: `POST/GET /v1/support/tickets` (kategori + başlık + mesaj + isteğe bağlı kendi karakteri, allowlist'li `client_info`, 10 açık talep tavanı hesap kilidi altında, saatte 5); ops `GET /internal/ops/support/tickets` + `POST .../{ticket_id}/reply` (`close` ile kapatma; `support.tickets` izni support_l1/l2/admin, denetim kaydı); yanıt `support_reply` bildirimi. Talepler veri dışa aktarımında, hesap silmede silinir. İstemci: hesap menüsü → Destek (talepler + ekip yanıtı, yeni talep formu). Fix: yanıt sorgusunda `$4` tür çıkarımı hatası (500) → `::text`.
 51. **İstemci hata raporlama (bitti)** — Sprint 51, DD-235. Migration 0032 (`ops.client_error`). Yeni `internal/clienterr`: `POST /v1/client/errors` (kimliksiz, IP başı saatte 30; e-posta/token maskeleme, boyut sınırları, platform allowlist), parmak izine göre gruplama (sayaç + ilk/son görülme), 10k grup tavanı; ops `GET /internal/ops/client-errors` (`ops.client_errors`); worker `client_error_gc` (30 gün); metrik `otter_client_errors_total{platform,kind}`. İstemci `ErrorReporter` (`main`'de `install()`): Flutter + async hataları, tekrarsız, çalıştırma başı 10, hata yutulur; `--dart-define=APP_VERSION`. Native çöküşler Crashlytics'e (Firebase bekliyor).
 52. **Uyarı kuralları + izleme (bitti)** — Sprint 52, DD-236. `deploy/alerts.yml` (11 kural: hedef erişilemez, 5xx yüksek/artmış, p95, worker hata/bozuk/durmuş, defter kayması, DB havuzu, giriş hatası dalgası, istemci hata dalgası) + `deploy/alerts_test.yml` promtool birim testleri; `scripts/check-alerts.sh` (Docker'lı promtool/amtool) + CI `alerts` işi. Yeni metrikler `otter_worker_job_last_success_timestamp_seconds` / `_interval_seconds`. Prod `monitoring` profili: Prometheus + Alertmanager (loopback, e-posta, `alertmanager.yml` git dışı, örnek dosya). Dev Prometheus aynı kuralları yükler. Doğrulandı: canlı dev Prometheus 2/2 hedef, 11 kural, 17 iş başarı zamanı, uyarı yok.
+53. **Bağımlılık güvenliği + statik analiz (bitti)** — Sprint 53, DD-237. govulncheck 21 erişilebilir açık buldu (jwt, pgx, go-redis, otel, x/net, x/text, grpc + stdlib) → modüller güncellendi (pgx 5.11, go-redis 9.23, otel 1.47, jwt 5.3.1 …), imajlar desteklenmeyen `golang:1.25` → `golang:1.27-alpine` (son yama), CI `go-version: 1.27.x` + `check-latest`; Go 1.27.2'de erişilebilir açık 0. CI: `server` işinde govulncheck v1.8.0, yeni `lint` işi staticcheck v0.8.1 (Go 1.26 — henüz 1.27 export verisini okuyamıyor); 4 bulgu (testlerde) düzeltildi. İstemci paketleri güncel, uyarı yok. Yerel Go 1.27.1 stdlib açıkları içerir — 1.27.2'ye güncellenmeli.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
