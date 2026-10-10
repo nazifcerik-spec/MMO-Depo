@@ -12,6 +12,7 @@ import (
 	_ "time/tzdata" // quiet-hours time zones in minimal images
 
 	"github.com/otter/server/internal/config"
+	"github.com/otter/server/internal/domain/health"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/notification"
@@ -24,6 +25,10 @@ import (
 var CommitSHA = "dev"
 
 func main() {
+	// Container HEALTHCHECK (distroless: no wget) — DD-232.
+	if len(os.Args) > 1 && os.Args[1] == "healthcheck" {
+		os.Exit(health.Probe(health.LocalURL(os.Getenv("WORKER_METRICS_ADDR"), ":9091", "/metrics")))
+	}
 	if err := run(); err != nil {
 		slog.Error("fatal", "err", err)
 		os.Exit(1)

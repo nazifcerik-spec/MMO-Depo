@@ -2109,6 +2109,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Metinler taslaktır; yayın öncesi hukuki inceleme ve `LEGAL_OPERATOR`/`SUPPORT_EMAIL` zorunlu. Koşullar değişince sürüm artar; mevcut oyunculardan yeniden onay Phase 02. Yedeklerden silme (docs/infra/backup.md §13) yedek saklama süresiyle (≤ 35 gün) sağlanır. Eski istemciler `accept_terms` göndermediği için kayıt olamaz (giriş etkilenmez).
 **Tarih:** 2026-10-10
 
+## DD-232 — Tek Sunuculu Üretim Kurulumu, Yedekleme Tatbikatı, Geri Alma
+**Karar:** v1 üretimi tek sunucuda Docker Compose (`deploy/prod/`): Caddy (otomatik TLS, tek açık port 80/443, WebSocket geçişi, HSTS, 1 MB gövde sınırı) → API; worker; Postgres ve Redis (şifreli) yalnız iç ağda; tek seferlik `migrate`; `backup` servisi günlük `pg_dump` (özel biçim, okunabilirlik kontrolü, 35 gün saklama, `LAST_SUCCESS`). API yalnız Caddy'nin sabit IP'sinden gelen `X-Forwarded-For`'a güvenir (DD-225). İmajlar git commit'iyle etiketlenir; `scripts/deploy.sh` (temiz checkout → build → migrate → up → sağlık bekleme → `deployed.log`), `scripts/rollback.sh [tag]` (yalnız uygulama; migration'lar ileri uyumlu — genişlet önce, daralt sonraki sürümde). `scripts/restore-drill.sh <dump>`: atılabilir konteynerde geri yükler, şema sürümünü, kirli migration'ı, hesap varlığını ve defterin para birimi başına dengesini (DD-135) denetler. İmaj düzeltmeleri: bağımlılıklar `go.sum` ile doğrulanır (önceden yalnız `go.mod` kopyalanıp `go mod tidy` çalışıyordu), içerik paketi imaja gömülür, distroless imajlarda `wget` olmadığı için sağlık kontrolü binary'nin kendisi (`/app healthcheck`), kökte beyaz liste `.dockerignore` (önceden `deploy/` içindeydi ve uygulanmıyordu; her derlemede ~325 MB istemci dosyası gönderiliyordu).
+**Reason:** Yayın kontrol listesinin NO-GO maddeleri (yedek + geri yükleme tatbikatı, geri alma prosedürü) ve hesap gerektirmeden çalışan, tek komutla kurulan bir üretim ortamı. Dev'deki API konteyneri sağlık kontrolü yüzünden sürekli "unhealthy" görünüyordu.
+**Alternatives:** Kubernetes/Terraform (docs/infra hedefi; tek sunucu için gereksiz karmaşa, bulut hesabı ister), WAL arşivi + S3 (15 dk RPO; nesne depolama hesabı açılınca eklenecek), yönetilen veritabanı (hesap ve maliyet).
+**Consequences:** RPO 24 saat (günlük döküm) — oyuncu ilerlemesinin en fazla bir günü kaybolabilir; `deploy/prod/backups` sunucu dışına kopyalanmadıkça felaket kurtarma yok. Tatbikat aylık koşulmalı. Tek sunucu = tek arıza noktası; ölçek ihtiyacında docs/infra hedef mimarisine geçilir.
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -1,0 +1,157 @@
+# New World MMO — single-host production (DD-232).
+#
+#   cp env.example .env   # fill in the secrets (never commit .env)
+#   ../../scripts/deploy.sh
+#
+# Services: caddy (TLS, the only public ports) → api; worker; postgres and
+# redis on the internal network only; migrate (one-shot); backup (daily
+# pg_dump, 35-day retention). Images are tagged with the git commit
+# (IMAGE_TAG) so scripts/rollback.sh can return to an earlier build.
+
+name: otter
+
+x-app-env: &app_env
+  ENV: prod
+  LOG_LEVEL: info
+  DATABASE_URL: postgres://otter:${POSTGRES_PASSWORD:?}@postgres:5432/otter?sslmode=disable
+  REDIS_ADDR: redis:6379
+  REDIS_PASSWORD: ${REDIS_PASSWORD:?}
+
+networks:
+  otter:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+
+services:
+  caddy:
+    image: caddy:2.8.4-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?}
+      ACME_EMAIL: ${ACME_EMAIL:?}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      otter:
+        ipv4_address: 172.28.0.10 # the API trusts X-Forwarded-For from here only (DD-225)
+    depends_on:
+      api:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    shm_size: 256mb
+    environment:
+      POSTGRES_USER: otter
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: otter
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [otter]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U otter -d otter"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "everysec", "--requirepass", "${REDIS_PASSWORD:?}"]
+    volumes:
+      - redis_data:/data
+    networks: [otter]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" --no-auth-warning ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?}
+
+  migrate:
+    image: migrate/migrate:v4.17.0
+    networks: [otter]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../../server/migrations:/migrations:ro
+    command: ["-path=/migrations", "-database=postgres://otter:${POSTGRES_PASSWORD:?}@postgres:5432/otter?sslmode=disable", "up"]
+    restart: "no"
+
+  api:
+    image: otter/api:${IMAGE_TAG:?}
+    build:
+      context: ../..
+      dockerfile: deploy/api.Dockerfile
+      args:
+        COMMIT_SHA: ${IMAGE_TAG:?}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *app_env
+      HTTP_ADDR: :8080
+      PUBLIC_BASE_URL: https://${DOMAIN:?}
+      TRUSTED_PROXIES: 172.28.0.10
+    networks: [otter]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    image: otter/worker:${IMAGE_TAG:?}
+    build:
+      context: ../..
+      dockerfile: deploy/worker.Dockerfile
+      args:
+        COMMIT_SHA: ${IMAGE_TAG:?}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *app_env
+      PUBLIC_BASE_URL: https://${DOMAIN:?}
+    networks: [otter]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  # Daily logical backup (scripts/backup.sh). Copy ./backups off the host
+  # (object storage, another machine): a backup on the same disk is not one.
+  backup:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    environment:
+      PGHOST: postgres
+      PGUSER: otter
+      PGPASSWORD: ${POSTGRES_PASSWORD:?}
+      PGDATABASE: otter
+      KEEP_DAYS: ${BACKUP_KEEP_DAYS:-35}
+    volumes:
+      - ../../scripts/backup.sh:/backup.sh:ro
+      - ${BACKUP_DIR:-./backups}:/backups
+    networks: [otter]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["sh", "-c", "while true; do sh /backup.sh /backups || echo 'backup FAILED'; sleep 86400; done"]
+
+volumes:
+  postgres_data:
+  redis_data:
+  caddy_data:
+  caddy_config:

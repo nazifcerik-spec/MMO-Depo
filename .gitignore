@@ -23,6 +23,8 @@ Thumbs.db
 
 # Docker volumes
 deploy/.data/
+deploy/prod/backups/
+deploy/prod/deployed.log
 
 # Logs
 *.log

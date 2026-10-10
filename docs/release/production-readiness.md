@@ -115,6 +115,19 @@ Bu maddeler eksik → NO-GO:
 - Rich notification (image + action button).
 - Achievement leaderboard.
 
+## 7. Durum (2026-10-10)
+
+Kodla karşılanabilen kritik maddeler:
+- [x] Core domain coverage ≥ 80% — birleşik birim + entegrasyon kapısı CI'da (DD-223).
+- [x] Backup + restore drill success — `scripts/restore-drill.sh` yerelde geçti (DD-232); üretimde aylık tekrarlanmalı.
+- [x] Rollback procedure — `scripts/rollback.sh`, ileri uyumlu migration kuralı (DD-232); üretimde bir kez denenmeli.
+- [x] Ledger reconciler operational — worker `economy_reconciler`.
+- [x] Age gate (13+) — kayıtta zorunlu onay (DD-231).
+- [~] Legal (ToS + Privacy) published — `/terms`, `/privacy` taslak; hukuki inceleme + `LEGAL_OPERATOR`/`SUPPORT_EMAIL` gerekli.
+- [x] Hesap silme + veri dışa aktarma (KVKK/GDPR, Play Store şartı) — DD-231.
+
+Hesap / karar bekleyenler (geliştirme dışı): sunucu + alan adı, Play Store / App Store hesapları ve uygulama imzalama anahtarı, Firebase (push), SMTP sağlayıcısı, nesne depolama (yedek kopyası), destek e-postası, hukuki inceleme, uyarı kanalı (PagerDuty/Slack), durum sayfası.
+
 ## 6. Cross-Reference
 - [closed-beta.md](closed-beta.md), [release.md](release.md)
 - [infra/](../infra/), [security/](../security/), [testing/](../testing/), [performance/](../performance/)

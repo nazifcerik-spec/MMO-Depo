@@ -17,6 +17,7 @@ import (
 
 	"github.com/otter/server/internal/app"
 	"github.com/otter/server/internal/config"
+	"github.com/otter/server/internal/domain/health"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/platform/db"
 	"github.com/otter/server/internal/platform/log"
@@ -27,6 +28,10 @@ import (
 var CommitSHA = "dev"
 
 func main() {
+	// Container HEALTHCHECK (distroless: no wget) — DD-232.
+	if len(os.Args) > 1 && os.Args[1] == "healthcheck" {
+		os.Exit(health.Probe(health.LocalURL(os.Getenv("HTTP_ADDR"), ":8080", "/live")))
+	}
 	if err := run(); err != nil {
 		slog.Error("fatal", "err", err)
 		os.Exit(1)

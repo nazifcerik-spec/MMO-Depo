@@ -1,0 +1,7 @@
+# Build context is the repo root (deploy/*.Dockerfile). Only what the images
+# need goes in: the server source and the content pack (DD-232).
+*
+!server/
+!content/
+server/bin/
+**/*_test.go

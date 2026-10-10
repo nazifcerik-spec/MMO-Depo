@@ -1,31 +1,28 @@
 # syntax=docker/dockerfile:1.7
 #
-# Otter API — production-optimized multi-stage build.
+# Otter API — production multi-stage build.
 # DD-203: distroless nonroot + layer caching + minimum attack surface.
-# Build context: project root (docker compose handles this)
+# DD-232: dependencies pinned by go.sum, content pack baked in, self-probing
+# HEALTHCHECK (distroless has no shell or wget).
+# Build context: project root (.dockerignore keeps it to server/ + content/).
 
 # ---- dependencies ----
 FROM golang:1.25-alpine AS deps
 
-RUN apk add --no-cache git
-
 WORKDIR /src/server
 
-# Copy only go.mod first
-COPY server/go.mod ./
-
-# Tidy and download dependencies (creates go.sum if missing)
-RUN go mod tidy && go mod download && go mod verify
+# Module files first so the download layer is cached; go.sum pins every
+# dependency and `verify` checks the module cache against it.
+COPY server/go.mod server/go.sum ./
+RUN go mod download && go mod verify
 
 # ---- build ----
 FROM deps AS build
 
-# Copy full source
 COPY server/ ./
 
 ARG COMMIT_SHA=dev
 
-# Build with optimizations: CGO disabled, stripped, minimal deps
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     -trimpath \
     -ldflags="-s -w -X main.CommitSHA=${COMMIT_SHA}" \
@@ -35,8 +32,13 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
 FROM gcr.io/distroless/base-debian12:nonroot
 
 COPY --from=build /out/api /app
+# The content pack (items, mobs, names, legal pages) ships with the image so
+# a deploy is one immutable artifact; dev mounts ../content over it.
+COPY content/ /content/
+ENV CONTENT_PATH=/content
 
 USER nonroot:nonroot
 EXPOSE 8080
 
+HEALTHCHECK --interval=10s --timeout=4s --retries=5 CMD ["/app", "healthcheck"]
 ENTRYPOINT ["/app"]
