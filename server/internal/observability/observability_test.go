@@ -69,8 +69,16 @@ func TestObserveJob(t *testing.T) {
 	require.Equal(t, 1.0, testutil.ToFloat64(m.jobRuns.WithLabelValues("chat_gc", "error")))
 	require.Equal(t, 5.0, testutil.ToFloat64(m.jobRows.WithLabelValues("chat_gc")))
 
+	require.Positive(t, testutil.ToFloat64(m.jobLastOK.WithLabelValues("chat_gc")), "success stamps the time")
+	m.JobInterval("chat_gc", time.Hour)
+	require.Equal(t, 3600.0, testutil.ToFloat64(m.jobInterval.WithLabelValues("chat_gc")))
+	m.ObserveClientError("android", "flutter")
+	require.Equal(t, 1.0, testutil.ToFloat64(m.clientErrors.WithLabelValues("android", "flutter")))
+
 	var nilM *Metrics
 	nilM.ObserveJob("x", 1, time.Second, nil) // must not panic
+	nilM.JobInterval("x", time.Second)
+	nilM.ObserveClientError("x", "y")
 }
 
 func TestMetricsHandlerExposition(t *testing.T) {

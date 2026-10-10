@@ -25,6 +25,7 @@ Thumbs.db
 deploy/.data/
 deploy/prod/backups/
 deploy/prod/deployed.log
+deploy/prod/alertmanager.yml
 
 # Logs
 *.log

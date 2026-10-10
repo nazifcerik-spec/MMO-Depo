@@ -5,7 +5,8 @@
 #
 # Services: caddy (TLS, the only public ports) → api; worker; postgres and
 # redis on the internal network only; migrate (one-shot); backup (daily
-# pg_dump, 35-day retention). Images are tagged with the git commit
+# pg_dump, 35-day retention); prometheus + alertmanager with the
+# `monitoring` profile (DD-236). Images are tagged with the git commit
 # (IMAGE_TAG) so scripts/rollback.sh can return to an earlier build.
 
 name: otter
@@ -150,7 +151,37 @@ services:
         condition: service_healthy
     entrypoint: ["sh", "-c", "while true; do sh /backup.sh /backups || echo 'backup FAILED'; sleep 86400; done"]
 
+  # Monitoring (DD-236): enable with COMPOSE_PROFILES=monitoring in .env after
+  # creating alertmanager.yml from the example. UIs on the host's loopback
+  # only — reach them through an SSH tunnel (ssh -L 9095:localhost:9095 …).
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: ["monitoring"]
+    restart: unless-stopped
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=15d"]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "127.0.0.1:9095:9090"
+    networks: [otter]
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    profiles: ["monitoring"]
+    restart: unless-stopped
+    command: ["--config.file=/etc/alertmanager/alertmanager.yml", "--storage.path=/alertmanager"]
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+    ports:
+      - "127.0.0.1:9093:9093"
+    networks: [otter]
+
 volumes:
+  prometheus_data:
+  alertmanager_data:
   postgres_data:
   redis_data:
   caddy_data:

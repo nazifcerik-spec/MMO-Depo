@@ -1,0 +1,217 @@
+# promtool unit tests for alerts.yml — run scripts/check-alerts.sh.
+rule_files: [alerts.yml]
+evaluation_interval: 1m
+
+tests:
+  # A scrape target down for 2m pages; a blip does not.
+  - interval: 1m
+    input_series:
+      - series: 'up{job="otter-api", instance="api:9090"}'
+        values: '1 1 0 0 0 0 0'
+      - series: 'up{job="otter-worker", instance="worker:9091"}'
+        values: '1 0 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: OtterInstanceDown
+        exp_alerts: []
+      - eval_time: 5m
+        alertname: OtterInstanceDown
+        exp_alerts:
+          - exp_labels: { severity: critical, job: otter-api, instance: "api:9090" }
+            exp_annotations:
+              summary: "otter-api (api:9090) is not answering scrapes"
+              runbook: "Check `docker compose ps` and the service logs; restart or roll back (scripts/rollback.sh)."
+
+  # ~9% 5xx at 1.1 req/s: high after 5m, warn after 10m.
+  - interval: 1m
+    input_series:
+      - series: 'otter_http_requests_total{method="GET", route="/v1/x", code="200"}'
+        values: '0+60x20'
+      - series: 'otter_http_requests_total{method="GET", route="/v1/x", code="500"}'
+        values: '0+6x20'
+    alert_rule_test:
+      - eval_time: 4m
+        alertname: OtterHighErrorRate
+        exp_alerts: []
+      - eval_time: 12m
+        alertname: OtterHighErrorRate
+        exp_alerts:
+          - exp_labels: { severity: high }
+            exp_annotations:
+              summary: "API 5xx rate 9.091% (> 5%) for 5m"
+              runbook: "Group api logs by route for level=ERROR; a fresh deploy → scripts/rollback.sh."
+      - eval_time: 12m
+        alertname: OtterElevatedErrorRate
+        exp_alerts:
+          - exp_labels: { severity: warn }
+            exp_annotations:
+              summary: "API 5xx rate 9.091% (> 1%) for 10m"
+              runbook: "Group api logs by route for level=ERROR."
+
+  # 50% errors on an idle server (0.1 req/s) stays quiet.
+  - interval: 1m
+    input_series:
+      - series: 'otter_http_requests_total{method="GET", route="/v1/x", code="200"}'
+        values: '0+3x20'
+      - series: 'otter_http_requests_total{method="GET", route="/v1/x", code="500"}'
+        values: '0+3x20'
+    alert_rule_test:
+      - eval_time: 15m
+        alertname: OtterHighErrorRate
+        exp_alerts: []
+      - eval_time: 15m
+        alertname: OtterElevatedErrorRate
+        exp_alerts: []
+
+  # Every request lands in the 0.25–1s bucket → p95 ≈ 0.96s.
+  - interval: 1m
+    input_series:
+      - series: 'otter_endpoint_request_duration_seconds_bucket{method="GET", route="/v1/x", le="0.25"}'
+        values: '0x20'
+      - series: 'otter_endpoint_request_duration_seconds_bucket{method="GET", route="/v1/x", le="1"}'
+        values: '0+60x20'
+      - series: 'otter_endpoint_request_duration_seconds_bucket{method="GET", route="/v1/x", le="+Inf"}'
+        values: '0+60x20'
+      - series: 'otter_endpoint_request_duration_seconds_count{method="GET", route="/v1/x"}'
+        values: '0+60x20'
+    alert_rule_test:
+      - eval_time: 13m
+        alertname: OtterSlowRequests
+        exp_alerts:
+          - exp_labels: { severity: warn }
+            exp_annotations:
+              summary: "API p95 latency 962.5ms (> 500ms) for 10m"
+              runbook: "Check otter_db_pool_* (waits) and slow routes: topk by route of the duration histogram."
+
+  # push_dispatch fails every run (broken + failing); mail_expire fails
+  # sometimes (failing only).
+  - interval: 1m
+    input_series:
+      - series: 'otter_worker_job_runs_total{job="push_dispatch", result="error", instance="worker:9091"}'
+        values: '0+1x40'
+      - series: 'otter_worker_job_runs_total{job="mail_expire", result="error", instance="worker:9091"}'
+        values: '0+1x40'
+      - series: 'otter_worker_job_runs_total{job="mail_expire", result="ok", instance="worker:9091"}'
+        values: '0+1x40'
+    alert_rule_test:
+      - eval_time: 35m
+        alertname: OtterWorkerJobBroken
+        exp_alerts:
+          - exp_labels: { severity: high, job: push_dispatch }
+            exp_annotations:
+              summary: "Worker job push_dispatch fails on every run"
+              runbook: "worker logs for the job; payouts/expiry it owns are not happening."
+      - eval_time: 35m
+        alertname: OtterWorkerJobFailing
+        exp_alerts:
+          - exp_labels: { severity: warn, job: mail_expire }
+            exp_annotations:
+              summary: "Worker job mail_expire failed in the last 15m"
+              runbook: "worker logs: msg=\"worker: job failed\" job=mail_expire."
+          - exp_labels: { severity: warn, job: push_dispatch }
+            exp_annotations:
+              summary: "Worker job push_dispatch failed in the last 15m"
+              runbook: "worker logs: msg=\"worker: job failed\" job=push_dispatch."
+
+  # chat_gc (1m interval) last succeeded at t=60s → stalled after
+  # 3×60+120 s plus 5m pending. idempotency_gc keeps succeeding on one
+  # replica while the other (lock loser) never runs it: not stalled.
+  - interval: 1m
+    input_series:
+      - series: 'otter_worker_job_last_success_timestamp_seconds{job="chat_gc", instance="worker:9091"}'
+        values: '60x20'
+      - series: 'otter_worker_job_interval_seconds{job="chat_gc", instance="worker:9091"}'
+        values: '60x20'
+      - series: 'otter_worker_job_last_success_timestamp_seconds{job="idempotency_gc", instance="worker:9091"}'
+        values: '0+60x20'
+      - series: 'otter_worker_job_last_success_timestamp_seconds{job="idempotency_gc", instance="worker-2:9091"}'
+        values: '0x20'
+      - series: 'otter_worker_job_interval_seconds{job="idempotency_gc", instance="worker:9091"}'
+        values: '60x20'
+      - series: 'otter_worker_job_interval_seconds{job="idempotency_gc", instance="worker-2:9091"}'
+        values: '60x20'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: OtterWorkerJobStalled
+        exp_alerts: []
+      - eval_time: 13m
+        alertname: OtterWorkerJobStalled
+        exp_alerts:
+          - exp_labels: { severity: high, job: chat_gc }
+            exp_annotations:
+              summary: "Worker job chat_gc has not succeeded for 12m 0s"
+              runbook: "Is the worker up? Advisory lock stuck (pg_locks)? Job errors?"
+
+  # Reconciler found drift once → critical.
+  - interval: 1m
+    input_series:
+      - series: 'otter_worker_job_rows_total{job="economy_reconciler", instance="worker:9091"}'
+        values: '0 0 0 2 2 2'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: OtterLedgerDrift
+        exp_alerts: []
+      - eval_time: 5m
+        alertname: OtterLedgerDrift
+        exp_alerts:
+          - exp_labels: { severity: critical, job: economy_reconciler, instance: "worker:9091" }
+            exp_annotations:
+              summary: "Ledger reconciler reported drifted wallets or unbalanced transactions"
+              runbook: "worker logs msg=\"economy drift\"; freeze affected characters (WORKER_RECONCILE_FREEZE) and audit the ledger."
+
+  # Pool at 100% for 10m warns; 90% does not.
+  - interval: 1m
+    input_series:
+      - series: 'otter_db_pool_acquired_conns{instance="api:9090"}'
+        values: '10x20'
+      - series: 'otter_db_pool_max_conns{instance="api:9090"}'
+        values: '10x20'
+      - series: 'otter_db_pool_acquired_conns{instance="worker:9091"}'
+        values: '9x20'
+      - series: 'otter_db_pool_max_conns{instance="worker:9091"}'
+        values: '10x20'
+    alert_rule_test:
+      - eval_time: 12m
+        alertname: OtterDBPoolSaturated
+        exp_alerts:
+          - exp_labels: { severity: warn, instance: "api:9090" }
+            exp_annotations:
+              summary: "api:9090 uses 100% of its DB pool"
+              runbook: "Long transactions (pg_stat_activity)? Raise the pool size only after ruling out leaks."
+
+  # 150 failed logins/min across the fleet (rate[5m] is fully fed from
+  # 5m, then 5m pending).
+  - interval: 1m
+    input_series:
+      - series: 'otter_http_requests_total{method="POST", route="/v1/auth/login", code="401"}'
+        values: '0+150x20'
+      - series: 'otter_http_requests_total{method="POST", route="/v1/auth/login", code="200"}'
+        values: '0+500x20'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: OtterLoginFailureSpike
+        exp_alerts: []
+      - eval_time: 12m
+        alertname: OtterLoginFailureSpike
+        exp_alerts:
+          - exp_labels: { severity: high }
+            exp_annotations:
+              summary: "150 failed logins/min for 5m"
+              runbook: "docs/security: credential stuffing. Check source spread in api logs; tighten login limits."
+
+  # 5 reports/min → 300 in the last hour.
+  - interval: 1m
+    input_series:
+      - series: 'otter_client_errors_total{platform="android", kind="flutter", instance="api:9090"}'
+        values: '0+5x70'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: OtterClientErrorSpike
+        exp_alerts: []
+      - eval_time: 65m
+        alertname: OtterClientErrorSpike
+        exp_alerts:
+          - exp_labels: { severity: warn }
+            exp_annotations:
+              summary: "300 app error reports in the last hour"
+              runbook: "GET /internal/ops/client-errors — newest groups first; correlate with a release."

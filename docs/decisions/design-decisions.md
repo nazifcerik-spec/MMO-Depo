@@ -2137,6 +2137,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Native (NDK/iOS) çöküşler ve obfuscate edilmiş yığınların sembolleştirilmesi kapsam dışı — Crashlytics Firebase hesabıyla eklenecek. Anonim uç kötüye kullanılırsa yalnız sayaçlar şişer (tavan + oran sınırı).
 **Tarih:** 2026-10-10
 
+## DD-236 — Uyarı Kuralları ve Tek Sunucu İzleme
+**Karar:** Prometheus uyarı kuralları depoda (`deploy/alerts.yml`) ve `promtool test rules` ile birim testli (`deploy/alerts_test.yml`, `scripts/check-alerts.sh`, CI `alerts` işi). Kurallar yalnız mevcut metriklerden: hedef erişilemez (critical), 5xx oranı >%5 (high) / >%1 (warn) — saniyede 0.2 istek hacim kapısıyla —, toplam p95 >500 ms (warn), worker işi hata (warn) / her çalışmada hata (high) / 3 aralık + 2 dk başarısız (high; replikalar arası `max by (job)`), defter mutabakatı kayma buldu (critical), DB havuzu >%90 (warn), filo genelinde dakikada >100 başarısız giriş (high), saatte >100 istemci hata raporu (warn). Durma tespiti için yeni metrikler: `otter_worker_job_last_success_timestamp_seconds`, `otter_worker_job_interval_seconds`. Üretimde `monitoring` profili: Prometheus (15 gün saklama) + Alertmanager, arayüzler yalnız sunucunun loopback'inde (SSH tüneli). Teslim v1'de e-posta; `alertmanager.yml` git dışı (SMTP şifresi), örnek dosya amtool ile doğrulanır; gürültü bastırma: yüksek olan düşük eşini, `InstanceDown{worker}` worker iş uyarılarını susturur. Dev Prometheus aynı kuralları yükler (teslim yok).
+**Reason:** Yayın öncesi kesinti, defter bütünlüğü ve kimlik bilgisi saldırılarının birine ulaşması gerekiyor; kuralların test edilmesi yanlış alarm/sessiz alarm riskini düşürür. Tek sunucu kurulumuna (DD-232) ek altyapı gerektirmeyen en basit yol.
+**Alternatives:** Yönetilen izleme (Grafana Cloud vb. — hesap), PagerDuty/Slack (hesap; alıcı olarak sonra eklenir), Grafana panoları (v1'de Prometheus arayüzü yeterli).
+**Consequences:** Sunucu/disk/Postgres/Redis düzeyi metrikler yok (node/postgres exporter eklenince disk >%85, yedek tazeliği, sertifika süresi uyarıları eklenecek). Eşikler lansman varsayılanı; gerçek trafikle ayarlanmalı. Prometheus sunucunun kendisi çökerse uyarı da gelmez — dış uptime kontrolü (ör. `/live`) ayrıca önerilir.
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

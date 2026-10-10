@@ -1,0 +1,131 @@
+# Prometheus alert rules (DD-236, docs/infra/alerting.md). Severity tiers
+# follow DD-191: info | warn | high | critical. Thresholds are launch
+# defaults — tune them from real traffic. Tests: deploy/alerts_test.yml
+# (scripts/check-alerts.sh).
+groups:
+  - name: otter-availability
+    rules:
+      - alert: OtterInstanceDown
+        expr: up{job=~"otter-.*"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.job }} ({{ $labels.instance }}) is not answering scrapes"
+          runbook: "Check `docker compose ps` and the service logs; restart or roll back (scripts/rollback.sh)."
+
+      # 5xx share of API traffic. The volume guard (>= 12 req/min) keeps a
+      # single failure on an idle server from paging anyone.
+      - alert: OtterHighErrorRate
+        expr: |
+          sum(rate(otter_http_requests_total{code=~"5.."}[5m])) / sum(rate(otter_http_requests_total[5m])) > 0.05
+          and sum(rate(otter_http_requests_total[5m])) > 0.2
+        for: 5m
+        labels:
+          severity: high
+        annotations:
+          summary: "API 5xx rate {{ $value | humanizePercentage }} (> 5%) for 5m"
+          runbook: "Group api logs by route for level=ERROR; a fresh deploy → scripts/rollback.sh."
+
+      - alert: OtterElevatedErrorRate
+        expr: |
+          sum(rate(otter_http_requests_total{code=~"5.."}[5m])) / sum(rate(otter_http_requests_total[5m])) > 0.01
+          and sum(rate(otter_http_requests_total[5m])) > 0.2
+        for: 10m
+        labels:
+          severity: warn
+        annotations:
+          summary: "API 5xx rate {{ $value | humanizePercentage }} (> 1%) for 10m"
+          runbook: "Group api logs by route for level=ERROR."
+
+      # Aggregate p95 (docs/performance/slo-slis.md: most routes 150–400 ms).
+      - alert: OtterSlowRequests
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(otter_endpoint_request_duration_seconds_bucket[5m]))) > 0.5
+          and sum(rate(otter_endpoint_request_duration_seconds_count[5m])) > 0.2
+        for: 10m
+        labels:
+          severity: warn
+        annotations:
+          summary: "API p95 latency {{ $value | humanizeDuration }} (> 500ms) for 10m"
+          runbook: "Check otter_db_pool_* (waits) and slow routes: topk by route of the duration histogram."
+
+  - name: otter-worker
+    rules:
+      - alert: OtterWorkerJobFailing
+        expr: sum by (job) (increase(otter_worker_job_runs_total{result="error"}[15m])) > 0
+        labels:
+          severity: warn
+        annotations:
+          summary: "Worker job {{ $labels.job }} failed in the last 15m"
+          runbook: "worker logs: msg=\"worker: job failed\" job={{ $labels.job }}."
+
+      # Every run failing (3+ runs in 30m, none succeeded).
+      - alert: OtterWorkerJobBroken
+        expr: |
+          sum by (job) (increase(otter_worker_job_runs_total{result="error"}[30m])) >= 3
+          unless sum by (job) (increase(otter_worker_job_runs_total{result="ok"}[30m])) > 0
+        labels:
+          severity: high
+        annotations:
+          summary: "Worker job {{ $labels.job }} fails on every run"
+          runbook: "worker logs for the job; payouts/expiry it owns are not happening."
+
+      # No success for 3 intervals (+2 min slack). max by (job) so a replica
+      # that lost the advisory lock does not look stalled.
+      - alert: OtterWorkerJobStalled
+        expr: |
+          time() - max by (job) (otter_worker_job_last_success_timestamp_seconds)
+          > 3 * max by (job) (otter_worker_job_interval_seconds) + 120
+        for: 5m
+        labels:
+          severity: high
+        annotations:
+          summary: "Worker job {{ $labels.job }} has not succeeded for {{ $value | humanizeDuration }}"
+          runbook: "Is the worker up? Advisory lock stuck (pg_locks)? Job errors?"
+
+  - name: otter-economy
+    rules:
+      # economy_reconciler returns the drifted wallets + unbalanced txns it
+      # found (DD-135); any non-zero is a ledger integrity incident.
+      - alert: OtterLedgerDrift
+        expr: increase(otter_worker_job_rows_total{job="economy_reconciler"}[26h]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Ledger reconciler reported drifted wallets or unbalanced transactions"
+          runbook: "worker logs msg=\"economy drift\"; freeze affected characters (WORKER_RECONCILE_FREEZE) and audit the ledger."
+
+  - name: otter-resources
+    rules:
+      - alert: OtterDBPoolSaturated
+        expr: max by (instance) (otter_db_pool_acquired_conns / otter_db_pool_max_conns) > 0.9
+        for: 10m
+        labels:
+          severity: warn
+        annotations:
+          summary: "{{ $labels.instance }} uses {{ $value | humanizePercentage }} of its DB pool"
+          runbook: "Long transactions (pg_stat_activity)? Raise the pool size only after ruling out leaks."
+
+  - name: otter-security
+    rules:
+      # Failed logins across all IPs (per-IP limits stop single sources;
+      # this catches a distributed credential-stuffing wave).
+      - alert: OtterLoginFailureSpike
+        expr: sum(rate(otter_http_requests_total{route="/v1/auth/login", code="401"}[5m])) * 60 > 100
+        for: 5m
+        labels:
+          severity: high
+        annotations:
+          summary: "{{ $value | humanize }} failed logins/min for 5m"
+          runbook: "docs/security: credential stuffing. Check source spread in api logs; tighten login limits."
+
+  - name: otter-client
+    rules:
+      - alert: OtterClientErrorSpike
+        expr: sum(increase(otter_client_errors_total[1h])) > 100
+        labels:
+          severity: warn
+        annotations:
+          summary: "{{ $value | humanize }} app error reports in the last hour"
+          runbook: "GET /internal/ops/client-errors — newest groups first; correlate with a release."

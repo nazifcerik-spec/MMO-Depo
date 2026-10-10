@@ -48,6 +48,8 @@ Kritik + warn seviye olayların doğru kişiye zamanında ulaşması. Alert fati
 
 ## 5. Alert Rule Örnek (Prometheus)
 
+> **Uygulama (DD-236):** Gerçek kurallar `deploy/alerts.yml` (11 kural: erişilebilirlik, 5xx, gecikme, worker hata/durma, defter kayması, DB havuzu, giriş hatası dalgası, istemci hata dalgası) ve `deploy/alerts_test.yml` (promtool birim testleri, CI `alerts` işi). Aşağıdaki örnek tasarım dönemindendir; metrik adları `otter_http_requests_total{code}` olarak uygulandı.
+
 ```yaml
 - alert: HighErrorRate
   expr: sum(rate(otter_endpoint_request_errors_total[5m])) 

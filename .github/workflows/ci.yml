@@ -4,6 +4,7 @@
 #                integration tests together and the per-package coverage
 #                ratchet on their merged profile (DD-223)
 #   client       format + analyze + widget/unit tests + coverage gate
+#   alerts       Prometheus rule syntax + rule unit tests + prod config (DD-236)
 name: ci
 
 on:
@@ -95,3 +96,9 @@ jobs:
       - run: flutter test --coverage
       - name: coverage gate
         run: sh ../scripts/coverage_gate.sh lcov coverage/lcov.info 80
+
+  alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/check-alerts.sh deploy/prod/alertmanager.yml.example

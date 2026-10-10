@@ -30,6 +30,8 @@ type Metrics struct {
 	jobRuns     *prometheus.CounterVec
 	jobDuration *prometheus.HistogramVec
 	jobRows     *prometheus.CounterVec
+	jobLastOK   *prometheus.GaugeVec
+	jobInterval *prometheus.GaugeVec
 
 	clientErrors *prometheus.CounterVec
 }
@@ -67,12 +69,21 @@ func NewMetrics() *Metrics {
 			Name: "otter_worker_job_rows_total",
 			Help: "Rows affected by worker jobs.",
 		}, []string{"job"}),
+		jobLastOK: prometheus.NewGaugeVec(prometheus.GaugeOpts{
+			Name: "otter_worker_job_last_success_timestamp_seconds",
+			Help: "Unix time of the job's last successful run (stall alerts).",
+		}, []string{"job"}),
+		jobInterval: prometheus.NewGaugeVec(prometheus.GaugeOpts{
+			Name: "otter_worker_job_interval_seconds",
+			Help: "Configured run interval per job.",
+		}, []string{"job"}),
 		clientErrors: prometheus.NewCounterVec(prometheus.CounterOpts{
 			Name: "otter_client_errors_total",
 			Help: "Uncaught client errors reported by the app (DD-235).",
 		}, []string{"platform", "kind"}),
 	}
-	reg.MustRegister(m.httpRequests, m.httpDuration, m.httpInFlight, m.jobRuns, m.jobDuration, m.jobRows, m.clientErrors)
+	reg.MustRegister(m.httpRequests, m.httpDuration, m.httpInFlight, m.jobRuns, m.jobDuration, m.jobRows,
+		m.jobLastOK, m.jobInterval, m.clientErrors)
 	return m
 }
 
@@ -86,10 +97,21 @@ func (m *Metrics) ObserveJob(job string, rows int64, dur time.Duration, err erro
 		result = "error"
 	}
 	m.jobRuns.WithLabelValues(job, result).Inc()
+	if err == nil {
+		m.jobLastOK.WithLabelValues(job).SetToCurrentTime()
+	}
 	m.jobDuration.WithLabelValues(job).Observe(dur.Seconds())
 	if rows > 0 {
 		m.jobRows.WithLabelValues(job).Add(float64(rows))
 	}
+}
+
+// JobInterval publishes a job's schedule so alerts can tell "late" per job.
+func (m *Metrics) JobInterval(job string, d time.Duration) {
+	if m == nil {
+		return
+	}
+	m.jobInterval.WithLabelValues(job).Set(d.Seconds())
 }
 
 // ObserveClientError counts one client error report (labels are allowlisted

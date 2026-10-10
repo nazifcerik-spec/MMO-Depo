@@ -35,8 +35,8 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Redis Sentinel/Cluster healthy.
 - [ ] Backup + PITR + restore drill success (aylık).
 - [ ] Monitoring dashboards deployed.
-- [ ] Alertmanager routing PagerDuty + Slack test.
-- [ ] Runbook wiki per alert.
+- [ ] Alertmanager routing PagerDuty + Slack test. (v1: kurallar + e-posta yönlendirmesi hazır — DD-236; `alertmanager.yml` SMTP bilgisi + test e-postası bekliyor.)
+- [x] Runbook per alert — her kuralın `runbook` açıklaması (deploy/alerts.yml).
 - [ ] Deploy pipeline CI/CD green + canary tested.
 - [ ] Feature flag provider (GrowthBook) live.
 - [ ] Secret manager (Vault/AWS SM) populated + rotation policy.

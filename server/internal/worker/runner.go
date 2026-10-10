@@ -66,6 +66,7 @@ func (r *Runner) Start(ctx context.Context) {
 }
 
 func (r *Runner) loop(ctx context.Context, j Job) {
+	r.metrics.JobInterval(j.Name(), j.Interval())
 	t := time.NewTicker(j.Interval())
 	defer t.Stop()
 	for {

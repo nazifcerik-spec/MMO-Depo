@@ -2,6 +2,10 @@
 global:
   scrape_interval: 15s
 
+# Same rules as production (DD-236); alerts show under /alerts, no delivery.
+rule_files:
+  - /etc/prometheus/alerts.yml
+
 scrape_configs:
   - job_name: otter-api
     static_configs:

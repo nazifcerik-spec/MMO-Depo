@@ -168,6 +168,7 @@ services:
       - otter
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
     ports:
       - "127.0.0.1:9095:9090"
     restart: unless-stopped
