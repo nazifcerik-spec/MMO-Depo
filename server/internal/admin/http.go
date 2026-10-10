@@ -14,6 +14,7 @@ import (
 	chimw "github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/clienterr"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -27,9 +28,10 @@ type MarketCanceller interface {
 }
 
 type Handler struct {
-	svc     *Service
-	market  MarketCanceller
-	support SupportDesk
+	svc        *Service
+	market     MarketCanceller
+	support    SupportDesk
+	clientErrs ClientErrors
 }
 
 func NewHandler(svc *Service, m MarketCanceller) *Handler { return &Handler{svc: svc, market: m} }
@@ -42,6 +44,14 @@ type SupportDesk interface {
 
 // WithSupport enables the support-ticket routes.
 func (h *Handler) WithSupport(d SupportDesk) *Handler { h.support = d; return h }
+
+// ClientErrors is the grouped app crash list (DD-235).
+type ClientErrors interface {
+	Recent(ctx context.Context, platform string, limit int) ([]clienterr.Group, error)
+}
+
+// WithClientErrors enables GET /internal/ops/client-errors.
+func (h *Handler) WithClientErrors(c ClientErrors) *Handler { h.clientErrs = c; return h }
 
 type ctxKey struct{}
 
@@ -447,7 +457,26 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 			r.Get("/internal/ops/support/tickets", h.SupportQueue)
 			r.Post("/internal/ops/support/tickets/{ticket_id}/reply", h.SupportReply)
 		}
+		if h.clientErrs != nil {
+			r.Get("/internal/ops/client-errors", h.ClientErrorList)
+		}
 	})
+}
+
+// ClientErrorList — GET /internal/ops/client-errors?platform=android&limit=N.
+func (h *Handler) ClientErrorList(w http.ResponseWriter, r *http.Request) {
+	a, ok := h.allow(w, r, perm(r, PermClientErrors), false)
+	if !ok {
+		return
+	}
+	limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
+	list, err := h.clientErrs.Recent(r.Context(), r.URL.Query().Get("platform"), limit)
+	if err != nil {
+		clienterr.WriteErr(w, r, err)
+		return
+	}
+	h.svc.Audit(r.Context(), a, AuditEntry{Action: "client_errors.read", RequestID: chimw.GetReqID(r.Context())})
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"errors": list})
 }
 
 // SupportQueue — GET /internal/ops/support/tickets?state=open|answered|closed&limit=N.

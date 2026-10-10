@@ -58,7 +58,7 @@ Closed Beta'nın önündeki tüm zorunlu gate'ler. Her madde `done` olmadan Wave
 - [ ] Play Store + App Store account + app registered.
 - [ ] App signing certificate + upload key secured.
 - [ ] Localization (TR + EN) ≥ %95 coverage.
-- [ ] Client crash reporting (Sentry / Firebase Crashlytics) live.
+- [x] Client crash reporting — Dart hataları birinci taraf toplayıcıya (DD-235). Native (NDK/iOS) çöküşler için Crashlytics: Firebase hesabı bekliyor.
 - [ ] Deep link routing test all screens.
 - [ ] Notification (FCM + APNs) live.
 - [ ] Cold start < 3sn hedef doğrula.

@@ -55,7 +55,7 @@ func TestHTTPHandlerErrors(t *testing.T) {
 	p.fail("POST", p.path("/guild/invite"), "{", 400, "E_INVALID_JSON")
 	p.fail("POST", p.path("/guild"), "{", 400, "E_INVALID_JSON")
 	require.Equal(t, 0.0, p.ok("GET", p.path("/guild/invites"), nil)["count"])
-	p.ok("POST", p.path("/guild"), map[string]any{"name": "Err " + randHex(4), "tag": "E" + randHex(1)})
+	p.ok("POST", p.path("/guild"), map[string]any{"name": "Err " + randHex(4), "tag": "E" + randHex(2)})
 	p.fail("POST", p.path("/guild/kick"), map[string]any{"target_character_id": o.char}, 404, "E_NOT_MEMBER")
 	p.fail("POST", p.path("/guild/transfer"), map[string]any{"target_character_id": o.char}, 404, "E_NOT_MEMBER")
 	p.fail("POST", p.path("/guild/invite"), map[string]any{"target_name": p.name}, 400, "E_SELF_TARGET")

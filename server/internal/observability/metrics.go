@@ -30,6 +30,8 @@ type Metrics struct {
 	jobRuns     *prometheus.CounterVec
 	jobDuration *prometheus.HistogramVec
 	jobRows     *prometheus.CounterVec
+
+	clientErrors *prometheus.CounterVec
 }
 
 // NewMetrics registers the process, Go runtime and Otter collectors.
@@ -65,8 +67,12 @@ func NewMetrics() *Metrics {
 			Name: "otter_worker_job_rows_total",
 			Help: "Rows affected by worker jobs.",
 		}, []string{"job"}),
+		clientErrors: prometheus.NewCounterVec(prometheus.CounterOpts{
+			Name: "otter_client_errors_total",
+			Help: "Uncaught client errors reported by the app (DD-235).",
+		}, []string{"platform", "kind"}),
 	}
-	reg.MustRegister(m.httpRequests, m.httpDuration, m.httpInFlight, m.jobRuns, m.jobDuration, m.jobRows)
+	reg.MustRegister(m.httpRequests, m.httpDuration, m.httpInFlight, m.jobRuns, m.jobDuration, m.jobRows, m.clientErrors)
 	return m
 }
 
@@ -84,6 +90,15 @@ func (m *Metrics) ObserveJob(job string, rows int64, dur time.Duration, err erro
 	if rows > 0 {
 		m.jobRows.WithLabelValues(job).Add(float64(rows))
 	}
+}
+
+// ObserveClientError counts one client error report (labels are allowlisted
+// by the caller, so cardinality stays bounded).
+func (m *Metrics) ObserveClientError(platform, kind string) {
+	if m == nil {
+		return
+	}
+	m.clientErrors.WithLabelValues(platform, kind).Inc()
 }
 
 // RegisterPool exports pgxpool stats, read lazily at scrape time.

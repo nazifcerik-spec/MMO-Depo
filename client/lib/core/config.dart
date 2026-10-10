@@ -6,4 +6,5 @@ class AppConfig {
 
   static const flavor = String.fromEnvironment('FLAVOR', defaultValue: 'dev');
   static const apiBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'http://localhost:8080');
+  static const appVersion = String.fromEnvironment('APP_VERSION');
 }

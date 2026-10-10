@@ -2130,6 +2130,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Ekler (ekran görüntüsü) v1'de yok. Yanıt tek mesaj; konuşma dizisi gerekirse sonraki iş. Kuyruk yalnız ops API'si üzerinden (admin arayüzü yok).
 **Tarih:** 2026-10-10
 
+## DD-235 — Birinci Taraf İstemci Hata Toplayıcı
+**Karar:** Uygulama yakalanmamış Dart hatalarını (`FlutterError.onError` + `PlatformDispatcher.onError`) kendi sunucumuza gönderir: `POST /v1/client/errors` (kimlik gerekmez — çöküş girişten önce olabilir; IP başı saatte 30). İstemci aynı hatayı bir kez, çalıştırma başına en fazla 10 rapor yollar, gönderim hatasını yutar. Sunucu e-posta, Bearer/JWT ve `token/code/password/key` sorgu değerlerini maskeler, mesajı 1000 / yığını 40 satır–8000 karakterle sınırlar, platform/sürüm/flavor'ı allowlist'ler. Raporlar parmak izine (tür + mesajın ilk satırı + ilk 3 çerçeve; sayılar, satır:sütun, adresler atılır) göre tek satırda toplanır (`ops.client_error`: sayaç + ilk/son görülme + son sürüm); 10 000 farklı grup tavanı, 30 gün görülmeyen grup worker `client_error_gc` ile silinir. Hesap ve IP saklanmaz. Operatör: `GET /internal/ops/client-errors` (`ops.client_errors`: support_l2, ops_engineer, admin; denetimli). Metrik `otter_client_errors_total{platform,kind}` (uyarı kuralları için). Uygulama sürümü `--dart-define=APP_VERSION`.
+**Reason:** Yayın öncesi istemci hata görünürlüğü gerekiyor (production-readiness); Sentry ve Crashlytics hesap ister ve kişisel veriyi üçüncü tarafa taşır. Gruplama satır sayısını sınırlı tutar.
+**Alternatives:** Sentry (hesap + DSN, SaaS), Firebase Crashlytics (Firebase projesi bekliyor; native çöküşleri yakalayan tek seçenek), yalnız log satırı (gruplama/sayaç yok, log toplama kararı DD-OPEN-11 açık).
+**Consequences:** Native (NDK/iOS) çöküşler ve obfuscate edilmiş yığınların sembolleştirilmesi kapsam dışı — Crashlytics Firebase hesabıyla eklenecek. Anonim uç kötüye kullanılırsa yalnız sayaçlar şişer (tavan + oran sınırı).
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

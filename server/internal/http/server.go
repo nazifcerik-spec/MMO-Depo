@@ -18,6 +18,7 @@ import (
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
 	"github.com/otter/server/internal/classskill"
+	"github.com/otter/server/internal/clienterr"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
@@ -84,8 +85,9 @@ type Deps struct {
 	ClassSkills       *classskill.Service
 	WorldEventHandler *worldevent.Handler
 	AdminHandler      *admin.Handler
-	PrivacyHandler    *privacy.Handler // DD-231: export download + legal pages
-	SupportHandler    *support.Handler // DD-234: player support tickets
+	PrivacyHandler    *privacy.Handler   // DD-231: export download + legal pages
+	SupportHandler    *support.Handler   // DD-234: player support tickets
+	ClientErrHandler  *clienterr.Handler // DD-235: app crash reports
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
 	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
@@ -229,6 +231,12 @@ func NewRouter(d Deps) http.Handler {
 					Endpoint: "POST /v1/support/tickets", PerAccount: ptrBucket(ratelimit.PerHour(5)),
 				}, d.Logger), appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/support/tickets", h.Create)
 			})
+		}
+		// --- Client error reports (DD-235): public, crashes happen before login ---
+		if h := d.ClientErrHandler; h != nil {
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "POST /v1/client/errors", PerIP: ptrBucket(ratelimit.PerHour(30)),
+			}, d.Logger)).Post("/client/errors", h.Report)
 		}
 		// The export link opens in a browser: no bearer, the one-time token is the credential.
 		if h := d.PrivacyHandler; h != nil {

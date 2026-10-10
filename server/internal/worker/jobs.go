@@ -460,6 +460,14 @@ func (j EconomyReconciler) Run(ctx context.Context) (int64, error) {
 	return int64(len(drifts)) + unbalanced, nil
 }
 
+// ClientErrorGC drops crash groups not seen for 30 days (DD-235).
+func ClientErrorGC(pool *pgxpool.Pool) Job {
+	return &sqlJob{name: "client_error_gc", interval: time.Hour, pool: pool, query: `
+DELETE FROM ops.client_error
+ WHERE fingerprint IN (SELECT fingerprint FROM ops.client_error
+                        WHERE last_seen < now() - INTERVAL '30 days' LIMIT $1)`}
+}
+
 // ChatGC deletes chat messages older than 30 days.
 func ChatGC(pool *pgxpool.Pool) Job {
 	return &sqlJob{name: "chat_gc", interval: time.Hour, pool: pool, query: `
@@ -514,6 +522,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 		AccountPurge{Pool: pool},
 		WorldEvents{Pool: pool, Txn: txn, Notifier: d.Notifier, Log: logger},
 		NotificationGC(pool),
+		ClientErrorGC(pool),
 		SanctionExpire(pool),
 		IdempotencyGC(pool),
 		BuybackGC(pool),

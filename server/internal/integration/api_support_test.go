@@ -37,20 +37,9 @@ func TestHTTPSupportTickets(t *testing.T) {
 	require.Empty(t, items(other.ok("GET", "/v1/support/tickets", nil), "tickets"), "players only see their own tickets")
 
 	// Operators: a viewer may not, a support agent may.
-	pass := "admin-pass-" + randHex(4) + "-x"
-	login := func(roles ...string) *hc {
-		email := "ops-" + randHex(4) + "@example.com"
-		_, secret, err := admin.NewService(w.p, nil, nil).CreateAdmin(w.ctx, email, "Ops", pass, roles)
-		require.NoError(t, err)
-		code, err := admin.TOTPCode(secret, time.Now().Unix()/30)
-		require.NoError(t, err)
-		c := &hc{t: t, base: p.base}
-		c.token = c.ok("POST", "/internal/admin/login", map[string]any{"email": email, "password": pass, "code": code})["token"].(string)
-		return c
-	}
-	viewer := login("viewer")
+	viewer := opsLogin(t, w, p.base, "viewer")
 	viewer.fail("GET", "/internal/ops/support/tickets", nil, 403, "")
-	agent := login("support_l1")
+	agent := opsLogin(t, w, p.base, "support_l1")
 	queue := items(agent.ok("GET", "/internal/ops/support/tickets?state=open&limit=200", nil), "tickets")
 	var found bool
 	for _, q := range queue {
@@ -82,4 +71,17 @@ func TestHTTPSupportTickets(t *testing.T) {
 	}
 	p.fail("POST", "/v1/support/tickets", map[string]any{"category": "feedback", "subject": "One more",
 		"body": "Please add more dungeons."}, 409, "E_TOO_MANY_TICKETS")
+}
+
+// opsLogin creates an operator with the given roles and signs in (password + TOTP).
+func opsLogin(t *testing.T, w *testEnv, base string, roles ...string) *hc {
+	t.Helper()
+	email, pass := "ops-"+randHex(4)+"@example.com", "admin-pass-"+randHex(4)+"-x"
+	_, secret, err := admin.NewService(w.p, nil, nil).CreateAdmin(w.ctx, email, "Ops", pass, roles)
+	require.NoError(t, err)
+	code, err := admin.TOTPCode(secret, time.Now().Unix()/30)
+	require.NoError(t, err)
+	c := &hc{t: t, base: base}
+	c.token = c.ok("POST", "/internal/admin/login", map[string]any{"email": email, "password": pass, "code": code})["token"].(string)
+	return c
 }

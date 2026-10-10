@@ -9,7 +9,9 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:otter/core/api_client.dart';
+import 'package:otter/core/error_reporter.dart';
 import 'package:otter/core/token_store.dart';
 import 'package:otter/features/activity/activity_repository.dart';
 import 'package:otter/features/adventure/adventure_repository.dart';
@@ -282,4 +284,23 @@ void main() {
     expect(mine.first.state, 'open');
     await expectLater(s.create(category: 'bug', subject: 'x', body: 'short', locale: 'tr'), apiError('E_VALIDATION'));
   });
+
+  test('client error report reaches the collector', () async {
+    // The reporter swallows failures, so check the status the server gave.
+    final client = _StatusRecorder();
+    await ErrorReporter(baseUrl: base, client: client).report(StateError('e2e'), StackTrace.current, kind: 'platform');
+    expect(client.codes, [202]);
+  });
+}
+
+class _StatusRecorder extends http.BaseClient {
+  final _inner = http.Client();
+  final codes = <int>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final res = await _inner.send(request);
+    codes.add(res.statusCode);
+    return res;
+  }
 }

@@ -100,6 +100,6 @@ v1.4.1 (2026-11-05)
 - [security/audit.md](../security/audit.md) — post-mortem template
 
 ## 12. Bekleyen Kararlar
-- Sentry vs Firebase Crashlytics client crash — Phase 01 client team karar.
+- ~~Sentry vs Firebase Crashlytics client crash~~ — v1: birinci taraf toplayıcı (DD-235); native çöküşler için Crashlytics Firebase hesabıyla eklenecek.
 - Bug tracking tool (Linear / GitHub Issues / JIRA) — biz karar.
 - Post-mortem publish policy (public retrospective sonrası) Phase 02 karar.
