@@ -1594,4 +1594,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deletionCancelled => 'Your account deletion request was cancelled.';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get supportIntro =>
+      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+
+  @override
+  String get supportNew => 'New request';
+
+  @override
+  String get supportNone => 'No requests yet.';
+
+  @override
+  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+
+  @override
+  String get supportCategory => 'Topic';
+
+  @override
+  String get supportSubject => 'Subject';
+
+  @override
+  String get supportMessage => 'What happened? Step by step if you can.';
+
+  @override
+  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+
+  @override
+  String get supportBug => 'Bug';
+
+  @override
+  String get supportAccount => 'Account';
+
+  @override
+  String get supportAbuse => 'Abuse / report a player';
+
+  @override
+  String get supportFeedback => 'Suggestion';
+
+  @override
+  String get supportOther => 'Other';
+
+  @override
+  String get supportOpen => 'Open';
+
+  @override
+  String get supportAnswered => 'Answered';
+
+  @override
+  String get supportClosed => 'Closed';
+
+  @override
+  String get supportReply => 'Team reply';
+
+  @override
+  String get nkSupport => 'Support reply';
 }

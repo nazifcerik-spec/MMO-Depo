@@ -5,6 +5,8 @@ import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/links.dart';
 import '../../shared/widgets.dart';
+import '../support/support_repository.dart';
+import '../support/support_screen.dart';
 import 'auth_controller.dart';
 
 /// "Forgot password": asks for the e-mail and requests a reset link. The
@@ -211,12 +213,16 @@ class AccountMenuButton extends StatelessWidget {
           context: context,
           builder: (_) => _DeleteAccountDialog(auth: auth),
         ),
+        'support' => Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => SupportScreen(repo: SupportRepository(auth.api)))),
         'terms' => openExternal(context, legalUrl(context, 'terms')),
         _ => openExternal(context, legalUrl(context, 'privacy')),
       },
       itemBuilder: (_) => [
         PopupMenuItem(value: 'password', child: Text(l.changePassword)),
         PopupMenuItem(value: 'export', child: Text(l.downloadMyData)),
+        PopupMenuItem(value: 'support', child: Text(l.support)),
         PopupMenuItem(value: 'terms', child: Text(l.termsOfService)),
         PopupMenuItem(value: 'privacy', child: Text(l.privacyPolicy)),
         const PopupMenuDivider(),

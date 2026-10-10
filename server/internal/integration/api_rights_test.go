@@ -57,7 +57,7 @@ func TestHTTPAccountRights(t *testing.T) {
 	require.Contains(t, string(doc["characters"]), p.char)
 	require.Contains(t, string(doc["wallets"]), "1234")
 	require.Contains(t, string(doc["chat"]), "hello export")
-	for _, s := range []string{"sessions", "items", "ledger", "mail", "market", "quests"} {
+	for _, s := range []string{"sessions", "items", "ledger", "mail", "market", "quests", "support_tickets"} {
 		require.Contains(t, doc, s)
 	}
 	code, _, _ = get(t, p.base+path)

@@ -1593,4 +1593,62 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get deletionCancelled => 'Hesap silme talebin iptal edildi.';
+
+  @override
+  String get support => 'Destek';
+
+  @override
+  String get supportIntro =>
+      'Bir hata mı buldun, hesabınla ilgili sorun mu var? Yaz, ekip burada yanıtlasın; yanıt gelince bildirim alırsın.';
+
+  @override
+  String get supportNew => 'Yeni talep';
+
+  @override
+  String get supportNone => 'Henüz talebin yok.';
+
+  @override
+  String get supportSent => 'Talebin alındı. Yanıt gelince haber vereceğiz.';
+
+  @override
+  String get supportCategory => 'Konu türü';
+
+  @override
+  String get supportSubject => 'Başlık';
+
+  @override
+  String get supportMessage => 'Ne oldu? Mümkünse adım adım anlat.';
+
+  @override
+  String get supportTooShort => 'Başlık en az 3, mesaj en az 10 karakter olmalı.';
+
+  @override
+  String get supportBug => 'Hata';
+
+  @override
+  String get supportAccount => 'Hesap';
+
+  @override
+  String get supportAbuse => 'Kötüye kullanım / şikâyet';
+
+  @override
+  String get supportFeedback => 'Öneri';
+
+  @override
+  String get supportOther => 'Diğer';
+
+  @override
+  String get supportOpen => 'Açık';
+
+  @override
+  String get supportAnswered => 'Yanıtlandı';
+
+  @override
+  String get supportClosed => 'Kapandı';
+
+  @override
+  String get supportReply => 'Ekibin yanıtı';
+
+  @override
+  String get nkSupport => 'Destek yanıtı';
 }

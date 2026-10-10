@@ -6,7 +6,7 @@
 #
 # package                     min%
 internal/activity             80
-internal/admin                16
+internal/admin                33
 internal/classskill           91
 internal/combat               86
 internal/consumable           79
@@ -28,6 +28,7 @@ internal/notification         83
 internal/observability        60
 internal/party                81
 internal/privacy              78
+internal/support              80
 internal/progression          81
 internal/quest                87
 internal/ratelimit            43

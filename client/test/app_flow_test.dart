@@ -776,6 +776,47 @@ void main() {
     expect(find.text('New here? Create an account'), findsOneWidget, reason: 'back on the sign-in screen');
   });
 
+  testWidgets('support: answered ticket shows the reply, new ticket validates and sends client info', (tester) async {
+    final be = FakeBackend();
+    be.tickets.add({
+      'id': 'tkt-0',
+      'category': 'account',
+      'subject': 'Lost my sword',
+      'body': 'It vanished after a hunt.',
+      'state': 'answered',
+      'reply': 'Restored it, sorry!',
+      'created_at': '2026-10-01T10:00:00Z',
+    });
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+
+    await tester.tap(find.byTooltip('Account'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Support'));
+    await tester.pumpAndSettle();
+    expect(find.text('Lost my sword'), findsOneWidget);
+    expect(find.text('Answered'), findsOneWidget);
+    expect(find.text('Restored it, sorry!'), findsOneWidget);
+
+    await tester.tap(find.text('New request'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('support-subject')), 'Bug');
+    await tester.enterText(find.byKey(const Key('support-body')), 'short');
+    await tester.tap(find.text('Send'));
+    await tester.pumpAndSettle();
+    expect(find.text('Subject needs at least 3 characters, the message at least 10.'), findsOneWidget);
+    expect(be.lastTicket, isNull);
+
+    await tester.enterText(find.byKey(const Key('support-body')), 'The bag shows an empty slot after selling.');
+    await tester.tap(find.text('Send'));
+    await tester.pumpAndSettle();
+    expect(be.lastTicket!['category'], 'bug');
+    expect((be.lastTicket!['client_info'] as Map)['locale'], 'en');
+    expect(find.text("Request received. We'll let you know when there's an answer."), findsOneWidget);
+    expect(find.text('Open'), findsOneWidget, reason: 'the new ticket is listed');
+  });
+
   testWidgets('unverified e-mail banner resends; change password rejects wrong current without refreshing', (
     tester,
   ) async {

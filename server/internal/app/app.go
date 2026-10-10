@@ -43,6 +43,7 @@ import (
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
+	"github.com/otter/server/internal/support"
 	"github.com/otter/server/internal/vendor"
 	"github.com/otter/server/internal/world"
 	"github.com/otter/server/internal/worldevent"
@@ -292,7 +293,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	marketHandler := market.NewHandler(marketSvc)
 
 	// --- Admin / Ops (Sprint 26, DD-213) ---
-	adminHandler := admin.NewHandler(admin.NewService(pool, txnSvc, logger), marketSvc)
+	supportSvc := support.NewService(pool, notifSvc, logger)
+	adminHandler := admin.NewHandler(admin.NewService(pool, txnSvc, logger), marketSvc).WithSupport(supportSvc)
 
 	// --- Content Pack Loader (Sprint 12) ---
 	// YAML → DB upsert → refresh in-process catalogs. Runs after all services
@@ -373,6 +375,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
 		AdminHandler:      adminHandler,
+		SupportHandler:    support.NewHandler(supportSvc),
 		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
 			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,
 		}, logger),

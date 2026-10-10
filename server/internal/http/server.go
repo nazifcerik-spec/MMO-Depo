@@ -43,6 +43,7 @@ import (
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/social"
+	"github.com/otter/server/internal/support"
 	"github.com/otter/server/internal/vendor"
 	"github.com/otter/server/internal/world"
 	"github.com/otter/server/internal/worldevent"
@@ -84,6 +85,7 @@ type Deps struct {
 	WorldEventHandler *worldevent.Handler
 	AdminHandler      *admin.Handler
 	PrivacyHandler    *privacy.Handler // DD-231: export download + legal pages
+	SupportHandler    *support.Handler // DD-234: player support tickets
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
 	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
@@ -218,6 +220,16 @@ func NewRouter(d Deps) http.Handler {
 				Endpoint: "DELETE /v1/me", PerAccount: ptrBucket(ratelimit.PerHour(3)),
 			}, d.Logger)).Delete("/me", authHandler.DeleteAccount)
 		})
+		// --- Support tickets (DD-234) ---
+		if h := d.SupportHandler; h != nil {
+			r.Group(func(r chi.Router) {
+				r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
+				r.Get("/support/tickets", h.Mine)
+				r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+					Endpoint: "POST /v1/support/tickets", PerAccount: ptrBucket(ratelimit.PerHour(5)),
+				}, d.Logger), appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/support/tickets", h.Create)
+			})
+		}
 		// The export link opens in a browser: no bearer, the one-time token is the credential.
 		if h := d.PrivacyHandler; h != nil {
 			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{

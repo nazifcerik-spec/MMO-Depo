@@ -2929,6 +2929,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your account deletion request was cancelled.'**
   String get deletionCancelled;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @supportIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.'**
+  String get supportIntro;
+
+  /// No description provided for @supportNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New request'**
+  String get supportNew;
+
+  /// No description provided for @supportNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests yet.'**
+  String get supportNone;
+
+  /// No description provided for @supportSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Request received. We\'ll let you know when there\'s an answer.'**
+  String get supportSent;
+
+  /// No description provided for @supportCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic'**
+  String get supportCategory;
+
+  /// No description provided for @supportSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get supportSubject;
+
+  /// No description provided for @supportMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened? Step by step if you can.'**
+  String get supportMessage;
+
+  /// No description provided for @supportTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject needs at least 3 characters, the message at least 10.'**
+  String get supportTooShort;
+
+  /// No description provided for @supportBug.
+  ///
+  /// In en, this message translates to:
+  /// **'Bug'**
+  String get supportBug;
+
+  /// No description provided for @supportAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get supportAccount;
+
+  /// No description provided for @supportAbuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Abuse / report a player'**
+  String get supportAbuse;
+
+  /// No description provided for @supportFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get supportFeedback;
+
+  /// No description provided for @supportOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get supportOther;
+
+  /// No description provided for @supportOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get supportOpen;
+
+  /// No description provided for @supportAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered'**
+  String get supportAnswered;
+
+  /// No description provided for @supportClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get supportClosed;
+
+  /// No description provided for @supportReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Team reply'**
+  String get supportReply;
+
+  /// No description provided for @nkSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support reply'**
+  String get nkSupport;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

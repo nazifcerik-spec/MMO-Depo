@@ -2123,6 +2123,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Yükleme anahtarı kaybolursa Play Console'dan sıfırlama gerekir — güvenli yedeklenmeli.
 **Tarih:** 2026-10-10
 
+## DD-234 — Oyun İçi Destek Talepleri
+**Karar:** Oyuncu hesap menüsünden destek talebi açar (`POST /v1/support/tickets`: kategori bug/account/abuse/feedback/other, başlık 3–120, mesaj 10–4000 karakter, isteğe bağlı kendi karakteri). İstemci yalnız allowlist'li `client_info` gönderir (platform, dil, flavor, sürüm; anahtar başı 64 karakter); bilinmeyen anahtarlar atılır. Hesap başı en fazla 10 açık talep (hesap satırı kilidi altında sayılır) + saatte 5 oluşturma. Operatörler `/internal/ops/support/tickets` kuyruğunu okur ve yanıtlar/kapatır (`support.tickets` izni: support_l1, support_l2, admin); her okuma ve yanıt `audit.admin_action`'a yazılır. Yanıt oyuncuya `support_reply` bildirimi (push + inbox) olarak gider. Talepler veri dışa aktarımına girer, hesap silinince silinir.
+**Reason:** Mağaza yayınından sonra oyuncunun hata/hesap sorununu iletebileceği ve yanıtı oyun içinde görebileceği bir kanal gerekiyor; e-posta adresi tek başına talep takibi ve kötüye kullanım şikâyeti için yetersiz.
+**Alternatives:** Harici yardım masası (Zendesk vb. — hesap + maliyet + kişisel veri üçüncü tarafa), yalnız `SUPPORT_EMAIL` (takip yok, yanıt oyunda görünmez).
+**Consequences:** Ekler (ekran görüntüsü) v1'de yok. Yanıt tek mesaj; konuşma dizisi gerekirse sonraki iş. Kuyruk yalnız ops API'si üzerinden (admin arayüzü yok).
+**Tarih:** 2026-10-10
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

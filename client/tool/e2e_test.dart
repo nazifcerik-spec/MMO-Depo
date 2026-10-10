@@ -23,6 +23,7 @@ import 'package:otter/features/progression/progression_repository.dart';
 import 'package:otter/features/quests/quest_repository.dart';
 import 'package:otter/features/social/group_repository.dart';
 import 'package:otter/features/social/social_repository.dart';
+import 'package:otter/features/support/support_repository.dart';
 import 'package:otter/features/workshop/workshop_repository.dart';
 import 'package:otter/shared/content_names.dart';
 
@@ -271,5 +272,14 @@ void main() {
       expect(await ev.claimDaily(seasonal.first.code), seasonal.first.dailyTokens);
       await expectLater(ev.claimDaily(seasonal.first.code), apiError('E_ALREADY_CLAIMED'));
     }
+  });
+
+  test('support ticket: file, list, validation', () async {
+    final s = SupportRepository(a.api);
+    await s.create(category: 'bug', subject: 'E2E ticket', body: 'Filed from the e2e suite.', locale: 'tr');
+    final mine = await s.mine();
+    expect(mine.first.subject, 'E2E ticket');
+    expect(mine.first.state, 'open');
+    await expectLater(s.create(category: 'bug', subject: 'x', body: 'short', locale: 'tr'), apiError('E_VALIDATION'));
   });
 }

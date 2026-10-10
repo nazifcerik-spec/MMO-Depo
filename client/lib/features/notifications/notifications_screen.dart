@@ -17,6 +17,7 @@ String notificationKindName(AppLocalizations l, String kind) => switch (kind) {
   'party_invite' => l.nkPartyInvite,
   'guild_invite' => l.nkGuildInvite,
   'achievement_unlocked' => l.nkAchievement,
+  'support_reply' => l.nkSupport,
   _ => l.nkSystem,
 };
 
@@ -37,6 +38,7 @@ String? _detail(InboxItem n) {
       '${itemName(s('template_code')!)} · +${goldString((v['net_copper'] as num?)?.toInt() ?? 0)}',
     'mail_received' => s('subject'),
     'guild_invite' => s('guild_name'),
+    'support_reply' => s('subject'),
     'travel_completed' when s('region') != null => ContentNames.of('region', s('region')!),
     'world_event_active' when s('event') != null => ContentNames.of('worldevent', s('event')!),
     'achievement_unlocked' when s('code') != null => ContentNames.of('achievement', s('code')!),

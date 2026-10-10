@@ -596,6 +596,8 @@ class FakeBackend {
   final ownedTitles = <String>['prospector'];
   final worldEvents = <Map<String, dynamic>>[];
   bool seasonalClaimed = false;
+  final tickets = <Map<String, dynamic>>[];
+  Map<String, dynamic>? lastTicket;
 
   int get _unread => inbox.where((n) => n['read_at'] == null).length;
 
@@ -604,6 +606,20 @@ class FakeBackend {
   http.Response? _meta(http.Request req, String path, Map body) {
     final now = DateTime.now().toUtc().toIso8601String();
     switch ((req.method, path)) {
+      case ('GET', '/v1/support/tickets'):
+        return json(200, {'tickets': tickets});
+      case ('POST', '/v1/support/tickets'):
+        lastTicket = Map<String, dynamic>.from(body);
+        final t = {
+          'id': 'tkt-${tickets.length + 1}',
+          'category': body['category'],
+          'subject': body['subject'],
+          'body': body['body'],
+          'state': 'open',
+          'created_at': now,
+        };
+        tickets.insert(0, t);
+        return json(201, t);
       case ('GET', '/v1/notifications'):
         return json(200, {'count': inbox.length, 'unread': _unread, 'notifications': inbox});
       case ('POST', '/v1/notifications/read-all'):

@@ -18,6 +18,7 @@ import (
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 	"github.com/otter/server/internal/market"
+	"github.com/otter/server/internal/support"
 )
 
 // MarketCanceller is the market capability admin needs.
@@ -26,11 +27,21 @@ type MarketCanceller interface {
 }
 
 type Handler struct {
-	svc    *Service
-	market MarketCanceller
+	svc     *Service
+	market  MarketCanceller
+	support SupportDesk
 }
 
 func NewHandler(svc *Service, m MarketCanceller) *Handler { return &Handler{svc: svc, market: m} }
+
+// SupportDesk is the ticket queue the support routes work on (DD-234).
+type SupportDesk interface {
+	Queue(ctx context.Context, state string, limit int) ([]support.Ticket, error)
+	Answer(ctx context.Context, admin, ticket uuid.UUID, reply string, closeIt bool) (*support.Ticket, error)
+}
+
+// WithSupport enables the support-ticket routes.
+func (h *Handler) WithSupport(d SupportDesk) *Handler { h.support = d; return h }
 
 type ctxKey struct{}
 
@@ -84,6 +95,8 @@ type body struct {
 	Grant     bool   `json:"grant"`
 	RefundFee bool   `json:"refund_fee"`
 	StartsIn  int    `json:"starts_in_minutes"`
+	Reply     string `json:"reply"`
+	Close     bool   `json:"close"`
 }
 
 func decode(w http.ResponseWriter, r *http.Request) (body, bool) {
@@ -430,5 +443,49 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 		r.Post("/internal/ops/market/{listing_id}/cancel", h.CancelListing)
 		r.Post("/internal/ops/guilds/{guild_id}/disband", h.DisbandGuild)
 		r.Post("/internal/ops/world-events/{template_code}/trigger", h.TriggerEvent)
+		if h.support != nil {
+			r.Get("/internal/ops/support/tickets", h.SupportQueue)
+			r.Post("/internal/ops/support/tickets/{ticket_id}/reply", h.SupportReply)
+		}
 	})
+}
+
+// SupportQueue — GET /internal/ops/support/tickets?state=open|answered|closed&limit=N.
+func (h *Handler) SupportQueue(w http.ResponseWriter, r *http.Request) {
+	a, ok := h.allow(w, r, perm(r, PermSupportTickets), false)
+	if !ok {
+		return
+	}
+	limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
+	list, err := h.support.Queue(r.Context(), r.URL.Query().Get("state"), limit)
+	if err != nil {
+		support.WriteErr(w, r, err)
+		return
+	}
+	h.svc.Audit(r.Context(), a, AuditEntry{Action: "support.queue", RequestID: chimw.GetReqID(r.Context())})
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"tickets": list})
+}
+
+// SupportReply — POST /internal/ops/support/tickets/{ticket_id}/reply {reply, close}.
+func (h *Handler) SupportReply(w http.ResponseWriter, r *http.Request) {
+	b, ok := decode(w, r)
+	if !ok {
+		return
+	}
+	a, ok := h.allow(w, r, perm(r, PermSupportTickets), false)
+	if !ok {
+		return
+	}
+	id, ok := pathID(w, r, "ticket_id")
+	if !ok {
+		return
+	}
+	t, err := h.support.Answer(r.Context(), a.ID, id, b.Reply, b.Close)
+	if err != nil {
+		support.WriteErr(w, r, err)
+		return
+	}
+	h.svc.Audit(r.Context(), a, AuditEntry{Action: "support.reply", TargetKind: "support_ticket", TargetID: &id,
+		After: map[string]any{"state": t.State}, RequestID: chimw.GetReqID(r.Context())})
+	apierr.WriteJSON(w, http.StatusOK, t)
 }
