@@ -8,6 +8,8 @@ import 'package:otter/core/token_store.dart';
 /// Minimal in-memory Otter API for client tests. Records every request.
 class FakeBackend {
   final requests = <http.Request>[];
+  int exportLinks = 0;
+  bool deletionRequested = false;
   int refreshCalls = 0;
   int accessGen = 0;
 
@@ -85,7 +87,20 @@ class FakeBackend {
       if (body['password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
       return json(200, _session());
     }
-    if (path == '/v1/auth/register') return json(201, _session());
+    if (path == '/v1/auth/register') {
+      if (body['accept_terms'] != true) return error(400, 'E_VALIDATION');
+      return json(201, _session());
+    }
+    // Account rights (DD-231).
+    if (path == '/v1/me/export-link') {
+      exportLinks++;
+      return json(201, {'url': 'http://localhost:8080/v1/me/export?token=t', 'expires_at': '2026-10-10T12:00:00Z'});
+    }
+    if (path == '/v1/me' && req.method == 'DELETE') {
+      if (body['current_password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
+      deletionRequested = true;
+      return json(202, {'purge_after': '2026-11-09T12:00:00Z'});
+    }
     if (path == '/v1/auth/password/reset-request') {
       resetRequestedFor.add(body['email'] as String);
       return json(202, {'status': 'queued'});

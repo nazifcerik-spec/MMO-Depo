@@ -60,6 +60,8 @@ type registerReq struct {
 	Email    string `json:"email"`
 	Username string `json:"username"`
 	Password string `json:"password"`
+	// AcceptTerms: 13+ and terms/privacy accepted (DD-231).
+	AcceptTerms bool `json:"accept_terms"`
 }
 
 // Register is the POST /v1/auth/register handler.
@@ -70,11 +72,12 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	res, err := h.svc.Register(r.Context(), RegisterRequest{
-		Email:     body.Email,
-		Username:  body.Username,
-		Password:  body.Password,
-		IPHash:    h.ipHash(httpctx.ClientIP(r)),
-		UserAgent: r.UserAgent(),
+		Email:       body.Email,
+		Username:    body.Username,
+		Password:    body.Password,
+		IPHash:      h.ipHash(httpctx.ClientIP(r)),
+		UserAgent:   r.UserAgent(),
+		AcceptTerms: body.AcceptTerms,
 	})
 	if err != nil {
 		writeAuthError(w, r, err)
@@ -162,17 +165,20 @@ type sessionResp struct {
 	RefreshToken    string `json:"refresh_token"`
 	RefreshExpires  string `json:"refresh_expires_at"`
 	EmailVerified   bool   `json:"email_verified"`
+	// DeletionCancelled: this sign-in cancelled a pending account deletion.
+	DeletionCancelled bool `json:"deletion_cancelled,omitempty"`
 }
 
 func sessionResponse(r *LoginResult) sessionResp {
 	return sessionResp{
-		AccountID:       r.AccountID.String(),
-		SessionID:       r.SessionID.String(),
-		AccessToken:     r.AccessToken,
-		AccessExpiresAt: r.AccessExpiresAt.UTC().Format(time.RFC3339),
-		RefreshToken:    r.RefreshToken,
-		RefreshExpires:  r.RefreshExpires.UTC().Format(time.RFC3339),
-		EmailVerified:   r.EmailVerified,
+		AccountID:         r.AccountID.String(),
+		SessionID:         r.SessionID.String(),
+		AccessToken:       r.AccessToken,
+		AccessExpiresAt:   r.AccessExpiresAt.UTC().Format(time.RFC3339),
+		RefreshToken:      r.RefreshToken,
+		RefreshExpires:    r.RefreshExpires.UTC().Format(time.RFC3339),
+		EmailVerified:     r.EmailVerified,
+		DeletionCancelled: r.DeletionCancelled,
 	}
 }
 
@@ -215,6 +221,8 @@ func writeAuthError(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusUnauthorized, "E_SESSION_EXPIRED", "session expired")
 	case errors.Is(err, ErrRecoveryTokenInvalid):
 		apierr.Write(w, r, http.StatusBadRequest, "E_RECOVERY_TOKEN_INVALID", "link is invalid or expired")
+	case errors.Is(err, ErrExportLimit):
+		apierr.Write(w, r, http.StatusTooManyRequests, "E_RATE_LIMITED", "too many export links, try again later")
 	case errors.Is(err, ErrEmailAlreadyVerified):
 		apierr.Write(w, r, http.StatusConflict, "E_ALREADY_VERIFIED", "e-mail already verified")
 	default:

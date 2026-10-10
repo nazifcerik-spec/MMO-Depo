@@ -74,6 +74,11 @@ type Config struct {
 	// When true, characters can only be created after the e-mail is verified
 	// (docs/auth/register.md §7). Enable once SMTP delivery is configured.
 	AuthRequireVerifiedEmail bool `envconfig:"AUTH_REQUIRE_VERIFIED_EMAIL" default:"false"`
+
+	// --- Legal pages (DD-231): who runs the game and how to reach them.
+	// Empty values show a draft banner on /terms and /privacy.
+	LegalOperator string `envconfig:"LEGAL_OPERATOR" default:""`
+	SupportEmail  string `envconfig:"SUPPORT_EMAIL" default:""`
 	// SMTP for the email_dispatch worker. Empty host = e-mails are only logged
 	// (dev). Port 587 uses STARTTLS; 465 implicit TLS.
 	SMTPHost     string `envconfig:"SMTP_HOST" default:""`

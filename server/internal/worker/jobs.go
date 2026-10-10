@@ -9,11 +9,13 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/otter/server/internal/domain/auth"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
+	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/worldevent"
 )
@@ -196,6 +198,16 @@ func (j EmailDispatch) Run(ctx context.Context) (int64, error) {
 		return 0, nil
 	}
 	return mail.Dispatch(ctx, j.Pool, j.Sender, 50)
+}
+
+// AccountPurge erases accounts whose deletion grace has passed (DD-231);
+// their characters then go through CharacterDeleteExpire.
+type AccountPurge struct{ Pool *pgxpool.Pool }
+
+func (AccountPurge) Name() string            { return "account_purge" }
+func (AccountPurge) Interval() time.Duration { return time.Hour }
+func (j AccountPurge) Run(ctx context.Context) (int64, error) {
+	return privacy.Purge(ctx, j.Pool, time.Now(), auth.DeletionGrace, BatchSize)
 }
 
 // WorldEvents schedules, opens, closes and pays world boss / invasion spawns.
@@ -499,6 +511,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 		TravelArrive{Pool: pool, Notifier: d.Notifier, Log: logger},
 		PushDispatch{Pool: pool, Senders: d.Senders},
 		EmailDispatch{Pool: pool, Sender: d.Mailer},
+		AccountPurge{Pool: pool},
 		WorldEvents{Pool: pool, Txn: txn, Notifier: d.Notifier, Log: logger},
 		NotificationGC(pool),
 		SanctionExpire(pool),

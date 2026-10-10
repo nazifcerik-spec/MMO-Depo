@@ -49,7 +49,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get haveAccount => 'Already have an account? Log in';
 
   @override
-  String get acceptTerms => 'I accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
 
   @override
   String get fieldRequired => 'Required';
@@ -1558,4 +1558,40 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
     return '$_temp0';
   }
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get accountMenu => 'Account';
+
+  @override
+  String get downloadMyData => 'Download my data';
+
+  @override
+  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+
+  @override
+  String get linkOpenFailed => 'Could not open the link.';
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountBody =>
+      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete account';
+
+  @override
+  String deleteScheduled(String date) {
+    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+  }
+
+  @override
+  String get deletionCancelled => 'Your account deletion request was cancelled.';
 }

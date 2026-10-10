@@ -38,6 +38,7 @@ import (
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
+	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/ratelimit"
@@ -82,6 +83,7 @@ type Deps struct {
 	ClassSkills       *classskill.Service
 	WorldEventHandler *worldevent.Handler
 	AdminHandler      *admin.Handler
+	PrivacyHandler    *privacy.Handler // DD-231: export download + legal pages
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
 	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
@@ -123,6 +125,15 @@ func NewRouter(d Deps) http.Handler {
 		Endpoint: "GET /verify-email", PerIP: ptrBucket(ratelimit.PerMinute(20)),
 	}, d.Logger)).Get("/verify-email", authHandler.VerifyEmailPage)
 	r.Get("/reset-password", authHandler.ResetPasswordPage)
+
+	// Legal pages (DD-231): linked from the app and the stores.
+	if h := d.PrivacyHandler; h != nil {
+		pages := appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+			Endpoint: "GET /legal", PerIP: ptrBucket(ratelimit.PerMinute(60)),
+		}, d.Logger)
+		r.With(pages).Get("/terms", h.Terms)
+		r.With(pages).Get("/privacy", h.Privacy)
+	}
 
 	// Admin / ops surface (DD-213) — outside /v1, own bearer sessions.
 	if h := d.AdminHandler; h != nil {
@@ -196,7 +207,23 @@ func NewRouter(d Deps) http.Handler {
 			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
 				Endpoint: "POST /v1/auth/password/change", PerAccount: ptrBucket(ratelimit.PerHour(5)),
 			}, d.Logger)).Post("/auth/password/change", authHandler.ChangePassword)
+			// --- Account rights (DD-231) ---
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "POST /v1/me/export-link", PerAccount: ptrBucket(ratelimit.PerHour(5)),
+			}, d.Logger)).Post("/me/export-link", authHandler.ExportLink)
 		})
+		r.Group(func(r chi.Router) {
+			r.Use(appmw.RequireAuth(d.AuthService, d.Logger))
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "DELETE /v1/me", PerAccount: ptrBucket(ratelimit.PerHour(3)),
+			}, d.Logger)).Delete("/me", authHandler.DeleteAccount)
+		})
+		// The export link opens in a browser: no bearer, the one-time token is the credential.
+		if h := d.PrivacyHandler; h != nil {
+			r.With(appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "GET /v1/me/export", PerIP: ptrBucket(ratelimit.PerHour(20)),
+			}, d.Logger)).Get("/me/export", h.Export)
+		}
 
 		// --- Character endpoints + wallet read ---
 		r.Group(func(r chi.Router) {

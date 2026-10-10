@@ -25,6 +25,7 @@ type TokenKind string
 const (
 	TokenPasswordReset TokenKind = "password_reset"
 	TokenEmailVerify   TokenKind = "email_verify"
+	TokenDataExport    TokenKind = "data_export" // DD-231
 )
 
 var tokenTTL = map[TokenKind]time.Duration{

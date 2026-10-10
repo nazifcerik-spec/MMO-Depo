@@ -41,7 +41,7 @@ func lastToken(t *testing.T, repo *auth.MemoryRepo) string {
 
 func register(t *testing.T, svc *auth.Service) *auth.LoginResult {
 	t.Helper()
-	res, err := svc.Register(context.Background(), auth.RegisterRequest{
+	res, err := svc.Register(context.Background(), auth.RegisterRequest{AcceptTerms: true,
 		Email: "grim@example.com", Username: "grim", Password: "hunter22-strong",
 	})
 	require.NoError(t, err)

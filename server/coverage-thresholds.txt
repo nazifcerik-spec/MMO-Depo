@@ -27,13 +27,14 @@ internal/market               80
 internal/notification         83
 internal/observability        60
 internal/party                81
+internal/privacy              78
 internal/progression          81
 internal/quest                87
 internal/ratelimit            43
 internal/skill                95
 internal/social               78
 internal/vendor               80
-internal/worker               36
+internal/worker               43
 internal/world                78
 internal/worldevent           81
 internal/wsgateway            40

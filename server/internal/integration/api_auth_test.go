@@ -14,12 +14,12 @@ func TestHTTPAuthEdges(t *testing.T) {
 	anon := &hc{t: t, base: liveAPI(t)}
 	suffix := randHex(5)
 	email, user, pass := "e"+suffix+"@example.com", "e"+suffix, "pass-"+suffix+"-word"
-	reg := anon.ok("POST", "/v1/auth/register", map[string]any{"email": email, "username": user, "password": pass})
+	reg := anon.ok("POST", "/v1/auth/register", map[string]any{"accept_terms": true, "email": email, "username": user, "password": pass})
 	acct := reg["account_id"].(string)
 
-	anon.fail("POST", "/v1/auth/register", map[string]any{"email": email, "username": "x" + suffix, "password": pass}, 409, "E_ACCOUNT_EXISTS")
-	anon.fail("POST", "/v1/auth/register", map[string]any{"email": "not-an-email", "username": "y" + suffix, "password": pass}, 400, "E_VALIDATION")
-	anon.fail("POST", "/v1/auth/register", map[string]any{"email": "z" + suffix + "@example.com", "username": "z" + suffix, "password": "short"}, 400, "E_VALIDATION")
+	anon.fail("POST", "/v1/auth/register", map[string]any{"accept_terms": true, "email": email, "username": "x" + suffix, "password": pass}, 409, "E_ACCOUNT_EXISTS")
+	anon.fail("POST", "/v1/auth/register", map[string]any{"accept_terms": true, "email": "not-an-email", "username": "y" + suffix, "password": pass}, 400, "E_VALIDATION")
+	anon.fail("POST", "/v1/auth/register", map[string]any{"accept_terms": true, "email": "z" + suffix + "@example.com", "username": "z" + suffix, "password": "short"}, 400, "E_VALIDATION")
 	anon.fail("POST", "/v1/auth/refresh", map[string]any{"refresh_token": "unknown-" + suffix}, 401, "E_REFRESH_TOKEN_UNKNOWN")
 	anon.fail("POST", "/v1/auth/refresh", "{", 400, "")
 	anon.fail("POST", "/v1/auth/login", "", 400, "")

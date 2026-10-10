@@ -34,11 +34,11 @@ func (r *PgRepo) CreateAccount(ctx context.Context, a Account) error {
 	const q = `
 		INSERT INTO auth.account
 		  (id, email, email_normalized, username, username_normalized, password_hash,
-		   state, created_at, updated_at)
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`
+		   state, created_at, updated_at, terms_version, terms_accepted_at)
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,NULLIF($10, ''),$11)`
 	_, err := r.pool.Exec(ctx, q,
 		a.ID, a.Email, a.EmailNormalized, a.Username, a.UsernameNormalized,
-		a.PasswordHash, string(a.State), a.CreatedAt, a.UpdatedAt,
+		a.PasswordHash, string(a.State), a.CreatedAt, a.UpdatedAt, a.TermsVersion, a.TermsAcceptedAt,
 	)
 	if err != nil {
 		if pgUniqueViolation(err) {
@@ -51,7 +51,8 @@ func (r *PgRepo) CreateAccount(ctx context.Context, a Account) error {
 
 func (r *PgRepo) accountBase() string {
 	return `SELECT id, email, email_normalized, username, username_normalized, password_hash,
-	               state, email_verified_at, last_login_at, created_at, updated_at, version
+	               state, email_verified_at, last_login_at, created_at, updated_at, version,
+	               COALESCE(terms_version, ''), terms_accepted_at, deletion_requested_at
 	          FROM auth.account`
 }
 
@@ -60,7 +61,7 @@ func (r *PgRepo) scanAccount(row pgx.Row) (*Account, error) {
 	var state string
 	err := row.Scan(&a.ID, &a.Email, &a.EmailNormalized, &a.Username, &a.UsernameNormalized,
 		&a.PasswordHash, &state, &a.EmailVerifiedAt, &a.LastLoginAt,
-		&a.CreatedAt, &a.UpdatedAt, &a.Version)
+		&a.CreatedAt, &a.UpdatedAt, &a.Version, &a.TermsVersion, &a.TermsAcceptedAt, &a.DeletionRequestedAt)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, ErrInvalidCredentials
@@ -207,10 +208,26 @@ func (r *PgRepo) IssueAccountToken(ctx context.Context, t AccountToken, mail Out
 			t.ID, t.AccountID, string(t.Kind), t.TokenHash, t.ExpiresAt, t.CreatedAt); err != nil {
 			return err
 		}
+		if mail.To == "" { // tokens without a mail (data export links)
+			return nil
+		}
 		_, err := tx.Exec(ctx, `INSERT INTO ops.email_outbox (to_address, subject, body) VALUES ($1, $2, $3)`,
 			mail.To, mail.Subject, mail.Body)
 		return err
 	})
+}
+
+func (r *PgRepo) SetDeletionRequested(ctx context.Context, accountID uuid.UUID, at *time.Time) error {
+	_, err := r.pool.Exec(ctx, `
+		UPDATE auth.account SET deletion_requested_at = $2, updated_at = now(), version = version + 1
+		 WHERE id = $1 AND state <> 'deleted'`, accountID, at)
+	return err
+}
+
+func (r *PgRepo) QueueEmail(ctx context.Context, mail OutboundEmail) error {
+	_, err := r.pool.Exec(ctx, `INSERT INTO ops.email_outbox (to_address, subject, body) VALUES ($1, $2, $3)`,
+		mail.To, mail.Subject, mail.Body)
+	return err
 }
 
 func (r *PgRepo) ConsumeAccountToken(ctx context.Context, kind TokenKind, hash []byte, now time.Time) (uuid.UUID, error) {

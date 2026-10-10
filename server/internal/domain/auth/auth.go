@@ -22,9 +22,10 @@ import (
 type AccountState string
 
 const (
-	AccountActive AccountState = "active"
-	AccountLocked AccountState = "locked" // temporary — auto expire or admin unlock
-	AccountBanned AccountState = "banned" // permanent per admin action
+	AccountActive  AccountState = "active"
+	AccountLocked  AccountState = "locked"  // temporary — auto expire or admin unlock
+	AccountBanned  AccountState = "banned"  // permanent per admin action
+	AccountDeleted AccountState = "deleted" // anonymised after the deletion grace (DD-231)
 )
 
 // Account is the persisted user record. PasswordHash is the full Argon2id
@@ -42,6 +43,11 @@ type Account struct {
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 	Version            int32
+
+	// DD-231: the terms version accepted at sign-up, and a pending deletion.
+	TermsVersion        string
+	TermsAcceptedAt     *time.Time
+	DeletionRequestedAt *time.Time
 }
 
 // Session represents one logged-in device instance. Refresh tokens rotate
@@ -87,6 +93,8 @@ type LoginResult struct {
 	RefreshToken    string
 	RefreshExpires  time.Time
 	EmailVerified   bool // DD-219: client shows a verify banner when false
+	// DeletionCancelled: this login cancelled a pending account deletion (DD-231).
+	DeletionCancelled bool
 }
 
 // --- Errors ------------------------------------------------------------------

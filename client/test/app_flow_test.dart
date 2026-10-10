@@ -4,6 +4,7 @@ import 'package:otter/app/app.dart';
 import 'package:otter/core/token_store.dart';
 import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/character/models.dart';
+import 'package:otter/shared/links.dart';
 
 import 'fake_backend.dart';
 import 'fake_ws.dart';
@@ -94,9 +95,14 @@ void main() {
     expect(be.requests, isEmpty, reason: 'nothing sent until the form is valid');
 
     await tester.tap(find.byType(Checkbox));
+    await tester.pumpAndSettle();
+    expect(find.text('Terms of Service'), findsOneWidget, reason: 'policy links next to the checkbox');
+    await tester.ensureVisible(find.text('Create account'));
     await tester.tap(find.text('Create account'));
     await tester.pumpAndSettle();
     expect(find.text('Characters'), findsOneWidget);
+    final reg = be.requests.firstWhere((r) => r.url.path == '/v1/auth/register');
+    expect(reg.body, contains('"accept_terms":true'));
   });
 
   testWidgets('create a character, enter it, and read the sheet', (tester) async {
@@ -732,6 +738,44 @@ void main() {
     expect(find.textContaining('If an account exists'), findsOneWidget);
   });
 
+  testWidgets('account menu: data export link, account deletion signs out with the date', (tester) async {
+    final be = FakeBackend();
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+
+    await tester.tap(find.byTooltip('Account'));
+    await tester.pumpAndSettle();
+    expect(find.text('Privacy Policy'), findsOneWidget);
+    final opened = <Uri>[];
+    launchExternal = (uri) async {
+      opened.add(uri);
+      return true;
+    };
+    addTearDown(() => launchExternal = (_) async => false);
+    await tester.tap(find.text('Download my data'));
+    await tester.pumpAndSettle();
+    expect(be.exportLinks, 1);
+    expect(opened.single.path, '/v1/me/export');
+    expect(find.text('The download link opened in your browser (valid for 15 minutes).'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Account'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Delete my account'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('delete-password')), 'wrong-horse');
+    await tester.tap(find.text('Delete account'));
+    await tester.pumpAndSettle();
+    expect(find.text('Wrong email/username or password.'), findsOneWidget);
+    expect(be.deletionRequested, isFalse);
+    await tester.enterText(find.byKey(const Key('delete-password')), 'correct-horse');
+    await tester.tap(find.text('Delete account'));
+    await tester.pumpAndSettle();
+    expect(be.deletionRequested, isTrue);
+    expect(find.textContaining('Your account will be deleted on'), findsOneWidget);
+    expect(find.text('New here? Create an account'), findsOneWidget, reason: 'back on the sign-in screen');
+  });
+
   testWidgets('unverified e-mail banner resends; change password rejects wrong current without refreshing', (
     tester,
   ) async {
@@ -746,7 +790,9 @@ void main() {
     expect(be.verificationResends, 1);
     expect(find.text('Verification e-mail sent.'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Change password'));
+    await tester.tap(find.byTooltip('Account'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Change password'));
     await tester.pumpAndSettle();
     final fields = find.byType(TextField);
     await tester.enterText(fields.at(0), 'wrong-horse');

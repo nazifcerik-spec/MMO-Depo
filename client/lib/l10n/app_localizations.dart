@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @acceptTerms.
   ///
   /// In en, this message translates to:
-  /// **'I accept the Terms of Service and Privacy Policy'**
+  /// **'I am 13 or older and accept the Terms of Service and Privacy Policy'**
   String get acceptTerms;
 
   /// No description provided for @fieldRequired.
@@ -2863,6 +2863,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{turns, plural, =1{every turn} other{every {turns} turns}}'**
   String skillCooldown(int turns);
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @accountMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountMenu;
+
+  /// No description provided for @downloadMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'Download my data'**
+  String get downloadMyData;
+
+  /// No description provided for @exportOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'The download link opened in your browser (valid for 15 minutes).'**
+  String get exportOpened;
+
+  /// No description provided for @linkOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the link.'**
+  String get linkOpenFailed;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.'**
+  String get deleteAccountBody;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account will be deleted on {date}. To cancel, just sign in before then.'**
+  String deleteScheduled(String date);
+
+  /// No description provided for @deletionCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account deletion request was cancelled.'**
+  String get deletionCancelled;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

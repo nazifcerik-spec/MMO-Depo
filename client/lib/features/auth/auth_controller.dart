@@ -21,6 +21,9 @@ class AuthController extends ChangeNotifier {
   /// True when the last sign-out was forced by the server (show a notice).
   bool sessionExpired = false;
 
+  /// Set after an account deletion request: when the data will be erased.
+  DateTime? deletionScheduledFor;
+
   Future<void> restore() async {
     _set(AuthStatus.unknown);
     try {
@@ -35,8 +38,8 @@ class AuthController extends ChangeNotifier {
     _set(AuthStatus.signedIn);
   }
 
-  Future<void> register(String email, String username, String password) async {
-    await api.register(email.trim(), username.trim(), password);
+  Future<void> register(String email, String username, String password, {required bool acceptTerms}) async {
+    await api.register(email.trim(), username.trim(), password, acceptTerms: acceptTerms);
     _set(AuthStatus.signedIn);
   }
 
@@ -51,6 +54,18 @@ class AuthController extends ChangeNotifier {
   /// Other devices are signed out; this one stays.
   Future<void> changePassword(String current, String next) =>
       api.post('/v1/auth/password/change', {'current_password': current, 'new_password': next});
+
+  /// Account rights (DD-231). Deletion signs every device out; signing in
+  /// again within 30 days cancels it.
+  Future<void> deleteAccount(String password) async {
+    final j = await api.delete('/v1/me', {'current_password': password});
+    deletionScheduledFor = DateTime.tryParse('${j['purge_after']}')?.toLocal();
+    await api.forgetSession();
+    _set(AuthStatus.signedOut);
+  }
+
+  /// A one-time link that downloads all of the account's data.
+  Future<String> exportLink() async => (await api.post('/v1/me/export-link', const {}))['url'] as String;
 
   Future<void> logout() async {
     await api.logout();

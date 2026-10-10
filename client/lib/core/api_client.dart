@@ -59,6 +59,9 @@ class ApiClient {
   /// every session response.
   bool emailVerified = true;
 
+  /// The last sign-in cancelled a pending account deletion (DD-231).
+  bool deletionCancelled = false;
+
   /// Sent as `X-Character-Id` once a character has been entered.
   String? characterId;
 
@@ -100,16 +103,21 @@ class ApiClient {
     await _applySession(body);
   }
 
-  Future<void> register(String email, String username, String password) async {
+  Future<void> register(String email, String username, String password, {required bool acceptTerms}) async {
     final body = await post('/v1/auth/register', {
       'email': email,
       'username': username,
       'password': password,
+      'accept_terms': acceptTerms,
     }, auth: false);
     await _applySession(body);
   }
 
   /// Best-effort server revoke; the local session is always cleared.
+  /// Drops the local session without calling the server (it is already
+  /// revoked, e.g. after an account deletion request).
+  Future<void> forgetSession() => _clearSession();
+
   Future<void> logout() async {
     try {
       if (_access != null) await post('/v1/auth/logout', const {});
@@ -125,6 +133,7 @@ class ApiClient {
     _refresh = body['refresh_token'] as String;
     accountId = body['account_id'] as String?;
     emailVerified = body['email_verified'] as bool? ?? true;
+    deletionCancelled = body['deletion_cancelled'] as bool? ?? false;
     await store.writeRefreshToken(_refresh!);
   }
 
@@ -167,7 +176,8 @@ class ApiClient {
 
   Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body) => _send('PUT', path, body, auth: true);
 
-  Future<Map<String, dynamic>> delete(String path) => _send('DELETE', path, null, auth: true);
+  Future<Map<String, dynamic>> delete(String path, [Map<String, dynamic>? body]) =>
+      _send('DELETE', path, body, auth: true);
 
   Future<Map<String, dynamic>> _send(
     String method,

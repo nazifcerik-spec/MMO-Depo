@@ -49,7 +49,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get haveAccount => 'Hesabın var mı? Giriş yap';
 
   @override
-  String get acceptTerms => 'Kullanım Koşulları\'nı ve Gizlilik Politikası\'nı kabul ediyorum';
+  String get acceptTerms => '13 yaşından büyüğüm; Kullanım Şartları\'nı ve Gizlilik Politikası\'nı kabul ediyorum';
 
   @override
   String get fieldRequired => 'Zorunlu';
@@ -1557,4 +1557,40 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: '$turns turda bir', one: 'her tur');
     return '$_temp0';
   }
+
+  @override
+  String get termsOfService => 'Kullanım Şartları';
+
+  @override
+  String get privacyPolicy => 'Gizlilik Politikası';
+
+  @override
+  String get accountMenu => 'Hesap';
+
+  @override
+  String get downloadMyData => 'Verilerimi indir';
+
+  @override
+  String get exportOpened => 'İndirme bağlantısı tarayıcıda açıldı (15 dakika geçerli).';
+
+  @override
+  String get linkOpenFailed => 'Bağlantı açılamadı.';
+
+  @override
+  String get deleteAccount => 'Hesabımı sil';
+
+  @override
+  String get deleteAccountBody =>
+      'Hesabın ve tüm karakterlerin 30 gün sonra kalıcı olarak silinir. Bu süre içinde tekrar giriş yaparsan silme iptal olur. Onaylamak için şifreni gir.';
+
+  @override
+  String get deleteAccountConfirm => 'Hesabı sil';
+
+  @override
+  String deleteScheduled(String date) {
+    return 'Hesabın $date tarihinde silinecek. Vazgeçersen bu tarihten önce giriş yapman yeterli.';
+  }
+
+  @override
+  String get deletionCancelled => 'Hesap silme talebin iptal edildi.';
 }

@@ -42,4 +42,9 @@ type Repository interface {
 	// RevokeAccountSessions revokes every live session (+ refresh tokens) of the
 	// account except `keep` (uuid.Nil = revoke all).
 	RevokeAccountSessions(ctx context.Context, accountID, keep uuid.UUID, reason string, at time.Time) error
+
+	// --- Account rights (DD-231)
+	// SetDeletionRequested marks (at != nil) or clears (nil) a pending deletion.
+	SetDeletionRequested(ctx context.Context, accountID uuid.UUID, at *time.Time) error
+	QueueEmail(ctx context.Context, mail OutboundEmail) error
 }

@@ -30,6 +30,10 @@ type ServiceConfig struct {
 
 	// PublicBaseURL prefixes links in recovery e-mails (DD-219).
 	PublicBaseURL string
+
+	// TermsVersion is recorded when a player accepts the terms at sign-up
+	// (DD-231); bump it when the published terms change.
+	TermsVersion string
 }
 
 // DefaultServiceConfig returns Faz 00 baseline values.
@@ -41,6 +45,7 @@ func DefaultServiceConfig() ServiceConfig {
 		SessionTTL:     30 * 24 * time.Hour,
 		Now:            time.Now,
 		MinPasswordLen: 8,
+		TermsVersion:   DefaultTermsVersion,
 	}
 }
 
@@ -57,6 +62,9 @@ func NewService(repo Repository, signer *Signer, cfg ServiceConfig, logger *slog
 	if cfg.Now == nil {
 		cfg.Now = time.Now
 	}
+	if cfg.TermsVersion == "" {
+		cfg.TermsVersion = DefaultTermsVersion
+	}
 	if logger == nil {
 		logger = slog.Default()
 	}
@@ -72,6 +80,9 @@ type RegisterRequest struct {
 	Password  string
 	IPHash    []byte
 	UserAgent string
+	// AcceptTerms: the player confirmed being 13+ and accepted the terms and
+	// privacy policy (DD-231). Required.
+	AcceptTerms bool
 }
 
 // LoginRequest is the sanitized login payload.
@@ -100,6 +111,9 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*LoginResu
 	if err := validatePassword(req.Password, s.cfg.MinPasswordLen); err != nil {
 		return nil, err
 	}
+	if !req.AcceptTerms {
+		return nil, &ValidationError{Field: "accept_terms", Message: "confirm you are 13+ and accept the terms"}
+	}
 
 	hash, err := HashPassword(req.Password, s.cfg.Argon2Params)
 	if err != nil {
@@ -118,6 +132,8 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*LoginResu
 		CreatedAt:          now,
 		UpdatedAt:          now,
 		Version:            1,
+		TermsVersion:       s.cfg.TermsVersion,
+		TermsAcceptedAt:    &now,
 	}
 	if err := s.repo.CreateAccount(ctx, account); err != nil {
 		return nil, err
@@ -162,6 +178,8 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*LoginResult, er
 		return nil, ErrAccountLocked
 	case AccountBanned:
 		return nil, ErrAccountBanned
+	case AccountDeleted:
+		return nil, ErrInvalidCredentials
 	}
 
 	if err := VerifyPassword(req.Password, account.PasswordHash); err != nil {
@@ -171,7 +189,19 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*LoginResult, er
 	now := s.cfg.Now().UTC()
 	_ = s.repo.UpdateAccountLastLogin(ctx, account.ID, now)
 
-	return s.issueSession(ctx, *account, req.IPHash, req.UserAgent, now)
+	// Signing in during the deletion grace cancels the deletion (DD-231).
+	cancelled := false
+	if account.DeletionRequestedAt != nil {
+		if err := s.repo.SetDeletionRequested(ctx, account.ID, nil); err != nil {
+			return nil, err
+		}
+		cancelled = true
+	}
+	res, err := s.issueSession(ctx, *account, req.IPHash, req.UserAgent, now)
+	if res != nil {
+		res.DeletionCancelled = cancelled
+	}
+	return res, err
 }
 
 // dummyHash is a pre-computed valid Argon2id hash used only to burn CPU on

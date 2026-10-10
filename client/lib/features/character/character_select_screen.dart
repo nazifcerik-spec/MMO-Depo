@@ -30,6 +30,12 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
   void initState() {
     super.initState();
     _load();
+    if (widget.auth.api.deletionCancelled) {
+      widget.auth.api.deletionCancelled = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) toast(context, Text(AppLocalizations.of(context).deletionCancelled));
+      });
+    }
   }
 
   Future<void> _load() async {
@@ -82,11 +88,7 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
       appBar: AppBar(
         title: Text(l.characters),
         actions: [
-          IconButton(
-            tooltip: l.changePassword,
-            icon: const Icon(Icons.key_outlined),
-            onPressed: () => showChangePasswordDialog(context, widget.auth),
-          ),
+          AccountMenuButton(auth: widget.auth),
           IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
         ],
       ),

@@ -33,7 +33,7 @@ func newTestService(t *testing.T) (*auth.Service, *auth.MemoryRepo, *auth.Signer
 
 func mustRegister(t *testing.T, svc *auth.Service) *auth.LoginResult {
 	t.Helper()
-	res, err := svc.Register(context.Background(), auth.RegisterRequest{
+	res, err := svc.Register(context.Background(), auth.RegisterRequest{AcceptTerms: true,
 		Email:    "grim@example.com",
 		Username: "grim",
 		Password: "hunter22-strong",
@@ -56,7 +56,7 @@ func TestRegister_DuplicateEmail(t *testing.T) {
 	svc, _, _ := newTestService(t)
 	mustRegister(t, svc)
 
-	_, err := svc.Register(context.Background(), auth.RegisterRequest{
+	_, err := svc.Register(context.Background(), auth.RegisterRequest{AcceptTerms: true,
 		Email:    "GRIM@example.com", // case variant of taken email
 		Username: "grim2",
 		Password: "another-password",
@@ -68,7 +68,7 @@ func TestRegister_DuplicateUsername(t *testing.T) {
 	svc, _, _ := newTestService(t)
 	mustRegister(t, svc)
 
-	_, err := svc.Register(context.Background(), auth.RegisterRequest{
+	_, err := svc.Register(context.Background(), auth.RegisterRequest{AcceptTerms: true,
 		Email:    "another@example.com",
 		Username: "GRIM", // case variant
 		Password: "another-password",
@@ -84,11 +84,11 @@ func TestRegister_ValidationErrors(t *testing.T) {
 		req   auth.RegisterRequest
 		field string
 	}{
-		{"empty email", auth.RegisterRequest{Email: "", Username: "grim", Password: "hunter22-strong"}, "email"},
-		{"bad email", auth.RegisterRequest{Email: "not-an-email", Username: "grim", Password: "hunter22-strong"}, "email"},
-		{"empty username", auth.RegisterRequest{Email: "a@b.co", Username: "", Password: "hunter22-strong"}, "username"},
-		{"bad username chars", auth.RegisterRequest{Email: "a@b.co", Username: "grim!!", Password: "hunter22-strong"}, "username"},
-		{"short password", auth.RegisterRequest{Email: "a@b.co", Username: "grim", Password: "short"}, "password"},
+		{"empty email", auth.RegisterRequest{AcceptTerms: true, Email: "", Username: "grim", Password: "hunter22-strong"}, "email"},
+		{"bad email", auth.RegisterRequest{AcceptTerms: true, Email: "not-an-email", Username: "grim", Password: "hunter22-strong"}, "email"},
+		{"empty username", auth.RegisterRequest{AcceptTerms: true, Email: "a@b.co", Username: "", Password: "hunter22-strong"}, "username"},
+		{"bad username chars", auth.RegisterRequest{AcceptTerms: true, Email: "a@b.co", Username: "grim!!", Password: "hunter22-strong"}, "username"},
+		{"short password", auth.RegisterRequest{AcceptTerms: true, Email: "a@b.co", Username: "grim", Password: "short"}, "password"},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

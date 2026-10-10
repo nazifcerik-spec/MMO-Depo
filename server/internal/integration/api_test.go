@@ -155,7 +155,7 @@ func newHTTPPlayer(t *testing.T, class string) *hc {
 	t.Helper()
 	c := &hc{t: t, base: liveAPI(t)}
 	suffix := randHex(5)
-	s := c.ok("POST", "/v1/auth/register", map[string]any{
+	s := c.ok("POST", "/v1/auth/register", map[string]any{"accept_terms": true,
 		"email": "h" + suffix + "@example.com", "username": "h" + suffix, "password": "pass-" + suffix + "-word",
 	})
 	c.token = s["access_token"].(string)
@@ -197,7 +197,7 @@ func TestHTTPAuthAndCharacters(t *testing.T) {
 
 	a := newHTTPPlayer(t, "warrior")
 	suffix := randHex(5)
-	reg := anon.ok("POST", "/v1/auth/register", map[string]any{
+	reg := anon.ok("POST", "/v1/auth/register", map[string]any{"accept_terms": true,
 		"email": "l" + suffix + "@example.com", "username": "l" + suffix, "password": "pass-" + suffix + "-word",
 	})
 	login := anon.ok("POST", "/v1/auth/login", map[string]any{"email_or_username": "l" + suffix, "password": "pass-" + suffix + "-word"})

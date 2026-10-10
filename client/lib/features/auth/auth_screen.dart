@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/links.dart';
 import '../../shared/widgets.dart';
 import 'account_dialogs.dart';
 import 'auth_controller.dart';
@@ -43,6 +44,15 @@ class _AuthScreenState extends State<AuthScreen> {
         if (mounted) setState(() => _error = AppLocalizations.of(context).errSessionExpired);
       });
     }
+    final purge = widget.auth.deletionScheduledFor;
+    if (purge != null) {
+      widget.auth.deletionScheduledFor = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final date = MaterialLocalizations.of(context).formatMediumDate(purge);
+        setState(() => _error = AppLocalizations.of(context).deleteScheduled(date));
+      });
+    }
   }
 
   @override
@@ -64,7 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() => _busy = true);
     try {
       if (_registering) {
-        await widget.auth.register(_email.text, _username.text, _password.text);
+        await widget.auth.register(_email.text, _username.text, _password.text, acceptTerms: _terms);
       } else {
         await widget.auth.login(_id.text, _password.text);
       }
@@ -178,6 +188,19 @@ class _AuthScreenState extends State<AuthScreen> {
                         controlAffinity: ListTileControlAffinity.leading,
                         contentPadding: EdgeInsets.zero,
                         dense: true,
+                      ),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () => openExternal(context, legalUrl(context, 'terms')),
+                            child: Text(l.termsOfService),
+                          ),
+                          TextButton(
+                            onPressed: () => openExternal(context, legalUrl(context, 'privacy')),
+                            child: Text(l.privacyPolicy),
+                          ),
+                        ],
                       ),
                     ],
                     if (_error != null) ...[

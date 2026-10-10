@@ -42,7 +42,7 @@ class Player {
 Future<Player> newPlayer(String tag, String cls) async {
   final suffix = Random().nextInt(1 << 30).toRadixString(36);
   final api = ApiClient(baseUrl: base, store: MemoryTokenStore());
-  await api.register('e2e_$tag$suffix@example.com', 'e2e_$tag$suffix', 'e2e-password-$suffix');
+  await api.register('e2e_$tag$suffix@example.com', 'e2e_$tag$suffix', 'e2e-password-$suffix', acceptTerms: true);
   final chars = CharacterRepository(api);
   final name = 'E${tag.toUpperCase()}$suffix';
   final created = await chars.create(name.substring(0, min(16, name.length)), 'human', cls);

@@ -13,7 +13,7 @@
   "register": "Create account",
   "noAccount": "New here? Create an account",
   "haveAccount": "Already have an account? Log in",
-  "acceptTerms": "I accept the Terms of Service and Privacy Policy",
+  "acceptTerms": "I am 13 or older and accept the Terms of Service and Privacy Policy",
   "fieldRequired": "Required",
   "invalidEmail": "Enter a valid email",
   "usernameRule": "3–32 letters, digits, _ or .",
@@ -541,5 +541,17 @@
   "skillMp": "{mp} MP",
   "@skillMp": {"placeholders": {"mp": {"type": "int"}}},
   "skillCooldown": "{turns, plural, =1{every turn} other{every {turns} turns}}",
-  "@skillCooldown": {"placeholders": {"turns": {"type": "int"}}}
+  "@skillCooldown": {"placeholders": {"turns": {"type": "int"}}},
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+  "accountMenu": "Account",
+  "downloadMyData": "Download my data",
+  "exportOpened": "The download link opened in your browser (valid for 15 minutes).",
+  "linkOpenFailed": "Could not open the link.",
+  "deleteAccount": "Delete my account",
+  "deleteAccountBody": "Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.",
+  "deleteAccountConfirm": "Delete account",
+  "deleteScheduled": "Your account will be deleted on {date}. To cancel, just sign in before then.",
+  "deletionCancelled": "Your account deletion request was cancelled.",
+  "@deleteScheduled": {"placeholders": {"date": {"type": "String"}}}
 }

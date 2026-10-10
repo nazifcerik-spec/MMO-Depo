@@ -37,6 +37,7 @@ import (
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
+	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/ratelimit"
@@ -372,9 +373,12 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
 		AdminHandler:      adminHandler,
-		Metrics:           metrics,
-		CORSOrigins:       cfg.CORSAllowedOrigins,
-		TrustedProxies:    trusted,
+		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
+			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,
+		}, logger),
+		Metrics:        metrics,
+		CORSOrigins:    cfg.CORSAllowedOrigins,
+		TrustedProxies: trusted,
 	})
 	return router, nil
 }

@@ -202,6 +202,27 @@ func (r *MemoryRepo) IssueAccountToken(_ context.Context, t AccountToken, mail O
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.acctTokens = append(r.acctTokens, memAccountToken{AccountToken: t})
+	if mail.To != "" {
+		r.Outbox = append(r.Outbox, mail)
+	}
+	return nil
+}
+
+func (r *MemoryRepo) SetDeletionRequested(_ context.Context, accountID uuid.UUID, at *time.Time) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	a, ok := r.accounts[accountID]
+	if !ok {
+		return ErrInvalidCredentials
+	}
+	a.DeletionRequestedAt = at
+	r.accounts[accountID] = a
+	return nil
+}
+
+func (r *MemoryRepo) QueueEmail(_ context.Context, mail OutboundEmail) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	r.Outbox = append(r.Outbox, mail)
 	return nil
 }

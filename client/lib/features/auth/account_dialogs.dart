@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/links.dart';
 import '../../shared/widgets.dart';
 import 'auth_controller.dart';
 
@@ -174,6 +175,129 @@ class _ChangePasswordDialogState extends State<_ChangePasswordDialog> {
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancel)),
         FilledButton(onPressed: _busy ? null : _submit, child: Text(l.save)),
+      ],
+    );
+  }
+}
+
+/// Account menu (DD-231): password, data export, deletion, legal pages.
+class AccountMenuButton extends StatelessWidget {
+  const AccountMenuButton({super.key, required this.auth});
+
+  final AuthController auth;
+
+  Future<void> _export(BuildContext context) async {
+    final l = AppLocalizations.of(context);
+    try {
+      final url = await auth.exportLink();
+      if (context.mounted && await openExternal(context, url) && context.mounted) {
+        toast(context, Text(l.exportOpened));
+      }
+    } on ApiError catch (e) {
+      if (context.mounted) toast(context, Text(errorText(l, e)));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return PopupMenuButton<String>(
+      tooltip: l.accountMenu,
+      icon: const Icon(Icons.manage_accounts_outlined),
+      onSelected: (v) => switch (v) {
+        'password' => showChangePasswordDialog(context, auth),
+        'export' => _export(context),
+        'delete' => showDialog<void>(
+          context: context,
+          builder: (_) => _DeleteAccountDialog(auth: auth),
+        ),
+        'terms' => openExternal(context, legalUrl(context, 'terms')),
+        _ => openExternal(context, legalUrl(context, 'privacy')),
+      },
+      itemBuilder: (_) => [
+        PopupMenuItem(value: 'password', child: Text(l.changePassword)),
+        PopupMenuItem(value: 'export', child: Text(l.downloadMyData)),
+        PopupMenuItem(value: 'terms', child: Text(l.termsOfService)),
+        PopupMenuItem(value: 'privacy', child: Text(l.privacyPolicy)),
+        const PopupMenuDivider(),
+        PopupMenuItem(
+          value: 'delete',
+          child: Text(l.deleteAccount, style: const TextStyle(color: Palette.danger)),
+        ),
+      ],
+    );
+  }
+}
+
+class _DeleteAccountDialog extends StatefulWidget {
+  const _DeleteAccountDialog({required this.auth});
+
+  final AuthController auth;
+
+  @override
+  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
+  final _password = TextEditingController();
+  bool _busy = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _password.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l = AppLocalizations.of(context);
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await widget.auth.deleteAccount(_password.text);
+      // Signing out already dismissed every route; popping again would close
+      // the root screen and leave a blank app.
+      if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) Navigator.pop(context);
+    } on ApiError catch (e) {
+      if (mounted) setState(() => _error = errorText(l, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l.deleteAccount),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.deleteAccountBody),
+          const SizedBox(height: Space.md),
+          TextField(
+            key: const Key('delete-password'),
+            controller: _password,
+            obscureText: true,
+            autofillHints: const [AutofillHints.password],
+            decoration: InputDecoration(labelText: l.currentPassword),
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: Space.sm),
+            Text(_error!, style: const TextStyle(color: Palette.danger)),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancel)),
+        FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: Palette.danger),
+          onPressed: _busy ? null : _submit,
+          child: Text(l.deleteAccountConfirm),
+        ),
       ],
     );
   }

@@ -13,7 +13,7 @@
   "register": "Hesap oluştur",
   "noAccount": "Yeni misin? Kayıt ol",
   "haveAccount": "Hesabın var mı? Giriş yap",
-  "acceptTerms": "Kullanım Koşulları'nı ve Gizlilik Politikası'nı kabul ediyorum",
+  "acceptTerms": "13 yaşından büyüğüm; Kullanım Şartları'nı ve Gizlilik Politikası'nı kabul ediyorum",
   "fieldRequired": "Zorunlu",
   "invalidEmail": "Geçerli bir e-posta gir",
   "usernameRule": "3–32 harf, rakam, _ veya .",
@@ -461,5 +461,16 @@
   "skillStrike": "%{power} hasar",
   "skillHeal": "HP yarının altındayken %{power} iyileştirir",
   "skillMp": "{mp} MP",
-  "skillCooldown": "{turns, plural, =1{her tur} other{{turns} turda bir}}"
+  "skillCooldown": "{turns, plural, =1{her tur} other{{turns} turda bir}}",
+  "termsOfService": "Kullanım Şartları",
+  "privacyPolicy": "Gizlilik Politikası",
+  "accountMenu": "Hesap",
+  "downloadMyData": "Verilerimi indir",
+  "exportOpened": "İndirme bağlantısı tarayıcıda açıldı (15 dakika geçerli).",
+  "linkOpenFailed": "Bağlantı açılamadı.",
+  "deleteAccount": "Hesabımı sil",
+  "deleteAccountBody": "Hesabın ve tüm karakterlerin 30 gün sonra kalıcı olarak silinir. Bu süre içinde tekrar giriş yaparsan silme iptal olur. Onaylamak için şifreni gir.",
+  "deleteAccountConfirm": "Hesabı sil",
+  "deleteScheduled": "Hesabın {date} tarihinde silinecek. Vazgeçersen bu tarihten önce giriş yapman yeterli.",
+  "deletionCancelled": "Hesap silme talebin iptal edildi."
 }
