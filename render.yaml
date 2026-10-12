@@ -43,8 +43,12 @@ services:
           property: connectionString
       - key: AUTH_HASH_CONCURRENCY # 0.1 CPU: two argon2id runs at a time (19 MiB each)
         value: "2"
-      - key: TRUSTED_PROXIES # Render's edge proxy connects over loopback, health checks from 10.x (DD-225, DD-239)
-        value: "::1/128,127.0.0.0/8,10.0.0.0/8"
+      # Chain: player → Cloudflare (Render's CDN) → Render edge on loopback → app;
+      # health checks come from 10.x. Trusting these hops lets RealIP take the
+      # first untrusted X-Forwarded-For entry — the player (DD-225, DD-239).
+      # Cloudflare ranges: https://www.cloudflare.com/ips/ (re-check yearly).
+      - key: TRUSTED_PROXIES
+        value: "::1/128,127.0.0.0/8,10.0.0.0/8,173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32"
       - key: PUBLIC_BASE_URL # https://<service>.onrender.com — links in e-mails and policy pages
         sync: false
       - key: LOG_LEVEL
