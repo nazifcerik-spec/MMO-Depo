@@ -43,8 +43,8 @@ services:
           property: connectionString
       - key: AUTH_HASH_CONCURRENCY # 0.1 CPU: two argon2id runs at a time (19 MiB each)
         value: "2"
-      - key: TRUSTED_PROXIES # Render's proxies reach the app from its private network (DD-225)
-        value: "10.0.0.0/8"
+      - key: TRUSTED_PROXIES # Render's edge proxy connects over loopback, health checks from 10.x (DD-225, DD-239)
+        value: "::1/128,127.0.0.0/8,10.0.0.0/8"
       - key: PUBLIC_BASE_URL # https://<service>.onrender.com — links in e-mails and policy pages
         sync: false
       - key: LOG_LEVEL

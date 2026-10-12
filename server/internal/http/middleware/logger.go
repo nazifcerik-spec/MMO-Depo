@@ -8,6 +8,8 @@ import (
 	"time"
 
 	chimw "github.com/go-chi/chi/v5/middleware"
+
+	"github.com/otter/server/internal/httpctx"
 )
 
 // Logger emits one JSON record per response with method, path, status, latency, and
@@ -28,6 +30,9 @@ func Logger(base *slog.Logger) func(http.Handler) http.Handler {
 				slog.Int("bytes", ww.BytesWritten()),
 				slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 				slog.String("remote", r.RemoteAddr),
+				// The IP rate limits key on (RealIP): shows whether the proxy
+				// chain is trusted correctly behind a host's load balancer.
+				slog.String("client_ip", httpctx.ClientIP(r)),
 			)
 		})
 	}
