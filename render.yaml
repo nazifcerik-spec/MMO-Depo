@@ -36,11 +36,11 @@ services:
         value: "true"
       - key: JWT_PRIVATE_KEY_SEED # Ed25519 seed for access tokens; Render generates it once
         generateValue: true
-      - key: REDIS_ADDR
+      - key: REDIS_ADDR # redis:// connection string (platform/redis accepts URLs)
         fromService:
           type: keyvalue
           name: new-world-mmo-redis
-          property: hostport
+          property: connectionString
       - key: AUTH_HASH_CONCURRENCY # 0.1 CPU: two argon2id runs at a time (19 MiB each)
         value: "2"
       - key: TRUSTED_PROXIES # Render's proxies reach the app from its private network (DD-225)

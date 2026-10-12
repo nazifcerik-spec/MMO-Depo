@@ -87,7 +87,7 @@ func run() error {
 		return err
 	}
 	defer func() { _ = rdb.Close() }()
-	logger.Info("redis connected", "addr", cfg.RedisAddr)
+	logger.Info("redis connected", "addr", rdb.Options().Addr) // never the URL: it may carry a password
 
 	router, err := app.Build(rootCtx, app.Options{
 		Config: cfg, Pool: pool, Redis: rdb, RateLimit: ratelimit.NewRedisStore(rdb),
