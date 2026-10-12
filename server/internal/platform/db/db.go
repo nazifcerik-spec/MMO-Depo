@@ -4,6 +4,7 @@ package db
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -14,7 +15,9 @@ import (
 func Connect(ctx context.Context, url string, maxConns int32) (*pgxpool.Pool, error) {
 	cfg, err := pgxpool.ParseConfig(url)
 	if err != nil {
-		return nil, fmt.Errorf("pgx parse config: %w", err)
+		// pgx quotes the input in its error, and a malformed URL can be just
+		// the password (DD-239): never let the connection string reach a log.
+		return nil, errors.New("DATABASE_URL is not a valid postgres:// URL (value not shown)")
 	}
 
 	if maxConns > 0 {
