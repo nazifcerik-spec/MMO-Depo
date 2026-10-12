@@ -20,6 +20,10 @@ type Config struct {
 
 	DatabaseURL      string `envconfig:"DATABASE_URL" required:"true"`
 	DatabaseMaxConns int32  `envconfig:"DATABASE_MAX_CONNS" default:"25"`
+	// Single-process hosting (Render free, DD-239): the API applies the
+	// embedded migrations at start and runs the worker jobs itself.
+	MigrateOnStart bool `envconfig:"MIGRATE_ON_START" default:"false"`
+	RunWorker      bool `envconfig:"RUN_WORKER" default:"false"`
 
 	RedisAddr     string `envconfig:"REDIS_ADDR" default:"localhost:6379"`
 	RedisPassword string `envconfig:"REDIS_PASSWORD" default:""`

@@ -106,7 +106,7 @@ func (s *Service) Create(ctx context.Context, account uuid.UUID, req NewTicket) 
 	var out *Ticket
 	err = pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		// Serialise per account so the open-ticket cap holds under concurrency.
-		if _, err := tx.Exec(ctx, `SELECT 1 FROM auth.account WHERE id = $1 FOR UPDATE`, account); err != nil {
+		if _, err := tx.Exec(ctx, `SELECT 1 FROM identity.account WHERE id = $1 FOR UPDATE`, account); err != nil {
 			return err
 		}
 		var open int

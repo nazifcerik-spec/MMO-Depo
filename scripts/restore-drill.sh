@@ -33,7 +33,7 @@ docker exec "$name" pg_restore --no-owner --no-privileges --exit-on-error -h 127
 q() { docker exec "$name" psql -h 127.0.0.1 -U postgres -d otter -Atc "$1"; }
 version=$(q "SELECT version FROM schema_migrations")
 dirty=$(q "SELECT dirty FROM schema_migrations")
-accounts=$(q "SELECT count(*) FROM auth.account")
+accounts=$(q "SELECT count(*) FROM identity.account")
 characters=$(q "SELECT count(*) FROM character.character")
 unbalanced=$(q "SELECT count(*) FROM (SELECT txn_id, currency_code FROM economy.ledger_entry
                                       GROUP BY 1, 2 HAVING sum(delta) <> 0) t")

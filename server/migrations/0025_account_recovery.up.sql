@@ -2,18 +2,18 @@
 
 -- Single-use account tokens. Only SHA-256(token) is stored; the raw token
 -- exists in the e-mail alone. kind: password_reset (1h) | email_verify (24h).
-CREATE TABLE auth.account_token (
+CREATE TABLE identity.account_token (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id  UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id  UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   kind        VARCHAR(16) NOT NULL CHECK (kind IN ('password_reset','email_verify')),
   token_hash  BYTEA NOT NULL UNIQUE,
   expires_at  TIMESTAMPTZ NOT NULL,
   used_at     TIMESTAMPTZ NULL,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_account_token_recent ON auth.account_token (account_id, kind, created_at DESC);
+CREATE INDEX idx_account_token_recent ON identity.account_token (account_id, kind, created_at DESC);
 
-ALTER TABLE auth.account ADD COLUMN password_updated_at TIMESTAMPTZ NULL;
+ALTER TABLE identity.account ADD COLUMN password_updated_at TIMESTAMPTZ NULL;
 
 -- Transactional e-mail outbox (worker email_dispatch). body is cleared once
 -- sent or given up on, so reset links do not linger at rest.

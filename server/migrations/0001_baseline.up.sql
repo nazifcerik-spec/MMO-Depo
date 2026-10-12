@@ -14,7 +14,7 @@
 --   ops         — admin_user, admin_role, admin_user_role
 --   analytics   — combat_event, market_search_event (24h hot)
 
-CREATE SCHEMA IF NOT EXISTS auth;
+CREATE SCHEMA IF NOT EXISTS identity; -- not `auth`: Supabase reserves it (DD-239)
 CREATE SCHEMA IF NOT EXISTS character;
 CREATE SCHEMA IF NOT EXISTS content;
 CREATE SCHEMA IF NOT EXISTS world;

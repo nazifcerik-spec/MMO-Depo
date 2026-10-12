@@ -70,7 +70,7 @@ func (s *Service) SearchPlayers(ctx context.Context, a *Admin, q string) ([]Play
 	}
 	id, _ := uuid.Parse(q)
 	rows, err := s.pool.Query(ctx, `
-		SELECT id, username, email, state, created_at, last_login_at FROM auth.account
+		SELECT id, username, email, state, created_at, last_login_at FROM identity.account
 		 WHERE id = $1 OR username_normalized LIKE $2 OR email_normalized LIKE $2
 		 ORDER BY username LIMIT 50`, id, strings.NewReplacer("%", `\%`, "_", `\_`).Replace(q)+"%")
 	if err != nil {
@@ -91,7 +91,7 @@ func (s *Service) SearchPlayers(ctx context.Context, a *Admin, q string) ([]Play
 func (s *Service) Player(ctx context.Context, a *Admin, id uuid.UUID) (*PlayerDetail, error) {
 	d := &PlayerDetail{}
 	err := s.pool.QueryRow(ctx, `
-		SELECT id, username, email, state, created_at, last_login_at FROM auth.account WHERE id = $1`, id).
+		SELECT id, username, email, state, created_at, last_login_at FROM identity.account WHERE id = $1`, id).
 		Scan(&d.ID, &d.Username, &d.Email, &d.State, &d.CreatedAt, &d.LastLoginAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return nil, ErrNotFound
@@ -142,7 +142,7 @@ func (s *Service) Sanction(ctx context.Context, a *Admin, account uuid.UUID, kin
 	out := &Sanction{Kind: kind, Until: until, Reason: reason}
 	var before string
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
-		if err := tx.QueryRow(ctx, `SELECT state FROM auth.account WHERE id = $1 FOR UPDATE`, account).Scan(&before); err != nil {
+		if err := tx.QueryRow(ctx, `SELECT state FROM identity.account WHERE id = $1 FOR UPDATE`, account).Scan(&before); err != nil {
 			if errors.Is(err, pgx.ErrNoRows) {
 				return ErrNotFound
 			}
@@ -164,12 +164,12 @@ func (s *Service) Sanction(ctx context.Context, a *Admin, account uuid.UUID, kin
 		if before == "banned" {
 			state = "banned" // never downgrade a permanent ban
 		}
-		if _, err := tx.Exec(ctx, `UPDATE auth.account SET state = $2, updated_at = now(), version = version + 1 WHERE id = $1`,
+		if _, err := tx.Exec(ctx, `UPDATE identity.account SET state = $2, updated_at = now(), version = version + 1 WHERE id = $1`,
 			account, state); err != nil {
 			return err
 		}
 		_, err := tx.Exec(ctx, `
-			UPDATE auth.session SET revoked_at = now(), revoke_reason = 'admin_ban'
+			UPDATE identity.session SET revoked_at = now(), revoke_reason = 'admin_ban'
 			 WHERE account_id = $1 AND revoked_at IS NULL`, account)
 		return err
 	})
@@ -198,7 +198,7 @@ func (s *Service) LiftSanctions(ctx context.Context, a *Admin, account uuid.UUID
 		n = tag.RowsAffected()
 		if kind == "ban" {
 			_, err = tx.Exec(ctx, `
-				UPDATE auth.account SET state = 'active', updated_at = now(), version = version + 1
+				UPDATE identity.account SET state = 'active', updated_at = now(), version = version + 1
 				 WHERE id = $1 AND state IN ('locked','banned')`, account)
 		}
 		return err

@@ -36,6 +36,24 @@ type Runner struct {
 	locker  Locker
 	log     *slog.Logger
 	metrics *observability.Metrics // nil → no metrics
+	slots   chan struct{}          // nil → unbounded
+}
+
+// WithMaxParallel caps how many jobs run at once. A run holds one pooled
+// connection for its advisory lock and up to two more for its work, so an
+// unbounded start (every job fires immediately) can take the whole pool and
+// deadlock: each run waits for a connection the others hold (DD-239).
+func (r *Runner) WithMaxParallel(n int) *Runner {
+	if n > 0 {
+		r.slots = make(chan struct{}, n)
+	}
+	return r
+}
+
+// ParallelFor is the run cap that fits a pool of maxConns while leaving
+// room for the process's other users: three connections per run.
+func ParallelFor(maxConns int32) int {
+	return max(1, int(maxConns)/3)
 }
 
 // WithMetrics records per-job run count, latency and rows (Sprint 27).
@@ -84,6 +102,14 @@ func (r *Runner) loop(ctx context.Context, j Job) {
 func (r *Runner) RunOnce(ctx context.Context, j Job) {
 	if ctx.Err() != nil {
 		return
+	}
+	if r.slots != nil {
+		select {
+		case r.slots <- struct{}{}:
+			defer func() { <-r.slots }()
+		case <-ctx.Done():
+			return
+		}
 	}
 	unlock, ok, err := r.locker.TryLock(ctx, LockKey(j.Name()))
 	if err != nil {

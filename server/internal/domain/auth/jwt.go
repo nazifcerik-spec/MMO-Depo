@@ -67,6 +67,13 @@ func EncodeSeed(seed []byte) string {
 
 // DecodeSeed reverses EncodeSeed.
 func DecodeSeed(encoded string) ([]byte, error) {
+	// Hosts that generate secrets (Render generateValue) may use the URL-safe
+	// alphabet or drop padding; the seed bytes are what matter.
+	for _, enc := range []*base64.Encoding{base64.StdEncoding, base64.URLEncoding, base64.RawStdEncoding, base64.RawURLEncoding} {
+		if b, err := enc.DecodeString(encoded); err == nil {
+			return b, nil
+		}
+	}
 	return base64.StdEncoding.DecodeString(encoded)
 }
 

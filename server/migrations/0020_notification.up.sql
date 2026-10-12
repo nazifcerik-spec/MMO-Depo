@@ -6,7 +6,7 @@ CREATE SCHEMA IF NOT EXISTS notification;
 
 CREATE TABLE notification.device_push_token (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id      UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id      UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   device_id       UUID NOT NULL,
   platform        VARCHAR(16) NOT NULL CHECK (platform IN ('android','ios')),
   push_token      TEXT NOT NULL,
@@ -23,7 +23,7 @@ CREATE INDEX idx_dpt_account ON notification.device_push_token (account_id) WHER
 
 CREATE TABLE notification.push_message (
   id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id     UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id     UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   character_id   UUID NULL,
   kind           VARCHAR(48) NOT NULL,
   dedup_key      VARCHAR(128) NOT NULL,
@@ -41,7 +41,7 @@ CREATE INDEX idx_push_rate    ON notification.push_message (account_id, kind, cr
 
 CREATE TABLE notification.inbox_message (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id    UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id    UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   character_id  UUID NULL,
   kind          VARCHAR(48) NOT NULL,
   dedup_key     VARCHAR(128) NOT NULL,
@@ -56,7 +56,7 @@ CREATE INDEX idx_inbox_account ON notification.inbox_message (account_id, create
 CREATE INDEX idx_inbox_unread  ON notification.inbox_message (account_id) WHERE read_at IS NULL;
 
 CREATE TABLE notification.preference (
-  account_id        UUID PRIMARY KEY REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id        UUID PRIMARY KEY REFERENCES identity.account(id) ON DELETE CASCADE,
   quiet_hours_start VARCHAR(5) NULL,
   quiet_hours_end   VARCHAR(5) NULL,
   quiet_hours_tz    VARCHAR(48) NULL,
@@ -66,7 +66,7 @@ CREATE TABLE notification.preference (
 );
 
 CREATE TABLE notification.preference_kind (
-  account_id  UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id  UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   kind        VARCHAR(48) NOT NULL,
   mode        VARCHAR(16) NOT NULL CHECK (mode IN ('push_and_inbox','inbox_only','silent_push','off')),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),

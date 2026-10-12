@@ -238,7 +238,7 @@ WITH exp AS (
                  WHERE revoked_at IS NULL AND until IS NOT NULL AND until <= now() LIMIT $1)
   RETURNING account_id, kind),
 act AS (
-  UPDATE auth.account a SET state = 'active', updated_at = now(), version = a.version + 1
+  UPDATE identity.account a SET state = 'active', updated_at = now(), version = a.version + 1
     FROM exp
    WHERE exp.kind = 'ban' AND a.id = exp.account_id AND a.state = 'locked'
      AND NOT EXISTS (SELECT 1 FROM ops.account_sanction s

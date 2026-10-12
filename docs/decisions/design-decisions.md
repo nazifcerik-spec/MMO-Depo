@@ -2158,6 +2158,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** T1 (1000 oyuncu) ve üstü bu makinede koşulmadı — yük üreticisi sunucuyla aynı 7.5 GB'ı paylaşıyor; ayrı yük makinesi/perf ortamı gerekir. Prod'da `AUTH_HASH_CONCURRENCY` × 19 MiB bellek ayrılmalı. Canlı muharebe (skill cast) uç noktası yok, karışımdan çıkarıldı.
 **Tarih:** 2026-10-11
 
+## DD-239 — Ücretsiz Barındırma: Render (API) + Supabase (PostgreSQL)
+**Karar:** Kapalı test/oyun için ücretsiz kurulum: veritabanı Supabase Free (Frankfurt), API Render Free web servisi (Frankfurt, `render.yaml` Blueprint), Redis Render Free Key Value (yalnız iç ağ). Ücretsiz katmana uyum: (1) API açılışta gömülü migration'ları uygular (`MIGRATE_ON_START`; `server/migrations` `embed`, bağımlılıksız `db.Migrate` — golang-migrate'in `schema_migrations` tablosu, dosya başına tek transaction, advisory lock, CLI ile birbirinin yerine geçebilir); (2) worker işleri API sürecinde (`RUN_WORKER`, `worker.FromConfig` ortak kurulum), aynı anda tek iş; (3) hesap tabloları `auth` → `identity` şeması (Supabase `auth`'u kendi servisine ayırıyor, yazmaya izin vermiyor; eski migration'lar `identity` oluşturur, 0033 mevcut veritabanlarını taşır); (4) `schema_migrations`'ta RLS (Supabase Data API public şemayı yayınlıyor); (5) JWT tohumu Render `generateValue` ile, URL-safe/dolgusuz base64 de kabul. `DATABASE_URL` (Supabase session pooler, şifreli) yalnız Render panelinde, depoya girmez.
+**Reason:** Kullanıcı telefondan, bilgisayardan bağımsız ve ücretsiz oynamak istiyor. Render Free'de arka plan işçisi ve deploy öncesi komut yok; Supabase'de `auth` şeması kullanılamaz.
+**Alternatives:** Ücretli Render (Starter ×2 ≈ 14 $/ay; ayrı worker + pre-deploy migrate), VPS + `deploy/prod` (DD-232; ödeme gerekir), bilgisayar + tünel (bilgisayar açık kalmalı, adres değişir), golang-migrate kütüphanesi (bağımlılık ağacı; 90 satırlık çalıştırıcı yeterli).
+**Consequences:** Bulunan hata: worker havuz kilitlenmesi — her iş kilit için bir, iş için bir-iki bağlantı tutuyor; açılışta 17 iş aynı anda havuzu (8) doldurup birbirini bekliyordu, API istekleri de bağlantı alamıyordu (ayrı worker'da 25'lik havuzda da teorik risk). `Runner.WithMaxParallel` + `ParallelFor(maxConns)=maxConns/3`; API modunda 1. Render benzeri yerel koşu (0.1 CPU, 512 MB, boş veritabanı): 33 migration, 5 sn'de hazır, 25 iş çalışması hatasız, giriş 0.57 sn, oyun istekleri 5–20 ms. Ücretsiz katman sınırları: 15 dk boşta uyku (~50 sn ilk istek; işler uyurken durur, uyanınca toplar), yedek yok, e-posta/izleme yok, birkaç düzine oyuncu kapasitesi. Render vekil IP aralığı yayın sonrası doğrulanacak (`TRUSTED_PROXIES`).
+**Tarih:** 2026-10-12
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

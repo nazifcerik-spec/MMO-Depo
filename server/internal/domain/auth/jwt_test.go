@@ -1,6 +1,7 @@
 package auth_test
 
 import (
+	"encoding/base64"
 	"testing"
 	"time"
 
@@ -109,6 +110,18 @@ func TestEncodeDecodeSeed_Roundtrip(t *testing.T) {
 	decoded, err := auth.DecodeSeed(encoded)
 	require.NoError(t, err)
 	require.Equal(t, s, decoded)
+}
+
+// Generated secrets may come URL-safe or unpadded (Render generateValue).
+func TestDecodeSeed_AcceptsBase64Variants(t *testing.T) {
+	s, _ := auth.GenerateSeed()
+	for _, enc := range []*base64.Encoding{base64.StdEncoding, base64.URLEncoding, base64.RawStdEncoding, base64.RawURLEncoding} {
+		got, err := auth.DecodeSeed(enc.EncodeToString(s))
+		require.NoError(t, err)
+		require.Equal(t, s, got)
+	}
+	_, err := auth.DecodeSeed("not base64 !!")
+	require.Error(t, err)
 }
 
 func TestNewSigner_RejectsShortSeed(t *testing.T) {

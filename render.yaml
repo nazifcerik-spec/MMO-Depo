@@ -1,0 +1,58 @@
+# Render Blueprint — free single-process hosting (DD-239).
+#
+#   Database: Supabase (free), session pooler URI in DATABASE_URL (set in the
+#   Render dashboard; never committed).
+#   API: Render free web service. It applies the embedded migrations at start
+#   and runs the worker jobs in-process (Render has no free background worker).
+#   Redis: Render free Key Value, internal only (rate limits; nothing durable).
+#
+# Free-tier limits: the API sleeps after 15 min without traffic (first request
+# then waits ~50 s; worker jobs pause and catch up on wake), 512 MB / 0.1 CPU.
+# Paid production keeps deploy/prod (separate worker, backups, monitoring).
+services:
+  - type: web
+    name: new-world-mmo-api
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./deploy/api.Dockerfile
+    dockerContext: .
+    healthCheckPath: /live
+    autoDeploy: true
+    envVars:
+      - key: ENV
+        value: prod
+      - key: PORT # the port Render routes to; the API listens on HTTP_ADDR
+        value: "8080"
+      - key: HTTP_ADDR
+        value: ":8080"
+      - key: DATABASE_URL # Supabase → Connect → Session pooler URI (+ ?sslmode=require)
+        sync: false
+      - key: DATABASE_MAX_CONNS # Supabase free session pooler: keep well under its pool size
+        value: "8"
+      - key: MIGRATE_ON_START
+        value: "true"
+      - key: RUN_WORKER
+        value: "true"
+      - key: JWT_PRIVATE_KEY_SEED # Ed25519 seed for access tokens; Render generates it once
+        generateValue: true
+      - key: REDIS_ADDR
+        fromService:
+          type: keyvalue
+          name: new-world-mmo-redis
+          property: hostport
+      - key: AUTH_HASH_CONCURRENCY # 0.1 CPU: two argon2id runs at a time (19 MiB each)
+        value: "2"
+      - key: TRUSTED_PROXIES # Render's proxies reach the app from its private network (DD-225)
+        value: "10.0.0.0/8"
+      - key: PUBLIC_BASE_URL # https://<service>.onrender.com — links in e-mails and policy pages
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+
+  - type: keyvalue
+    name: new-world-mmo-redis
+    plan: free
+    region: frankfurt
+    ipAllowList: [] # internal connections only
+    maxmemoryPolicy: allkeys-lru

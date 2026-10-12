@@ -75,7 +75,7 @@ func TestHTTPAccountRights(t *testing.T) {
 
 	// Request again and let the grace pass: the account is erased.
 	p.ok("DELETE", "/v1/me", map[string]any{"current_password": pass})
-	_, err := w.p.Exec(w.ctx, `UPDATE auth.account SET deletion_requested_at = now() - interval '31 days'
+	_, err := w.p.Exec(w.ctx, `UPDATE identity.account SET deletion_requested_at = now() - interval '31 days'
 	                            WHERE username = $1`, user)
 	require.NoError(t, err)
 	n, err := privacy.Purge(w.ctx, w.p, time.Now(), auth.DeletionGrace, 100)
@@ -83,7 +83,7 @@ func TestHTTPAccountRights(t *testing.T) {
 	require.GreaterOrEqual(t, n, int64(1))
 	anon.fail("POST", "/v1/auth/login", map[string]any{"email_or_username": user, "password": pass}, 401, "E_INVALID_CREDENTIALS")
 	var state, email string
-	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT state, email FROM auth.account WHERE id = $1`, account[0]["id"]).Scan(&state, &email))
+	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT state, email FROM identity.account WHERE id = $1`, account[0]["id"]).Scan(&state, &email))
 	require.Equal(t, "deleted", state)
 	require.True(t, strings.HasSuffix(email, "@deleted.invalid"), email)
 

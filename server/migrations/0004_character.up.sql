@@ -11,7 +11,7 @@
 
 CREATE TABLE character.character (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id        UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id        UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   name              TEXT NOT NULL,
   name_normalized   TEXT NOT NULL,          -- lowercase + trimmed, unique lookup
   race_code         VARCHAR(48) NOT NULL,

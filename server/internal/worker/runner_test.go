@@ -123,3 +123,40 @@ func TestAll_UniqueNamesAndPositiveIntervals(t *testing.T) {
 	}
 	require.Len(t, seen, 17)
 }
+
+// slowJob records how many runs overlap.
+type slowJob struct {
+	name            string
+	active, maxSeen *atomic.Int32
+}
+
+func (s *slowJob) Name() string            { return s.name }
+func (s *slowJob) Interval() time.Duration { return time.Hour }
+func (s *slowJob) Run(context.Context) (int64, error) {
+	n := s.active.Add(1)
+	defer s.active.Add(-1)
+	for {
+		m := s.maxSeen.Load()
+		if n <= m || s.maxSeen.CompareAndSwap(m, n) {
+			break
+		}
+	}
+	time.Sleep(20 * time.Millisecond)
+	return 0, nil
+}
+
+// With a cap, the start-up burst (every job fires at once) runs in turn
+// instead of taking every pooled connection at the same time.
+func TestStart_MaxParallelCapsOverlap(t *testing.T) {
+	var active, maxSeen atomic.Int32
+	jobs := make([]Job, 6)
+	for i := range jobs {
+		jobs[i] = &slowJob{name: string(rune('a' + i)), active: &active, maxSeen: &maxSeen}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 400*time.Millisecond)
+	defer cancel()
+	NewRunner(newMemLocker(), nil, jobs...).WithMaxParallel(2).Start(ctx)
+	require.EqualValues(t, 2, maxSeen.Load())
+	require.Equal(t, 1, ParallelFor(2))
+	require.Equal(t, 8, ParallelFor(25))
+}

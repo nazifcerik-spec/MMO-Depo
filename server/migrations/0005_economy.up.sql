@@ -76,7 +76,7 @@ CREATE TABLE economy.character_currency_balance (
 );
 
 CREATE TABLE economy.account_currency_balance (
-  account_id    UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id    UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   currency_code VARCHAR(48) NOT NULL REFERENCES economy.currency(code),
   amount        BIGINT NOT NULL DEFAULT 0 CHECK (amount >= 0),
   updated_at    TIMESTAMPTZ NOT NULL DEFAULT now(),

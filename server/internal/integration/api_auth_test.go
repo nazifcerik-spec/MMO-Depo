@@ -27,10 +27,10 @@ func TestHTTPAuthEdges(t *testing.T) {
 
 	// Expired refresh token and expired session.
 	s := anon.ok("POST", "/v1/auth/login", map[string]any{"email_or_username": user, "password": pass})
-	_, err := w.p.Exec(w.ctx, `UPDATE auth.refresh_token SET expires_at = now() - interval '1 minute' WHERE session_id = $1`, s["session_id"])
+	_, err := w.p.Exec(w.ctx, `UPDATE identity.refresh_token SET expires_at = now() - interval '1 minute' WHERE session_id = $1`, s["session_id"])
 	require.NoError(t, err)
 	anon.fail("POST", "/v1/auth/refresh", map[string]any{"refresh_token": s["refresh_token"]}, 401, "E_TOKEN_EXPIRED")
-	_, err = w.p.Exec(w.ctx, `UPDATE auth.session SET expires_at = now() - interval '1 minute' WHERE id = $1`, s["session_id"])
+	_, err = w.p.Exec(w.ctx, `UPDATE identity.session SET expires_at = now() - interval '1 minute' WHERE id = $1`, s["session_id"])
 	require.NoError(t, err)
 	(&hc{t: t, base: anon.base, token: s["access_token"].(string)}).fail("GET", "/v1/character", nil, 401, "E_SESSION_EXPIRED")
 	anon.fail("GET", "/v1/character", nil, 401, "")
@@ -38,7 +38,7 @@ func TestHTTPAuthEdges(t *testing.T) {
 
 	// Session housekeeping: e-mail verified, logout ends the session.
 	c := &hc{t: t, base: anon.base, token: anon.ok("POST", "/v1/auth/login", map[string]any{"email_or_username": email, "password": pass})["access_token"].(string)}
-	_, err = w.p.Exec(w.ctx, `UPDATE auth.account SET email_verified_at = now() WHERE id = $1`, acct)
+	_, err = w.p.Exec(w.ctx, `UPDATE identity.account SET email_verified_at = now() WHERE id = $1`, acct)
 	require.NoError(t, err)
 	c.fail("POST", "/v1/auth/resend-verification", map[string]any{}, 409, "E_ALREADY_VERIFIED")
 	c.fail("POST", "/v1/auth/password/change", "{", 400, "E_INVALID_JSON")
@@ -48,7 +48,7 @@ func TestHTTPAuthEdges(t *testing.T) {
 
 	// Locked and banned accounts can't sign in.
 	for state, code := range map[string]string{"locked": "E_ACCOUNT_LOCKED", "banned": "E_ACCOUNT_BANNED"} {
-		_, err = w.p.Exec(w.ctx, `UPDATE auth.account SET state = $2 WHERE id = $1`, acct, state)
+		_, err = w.p.Exec(w.ctx, `UPDATE identity.account SET state = $2 WHERE id = $1`, acct, state)
 		require.NoError(t, err)
 		anon.fail("POST", "/v1/auth/login", map[string]any{"email_or_username": user, "password": pass}, 403, code)
 	}

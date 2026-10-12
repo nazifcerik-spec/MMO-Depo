@@ -23,6 +23,8 @@ import (
 	"github.com/otter/server/internal/platform/log"
 	"github.com/otter/server/internal/platform/redis"
 	"github.com/otter/server/internal/ratelimit"
+	"github.com/otter/server/internal/worker"
+	"github.com/otter/server/migrations"
 )
 
 var CommitSHA = "dev"
@@ -58,6 +60,14 @@ func run() error {
 	defer pool.Close()
 	logger.Info("postgres connected", "max_conns", cfg.DatabaseMaxConns)
 
+	if cfg.MigrateOnStart {
+		n, err := db.Migrate(rootCtx, pool, migrations.FS, logger)
+		if err != nil {
+			return err
+		}
+		logger.Info("migrations up to date", "applied", n)
+	}
+
 	// --- Observability (Sprint 27, DD-214) ---
 	shutdownTracing, err := observability.InitTracing(rootCtx, "otter-api", cfg.Env, CommitSHA, cfg.OTLPEndpoint, cfg.TraceSampleRatio)
 	if err != nil {
@@ -86,6 +96,25 @@ func run() error {
 	if err != nil {
 		return err
 	}
+
+	// Worker jobs in this process (RUN_WORKER, DD-239); they stop with the
+	// server and finish before the pool closes.
+	workerDone := make(chan struct{})
+	if cfg.RunWorker {
+		jobs, err := worker.FromConfig(rootCtx, cfg, pool, logger)
+		if err != nil {
+			return err
+		}
+		go func() {
+			defer close(workerDone)
+			// One job at a time: the pool is shared with live requests.
+			worker.NewRunner(worker.NewPgLocker(pool), logger, jobs...).WithMetrics(metrics).
+				WithMaxParallel(1).Start(rootCtx)
+		}()
+	} else {
+		close(workerDone)
+	}
+	defer func() { stop(); <-workerDone }()
 
 	srv := &http.Server{
 		Addr:         cfg.HTTPAddr,

@@ -23,9 +23,9 @@ const chars = `(SELECT id FROM character.character WHERE account_id = $1)`
 // can grow without limit.
 var exportSections = []struct{ name, sql string }{
 	{"account", `SELECT id, email, username, created_at, email_verified_at, last_login_at,
-	        terms_version, terms_accepted_at, deletion_requested_at FROM auth.account WHERE id = $1`},
+	        terms_version, terms_accepted_at, deletion_requested_at FROM identity.account WHERE id = $1`},
 	{"sessions", `SELECT created_at, last_active_at, expires_at, revoked_at, user_agent
-	        FROM auth.session WHERE account_id = $1 ORDER BY created_at DESC LIMIT 200`},
+	        FROM identity.session WHERE account_id = $1 ORDER BY created_at DESC LIMIT 200`},
 	{"devices", `SELECT platform, locale, app_version, registered_at, last_used_at, is_active
 	        FROM notification.device_push_token WHERE account_id = $1`},
 	{"characters", `SELECT id, name, race_code, class_code, level, xp, state, location_region_code,
@@ -103,7 +103,7 @@ func Purge(ctx context.Context, pool *pgxpool.Pool, now time.Time, grace time.Du
 	var n int64
 	err := pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error {
 		rows, err := tx.Query(ctx, `
-			SELECT id, email FROM auth.account
+			SELECT id, email FROM identity.account
 			 WHERE deletion_requested_at <= $1 AND state <> 'deleted'
 			 ORDER BY deletion_requested_at LIMIT $2 FOR UPDATE SKIP LOCKED`, now.Add(-grace), batch)
 		if err != nil {
@@ -153,11 +153,11 @@ var (
 		`UPDATE character.character SET state = 'delete_grace', delete_grace_at = $2, updated_at = $2,
 		        version = version + 1 WHERE account_id = $1 AND state <> 'delete_grace'`,
 		`UPDATE character.character SET delete_grace_at = $2 WHERE account_id = $1 AND delete_grace_at > $2`,
-		`UPDATE auth.refresh_token rt SET revoked_at = $2, revoke_reason = 'account_deleted'
-		   FROM auth.session s WHERE rt.session_id = s.id AND s.account_id = $1 AND rt.revoked_at IS NULL`,
-		`UPDATE auth.session SET revoked_at = $2, revoke_reason = 'account_deleted'
+		`UPDATE identity.refresh_token rt SET revoked_at = $2, revoke_reason = 'account_deleted'
+		   FROM identity.session s WHERE rt.session_id = s.id AND s.account_id = $1 AND rt.revoked_at IS NULL`,
+		`UPDATE identity.session SET revoked_at = $2, revoke_reason = 'account_deleted'
 		  WHERE account_id = $1 AND revoked_at IS NULL`,
-		`UPDATE auth.account
+		`UPDATE identity.account
 		    SET email = 'deleted+' || id || '@deleted.invalid', email_normalized = 'deleted+' || id || '@deleted.invalid',
 		        username = 'deleted_' || left(replace(id::text, '-', ''), 16),
 		        username_normalized = 'deleted_' || left(replace(id::text, '-', ''), 16),
@@ -165,7 +165,7 @@ var (
 		  WHERE id = $1`,
 	}
 	purgeDeleted = []string{
-		`DELETE FROM auth.account_token WHERE account_id = $1`,
+		`DELETE FROM identity.account_token WHERE account_id = $1`,
 		`DELETE FROM notification.device_push_token WHERE account_id = $1`,
 		`DELETE FROM notification.push_message WHERE account_id = $1`,
 		`DELETE FROM notification.inbox_message WHERE account_id = $1`,

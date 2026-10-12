@@ -36,7 +36,7 @@ internal/ratelimit            43
 internal/skill                95
 internal/social               78
 internal/vendor               80
-internal/worker               45
+internal/worker               51
 internal/world                78
 internal/worldevent           81
 internal/wsgateway            40

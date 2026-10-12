@@ -1,7 +1,7 @@
 -- Support tickets (DD-234): in-app reports answered from the admin panel.
 CREATE TABLE ops.support_ticket (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    account_id   UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+    account_id   UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
     character_id UUID REFERENCES character.character(id) ON DELETE SET NULL,
     category     VARCHAR(16)  NOT NULL CHECK (category IN ('bug', 'account', 'abuse', 'feedback', 'other')),
     subject      VARCHAR(120) NOT NULL,

@@ -32,7 +32,7 @@ func pgUniqueViolation(err error) bool {
 
 func (r *PgRepo) CreateAccount(ctx context.Context, a Account) error {
 	const q = `
-		INSERT INTO auth.account
+		INSERT INTO identity.account
 		  (id, email, email_normalized, username, username_normalized, password_hash,
 		   state, created_at, updated_at, terms_version, terms_accepted_at)
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,NULLIF($10, ''),$11)`
@@ -53,7 +53,7 @@ func (r *PgRepo) accountBase() string {
 	return `SELECT id, email, email_normalized, username, username_normalized, password_hash,
 	               state, email_verified_at, last_login_at, created_at, updated_at, version,
 	               COALESCE(terms_version, ''), terms_accepted_at, deletion_requested_at
-	          FROM auth.account`
+	          FROM identity.account`
 }
 
 func (r *PgRepo) scanAccount(row pgx.Row) (*Account, error) {
@@ -85,7 +85,7 @@ func (r *PgRepo) AccountByID(ctx context.Context, id uuid.UUID) (*Account, error
 }
 
 func (r *PgRepo) UpdateAccountLastLogin(ctx context.Context, id uuid.UUID, ts time.Time) error {
-	const q = `UPDATE auth.account SET last_login_at = $2, updated_at = $2 WHERE id = $1`
+	const q = `UPDATE identity.account SET last_login_at = $2, updated_at = $2 WHERE id = $1`
 	_, err := r.pool.Exec(ctx, q, id, ts)
 	return err
 }
@@ -94,7 +94,7 @@ func (r *PgRepo) UpdateAccountLastLogin(ctx context.Context, id uuid.UUID, ts ti
 
 func (r *PgRepo) CreateSession(ctx context.Context, s Session) error {
 	const q = `
-		INSERT INTO auth.session
+		INSERT INTO identity.session
 		  (id, account_id, device_id, ip_hash, user_agent, created_at, last_active_at, expires_at)
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`
 	_, err := r.pool.Exec(ctx, q,
@@ -107,7 +107,7 @@ func (r *PgRepo) CreateSession(ctx context.Context, s Session) error {
 func (r *PgRepo) Session(ctx context.Context, id uuid.UUID) (*Session, error) {
 	const q = `SELECT id, account_id, device_id, ip_hash, user_agent,
 	                  created_at, last_active_at, expires_at, revoked_at, revoke_reason
-	             FROM auth.session WHERE id = $1`
+	             FROM identity.session WHERE id = $1`
 	var s Session
 	var reason *string
 	err := r.pool.QueryRow(ctx, q, id).Scan(
@@ -127,7 +127,7 @@ func (r *PgRepo) Session(ctx context.Context, id uuid.UUID) (*Session, error) {
 }
 
 func (r *PgRepo) RevokeSession(ctx context.Context, id uuid.UUID, reason string, at time.Time) error {
-	const q = `UPDATE auth.session
+	const q = `UPDATE identity.session
 	              SET revoked_at = $2, revoke_reason = $3
 	            WHERE id = $1 AND revoked_at IS NULL`
 	_, err := r.pool.Exec(ctx, q, id, at, reason)
@@ -135,7 +135,7 @@ func (r *PgRepo) RevokeSession(ctx context.Context, id uuid.UUID, reason string,
 }
 
 func (r *PgRepo) TouchSession(ctx context.Context, id uuid.UUID, at time.Time) error {
-	const q = `UPDATE auth.session SET last_active_at = $2 WHERE id = $1 AND revoked_at IS NULL`
+	const q = `UPDATE identity.session SET last_active_at = $2 WHERE id = $1 AND revoked_at IS NULL`
 	_, err := r.pool.Exec(ctx, q, id, at)
 	return err
 }
@@ -144,7 +144,7 @@ func (r *PgRepo) TouchSession(ctx context.Context, id uuid.UUID, at time.Time) e
 
 func (r *PgRepo) CreateRefreshToken(ctx context.Context, t RefreshToken) error {
 	const q = `
-		INSERT INTO auth.refresh_token
+		INSERT INTO identity.refresh_token
 		  (id, session_id, token_hash, parent_token_id, issued_at, expires_at)
 		VALUES ($1,$2,$3,$4,$5,$6)`
 	_, err := r.pool.Exec(ctx, q,
@@ -156,7 +156,7 @@ func (r *PgRepo) CreateRefreshToken(ctx context.Context, t RefreshToken) error {
 func (r *PgRepo) RefreshTokenByHash(ctx context.Context, hash []byte) (*RefreshToken, error) {
 	const q = `SELECT id, session_id, token_hash, parent_token_id,
 	                  issued_at, expires_at, used_at, revoked_at, revoke_reason
-	             FROM auth.refresh_token
+	             FROM identity.refresh_token
 	            WHERE token_hash = $1`
 	var t RefreshToken
 	var reason *string
@@ -177,13 +177,13 @@ func (r *PgRepo) RefreshTokenByHash(ctx context.Context, hash []byte) (*RefreshT
 }
 
 func (r *PgRepo) MarkRefreshTokenUsed(ctx context.Context, id uuid.UUID, at time.Time) error {
-	const q = `UPDATE auth.refresh_token SET used_at = $2 WHERE id = $1 AND used_at IS NULL`
+	const q = `UPDATE identity.refresh_token SET used_at = $2 WHERE id = $1 AND used_at IS NULL`
 	_, err := r.pool.Exec(ctx, q, id, at)
 	return err
 }
 
 func (r *PgRepo) RevokeRefreshTokensForSession(ctx context.Context, sessionID uuid.UUID, reason string, at time.Time) error {
-	const q = `UPDATE auth.refresh_token
+	const q = `UPDATE identity.refresh_token
 	              SET revoked_at = $3, revoke_reason = $2
 	            WHERE session_id = $1 AND revoked_at IS NULL`
 	_, err := r.pool.Exec(ctx, q, sessionID, reason, at)
@@ -195,7 +195,7 @@ func (r *PgRepo) RevokeRefreshTokensForSession(ctx context.Context, sessionID uu
 func (r *PgRepo) CountAccountTokens(ctx context.Context, accountID uuid.UUID, kind TokenKind, since time.Time) (int, error) {
 	var n int
 	err := r.pool.QueryRow(ctx, `
-		SELECT count(*) FROM auth.account_token
+		SELECT count(*) FROM identity.account_token
 		 WHERE account_id = $1 AND kind = $2 AND created_at >= $3`, accountID, string(kind), since).Scan(&n)
 	return n, err
 }
@@ -203,7 +203,7 @@ func (r *PgRepo) CountAccountTokens(ctx context.Context, accountID uuid.UUID, ki
 func (r *PgRepo) IssueAccountToken(ctx context.Context, t AccountToken, mail OutboundEmail) error {
 	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `
-			INSERT INTO auth.account_token (id, account_id, kind, token_hash, expires_at, created_at)
+			INSERT INTO identity.account_token (id, account_id, kind, token_hash, expires_at, created_at)
 			VALUES ($1, $2, $3, $4, $5, $6)`,
 			t.ID, t.AccountID, string(t.Kind), t.TokenHash, t.ExpiresAt, t.CreatedAt); err != nil {
 			return err
@@ -219,7 +219,7 @@ func (r *PgRepo) IssueAccountToken(ctx context.Context, t AccountToken, mail Out
 
 func (r *PgRepo) SetDeletionRequested(ctx context.Context, accountID uuid.UUID, at *time.Time) error {
 	_, err := r.pool.Exec(ctx, `
-		UPDATE auth.account SET deletion_requested_at = $2, updated_at = now(), version = version + 1
+		UPDATE identity.account SET deletion_requested_at = $2, updated_at = now(), version = version + 1
 		 WHERE id = $1 AND state <> 'deleted'`, accountID, at)
 	return err
 }
@@ -234,7 +234,7 @@ func (r *PgRepo) ConsumeAccountToken(ctx context.Context, kind TokenKind, hash [
 	var accountID uuid.UUID
 	err := pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
 		err := tx.QueryRow(ctx, `
-			UPDATE auth.account_token SET used_at = $3
+			UPDATE identity.account_token SET used_at = $3
 			 WHERE token_hash = $1 AND kind = $2 AND used_at IS NULL AND expires_at > $3
 			RETURNING account_id`, hash, string(kind), now).Scan(&accountID)
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -245,7 +245,7 @@ func (r *PgRepo) ConsumeAccountToken(ctx context.Context, kind TokenKind, hash [
 		}
 		// Older links of the same kind stop working too.
 		_, err = tx.Exec(ctx, `
-			UPDATE auth.account_token SET used_at = $3
+			UPDATE identity.account_token SET used_at = $3
 			 WHERE account_id = $1 AND kind = $2 AND used_at IS NULL`, accountID, string(kind), now)
 		return err
 	})
@@ -254,7 +254,7 @@ func (r *PgRepo) ConsumeAccountToken(ctx context.Context, kind TokenKind, hash [
 
 func (r *PgRepo) UpdatePassword(ctx context.Context, accountID uuid.UUID, hash string, at time.Time) error {
 	_, err := r.pool.Exec(ctx, `
-		UPDATE auth.account
+		UPDATE identity.account
 		   SET password_hash = $2, password_updated_at = $3, updated_at = $3, version = version + 1
 		 WHERE id = $1`, accountID, hash, at)
 	return err
@@ -262,7 +262,7 @@ func (r *PgRepo) UpdatePassword(ctx context.Context, accountID uuid.UUID, hash s
 
 func (r *PgRepo) MarkEmailVerified(ctx context.Context, accountID uuid.UUID, at time.Time) error {
 	_, err := r.pool.Exec(ctx, `
-		UPDATE auth.account
+		UPDATE identity.account
 		   SET email_verified_at = COALESCE(email_verified_at, $2), updated_at = $2, version = version + 1
 		 WHERE id = $1`, accountID, at)
 	return err
@@ -271,14 +271,14 @@ func (r *PgRepo) MarkEmailVerified(ctx context.Context, accountID uuid.UUID, at 
 func (r *PgRepo) RevokeAccountSessions(ctx context.Context, accountID, keep uuid.UUID, reason string, at time.Time) error {
 	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `
-			UPDATE auth.refresh_token rt SET revoked_at = $3, revoke_reason = $4
-			  FROM auth.session s
+			UPDATE identity.refresh_token rt SET revoked_at = $3, revoke_reason = $4
+			  FROM identity.session s
 			 WHERE rt.session_id = s.id AND s.account_id = $1 AND s.id <> $2
 			   AND rt.revoked_at IS NULL`, accountID, keep, at, reason); err != nil {
 			return err
 		}
 		_, err := tx.Exec(ctx, `
-			UPDATE auth.session SET revoked_at = $3, revoke_reason = $4
+			UPDATE identity.session SET revoked_at = $3, revoke_reason = $4
 			 WHERE account_id = $1 AND id <> $2 AND revoked_at IS NULL`, accountID, keep, at, reason)
 		return err
 	})

@@ -60,7 +60,7 @@ CREATE INDEX idx_admin_action_target ON audit.admin_action (target_kind, target_
 
 CREATE TABLE ops.account_sanction (
   id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id           UUID NOT NULL REFERENCES auth.account(id) ON DELETE CASCADE,
+  account_id           UUID NOT NULL REFERENCES identity.account(id) ON DELETE CASCADE,
   kind                 VARCHAR(8) NOT NULL CHECK (kind IN ('mute','ban')),
   until                TIMESTAMPTZ NULL,    -- NULL = permanent
   reason               TEXT NOT NULL,
