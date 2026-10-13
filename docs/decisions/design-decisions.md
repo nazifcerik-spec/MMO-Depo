@@ -2172,6 +2172,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Yeni görsel yeni APK gerektirir. 84 eşya × ~10 KB ≈ 1 MB uygulama boyutu. Görsel adı koddan farklı yazılırsa (büyük harf, boşluk, .jpg) eşleşmez ve ikon görünür.
 **Tarih:** 2026-10-13
 
+## DD-241 — Can İksiri Kademeleri; Mana İksirleri Mana Sistemine Kadar Ertelendi
+**Karar:** Dört yeni can iksiri: Orta Boy (Sv 5, +150, 60b), Büyük Boy (Sv 12, +280, 1g 50b), Ekstra Büyük (Sv 20, +450, 3g 20b), Çok Büyük (Sv 28, +700, 6g); yığın 20. Miktarlar ilgili seviyede tipik can tavanının ~%40–60'ı (can = 100 + 10×VIT + ekipman). Orta ve Büyük Ironhold dükkânında; dördü de simyayla üretilir (beceri 5/10/20/30) — üst kademeler o ana dek hiçbir tarifte kullanılmayan Kral Çiçeği ve Anka Yaprağı'nı tüketir. Mana iksirleri (kullanıcının istediği Orta/Büyük/Ekstra Büyük/Çok Çok Büyük) eklenmedi: mana her savaşın başında dolduğu için (DD-222) etkileri olamaz; kullanıcı "şimdilik sadece can" dedi. Mevcut Küçük Mana İksiri dükkândan çıkarıldı, tarifi migration 0034 ile emekliye ayrıldı (loader yalnız upsert eder), şablon kalır (eldekiler satılabilir).
+**Reason:** Oyuncunun işe yaramayan eşyaya altın harcamaması; can iksirleri seviyeyle ölçeklenmeliydi (tek iksir 60 can veriyordu).
+**Alternatives:** Kalıcı mana (can gibi taşınır/yenilenir) veya savaşta otomatik iksir — mana iksirlerini anlamlı kılar, denge yeniden ayarı gerektirir; ileride.
+**Consequences:** Mana sistemi değişince dört mana iksiri + Küçük Mana İksiri tarifi geri gelir (kodlar `potion_mp_{medium,large,xlarge,huge}` için yer ayrılmış sayılır).
+**Tarih:** 2026-10-13
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

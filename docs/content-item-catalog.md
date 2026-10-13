@@ -1,6 +1,6 @@
 # Oyundaki Eşyalar
 
-Toplam **84** eşya şablonu (`content/items.yaml` + `content/gear.yaml`). Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış fiyatı = değer × 0.25 (genel dükkân).
+Toplam **88** eşya şablonu (`content/items.yaml` + `content/gear.yaml`). Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış fiyatı = değer × 0.25 (genel dükkân).
 
 ## Silahlar (30)
 
@@ -72,12 +72,16 @@ Toplam **84** eşya şablonu (`content/items.yaml` + `content/gear.yaml`). Para:
 | Şövalye Bacaklığı | `legs_knight` | zırh | Bacak | Hepsi | 20 | +7 Savunma, +4 DAY | 7g 72b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Bacaklık | `legs_runed` | zırh | Bacak | Hepsi | 25 | +8 Savunma, +5 DAY | 10g 71b | 3 kg | Av zaferi %4 / zindan boss'u |
 
-## Tüketilebilirler (2)
+## Tüketilebilirler (6)
 
 | Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|
 | Küçük Can İksiri | `potion_hp_small` | iksir | 1 | Kullan: +60 Can | 20 | 20b | 0.2 kg | Dükkân (20b); Üretim: Simya 1+ (2× Keten Tohumu, 5b) |
-| Küçük Mana İksiri | `potion_mp_small` | iksir | 1 | — | 20 | 20b | 0.2 kg | Dükkân (20b); Üretim: Simya 3+ (2× Adamotu, 5b) |
+| Orta Boy Can İksiri | `potion_hp_medium` | iksir | 5 | Kullan: +150 Can | 20 | 60b | 0.25 kg | Dükkân (60b); Üretim: Simya 5+ (3× Keten Tohumu, 1× Adamotu, 15b) |
+| Büyük Boy Can İksiri | `potion_hp_large` | iksir | 12 | Kullan: +280 Can | 20 | 1g 50b | 0.3 kg | Dükkân (1g 50b); Üretim: Simya 10+ (3× Adamotu, 2× Keten Tohumu, 40b) |
+| Ekstra Büyük Can İksiri | `potion_hp_xlarge` | iksir | 20 | Kullan: +450 Can | 20 | 3g 20b | 0.35 kg | Üretim: Simya 20+ (2× Kral Çiçeği, 2× Adamotu, 1g) |
+| Çok Büyük Can İksiri | `potion_hp_huge` | iksir | 28 | Kullan: +700 Can | 20 | 6g | 0.4 kg | Üretim: Simya 30+ (1× Anka Yaprağı, 2× Kral Çiçeği, 2g) |
+| Küçük Mana İksiri | `potion_mp_small` | iksir | 1 | — (mana her savaşta dolduğu için etkisiz, DD-241) | 20 | 20b | 0.2 kg | Artık satılmıyor/üretilmiyor; eldekiler satılabilir |
 
 ## Malzemeler (22)
 

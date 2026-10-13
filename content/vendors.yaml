@@ -18,7 +18,8 @@ vendors:
     sell_multiplier: 0.250
     sells:
       - { template_code: potion_hp_small }
-      - { template_code: potion_mp_small }
+      - { template_code: potion_hp_medium }
+      - { template_code: potion_hp_large }
       - { template_code: sword_training }
       - { template_code: staff_willow }
       - { template_code: bow_short }

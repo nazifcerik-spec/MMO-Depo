@@ -288,6 +288,54 @@ items:
     bind_kind: boe
     use_effect: { kind: heal_hp, amount: 60 }
 
+  - code: potion_hp_medium
+    display_name_key: item.potion_hp_medium
+    item_class: consumable
+    item_subclass: potion
+    min_level: 5
+    base_value_copper: 60
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 150 }
+
+  - code: potion_hp_large
+    display_name_key: item.potion_hp_large
+    item_class: consumable
+    item_subclass: potion
+    min_level: 12
+    base_value_copper: 150
+    base_weight_g: 300
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 280 }
+
+  - code: potion_hp_xlarge
+    display_name_key: item.potion_hp_xlarge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 20
+    base_value_copper: 320
+    base_weight_g: 350
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 450 }
+
+  - code: potion_hp_huge
+    display_name_key: item.potion_hp_huge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 28
+    base_value_copper: 600
+    base_weight_g: 400
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 700 }
+
   - code: potion_mp_small
     display_name_key: item.potion_mp_small
     item_class: consumable

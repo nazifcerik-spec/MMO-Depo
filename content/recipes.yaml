@@ -24,16 +24,56 @@ recipes:
     output_stack: 1
     profession_xp_reward: 15
 
-  - code: recipe_potion_mp_small
-    display_name_key: recipe.potion_mp_small
+  # recipe_potion_mp_small retired by migration 0034 until mana persists
+  # between fights (DD-241); the item template stays.
+
+  - code: recipe_potion_hp_medium
+    display_name_key: recipe.hp_medium
     profession_code: alchemy
-    min_skill: 3
+    min_skill: 5
     inputs:
-      - { template_code: mandrake, quantity: 2 }
-    gold_cost_copper: 5
-    output_template_code: potion_mp_small
+      - { template_code: linseed, quantity: 3 }
+      - { template_code: mandrake, quantity: 1 }
+    gold_cost_copper: 15
+    output_template_code: potion_hp_medium
     output_stack: 1
-    profession_xp_reward: 20
+    profession_xp_reward: 30
+
+  - code: recipe_potion_hp_large
+    display_name_key: recipe.hp_large
+    profession_code: alchemy
+    min_skill: 10
+    inputs:
+      - { template_code: mandrake, quantity: 3 }
+      - { template_code: linseed, quantity: 2 }
+    gold_cost_copper: 40
+    output_template_code: potion_hp_large
+    output_stack: 1
+    profession_xp_reward: 50
+
+  - code: recipe_potion_hp_xlarge
+    display_name_key: recipe.hp_xlarge
+    profession_code: alchemy
+    min_skill: 20
+    inputs:
+      - { template_code: king_bloom, quantity: 2 }
+      - { template_code: mandrake, quantity: 2 }
+    gold_cost_copper: 100
+    output_template_code: potion_hp_xlarge
+    output_stack: 1
+    profession_xp_reward: 80
+
+  - code: recipe_potion_hp_huge
+    display_name_key: recipe.hp_huge
+    profession_code: alchemy
+    min_skill: 30
+    inputs:
+      - { template_code: phoenix_petal, quantity: 1 }
+      - { template_code: king_bloom, quantity: 2 }
+    gold_cost_copper: 200
+    output_template_code: potion_hp_huge
+    output_stack: 1
+    profession_xp_reward: 120
 
   # --- Blacksmithing (DD-229): leather set from skill 1, iron set + iron
   # weapons, scale set at skill 10. Higher tiers drop from hunts/dungeons. ---
