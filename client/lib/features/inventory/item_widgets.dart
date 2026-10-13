@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
 import 'inventory_models.dart';
+import 'item_images.dart';
 
 IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClass, subclass)) {
   ('weapon', _) => Icons.hardware,
@@ -18,12 +19,13 @@ IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClas
   _ => Icons.category_outlined,
 };
 
-/// Square item cell: rarity border, class icon, stack badge, lock marker.
+/// Square item cell: rarity border, item art (or class icon), stack badge, lock marker.
 class ItemCell extends StatelessWidget {
   const ItemCell({
     super.key,
     this.rarity,
     this.icon,
+    this.code,
     this.stack = 1,
     this.locked = false,
     this.label,
@@ -33,6 +35,9 @@ class ItemCell extends StatelessWidget {
 
   final String? rarity;
   final IconData? icon;
+
+  /// Template code: shows `assets/items/<code>.png` when it ships.
+  final String? code;
   final int stack;
   final bool locked;
 
@@ -62,7 +67,7 @@ class ItemCell extends StatelessWidget {
             children: [
               Center(
                 child: filled
-                    ? Icon(icon, color: c, size: 22)
+                    ? (code == null ? Icon(icon, color: c, size: 22) : ItemArt(code: code!, icon: icon!, color: c))
                     : (label == null
                           ? null
                           : Padding(

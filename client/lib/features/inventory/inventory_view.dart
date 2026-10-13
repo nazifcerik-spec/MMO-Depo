@@ -135,6 +135,7 @@ class _InventoryViewState extends State<InventoryView> {
                 name: itemName(item.templateCode, item.prefix, item.suffix),
                 rarity: item.rarity,
                 icon: itemIcon(item.itemClass),
+                code: item.templateCode,
                 subtitle: slotName(l, slot),
               ),
               const SizedBox(height: Space.xl),
@@ -201,6 +202,7 @@ class _InventoryViewState extends State<InventoryView> {
                     ItemCell(
                       rarity: e.rarity,
                       icon: itemIcon(e.itemClass),
+                      code: e.templateCode,
                       semantic: '${slotName(l, slot)}: ${itemName(e.templateCode, e.prefix, e.suffix)}',
                       onTap: () => _openEquipped(slot, e),
                     )
@@ -237,6 +239,7 @@ class _InventoryViewState extends State<InventoryView> {
                 return ItemCell(
                   rarity: item.rarity,
                   icon: itemIcon(item.itemClass, item.itemSubclass),
+                  code: item.templateCode,
                   stack: item.stack,
                   locked: item.isLocked,
                   semantic: '${displayName(item)} ×${item.stack}',
@@ -252,11 +255,18 @@ class _InventoryViewState extends State<InventoryView> {
 }
 
 class _ItemHeader extends StatelessWidget {
-  const _ItemHeader({required this.name, required this.rarity, required this.icon, required this.subtitle});
+  const _ItemHeader({
+    required this.name,
+    required this.rarity,
+    required this.icon,
+    required this.code,
+    required this.subtitle,
+  });
 
   final String name;
   final String rarity;
   final IconData icon;
+  final String code;
   final String subtitle;
 
   @override
@@ -267,7 +277,7 @@ class _ItemHeader extends StatelessWidget {
       children: [
         SizedBox.square(
           dimension: 56,
-          child: ItemCell(rarity: rarity, icon: icon),
+          child: ItemCell(rarity: rarity, icon: icon, code: code),
         ),
         const SizedBox(width: Space.lg),
         Expanded(
@@ -320,6 +330,7 @@ class _ItemDetail extends StatelessWidget {
                 name: displayName(item),
                 rarity: item.rarity,
                 icon: itemIcon(item.itemClass, item.itemSubclass),
+                code: item.templateCode,
                 subtitle: item.equippable ? slotName(l, item.equipSlot!) : itemName(item.itemSubclass),
               ),
               const SizedBox(height: Space.lg),

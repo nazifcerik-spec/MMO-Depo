@@ -7,6 +7,7 @@ import '../../shared/widgets.dart';
 import '../market/market_repository.dart';
 import '../market/market_view.dart';
 import '../inventory/inventory_models.dart';
+import '../inventory/item_images.dart';
 import '../inventory/item_widgets.dart';
 import 'workshop_repository.dart';
 import '../../shared/content_names.dart';
@@ -346,7 +347,11 @@ class _ShopPanelState extends State<_ShopPanel> with PanelState {
           Card(
             margin: const EdgeInsets.only(bottom: Space.sm),
             child: ListTile(
-              leading: Icon(itemIcon(o.itemClass, o.itemSubclass), color: Palette.textSecondary),
+              leading: ItemArt(
+                code: o.templateCode,
+                icon: itemIcon(o.itemClass, o.itemSubclass),
+                color: Palette.textSecondary,
+              ),
               title: Text(itemName(o.templateCode)),
               subtitle: GoldText(o.price, size: 13),
               trailing: FilledButton.tonal(

@@ -2165,6 +2165,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Bulunan hata: worker havuz kilitlenmesi — her iş kilit için bir, iş için bir-iki bağlantı tutuyor; açılışta 17 iş aynı anda havuzu (8) doldurup birbirini bekliyordu, API istekleri de bağlantı alamıyordu (ayrı worker'da 25'lik havuzda da teorik risk). `Runner.WithMaxParallel` + `ParallelFor(maxConns)=maxConns/3`; API modunda 1. Render benzeri yerel koşu (0.1 CPU, 512 MB, boş veritabanı): 33 migration, 5 sn'de hazır, 25 iş çalışması hatasız, giriş 0.57 sn, oyun istekleri 5–20 ms. Ücretsiz katman sınırları: 15 dk boşta uyku (~50 sn ilk istek; işler uyurken durur, uyanınca toplar), yedek yok, e-posta/izleme yok, birkaç düzine oyuncu kapasitesi. Yayında bulunanlar (2026-10-12, canlı: https://new-world-mmo-api.onrender.com, Supabase `new-world-mmo` Frankfurt): (a) Render Key Value Blueprint'te yalnız `connectionString` verir → `REDIS_ADDR` `redis://` URL'si kabul eder, log'a yalnız host:port; (b) `DATABASE_URL` hatalıyken pgx hatası değeri (şifreyi) olduğu gibi log'a basıyordu → hata metni değeri göstermez; (c) istek zinciri oyuncu → Cloudflare → Render kenarı (`::1`) → uygulama; yalnız `10.0.0.0/8` güvenilince herkes `::1`, sonra Cloudflare kenar IP'si görünüyordu (IP başı sınırlar herkese ortak) → `TRUSTED_PROXIES` loopback + Cloudflare aralıkları (yılda bir kontrol), istek log'una `client_ip`; doğrulandı: gerçek istemci IP'si. Uyumayı önleyen Supabase `pg_cron` işi kullanıcı onayına bırakıldı.
 **Tarih:** 2026-10-12
 
+## DD-240 — Eşya Görselleri: Uygulamaya Gömülü, Koda Göre Adlandırılmış
+**Karar:** Eşya görselleri `client/assets/items/<template_code>.png` olarak uygulamaya gömülür (kare, şeffaf, 128×128). Eşleştirme yalnız dosya adıyla: açılışta asset manifest'i bir kez okunur (`ItemImages.load`), görseli olan kodlar kümeye girer; `ItemArt` görsel varsa onu ekran boyutunda çözerek (`cacheWidth`) gösterir, yoksa sınıf ikonu kalır. Nadirlik hücre çerçevesinin rengi, önek/sonekli eşyalar temel eşyanın görselini kullanır. Çanta, ekipman, eşya detayı ve dükkân listesi görseli gösterir.
+**Reason:** Kullanıcı görselleri koddan isimle eklemek istiyor; ek eşleştirme tablosu veya sunucu değişikliği gerektirmeyen en basit yol. Eksik görsel hata üretmez (manifest kontrolü), görseller kademeli eklenebilir.
+**Alternatives:** Sunucudan/CDN'den indirme (APK'sız güncelleme ama önbellek, sürümleme ve ağ maliyeti), içerik paketinde `icon:` alanı (kod adıyla aynı bilgiyi tekrarlar).
+**Consequences:** Yeni görsel yeni APK gerektirir. 84 eşya × ~10 KB ≈ 1 MB uygulama boyutu. Görsel adı koddan farklı yazılırsa (büyük harf, boşluk, .jpg) eşleşmez ve ikon görünür.
+**Tarih:** 2026-10-13
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

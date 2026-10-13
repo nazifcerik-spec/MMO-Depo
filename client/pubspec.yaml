@@ -26,3 +26,5 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  assets:
+    - assets/items/ # item art: <template_code>.png (DD-240)
