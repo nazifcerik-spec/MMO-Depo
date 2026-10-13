@@ -1,6 +1,6 @@
 # Oyundaki Eşyalar
 
-Toplam **88** eşya şablonu (`content/items.yaml` + `content/gear.yaml`). Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış fiyatı = değer × 0.25 (genel dükkân).
+Toplam **120** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplamada kademe şansı: bir kademenin buluntusu %25 (efsanevide %15) ihtimalle bir üst nadirliğe çıkar (DD-243).
 
 ## Silahlar (30)
 
@@ -74,38 +74,70 @@ Toplam **88** eşya şablonu (`content/items.yaml` + `content/gear.yaml`). Para:
 
 ## Tüketilebilirler (6)
 
-| Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden |
-|---|---|---|---|---|---|---|---|---|
-| Küçük Can İksiri | `potion_hp_small` | iksir | 1 | Kullan: +60 Can | 20 | 20b | 0.2 kg | Dükkân (20b); Üretim: Simya 1+ (2× Keten Tohumu, 5b) |
-| Orta Boy Can İksiri | `potion_hp_medium` | iksir | 5 | Kullan: +150 Can | 20 | 60b | 0.25 kg | Dükkân (60b); Üretim: Simya 5+ (3× Keten Tohumu, 1× Adamotu, 15b) |
-| Büyük Boy Can İksiri | `potion_hp_large` | iksir | 12 | Kullan: +280 Can | 20 | 1g 50b | 0.3 kg | Dükkân (1g 50b); Üretim: Simya 10+ (3× Adamotu, 2× Keten Tohumu, 40b) |
-| Ekstra Büyük Can İksiri | `potion_hp_xlarge` | iksir | 20 | Kullan: +450 Can | 20 | 3g 20b | 0.35 kg | Üretim: Simya 20+ (2× Kral Çiçeği, 2× Adamotu, 1g) |
-| Çok Büyük Can İksiri | `potion_hp_huge` | iksir | 28 | Kullan: +700 Can | 20 | 6g | 0.4 kg | Üretim: Simya 30+ (1× Anka Yaprağı, 2× Kral Çiçeği, 2g) |
-| Küçük Mana İksiri | `potion_mp_small` | iksir | 1 | — (mana her savaşta dolduğu için etkisiz, DD-241) | 20 | 20b | 0.2 kg | Artık satılmıyor/üretilmiyor; eldekiler satılabilir |
+| Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden | Kullanıldığı yer |
+|---|---|---|---|---|---|---|---|---|---|
+| Küçük Can İksiri | `potion_hp_small` | iksir | 1 | Kullan: +60 Can | 20 | 20b | 0.2 kg | Dükkân (20b); Üretim: Simya 1+ (2× Keten Tohumu, 5b) | — |
+| Küçük Mana İksiri | `potion_mp_small` | iksir | 1 | — | 20 | 20b | 0.2 kg | — | — |
+| Orta Boy Can İksiri | `potion_hp_medium` | iksir | 5 | Kullan: +150 Can | 20 | 60b | 0.25 kg | Dükkân (60b); Üretim: Simya 5+ (3× Keten Tohumu, 1× Adamotu, 15b) | — |
+| Büyük Boy Can İksiri | `potion_hp_large` | iksir | 12 | Kullan: +280 Can | 20 | 1g 50b | 0.3 kg | Dükkân (1g 50b); Üretim: Simya 10+ (3× Adamotu, 2× Keten Tohumu, 40b) | — |
+| Ekstra Büyük Can İksiri | `potion_hp_xlarge` | iksir | 20 | Kullan: +450 Can | 20 | 3g 20b | 0.35 kg | Üretim: Simya 20+ (2× Kral Çiçeği, 2× Adamotu, 1g) | — |
+| Çok Büyük Can İksiri | `potion_hp_huge` | iksir | 28 | Kullan: +700 Can | 20 | 6g | 0.4 kg | Üretim: Simya 30+ (1× Anka Yaprağı, 2× Kral Çiçeği, 2g) | — |
 
-## Malzemeler (22)
+## Malzemeler (54)
 
-| Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden |
-|---|---|---|---|---|---|---|---|---|
-| Domuz Postu | `boar_hide` | post | 1 | — | 99 | 15b | 0.8 kg | Avcılık (toplama) (yaygın) |
-| Demir Cevheri | `iron_ore` | cevher | 1 | — | 99 | 5b | 0.2 kg | Madencilik (yaygın) |
-| Keten Tohumu | `linseed` | bitki | 1 | — | 99 | 7b | 0.05 kg | Şifalı bitki (yaygın) |
-| Meşe Kütüğü | `oak_log` | kütük | 1 | — | 99 | 4b | 1 kg | Oduncu (yaygın) |
-| Somon | `salmon` | balık | 1 | — | 99 | 8b | 0.5 kg | Balıkçılık (yaygın) |
-| Levrek | `bass` | balık | 5 | — | 99 | 12b | 0.4 kg | Balıkçılık (nadirce) |
-| Bakır Cevheri | `copper_ore` | cevher | 5 | — | 99 | 8b | 0.2 kg | Madencilik (nadirce) |
-| Adamotu | `mandrake` | bitki | 5 | — | 99 | 12b | 0.05 kg | Şifalı bitki (nadirce) |
-| Kalay Cevheri | `tin_ore` | cevher | 5 | — | 99 | 7b | 0.2 kg | Madencilik (nadirce) |
-| Karaağaç Kütüğü | `elm_log` | kütük | 8 | — | 99 | 9b | 1 kg | Oduncu (nadirce) |
-| Kurt Postu | `wolf_pelt` | post | 8 | — | 99 | 25b | 0.7 kg | Avcılık (toplama) (nadirce) |
-| Altın Sazan | `golden_carp` | balık | 15 | — | 99 | 50b | 0.5 kg | Balıkçılık (nadir) |
-| Gümüş Cevheri | `silver_ore` | cevher | 15 | — | 99 | 25b | 0.2 kg | Madencilik (nadir) |
-| Dev Ayı Postu | `dire_bear_hide` | post | 20 | — | 99 | 90b | 1.5 kg | Avcılık (toplama) (nadir) |
-| Altın Cevheri | `gold_ore` | cevher | 20 | — | 99 | 40b | 0.25 kg | Madencilik (nadir) |
-| Kral Çiçeği | `king_bloom` | bitki | 20 | — | 99 | 60b | 0.06 kg | Şifalı bitki (nadir) |
-| Porsuk Kütüğü | `yew_log` | kütük | 20 | — | 99 | 30b | 1 kg | Oduncu (nadir) |
-| Kadim Leviathan Pulu | `ancient_leviathan_scale` | balık | 35 | — | 99 | 3g | 0.1 kg | Balıkçılık (efsanevi) |
-| Demirağaç Kütüğü | `ironwood_log` | kütük | 40 | — | 99 | 2g | 1.2 kg | Oduncu (efsanevi) |
-| Mitril Cevheri | `mythril_ore` | cevher | 40 | — | 99 | 2g 50b | 0.3 kg | Madencilik (efsanevi) |
-| Anka Yaprağı | `phoenix_petal` | bitki | 40 | — | 99 | 5g | 0.03 kg | Şifalı bitki (efsanevi) |
-| Ejder Pulu | `dragon_scale` | post | 45 | — | 99 | 8g | 0.3 kg | Avcılık (toplama) (efsanevi) |
+| Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden | Kullanıldığı yer |
+|---|---|---|---|---|---|---|---|---|---|
+| Bakır Külçesi | `copper_bar` | külçe | 1 | — | 99 | 29b | 0.5 kg | Üretim: Ergitme 1+ (2× Bakır Cevheri, 1× Kömür, 2b) | — |
+| Demir Külçesi | `iron_bar` | külçe | 1 | — | 99 | 19b | 0.5 kg | Üretim: Ergitme 1+ (2× Demir Cevheri, 1× Kömür, 2b) | — |
+| Kurşun Külçesi | `lead_bar` | külçe | 1 | — | 99 | 22b | 0.5 kg | Üretim: Ergitme 3+ (2× Kurşun Cevheri, 1× Kömür, 2b) | — |
+| Kalay Külçesi | `tin_bar` | külçe | 1 | — | 99 | 26b | 0.5 kg | Üretim: Ergitme 1+ (2× Kalay Cevheri, 1× Kömür, 2b) | — |
+| Çinko Külçesi | `zinc_bar` | külçe | 1 | — | 99 | 22b | 0.5 kg | Üretim: Ergitme 3+ (2× Çinko Cevheri, 1× Kömür, 2b) | — |
+| Kobalt Külçesi | `cobalt_bar` | külçe | 5 | — | 99 | 48b | 0.5 kg | Üretim: Ergitme 8+ (2× Kobalt Cevheri, 1× Kömür, 5b) | — |
+| Nikel Külçesi | `nickel_bar` | külçe | 5 | — | 99 | 42b | 0.5 kg | Üretim: Ergitme 8+ (2× Nikel Cevheri, 1× Kömür, 5b) | — |
+| Altın Külçesi | `gold_bar` | külçe | 10 | — | 99 | 1g 34b | 0.5 kg | Üretim: Ergitme 12+ (2× Altın Cevheri, 2× Kömür, 10b) | — |
+| Gümüş Külçesi | `silver_bar` | külçe | 10 | — | 99 | 86b | 0.5 kg | Üretim: Ergitme 12+ (2× Gümüş Cevheri, 2× Kömür, 10b) | — |
+| Paladyum Külçesi | `palladium_bar` | külçe | 15 | — | 99 | 2g 94b | 0.5 kg | Üretim: Ergitme 18+ (3× Paladyum Cevheri, 2× Kömür, 20b) | — |
+| Rodyum Külçesi | `rhodium_bar` | külçe | 15 | — | 99 | 3g 42b | 0.5 kg | Üretim: Ergitme 18+ (3× Rodyum Cevheri, 2× Kömür, 20b) | — |
+| Titanyum Külçesi | `titanium_bar` | külçe | 15 | — | 99 | 2g 70b | 0.5 kg | Üretim: Ergitme 18+ (3× Titanyum Cevheri, 2× Kömür, 20b) | — |
+| İridyum Külçesi | `iridium_bar` | külçe | 20 | — | 99 | 6g 34b | 0.5 kg | Üretim: Ergitme 25+ (3× İridyum Cevheri, 3× Kömür, 40b) | — |
+| Osmiyum Külçesi | `osmium_bar` | külçe | 20 | — | 99 | 6g 10b | 0.5 kg | Üretim: Ergitme 25+ (3× Osmiyum Cevheri, 3× Kömür, 40b) | — |
+| Platin Külçesi | `platinum_bar` | külçe | 20 | — | 99 | 5g 86b | 0.5 kg | Üretim: Ergitme 25+ (3× Platin Cevheri, 3× Kömür, 40b) | — |
+| Mitril Külçesi | `mythril_bar` | külçe | 25 | — | 99 | 16g 10b | 0.5 kg | Üretim: Ergitme 32+ (4× Mitril Cevheri, 3× Kömür, 80b) | — |
+| Orikalkum Külçesi | `orichalcum_bar` | külçe | 25 | — | 99 | 18g 2b | 0.5 kg | Üretim: Ergitme 32+ (4× Orikalkum Cevheri, 3× Kömür, 80b) | — |
+| Adamantit Külçesi | `adamantite_bar` | külçe | 30 | — | 99 | 48g 13b | 0.5 kg | Üretim: Ergitme 40+ (5× Adamantit Cevheri, 4× Kömür, 1g 50b) | — |
+| Somon | `salmon` | balık | 1 | — | 99 | 8b | 0.5 kg | Balıkçılık — Sıradan | — |
+| Levrek | `bass` | balık | 5 | — | 99 | 12b | 0.4 kg | Balıkçılık — Seçkin | — |
+| Altın Sazan | `golden_carp` | balık | 15 | — | 99 | 50b | 0.5 kg | Balıkçılık — Nadir | — |
+| Kadim Leviathan Pulu | `ancient_leviathan_scale` | balık | 35 | — | 99 | 3g | 0.1 kg | Balıkçılık — Efsanevi | — |
+| Kömür | `coal` | yakıt | 1 | — | 99 | 2b | 0.15 kg | Madencilik — Sıradan, ×2 ağırlık | Çinko Külçesi, Kurşun Külçesi, Kalay Külçesi, Demir Külçesi, Bakır Külçesi, Nikel Külçesi, Kobalt Külçesi, Gümüş Külçesi, Altın Külçesi, Titanyum Külçesi, Rodyum Külçesi, Paladyum Külçesi, Osmiyum Külçesi, İridyum Külçesi, Platin Külçesi, Mitril Külçesi, Orikalkum Külçesi, Adamantit Külçesi |
+| Keten Tohumu | `linseed` | bitki | 1 | — | 99 | 7b | 0.05 kg | Bitki toplama — Sıradan | Küçük Can İksiri, Orta Boy Can İksiri, Büyük Boy Can İksiri, Çırak Asası |
+| Adamotu | `mandrake` | bitki | 5 | — | 99 | 12b | 0.05 kg | Bitki toplama — Seçkin | Orta Boy Can İksiri, Büyük Boy Can İksiri, Ekstra Büyük Can İksiri |
+| Kral Çiçeği | `king_bloom` | bitki | 20 | — | 99 | 60b | 0.06 kg | Bitki toplama — Nadir | Ekstra Büyük Can İksiri, Çok Büyük Can İksiri |
+| Anka Yaprağı | `phoenix_petal` | bitki | 40 | — | 99 | 5g | 0.03 kg | Bitki toplama — Efsanevi | Çok Büyük Can İksiri |
+| Domuz Postu | `boar_hide` | post | 1 | — | 99 | 15b | 0.8 kg | Avcılık (toplama) — Sıradan | Deri Kask, Deri Göğüslük, Deri Bacaklık, Deri Çizme, Deri Eldiven, Demir Göğüslük, Av Yayı |
+| Kurt Postu | `wolf_pelt` | post | 8 | — | 99 | 25b | 0.7 kg | Avcılık (toplama) — Seçkin | Pul Göğüslük, Pul Çizme, Pul Eldiven |
+| Dev Ayı Postu | `dire_bear_hide` | post | 20 | — | 99 | 90b | 1.5 kg | Avcılık (toplama) — Nadir | — |
+| Ejder Pulu | `dragon_scale` | post | 45 | — | 99 | 8g | 0.3 kg | Avcılık (toplama) — Efsanevi | — |
+| Bakır Cevheri | `copper_ore` | cevher | 1 | — | 99 | 8b | 0.2 kg | Madencilik — Sıradan | Pul Kask, Pul Göğüslük, Pul Bacaklık, Pul Çizme, Pul Eldiven, Bakır Külçesi |
+| Demir Cevheri | `iron_ore` | cevher | 1 | — | 99 | 5b | 0.2 kg | Madencilik — Sıradan | Demir Kask, Demir Göğüslük, Demir Bacaklık, Demir Çizme, Demir Eldiven, Demir Kılıç, Demir Topuz, Demir Hançer, Demir Külçesi |
+| Kurşun Cevheri | `lead_ore` | cevher | 1 | — | 99 | 6b | 0.22 kg | Madencilik — Sıradan | Kurşun Külçesi |
+| Taş Cevheri | `stone_ore` | cevher | 1 | — | 99 | 1b | 0.3 kg | Madencilik — Sıradan, ×2 ağırlık | — |
+| Kalay Cevheri | `tin_ore` | cevher | 1 | — | 99 | 7b | 0.2 kg | Madencilik — Sıradan | Pul Kask, Pul Göğüslük, Pul Bacaklık, Kalay Külçesi |
+| Çinko Cevheri | `zinc_ore` | cevher | 1 | — | 99 | 6b | 0.2 kg | Madencilik — Sıradan | Çinko Külçesi |
+| Kobalt Cevheri | `cobalt_ore` | cevher | 5 | — | 99 | 14b | 0.2 kg | Madencilik — Seçkin, ×2 ağırlık | Kobalt Külçesi |
+| Nikel Cevheri | `nickel_ore` | cevher | 5 | — | 99 | 12b | 0.2 kg | Madencilik — Seçkin, ×2 ağırlık | Nikel Külçesi |
+| Altın Cevheri | `gold_ore` | cevher | 10 | — | 99 | 40b | 0.25 kg | Madencilik — Seçkin | Altın Külçesi |
+| Gümüş Cevheri | `silver_ore` | cevher | 10 | — | 99 | 25b | 0.2 kg | Madencilik — Seçkin | Gümüş Külçesi |
+| Paladyum Cevheri | `palladium_ore` | cevher | 15 | — | 99 | 60b | 0.25 kg | Madencilik — Nadir | Paladyum Külçesi |
+| Rodyum Cevheri | `rhodium_ore` | cevher | 15 | — | 99 | 70b | 0.25 kg | Madencilik — Nadir | Rodyum Külçesi |
+| Titanyum Cevheri | `titanium_ore` | cevher | 15 | — | 99 | 55b | 0.25 kg | Madencilik — Nadir | Titanyum Külçesi |
+| İridyum Cevheri | `iridium_ore` | cevher | 20 | — | 99 | 1g 30b | 0.25 kg | Madencilik — Destansı | İridyum Külçesi |
+| Osmiyum Cevheri | `osmium_ore` | cevher | 20 | — | 99 | 1g 25b | 0.25 kg | Madencilik — Destansı | Osmiyum Külçesi |
+| Platin Cevheri | `platinum_ore` | cevher | 20 | — | 99 | 1g 20b | 0.25 kg | Madencilik — Destansı | Platin Külçesi |
+| Mitril Cevheri | `mythril_ore` | cevher | 25 | — | 99 | 2g 50b | 0.3 kg | Madencilik — Efsanevi | Mitril Külçesi |
+| Orikalkum Cevheri | `orichalcum_ore` | cevher | 25 | — | 99 | 2g 80b | 0.3 kg | Madencilik — Efsanevi | Orikalkum Külçesi |
+| Adamantit Cevheri | `adamantite_ore` | cevher | 30 | — | 99 | 6g | 0.35 kg | Madencilik — Mitik | Adamantit Külçesi |
+| Meşe Kütüğü | `oak_log` | kütük | 1 | — | 99 | 4b | 1 kg | Odunculuk — Sıradan | Demir Kılıç, Demir Topuz, Demir Hançer, Av Yayı, Çırak Asası |
+| Karaağaç Kütüğü | `elm_log` | kütük | 8 | — | 99 | 9b | 1 kg | Odunculuk — Seçkin | — |
+| Porsuk Kütüğü | `yew_log` | kütük | 20 | — | 99 | 30b | 1 kg | Odunculuk — Nadir | — |
+| Demirağaç Kütüğü | `ironwood_log` | kütük | 40 | — | 99 | 2g | 1.2 kg | Odunculuk — Efsanevi | — |

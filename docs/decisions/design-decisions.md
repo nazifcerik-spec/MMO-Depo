@@ -2186,6 +2186,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Kazanımlar 30 gün sonra silinir (gelen kutusu `expires_at`); daha uzun saklama istenirse tür başı süre eklenir. Sekme son 100 kazanımı gösterir.
 **Tarih:** 2026-10-13
 
+## DD-243 — Cevher Merdiveni, Ergitme Mesleği ve Düşme Kademelerinin Tamamı
+**Karar:** Madencilik kullanıcının 8 kademeli cevher listesine göre: Çok Yaygın (Kömür, Taş Cevheri) ve Yaygın (Bakır, Demir, Kalay, Kurşun, Çinko) → Sıradan havuz (çok yaygınlar ×2 ağırlık); Orta (Kobalt, Nikel, ×2) ve Değerli (Altın, Gümüş) → Seçkin; Nadir (Paladyum, Rodyum, Titanyum) → Nadir; Çok Nadir (Platin, İridyum, Osmiyum) → Destansı; Efsanevi (Orikalkum, Mitril) → Efsanevi; Mitik (Adamantit) → Mitik. 14 yeni cevher; mevcut cevherlerin seviyeleri merdivene hizalandı (Sv 1/1/5/10/15/20/25/30). Yeni **Ergitme** mesleği: 18 metal için `<metal>_bar` külçesi = cevher + kömür (yaygın 2+1 beceri 1–3, orta 2+1 8, değerli 2+2 12, nadir 3+2 18, çok nadir 3+3 25, efsanevi 4+3 32, mitik 5+4 40; altın maliyeti ve meslek XP'si kademeyle artar; külçe değeri girdilerin ~1.6 katı). Kömür yakıttır, Taş Cevheri'nin külçesi yok. **Düşme kodu düzeltmesi:** verim modeli sıradan/nadir/efsanevi sayar; `RollDrops` her buluntuyu %25 (efsanevide %15) ihtimalle bir üst nadirliğe (seçkin/destansı/mitik) çıkarır — önceden bu kademeler hiç kullanılmıyordu.
+**Reason:** Kullanıcı isteği (cevher + külçe). Düzeltme: Bakır/Kalay Cevheri, Levrek, Karaağaç, Adamotu, Kurt Postu hiç düşmüyordu; Pul zırh ve Orta/Büyük Can İksiri tarifleri yapılamıyordu.
+**Alternatives:** Verim modeline 6 ayrı sayaç (analitik model ve eski kontrat determinizmi değişir), malzemeye sabit nadirlik alanı (içerik + şema değişikliği).
+**Consequences:** Dağıtım anında aktif toplama kontratlarının düşmeleri (aynı tohumla) yeni bölünmeyle hesaplanır. Külçeler henüz hiçbir üretimde kullanılmıyor — demircilik tariflerinin cevher yerine külçeye geçmesi ayrı karar. Yeni test: düşme tablosundaki her kod içerikte olmalı (bilinmeyen kod sessizce düşmüyordu). Eşya listesi artık `scripts/item_catalog.py` ile üretilir.
+**Tarih:** 2026-10-13
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

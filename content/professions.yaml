@@ -16,3 +16,7 @@ professions:
   - code: cooking
     display_name_key: profession.cooking
     max_level: 60
+
+  - code: smelting # ore + coal → bar (DD-243)
+    display_name_key: profession.smelting
+    max_level: 60

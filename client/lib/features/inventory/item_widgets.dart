@@ -11,6 +11,8 @@ IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClas
   ('armor', _) => Icons.shield_outlined,
   ('consumable', _) => Icons.local_drink_outlined,
   (_, 'ore') => Icons.landscape_outlined,
+  (_, 'bar') => Icons.view_stream_outlined,
+  (_, 'fuel') => Icons.local_fire_department_outlined,
   (_, 'fish') => Icons.set_meal_outlined,
   (_, 'wood' || 'log') => Icons.forest_outlined,
   (_, 'herb') => Icons.eco_outlined,

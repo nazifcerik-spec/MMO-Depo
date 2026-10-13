@@ -309,3 +309,220 @@ recipes:
     output_template_code: gloves_scale
     output_stack: 1
     profession_xp_reward: 50
+
+  # --- Smelting (DD-243): bars from the ore ladder ---
+  - code: recipe_zinc_bar
+    display_name_key: recipe.zinc_bar
+    profession_code: smelting
+    min_skill: 3
+    inputs:
+      - { template_code: zinc_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: zinc_bar
+    output_stack: 1
+    profession_xp_reward: 10
+
+  - code: recipe_lead_bar
+    display_name_key: recipe.lead_bar
+    profession_code: smelting
+    min_skill: 3
+    inputs:
+      - { template_code: lead_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: lead_bar
+    output_stack: 1
+    profession_xp_reward: 10
+
+  - code: recipe_tin_bar
+    display_name_key: recipe.tin_bar
+    profession_code: smelting
+    min_skill: 1
+    inputs:
+      - { template_code: tin_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: tin_bar
+    output_stack: 1
+    profession_xp_reward: 10
+
+  - code: recipe_iron_bar
+    display_name_key: recipe.iron_bar
+    profession_code: smelting
+    min_skill: 1
+    inputs:
+      - { template_code: iron_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: iron_bar
+    output_stack: 1
+    profession_xp_reward: 10
+
+  - code: recipe_copper_bar
+    display_name_key: recipe.copper_bar
+    profession_code: smelting
+    min_skill: 1
+    inputs:
+      - { template_code: copper_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: copper_bar
+    output_stack: 1
+    profession_xp_reward: 10
+
+  - code: recipe_nickel_bar
+    display_name_key: recipe.nickel_bar
+    profession_code: smelting
+    min_skill: 8
+    inputs:
+      - { template_code: nickel_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: nickel_bar
+    output_stack: 1
+    profession_xp_reward: 18
+
+  - code: recipe_cobalt_bar
+    display_name_key: recipe.cobalt_bar
+    profession_code: smelting
+    min_skill: 8
+    inputs:
+      - { template_code: cobalt_ore, quantity: 2 }
+      - { template_code: coal, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: cobalt_bar
+    output_stack: 1
+    profession_xp_reward: 18
+
+  - code: recipe_silver_bar
+    display_name_key: recipe.silver_bar
+    profession_code: smelting
+    min_skill: 12
+    inputs:
+      - { template_code: silver_ore, quantity: 2 }
+      - { template_code: coal, quantity: 2 }
+    gold_cost_copper: 10
+    output_template_code: silver_bar
+    output_stack: 1
+    profession_xp_reward: 25
+
+  - code: recipe_gold_bar
+    display_name_key: recipe.gold_bar
+    profession_code: smelting
+    min_skill: 12
+    inputs:
+      - { template_code: gold_ore, quantity: 2 }
+      - { template_code: coal, quantity: 2 }
+    gold_cost_copper: 10
+    output_template_code: gold_bar
+    output_stack: 1
+    profession_xp_reward: 25
+
+  - code: recipe_titanium_bar
+    display_name_key: recipe.titanium_bar
+    profession_code: smelting
+    min_skill: 18
+    inputs:
+      - { template_code: titanium_ore, quantity: 3 }
+      - { template_code: coal, quantity: 2 }
+    gold_cost_copper: 20
+    output_template_code: titanium_bar
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_rhodium_bar
+    display_name_key: recipe.rhodium_bar
+    profession_code: smelting
+    min_skill: 18
+    inputs:
+      - { template_code: rhodium_ore, quantity: 3 }
+      - { template_code: coal, quantity: 2 }
+    gold_cost_copper: 20
+    output_template_code: rhodium_bar
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_palladium_bar
+    display_name_key: recipe.palladium_bar
+    profession_code: smelting
+    min_skill: 18
+    inputs:
+      - { template_code: palladium_ore, quantity: 3 }
+      - { template_code: coal, quantity: 2 }
+    gold_cost_copper: 20
+    output_template_code: palladium_bar
+    output_stack: 1
+    profession_xp_reward: 35
+
+  - code: recipe_osmium_bar
+    display_name_key: recipe.osmium_bar
+    profession_code: smelting
+    min_skill: 25
+    inputs:
+      - { template_code: osmium_ore, quantity: 3 }
+      - { template_code: coal, quantity: 3 }
+    gold_cost_copper: 40
+    output_template_code: osmium_bar
+    output_stack: 1
+    profession_xp_reward: 50
+
+  - code: recipe_iridium_bar
+    display_name_key: recipe.iridium_bar
+    profession_code: smelting
+    min_skill: 25
+    inputs:
+      - { template_code: iridium_ore, quantity: 3 }
+      - { template_code: coal, quantity: 3 }
+    gold_cost_copper: 40
+    output_template_code: iridium_bar
+    output_stack: 1
+    profession_xp_reward: 50
+
+  - code: recipe_platinum_bar
+    display_name_key: recipe.platinum_bar
+    profession_code: smelting
+    min_skill: 25
+    inputs:
+      - { template_code: platinum_ore, quantity: 3 }
+      - { template_code: coal, quantity: 3 }
+    gold_cost_copper: 40
+    output_template_code: platinum_bar
+    output_stack: 1
+    profession_xp_reward: 50
+
+  - code: recipe_mythril_bar
+    display_name_key: recipe.mythril_bar
+    profession_code: smelting
+    min_skill: 32
+    inputs:
+      - { template_code: mythril_ore, quantity: 4 }
+      - { template_code: coal, quantity: 3 }
+    gold_cost_copper: 80
+    output_template_code: mythril_bar
+    output_stack: 1
+    profession_xp_reward: 70
+
+  - code: recipe_orichalcum_bar
+    display_name_key: recipe.orichalcum_bar
+    profession_code: smelting
+    min_skill: 32
+    inputs:
+      - { template_code: orichalcum_ore, quantity: 4 }
+      - { template_code: coal, quantity: 3 }
+    gold_cost_copper: 80
+    output_template_code: orichalcum_bar
+    output_stack: 1
+    profession_xp_reward: 70
+
+  - code: recipe_adamantite_bar
+    display_name_key: recipe.adamantite_bar
+    profession_code: smelting
+    min_skill: 40
+    inputs:
+      - { template_code: adamantite_ore, quantity: 5 }
+      - { template_code: coal, quantity: 4 }
+    gold_cost_copper: 150
+    output_template_code: adamantite_bar
+    output_stack: 1
+    profession_xp_reward: 100

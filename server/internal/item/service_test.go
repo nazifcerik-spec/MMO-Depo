@@ -16,7 +16,7 @@ import (
 // A minimal in-memory catalog with the same templates seeded by 0007 migration
 // (subset — enough to cover mining + weapons for the tests).
 func testCatalog() *item.Catalog {
-	return item.NewCatalog([]item.Template{
+	return item.NewCatalog(append([]item.Template{
 		{Code: "iron_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 5},
 		{Code: "copper_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 8},
 		{Code: "tin_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 7},
@@ -24,7 +24,25 @@ func testCatalog() *item.Catalog {
 		{Code: "gold_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 40},
 		{Code: "mythril_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 250},
 		{Code: "sword_iron", ItemClass: "weapon", ItemSubclass: "sword", BindKind: "boe", Affixable: true},
-	})
+	}, poolTemplates()...))
+}
+
+// poolTemplates covers every code the loot tables can roll, so no draw is
+// skipped as unknown in these tests.
+func poolTemplates() []item.Template {
+	seen := map[string]bool{"iron_ore": true, "copper_ore": true, "tin_ore": true, "silver_ore": true, "gold_ore": true, "mythril_ore": true}
+	var out []item.Template
+	for _, p := range item.PoolPerKind {
+		for _, tier := range [][]string{p.Common, p.Uncommon, p.Rare, p.Epic, p.Legendary, p.Mythic} {
+			for _, c := range tier {
+				if !seen[c] {
+					seen[c] = true
+					out = append(out, item.Template{Code: c, ItemClass: "material", BindKind: "boe"})
+				}
+			}
+		}
+	}
+	return out
 }
 
 func newTestService() (*item.Service, *item.MemoryRepo) {
@@ -70,9 +88,47 @@ func TestRollDrops_RarityCountsExact(t *testing.T) {
 	for _, d := range drops {
 		byRarity[d.Rarity]++
 	}
-	require.Equal(t, 3, byRarity[item.RarityCommon])
-	require.Equal(t, 2, byRarity[item.RarityRare])
-	require.Equal(t, 1, byRarity[item.RarityLegendary])
+	// Each yield tier keeps its count; part of it may step up one rarity.
+	require.Equal(t, 3, byRarity[item.RarityCommon]+byRarity[item.RarityUncommon])
+	require.Equal(t, 2, byRarity[item.RarityRare]+byRarity[item.RarityEpic])
+	require.Equal(t, 1, byRarity[item.RarityLegendary]+byRarity[item.RarityMythic])
+}
+
+// Every rarity of the mining ladder drops, at roughly the configured split
+// (DD-243) — before it, uncommon/epic/mythic tables were never rolled.
+func TestRollDrops_UpgradeSplitReachesEveryTier(t *testing.T) {
+	cat := testCatalog()
+	byRarity := map[item.Rarity]int{}
+	codes := map[string]bool{}
+	for seed := int64(0); seed < 400; seed++ {
+		for _, d := range item.RollDrops(cat, seed, activity.KindMining, 10, 10, 10) {
+			byRarity[d.Rarity]++
+			codes[d.TemplateCode] = true
+		}
+	}
+	for _, r := range []item.Rarity{item.RarityCommon, item.RarityUncommon, item.RarityRare, item.RarityEpic, item.RarityLegendary, item.RarityMythic} {
+		require.Positive(t, byRarity[r], r)
+	}
+	share := func(up, base item.Rarity) float64 {
+		return float64(byRarity[up]) / float64(byRarity[up]+byRarity[base])
+	}
+	require.InDelta(t, 0.25, share(item.RarityUncommon, item.RarityCommon), 0.03)
+	require.InDelta(t, 0.25, share(item.RarityEpic, item.RarityRare), 0.03)
+	require.InDelta(t, 0.15, share(item.RarityMythic, item.RarityLegendary), 0.03)
+	require.True(t, codes["copper_ore"] && codes["adamantite_ore"], "both ends of the ladder drop")
+	// Weight by repetition: coal is listed twice, lead once.
+	coal, lead := 0, 0
+	for seed := int64(0); seed < 400; seed++ {
+		for _, d := range item.RollDrops(cat, seed, activity.KindMining, 20, 0, 0) {
+			switch d.TemplateCode {
+			case "coal":
+				coal++
+			case "lead_ore":
+				lead++
+			}
+		}
+	}
+	require.InDelta(t, 2.0, float64(coal)/float64(lead), 0.35)
 }
 
 func TestRollDrops_UnknownKindReturnsNil(t *testing.T) {
