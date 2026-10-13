@@ -254,6 +254,12 @@ void main() {
     final n = NotificationRepository(b.api);
     final (items, _) = await n.inbox();
     expect(items.map((i) => i.kind), containsAll(['mail_received', 'party_invite', 'guild_invite']));
+    expect(items.map((i) => i.kind), isNot(contains('reward_collected')), reason: 'reward history is its own list');
+    // Player a gathered and hunted earlier; b did neither.
+    final (rewards, _) = await NotificationRepository(a.api).inbox(rewards: true);
+    expect(rewards, isNotEmpty, reason: 'the gathering and hunt collections earlier were recorded (DD-242)');
+    expect((await n.inbox(rewards: true)).$1, isEmpty, reason: 'history is per account');
+    expect(rewards.every((r) => r.kind == 'reward_collected' && !r.unread), isTrue);
     await n.markAllRead();
     expect(await n.unreadCount(), 0);
     final prefs = await n.prefs();

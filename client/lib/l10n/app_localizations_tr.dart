@@ -1654,4 +1654,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errServerBusy => 'Sunucu şu an çok yoğun. Birkaç saniye sonra tekrar dene.';
+
+  @override
+  String get notifTabInbox => 'Bildirimler';
+
+  @override
+  String get notifTabRewards => 'Kazanımlar';
+
+  @override
+  String get rewardsNone =>
+      'Henüz kazanım yok. Topladığın ve savaşlardan kazandığın her şey burada listelenir (30 gün saklanır).';
+
+  @override
+  String rewardFromActivity(String name) {
+    return 'Toplama: $name';
+  }
+
+  @override
+  String rewardFromHunt(String name) {
+    return 'Av: $name';
+  }
+
+  @override
+  String rewardFromDungeon(String name) {
+    return 'Zindan: $name';
+  }
+
+  @override
+  String rewardLevelUp(int level) {
+    return 'Seviye $level!';
+  }
 }

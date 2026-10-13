@@ -37,7 +37,7 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    final rows = widget.loot.items.length + widget.loot.counts.length;
+    final rows = widget.loot.stacks.length + widget.loot.counts.length;
     _anim = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400 + 60 * min(rows, 10)),
@@ -74,7 +74,8 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
     final text = Theme.of(context).textTheme;
     final loot = widget.loot;
     final counts = loot.counts.entries.where((e) => e.value > 0).toList();
-    final n = loot.items.length + counts.length;
+    final stacks = loot.stacks;
+    final n = stacks.length + counts.length;
     var i = 0;
 
     return SafeArea(
@@ -106,11 +107,14 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
                 ),
               const SizedBox(height: Space.lg),
               if (loot.isEmpty) Text(l.lootNothing, textAlign: TextAlign.center, style: text.bodySmall),
-              for (final item in loot.items) ...[
+              for (final s in stacks) ...[
                 _stagger(
                   i++,
                   n,
-                  _LootRow(label: itemName(item.templateCode, item.prefix, item.suffix), rarity: item.rarity),
+                  _LootRow(
+                    label: stackLabel(itemName(s.item.templateCode, s.item.prefix, s.item.suffix), s.count),
+                    rarity: s.item.rarity,
+                  ),
                 ),
                 const SizedBox(height: Space.sm),
               ],

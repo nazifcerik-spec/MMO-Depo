@@ -36,6 +36,42 @@ class LootItem {
   final String? suffix;
 }
 
+/// Identical drops (template, rarity, affixes) shown once with a count —
+/// "Iron Ore × 5" (DD-242).
+class LootStack {
+  const LootStack(this.item, this.count);
+
+  final LootItem item;
+  final int count;
+}
+
+const _rarityRank = {'common': 0, 'uncommon': 1, 'rare': 2, 'epic': 3, 'legendary': 4, 'mythic': 5};
+
+/// Groups drops into stacks: rarest first, then in order of first appearance.
+List<LootStack> stackLoot(List<LootItem> items) {
+  final order = <String>[];
+  final first = <String, LootItem>{};
+  final counts = <String, int>{};
+  for (final i in items) {
+    final key = '${i.templateCode}|${i.rarity}|${i.prefix ?? ''}|${i.suffix ?? ''}';
+    if (counts.containsKey(key)) {
+      counts[key] = counts[key]! + 1;
+    } else {
+      order.add(key);
+      first[key] = i;
+      counts[key] = 1;
+    }
+  }
+  final stacks = [for (final k in order) LootStack(first[k]!, counts[k]!)];
+  // List.sort is not stable: tie-break on first appearance.
+  final pos = {for (var i = 0; i < stacks.length; i++) stacks[i]: i};
+  stacks.sort((a, b) {
+    final r = (_rarityRank[b.item.rarity] ?? 0) - (_rarityRank[a.item.rarity] ?? 0);
+    return r != 0 ? r : pos[a]! - pos[b]!;
+  });
+  return stacks;
+}
+
 /// Reward summary shared by activity, hunt and dungeon reveals.
 class Loot {
   const Loot({this.goldCopper = 0, this.xp = 0, this.items = const [], this.counts = const {}});
@@ -48,6 +84,8 @@ class Loot {
   final Map<String, int> counts;
 
   bool get isEmpty => goldCopper == 0 && xp == 0 && items.isEmpty && counts.values.every((c) => c == 0);
+
+  List<LootStack> get stacks => stackLoot(items);
 }
 
 class ActivityYield {

@@ -492,5 +492,12 @@
   "supportClosed": "Kapandı",
   "supportReply": "Ekibin yanıtı",
   "nkSupport": "Destek yanıtı",
-  "errServerBusy": "Sunucu şu an çok yoğun. Birkaç saniye sonra tekrar dene."
+  "errServerBusy": "Sunucu şu an çok yoğun. Birkaç saniye sonra tekrar dene.",
+  "notifTabInbox": "Bildirimler",
+  "notifTabRewards": "Kazanımlar",
+  "rewardsNone": "Henüz kazanım yok. Topladığın ve savaşlardan kazandığın her şey burada listelenir (30 gün saklanır).",
+  "rewardFromActivity": "Toplama: {name}",
+  "rewardFromHunt": "Av: {name}",
+  "rewardFromDungeon": "Zindan: {name}",
+  "rewardLevelUp": "Seviye {level}!"
 }

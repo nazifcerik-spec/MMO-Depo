@@ -949,6 +949,42 @@ void main() {
     expect(find.textContaining('Guild disbands in'), findsNothing);
   });
 
+  testWidgets('rewards tab lists collected loot as stacks, apart from the inbox', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.rewardLog.add({
+      'id': 'r-1',
+      'kind': 'reward_collected',
+      'read_at': DateTime.now().toUtc().toIso8601String(),
+      'created_at': DateTime.now().toUtc().subtract(const Duration(minutes: 2)).toIso8601String(),
+      'body': {
+        'kind': 'reward_collected',
+        'body_vars': {
+          'source': 'hunt',
+          'target': 'young_boar',
+          'gold_copper': 120,
+          'xp': 45,
+          'new_level': 6,
+          'items': [
+            {'code': 'boar_hide', 'rarity': 'common', 'count': 5},
+            {'code': 'sword_iron', 'rarity': 'rare', 'prefix': 'ancient', 'count': 1},
+          ],
+        },
+      },
+    });
+    await tester.tap(find.byTooltip('Notifications'));
+    await tester.pumpAndSettle();
+    expect(find.text('Hunt: Young Boar'), findsNothing, reason: 'rewards are not in the regular inbox');
+
+    await tester.tap(find.text('Rewards'));
+    await tester.pumpAndSettle();
+    expect(find.text('Hunt: Young Boar'), findsOneWidget);
+    expect(find.text('Boar Hide × 5'), findsOneWidget);
+    expect(find.text('+45 XP'), findsOneWidget);
+    expect(find.text('Level 6!'), findsOneWidget);
+    expect(find.textContaining('Sword Iron'), findsOneWidget);
+    expect(find.textContaining('× 1'), findsNothing, reason: 'a single drop shows no count');
+  });
+
   testWidgets('notifications: badge, read one / all, live bump, settings keep quiet hours', (tester) async {
     Map<String, dynamic> note(String id, String kind, Map<String, dynamic> vars) => {
       'id': id,

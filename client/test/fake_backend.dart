@@ -589,6 +589,7 @@ class FakeBackend {
   // --- notifications / progression / events ---------------------------------
 
   final inbox = <Map<String, dynamic>>[];
+  final rewardLog = <Map<String, dynamic>>[]; // reward history (DD-242)
   final notifKinds = <String, String>{'market_sold': 'push_and_inbox', 'mail_received': 'push_and_inbox'};
   Map<String, dynamic> quietHours = {'quiet_hours_start': '22:00', 'quiet_hours_end': '07:00', 'quiet_hours_tz': 'UTC'};
   String? muteUntil;
@@ -622,7 +623,8 @@ class FakeBackend {
         tickets.insert(0, t);
         return json(201, t);
       case ('GET', '/v1/notifications'):
-        return json(200, {'count': inbox.length, 'unread': _unread, 'notifications': inbox});
+        final list = req.url.queryParameters['rewards'] == '1' ? rewardLog : inbox;
+        return json(200, {'count': list.length, 'unread': _unread, 'notifications': list});
       case ('POST', '/v1/notifications/read-all'):
         for (final n in inbox) {
           n['read_at'] ??= now;

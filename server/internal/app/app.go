@@ -256,7 +256,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Quests tick from the same event stream as mastery/achievements (DD-221).
 	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub)
 	recorder := progression.Recorders(progSvc, questSvc)
-	activitySvc.WithRecorder(recorder).WithGatherBonus(progSvc)
+	activitySvc.WithRecorder(recorder).WithGatherBonus(progSvc).WithNotifier(notifSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).
 	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
 		effects, err := progSvc.ActiveBonuses(ctx, id)
@@ -272,8 +272,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Class skills (DD-222): passives → sheet stack, actives → combat snapshots.
 	classSkills := classskill.NewService(pool)
 	sheetAdapter.WithModifierSource(classSkills.PassiveModifiers)
-	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills)
-	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills)
+	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc)
+	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc)
 	craftSvc.WithRecorder(recorder)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---

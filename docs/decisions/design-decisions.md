@@ -2179,6 +2179,13 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Consequences:** Mana sistemi değişince dört mana iksiri + Küçük Mana İksiri tarifi geri gelir (kodlar `potion_mp_{medium,large,xlarge,huge}` için yer ayrılmış sayılır).
 **Tarih:** 2026-10-13
 
+## DD-242 — Ganimet Yığınlama ve Kazanım Geçmişi
+**Karar:** (1) Toplama/av/zindan sonuç ekranı aynı eşyaları (şablon + nadirlik + önek/sonek) tek satırda sayıyla gösterir ("Demir Cevheri × 5"; tek düşüşte sayı yok), en nadir üstte, sonra ilk görülme sırası. (2) Her toplanan kontrat için sunucu bir `reward_collected` bildirimi yazar: kaynak (activity/hunt/dungeon), hedef (iş türü/mob/zindan), altın, XP, yeni seviye, yığınlanmış eşya listesi (+ av zafer/yenilgi, zindan temizlendi/boss). Yalnız gelen kutusu (push yok), **okunmuş olarak** yazılır (oyuncu ganimet ekranını az önce gördü; rozet şişmez), kontrat başına tek kayıt (`reward:<contract>` dedup — tekrar açma çoğaltmaz). Bildirimler ekranında ayrı "Kazanımlar" sekmesi (`GET /v1/notifications?rewards=1`); normal liste bunları içermez, böylece sık toplama diğer bildirimleri son-100 penceresinden itmez. Gelen kutusu kuralı gereği 30 gün saklanır.
+**Reason:** Kullanıcı isteği: ganimet tek tek satır yerine yığın halinde, kazanımlar bildirimlerde kalıcı liste olarak.
+**Alternatives:** Ayrı kazanım tablosu + uç nokta (ikinci saklama/temizlik yolu; gelen kutusu zaten saklıyor, dedup ve 30 gün GC'si var), istemcide yerel kayıt (cihaz değişince kaybolur).
+**Consequences:** Kazanımlar 30 gün sonra silinir (gelen kutusu `expires_at`); daha uzun saklama istenirse tür başı süre eklenir. Sekme son 100 kazanımı gösterir.
+**Tarih:** 2026-10-13
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

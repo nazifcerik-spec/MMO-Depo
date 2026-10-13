@@ -13,6 +13,7 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/progression"
 )
 
@@ -70,12 +71,16 @@ type Service struct {
 	log      *slog.Logger
 	rngNew   func(seed int64) combat.RNG
 	progress progression.Recorder
+	notifier notification.Notifier // reward history (DD-242); nil = none
 	hp       HPWriter
 	skills   SkillSource
 }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
+
+// WithNotifier records each collection in the reward history (DD-242).
+func (s *Service) WithNotifier(n notification.Notifier) *Service { s.notifier = n; return s }
 
 // HPWriter persists post-fight HP (character.Service). Optional: nil keeps
 // the pre-DD-218 behaviour of HP never leaving the contract.
@@ -354,6 +359,13 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		progression.Event{Kind: progression.EventMobKilled, Amount: int64(hr.Victories)},
 		progression.Event{Kind: progression.EventMobKilled + ":" + c.MobCode, Amount: int64(hr.Victories)})
 
+	notification.Send(ctx, s.notifier, s.log, notification.Reward{
+		AccountID: accountID, CharacterID: c.CharacterID, Ref: c.ID,
+		Source: "hunt", Target: c.MobCode,
+		GoldCopper: hr.TotalGoldCopper, XP: hr.TotalXP, Items: activity.RewardItems(granted),
+		NewLevel: newLevel(xpResult),
+		Extra:    map[string]any{"victories": hr.Victories, "defeats": hr.Defeats},
+	}.Notice())
 	return &RevealResult{
 		Hunt: hr, Elapsed: elapsed, LedgerTxnID: txnID,
 		Items: granted, XPGain: xpResult, Replayed: false,
@@ -427,4 +439,12 @@ func seedFromIDs(huntID, characterID uuid.UUID) int64 {
 		acc *= 1099511628211
 	}
 	return int64(acc)
+}
+
+// newLevel is the level reached when the reveal levelled up, else 0.
+func newLevel(x *character.XPGrantResult) int {
+	if x == nil || !x.LeveledUp || x.Character == nil {
+		return 0
+	}
+	return int(x.Character.Level)
 }

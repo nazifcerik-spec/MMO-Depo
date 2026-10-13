@@ -3049,6 +3049,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The server is busy right now. Try again in a few seconds.'**
   String get errServerBusy;
+
+  /// No description provided for @notifTabInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifTabInbox;
+
+  /// No description provided for @notifTabRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get notifTabRewards;
+
+  /// No description provided for @rewardsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).'**
+  String get rewardsNone;
+
+  /// No description provided for @rewardFromActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering: {name}'**
+  String rewardFromActivity(String name);
+
+  /// No description provided for @rewardFromHunt.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunt: {name}'**
+  String rewardFromHunt(String name);
+
+  /// No description provided for @rewardFromDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeon: {name}'**
+  String rewardFromDungeon(String name);
+
+  /// No description provided for @rewardLevelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}!'**
+  String rewardLevelUp(int level);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

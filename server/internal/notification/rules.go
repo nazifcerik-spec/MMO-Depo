@@ -47,6 +47,7 @@ var DefaultModes = map[string]Mode{
 	"guild_invite":         ModePushAndInbox,
 	"achievement_unlocked": ModeSilentPush,
 	"support_reply":        ModePushAndInbox, // DD-234
+	KindReward:             ModeInboxOnly,    // DD-242
 	KindSystemBroadcast:    ModePushAndInbox,
 }
 

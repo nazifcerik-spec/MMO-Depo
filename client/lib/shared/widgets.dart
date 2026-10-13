@@ -128,6 +128,9 @@ String activityName(AppLocalizations l, String kind) => switch (kind) {
   _ => kind,
 };
 
+/// "Iron Ore × 5"; a single drop shows just its name (DD-242).
+String stackLabel(String name, int count) => count > 1 ? '$name × $count' : name;
+
 /// An item's display name with its affixes (content names, DD-230).
 String itemName(String templateCode, [String? prefix, String? suffix]) =>
     ContentNames.item(templateCode, prefix, suffix);

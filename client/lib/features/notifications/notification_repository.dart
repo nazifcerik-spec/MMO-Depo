@@ -67,8 +67,9 @@ class NotificationRepository {
 
   final ApiClient api;
 
-  Future<(List<InboxItem>, int)> inbox() async {
-    final j = await api.get('/v1/notifications');
+  /// [rewards]: the reward history (DD-242) instead of the regular inbox.
+  Future<(List<InboxItem>, int)> inbox({bool rewards = false}) async {
+    final j = await api.get(rewards ? '/v1/notifications?rewards=1' : '/v1/notifications');
     return (
       [for (final n in (j['notifications'] as List? ?? const []).cast<Map<String, dynamic>>()) InboxItem.fromJson(n)],
       (j['unread'] as num?)?.toInt() ?? 0,

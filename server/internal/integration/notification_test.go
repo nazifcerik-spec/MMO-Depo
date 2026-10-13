@@ -50,7 +50,7 @@ func TestNotificationQueueAndDispatch(t *testing.T) {
 	n1 := notice(p.Account, "market_sold")
 	require.NoError(t, svc.Notify(w.ctx, n1))
 	require.NoError(t, svc.Notify(w.ctx, n1), "same dedup key is a no-op")
-	items, unread, err := svc.Inbox(w.ctx, p.Account, false)
+	items, unread, err := svc.Inbox(w.ctx, p.Account, false, false)
 	require.NoError(t, err)
 	require.Len(t, items, 1)
 	require.Equal(t, 1, unread)

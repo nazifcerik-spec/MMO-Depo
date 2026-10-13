@@ -11,6 +11,7 @@ import (
 
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/progression"
 )
 
@@ -45,6 +46,13 @@ type GearDrop struct {
 	Boss       bool
 }
 
+// RewardItems stacks granted drops for the reward history entry (DD-242).
+func RewardItems(items []GrantedItem) []notification.RewardItem {
+	return notification.StackItems(items, func(g GrantedItem) notification.RewardItem {
+		return notification.RewardItem{Code: g.TemplateCode, Rarity: g.Rarity, Prefix: g.Prefix, Suffix: g.Suffix}
+	})
+}
+
 type GrantedItem struct {
 	InstanceID   uuid.UUID `json:"instance_id"`
 	TemplateCode string    `json:"template_code"`
@@ -74,6 +82,7 @@ type Service struct {
 	txn      economy.TxnService
 	items    ItemGranter // optional — nil during transition sprints
 	progress progression.Recorder
+	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
 	cfg      ServiceConfig
 	log      *slog.Logger
@@ -90,6 +99,9 @@ func NewService(repo Repository, chars CharacterFetcher, txn economy.TxnService,
 }
 
 // WithRecorder feeds reveal yields into progression (Sprint 24).
+// WithNotifier records each collection in the reward history (DD-242).
+func (s *Service) WithNotifier(n notification.Notifier) *Service { s.notifier = n; return s }
+
 func (s *Service) WithRecorder(r progression.Recorder) *Service {
 	s.progress = r
 	return s
@@ -303,6 +315,11 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		Kind:   progression.EventGatherPrefix + string(contract.Kind),
 		Amount: int64(yield.CommonCount + yield.RareCount + yield.LegendaryCount),
 	})
+	notification.Send(ctx, s.notifier, s.log, notification.Reward{
+		AccountID: accountID, CharacterID: contract.CharacterID, Ref: contract.ID,
+		Source: "activity", Target: string(contract.Kind),
+		GoldCopper: yield.GoldCopper, Items: RewardItems(yield.Items),
+	}.Notice())
 	return &RevealResult{Yield: yield, LedgerTxnID: txnID, Replayed: false}, nil
 }
 

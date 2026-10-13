@@ -26,6 +26,7 @@ type Notice struct {
 	Category    string // android channel / iOS category: activity|event|social|system
 	CollapseKey string
 	High        bool
+	Read        bool // stored already read: a history entry, not an alert
 }
 
 // Notifier is the narrow interface producers depend on.
@@ -122,10 +123,10 @@ func (s *Service) Notify(ctx context.Context, n Notice) error {
 	}
 	if d.Inbox {
 		if _, err := s.pool.Exec(ctx, `
-			INSERT INTO notification.inbox_message (account_id, character_id, kind, dedup_key, body, route)
-			VALUES ($1, $2, $3, $4, $5, NULLIF($6, ''))
+			INSERT INTO notification.inbox_message (account_id, character_id, kind, dedup_key, body, route, read_at)
+			VALUES ($1, $2, $3, $4, $5, NULLIF($6, ''), CASE WHEN $7::boolean THEN now() END)
 			ON CONFLICT (account_id, dedup_key) DO NOTHING`,
-			n.AccountID, n.CharacterID, n.Kind, n.DedupKey, body, n.Route); err != nil {
+			n.AccountID, n.CharacterID, n.Kind, n.DedupKey, body, n.Route, n.Read); err != nil {
 			return err
 		}
 	}
@@ -216,12 +217,15 @@ type InboxItem struct {
 	ReadAt      *time.Time      `json:"read_at,omitempty"`
 }
 
-func (s *Service) Inbox(ctx context.Context, account uuid.UUID, unreadOnly bool) ([]InboxItem, int, error) {
+// Inbox lists the newest 100 entries. Reward history (KindReward) is its own
+// list so frequent collections never push other notifications out (DD-242).
+func (s *Service) Inbox(ctx context.Context, account uuid.UUID, unreadOnly, rewards bool) ([]InboxItem, int, error) {
 	rows, err := s.pool.Query(ctx, `
 		SELECT id, character_id, kind, body, route, created_at, read_at
 		  FROM notification.inbox_message
 		 WHERE account_id = $1 AND expires_at > now() AND ($2 = false OR read_at IS NULL)
-		 ORDER BY created_at DESC LIMIT 100`, account, unreadOnly)
+		   AND (kind = $4) = $3
+		 ORDER BY created_at DESC LIMIT 100`, account, unreadOnly, rewards, KindReward)
 	if err != nil {
 		return nil, 0, err
 	}

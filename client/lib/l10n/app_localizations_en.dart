@@ -1655,4 +1655,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+
+  @override
+  String get notifTabInbox => 'Notifications';
+
+  @override
+  String get notifTabRewards => 'Rewards';
+
+  @override
+  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+
+  @override
+  String rewardFromActivity(String name) {
+    return 'Gathering: $name';
+  }
+
+  @override
+  String rewardFromHunt(String name) {
+    return 'Hunt: $name';
+  }
+
+  @override
+  String rewardFromDungeon(String name) {
+    return 'Dungeon: $name';
+  }
+
+  @override
+  String rewardLevelUp(int level) {
+    return 'Level $level!';
+  }
 }

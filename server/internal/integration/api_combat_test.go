@@ -58,4 +58,27 @@ func TestHTTPCombatRewind(t *testing.T) {
 	}
 	hist := items(p.ok("GET", p.path("/dungeon/history"), nil), "runs")
 	require.NotEmpty(t, hist)
+
+	// Reward history (DD-242): one entry per collected contract (replays add
+	// none), stored read, in its own list apart from the regular inbox.
+	rewards := items(p.ok("GET", "/v1/notifications?rewards=1", nil), "notifications")
+	require.Len(t, rewards, 2, "hunt + dungeon")
+	for _, n := range rewards {
+		require.Equal(t, "reward_collected", n["kind"])
+		require.NotNil(t, n["read_at"], "history must not raise the unread badge")
+	}
+	huntVars := rewards[1]["body"].(map[string]any)["body_vars"].(map[string]any)
+	require.Equal(t, "hunt", huntVars["source"])
+	require.Equal(t, "young_boar", huntVars["target"])
+	require.Equal(t, hunt["total_xp"], huntVars["xp"])
+	stacked := 0.0
+	for _, it := range huntVars["items"].([]any) {
+		stacked += it.(map[string]any)["count"].(float64)
+	}
+	drops, _ := res["items"].([]any)
+	require.Equal(t, float64(len(drops)), stacked, "every drop is in a stack")
+	require.Equal(t, "dungeon", rewards[0]["body"].(map[string]any)["body_vars"].(map[string]any)["source"])
+	for _, n := range items(p.ok("GET", "/v1/notifications", nil), "notifications") {
+		require.NotEqual(t, "reward_collected", n["kind"], "rewards stay out of the regular inbox")
+	}
 }

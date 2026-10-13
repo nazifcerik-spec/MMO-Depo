@@ -71,7 +71,7 @@ func (h *Handler) Inbox(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	items, unread, err := h.svc.Inbox(r.Context(), a, r.URL.Query().Get("unread") == "1")
+	items, unread, err := h.svc.Inbox(r.Context(), a, r.URL.Query().Get("unread") == "1", r.URL.Query().Get("rewards") == "1")
 	reply(w, r, map[string]any{"count": len(items), "unread": unread, "notifications": items}, err)
 }
 
