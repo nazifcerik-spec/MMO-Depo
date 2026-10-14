@@ -321,13 +321,19 @@ func TestHTTPGameplayLoop(t *testing.T) {
 	p.ok("POST", p.path("/inventory/"+potion+"/move"), map[string]any{"target_slot": 40})
 	p.ok("POST", p.path("/inventory/"+potion+"/split"), map[string]any{"amount": 1, "target_slot": 41})
 	p.ok("GET", p.path("/items"), nil)
-	p.fail("POST", "/v1/vendor/general_ironhold/sell", map[string]any{"item_instance_id": chest, "character_id": p.char}, 409, "E_ITEM_BOUND") // equip bound it (BoE)
+	p.ok("POST", "/v1/vendor/general_ironhold/sell", map[string]any{"item_instance_id": chest, "character_id": p.char}) // worn once (bound), still sells (DD-245)
 	sold := p.ok("POST", "/v1/vendor/general_ironhold/sell", map[string]any{"item_instance_id": potion, "character_id": p.char})
 	require.NotZero(t, sold["received_copper"])
 	bbs := items(p.ok("GET", p.path("/buybacks"), nil), "buybacks")
 	require.NotEmpty(t, bbs)
-	p.ok("POST", "/v1/vendor/general_ironhold/buyback/"+bbs[0]["id"].(string), map[string]any{"character_id": p.char})
-	p.ok("DELETE", p.path("/inventory/"+chest), nil)
+	var chestBB string
+	for _, bb := range bbs {
+		if bb["template_code"] == "chest_leather" {
+			chestBB = bb["id"].(string)
+		}
+	}
+	back := p.ok("POST", "/v1/vendor/general_ironhold/buyback/"+chestBB, map[string]any{"character_id": p.char})
+	p.ok("DELETE", p.path("/inventory/"+back["instance_id"].(string)), nil)
 
 	// Crafting.
 	p.ok("GET", "/v1/professions", nil)

@@ -319,9 +319,8 @@ func (s *Service) Sell(ctx context.Context, req SellRequest) (*SellResult, error
 	if inst.IsEquipped() {
 		return nil, ErrItemLocked // can't sell equipped items — unequip first
 	}
-	if inst.IsBound {
-		return nil, ErrItemBound
-	}
+	// Bound items (e.g. worn once) still sell to a vendor (DD-245); only
+	// player-to-player trade stays closed to them.
 
 	itemTmpl, err := s.items.Catalog().Get(inst.TemplateCode)
 	if err != nil {
@@ -458,6 +457,11 @@ func (s *Service) Buyback(ctx context.Context, characterID, buybackID uuid.UUID,
 	}
 	if len(instances) == 0 {
 		return nil, fmt.Errorf("buyback: item materialization returned no instances")
+	}
+	if snap.IsBound {
+		if err := s.repo.Rebind(ctx, instances[0].ID); err != nil {
+			return nil, fmt.Errorf("buyback rebind: %w", err)
+		}
 	}
 	if err := s.repo.ClaimBuyback(ctx, entry.ID, now); err != nil && !errors.Is(err, ErrBuybackClaimed) {
 		return nil, err

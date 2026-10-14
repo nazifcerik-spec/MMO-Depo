@@ -516,6 +516,7 @@ func NewRouter(d Deps) http.Handler {
 				r.Get("/notifications", h.Inbox)
 				r.Post("/notifications/read-all", h.MarkRead)
 				r.Post("/notifications/{notification_id}/read", h.MarkRead)
+				r.Delete("/notifications/{notification_id}", h.Delete)
 				r.Get("/notification/preference", h.GetPreferences)
 				r.Put("/notification/preference", h.PutPreferences)
 				r.Post("/notification/preference/global-mute", h.Mute)

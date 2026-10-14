@@ -19,12 +19,16 @@ class CharacterSheetView extends StatefulWidget {
     required this.initial,
     required this.dataVersion,
     this.onOpenProgress,
+    this.onSheet,
   });
 
   final CharacterRepository repo;
   final CharacterSheet initial;
   final ValueNotifier<int> dataVersion;
   final VoidCallback? onOpenProgress;
+
+  /// Every fresh sheet (the shell tracks the level from it).
+  final ValueChanged<CharacterSheet>? onSheet;
 
   @override
   State<CharacterSheetView> createState() => _CharacterSheetViewState();
@@ -75,6 +79,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
         _sheet = results[0] as CharacterSheet;
         _gold = results[1] as int;
       });
+      widget.onSheet?.call(_sheet);
     }
   }
 

@@ -81,6 +81,9 @@ class NotificationRepository {
   Future<void> markRead(String id) => api.post('/v1/notifications/$id/read', const {});
   Future<void> markAllRead() => api.post('/v1/notifications/read-all', const {});
 
+  /// Removes one inbox / reward-history entry (DD-245).
+  Future<void> delete(String id) => api.delete('/v1/notifications/$id');
+
   Future<NotificationPrefs> prefs() async => NotificationPrefs.fromJson(await api.get('/v1/notification/preference'));
 
   Future<NotificationPrefs> setMode(NotificationPrefs current, String kind, String mode) async =>

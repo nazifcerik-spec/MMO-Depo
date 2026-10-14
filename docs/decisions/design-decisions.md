@@ -2204,6 +2204,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-245 — Çanta Sıralama/Çoklu Seçim, Bağlı Eşya Satışı, Bildirim Silme, Toplu Üretim, Anlık Seviye
+**Karar:** (1) Çanta görünümü sıralanabilir (çanta düzeni / nadirlik / tür / ad / değer); yalnız gösterim, sunucudaki konumlar değişmez. (2) Uzun basıp sürükleyerek çoklu seçim (sürükleme ilk hücreye göre ekler ya da çıkarır; seçim modunda dokunma seçer/bırakır; kilitli eşya seçilmez); seçilenler toplu satılır ya da yok edilir (onaylı, istemci sırayla tek tek çağırır). (3) Bağlı eşyalar (ör. bir kez kuşanılmış BoE) dükkâna satılabilir; geri alınan eşya yeniden bağlanır (`vendor.Repository.Rebind`), böylece sat-geri al döngüsü bağı çözmez; pazar bağlı eşyayı hâlâ kabul etmez. (4) `DELETE /v1/notifications/{id}`: hesabın kendi gelen kutusu / kazanım kaydı girdisini siler (yabancı ya da bilinmeyen id → 0, hata değil); istemci her girdinin sol üst köşesinde çöp kutusu. (5) `POST /craft` `count` (1..100): tüm partinin malzemesi önce kontrol edilir (yetmezse hiçbir şey yapılmaz), sonra her üretim kendi garantileriyle tek tek; sonradan biri düşerse (ör. altın biter) parti durur ve yapılan kadarı döner (`count`). İstemci: malzeme/altının izin verdiği en fazla adede kadar −/+ / kaydırıcı / max seçimi. (6) Seviye atlaması anında yansır: kabuk karakter seviyesini her yeni sheet'ten bir `ValueNotifier`'da tutar; Macera panelleri (av, zindan, yolculuk, etkinlik kapıları ve varsayılan mob) onunla yeniden kurulur, toplama sekmesi meslek seviyelerini her veri değişiminde sessizce yeniler.
+**Reason:** Kullanıcı istekleri. (3): kuşanıp çıkarılan eşya `E_ITEM_BOUND` ile satılamıyordu. (6): Macera sekmesi seviyeyi girişteki değerle sabit tutuyordu; yeni açılan zindan/bölge karaktere yeniden girmeden açılmıyordu.
+**Alternatives:** Sunucu tarafı toplu satış ucu (istemci döngüsü v1 için yeterli, mevcut idempotent satışı yeniden kullanır), sunucuda kalıcı sıralama (eşya taşıma — gereksiz yazım), bağlı eşya satışında ceza.
+**Consequences:** Bağlı eşya satışından gelen altın normal satış gibi (değer × çarpan). Toplu üretimde her birim ayrı defter kaydı. `vendor.ErrItemBound` artık dönmüyor (eski istemciler için eşlemesi duruyor).
+**Tarih:** 2026-10-15
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

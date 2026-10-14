@@ -464,6 +464,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sell => 'Sell';
 
   @override
+  String get sortLabel => 'Sort';
+
+  @override
+  String get sortSlot => 'Bag order';
+
+  @override
+  String get sortRarity => 'Rarity';
+
+  @override
+  String get sortType => 'Type';
+
+  @override
+  String get sortName => 'Name';
+
+  @override
+  String get sortValue => 'Value';
+
+  @override
+  String selectedCount(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get selectAll => 'Select all';
+
+  @override
+  String get clearSelection => 'Clear selection';
+
+  @override
+  String sellSelectedTitle(int count) {
+    return 'Sell $count items?';
+  }
+
+  @override
+  String destroySelectedTitle(int count) {
+    return 'Destroy $count items?';
+  }
+
+  @override
+  String get deleteEntry => 'Delete';
+
+  @override
+  String craftHowMany(String name) {
+    return 'How many $name?';
+  }
+
+  @override
+  String craftCount(int count) {
+    return 'Craft ×$count';
+  }
+
+  @override
   String get destroy => 'Destroy';
 
   @override

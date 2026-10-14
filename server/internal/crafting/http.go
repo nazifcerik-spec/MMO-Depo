@@ -121,6 +121,7 @@ func (h *Handler) Learn(w http.ResponseWriter, r *http.Request) {
 
 type craftBody struct {
 	RecipeCode string `json:"recipe_code"`
+	Count      int    `json:"count,omitempty"` // default 1 (DD-245)
 }
 
 func (h *Handler) Craft(w http.ResponseWriter, r *http.Request) {
@@ -139,7 +140,10 @@ func (h *Handler) Craft(w http.ResponseWriter, r *http.Request) {
 		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
 		return
 	}
-	res, err := h.svc.Craft(r.Context(), charID, acct, body.RecipeCode)
+	if body.Count == 0 {
+		body.Count = 1
+	}
+	res, err := h.svc.CraftMany(r.Context(), charID, acct, body.RecipeCode, body.Count)
 	if err != nil {
 		writeErr(w, r, err)
 		return

@@ -36,6 +36,12 @@ func TestHTTPSuccessFlows(t *testing.T) {
 	w.give(me, "common_grass", 4)
 	crafted := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"})
 	require.NotEmpty(t, crafted)
+	// Batch (DD-245): checked for the whole batch up front.
+	w.give(me, "common_grass", 6) // 1 left + 6 = 7: two crafts, not three
+	p.fail("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small", "count": 3}, 409, "E_INSUFFICIENT_MATERIALS")
+	batch := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small", "count": 2})
+	require.Equal(t, 2.0, batch["count"])
+	require.Equal(t, 1.0, p.stackOf("common_grass"))
 	profs := items(p.ok("GET", p.path("/professions"), nil), "professions")
 	require.Positive(t, profs[0]["xp"].(float64)+profs[0]["level"].(float64)-1, "%v", profs)
 	potion := p.bagItem("potion_hp_small")

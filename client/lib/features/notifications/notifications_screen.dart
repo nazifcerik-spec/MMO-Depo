@@ -78,6 +78,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> with PanelSta
     _unread = unread;
   }
 
+  Future<void> _delete(InboxItem n) => run(() async {
+    await widget.repo.delete(n.id);
+    if (!mounted) return;
+    setState(() {
+      _items = [
+        for (final i in _items)
+          if (i.id != n.id) i,
+      ];
+      _rewards = [
+        for (final i in _rewards)
+          if (i.id != n.id) i,
+      ];
+      if (n.unread && _unread > 0) _unread--;
+    });
+  });
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -139,7 +155,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> with PanelSta
                     padding: const EdgeInsets.only(top: Space.xxl),
                     child: MessageView(message: l.rewardsNone, icon: Icons.inventory_2_outlined),
                   ),
-                for (final n in _rewards) RewardTile(entry: n),
+                for (final n in _rewards) RewardTile(entry: n, onDelete: () => _delete(n)),
               ],
               if (_tab == 0 && _items.isEmpty)
                 Padding(
@@ -150,15 +166,24 @@ class _NotificationsScreenState extends State<NotificationsScreen> with PanelSta
                 for (final n in _items)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      n.unread ? Icons.circle : Icons.circle_outlined,
-                      size: 10,
-                      color: n.unread ? Palette.accent : Palette.textMuted,
-                    ),
-                    minLeadingWidth: 10,
-                    title: Text(
-                      notificationKindName(l, n.kind),
-                      style: n.unread ? const TextStyle(fontWeight: FontWeight.w600) : null,
+                    titleAlignment: ListTileTitleAlignment.top,
+                    leading: _DeleteButton(onPressed: () => _delete(n)),
+                    minLeadingWidth: 32,
+                    title: Row(
+                      children: [
+                        Icon(
+                          n.unread ? Icons.circle : Icons.circle_outlined,
+                          size: 10,
+                          color: n.unread ? Palette.accent : Palette.textMuted,
+                        ),
+                        const SizedBox(width: Space.sm),
+                        Expanded(
+                          child: Text(
+                            notificationKindName(l, n.kind),
+                            style: n.unread ? const TextStyle(fontWeight: FontWeight.w600) : null,
+                          ),
+                        ),
+                      ],
                     ),
                     subtitle: Text(
                       [?_detail(n), l.timeAgo(shortDuration(l, DateTime.now().difference(n.createdAt)))].join('\n'),
@@ -182,9 +207,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> with PanelSta
 /// One collected contract: where it came from, gold / XP / level and the
 /// drops as "Iron Ore × 5" chips in their rarity colour (DD-242).
 class RewardTile extends StatelessWidget {
-  const RewardTile({super.key, required this.entry});
+  const RewardTile({super.key, required this.entry, this.onDelete});
 
   final InboxItem entry;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -213,6 +239,7 @@ class RewardTile extends StatelessWidget {
           children: [
             Row(
               children: [
+                if (onDelete != null) _DeleteButton(onPressed: onDelete!),
                 Expanded(child: Text(title, style: text.titleSmall)),
                 Text(
                   l.timeAgo(shortDuration(l, DateTime.now().difference(entry.createdAt))),
@@ -262,6 +289,23 @@ class RewardTile extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Compact trash icon in an entry's top-left corner.
+class _DeleteButton extends StatelessWidget {
+  const _DeleteButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+    tooltip: AppLocalizations.of(context).deleteEntry,
+    icon: const Icon(Icons.delete_outline, size: 20, color: Palette.textSecondary),
+    visualDensity: VisualDensity.compact,
+    padding: EdgeInsets.zero,
+    constraints: const BoxConstraints.tightFor(width: 32, height: 32),
+    onPressed: onPressed,
+  );
 }
 
 class _RewardChip extends StatelessWidget {

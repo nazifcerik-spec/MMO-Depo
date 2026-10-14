@@ -464,6 +464,58 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sell => 'Sat';
 
   @override
+  String get sortLabel => 'Sırala';
+
+  @override
+  String get sortSlot => 'Çanta düzeni';
+
+  @override
+  String get sortRarity => 'Nadirlik';
+
+  @override
+  String get sortType => 'Tür';
+
+  @override
+  String get sortName => 'Ad';
+
+  @override
+  String get sortValue => 'Değer';
+
+  @override
+  String selectedCount(int count) {
+    return '$count seçili';
+  }
+
+  @override
+  String get selectAll => 'Tümünü seç';
+
+  @override
+  String get clearSelection => 'Seçimi kaldır';
+
+  @override
+  String sellSelectedTitle(int count) {
+    return '$count eşya satılsın mı?';
+  }
+
+  @override
+  String destroySelectedTitle(int count) {
+    return '$count eşya yok edilsin mi?';
+  }
+
+  @override
+  String get deleteEntry => 'Sil';
+
+  @override
+  String craftHowMany(String name) {
+    return 'Kaç adet $name?';
+  }
+
+  @override
+  String craftCount(int count) {
+    return '×$count üret';
+  }
+
+  @override
   String get destroy => 'Yok et';
 
   @override

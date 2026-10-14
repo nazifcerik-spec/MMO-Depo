@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
@@ -13,9 +14,11 @@ import 'item_widgets.dart';
 
 enum _ItemAction { use, equip, unequip, sell, list, destroy }
 
-/// Bag + equipment tab: 12 equipment slots above the positional bag grid.
+/// Bag + equipment tab: 12 equipment slots above the bag grid.
 /// Tapping an item opens its detail sheet; the chosen action runs here and
 /// both lists reload (the server moves items between bag and slots).
+/// The bag can be shown in another order (display only), and a long press —
+/// dragging on across cells — selects several items to sell or destroy.
 class InventoryView extends StatefulWidget {
   const InventoryView({super.key, required this.repo, required this.dataVersion});
 
@@ -32,6 +35,14 @@ class _InventoryViewState extends State<InventoryView> {
   double? _sellMult;
   Object? _error;
   bool _busy = false;
+  BagSort _sort = BagSort.slot;
+
+  /// Selected instance ids; non-empty = selection mode.
+  final Set<String> _selected = {};
+
+  /// While a long-press drag runs: true adds the cells it crosses, false
+  /// removes them (decided by the first cell).
+  bool? _dragAdds;
 
   @override
   void initState() {
@@ -54,6 +65,8 @@ class _InventoryViewState extends State<InventoryView> {
           _bag = r[0] as Bag;
           _equipped = r[1] as Map<String, EquippedItem>;
           _error = null;
+          final ids = {for (final i in _bag!.items) i.instanceId};
+          _selected.retainWhere(ids.contains);
         });
       }
     } on ApiError catch (e) {
@@ -148,6 +161,88 @@ class _InventoryViewState extends State<InventoryView> {
     if (action == _ItemAction.unequip) await _run(() => widget.repo.unequip(slot));
   }
 
+  /// The bag as shown: server positions, or every item in [_sort] order.
+  List<BagItem?> _cells(Bag bag) {
+    if (_sort == BagSort.slot) {
+      final by = bag.bySlot;
+      return [for (var i = 0; i < bag.slotCap; i++) by[i]];
+    }
+    final sorted = sortBag(bag.items, _sort, displayName);
+    final n = sorted.length > bag.slotCap ? sorted.length : bag.slotCap;
+    return [for (var i = 0; i < n; i++) i < sorted.length ? sorted[i] : null];
+  }
+
+  void _toggle(BagItem item, {bool? add}) {
+    if (item.isLocked) return; // escrowed items can't be sold or destroyed
+    setState(() {
+      if (add ?? !_selected.contains(item.instanceId)) {
+        _selected.add(item.instanceId);
+      } else {
+        _selected.remove(item.instanceId);
+      }
+    });
+  }
+
+  void _dragSelect(BagItem? item, {bool start = false}) {
+    if (item == null || item.isLocked) return;
+    if (start) {
+      HapticFeedback.selectionClick();
+      _dragAdds = !_selected.contains(item.instanceId);
+    }
+    final add = _dragAdds;
+    if (add == null || _selected.contains(item.instanceId) == add) return;
+    _toggle(item, add: add);
+  }
+
+  List<BagItem> _selectedItems() => [
+    for (final i in _bag?.items ?? const <BagItem>[])
+      if (_selected.contains(i.instanceId)) i,
+  ];
+
+  Future<void> _sellSelected() async {
+    final l = AppLocalizations.of(context);
+    final items = _selectedItems();
+    if (items.isEmpty ||
+        !await confirmAction(context, title: l.sellSelectedTitle(items.length), body: l.sellBody, action: l.sell)) {
+      return;
+    }
+    var total = 0;
+    await _run(() async {
+      try {
+        for (final i in items) {
+          total += await widget.repo.sell(i.instanceId);
+        }
+      } finally {
+        _selected.clear();
+        if (total > 0 && mounted) _toastGold(l.soldFor, total);
+      }
+    });
+  }
+
+  Future<void> _destroySelected() async {
+    final l = AppLocalizations.of(context);
+    final items = _selectedItems();
+    if (items.isEmpty ||
+        !await confirmAction(
+          context,
+          title: l.destroySelectedTitle(items.length),
+          body: l.destroyBody,
+          action: l.destroy,
+          danger: true,
+        )) {
+      return;
+    }
+    await _run(() async {
+      try {
+        for (final i in items) {
+          await widget.repo.destroy(i.instanceId);
+        }
+      } finally {
+        _selected.clear();
+      }
+    });
+  }
+
   void _toastGold(String label, int copper) {
     toast(context, Row(children: [Text('$label '), GoldText(copper, size: 14)]));
   }
@@ -178,8 +273,9 @@ class _InventoryViewState extends State<InventoryView> {
           ? MessageView(message: errorText(l, _error!), onRetry: _load)
           : const Center(child: CircularProgressIndicator());
     }
-    final bySlot = bag.bySlot;
+    final cells = _cells(bag);
     final text = Theme.of(context).textTheme;
+    final selecting = _selected.isNotEmpty;
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -211,45 +307,145 @@ class _InventoryViewState extends State<InventoryView> {
               ],
             ),
             const SizedBox(height: Space.xl),
-            Row(
-              children: [
-                Expanded(child: Text(l.bag, style: text.titleMedium)),
-                Text(
-                  '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
-                  style: text.bodySmall?.copyWith(
-                    color: bag.weightGrams > bag.weightCapGrams ? Palette.warning : null,
-                    fontFeatures: numeric,
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 48,
+              child: selecting
+                  ? _SelectionBar(
+                      count: _selected.length,
+                      onClear: () => setState(_selected.clear),
+                      onSelectAll: () => setState(() {
+                        _selected.addAll([
+                          for (final i in bag.items)
+                            if (!i.isLocked) i.instanceId,
+                        ]);
+                      }),
+                      onSell: _sellSelected,
+                      onDestroy: _destroySelected,
+                    )
+                  : Row(
+                      children: [
+                        Expanded(child: Text(l.bag, style: text.titleMedium)),
+                        PopupMenuButton<BagSort>(
+                          tooltip: l.sortLabel,
+                          initialValue: _sort,
+                          onSelected: (v) => setState(() => _sort = v),
+                          itemBuilder: (_) => [
+                            for (final v in BagSort.values) PopupMenuItem(value: v, child: Text(_sortName(l, v))),
+                          ],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: Space.xs),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.sort, size: 18, color: Palette.textSecondary),
+                                const SizedBox(width: Space.xs),
+                                Text(_sortName(l, _sort), style: text.bodySmall),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+            Text(
+              '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
+              style: text.bodySmall?.copyWith(
+                color: bag.weightGrams > bag.weightCapGrams ? Palette.warning : null,
+                fontFeatures: numeric,
+              ),
             ),
             const SizedBox(height: Space.md),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: bag.slotCap,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-                mainAxisSpacing: Space.sm,
-                crossAxisSpacing: Space.sm,
-              ),
-              itemBuilder: (_, i) {
-                final item = bySlot[i];
-                if (item == null) return const ItemCell();
-                return ItemCell(
-                  rarity: item.rarity,
-                  icon: itemIcon(item.itemClass, item.itemSubclass),
-                  code: item.templateCode,
-                  stack: item.stack,
-                  locked: item.isLocked,
-                  semantic: '${displayName(item)} ×${item.stack}',
-                  onTap: () => _openBagItem(item),
+            LayoutBuilder(
+              builder: (context, box) {
+                const cols = 6;
+                final step = (box.maxWidth + Space.sm) / cols; // cell + gap; cells are square
+                // From the global position against the grid's current place:
+                // the header changes when selection starts, so the pointer's
+                // own local coordinates would be stale.
+                BagItem? at(Offset global) {
+                  final p = (context.findRenderObject()! as RenderBox).globalToLocal(global);
+                  if (p.dx < 0 || p.dy < 0 || p.dx >= box.maxWidth) return null;
+                  final i = (p.dy ~/ step) * cols + (p.dx ~/ step);
+                  return i < cells.length ? cells[i] : null;
+                }
+
+                return GestureDetector(
+                  onLongPressStart: (d) => _dragSelect(at(d.globalPosition), start: true),
+                  onLongPressMoveUpdate: (d) => _dragSelect(at(d.globalPosition)),
+                  onLongPressEnd: (_) => _dragAdds = null,
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: cells.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: cols,
+                      mainAxisSpacing: Space.sm,
+                      crossAxisSpacing: Space.sm,
+                    ),
+                    itemBuilder: (_, i) {
+                      final item = cells[i];
+                      if (item == null) return const ItemCell();
+                      return ItemCell(
+                        rarity: item.rarity,
+                        icon: itemIcon(item.itemClass, item.itemSubclass),
+                        code: item.templateCode,
+                        stack: item.stack,
+                        locked: item.isLocked,
+                        selected: _selected.contains(item.instanceId),
+                        semantic: '${displayName(item)} ×${item.stack}',
+                        onTap: () => selecting ? _toggle(item) : _openBagItem(item),
+                      );
+                    },
+                  ),
                 );
               },
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+String _sortName(AppLocalizations l, BagSort s) => switch (s) {
+  BagSort.slot => l.sortSlot,
+  BagSort.rarity => l.sortRarity,
+  BagSort.type => l.sortType,
+  BagSort.name => l.sortName,
+  BagSort.value => l.sortValue,
+};
+
+/// Replaces the bag header while items are selected.
+class _SelectionBar extends StatelessWidget {
+  const _SelectionBar({
+    required this.count,
+    required this.onClear,
+    required this.onSelectAll,
+    required this.onSell,
+    required this.onDestroy,
+  });
+
+  final int count;
+  final VoidCallback onClear;
+  final VoidCallback onSelectAll;
+  final VoidCallback onSell;
+  final VoidCallback onDestroy;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Row(
+      children: [
+        IconButton(tooltip: l.clearSelection, icon: const Icon(Icons.close), onPressed: onClear),
+        Expanded(child: Text(l.selectedCount(count), style: Theme.of(context).textTheme.titleMedium)),
+        TextButton(onPressed: onSelectAll, child: Text(l.selectAll)),
+        IconButton(tooltip: l.sell, icon: const Icon(Icons.sell_outlined), onPressed: onSell),
+        IconButton(
+          tooltip: l.destroy,
+          icon: const Icon(Icons.delete_outline, color: Palette.danger),
+          onPressed: onDestroy,
+        ),
+      ],
     );
   }
 }

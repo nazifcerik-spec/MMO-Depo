@@ -131,6 +131,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 60. **Toplama meslekleri + kaynak seçimi (bitti)** — Sprint 60, DD-244. Migration 0035 (`content.item_template.gather_kind/level/tier`, `content.profession.kind`). `content/gathering.yaml` (150 kaynak, Book.xlsx listesi esas; eski malzemeler emekli, tarifler yeniden bağlandı, 24 külçe). Beş toplama türü seviye 1–100 meslek (`crafting.character_profession`, ilk XP'de açılır, `Learn` reddeder). Yeni `internal/gathering` (`activity.Gathering` impl + `GET /v1/character/{id}/gathering`). Aktivite: `target` (boş = açılmış en iyi; `E_GATHER_LEVEL`), snapshot'a donar, kademe hız çarpanı, her buluntu hedefin birimi (`item.GatherDrops`), birim başı kademe XP'si, reveal `gather`. Av/zindan: `item.CombatHides` (mob Sv × 4). Meslek eğrisi `60 × 1.06^L`. `RollDrops`/havuzlar silindi. İstemci: Toplama'da seviye/XP + kaynak listesi, sonuçta XP/seviye; Atölye toplama mesleklerini gizler. `scripts/item_catalog.py` gathering.yaml'ı okur.
 
+61. **Çanta + bildirim + üretim kolaylıkları (bitti)** — Sprint 61, DD-245. Çanta sıralama (görünüm; `sortBag`), uzun bas + sürükle çoklu seçim → toplu sat / yok et. Bağlı eşya dükkâna satılır, geri alımda yeniden bağlanır (`vendor.Repository.Rebind`). `DELETE /v1/notifications/{id}` + istemcide girdi başı çöp kutusu. `POST /craft` `count` 1..100 (parti malzemesi önce kontrol, yarıda durursa yapılan döner) + istemci adet seçici. Seviye anında: kabuk `ValueNotifier` seviye → Macera panelleri; toplama sekmesi `dataVersion`'da meslek seviyelerini yeniler.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

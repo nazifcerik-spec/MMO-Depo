@@ -140,9 +140,32 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
     await fetch();
   });
 
-  Future<void> _craft(Recipe rec) => run(() async {
+  /// How many crafts the bag and purse allow now (capped like the server).
+  int _maxCrafts(Recipe rec) {
+    var n = maxCraftCount;
+    for (final e in rec.inputs.entries) {
+      final can = (_have[e.key] ?? 0) ~/ e.value;
+      if (can < n) n = can;
+    }
+    if (rec.goldCost > 0 && _gold ~/ rec.goldCost < n) n = _gold ~/ rec.goldCost;
+    return n;
+  }
+
+  Future<void> _craft(Recipe rec) async {
+    final max = _maxCrafts(rec);
+    final count = max > 1 ? await _askCount(rec, max) : 1;
+    if (count == null || count < 1 || !mounted) return;
+    await _craftN(rec, count);
+  }
+
+  Future<int?> _askCount(Recipe rec, int max) => showDialog<int>(
+    context: context,
+    builder: (_) => _CraftCountDialog(name: itemName(rec.output), max: max),
+  );
+
+  Future<void> _craftN(Recipe rec, int count) => run(() async {
     final l = AppLocalizations.of(context);
-    final res = await widget.repo.craft(rec.code);
+    final res = await widget.repo.craft(rec.code, count: count);
     if (!mounted) return;
     toast(
       context,
@@ -204,6 +227,66 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
           ),
           const SizedBox(height: Space.md),
         ],
+      ],
+    );
+  }
+}
+
+/// Server cap on one batch (crafting.MaxCraftCount).
+const maxCraftCount = 100;
+
+/// Quantity picker: slider plus −/+ and a "max" shortcut.
+class _CraftCountDialog extends StatefulWidget {
+  const _CraftCountDialog({required this.name, required this.max});
+
+  final String name;
+  final int max;
+
+  @override
+  State<_CraftCountDialog> createState() => _CraftCountDialogState();
+}
+
+class _CraftCountDialogState extends State<_CraftCountDialog> {
+  int _n = 1;
+
+  void _set(int v) => setState(() => _n = v.clamp(1, widget.max));
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l.craftHowMany(widget.name)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(icon: const Icon(Icons.remove), onPressed: _n > 1 ? () => _set(_n - 1) : null),
+              SizedBox(
+                width: 56,
+                child: Text(
+                  '$_n',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontFeatures: numeric),
+                ),
+              ),
+              IconButton(icon: const Icon(Icons.add), onPressed: _n < widget.max ? () => _set(_n + 1) : null),
+              TextButton(onPressed: () => _set(widget.max), child: Text('max ${widget.max}')),
+            ],
+          ),
+          Slider(
+            value: _n.toDouble(),
+            min: 1,
+            max: widget.max.toDouble(),
+            divisions: widget.max - 1,
+            onChanged: (v) => _set(v.round()),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancel)),
+        FilledButton(onPressed: () => Navigator.pop(context, _n), child: Text(l.craftCount(_n))),
       ],
     );
   }

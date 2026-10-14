@@ -81,4 +81,13 @@ func TestHTTPCombatRewind(t *testing.T) {
 	for _, n := range items(p.ok("GET", "/v1/notifications", nil), "notifications") {
 		require.NotEqual(t, "reward_collected", n["kind"], "rewards stay out of the regular inbox")
 	}
+
+	// Deleting an entry (DD-245): own only; a foreign or repeated delete is a no-op.
+	id := rewards[0]["id"].(string)
+	other := newHTTPPlayer(t, "mage")
+	require.Equal(t, 0.0, other.ok("DELETE", "/v1/notifications/"+id, nil)["deleted"])
+	require.Equal(t, 1.0, p.ok("DELETE", "/v1/notifications/"+id, nil)["deleted"])
+	require.Equal(t, 0.0, p.ok("DELETE", "/v1/notifications/"+id, nil)["deleted"])
+	require.Len(t, items(p.ok("GET", "/v1/notifications?rewards=1", nil), "notifications"), 1)
+	p.fail("DELETE", "/v1/notifications/nope", nil, 400, "E_INVALID_ID")
 }

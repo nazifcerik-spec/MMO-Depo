@@ -82,6 +82,11 @@ func (r *PgRepo) GetBuyback(ctx context.Context, id uuid.UUID) (*BuybackEntry, e
 	return r.scanBuyback(r.pool.QueryRow(ctx, buybackSelect+" WHERE id = $1", id))
 }
 
+func (r *PgRepo) Rebind(ctx context.Context, instanceID uuid.UUID) error {
+	_, err := r.pool.Exec(ctx, `UPDATE inventory.item_instance SET is_bound = true WHERE id = $1`, instanceID)
+	return err
+}
+
 func (r *PgRepo) ClaimBuyback(ctx context.Context, id uuid.UUID, at time.Time) error {
 	const q = `UPDATE economy.vendor_buyback
 	              SET claimed_at = $2

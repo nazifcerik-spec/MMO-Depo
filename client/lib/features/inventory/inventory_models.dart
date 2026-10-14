@@ -167,3 +167,28 @@ class EquippedItem {
   final String? prefix;
   final String? suffix;
 }
+
+/// Bag display orders. [slot] is the server's positional layout; the others
+/// only reorder what is shown (positions on the server are unchanged).
+enum BagSort { slot, rarity, type, name, value }
+
+const _rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'mythic'];
+
+/// [items] in [sort] order; ties keep bag position so the view is stable.
+List<BagItem> sortBag(List<BagItem> items, BagSort sort, String Function(BagItem) name) {
+  int rarity(BagItem i) => _rarityOrder.indexOf(i.rarity);
+  final cmp = switch (sort) {
+    BagSort.slot => (BagItem a, BagItem b) => 0,
+    BagSort.rarity => (BagItem a, BagItem b) => rarity(b) - rarity(a),
+    BagSort.type => (BagItem a, BagItem b) {
+      final c = a.itemClass.compareTo(b.itemClass);
+      return c != 0 ? c : a.itemSubclass.compareTo(b.itemSubclass);
+    },
+    BagSort.name => (BagItem a, BagItem b) => name(a).toLowerCase().compareTo(name(b).toLowerCase()),
+    BagSort.value => (BagItem a, BagItem b) => (b.baseValueCopper * b.stack).compareTo(a.baseValueCopper * a.stack),
+  };
+  return [...items]..sort((a, b) {
+    final c = cmp(a, b);
+    return c != 0 ? c : a.slot - b.slot;
+  });
+}

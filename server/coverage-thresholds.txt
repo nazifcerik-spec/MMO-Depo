@@ -9,9 +9,9 @@ internal/activity             81
 internal/admin                34
 internal/classskill           91
 internal/combat               86
-internal/consumable           79
+internal/consumable           80
 internal/contentpack          88
-internal/crafting             79
+internal/crafting             81
 internal/gathering            85
 internal/domain/auth          81
 internal/domain/character     78

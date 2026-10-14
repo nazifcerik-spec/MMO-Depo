@@ -27,4 +27,8 @@ type Repository interface {
 	// ListBuybacks returns character's active (unclaimed + not expired)
 	// buybacks, newest first.
 	ListBuybacks(ctx context.Context, characterID uuid.UUID, limit int) ([]BuybackEntry, error)
+
+	// Rebind marks a bought-back item bound again, so selling a bound item
+	// and buying it back never unbinds it (DD-245).
+	Rebind(ctx context.Context, instanceID uuid.UUID) error
 }

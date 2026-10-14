@@ -45,6 +45,10 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   final _dataVersion = ValueNotifier(0);
+
+  /// Current character level: level gates in other tabs follow it as soon
+  /// as a refreshed sheet shows a level-up (no manual reload).
+  late final _level = ValueNotifier(widget.initial.level);
   final _visited = <int>{0};
   int _tab = 0;
   int _unread = 0;
@@ -94,6 +98,7 @@ class _HomeShellState extends State<HomeShell> {
     _sub?.cancel();
     _live.stop();
     _dataVersion.dispose();
+    _level.dispose();
     super.dispose();
   }
 
@@ -149,6 +154,7 @@ class _HomeShellState extends State<HomeShell> {
       repo: widget.characters,
       initial: widget.initial,
       dataVersion: _dataVersion,
+      onSheet: (s) => _level.value = s.level,
       onOpenProgress: () => _push(
         ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
       ),
@@ -156,7 +162,7 @@ class _HomeShellState extends State<HomeShell> {
     3 => AdventureView(
       repo: AdventureRepository(widget.auth.api, widget.initial.id),
       dataVersion: _dataVersion,
-      characterLevel: widget.initial.level,
+      level: _level,
     ),
     4 => WorkshopView(repo: WorkshopRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
     2 => InventoryView(repo: InventoryRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),

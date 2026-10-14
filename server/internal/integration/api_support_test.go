@@ -40,6 +40,10 @@ func TestHTTPSupportTickets(t *testing.T) {
 	viewer := opsLogin(t, w, p.base, "viewer")
 	viewer.fail("GET", "/internal/ops/support/tickets", nil, 403, "")
 	agent := opsLogin(t, w, p.base, "support_l1")
+	// The queue is oldest-first: earlier local runs' leftovers must not push
+	// this ticket past the page.
+	_, err := w.p.Exec(w.ctx, `UPDATE ops.support_ticket SET state = 'closed' WHERE state = 'open' AND id <> $1`, created["id"])
+	require.NoError(t, err)
 	queue := items(agent.ok("GET", "/internal/ops/support/tickets?state=open&limit=200", nil), "tickets")
 	var found bool
 	for _, q := range queue {

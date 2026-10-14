@@ -26,6 +26,7 @@ class FakeBackend {
   String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
   int gatherLevel = 20;
+  int? lastCraftCount;
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
@@ -425,11 +426,14 @@ class FakeBackend {
       return json(200, {'profession_code': body['profession_code'], 'level': 1});
     }
     if (path.endsWith('/craft')) {
+      final n = body['count'] as int? ?? 1;
+      lastCraftCount = n;
       final seed = bag.firstWhere((i) => i['template_code'] == 'linseed');
-      seed['stack_quantity'] = (seed['stack_quantity'] as int) - 2;
+      seed['stack_quantity'] = (seed['stack_quantity'] as int) - 2 * n;
       return json(200, {
         'output_template_code': 'potion_hp_small',
-        'output_stack': 1,
+        'output_stack': n,
+        'count': n,
         'skill_before': 1,
         'skill_after': 2,
         'leveled_up': true,
@@ -716,6 +720,12 @@ class FakeBackend {
         if (seasonalClaimed) return error(409, 'E_ALREADY_CLAIMED');
         seasonalClaimed = true;
         return json(200, {'event_tokens': 15});
+    }
+    final del = RegExp(r'^/v1/notifications/([^/]+)$').firstMatch(path);
+    if (del != null && req.method == 'DELETE') {
+      inbox.removeWhere((n) => n['id'] == del[1]);
+      rewardLog.removeWhere((n) => n['id'] == del[1]);
+      return json(200, {'deleted': 1});
     }
     final read = RegExp(r'^/v1/notifications/([^/]+)/read$').firstMatch(path);
     if (read != null) {

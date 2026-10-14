@@ -253,6 +253,14 @@ func (s *Service) MarkRead(ctx context.Context, account, id uuid.UUID) (int64, e
 	return tag.RowsAffected(), err
 }
 
+// Delete removes one of the account's inbox items (reward history included).
+// Deleting an unknown or foreign id is a no-op (0 rows), not an error.
+func (s *Service) Delete(ctx context.Context, account, id uuid.UUID) (int64, error) {
+	tag, err := s.pool.Exec(ctx, `
+		DELETE FROM notification.inbox_message WHERE account_id = $1 AND id = $2`, account, id)
+	return tag.RowsAffected(), err
+}
+
 // --- preferences ------------------------------------------------------------
 
 type Preferences struct {

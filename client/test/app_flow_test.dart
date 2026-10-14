@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:otter/app/app.dart';
@@ -256,9 +257,9 @@ void main() {
     expect(socket.closed, isTrue);
   });
 
-  testWidgets('bag: item detail, equip/unequip, class gate, sell, destroy', (tester) async {
+  testWidgets('bag: item detail, equip/unequip, class gate, sell, destroy, sort, multi-select', (tester) async {
     final semantics = tester.ensureSemantics();
-    final (be, _, _) = await _inGame(tester);
+    final (be, ws, _) = await _inGame(tester);
     Map<String, dynamic> item(String id, String code, int slot, {Map<String, dynamic> extra = const {}}) => {
       'instance_id': id,
       'template_code': code,
@@ -350,6 +351,42 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Destroy'));
     await tester.pumpAndSettle();
     expect(be.bag.any((i) => i['instance_id'] == 'j1'), isFalse);
+
+    // Sort by name (display only): Boar Hide moves to the first cell.
+    be.bag.addAll([item('b1', 'boar_hide', 20), item('w1', 'wolf_pelt', 21)]);
+    ws.last.push('hunt.reveal', {}); // any data bump reloads the bag
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bag order'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Name').last);
+    await tester.pumpAndSettle();
+    Offset at(String label) => tester.getCenter(find.bySemanticsLabel(label));
+    expect(at('Boar Hide ×1').dx, lessThan(at('Sharp Sword Iron ×1').dx));
+    expect(at('Boar Hide ×1').dy, at('Sharp Sword Iron ×1').dy);
+
+    // Long press, then drag across: Boar Hide, Sharp Sword Iron, Staff Oak.
+    final g = await tester.startGesture(at('Boar Hide ×1'));
+    await tester.pump(kLongPressTimeout + const Duration(milliseconds: 50));
+    await g.moveTo(at('Sharp Sword Iron ×1'));
+    await g.moveTo(at('Staff Oak ×1'));
+    await g.up();
+    await tester.pumpAndSettle();
+    expect(find.text('3 selected'), findsOneWidget);
+    // A tap toggles while selecting (Wolf Pelt in, then out again).
+    await tester.tap(find.bySemanticsLabel('Wolf Pelt ×1'));
+    await tester.pump();
+    expect(find.text('4 selected'), findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('Wolf Pelt ×1'));
+    await tester.pump();
+
+    await tester.tap(find.byTooltip('Sell'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sell 3 items?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Sell'));
+    await tester.pumpAndSettle();
+    expect(be.bag.map((i) => i['instance_id']), ['w1']);
+    expect(find.textContaining('Sold for'), findsOneWidget);
+    expect(find.textContaining('selected'), findsNothing, reason: 'selection ends after the sale');
     semantics.dispose();
   });
 
@@ -390,7 +427,7 @@ void main() {
   });
 
   testWidgets('dungeon: level gate, collect locked until the run ends, cleared result', (tester) async {
-    final (be, _, _) = await _inGame(tester);
+    final (be, ws, _) = await _inGame(tester);
     await tester.tap(find.byIcon(Icons.explore_outlined));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dungeon'));
@@ -398,6 +435,16 @@ void main() {
 
     final enters = find.widgetWithText(FilledButton, 'Enter');
     expect(tester.widget<FilledButton>(enters.at(1)).onPressed, isNull, reason: 'Sunken Crypt needs level 18');
+
+    // A level-up elsewhere (here: a hunt revealed on the server) unlocks it
+    // at once — the sheet reload carries the new level to every tab.
+    be.characters.first['level'] = 18;
+    ws.last.push('hunt.reveal', {'leveled_up': true});
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(enters.at(1)).onPressed, isNotNull);
+    be.characters.first['level'] = 3;
+    ws.last.push('hunt.reveal', {});
+    await tester.pumpAndSettle();
 
     await tester.tap(enters.first);
     await tester.pumpAndSettle();
@@ -996,6 +1043,40 @@ void main() {
     expect(find.text('Level 6!'), findsOneWidget);
     expect(find.textContaining('Sword Iron'), findsOneWidget);
     expect(find.textContaining('× 1'), findsNothing, reason: 'a single drop shows no count');
+
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    expect(be.rewardLog, isEmpty);
+    expect(find.text('Hunt: Young Boar'), findsNothing);
+  });
+
+  testWidgets('workshop: choose how many to craft', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.skills['alchemy'] = 1;
+    be.bag.add({
+      'instance_id': 'seed',
+      'template_code': 'linseed',
+      'item_class': 'material',
+      'item_subclass': 'herb',
+      'slot': 0,
+      'stack_quantity': 7,
+      'max_stack': 99,
+      'rarity': 'common',
+    });
+    await tester.tap(find.byIcon(Icons.handyman_outlined).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Craft').first);
+    await tester.pumpAndSettle();
+    expect(find.text('How many Potion Hp Small?'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+    await tester.tap(find.text('max 3'));
+    await tester.pump();
+    await tester.tap(find.text('Craft ×3'));
+    await tester.pumpAndSettle();
+    expect(be.lastCraftCount, 3);
+    expect(find.textContaining('Potion Hp Small ×3'), findsOneWidget);
+    expect(find.text('Linseed 1/2'), findsOneWidget);
   });
 
   testWidgets('notifications: badge, read one / all, live bump, settings keep quiet hours', (tester) async {

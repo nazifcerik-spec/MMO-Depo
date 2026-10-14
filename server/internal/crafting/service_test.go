@@ -91,16 +91,24 @@ type consumeCall struct {
 type fakeInv struct {
 	calls    []consumeCall
 	shortage map[string]bool
+	have     int32 // 0 = plenty
+	failAt   int   // ConsumeAll fails once this many calls were made (0 = never)
 }
 
 func (f *fakeInv) Available(_ context.Context, _ uuid.UUID, tmpl string) (int32, error) {
 	if f.shortage[tmpl] {
 		return 0, nil
 	}
+	if f.have > 0 {
+		return f.have, nil
+	}
 	return 1 << 20, nil
 }
 
 func (f *fakeInv) ConsumeAll(_ context.Context, _ uuid.UUID, needs []inventory.Need) error {
+	if f.failAt > 0 && len(f.calls) >= f.failAt {
+		return inventory.ErrInsufficient
+	}
 	for _, n := range needs {
 		f.calls = append(f.calls, consumeCall{n.TemplateCode, n.Quantity})
 	}
@@ -170,6 +178,39 @@ func TestLearn_GatheringProfessionIsNotLearnable(t *testing.T) {
 	svc, _, _, _ := newTestSvc(t)
 	_, err := svc.Learn(context.Background(), uuid.New(), uuid.New(), "mining")
 	require.ErrorIs(t, err, ErrUnknownProfession, "gathering levels come from activities")
+}
+
+func TestCraftMany_Batch(t *testing.T) {
+	svc, _, inv, _ := newTestSvc(t)
+	ctx := context.Background()
+	charID, acct := uuid.New(), uuid.New()
+	_, err := svc.Learn(ctx, charID, acct, "alchemy")
+	require.NoError(t, err)
+
+	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 0)
+	require.ErrorIs(t, err, ErrValidation)
+	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", MaxCraftCount+1)
+	require.ErrorIs(t, err, ErrValidation)
+
+	res, err := svc.CraftMany(ctx, charID, acct, "recipe_potion", 3)
+	require.NoError(t, err)
+	require.Equal(t, 3, res.Count)
+	require.Equal(t, int32(3), res.OutputStack)
+	require.Equal(t, int32(300), res.XPGained)
+	require.True(t, res.LeveledUp)
+	require.Len(t, inv.calls, 3)
+
+	// Not enough for the whole batch: nothing is made.
+	inv.calls, inv.have = nil, 5 // 2 per craft → 2 crafts possible, 3 asked
+	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 3)
+	require.ErrorIs(t, err, inventory.ErrInsufficient)
+	require.Empty(t, inv.calls)
+
+	// A craft failing mid-batch stops it and reports what was made.
+	inv.have, inv.failAt = 0, 2
+	res, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 5)
+	require.NoError(t, err)
+	require.Equal(t, 2, res.Count)
 }
 
 func TestCraft_HappyPathConsumesInputsAndGrantsXP(t *testing.T) {

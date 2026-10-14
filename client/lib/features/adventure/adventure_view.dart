@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
@@ -17,11 +18,13 @@ import '../../shared/content_names.dart';
 /// Adventure tab: hunts, dungeons, travel and events behind one segmented control.
 /// Panels are built on first selection and kept alive.
 class AdventureView extends StatefulWidget {
-  const AdventureView({super.key, required this.repo, required this.dataVersion, required this.characterLevel});
+  const AdventureView({super.key, required this.repo, required this.dataVersion, required this.level});
 
   final AdventureRepository repo;
   final ValueNotifier<int> dataVersion;
-  final int characterLevel;
+
+  /// Live character level; panels rebuild with it on a level-up.
+  final ValueListenable<int> level;
 
   @override
   State<AdventureView> createState() => _AdventureViewState();
@@ -32,13 +35,15 @@ class _AdventureViewState extends State<AdventureView> {
   final _visited = <int>{0};
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ValueListenableBuilder<int>(valueListenable: widget.level, builder: _build);
+
+  Widget _build(BuildContext context, int level, Widget? _) {
     final l = AppLocalizations.of(context);
     final panels = <Widget Function()>[
-      () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.characterLevel),
-      () => _DungeonPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.characterLevel),
-      () => _TravelPanel(repo: widget.repo, level: widget.characterLevel),
-      () => EventsPanel(repo: EventRepository(widget.repo.api, widget.repo.characterId), level: widget.characterLevel),
+      () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level),
+      () => _DungeonPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level),
+      () => _TravelPanel(repo: widget.repo, level: level),
+      () => EventsPanel(repo: EventRepository(widget.repo.api, widget.repo.characterId), level: level),
     ];
     return Column(
       children: [
@@ -172,6 +177,9 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
   List<MobInfo> _mobs = const [];
   CombatContract? _active;
   String? _mob;
+
+  /// The player picked [_mob] themselves; otherwise it follows the level.
+  bool _mobPicked = false;
   Duration _duration = huntDurations[1];
 
   List<Duration> get _durations => [if (AppConfig.flavor == 'dev') const Duration(minutes: 5), ...huntDurations];
@@ -183,12 +191,20 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
   }
 
   @override
+  void didUpdateWidget(_HuntPanel old) {
+    super.didUpdateWidget(old);
+    if (old.level != widget.level && !_mobPicked) _mob = _defaultMob();
+  }
+
+  /// The toughest mob at or below the character's level.
+  String? _defaultMob() => _mobs.where((m) => m.level <= widget.level).lastOrNull?.code ?? _mobs.firstOrNull?.code;
+
+  @override
   Future<void> fetch() async {
     final r = await Future.wait<Object?>([widget.repo.mobs(), widget.repo.activeHunt()]);
     _mobs = r[0]! as List<MobInfo>;
     _active = r[1] as CombatContract?;
-    // Default to the toughest mob at or below the character's level.
-    _mob ??= _mobs.where((m) => m.level <= widget.level).lastOrNull?.code ?? _mobs.firstOrNull?.code;
+    if (!_mobPicked) _mob = _defaultMob();
   }
 
   Future<void> _start() => run(() async {
@@ -260,7 +276,10 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
             mob: m,
             selected: m.code == _mob,
             overLevel: m.level > widget.level,
-            onTap: () => setState(() => _mob = m.code),
+            onTap: () => setState(() {
+              _mob = m.code;
+              _mobPicked = true;
+            }),
           ),
           const SizedBox(height: Space.sm),
         ],

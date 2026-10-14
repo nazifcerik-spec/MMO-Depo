@@ -229,7 +229,57 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 		SkillAfter:         updated.Level,
 		XPGained:           recipe.ProfessionXPReward,
 		LeveledUp:          leveled,
+		Count:              1,
 	}, nil
+}
+
+// CraftMany crafts recipeCode up to count times (DD-245). Materials for the
+// whole batch are checked first, so a batch that cannot start changes
+// nothing; a later failure (e.g. gold runs out) stops the batch and returns
+// what was made. Each craft keeps Craft's own guarantees.
+func (s *Service) CraftMany(ctx context.Context, characterID, accountID uuid.UUID, recipeCode string, count int) (*CraftResult, error) {
+	if count < 1 || count > MaxCraftCount {
+		return nil, fmt.Errorf("%w: count must be 1..%d", ErrValidation, MaxCraftCount)
+	}
+	if count > 1 {
+		if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
+			return nil, err
+		}
+		if recipe, ok := s.catalog.Catalog().Recipe(recipeCode); ok {
+			for _, in := range recipe.Inputs {
+				have, err := s.inv.Available(ctx, characterID, in.TemplateCode)
+				if err != nil {
+					return nil, err
+				}
+				if need := in.Quantity * int32(count); have < need {
+					return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, need, have, inventory.ErrInsufficient)
+				}
+			}
+		}
+	}
+	var total *CraftResult
+	for i := 0; i < count; i++ {
+		res, err := s.Craft(ctx, characterID, accountID, recipeCode)
+		if err != nil {
+			if total == nil {
+				return nil, err
+			}
+			s.log.InfoContext(ctx, "crafting: batch stopped early",
+				slog.Int("made", total.Count), slog.Int("asked", count), slog.String("err", err.Error()))
+			break
+		}
+		if total == nil {
+			total = res
+			continue
+		}
+		total.OutputInstanceID = res.OutputInstanceID
+		total.OutputStack += res.OutputStack
+		total.SkillAfter = res.SkillAfter
+		total.XPGained += res.XPGained
+		total.LeveledUp = total.LeveledUp || res.LeveledUp
+		total.Count++
+	}
+	return total, nil
 }
 
 // --- Public catalog readers ------------------------------------------------

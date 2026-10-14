@@ -33,6 +33,7 @@ class ItemCell extends StatelessWidget {
     this.code,
     this.stack = 1,
     this.locked = false,
+    this.selected = false,
     this.label,
     this.semantic,
     this.onTap,
@@ -46,6 +47,9 @@ class ItemCell extends StatelessWidget {
   final int stack;
   final bool locked;
 
+  /// Multi-select highlight (bag selection mode).
+  final bool selected;
+
   /// Caption for empty equipment slots.
   final String? label;
   final String? semantic;
@@ -57,13 +61,20 @@ class ItemCell extends StatelessWidget {
     final c = filled ? rarityColor(rarity ?? 'common') : Palette.borderSubtle;
     return Semantics(
       button: onTap != null,
+      selected: selected,
       label: semantic ?? label,
       excludeSemantics: true,
       child: Material(
-        color: filled ? Palette.bgElevated : Palette.bgSurface,
+        color: selected
+            ? Palette.accent.withValues(alpha: 0.22)
+            : filled
+            ? Palette.bgElevated
+            : Palette.bgSurface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Radii.sm),
-          side: BorderSide(color: filled ? c.withValues(alpha: 0.85) : Palette.borderSubtle, width: filled ? 1.5 : 1),
+          side: selected
+              ? const BorderSide(color: Palette.accent, width: 2)
+              : BorderSide(color: filled ? c.withValues(alpha: 0.85) : Palette.borderSubtle, width: filled ? 1.5 : 1),
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(Radii.sm),
@@ -94,6 +105,8 @@ class ItemCell extends StatelessWidget {
                   ),
                 ),
               if (locked) const Positioned(left: 2, top: 2, child: Icon(Icons.lock, size: 10, color: Palette.warning)),
+              if (selected)
+                const Positioned(right: 2, top: 2, child: Icon(Icons.check_circle, size: 14, color: Palette.accent)),
             ],
           ),
         ),

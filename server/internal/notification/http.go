@@ -92,6 +92,20 @@ func (h *Handler) MarkRead(w http.ResponseWriter, r *http.Request) {
 	reply(w, r, map[string]any{"marked": n}, err)
 }
 
+func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
+	a, ok := account(w, r)
+	if !ok {
+		return
+	}
+	id, err := uuid.Parse(chi.URLParam(r, "notification_id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	n, err := h.svc.Delete(r.Context(), a, id)
+	reply(w, r, map[string]any{"deleted": n}, err)
+}
+
 func (h *Handler) GetPreferences(w http.ResponseWriter, r *http.Request) {
 	a, ok := account(w, r)
 	if !ok {

@@ -56,7 +56,14 @@ class _ActivityViewState extends State<ActivityView> {
   @override
   void initState() {
     super.initState();
+    widget.dataVersion.addListener(_loadSkills);
     _load();
+  }
+
+  @override
+  void dispose() {
+    widget.dataVersion.removeListener(_loadSkills);
+    super.dispose();
   }
 
   Future<void> _load() async {

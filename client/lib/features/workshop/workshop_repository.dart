@@ -144,8 +144,9 @@ class WorkshopRepository {
 
   Future<void> learn(String profession) => api.post('$_char/professions/learn', {'profession_code': profession});
 
-  Future<CraftResult> craft(String recipe) async {
-    final j = await api.post('$_char/craft', {'recipe_code': recipe});
+  /// Crafts [count] at once (DD-245); the server checks the whole batch.
+  Future<CraftResult> craft(String recipe, {int count = 1}) async {
+    final j = await api.post('$_char/craft', {'recipe_code': recipe, if (count > 1) 'count': count});
     return CraftResult(
       output: j['output_template_code'] as String,
       stack: (j['output_stack'] as num?)?.toInt() ?? 1,

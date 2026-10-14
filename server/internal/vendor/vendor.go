@@ -104,8 +104,8 @@ var (
 	// ErrItemNoSell — the item's template is marked no_sell (quest / soulbound).
 	ErrItemNoSell = errors.New("vendor: item cannot be sold to vendor")
 
-	// ErrItemBound — bound-on-pickup items cannot be sold to a vendor
-	// (v1 policy — Phase 02 may allow with penalty).
+	// ErrItemBound — no longer returned by Sell (DD-245: bound items sell
+	// to vendors); kept for the HTTP code mapping of older clients.
 	ErrItemBound = errors.New("vendor: bound items cannot be sold")
 
 	// ErrItemLocked — item is in escrow (market/trade/mail/craft).

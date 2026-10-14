@@ -932,6 +932,90 @@ abstract class AppLocalizations {
   /// **'Sell'**
   String get sell;
 
+  /// No description provided for @sortLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sortLabel;
+
+  /// No description provided for @sortSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag order'**
+  String get sortSlot;
+
+  /// No description provided for @sortRarity.
+  ///
+  /// In en, this message translates to:
+  /// **'Rarity'**
+  String get sortRarity;
+
+  /// No description provided for @sortType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get sortType;
+
+  /// No description provided for @sortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get sortName;
+
+  /// No description provided for @sortValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get sortValue;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedCount(int count);
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get selectAll;
+
+  /// No description provided for @clearSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear selection'**
+  String get clearSelection;
+
+  /// No description provided for @sellSelectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell {count} items?'**
+  String sellSelectedTitle(int count);
+
+  /// No description provided for @destroySelectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Destroy {count} items?'**
+  String destroySelectedTitle(int count);
+
+  /// No description provided for @deleteEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteEntry;
+
+  /// No description provided for @craftHowMany.
+  ///
+  /// In en, this message translates to:
+  /// **'How many {name}?'**
+  String craftHowMany(String name);
+
+  /// No description provided for @craftCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft ×{count}'**
+  String craftCount(int count);
+
   /// No description provided for @destroy.
   ///
   /// In en, this message translates to:

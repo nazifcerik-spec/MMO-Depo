@@ -61,8 +61,15 @@ func TestVendorRules(t *testing.T) {
 	require.ErrorIs(t, err, vendor.ErrItemNotOwned)
 	_, err = w.p.Exec(w.ctx, `UPDATE inventory.item_instance SET is_bound = true WHERE id = $1`, first.InstanceID)
 	require.NoError(t, err)
-	_, err = sell(a, first.InstanceID)
-	require.ErrorIs(t, err, vendor.ErrItemBound)
+	// A bound item (e.g. worn once) still sells to a vendor; buying it back
+	// keeps it bound, so the round trip never unbinds it (DD-245).
+	bound, err := sell(a, first.InstanceID)
+	require.NoError(t, err)
+	back, err := svc.Buyback(w.ctx, a.ID, bound.BuybackID, uuid.NewString())
+	require.NoError(t, err)
+	var isBound bool
+	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT is_bound FROM inventory.item_instance WHERE id = $1`, back.InstanceID).Scan(&isBound))
+	require.True(t, isBound)
 
 	// Buyback: own, once, within the TTL.
 	list, err := svc.ListBuybacks(w.ctx, a.ID)

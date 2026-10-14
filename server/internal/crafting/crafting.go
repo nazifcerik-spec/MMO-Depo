@@ -90,7 +90,11 @@ type CraftResult struct {
 	SkillAfter         int16     `json:"skill_after"`
 	XPGained           int32     `json:"xp_gained"`
 	LeveledUp          bool      `json:"leveled_up"`
+	Count              int       `json:"count"` // crafts made by this request (DD-245)
 }
+
+// MaxCraftCount caps one batch request (DD-245).
+const MaxCraftCount = 100
 
 // --- Errors -----------------------------------------------------------------
 
