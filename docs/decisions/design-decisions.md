@@ -2195,6 +2195,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-244 — Toplama Meslekleri (Sv 1–100) ve Kaynak Seçimi
+**Karar:** Kullanıcının kaynak listesi (Book.xlsx) esas alınır. Beş toplama türü (madencilik, şifacılık, odunculuk, balıkçılık, avcılık) birer **toplama mesleği**dir: seviye 1–100, `crafting.character_profession`'da tutulur (ilk kazanımda açılır, elle öğrenilmez — `content.profession.kind = 'gathering'`, migration 0035). `content/gathering.yaml` 150 kaynak tanımlar; her kaynak `gather: {kind, level, tier}` taşır (`content.item_template.gather_*`). Oyuncu başlangıçta kaynağı seçer (`target`; boşsa açılmış en iyi kaynak); seviye kapısı `E_GATHER_LEVEL` (409). Seçim kontrat snapshot'ına donar. Kademe T0–T7: hız çarpanı 1.0→0.3, nadirlik (T0–1 sıradan, T2–3 seçkin, T4 nadir, T5 destansı, T6 efsanevi, T7 mitik), birim başı meslek XP'si 8→90. Her buluntu seçilen kaynağın bir birimidir. Meslek eğrisi tüm mesleklerde `round(60 × 1.06^L)` (önceden `100 × L`). Av/zindan zaferleri, mob seviyesi × 4'e (tavan 100) kadar açılan hayvanların derisini bırakır (sıradanlar en iyi 4'ten, nadir/efsanevi en iyisi). Listede olmayan eski malzemeler emekli (şablonları duruyor), tarifler yeni kaynaklara bağlandı; ergitme 24 külçe (yeni: yıldızçelik, tungsten, elektrum, krom, bronz, alüminyum), ergitme beceri kapısı `cevher seviyesi − 13`. `GET /v1/character/{id}/gathering` meslek seviyeleri + kaynak listesi; reveal yanıtında `gather` (kazanılan XP, seviye, seviye atlama); kazanım geçmişi kaydına `gather_xp`/`gather_level`.
+**Reason:** Kullanıcı isteği: belgedeki listelerdeki eşyalar meslek sınıflarına; seviye = toplama meslek seviyesi 1–100; liste esas. DD-243'ün kademe-rastgele havuzu oyuncuya hedef seçtirmiyordu.
+**Alternatives:** Karakter seviyesiyle kapı (meslek derinliği yok), DD-243 havuzuna ekleme (liste büyüdükçe istenen kaynak neredeyse hiç düşmez), ayrı toplama tablosu (meslek altyapısı zaten var).
+**Consequences:** Eski (hedefsiz) kontratlar reveal'da türün başlangıç kaynağını verir. Avcılık mesleği yalnız toplamayla ilerler (av/zindan derisi XP vermez). Zanaat meslekleri yeni eğriyle orta seviyelerde daha hızlı ilerler. Yeni kaynakların görselleri `client/assets/items/<code>.png` ile eklenebilir. İstemci: Toplama sekmesinde seviye/XP çubuğu, kaynak listesi (açılmış en iyi üstte, sonraki 2 kilitli), sonuçta meslek XP'si; Atölye toplama mesleklerini göstermez.
+**Tarih:** 2026-10-15
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

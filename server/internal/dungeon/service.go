@@ -34,14 +34,7 @@ const GearDropPct = 4
 
 // ItemGranter — item.Service.Grant satisfies exactly this shape.
 type ItemGranter interface {
-	Grant(
-		ctx context.Context,
-		characterID uuid.UUID,
-		sourceRefID uuid.UUID,
-		seed int64, kind activity.Kind,
-		common, rare, legendary int,
-		gear activity.GearDrop,
-	) ([]activity.GrantedItem, error)
+	Grant(ctx context.Context, characterID, sourceRefID uuid.UUID, seed int64, d activity.Drops) ([]activity.GrantedItem, error)
 }
 
 // XPGranter — character.Service.GrantXP satisfies.
@@ -308,10 +301,12 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}
 	var granted []activity.GrantedItem
 	if s.items != nil && (run.CommonDrops+run.RareDrops+run.LegendaryDrops+gear.Rolls+gear.Guaranteed) > 0 {
-		granted, err = s.items.Grant(ctx,
-			c.CharacterID, c.ID, c.Seed, activity.KindHunting,
-			run.CommonDrops, run.RareDrops, run.LegendaryDrops, gear,
-		)
+		// Hides follow the dungeon's boss level (DD-244).
+		boss, _ := s.mobs.Catalog().Get(tmpl.BossMobCode)
+		granted, err = s.items.Grant(ctx, c.CharacterID, c.ID, c.Seed, activity.Drops{
+			Kind: activity.KindHunting, MobLevel: int(boss.Level),
+			Common: run.CommonDrops, Rare: run.RareDrops, Legendary: run.LegendaryDrops, Gear: gear,
+		})
 		if err != nil {
 			return nil, fmt.Errorf("dungeon reveal item grant: %w", err)
 		}

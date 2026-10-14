@@ -51,7 +51,19 @@ type Item struct {
 	ClassRestriction string      `yaml:"class_restriction"`
 	StatBonuses      []StatBonus `yaml:"stat_bonuses"`
 	UseEffect        *UseEffect  `yaml:"use_effect"`
+	Gather           *Gather     `yaml:"gather"`
 }
+
+// Gather makes an item a gathering node (DD-244): which gathering
+// profession yields it, the level that unlocks it and its tier (0..7).
+type Gather struct {
+	Kind  string `yaml:"kind"`
+	Level int16  `yaml:"level"`
+	Tier  int16  `yaml:"tier"`
+}
+
+// GatherKinds are the gathering professions (activity kinds).
+var GatherKinds = map[string]bool{"mining": true, "fishing": true, "woodcutting": true, "herbalism": true, "hunting": true}
 
 // UseEffect is what consuming one unit of a consumable does (DD-218).
 type UseEffect struct {
@@ -163,6 +175,7 @@ type Profession struct {
 	Code           string `yaml:"code"`
 	DisplayNameKey string `yaml:"display_name_key"`
 	MaxLevel       int16  `yaml:"max_level"`
+	Kind           string `yaml:"kind"` // crafting (default) | gathering (DD-244)
 }
 
 type professionsFile struct {
@@ -373,8 +386,26 @@ func Read(dir string) (*Pack, error) {
 		return nil, err
 	}
 	p.Items = append(p.Items, gear...)
+	// Gathering tables (DD-244).
+	nodes, err := loadItemsFile(f("gathering.yaml"))
+	if err != nil {
+		return nil, err
+	}
+	p.Items = append(p.Items, nodes...)
 	if err := validateItems(p.Items); err != nil {
 		return nil, fmt.Errorf("validate items + gear: %w", err)
+	}
+	// A new character (gathering level 1) must be able to gather everywhere.
+	starter := map[string]bool{}
+	for _, it := range p.Items {
+		if it.Gather != nil && it.Gather.Level == 1 {
+			starter[it.Gather.Kind] = true
+		}
+	}
+	for kind := range GatherKinds {
+		if !starter[kind] {
+			return nil, fmt.Errorf("gathering: %s has no level-1 resource", kind)
+		}
 	}
 	if p.Vendors, err = loadVendorsFile(f("vendors.yaml")); err != nil {
 		return nil, err
@@ -632,6 +663,17 @@ func validateItems(items []Item) error {
 				return fmt.Errorf("item %s: use_effect amount out of (0, 100000]", it.Code)
 			}
 		}
+		if g := it.Gather; g != nil {
+			if !GatherKinds[g.Kind] {
+				return fmt.Errorf("item %s: unknown gather kind %q", it.Code, g.Kind)
+			}
+			if g.Level < 1 || g.Level > 100 || g.Tier < 0 || g.Tier > 7 {
+				return fmt.Errorf("item %s: gather level must be 1..100 and tier 0..7", it.Code)
+			}
+			if it.ItemClass != "material" || !it.Stackable {
+				return fmt.Errorf("item %s: gathering nodes must be stackable materials", it.Code)
+			}
+		}
 		for j, sb := range it.StatBonuses {
 			if !validModifierKinds(sb.Kind) {
 				return fmt.Errorf("item %s: stat_bonuses[%d] unknown kind %q", it.Code, j, sb.Kind)
@@ -656,6 +698,15 @@ func validateProfessions(profs []Profession) error {
 		seen[p.Code] = true
 		if p.MaxLevel <= 0 || p.MaxLevel > 100 {
 			return fmt.Errorf("profession %s: max_level out of (0, 100]", p.Code)
+		}
+		switch p.Kind {
+		case "", "crafting":
+		case "gathering":
+			if !GatherKinds[p.Code] {
+				return fmt.Errorf("profession %s: gathering professions are named after a gather kind", p.Code)
+			}
+		default:
+			return fmt.Errorf("profession %s: unknown kind %q", p.Code, p.Kind)
 		}
 	}
 	return nil
@@ -875,8 +926,9 @@ func (l *Loader) upsertItems(ctx context.Context, items []Item) error {
 INSERT INTO content.item_template (
   code, display_name_key, item_class, item_subclass, min_level,
   base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
-  no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+  no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect,
+  gather_kind, gather_level, gather_tier
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   item_class         = EXCLUDED.item_class,
@@ -894,6 +946,9 @@ ON CONFLICT (code) DO UPDATE SET
   class_restriction  = EXCLUDED.class_restriction,
   stat_bonuses       = EXCLUDED.stat_bonuses,
   use_effect         = EXCLUDED.use_effect,
+  gather_kind        = EXCLUDED.gather_kind,
+  gather_level       = EXCLUDED.gather_level,
+  gather_tier        = EXCLUDED.gather_tier,
   version            = content.item_template.version + 1`
 
 	for _, it := range items {
@@ -915,11 +970,17 @@ ON CONFLICT (code) DO UPDATE SET
 				return fmt.Errorf("item %s: marshal use_effect: %w", it.Code, err)
 			}
 		}
+		var gKind *string // nil → SQL NULL (not a gathering node)
+		var gLevel, gTier *int16
+		if g := it.Gather; g != nil {
+			gKind, gLevel, gTier = &g.Kind, &g.Level, &g.Tier
+		}
 		_, err = tx.Exec(ctx, q,
 			it.Code, it.DisplayNameKey, it.ItemClass, it.ItemSubclass, it.MinLevel,
 			it.BaseValueCopper, it.BaseWeightG, it.Stackable, maxStack, bindKind,
 			it.NoTrade, it.NoSell, it.Affixable,
 			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses, useEffect,
+			gKind, gLevel, gTier,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert item %s: %w", it.Code, err)
@@ -1055,14 +1116,19 @@ func (l *Loader) upsertProfessions(ctx context.Context, professions []Profession
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
 	const q = `
-INSERT INTO content.profession (code, display_name_key, max_level)
-VALUES ($1, $2, $3)
+INSERT INTO content.profession (code, display_name_key, max_level, kind)
+VALUES ($1, $2, $3, $4)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key = EXCLUDED.display_name_key,
   max_level        = EXCLUDED.max_level,
+  kind             = EXCLUDED.kind,
   version          = content.profession.version + 1`
 	for _, p := range professions {
-		if _, err := tx.Exec(ctx, q, p.Code, p.DisplayNameKey, p.MaxLevel); err != nil {
+		kind := p.Kind
+		if kind == "" {
+			kind = "crafting"
+		}
+		if _, err := tx.Exec(ctx, q, p.Code, p.DisplayNameKey, p.MaxLevel, kind); err != nil {
 			return fmt.Errorf("upsert profession %s: %w", p.Code, err)
 		}
 	}

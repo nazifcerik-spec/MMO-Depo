@@ -97,7 +97,7 @@ func (s *CatalogService) ReloadCatalog(ctx context.Context, pool *pgxpool.Pool) 
 // LoadCatalog reads both tables into an in-memory Catalog.
 func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	profRows, err := pool.Query(ctx, `
-		SELECT code, display_name_key, max_level, version
+		SELECT code, display_name_key, max_level, kind, version
 		  FROM content.profession
 		 ORDER BY code`)
 	if err != nil {
@@ -107,7 +107,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	var professions []Profession
 	for profRows.Next() {
 		var p Profession
-		if err := profRows.Scan(&p.Code, &p.DisplayNameKey, &p.MaxLevel, &p.Version); err != nil {
+		if err := profRows.Scan(&p.Code, &p.DisplayNameKey, &p.MaxLevel, &p.Kind, &p.Version); err != nil {
 			return nil, fmt.Errorf("profession scan: %w", err)
 		}
 		professions = append(professions, p)

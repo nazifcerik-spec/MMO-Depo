@@ -58,6 +58,12 @@ type Template struct {
 	ClassRestriction *string // 'warrior'|... nil for universal
 	StatBonuses      []byte  // JSONB — parsed via skill.DecodeModifiers on demand
 	UseEffect        *UseEffect
+
+	// Gathering node (DD-244): profession, unlock level 1..100, tier 0..7.
+	// Empty kind = not gathered.
+	GatherKind  string
+	GatherLevel int16
+	GatherTier  int16
 }
 
 // UseEffect is what consuming one unit does (content use_effect, DD-218).

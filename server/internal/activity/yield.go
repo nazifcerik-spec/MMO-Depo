@@ -19,6 +19,7 @@ type YieldSummary struct {
 	LegendaryCount  int           `json:"legendary_count"`
 	Highlights      []string      `json:"highlights,omitempty"` // "1 legendary!", "3 rare gems"
 	Items           []GrantedItem `json:"items,omitempty"`      // populated by Reveal after ItemGranter call
+	Target          string        `json:"target,omitempty"`     // gathered resource (DD-244)
 }
 
 // yieldProfile is the per-kind rate table (v1 hardcoded placeholder).
@@ -105,6 +106,9 @@ func ComputeYield(c *Contract, elapsedSec int32) YieldSummary {
 	// Common resource count (Poisson) on the mastery-adjusted hourly rate.
 	snap := parseSnapshot(c.Snapshot)
 	lambda := (prof.BasePerHour + snap.YieldFlatPerHour) * (1 + snap.YieldMult) * hours
+	if snap.Target != "" {
+		lambda *= tierRate[tierIndex(snap.TargetTier)] // higher tiers come slower (DD-244)
+	}
 	commons := Poisson(rng, lambda)
 
 	// Rare drops (Binomial on commons).
@@ -141,6 +145,7 @@ func ComputeYield(c *Contract, elapsedSec int32) YieldSummary {
 		RareCount:       rares,
 		LegendaryCount:  legendaries,
 		Highlights:      highlights,
+		Target:          snap.Target,
 	}
 }
 

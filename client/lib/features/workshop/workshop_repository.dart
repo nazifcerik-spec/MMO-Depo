@@ -108,7 +108,8 @@ class WorkshopRepository {
   Future<List<String>> professions() async => _professions ??= [
     for (final p
         in ((await api.get('/v1/professions'))['professions'] as List? ?? const []).cast<Map<String, dynamic>>())
-      p['code'] as String,
+      // Gathering professions level on the Gather tab (DD-244).
+      if (p['kind'] != 'gathering') p['code'] as String,
   ];
 
   Future<List<Recipe>> recipes() async => _recipes ??= [

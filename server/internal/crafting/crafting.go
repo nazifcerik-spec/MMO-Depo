@@ -24,6 +24,7 @@ package crafting
 
 import (
 	"errors"
+	"math"
 	"time"
 
 	"github.com/google/uuid"
@@ -34,8 +35,16 @@ type Profession struct {
 	Code           string
 	DisplayNameKey string
 	MaxLevel       int16
+	Kind           string // "crafting" or "gathering" (DD-244)
 	Version        int32
 }
+
+// Profession kinds. Gathering professions level from activities and are
+// never learned by hand.
+const (
+	KindCrafting  = "crafting"
+	KindGathering = "gathering"
+)
 
 // RecipeInput is one required material for a recipe.
 type RecipeInput struct {
@@ -98,12 +107,12 @@ var (
 
 // --- Tuning -----------------------------------------------------------------
 
-// professionXPToNext is a placeholder curve. Level N → N+1 requires 100 * N XP.
-// Kept in code (not YAML) since balance tuning belongs with the crafting
-// engine; content pack would only expose a curve id in Phase 02.
+// ProfessionXPToNext is the shared profession curve (DD-244): level N → N+1
+// needs round(60 × 1.06^N) XP — 64 at 1, ~1 100 at 50, ~19 200 at 99.
+// Kept in code (not YAML) since balance tuning belongs with the engine.
 func ProfessionXPToNext(level int16) int32 {
 	if level < 1 {
 		level = 1
 	}
-	return int32(level) * 100
+	return int32(math.Round(60 * math.Pow(1.06, float64(level))))
 }

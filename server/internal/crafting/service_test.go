@@ -129,12 +129,15 @@ func (fakeOwner) Owns(_ context.Context, _ uuid.UUID, _ uuid.UUID) error { retur
 func newTestSvc(t *testing.T) (*Service, *memRepo, *fakeInv, *fakeItemMinter) {
 	t.Helper()
 	cat := NewCatalog(
-		[]Profession{{Code: "alchemy", DisplayNameKey: "p.a", MaxLevel: 60}},
+		[]Profession{
+			{Code: "alchemy", DisplayNameKey: "p.a", MaxLevel: 60, Kind: KindCrafting},
+			{Code: "mining", DisplayNameKey: "p.m", MaxLevel: 100, Kind: KindGathering},
+		},
 		[]Recipe{{
 			Code: "recipe_potion", ProfessionCode: "alchemy", MinSkill: 1,
 			Inputs:             []RecipeInput{{TemplateCode: "linseed", Quantity: 2}},
 			GoldCostCopper:     0, // skip ledger in tests
-			OutputTemplateCode: "potion_hp_small", OutputStack: 1, ProfessionXPReward: 150,
+			OutputTemplateCode: "potion_hp_small", OutputStack: 1, ProfessionXPReward: 100,
 		}, {
 			Code: "recipe_forge", ProfessionCode: "alchemy", MinSkill: 10, // above starting level
 			Inputs:             []RecipeInput{{TemplateCode: "iron_ore", Quantity: 3}},
@@ -163,6 +166,12 @@ func TestLearn_IdempotentReturnsRowUnchanged(t *testing.T) {
 	require.Equal(t, first.LearnedAt, second.LearnedAt, "re-learn must not reset learned_at")
 }
 
+func TestLearn_GatheringProfessionIsNotLearnable(t *testing.T) {
+	svc, _, _, _ := newTestSvc(t)
+	_, err := svc.Learn(context.Background(), uuid.New(), uuid.New(), "mining")
+	require.ErrorIs(t, err, ErrUnknownProfession, "gathering levels come from activities")
+}
+
 func TestCraft_HappyPathConsumesInputsAndGrantsXP(t *testing.T) {
 	svc, repo, inv, minter := newTestSvc(t)
 	ctx := context.Background()
@@ -175,8 +184,8 @@ func TestCraft_HappyPathConsumesInputsAndGrantsXP(t *testing.T) {
 	require.Equal(t, "potion_hp_small", res.OutputTemplateCode)
 	require.Equal(t, int32(1), res.OutputStack)
 	require.NotZero(t, res.OutputInstanceID)
-	require.Equal(t, int32(150), res.XPGained)
-	require.True(t, res.LeveledUp, "150 xp at level 1 crosses the 100 threshold")
+	require.Equal(t, int32(100), res.XPGained)
+	require.True(t, res.LeveledUp, "100 xp at level 1 crosses the 64 threshold, not 64+67")
 	require.Equal(t, int16(2), res.SkillAfter)
 
 	require.Equal(t, []consumeCall{{Template: "linseed", Qty: 2}}, inv.calls)
@@ -227,10 +236,15 @@ func TestCraft_InventoryShortageBubblesUpBeforeMint(t *testing.T) {
 }
 
 func TestProfessionXPToNext_MonotonicByLevel(t *testing.T) {
-	require.Equal(t, int32(100), ProfessionXPToNext(1))
-	require.Equal(t, int32(200), ProfessionXPToNext(2))
-	require.Equal(t, int32(1000), ProfessionXPToNext(10))
+	require.Equal(t, int32(64), ProfessionXPToNext(1))
+	require.Equal(t, int32(67), ProfessionXPToNext(2))
+	require.Equal(t, int32(107), ProfessionXPToNext(10))
+	require.Equal(t, int32(1105), ProfessionXPToNext(50))
+	require.Equal(t, int32(19206), ProfessionXPToNext(99))
+	for l := int16(1); l < 100; l++ {
+		require.Greater(t, ProfessionXPToNext(l+1), ProfessionXPToNext(l))
+	}
 	// Clamps sub-1 levels to 1's cost.
-	require.Equal(t, int32(100), ProfessionXPToNext(0))
-	require.Equal(t, int32(100), ProfessionXPToNext(-5))
+	require.Equal(t, int32(64), ProfessionXPToNext(0))
+	require.Equal(t, int32(64), ProfessionXPToNext(-5))
 }

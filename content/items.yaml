@@ -26,519 +26,6 @@
 
 items:
   # --- Mining ---
-  - code: iron_ore
-    display_name_key: item.iron_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 5
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: copper_ore
-    display_name_key: item.copper_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 8
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: tin_ore
-    display_name_key: item.tin_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 7
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: silver_ore
-    display_name_key: item.silver_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 10
-    base_value_copper: 25
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: gold_ore
-    display_name_key: item.gold_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 10
-    base_value_copper: 40
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: mythril_ore
-    display_name_key: item.mythril_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 25
-    base_value_copper: 250
-    base_weight_g: 300
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  # Ore ladder (DD-243): very common → mythic. Coal is smelting fuel;
-  # stone ore has no bar.
-
-  - code: coal
-    display_name_key: item.coal
-    item_class: material
-    item_subclass: fuel
-    min_level: 1
-    base_value_copper: 2
-    base_weight_g: 150
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: stone_ore
-    display_name_key: item.stone_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 1
-    base_weight_g: 300
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: adamantite_ore
-    display_name_key: item.adamantite_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 30
-    base_value_copper: 600
-    base_weight_g: 350
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: orichalcum_ore
-    display_name_key: item.orichalcum_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 25
-    base_value_copper: 280
-    base_weight_g: 300
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: platinum_ore
-    display_name_key: item.platinum_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 20
-    base_value_copper: 120
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: iridium_ore
-    display_name_key: item.iridium_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 20
-    base_value_copper: 130
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: osmium_ore
-    display_name_key: item.osmium_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 20
-    base_value_copper: 125
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: palladium_ore
-    display_name_key: item.palladium_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 15
-    base_value_copper: 60
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: rhodium_ore
-    display_name_key: item.rhodium_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 15
-    base_value_copper: 70
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: titanium_ore
-    display_name_key: item.titanium_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 15
-    base_value_copper: 55
-    base_weight_g: 250
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: cobalt_ore
-    display_name_key: item.cobalt_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 5
-    base_value_copper: 14
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: nickel_ore
-    display_name_key: item.nickel_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 5
-    base_value_copper: 12
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: lead_ore
-    display_name_key: item.lead_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 6
-    base_weight_g: 220
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: zinc_ore
-    display_name_key: item.zinc_ore
-    item_class: material
-    item_subclass: ore
-    min_level: 1
-    base_value_copper: 6
-    base_weight_g: 200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  # --- Smelting bars (DD-243): ore + coal → bar ---
-
-  - code: adamantite_bar
-    display_name_key: item.adamantite_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 30
-    base_value_copper: 4813
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: orichalcum_bar
-    display_name_key: item.orichalcum_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 25
-    base_value_copper: 1802
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: mythril_bar
-    display_name_key: item.mythril_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 25
-    base_value_copper: 1610
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: platinum_bar
-    display_name_key: item.platinum_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 20
-    base_value_copper: 586
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: iridium_bar
-    display_name_key: item.iridium_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 20
-    base_value_copper: 634
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: osmium_bar
-    display_name_key: item.osmium_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 20
-    base_value_copper: 610
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: palladium_bar
-    display_name_key: item.palladium_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 15
-    base_value_copper: 294
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: rhodium_bar
-    display_name_key: item.rhodium_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 15
-    base_value_copper: 342
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: titanium_bar
-    display_name_key: item.titanium_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 15
-    base_value_copper: 270
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: gold_bar
-    display_name_key: item.gold_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 10
-    base_value_copper: 134
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: silver_bar
-    display_name_key: item.silver_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 10
-    base_value_copper: 86
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: cobalt_bar
-    display_name_key: item.cobalt_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 5
-    base_value_copper: 48
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: nickel_bar
-    display_name_key: item.nickel_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 5
-    base_value_copper: 42
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: copper_bar
-    display_name_key: item.copper_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 1
-    base_value_copper: 29
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: iron_bar
-    display_name_key: item.iron_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 1
-    base_value_copper: 19
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: tin_bar
-    display_name_key: item.tin_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 1
-    base_value_copper: 26
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: lead_bar
-    display_name_key: item.lead_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 1
-    base_value_copper: 22
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  - code: zinc_bar
-    display_name_key: item.zinc_bar
-    item_class: material
-    item_subclass: bar
-    min_level: 1
-    base_value_copper: 22
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-    affixable: false
-
-  # --- Fishing ---
-  - code: salmon
-    display_name_key: item.salmon
-    item_class: material
-    item_subclass: fish
-    min_level: 1
-    base_value_copper: 8
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: bass
-    display_name_key: item.bass
-    item_class: material
-    item_subclass: fish
-    min_level: 5
-    base_value_copper: 12
-    base_weight_g: 400
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: golden_carp
-    display_name_key: item.golden_carp
-    item_class: material
-    item_subclass: fish
-    min_level: 15
-    base_value_copper: 50
-    base_weight_g: 500
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  - code: ancient_leviathan_scale
-    display_name_key: item.leviathan_scale
-    item_class: material
-    item_subclass: fish
-    min_level: 35
-    base_value_copper: 300
-    base_weight_g: 100
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  # --- Woodcutting ---
-  - code: oak_log
-    display_name_key: item.oak_log
-    item_class: material
-    item_subclass: wood
-    min_level: 1
-    base_value_copper: 4
-    base_weight_g: 1000
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
   - code: elm_log
     display_name_key: item.elm_log
     item_class: material
@@ -561,18 +48,8 @@ items:
     max_stack: 99
     bind_kind: boe
 
-  - code: ironwood_log
-    display_name_key: item.ironwood_log
-    item_class: material
-    item_subclass: wood
-    min_level: 40
-    base_value_copper: 200
-    base_weight_g: 1200
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  # --- Herbalism ---
+  # Retired by DD-244 (not in the gathering tables): linseed, mandrake,
+  # king_bloom, elm_log, yew_log stay as templates so existing stacks sell.
   - code: linseed
     display_name_key: item.linseed
     item_class: material
@@ -606,63 +83,294 @@ items:
     max_stack: 99
     bind_kind: boe
 
-  - code: phoenix_petal
-    display_name_key: item.phoenix_petal
+  # --- Smelting bars (DD-243, DD-244): ore + coal at the furnace ---
+  - code: adamantite_bar
+    display_name_key: item.adamantite_bar
     item_class: material
-    item_subclass: herb
-    min_level: 40
-    base_value_copper: 500
-    base_weight_g: 30
-    stackable: true
-    max_stack: 99
-    bind_kind: boe
-
-  # --- Hunting ---
-  - code: boar_hide
-    display_name_key: item.boar_hide
-    item_class: material
-    item_subclass: hide
+    item_subclass: bar
     min_level: 1
-    base_value_copper: 15
-    base_weight_g: 800
+    base_value_copper: 5458
+    base_weight_g: 500
     stackable: true
     max_stack: 99
     bind_kind: boe
+    affixable: false
 
-  - code: wolf_pelt
-    display_name_key: item.wolf_pelt
+  - code: orichalcum_bar
+    display_name_key: item.orichalcum_bar
     item_class: material
-    item_subclass: hide
-    min_level: 8
-    base_value_copper: 25
-    base_weight_g: 700
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 4082
+    base_weight_g: 500
     stackable: true
     max_stack: 99
     bind_kind: boe
+    affixable: false
 
-  - code: dire_bear_hide
-    display_name_key: item.dire_bear_hide
+  - code: mythril_bar
+    display_name_key: item.mythril_bar
     item_class: material
-    item_subclass: hide
-    min_level: 20
-    base_value_copper: 90
-    base_weight_g: 1500
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 3058
+    base_weight_g: 500
     stackable: true
     max_stack: 99
     bind_kind: boe
+    affixable: false
 
-  - code: dragon_scale
-    display_name_key: item.dragon_scale
+  - code: starsteel_bar
+    display_name_key: item.starsteel_bar
     item_class: material
-    item_subclass: hide
-    min_level: 45
-    base_value_copper: 800
-    base_weight_g: 300
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 1830
+    base_weight_g: 500
     stackable: true
     max_stack: 99
     bind_kind: boe
+    affixable: false
 
-  # Equipment lives in gear.yaml (DD-229).
+  - code: iridium_bar
+    display_name_key: item.iridium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 1376
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: osmium_bar
+    display_name_key: item.osmium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 1030
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: platinum_bar
+    display_name_key: item.platinum_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 586
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: rhodium_bar
+    display_name_key: item.rhodium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 442
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: palladium_bar
+    display_name_key: item.palladium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 336
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: titanium_bar
+    display_name_key: item.titanium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 248
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: tungsten_bar
+    display_name_key: item.tungsten_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 190
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: electrum_bar
+    display_name_key: item.electrum_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 147
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: gold_bar
+    display_name_key: item.gold_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 86
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: silver_bar
+    display_name_key: item.silver_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 74
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: cobalt_bar
+    display_name_key: item.cobalt_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 64
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: chromium_bar
+    display_name_key: item.chromium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 58
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: nickel_bar
+    display_name_key: item.nickel_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 48
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: zinc_bar
+    display_name_key: item.zinc_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 38
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: bronze_bar
+    display_name_key: item.bronze_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 29
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: copper_bar
+    display_name_key: item.copper_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 26
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: tin_bar
+    display_name_key: item.tin_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 26
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: iron_bar
+    display_name_key: item.iron_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 22
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: lead_bar
+    display_name_key: item.lead_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 22
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+
+  - code: aluminium_bar
+    display_name_key: item.aluminium_bar
+    item_class: material
+    item_subclass: bar
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
 
   # --- Consumables ---
   - code: potion_hp_small

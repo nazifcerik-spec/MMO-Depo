@@ -277,6 +277,35 @@ class AppLocalizationsTr extends AppLocalizations {
   String get durationLabel => 'Süre';
 
   @override
+  String get gatherResource => 'Kaynak';
+
+  @override
+  String gatherXp(int xp, int next) {
+    return '$xp / $next XP';
+  }
+
+  @override
+  String get gatherMax => 'En yüksek seviye';
+
+  @override
+  String gatherLocked(int level) {
+    return '$level. seviyede açılır';
+  }
+
+  @override
+  String gatherXpGained(String name, int xp) {
+    return '$name +$xp XP';
+  }
+
+  @override
+  String gatherLevelUp(String name, int level) {
+    return '$name $level. seviyeye ulaştı!';
+  }
+
+  @override
+  String get errGatherLevel => 'Bu kaynak için toplama seviyen yetersiz.';
+
+  @override
   String startActivity(String name) {
     return '$name başlat';
   }

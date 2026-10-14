@@ -17,10 +17,17 @@ class ActivityRepository {
     );
   }
 
-  Future<ActiveActivity> start(String characterId, String kind, Duration duration) async {
+  /// Every gathering profession's level and resources (DD-244).
+  Future<List<GatherSkill>> skills(String characterId) async {
+    final j = await api.get('/v1/character/$characterId/gathering');
+    return [for (final p in (j['professions'] as List? ?? const [])) GatherSkill.fromJson(p as Map<String, dynamic>)];
+  }
+
+  Future<ActiveActivity> start(String characterId, String kind, Duration duration, {String? target}) async {
     final j = await api.post('/v1/character/$characterId/activity', {
       'kind': kind,
       'duration_seconds': duration.inSeconds,
+      'target': ?target,
     });
     return ActiveActivity(
       ActivityContract.fromJson(j['contract'] as Map<String, dynamic>),
@@ -30,9 +37,9 @@ class ActivityRepository {
 
   /// Collects what was earned so far and ends the contract. Idempotent on the
   /// server (a retried reveal returns the cached result).
-  Future<ActivityYield> reveal(String contractId) async {
+  Future<(ActivityYield, GatherProgress?)> reveal(String contractId) async {
     final j = await api.post('/v1/activity/$contractId/reveal', const {});
-    return ActivityYield.fromJson(j['yield'] as Map<String, dynamic>?);
+    return (ActivityYield.fromJson(j['yield'] as Map<String, dynamic>?), GatherProgress.fromJson(j['gather']));
   }
 
   /// Abandons the contract; accrued yield is forfeited.

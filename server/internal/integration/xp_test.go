@@ -39,7 +39,7 @@ func TestXPRollover(t *testing.T) {
 	require.NoError(t, err)
 	_, _, err = profs.AddXP(w.ctx, p.ID, "alchemy", -1, 60)
 	require.ErrorIs(t, err, crafting.ErrValidation)
-	cp, up, err := profs.AddXP(w.ctx, p.ID, "alchemy", 100+200+50, 60)
+	cp, up, err := profs.AddXP(w.ctx, p.ID, "alchemy", 64+67+50, 60)
 	require.NoError(t, err)
 	require.True(t, up)
 	require.Equal(t, int16(3), cp.Level, "two levels in one grant")

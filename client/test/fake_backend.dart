@@ -25,6 +25,7 @@ class FakeBackend {
   int verificationResends = 0;
   String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
+  int gatherLevel = 20;
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
@@ -164,6 +165,29 @@ class FakeBackend {
     if (qs != null) return qs;
     final so = _social(req, path, body);
     if (so != null) return so;
+    if (RegExp(r'^/v1/character/[^/]+/gathering$').hasMatch(path)) {
+      return json(200, {
+        'professions': [
+          for (final k in ['mining', 'herbalism', 'woodcutting', 'fishing', 'hunting'])
+            {
+              'kind': k,
+              'level': k == 'fishing' ? gatherLevel : 1,
+              'xp': 10,
+              'xp_to_next': 64,
+              'nodes': k == 'fishing'
+                  ? [
+                      {'code': 'tiny_guppy', 'level': 1, 'tier': 0},
+                      {'code': 'salmon', 'level': 18, 'tier': 1},
+                      {'code': 'bass', 'level': 20, 'tier': 2},
+                      {'code': 'golden_carp', 'level': 70, 'tier': 5},
+                    ]
+                  : [
+                      {'code': 'raw_stone', 'level': 1, 'tier': 0},
+                    ],
+            },
+        ],
+      });
+    }
     final act = RegExp(r'^/v1/character/([^/]+)/activity(/active)?$').firstMatch(path);
     if (act != null) {
       if (act[2] != null) {
@@ -184,6 +208,7 @@ class FakeBackend {
         'id': 'act-1',
         'character_id': act[1],
         'kind': body['kind'],
+        'target': body['target'],
         'duration_seconds': body['duration_seconds'],
         'started_at': now.toIso8601String(),
         'expires_at': now.add(Duration(seconds: body['duration_seconds'] as int)).toIso8601String(),
@@ -207,6 +232,7 @@ class FakeBackend {
           ],
         },
         'replayed': false,
+        'gather': {'level': gatherLevel + 1, 'xp': 4, 'xp_to_next': 70, 'gained': 36, 'leveled_up': true},
       });
     }
     final m = RegExp(r'^/v1/character/([^/]+)/(enter|sheet|wallet)$').firstMatch(path);

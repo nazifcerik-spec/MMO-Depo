@@ -90,8 +90,8 @@ func (s *Service) Learn(ctx context.Context, characterID, accountID uuid.UUID, p
 	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
 		return nil, err
 	}
-	if _, ok := s.catalog.Catalog().Profession(professionCode); !ok {
-		return nil, ErrUnknownProfession
+	if p, ok := s.catalog.Catalog().Profession(professionCode); !ok || p.Kind == KindGathering {
+		return nil, ErrUnknownProfession // gathering levels come from activities (DD-244)
 	}
 	return s.repo.UpsertLearn(ctx, characterID, professionCode, s.cfg.Now().UTC())
 }

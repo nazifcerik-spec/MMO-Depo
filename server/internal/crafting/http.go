@@ -36,6 +36,7 @@ func (h *Handler) Professions(w http.ResponseWriter, r *http.Request) {
 			"code":             p.Code,
 			"display_name_key": p.DisplayNameKey,
 			"max_level":        p.MaxLevel,
+			"kind":             p.Kind,
 		})
 	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "professions": out})

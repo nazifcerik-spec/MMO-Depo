@@ -13,10 +13,12 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
-		"ErrForbidden": ErrForbidden,
-		"ErrNotActive": ErrNotActive,
-		"ErrNotFound":  ErrNotFound,
-		"ErrSlotBusy":  ErrSlotBusy,
+		"ErrForbidden":      ErrForbidden,
+		"ErrNotActive":      ErrNotActive,
+		"ErrNotFound":       ErrNotFound,
+		"ErrSlotBusy":       ErrSlotBusy,
+		"ErrUnknownTarget":  ErrUnknownTarget,
+		"ErrGatherLevelLow": ErrGatherLevelLow,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

@@ -30,14 +30,7 @@ const GearDropPct = 4
 // ItemGranter is the drop-side capability. item.Service.Grant already
 // satisfies exactly this signature (used by activity too).
 type ItemGranter interface {
-	Grant(
-		ctx context.Context,
-		characterID uuid.UUID,
-		sourceRefID uuid.UUID,
-		seed int64, kind activity.Kind,
-		common, rare, legendary int,
-		gear activity.GearDrop,
-	) ([]activity.GrantedItem, error)
+	Grant(ctx context.Context, characterID, sourceRefID uuid.UUID, seed int64, d activity.Drops) ([]activity.GrantedItem, error)
 }
 
 // XPGranter awards experience — character.Service satisfies via GrantXP.
@@ -282,10 +275,10 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}
 	var granted []activity.GrantedItem
 	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops+gear.Rolls) > 0 {
-		granted, err = s.items.Grant(ctx,
-			c.CharacterID, c.ID, c.Seed, activity.KindHunting,
-			hr.CommonDrops, hr.RareDrops, hr.LegendaryDrops, gear,
-		)
+		granted, err = s.items.Grant(ctx, c.CharacterID, c.ID, c.Seed, activity.Drops{
+			Kind: activity.KindHunting, MobLevel: int(mob.Level),
+			Common: hr.CommonDrops, Rare: hr.RareDrops, Legendary: hr.LegendaryDrops, Gear: gear,
+		})
 		if err != nil {
 			return nil, fmt.Errorf("hunt reveal item grant: %w", err)
 		}

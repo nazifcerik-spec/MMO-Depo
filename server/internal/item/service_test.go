@@ -13,36 +13,21 @@ import (
 	"github.com/otter/server/internal/item"
 )
 
-// A minimal in-memory catalog with the same templates seeded by 0007 migration
-// (subset — enough to cover mining + weapons for the tests).
+// A minimal in-memory catalog: a mining ladder, a hunting ladder and a weapon.
 func testCatalog() *item.Catalog {
-	return item.NewCatalog(append([]item.Template{
-		{Code: "iron_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 5},
-		{Code: "copper_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 8},
-		{Code: "tin_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 7},
-		{Code: "silver_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 25},
-		{Code: "gold_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 40},
-		{Code: "mythril_ore", ItemClass: "material", ItemSubclass: "ore", BindKind: "boe", BaseValueCopper: 250},
-		{Code: "sword_iron", ItemClass: "weapon", ItemSubclass: "sword", BindKind: "boe", Affixable: true},
-	}, poolTemplates()...))
-}
-
-// poolTemplates covers every code the loot tables can roll, so no draw is
-// skipped as unknown in these tests.
-func poolTemplates() []item.Template {
-	seen := map[string]bool{"iron_ore": true, "copper_ore": true, "tin_ore": true, "silver_ore": true, "gold_ore": true, "mythril_ore": true}
-	var out []item.Template
-	for _, p := range item.PoolPerKind {
-		for _, tier := range [][]string{p.Common, p.Uncommon, p.Rare, p.Epic, p.Legendary, p.Mythic} {
-			for _, c := range tier {
-				if !seen[c] {
-					seen[c] = true
-					out = append(out, item.Template{Code: c, ItemClass: "material", BindKind: "boe"})
-				}
-			}
-		}
+	node := func(code, kind string, level, tier int16) item.Template {
+		return item.Template{Code: code, ItemClass: "material", ItemSubclass: "ore", BindKind: "boe",
+			BaseValueCopper: 5, Stackable: true, MaxStack: 200, GatherKind: kind, GatherLevel: level, GatherTier: tier}
 	}
-	return out
+	return item.NewCatalog([]item.Template{
+		node("raw_stone", "mining", 1, 0), node("iron_ore", "mining", 16, 1),
+		node("copper_ore", "mining", 20, 2), node("mythril_ore", "mining", 90, 7),
+		node("forest_rat_pelt", "hunting", 1, 0), node("hare_pelt", "hunting", 4, 0),
+		node("boar_hide", "hunting", 22, 2), node("wolf_pelt", "hunting", 26, 2),
+		node("bear_hide", "hunting", 40, 3), node("dire_bear_hide", "hunting", 60, 5),
+		node("dragon_scale", "hunting", 100, 7),
+		{Code: "sword_iron", ItemClass: "weapon", ItemSubclass: "sword", BindKind: "boe", Affixable: true},
+	})
 }
 
 func newTestService() (*item.Service, *item.MemoryRepo) {
@@ -60,80 +45,57 @@ func TestCatalog_Lookup(t *testing.T) {
 	require.ErrorIs(t, err, item.ErrUnknownTemplate)
 }
 
-func TestRollDrops_DeterministicGivenSeed(t *testing.T) {
-	cat := testCatalog()
-	d1 := item.RollDrops(cat, 4242, activity.KindMining, 5, 2, 1)
-	d2 := item.RollDrops(cat, 4242, activity.KindMining, 5, 2, 1)
-	require.Equal(t, d1, d2, "same seed must yield same drops")
+func TestCatalog_NodesSortedByLevel(t *testing.T) {
+	var codes []string
+	for _, n := range testCatalog().Nodes("mining") {
+		codes = append(codes, n.Code)
+	}
+	require.Equal(t, []string{"raw_stone", "iron_ore", "copper_ore", "mythril_ore"}, codes)
+	require.Empty(t, testCatalog().Nodes("unicorn"))
 }
 
-func TestRollDrops_DifferentSeedsDiverge(t *testing.T) {
-	cat := testCatalog()
-	d1 := item.RollDrops(cat, 1, activity.KindMining, 10, 0, 0)
-	d2 := item.RollDrops(cat, 2, activity.KindMining, 10, 0, 0)
-	// With single-template pool for common, template_code is same; but the RNG
-	// sequence differs — assert the SEQUENCE isn't identical for larger pools.
-	d3 := item.RollDrops(cat, 1, activity.KindMining, 0, 10, 0)
-	d4 := item.RollDrops(cat, 2, activity.KindMining, 0, 10, 0)
-	require.Equal(t, len(d1), len(d2))
-	require.NotEqual(t, d3, d4, "rare-tier pool has 2 templates — different seed → different sequence")
+func TestTierRarity(t *testing.T) {
+	want := []item.Rarity{item.RarityCommon, item.RarityCommon, item.RarityUncommon, item.RarityUncommon,
+		item.RarityRare, item.RarityEpic, item.RarityLegendary, item.RarityMythic}
+	for tier, r := range want {
+		require.Equal(t, r, item.TierRarity(int16(tier)), "tier %d", tier)
+	}
 }
 
-func TestRollDrops_RarityCountsExact(t *testing.T) {
+func TestGatherDrops_AllUnitsOfTheTarget(t *testing.T) {
 	cat := testCatalog()
-	drops := item.RollDrops(cat, 42, activity.KindMining, 3, 2, 1)
-	require.Len(t, drops, 6)
-
-	byRarity := map[item.Rarity]int{}
+	drops := item.GatherDrops(cat, "mythril_ore", 3)
+	require.Len(t, drops, 3)
 	for _, d := range drops {
-		byRarity[d.Rarity]++
+		require.Equal(t, "mythril_ore", d.TemplateCode)
+		require.Equal(t, item.RarityMythic, d.Rarity)
 	}
-	// Each yield tier keeps its count; part of it may step up one rarity.
-	require.Equal(t, 3, byRarity[item.RarityCommon]+byRarity[item.RarityUncommon])
-	require.Equal(t, 2, byRarity[item.RarityRare]+byRarity[item.RarityEpic])
-	require.Equal(t, 1, byRarity[item.RarityLegendary]+byRarity[item.RarityMythic])
+	require.Nil(t, item.GatherDrops(cat, "sword_iron", 3), "not a node")
+	require.Nil(t, item.GatherDrops(cat, "nope", 3))
+	require.Nil(t, item.GatherDrops(cat, "iron_ore", 0))
 }
 
-// Every rarity of the mining ladder drops, at roughly the configured split
-// (DD-243) — before it, uncommon/epic/mythic tables were never rolled.
-func TestRollDrops_UpgradeSplitReachesEveryTier(t *testing.T) {
+func TestCombatHides_ByMobLevel(t *testing.T) {
 	cat := testCatalog()
-	byRarity := map[item.Rarity]int{}
-	codes := map[string]bool{}
-	for seed := int64(0); seed < 400; seed++ {
-		for _, d := range item.RollDrops(cat, seed, activity.KindMining, 10, 10, 10) {
-			byRarity[d.Rarity]++
-			codes[d.TemplateCode] = true
+	// Level 6 mob reaches hunting 24: the best four unlocked are rat, hare, boar
+	// (22) — wolf (26) is out of reach. Rare finds are the best: boar.
+	seen := map[string]bool{}
+	for seed := int64(0); seed < 50; seed++ {
+		for _, d := range item.CombatHides(cat, seed, 6, 4, 0, 0) {
+			seen[d.TemplateCode] = true
 		}
 	}
-	for _, r := range []item.Rarity{item.RarityCommon, item.RarityUncommon, item.RarityRare, item.RarityEpic, item.RarityLegendary, item.RarityMythic} {
-		require.Positive(t, byRarity[r], r)
+	require.Equal(t, map[string]bool{"forest_rat_pelt": true, "hare_pelt": true, "boar_hide": true}, seen)
+	rare := item.CombatHides(cat, 1, 6, 0, 2, 1)
+	require.Len(t, rare, 3)
+	for _, d := range rare {
+		require.Equal(t, "boar_hide", d.TemplateCode)
+		require.Equal(t, item.RarityUncommon, d.Rarity)
 	}
-	share := func(up, base item.Rarity) float64 {
-		return float64(byRarity[up]) / float64(byRarity[up]+byRarity[base])
-	}
-	require.InDelta(t, 0.25, share(item.RarityUncommon, item.RarityCommon), 0.03)
-	require.InDelta(t, 0.25, share(item.RarityEpic, item.RarityRare), 0.03)
-	require.InDelta(t, 0.15, share(item.RarityMythic, item.RarityLegendary), 0.03)
-	require.True(t, codes["copper_ore"] && codes["adamantite_ore"], "both ends of the ladder drop")
-	// Weight by repetition: coal is listed twice, lead once.
-	coal, lead := 0, 0
-	for seed := int64(0); seed < 400; seed++ {
-		for _, d := range item.RollDrops(cat, seed, activity.KindMining, 20, 0, 0) {
-			switch d.TemplateCode {
-			case "coal":
-				coal++
-			case "lead_ore":
-				lead++
-			}
-		}
-	}
-	require.InDelta(t, 2.0, float64(coal)/float64(lead), 0.35)
-}
-
-func TestRollDrops_UnknownKindReturnsNil(t *testing.T) {
-	cat := testCatalog()
-	require.Nil(t, item.RollDrops(cat, 1, "unicorn", 5, 0, 0))
+	// Level 25+ reaches 100 (cap): dragon scale for the best finds.
+	require.Equal(t, "dragon_scale", item.CombatHides(cat, 1, 40, 0, 1, 0)[0].TemplateCode)
+	require.Equal(t, item.CombatHides(cat, 9, 12, 5, 1, 0), item.CombatHides(cat, 9, 12, 5, 1, 0), "deterministic")
+	require.Empty(t, item.CombatHides(item.NewCatalog(nil), 1, 10, 3, 0, 0))
 }
 
 func TestRarityAffixRules(t *testing.T) {
@@ -165,7 +127,7 @@ func TestService_MaterializeDrops_PersistsInstances(t *testing.T) {
 	char := uuid.New()
 	src := uuid.New()
 
-	drops := item.RollDrops(svc.Catalog(), 999, activity.KindMining, 3, 1, 0)
+	drops := item.GatherDrops(svc.Catalog(), "iron_ore", 4)
 	require.Len(t, drops, 4)
 
 	instances, err := svc.MaterializeDrops(context.Background(), char, "activity_reveal", src, drops)
@@ -191,19 +153,29 @@ func TestService_Grant_EndToEnd(t *testing.T) {
 	char := uuid.New()
 	src := uuid.New()
 
-	instances, err := svc.Grant(context.Background(), char, src,
-		1234, activity.KindMining, 2, 1, 0, activity.GearDrop{})
+	instances, err := svc.Grant(context.Background(), char, src, 1234,
+		activity.Drops{Kind: activity.KindMining, Target: "copper_ore", Common: 2, Rare: 1})
 	require.NoError(t, err)
 	require.Len(t, instances, 3)
+	for _, in := range instances {
+		require.Equal(t, "copper_ore", in.TemplateCode, "every find is the chosen resource")
+	}
 
-	// Deterministic — same seed => same TemplateCode / Rarity sequence.
-	instances2, err := svc.Grant(context.Background(), char, uuid.New(),
-		1234, activity.KindMining, 2, 1, 0, activity.GearDrop{})
+	// Combat: hides by mob level, deterministic per seed.
+	fight := activity.Drops{Kind: activity.KindHunting, MobLevel: 6, Common: 3, Rare: 1}
+	instances, err = svc.Grant(context.Background(), char, uuid.New(), 1234, fight)
+	require.NoError(t, err)
+	require.Len(t, instances, 4)
+	instances2, err := svc.Grant(context.Background(), char, uuid.New(), 1234, fight)
 	require.NoError(t, err)
 	for i := range instances {
 		require.Equal(t, instances[i].TemplateCode, instances2[i].TemplateCode)
 		require.Equal(t, instances[i].Rarity, instances2[i].Rarity)
 	}
+
+	none, err := svc.Grant(context.Background(), char, uuid.New(), 1, activity.Drops{Kind: activity.KindMining, Common: 5})
+	require.NoError(t, err)
+	require.Empty(t, none, "no target, no mob: nothing")
 }
 
 func TestService_ListBySource(t *testing.T) {
@@ -212,8 +184,8 @@ func TestService_ListBySource(t *testing.T) {
 	srcA := uuid.New()
 	srcB := uuid.New()
 
-	_, _ = svc.Grant(context.Background(), char, srcA, 1, activity.KindMining, 2, 0, 0, activity.GearDrop{})
-	_, _ = svc.Grant(context.Background(), char, srcB, 2, activity.KindMining, 3, 0, 0, activity.GearDrop{})
+	_, _ = svc.Grant(context.Background(), char, srcA, 1, activity.Drops{Kind: activity.KindMining, Target: "iron_ore", Common: 2})
+	_, _ = svc.Grant(context.Background(), char, srcB, 2, activity.Drops{Kind: activity.KindMining, Target: "iron_ore", Common: 3})
 
 	a, _ := svc.ListBySource(context.Background(), srcA)
 	require.Len(t, a, 2)

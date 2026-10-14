@@ -33,7 +33,7 @@ func TestHTTPSuccessFlows(t *testing.T) {
 	// Crafting: learn, gather the inputs, craft, profession XP.
 	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "alchemy"})
 	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "alchemy"}) // idempotent
-	w.give(me, "linseed", 4)
+	w.give(me, "common_grass", 4)
 	crafted := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"})
 	require.NotEmpty(t, crafted)
 	profs := items(p.ok("GET", p.path("/professions"), nil), "professions")

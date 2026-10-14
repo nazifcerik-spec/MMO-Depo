@@ -28,6 +28,7 @@ import (
 	"github.com/otter/server/internal/domain/health"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/gathering"
 	"github.com/otter/server/internal/guild"
 	"github.com/otter/server/internal/http/apierr"
 	appmw "github.com/otter/server/internal/http/middleware"
@@ -74,6 +75,7 @@ type Deps struct {
 	DungeonHandler    *dungeon.Handler
 	WorldHandler      *world.Handler
 	CraftingHandler   *crafting.Handler
+	GatheringHandler  *gathering.Handler
 	WSHandler         *wsgateway.Handler
 	PartyHandler      *party.Handler
 	GuildHandler      *guild.Handler
@@ -329,6 +331,11 @@ func NewRouter(d Deps) http.Handler {
 					r.Get("/travel/history", d.WorldHandler.History)
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/travel", d.WorldHandler.Start)
+				}
+
+				// --- Gathering professions (DD-244) ---
+				if d.GatheringHandler != nil {
+					r.Get("/gathering", d.GatheringHandler.Overview)
 				}
 
 				// --- Crafting (Sprint 17) — character-scoped ---

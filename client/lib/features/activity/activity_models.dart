@@ -88,6 +88,78 @@ class Loot {
   List<LootStack> get stacks => stackLoot(items);
 }
 
+/// One resource of a gathering profession (DD-244).
+class GatherNode {
+  const GatherNode({required this.code, required this.level, required this.tier});
+
+  factory GatherNode.fromJson(Map<String, dynamic> j) => GatherNode(
+    code: j['code'] as String,
+    level: (j['level'] as num).toInt(),
+    tier: (j['tier'] as num?)?.toInt() ?? 0,
+  );
+
+  final String code;
+  final int level;
+  final int tier;
+
+  /// Mirrors item.TierRarity: T0–1 common … T7 mythic.
+  String get rarity => switch (tier) {
+    >= 7 => 'mythic',
+    6 => 'legendary',
+    5 => 'epic',
+    4 => 'rare',
+    >= 2 => 'uncommon',
+    _ => 'common',
+  };
+}
+
+/// A gathering profession's level plus its resources, lowest first.
+class GatherSkill {
+  const GatherSkill({required this.kind, required this.level, this.xp = 0, this.xpToNext = 0, this.nodes = const []});
+
+  factory GatherSkill.fromJson(Map<String, dynamic> j) => GatherSkill(
+    kind: j['kind'] as String,
+    level: (j['level'] as num).toInt(),
+    xp: (j['xp'] as num?)?.toInt() ?? 0,
+    xpToNext: (j['xp_to_next'] as num?)?.toInt() ?? 0,
+    nodes: [for (final n in (j['nodes'] as List? ?? const [])) GatherNode.fromJson(n as Map<String, dynamic>)],
+  );
+
+  final String kind;
+  final int level;
+  final int xp;
+  final int xpToNext;
+  final List<GatherNode> nodes;
+
+  bool unlocks(GatherNode n) => n.level <= level;
+
+  /// The best resource the level unlocks (the server's default).
+  GatherNode? get best {
+    GatherNode? b;
+    for (final n in nodes) {
+      if (unlocks(n)) b = n;
+    }
+    return b;
+  }
+}
+
+/// Gathering XP a reveal paid.
+class GatherProgress {
+  const GatherProgress({required this.level, required this.gained, required this.leveledUp});
+
+  final int level;
+  final int gained;
+  final bool leveledUp;
+
+  static GatherProgress? fromJson(Object? j) => j is Map<String, dynamic>
+      ? GatherProgress(
+          level: (j['level'] as num?)?.toInt() ?? 1,
+          gained: (j['gained'] as num?)?.toInt() ?? 0,
+          leveledUp: j['leveled_up'] == true,
+        )
+      : null;
+}
+
 class ActivityYield {
   const ActivityYield({
     required this.completionRatio,
@@ -96,6 +168,7 @@ class ActivityYield {
     required this.rare,
     required this.legendary,
     this.items = const [],
+    this.target = '',
   });
 
   factory ActivityYield.fromJson(Map<String, dynamic>? j) {
@@ -108,6 +181,7 @@ class ActivityYield {
       rare: n('rare_count'),
       legendary: n('legendary_count'),
       items: [for (final i in (j['items'] as List? ?? const [])) LootItem.fromJson(i as Map<String, dynamic>)],
+      target: j['target'] as String? ?? '',
     );
   }
 
@@ -117,6 +191,11 @@ class ActivityYield {
   final int rare;
   final int legendary;
   final List<LootItem> items;
+
+  /// Gathered resource (DD-244); empty on older contracts.
+  final String target;
+
+  int get units => common + rare + legendary;
 
   Loot toLoot() => Loot(
     goldCopper: goldCopper,

@@ -18,6 +18,9 @@ IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClas
   (_, 'herb') => Icons.eco_outlined,
   (_, 'gem') => Icons.diamond_outlined,
   (_, 'hide' || 'leather' || 'pelt') => Icons.pets_outlined,
+  (_, 'feather') => Icons.air,
+  (_, 'scale') => Icons.texture,
+  (_, 'stone') => Icons.terrain_outlined,
   _ => Icons.category_outlined,
 };
 

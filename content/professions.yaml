@@ -19,4 +19,30 @@ professions:
 
   - code: smelting # ore + coal → bar (DD-243)
     display_name_key: profession.smelting
-    max_level: 60
+    max_level: 100
+
+  # Gathering professions (DD-244): levelled by gathering, never learned.
+  - code: hunting
+    display_name_key: profession.hunting
+    kind: gathering
+    max_level: 100
+
+  - code: herbalism
+    display_name_key: profession.herbalism
+    kind: gathering
+    max_level: 100
+
+  - code: woodcutting
+    display_name_key: profession.woodcutting
+    kind: gathering
+    max_level: 100
+
+  - code: fishing
+    display_name_key: profession.fishing
+    kind: gathering
+    max_level: 100
+
+  - code: mining
+    display_name_key: profession.mining
+    kind: gathering
+    max_level: 100

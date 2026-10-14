@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"sort"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -13,15 +14,31 @@ import (
 // a versioned content pack hot-reload.
 type Catalog struct {
 	byCode map[string]Template
+	nodes  map[string][]Template // gather kind → nodes by unlock level (DD-244)
 }
 
 func NewCatalog(templates []Template) *Catalog {
 	m := make(map[string]Template, len(templates))
+	nodes := map[string][]Template{}
 	for _, t := range templates {
 		m[t.Code] = t
+		if t.GatherKind != "" {
+			nodes[t.GatherKind] = append(nodes[t.GatherKind], t)
+		}
 	}
-	return &Catalog{byCode: m}
+	for _, list := range nodes {
+		sort.Slice(list, func(i, j int) bool {
+			if list[i].GatherLevel != list[j].GatherLevel {
+				return list[i].GatherLevel < list[j].GatherLevel
+			}
+			return list[i].Code < list[j].Code
+		})
+	}
+	return &Catalog{byCode: m, nodes: nodes}
 }
+
+// Nodes lists a gathering profession's resources, lowest unlock level first.
+func (c *Catalog) Nodes(kind string) []Template { return c.nodes[kind] }
 
 // Get returns a template by code; ErrUnknownTemplate on miss.
 func (c *Catalog) Get(code string) (Template, error) {
@@ -47,7 +64,8 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		SELECT code, display_name_key, item_class, item_subclass, min_level,
 		       base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
 		       no_trade, no_sell, affixable,
-		       equip_slot, class_restriction, stat_bonuses, use_effect
+		       equip_slot, class_restriction, stat_bonuses, use_effect,
+		       COALESCE(gather_kind, ''), COALESCE(gather_level, 0), COALESCE(gather_tier, 0)
 		  FROM content.item_template`
 	rows, err := pool.Query(ctx, q)
 	if err != nil {
@@ -66,6 +84,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 			&t.BaseValueCopper, &t.BaseWeightG, &t.Stackable, &t.MaxStack, &bind,
 			&t.NoTrade, &t.NoSell, &t.Affixable,
 			&t.EquipSlot, &t.ClassRestriction, &bonuses, &useEffect,
+			&t.GatherKind, &t.GatherLevel, &t.GatherTier,
 		); err != nil {
 			return nil, fmt.Errorf("scan item template: %w", err)
 		}

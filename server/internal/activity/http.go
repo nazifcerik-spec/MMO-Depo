@@ -33,6 +33,7 @@ func NewHandler(svc *Service, logger *slog.Logger) *Handler {
 type startReq struct {
 	Kind            string          `json:"kind"`
 	DurationSeconds int32           `json:"duration_seconds"`
+	Target          string          `json:"target,omitempty"` // gathering resource (DD-244)
 	Params          json.RawMessage `json:"params,omitempty"`
 }
 
@@ -51,6 +52,7 @@ func (h *Handler) Start(w http.ResponseWriter, r *http.Request) {
 		AccountID:       acct,
 		Kind:            Kind(body.Kind),
 		DurationSeconds: body.DurationSeconds,
+		Target:          body.Target,
 		Params:          body.Params,
 	})
 	if err != nil {
@@ -122,6 +124,7 @@ func (h *Handler) Reveal(w http.ResponseWriter, r *http.Request) {
 		"yield":         res.Yield,
 		"ledger_txn_id": res.LedgerTxnID.String(),
 		"replayed":      res.Replayed,
+		"gather":        res.Gather,
 	})
 }
 
@@ -220,6 +223,10 @@ func writeActivityErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_SLOT_BUSY", "character already has an active contract")
 	case errors.Is(err, ErrNotActive):
 		apierr.Write(w, r, http.StatusConflict, "E_NOT_ACTIVE", "contract is not active")
+	case errors.Is(err, ErrUnknownTarget):
+		apierr.WriteField(w, r, http.StatusBadRequest, "E_VALIDATION", "unknown gathering resource", "target")
+	case errors.Is(err, ErrGatherLevelLow):
+		apierr.Write(w, r, http.StatusConflict, "E_GATHER_LEVEL", "gathering level too low for this resource")
 	default:
 		apierr.Write(w, r, http.StatusInternalServerError, "E_INTERNAL", err.Error())
 	}

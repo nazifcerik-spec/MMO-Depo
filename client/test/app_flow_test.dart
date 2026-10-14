@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:otter/app/app.dart';
+import 'package:otter/features/activity/activity_view.dart';
 import 'package:otter/core/token_store.dart';
 import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/character/models.dart';
@@ -180,11 +181,21 @@ void main() {
     expect(find.text('Choose an activity'), findsOneWidget);
 
     await tester.tap(find.text('Fishing'));
+    await tester.pumpAndSettle();
+    // Gathering profession (DD-244): level, the unlocked resources (best
+    // first, preselected) and the next one still locked.
+    expect(find.text('Fishing · Lvl 20'), findsOneWidget);
+    expect(find.text('10 / 64 XP'), findsOneWidget);
+    expect(find.text('Unlocks at level 70'), findsOneWidget);
+    await tester.tap(find.text('Salmon'));
+    await _gatherScrollTo(tester, '2h 00m');
     await tester.tap(find.text('2h 00m'));
     await tester.pump();
+    await _gatherScrollTo(tester, 'Start Fishing');
     await tester.tap(find.text('Start Fishing'));
     await tester.pumpAndSettle();
     expect(be.activeActivity!['kind'], 'fishing');
+    expect(be.activeActivity!['target'], 'salmon');
     expect(be.activeActivity!['duration_seconds'], 7200);
     expect(find.textContaining('left'), findsOneWidget);
 
@@ -197,6 +208,7 @@ void main() {
 
     expect(find.text('Copper Ore'), findsOneWidget);
     expect(find.text('Flawless Raw Sapphire'), findsOneWidget);
+    expect(find.text('Fishing +36 XP · Fishing reached level 21!'), findsOneWidget);
     await tester.tap(find.text('Nice!'));
     await tester.pumpAndSettle();
     expect(find.text('Choose an activity'), findsOneWidget);
@@ -208,6 +220,7 @@ void main() {
     final (be, _, _) = await _inGame(tester);
     await tester.tap(find.text('Gather'));
     await tester.pumpAndSettle();
+    await _gatherScrollTo(tester, 'Start Mining');
     await tester.tap(find.text('Start Mining'));
     await tester.pumpAndSettle();
 
@@ -1206,4 +1219,15 @@ void main() {
     expect(splitCopper(123456), (gold: 12, silver: 34, copper: 56));
     expect(splitCopper(-5), (gold: 0, silver: 0, copper: 0));
   });
+}
+
+/// The Gather picker outgrows the test screen once resources are listed.
+Future<void> _gatherScrollTo(WidgetTester tester, String text) async {
+  await tester.scrollUntilVisible(
+    find.text(text),
+    200,
+    scrollable: find.descendant(of: find.byType(ActivityView), matching: find.byType(Scrollable)).first,
+  );
+  await tester.ensureVisible(find.text(text)); // fully, not just its top edge
+  await tester.pumpAndSettle();
 }

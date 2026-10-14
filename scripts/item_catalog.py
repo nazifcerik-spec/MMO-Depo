@@ -3,14 +3,13 @@
 
     python scripts/item_catalog.py
 
-Reads content/{items,gear,vendors,recipes}.yaml, content/i18n/tr.yaml and the
-loot tables in server/internal/item/loot.go, so the list never drifts from
-what the game actually ships. Needs PyYAML.
+Reads content/{items,gear,gathering,vendors,recipes}.yaml and
+content/i18n/tr.yaml, so the list never drifts from what the game actually
+ships. Needs PyYAML.
 """
 import collections
 import io
 import os
-import re
 
 import yaml
 
@@ -22,25 +21,23 @@ def load(rel):
         return yaml.safe_load(f)
 
 
-items = load("content/items.yaml")["items"] + load("content/gear.yaml")["items"]
+items = (load("content/items.yaml")["items"] + load("content/gear.yaml")["items"]
+         + load("content/gathering.yaml")["items"])
 tr = load("content/i18n/tr.yaml")
 vendors = load("content/vendors.yaml")["vendors"]
 recipes = load("content/recipes.yaml")["recipes"]
 profs = {p["code"]: p for p in load("content/professions.yaml")["professions"]}
-with open(os.path.join(ROOT, "server/internal/item/loot.go"), encoding="utf-8") as f:
-    loot = f.read()
 
-KIND = {"Mining": "Madencilik", "Fishing": "Balıkçılık", "Woodcutting": "Odunculuk",
-        "Herbalism": "Bitki toplama", "Hunting": "Avcılık (toplama)"}
-TIER = {"Common": "Sıradan", "Uncommon": "Seçkin", "Rare": "Nadir", "Epic": "Destansı",
-        "Legendary": "Efsanevi", "Mythic": "Mitik"}
+KIND = {"mining": "Madencilik", "fishing": "Balıkçılık", "woodcutting": "Odunculuk",
+        "herbalism": "Şifacılık", "hunting": "Avcılık"}
+TIER_RARITY = ["Sıradan", "Sıradan", "Seçkin", "Seçkin", "Nadir", "Destansı", "Efsanevi", "Mitik"]
 STAT = {"attack": "Saldırı", "defense": "Savunma", "str": "GÜÇ", "agi": "ÇEV", "int": "ZEK", "vit": "DAY",
         "luck": "Şans", "crit_pct": "Kritik %", "hit_pct": "İsabet %", "hp_max": "Can", "mp_max": "Mana", "cha": "KAR"}
 SLOT = {"mainhand": "Ana el", "offhand": "Yan el", "helm": "Kask", "chest": "Göğüs", "legs": "Bacak",
         "boots": "Çizme", "gloves": "Eldiven", "necklace": "Kolye", "ring1": "Yüzük", "trinket1": "Tılsım"}
 CLASS = {"warrior": "Savaşçı", "mage": "Büyücü", "rogue": "Haydut", "priest": "Rahip", "hunter": "Avcı"}
 SUB = {"ore": "cevher", "bar": "külçe", "fuel": "yakıt", "fish": "balık", "log": "kütük", "wood": "kütük",
-       "herb": "bitki", "hide": "post", "pelt": "post", "potion": "iksir", "sword": "kılıç", "staff": "asa",
+       "herb": "bitki", "hide": "post", "pelt": "post", "feather": "tüy", "scale": "pul", "stone": "taş", "potion": "iksir", "sword": "kılıç", "staff": "asa",
        "bow": "yay", "mace": "topuz", "dagger": "hançer"}
 
 
@@ -55,12 +52,12 @@ def money(c):
 
 
 src = collections.defaultdict(list)
-for m in re.finditer(r"activity\.Kind(\w+): \{(.*?)\n\t\},", loot, re.S):
-    for tier, codes in re.findall(r"(\w+):\s*\[\]string\{([^}]*)\}", m.group(2)):
-        listed = re.findall(r'"(\w+)"', codes)
-        for c in dict.fromkeys(listed):
-            weight = f", ×{listed.count(c)} ağırlık" if listed.count(c) > 1 else ""
-            src[c].append(f"{KIND[m.group(1)]} — {TIER[tier]}{weight}")
+for it in items:
+    g = it.get("gather")
+    if g:
+        src[it["code"]].append(f"{KIND[g['kind']]} Sv {g['level']} (T{g['tier']}, {TIER_RARITY[g['tier']]})")
+        if g["kind"] == "hunting":
+            src[it["code"]].append(f"Av/zindan (mob Sv ≥ {max(1, -(-g['level'] // 4))})")
 for v in vendors:
     for s in v["sells"]:
         it = next(i for i in items if i["code"] == s["template_code"])
@@ -92,8 +89,9 @@ def bonus(it):
 lines = ["# Oyundaki Eşyalar", "",
          f"Toplam **{len(items)}** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik "
          "dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). "
-         "Satış = değer × 0.25 (genel dükkân). Toplamada kademe şansı: bir kademenin buluntusu %25 "
-         "(efsanevide %15) ihtimalle bir üst nadirliğe çıkar (DD-243).", ""]
+         "Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek "
+         "seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini "
+         "belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.", ""]
 groups = [("weapon", "Silahlar"), ("armor", "Zırhlar"), ("consumable", "Tüketilebilirler"), ("material", "Malzemeler")]
 for cls, title in groups:
     rows = sorted((i for i in items if i["item_class"] == cls),

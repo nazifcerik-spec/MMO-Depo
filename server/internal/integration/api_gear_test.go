@@ -46,12 +46,12 @@ func TestHTTPCraftNeedsGold(t *testing.T) {
 	p := newHTTPPlayer(t, "warrior")
 	me := player{ID: uuid.MustParse(p.char)}
 	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "alchemy"})
-	w.give(me, "linseed", 2)
+	w.give(me, "common_grass", 3)
 	p.fail("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"}, 409, "E_INSUFFICIENT_GOLD")
-	require.Equal(t, 2.0, p.stackOf("linseed"))
+	require.Equal(t, 3.0, p.stackOf("common_grass"))
 	p.mint(5)
 	p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"})
-	require.Equal(t, 0.0, p.stackOf("linseed"))
+	require.Equal(t, 0.0, p.stackOf("common_grass"))
 	profs := items(p.ok("GET", p.path("/professions"), nil), "professions")
 	require.Equal(t, "alchemy", profs[0]["profession_code"])
 }

@@ -277,6 +277,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get durationLabel => 'Duration';
 
   @override
+  String get gatherResource => 'Resource';
+
+  @override
+  String gatherXp(int xp, int next) {
+    return '$xp / $next XP';
+  }
+
+  @override
+  String get gatherMax => 'Max level';
+
+  @override
+  String gatherLocked(int level) {
+    return 'Unlocks at level $level';
+  }
+
+  @override
+  String gatherXpGained(String name, int xp) {
+    return '$name +$xp XP';
+  }
+
+  @override
+  String gatherLevelUp(String name, int level) {
+    return '$name reached level $level!';
+  }
+
+  @override
+  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+
+  @override
   String startActivity(String name) {
     return 'Start $name';
   }

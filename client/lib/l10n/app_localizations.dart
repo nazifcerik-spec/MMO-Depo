@@ -602,6 +602,48 @@ abstract class AppLocalizations {
   /// **'Duration'**
   String get durationLabel;
 
+  /// No description provided for @gatherResource.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource'**
+  String get gatherResource;
+
+  /// No description provided for @gatherXp.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} / {next} XP'**
+  String gatherXp(int xp, int next);
+
+  /// No description provided for @gatherMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Max level'**
+  String get gatherMax;
+
+  /// No description provided for @gatherLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocks at level {level}'**
+  String gatherLocked(int level);
+
+  /// No description provided for @gatherXpGained.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} +{xp} XP'**
+  String gatherXpGained(String name, int xp);
+
+  /// No description provided for @gatherLevelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} reached level {level}!'**
+  String gatherLevelUp(String name, int level);
+
+  /// No description provided for @errGatherLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your gathering level is too low for this resource.'**
+  String get errGatherLevel;
+
   /// No description provided for @startActivity.
   ///
   /// In en, this message translates to:

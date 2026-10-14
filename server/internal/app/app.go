@@ -27,6 +27,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/gathering"
 	"github.com/otter/server/internal/guild"
 	httpapi "github.com/otter/server/internal/http"
 	appmw "github.com/otter/server/internal/http/middleware"
@@ -189,6 +190,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		crafting.DefaultServiceConfig(), logger,
 	)
 	craftHandler := crafting.NewHandler(craftSvc, logger)
+	gatherSvc := gathering.NewService(itemSvc, craftRepo) // DD-244
+	activitySvc.WithGathering(gatherSvc)
 	logger.Info("crafting wired",
 		"professions", len(craftCat.AllProfessions()),
 		"recipes", len(craftCat.AllRecipes()))
@@ -367,6 +370,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		DungeonHandler:    dungHandler,
 		WorldHandler:      worldHandler,
 		CraftingHandler:   craftHandler,
+		GatheringHandler:  gathering.NewHandler(gatherSvc),
 		WSHandler:         wsHandler,
 		PartyHandler:      partyHandler,
 		GuildHandler:      guildHandler,

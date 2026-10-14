@@ -23,6 +23,11 @@ type Snapshot struct {
 	// contracts started before Sprint 40 → zero.
 	YieldFlatPerHour float64 `json:"yield_flat_per_hour,omitempty"`
 	YieldMult        float64 `json:"yield_mult,omitempty"`
+
+	// Gathered resource (DD-244), frozen at start. Absent on older
+	// contracts: full rate, the starter resource at reveal.
+	Target     string `json:"target,omitempty"`
+	TargetTier int    `json:"target_tier,omitempty"`
 }
 
 // parseSnapshot reads a stored snapshot; a malformed one yields zero bonuses

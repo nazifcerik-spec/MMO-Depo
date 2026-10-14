@@ -66,13 +66,18 @@ type GrantedItem struct {
 // same source (i.e. reveal replays) return the previously created list without
 // creating duplicates.
 type ItemGranter interface {
-	Grant(
-		ctx context.Context,
-		characterID, sourceRefID uuid.UUID,
-		seed int64, kind Kind,
-		commonCount, rareCount, legendaryCount int,
-		gear GearDrop,
-	) ([]GrantedItem, error)
+	Grant(ctx context.Context, characterID, sourceRefID uuid.UUID, seed int64, d Drops) ([]GrantedItem, error)
+}
+
+// Drops is what a reveal yields (DD-244). A gathering contract names the
+// node it gathered (Target); hunts and dungeons give the fought mob's
+// level instead, which sets the hides they leave.
+type Drops struct {
+	Kind                    Kind
+	Target                  string
+	MobLevel                int
+	Common, Rare, Legendary int
+	Gear                    GearDrop
 }
 
 // Service is the activity business logic.
@@ -84,6 +89,7 @@ type Service struct {
 	progress progression.Recorder
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
+	gather   Gathering // gathering professions (DD-244); nil = gold only
 	cfg      ServiceConfig
 	log      *slog.Logger
 }
@@ -134,6 +140,7 @@ type StartRequest struct {
 	AccountID       uuid.UUID
 	Kind            Kind
 	DurationSeconds int32
+	Target          string // gathering resource (DD-244); "" = best unlocked
 	Params          json.RawMessage
 }
 
@@ -146,9 +153,10 @@ type StartResult struct {
 
 // RevealResult wraps the yield summary + the ledger txn id (for audit trace).
 type RevealResult struct {
-	Yield       YieldSummary `json:"yield"`
-	LedgerTxnID uuid.UUID    `json:"ledger_txn_id"`
-	Replayed    bool         `json:"replayed"`
+	Yield       YieldSummary    `json:"yield"`
+	LedgerTxnID uuid.UUID       `json:"ledger_txn_id"`
+	Replayed    bool            `json:"replayed"`
+	Gather      *GatherProgress `json:"gather,omitempty"` // gathering level after this haul (DD-244)
 }
 
 // --- Start ------------------------------------------------------------------
@@ -183,6 +191,17 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 			return nil, fmt.Errorf("activity: gather bonus: %w", err)
 		}
 		snapshot.YieldFlatPerHour, snapshot.YieldMult = flat, mult
+	}
+	if s.gather != nil {
+		level, err := s.gather.Level(ctx, req.CharacterID, req.Kind)
+		if err != nil {
+			return nil, fmt.Errorf("activity: gathering level: %w", err)
+		}
+		node, err := pickNode(s.gather.Nodes(req.Kind), level, req.Target)
+		if err != nil {
+			return nil, err
+		}
+		snapshot.Target, snapshot.TargetTier = node.Code, node.Tier
 	}
 
 	contract := Contract{
@@ -255,12 +274,17 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	// BEFORE ledger write so a partial failure (items minted, ledger failed)
 	// leaves contract active; retry re-uses the same items instead of
 	// double-minting. items may be nil during transition sprints.
-	if s.items != nil {
-		granted, err := s.items.Grant(ctx,
-			contract.CharacterID, contract.ID,
-			contract.Seed, contract.Kind,
-			yield.CommonCount, yield.RareCount, yield.LegendaryCount, GearDrop{},
-		)
+	target := yield.Target
+	if target == "" && s.gather != nil { // contracts started before DD-244
+		if nodes := s.gather.Nodes(contract.Kind); len(nodes) > 0 {
+			target = nodes[0].Code
+		}
+	}
+	if s.items != nil && target != "" {
+		granted, err := s.items.Grant(ctx, contract.CharacterID, contract.ID, contract.Seed, Drops{
+			Kind: contract.Kind, Target: target,
+			Common: yield.CommonCount, Rare: yield.RareCount, Legendary: yield.LegendaryCount,
+		})
 		if err != nil {
 			return nil, fmt.Errorf("reveal item grant: %w", err)
 		}
@@ -315,12 +339,26 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		Kind:   progression.EventGatherPrefix + string(contract.Kind),
 		Amount: int64(yield.CommonCount + yield.RareCount + yield.LegendaryCount),
 	})
+	// Gathering XP (DD-244): per unit, by the resource's tier. After the
+	// contract is marked revealed, so a replay never grants it twice.
+	var progress *GatherProgress
+	var extra map[string]any
+	if units := yield.CommonCount + yield.RareCount + yield.LegendaryCount; s.gather != nil && units > 0 {
+		snap := parseSnapshot(contract.Snapshot)
+		p, err := s.gather.AddXP(ctx, contract.CharacterID, contract.Kind, units*tierXP[tierIndex(snap.TargetTier)])
+		if err != nil {
+			s.log.WarnContext(ctx, "activity: gathering xp failed", "contract", contract.ID.String(), "err", err.Error())
+		} else {
+			progress = &p
+			extra = map[string]any{"gather_xp": p.Gained, "gather_level": p.Level, "gather_leveled_up": p.LeveledUp}
+		}
+	}
 	notification.Send(ctx, s.notifier, s.log, notification.Reward{
 		AccountID: accountID, CharacterID: contract.CharacterID, Ref: contract.ID,
 		Source: "activity", Target: string(contract.Kind),
-		GoldCopper: yield.GoldCopper, Items: RewardItems(yield.Items),
+		GoldCopper: yield.GoldCopper, Items: RewardItems(yield.Items), Extra: extra,
 	}.Notice())
-	return &RevealResult{Yield: yield, LedgerTxnID: txnID, Replayed: false}, nil
+	return &RevealResult{Yield: yield, LedgerTxnID: txnID, Replayed: false, Gather: progress}, nil
 }
 
 // --- Stop -------------------------------------------------------------------

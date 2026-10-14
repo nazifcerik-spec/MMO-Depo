@@ -43,3 +43,6 @@ tmp/
 
 # Local Claude Code tooling (machine-specific paths, worktrees)
 .claude/
+
+# Full-size item art originals; the app ships 128px copies (DD-240)
+art-src/

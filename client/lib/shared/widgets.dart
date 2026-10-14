@@ -21,6 +21,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_SLOT_CAP' => l.errSlotCap,
     'E_NOT_PLAYABLE' => l.errNotPlayable,
     'E_SLOT_BUSY' => l.errSlotBusy,
+    'E_GATHER_LEVEL' => l.errGatherLevel,
     'E_NOT_ACTIVE' => l.errNotActive,
     'E_BAG_FULL' => l.errBagFull,
     'E_ITEM_LOCKED' => l.errItemLocked,

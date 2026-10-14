@@ -81,12 +81,23 @@ void main() {
 
   test('gathering: start, active preview, early reveal, stop guard', () async {
     final repo = ActivityRepository(a.api);
-    final started = await repo.start(a.id, 'mining', const Duration(minutes: 1));
+    final skills = await repo.skills(a.id);
+    expect(skills.map((g) => g.kind), containsAll(['mining', 'herbalism', 'woodcutting', 'fishing', 'hunting']));
+    final mining = skills.firstWhere((g) => g.kind == 'mining');
+    expect(mining.level, 1);
+    expect(mining.best!.code, 'raw_stone');
+    await expectLater(
+      repo.start(a.id, 'mining', const Duration(minutes: 1), target: 'adamantite_ore'),
+      apiError('E_GATHER_LEVEL'),
+    );
+    final started = await repo.start(a.id, 'mining', const Duration(minutes: 1), target: 'raw_stone');
     expect(started.contract.kind, 'mining');
     final active = await repo.active(a.id);
     expect(active!.contract.id, started.contract.id);
-    final y = await repo.reveal(started.contract.id);
+    expect(active.current.target, 'raw_stone');
+    final (y, _) = await repo.reveal(started.contract.id);
     expect(y.goldCopper, greaterThanOrEqualTo(0));
+    expect(y.items.every((i) => i.templateCode == 'raw_stone'), isTrue);
     expect(await repo.active(a.id), isNull);
   });
 

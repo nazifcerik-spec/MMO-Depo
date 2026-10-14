@@ -1,0 +1,1818 @@
+# Gathering tables (DD-244), from the design sheet (Book.xlsx): five
+# gathering professions, 30 resources each, tier T0..T7 and the gathering
+# level (1..100) that unlocks them. The player picks a resource when
+# starting; its tier sets the colour (T0-1 common, T2-3 uncommon, T4 rare,
+# T5 epic, T6 legendary, T7 mythic) and how fast it is gathered.
+# Value = 2 x 1.06^level copper. Codes are unique across items/gear/gathering.
+
+items:
+
+  # --- Hunting (Avcılık) ---
+  - code: forest_rat_pelt
+    display_name_key: item.forest_rat_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 2
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 1, tier: 0 }
+  - code: rabbit_pelt
+    display_name_key: item.rabbit_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 4, tier: 0 }
+  - code: field_mouse_pelt
+    display_name_key: item.field_mouse_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 7, tier: 0 }
+  - code: squirrel_pelt
+    display_name_key: item.squirrel_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 10, tier: 1 }
+  - code: hare_pelt
+    display_name_key: item.hare_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 12, tier: 1 }
+  - code: badger_pelt
+    display_name_key: item.badger_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 14, tier: 1 }
+  - code: wild_turkey_feather
+    display_name_key: item.wild_turkey_feather
+    item_class: material
+    item_subclass: feather
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 16, tier: 1 }
+  - code: forest_deer_hide
+    display_name_key: item.forest_deer_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 18, tier: 1 }
+  - code: red_fox_pelt
+    display_name_key: item.red_fox_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 20, tier: 2 }
+  - code: boar_hide
+    display_name_key: item.boar_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 22, tier: 2 }
+  - code: mountain_goat_hide
+    display_name_key: item.mountain_goat_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 24, tier: 2 }
+  - code: wolf_pelt
+    display_name_key: item.wolf_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 9
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 26, tier: 2 }
+  - code: forest_bear_hide
+    display_name_key: item.forest_bear_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 10
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 28, tier: 2 }
+  - code: wild_buffalo_hide
+    display_name_key: item.wild_buffalo_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 11
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 30, tier: 3 }
+  - code: giant_elk_hide
+    display_name_key: item.giant_elk_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 14
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 33, tier: 3 }
+  - code: dire_wolf_pelt
+    display_name_key: item.dire_wolf_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 16
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 36, tier: 3 }
+  - code: mountain_lion_pelt
+    display_name_key: item.mountain_lion_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 39, tier: 3 }
+  - code: black_panther_pelt
+    display_name_key: item.black_panther_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 23
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 42, tier: 3 }
+  - code: storm_eagle_feather
+    display_name_key: item.storm_eagle_feather
+    item_class: material
+    item_subclass: feather
+    min_level: 1
+    base_value_copper: 28
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 45, tier: 4 }
+  - code: ember_boar_hide
+    display_name_key: item.ember_boar_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 37
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 50, tier: 4 }
+  - code: frost_wolf_pelt
+    display_name_key: item.frost_wolf_pelt
+    item_class: material
+    item_subclass: pelt
+    min_level: 1
+    base_value_copper: 49
+    base_weight_g: 600
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 55, tier: 4 }
+  - code: dire_bear_hide
+    display_name_key: item.dire_bear_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 66
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 60, tier: 5 }
+  - code: spirit_stag_hide
+    display_name_key: item.spirit_stag_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 88
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 65, tier: 5 }
+  - code: ancient_mammoth_hide
+    display_name_key: item.ancient_mammoth_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 118
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 70, tier: 5 }
+  - code: shadow_chimera_hide
+    display_name_key: item.shadow_chimera_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 158
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 75, tier: 6 }
+  - code: elder_wyvern_scale
+    display_name_key: item.elder_wyvern_scale
+    item_class: material
+    item_subclass: scale
+    min_level: 1
+    base_value_copper: 212
+    base_weight_g: 300
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 80, tier: 6 }
+  - code: astral_griffin_feather
+    display_name_key: item.astral_griffin_feather
+    item_class: material
+    item_subclass: feather
+    min_level: 1
+    base_value_copper: 283
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 85, tier: 6 }
+  - code: void_behemoth_hide
+    display_name_key: item.void_behemoth_hide
+    item_class: material
+    item_subclass: hide
+    min_level: 1
+    base_value_copper: 379
+    base_weight_g: 1200
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 90, tier: 7 }
+  - code: ancient_phoenix_feather
+    display_name_key: item.ancient_phoenix_feather
+    item_class: material
+    item_subclass: feather
+    min_level: 1
+    base_value_copper: 507
+    base_weight_g: 50
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 95, tier: 7 }
+  - code: dragon_scale
+    display_name_key: item.dragon_scale
+    item_class: material
+    item_subclass: scale
+    min_level: 1
+    base_value_copper: 679
+    base_weight_g: 300
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: hunting, level: 100, tier: 7 }
+
+  # --- Herbalism (Şifacılık) ---
+  - code: common_grass
+    display_name_key: item.common_grass
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 2
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 1, tier: 0 }
+  - code: dandelion
+    display_name_key: item.dandelion
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 4, tier: 0 }
+  - code: wild_mint
+    display_name_key: item.wild_mint
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 7, tier: 0 }
+  - code: chamomile
+    display_name_key: item.chamomile
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 10, tier: 1 }
+  - code: lavender
+    display_name_key: item.lavender
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 12, tier: 1 }
+  - code: sunflower
+    display_name_key: item.sunflower
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 14, tier: 1 }
+  - code: bitterroot
+    display_name_key: item.bitterroot
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 16, tier: 1 }
+  - code: healing_moss
+    display_name_key: item.healing_moss
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 18, tier: 1 }
+  - code: marsh_reed
+    display_name_key: item.marsh_reed
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 20, tier: 2 }
+  - code: blue_thistle
+    display_name_key: item.blue_thistle
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 22, tier: 2 }
+  - code: red_sage
+    display_name_key: item.red_sage
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 24, tier: 2 }
+  - code: nightshade
+    display_name_key: item.nightshade
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 9
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 26, tier: 2 }
+  - code: wild_ginseng
+    display_name_key: item.wild_ginseng
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 10
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 28, tier: 2 }
+  - code: golden_clover
+    display_name_key: item.golden_clover
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 11
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 30, tier: 3 }
+  - code: dreamroot
+    display_name_key: item.dreamroot
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 14
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 33, tier: 3 }
+  - code: silverleaf
+    display_name_key: item.silverleaf
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 16
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 36, tier: 3 }
+  - code: bloodthorn
+    display_name_key: item.bloodthorn
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 39, tier: 3 }
+  - code: ghost_mushroom
+    display_name_key: item.ghost_mushroom
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 23
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 42, tier: 3 }
+  - code: stormflower
+    display_name_key: item.stormflower
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 28
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 45, tier: 4 }
+  - code: emberleaf
+    display_name_key: item.emberleaf
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 37
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 50, tier: 4 }
+  - code: frostbloom
+    display_name_key: item.frostbloom
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 49
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 55, tier: 4 }
+  - code: moonshade
+    display_name_key: item.moonshade
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 66
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 60, tier: 5 }
+  - code: spirit_lotus
+    display_name_key: item.spirit_lotus
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 88
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 65, tier: 5 }
+  - code: ancient_mandrake
+    display_name_key: item.ancient_mandrake
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 118
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 70, tier: 5 }
+  - code: dragonblood_herb
+    display_name_key: item.dragonblood_herb
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 158
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 75, tier: 6 }
+  - code: astral_bloom
+    display_name_key: item.astral_bloom
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 212
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 80, tier: 6 }
+  - code: void_orchid
+    display_name_key: item.void_orchid
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 283
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 85, tier: 6 }
+  - code: celestial_lotus
+    display_name_key: item.celestial_lotus
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 379
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 90, tier: 7 }
+  - code: phoenix_petal
+    display_name_key: item.phoenix_petal
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 507
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 95, tier: 7 }
+  - code: worldroot
+    display_name_key: item.worldroot
+    item_class: material
+    item_subclass: herb
+    min_level: 1
+    base_value_copper: 679
+    base_weight_g: 40
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: herbalism, level: 100, tier: 7 }
+
+  # --- Woodcutting (Odunculuk) ---
+  - code: young_sapling
+    display_name_key: item.young_sapling
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 2
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 1, tier: 0 }
+  - code: poplar_log
+    display_name_key: item.poplar_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 4, tier: 0 }
+  - code: willow_log
+    display_name_key: item.willow_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 7, tier: 0 }
+  - code: fir_log
+    display_name_key: item.fir_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 10, tier: 1 }
+  - code: pine_log
+    display_name_key: item.pine_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 12, tier: 1 }
+  - code: birch_log
+    display_name_key: item.birch_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 14, tier: 1 }
+  - code: cedar_log
+    display_name_key: item.cedar_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 16, tier: 1 }
+  - code: oak_log
+    display_name_key: item.oak_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 18, tier: 1 }
+  - code: beech_log
+    display_name_key: item.beech_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 20, tier: 2 }
+  - code: ash_log
+    display_name_key: item.ash_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 22, tier: 2 }
+  - code: maple_log
+    display_name_key: item.maple_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 24, tier: 2 }
+  - code: walnut_log
+    display_name_key: item.walnut_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 9
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 26, tier: 2 }
+  - code: teak_log
+    display_name_key: item.teak_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 10
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 28, tier: 2 }
+  - code: mahogany_log
+    display_name_key: item.mahogany_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 11
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 30, tier: 3 }
+  - code: ebony_log
+    display_name_key: item.ebony_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 14
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 33, tier: 3 }
+  - code: silver_willow_log
+    display_name_key: item.silver_willow_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 16
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 36, tier: 3 }
+  - code: golden_oak_log
+    display_name_key: item.golden_oak_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 39, tier: 3 }
+  - code: blackwood_log
+    display_name_key: item.blackwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 23
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 42, tier: 3 }
+  - code: crystal_birch_log
+    display_name_key: item.crystal_birch_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 28
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 45, tier: 4 }
+  - code: emberwood_log
+    display_name_key: item.emberwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 37
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 50, tier: 4 }
+  - code: frostpine_log
+    display_name_key: item.frostpine_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 49
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 55, tier: 4 }
+  - code: bloodwood_log
+    display_name_key: item.bloodwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 66
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 60, tier: 5 }
+  - code: spiritwood_log
+    display_name_key: item.spiritwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 88
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 65, tier: 5 }
+  - code: ironwood_log
+    display_name_key: item.ironwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 118
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 70, tier: 5 }
+  - code: starbark_log
+    display_name_key: item.starbark_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 158
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 75, tier: 6 }
+  - code: moonwood_log
+    display_name_key: item.moonwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 212
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 80, tier: 6 }
+  - code: dragonheart_log
+    display_name_key: item.dragonheart_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 283
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 85, tier: 6 }
+  - code: voidwood_log
+    display_name_key: item.voidwood_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 379
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 90, tier: 7 }
+  - code: celestial_ash_log
+    display_name_key: item.celestial_ash_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 507
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 95, tier: 7 }
+  - code: worldtree_log
+    display_name_key: item.worldtree_log
+    item_class: material
+    item_subclass: log
+    min_level: 1
+    base_value_copper: 679
+    base_weight_g: 1000
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: woodcutting, level: 100, tier: 7 }
+
+  # --- Fishing (Balıkçılık) ---
+  - code: tiny_guppy
+    display_name_key: item.tiny_guppy
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 2
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 1, tier: 0 }
+  - code: river_sardine
+    display_name_key: item.river_sardine
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 4, tier: 0 }
+  - code: minnow
+    display_name_key: item.minnow
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 7, tier: 0 }
+  - code: small_pike
+    display_name_key: item.small_pike
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 10, tier: 1 }
+  - code: common_carp
+    display_name_key: item.common_carp
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 12, tier: 1 }
+  - code: silver_herring
+    display_name_key: item.silver_herring
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 14, tier: 1 }
+  - code: river_trout
+    display_name_key: item.river_trout
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 16, tier: 1 }
+  - code: salmon
+    display_name_key: item.salmon
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 18, tier: 1 }
+  - code: bass
+    display_name_key: item.bass
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 20, tier: 2 }
+  - code: lake_perch
+    display_name_key: item.lake_perch
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 22, tier: 2 }
+  - code: red_snapper
+    display_name_key: item.red_snapper
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 24, tier: 2 }
+  - code: river_catfish
+    display_name_key: item.river_catfish
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 9
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 26, tier: 2 }
+  - code: bluefin_tuna
+    display_name_key: item.bluefin_tuna
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 10
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 28, tier: 2 }
+  - code: rainbow_trout
+    display_name_key: item.rainbow_trout
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 11
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 30, tier: 3 }
+  - code: royal_carp
+    display_name_key: item.royal_carp
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 14
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 33, tier: 3 }
+  - code: emerald_pike
+    display_name_key: item.emerald_pike
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 16
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 36, tier: 3 }
+  - code: silver_barracuda
+    display_name_key: item.silver_barracuda
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 39, tier: 3 }
+  - code: golden_sturgeon
+    display_name_key: item.golden_sturgeon
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 23
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 42, tier: 3 }
+  - code: crimson_swordfish
+    display_name_key: item.crimson_swordfish
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 28
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 45, tier: 4 }
+  - code: stormscale_eel
+    display_name_key: item.stormscale_eel
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 37
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 50, tier: 4 }
+  - code: frostfin_salmon
+    display_name_key: item.frostfin_salmon
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 49
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 55, tier: 4 }
+  - code: obsidian_tuna
+    display_name_key: item.obsidian_tuna
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 66
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 60, tier: 5 }
+  - code: ghost_marlin
+    display_name_key: item.ghost_marlin
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 88
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 65, tier: 5 }
+  - code: golden_carp
+    display_name_key: item.golden_carp
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 118
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 70, tier: 5 }
+  - code: crystal_serpentfish
+    display_name_key: item.crystal_serpentfish
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 158
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 75, tier: 6 }
+  - code: void_angler
+    display_name_key: item.void_angler
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 212
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 80, tier: 6 }
+  - code: astral_moonfish
+    display_name_key: item.astral_moonfish
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 283
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 85, tier: 6 }
+  - code: phoenix_koi
+    display_name_key: item.phoenix_koi
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 379
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 90, tier: 7 }
+  - code: abyssal_dragonfish
+    display_name_key: item.abyssal_dragonfish
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 507
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 95, tier: 7 }
+  - code: ancient_leviathan_scale
+    display_name_key: item.ancient_leviathan_scale
+    item_class: material
+    item_subclass: fish
+    min_level: 1
+    base_value_copper: 679
+    base_weight_g: 500
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: fishing, level: 100, tier: 7 }
+
+  # --- Mining (Madencilik) ---
+  - code: raw_stone
+    display_name_key: item.raw_stone
+    item_class: material
+    item_subclass: stone
+    min_level: 1
+    base_value_copper: 2
+    base_weight_g: 400
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 1, tier: 0 }
+  - code: stone_ore
+    display_name_key: item.stone_ore
+    item_class: material
+    item_subclass: stone
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 400
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 4, tier: 0 }
+  - code: flint
+    display_name_key: item.flint
+    item_class: material
+    item_subclass: stone
+    min_level: 1
+    base_value_copper: 3
+    base_weight_g: 400
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 7, tier: 0 }
+  - code: coal
+    display_name_key: item.coal
+    item_class: material
+    item_subclass: fuel
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 150
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 10, tier: 1 }
+  - code: aluminium_ore
+    display_name_key: item.aluminium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 4
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 12, tier: 1 }
+  - code: lead_ore
+    display_name_key: item.lead_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 14, tier: 1 }
+  - code: iron_ore
+    display_name_key: item.iron_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 5
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 16, tier: 1 }
+  - code: tin_ore
+    display_name_key: item.tin_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 18, tier: 1 }
+  - code: copper_ore
+    display_name_key: item.copper_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 20, tier: 2 }
+  - code: bronze_ore
+    display_name_key: item.bronze_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 7
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 22, tier: 2 }
+  - code: obsidian
+    display_name_key: item.obsidian
+    item_class: material
+    item_subclass: stone
+    min_level: 1
+    base_value_copper: 8
+    base_weight_g: 400
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 24, tier: 2 }
+  - code: mercury_ore
+    display_name_key: item.mercury_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 9
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 26, tier: 2 }
+  - code: zinc_ore
+    display_name_key: item.zinc_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 10
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 28, tier: 2 }
+  - code: nickel_ore
+    display_name_key: item.nickel_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 11
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 30, tier: 3 }
+  - code: chromium_ore
+    display_name_key: item.chromium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 14
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 33, tier: 3 }
+  - code: cobalt_ore
+    display_name_key: item.cobalt_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 16
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 36, tier: 3 }
+  - code: silver_ore
+    display_name_key: item.silver_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 19
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 39, tier: 3 }
+  - code: gold_ore
+    display_name_key: item.gold_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 23
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 42, tier: 3 }
+  - code: electrum_ore
+    display_name_key: item.electrum_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 28
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 45, tier: 4 }
+  - code: tungsten_ore
+    display_name_key: item.tungsten_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 37
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 50, tier: 4 }
+  - code: titanium_ore
+    display_name_key: item.titanium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 49
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 55, tier: 4 }
+  - code: palladium_ore
+    display_name_key: item.palladium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 66
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 60, tier: 5 }
+  - code: rhodium_ore
+    display_name_key: item.rhodium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 88
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 65, tier: 5 }
+  - code: platinum_ore
+    display_name_key: item.platinum_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 118
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 70, tier: 5 }
+  - code: osmium_ore
+    display_name_key: item.osmium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 158
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 75, tier: 6 }
+  - code: iridium_ore
+    display_name_key: item.iridium_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 212
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 80, tier: 6 }
+  - code: starsteel_ore
+    display_name_key: item.starsteel_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 283
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 85, tier: 6 }
+  - code: mythril_ore
+    display_name_key: item.mythril_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 379
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 90, tier: 7 }
+  - code: orichalcum_ore
+    display_name_key: item.orichalcum_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 507
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 95, tier: 7 }
+  - code: adamantite_ore
+    display_name_key: item.adamantite_ore
+    item_class: material
+    item_subclass: ore
+    min_level: 1
+    base_value_copper: 679
+    base_weight_g: 250
+    stackable: true
+    max_stack: 99
+    bind_kind: boe
+    affixable: false
+    gather: { kind: mining, level: 100, tier: 7 }

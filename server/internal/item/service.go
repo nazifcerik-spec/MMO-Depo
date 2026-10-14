@@ -208,13 +208,7 @@ func (s *Service) ListBySource(ctx context.Context, sourceRefID uuid.UUID) ([]In
 // Grant satisfies activity.ItemGranter. Idempotent by sourceRefID — if any
 // items are already tagged with this source_ref_id, they are returned as-is
 // (no new mint). This guarantees reveal replay never double-creates loot.
-func (s *Service) Grant(
-	ctx context.Context,
-	characterID, sourceRefID uuid.UUID,
-	seed int64, kind activity.Kind,
-	commonCount, rareCount, legendaryCount int,
-	gear activity.GearDrop,
-) ([]activity.GrantedItem, error) {
+func (s *Service) Grant(ctx context.Context, characterID, sourceRefID uuid.UUID, seed int64, d activity.Drops) ([]activity.GrantedItem, error) {
 	// Idempotency check: if this source already produced items, return them.
 	existing, err := s.repo.ListBySource(ctx, sourceRefID)
 	if err != nil {
@@ -225,7 +219,14 @@ func (s *Service) Grant(
 	}
 	// Fresh mint.
 	cat := s.catPtr.Load()
-	drops := append(RollDrops(cat, seed, kind, commonCount, rareCount, legendaryCount), RollGear(cat, seed, gear)...)
+	var drops []DropSpec
+	switch {
+	case d.Target != "": // gathering: the chosen node (DD-244)
+		drops = GatherDrops(cat, d.Target, d.Common+d.Rare+d.Legendary)
+	case d.MobLevel > 0: // hunts and dungeons: hides by mob level
+		drops = CombatHides(cat, seed, d.MobLevel, d.Common, d.Rare, d.Legendary)
+	}
+	drops = append(drops, RollGear(cat, seed, d.Gear)...)
 	instances, err := s.MaterializeDrops(ctx, characterID, "activity_reveal", sourceRefID, drops)
 	if err != nil {
 		return nil, err
