@@ -93,6 +93,13 @@ type Config struct {
 	SMTPPassword string `envconfig:"SMTP_PASSWORD" default:""`
 	SMTPFrom     string `envconfig:"SMTP_FROM" default:""`
 
+	// Brevo HTTPS e-mail API (DD-247): used instead of SMTP when set — hosts
+	// such as Render's free plan block outbound SMTP ports. MAIL_FROM must be
+	// a sender verified in Brevo; falls back to SMTP_FROM.
+	BrevoAPIKey  string `envconfig:"BREVO_API_KEY" default:""`
+	MailFrom     string `envconfig:"MAIL_FROM" default:""`
+	MailFromName string `envconfig:"MAIL_FROM_NAME" default:"New World MMO"`
+
 	// --- Observability (Sprint 27, DD-214) ---
 	// /metrics listens on its own port so it is never exposed through the
 	// public reverse proxy. Empty disables it.

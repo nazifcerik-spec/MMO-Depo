@@ -88,6 +88,10 @@ func TestPasswordReset_FullFlow(t *testing.T) {
 	var ve *auth.ValidationError
 	require.ErrorAs(t, svc.ConfirmPasswordReset(ctx, second, "short"), &ve)
 	require.NoError(t, svc.ConfirmPasswordReset(ctx, second, "brand-new-pass"), "weak attempt did not burn the token")
+	notice := repo.Outbox[len(repo.Outbox)-1]
+	require.Equal(t, "grim@example.com", notice.To)
+	require.Contains(t, notice.Subject, "Your password was changed", "a reset sends a security notice")
+	require.NotContains(t, notice.Body, "token=", "the notice carries no link or token")
 	require.ErrorIs(t, svc.ConfirmPasswordReset(ctx, second, "another-pass-1"), auth.ErrRecoveryTokenInvalid)
 	require.ErrorIs(t, svc.ConfirmPasswordReset(ctx, first, "another-pass-1"), auth.ErrRecoveryTokenInvalid,
 		"older links die when one is used")

@@ -135,6 +135,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 62. **Çanta 100 slot + dolu çanta kapısı (bitti)** — Sprint 62, DD-246. `BagSlotCap` 100. `inventory.Service.HasRoom` (boş slot ya da yığında yer) / `FreeSlots`. Ödemeden önce `E_BAG_FULL` (409): dükkân alım/geri alım, üretim (birim başı), pazar alımı, posta eki alma, toplama/av/zindan başlangıcı (`WithBagRoom`). İstemci: dolu çantada sayaç uyarı rengi. Entegrasyon: `TestHTTPFullBagRefusesNewItems`.
 
+63. **E-posta teslimi: Brevo HTTPS API (bitti — kod)** — Sprint 63, DD-247. `mail.BrevoSender`; `BREVO_API_KEY` + `MAIL_FROM` (+ `MAIL_FROM_NAME`) varsa SMTP yerine kullanılır (Render ücretsiz SMTP portlarını engelliyor). Şifre değişince / sıfırlanınca "Şifren değişti" güvenlik bildirimi. Etkinleştirme: Brevo hesabı + doğrulanmış gönderici + API anahtarı → Render ortam değişkenleri (`PUBLIC_BASE_URL` de gerekli).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

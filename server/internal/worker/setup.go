@@ -63,6 +63,18 @@ func pushSenders(cfg config.Config, logger *slog.Logger) map[string]notification
 // mailSender picks SMTP when configured; otherwise mail is only logged in dev
 // and refused (kept in the outbox, retried) elsewhere.
 func mailSender(cfg config.Config, logger *slog.Logger) mail.Sender {
+	from := cfg.MailFrom
+	if from == "" {
+		from = cfg.SMTPFrom
+	}
+	if cfg.BrevoAPIKey != "" {
+		if from == "" {
+			logger.Error("MAIL_FROM is required with BREVO_API_KEY — e-mail disabled")
+			return mail.LogSender{Log: logger}
+		}
+		logger.Info("brevo mail enabled", "from", from)
+		return mail.BrevoSender{APIKey: cfg.BrevoAPIKey, From: from, FromName: cfg.MailFromName}
+	}
 	if cfg.SMTPHost == "" {
 		logger.Warn("SMTP_HOST not set — e-mails are only logged (dev) or held in the outbox")
 		return mail.LogSender{Dev: cfg.Env == "dev", Log: logger}

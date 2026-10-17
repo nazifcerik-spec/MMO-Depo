@@ -23,7 +23,7 @@ internal/http/middleware      91
 internal/hunt                 79
 internal/inventory            78
 internal/item                 87
-internal/mail                 38
+internal/mail                 50
 internal/market               80
 internal/notification         84
 internal/observability        63

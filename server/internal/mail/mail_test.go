@@ -2,8 +2,11 @@ package mail
 
 import (
 	"context"
+	"encoding/json"
 	"io"
 	"log/slog"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 
@@ -30,4 +33,31 @@ func TestLogSender_RefusesOutsideDev(t *testing.T) {
 func TestSMTPSender_RejectsHeaderInjection(t *testing.T) {
 	err := SMTPSender{Host: "localhost", Port: 587}.Send(context.Background(), "a@b.c\r\nBcc: x@y.z", "s", "b")
 	require.ErrorContains(t, err, "invalid recipient")
+}
+
+func TestBrevoSender(t *testing.T) {
+	var got map[string]any
+	var key string
+	status := http.StatusCreated
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		key = r.Header.Get("api-key")
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&got))
+		w.WriteHeader(status)
+		_, _ = w.Write([]byte(`{"message":"sender not verified"}`))
+	}))
+	defer srv.Close()
+	s := BrevoSender{APIKey: "k-1", From: "noreply@otter.gg", FromName: "New World MMO", Endpoint: srv.URL}
+
+	require.NoError(t, s.Send(context.Background(), "p@example.com", "Şifre sıfırlama", "link"))
+	require.Equal(t, "k-1", key)
+	require.Equal(t, map[string]any{"email": "noreply@otter.gg", "name": "New World MMO"}, got["sender"])
+	require.Equal(t, []any{map[string]any{"email": "p@example.com"}}, got["to"])
+	require.Equal(t, "Şifre sıfırlama", got["subject"])
+	require.Equal(t, "link", got["textContent"])
+
+	status = http.StatusBadRequest
+	err := s.Send(context.Background(), "p@example.com", "s", "b")
+	require.ErrorContains(t, err, "status 400")
+	require.ErrorContains(t, err, "sender not verified")
+	require.ErrorContains(t, s.Send(context.Background(), "a@b.c\r\nBcc: x@y.z", "s", "b"), "invalid recipient")
 }

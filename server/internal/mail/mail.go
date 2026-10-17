@@ -4,14 +4,18 @@
 package mail
 
 import (
+	"bytes"
 	"context"
 	"crypto/rand"
 	"crypto/tls"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log/slog"
 	"mime"
 	"net"
+	"net/http"
 	"net/smtp"
 	"strings"
 	"time"
@@ -43,6 +47,62 @@ func (s LogSender) Send(ctx context.Context, to, subject, body string) error {
 		return fmt.Errorf("mail: SMTP_HOST not configured")
 	}
 	s.Log.InfoContext(ctx, "mail (dev, not sent)", "to", to, "subject", subject, "body", body)
+	return nil
+}
+
+// BrevoSender sends through Brevo's HTTPS API (https://api.brevo.com), for
+// hosts that block outbound SMTP ports (Render's free plan does).
+type BrevoSender struct {
+	APIKey, From, FromName string
+	Endpoint               string       // default brevoEndpoint (tests override)
+	Client                 *http.Client // default: 15 s timeout
+}
+
+const brevoEndpoint = "https://api.brevo.com/v3/smtp/email"
+
+func (s BrevoSender) Send(ctx context.Context, to, subject, body string) error {
+	if strings.ContainsAny(to, "\r\n") {
+		return fmt.Errorf("mail: invalid recipient")
+	}
+	type addr struct {
+		Email string `json:"email"`
+		Name  string `json:"name,omitempty"`
+	}
+	payload, err := json.Marshal(struct {
+		Sender      addr   `json:"sender"`
+		To          []addr `json:"to"`
+		Subject     string `json:"subject"`
+		TextContent string `json:"textContent"`
+	}{addr{s.From, s.FromName}, []addr{{Email: to}}, subject, body})
+	if err != nil {
+		return err
+	}
+	endpoint := s.Endpoint
+	if endpoint == "" {
+		endpoint = brevoEndpoint
+	}
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, bytes.NewReader(payload))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("api-key", s.APIKey)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	client := s.Client
+	if client == nil {
+		client = &http.Client{Timeout: 15 * time.Second}
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("mail: brevo: %w", err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode/100 != 2 {
+		// The error body names the problem (bad key, unverified sender); it
+		// never echoes the key or the message.
+		msg, _ := io.ReadAll(io.LimitReader(res.Body, 512))
+		return fmt.Errorf("mail: brevo: status %d: %s", res.StatusCode, strings.TrimSpace(string(msg)))
+	}
 	return nil
 }
 

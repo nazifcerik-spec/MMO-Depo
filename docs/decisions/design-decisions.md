@@ -2222,6 +2222,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-247 — E-posta Teslimi Brevo HTTPS API'si + Şifre Değişti Bildirimi
+**Karar:** `mail.BrevoSender` (`POST https://api.brevo.com/v3/smtp/email`, `api-key` başlığı, düz metin gövde). `BREVO_API_KEY` doluysa worker `email_dispatch` SMTP yerine bunu kullanır; gönderen `MAIL_FROM` (Brevo'da doğrulanmış adres; yoksa `SMTP_FROM`), ad `MAIL_FROM_NAME` (varsayılan "New World MMO"). Mevcut akışlar aynen: kayıtta doğrulama bağlantısı, şifremi unuttum → sıfırlama bağlantısı, hesap silme bildirimi. Yeni: şifre değiştirme ve sıfırlama sonrası güvenlik bildirimi ("Şifren değişti" — bağlantı/token yok; best-effort, kuyruğa yazılamazsa değişiklik geri alınmaz). `render.yaml`'a `BREVO_API_KEY` + `MAIL_FROM` (panelden girilir).
+**Reason:** Kullanıcı isteği (kayıt, şifre unutma/değiştirme için e-posta). Render ücretsiz planı giden SMTP portlarını (25/465/587) engelliyor; SMTP göndericisi orada çalışamaz. Brevo ücretsiz planı günde 300 e-posta, alan adı gerektirmeden tek doğrulanmış gönderici adresiyle çalışır.
+**Alternatives:** Ücretli Render planı + SMTP, Resend (başkalarına göndermek için alan adı doğrulaması ister), Mailgun/SendGrid (ücretsiz planları kısıtlı).
+**Consequences:** Hesap (Brevo) ve API anahtarı kullanıcının işidir; anahtar yalnız Render ortam değişkeninde durur, repo'ya girmez. Gmail gibi ücretsiz bir adres gönderici yapılırsa DMARC yüzünden e-postalar spam'e düşebilir — kalıcı çözüm kendi alan adı. Gönderilemeyen e-postalar kuyrukta 5 deneme / 24 saat bekler.
+**Tarih:** 2026-10-17
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -125,7 +125,13 @@ func (s *Service) ConfirmPasswordReset(ctx context.Context, token, newPassword s
 	if err := s.repo.UpdatePassword(ctx, accountID, hash, now); err != nil {
 		return err
 	}
-	return s.repo.RevokeAccountSessions(ctx, accountID, uuid.Nil, "password_reset", now)
+	if err := s.repo.RevokeAccountSessions(ctx, accountID, uuid.Nil, "password_reset", now); err != nil {
+		return err
+	}
+	if a, err := s.repo.AccountByID(ctx, accountID); err == nil {
+		s.notifyPasswordChanged(ctx, a, now)
+	}
+	return nil
 }
 
 // VerifyEmail marks the account's e-mail verified.
@@ -174,7 +180,30 @@ func (s *Service) ChangePassword(ctx context.Context, accountID, currentSession 
 	if err := s.repo.UpdatePassword(ctx, accountID, hash, now); err != nil {
 		return err
 	}
-	return s.repo.RevokeAccountSessions(ctx, accountID, currentSession, "password_changed", now)
+	if err := s.repo.RevokeAccountSessions(ctx, accountID, currentSession, "password_changed", now); err != nil {
+		return err
+	}
+	s.notifyPasswordChanged(ctx, a, now)
+	return nil
+}
+
+// notifyPasswordChanged queues a security notice (no link, no token) so an
+// owner learns about a change they didn't make. Best-effort: the change
+// itself already succeeded.
+func (s *Service) notifyPasswordChanged(ctx context.Context, a *Account, at time.Time) {
+	when := at.Format("2006-01-02 15:04 UTC")
+	err := s.repo.QueueEmail(ctx, OutboundEmail{
+		To:      a.Email,
+		Subject: "New World MMO — Şifren değişti / Your password was changed",
+		Body: fmt.Sprintf("Merhaba %s,\n\nHesabının şifresi %s tarihinde değiştirildi ve diğer oturumlar kapatıldı. "+
+			"Bunu sen yapmadıysan uygulamadaki \"Şifremi unuttum\" ile hemen yeni şifre belirle ve destekle iletişime geç.\n\n---\n\n"+
+			"Hi %s,\n\nYour account password was changed on %s and other sessions were signed out. "+
+			"If this wasn't you, reset your password right away with \"Forgot password\" in the app and contact support.\n",
+			a.Username, when, a.Username, when),
+	})
+	if err != nil {
+		s.log.WarnContext(ctx, "auth: password-changed notice not queued", "err", err.Error())
+	}
 }
 
 // recoveryEmail builds the bilingual (TR/EN) message with the one-time link.
