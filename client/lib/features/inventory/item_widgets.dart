@@ -83,7 +83,15 @@ class ItemCell extends StatelessWidget {
             children: [
               Center(
                 child: filled
-                    ? (code == null ? Icon(icon, color: c, size: 22) : ItemArt(code: code!, icon: icon!, color: c))
+                    ? LayoutBuilder(
+                        // Art scales with the cell (bag rows of 5, equipment rows of 6, detail headers).
+                        builder: (_, box) {
+                          final size = (box.maxWidth * 0.42).clamp(18.0, 48.0);
+                          return code == null
+                              ? Icon(icon, color: c, size: size)
+                              : ItemArt(code: code!, icon: icon!, color: c, size: size);
+                        },
+                      )
                     : (label == null
                           ? null
                           : Padding(

@@ -358,7 +358,7 @@ class _InventoryViewState extends State<InventoryView> {
             const SizedBox(height: Space.md),
             LayoutBuilder(
               builder: (context, box) {
-                const cols = 6;
+                const cols = 5; // five items per row
                 final step = (box.maxWidth + Space.sm) / cols; // cell + gap; cells are square
                 // From the global position against the grid's current place:
                 // the header changes when selection starts, so the pointer's
