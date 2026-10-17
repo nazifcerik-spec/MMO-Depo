@@ -2258,6 +2258,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-251 — Karakter Slotu 5
+**Karar:** Hesap başı karakter slotu 2 → 5 (`CHARACTER_SLOT_CAP` varsayılanı ve servis varsayılanı). DD-OPEN-8'i kapatır.
+**Reason:** Kullanıcı isteği.
+**Alternatives:** Ortam değişkeniyle yalnız canlıda artırmak (varsayılan ile canlı ayrışır).
+**Consequences:** Canlıda `CHARACTER_SLOT_CAP` elle ayarlanmışsa o değer geçerli kalır. İstemci slot sayısını sunucudan okur.
+**Tarih:** 2026-10-17
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
@@ -2269,7 +2278,7 @@ Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
 - **DD-OPEN-5**: Ascension frequency final tune (60-100h aktif oyun/ascension).
 - **DD-OPEN-6**: Guild max size progression Phase 02'de nerede kapsar (100 mi 150 mi).
 - **DD-OPEN-7**: RNG algoritma final seçimi (xoshiro256++ vs ChaCha8).
-- **DD-OPEN-8**: Character slot sayısı başlangıç (2 önerildi; 3?).
+- ~~**DD-OPEN-8**: Character slot sayısı başlangıç~~ → DD-251 (5).
 - **DD-OPEN-9**: Orchestrator seçimi (Kubernetes vs Nomad vs systemd) — v1 ölçeğine göre.
 - **DD-OPEN-10**: Job queue (Postgres SKIP LOCKED vs Redis stream vs NATS) — reveal batch throughput'una göre.
 - **DD-OPEN-11**: Log aggregation (Loki vs ELK vs cloud provider).
