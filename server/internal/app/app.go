@@ -189,7 +189,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		craftRepo, craftCatSvc, invSvc, itemSvc, txnSvc, charSvc,
 		crafting.DefaultServiceConfig(), logger,
 	)
-	craftHandler := crafting.NewHandler(craftSvc, logger)
+	craftHandler := crafting.NewHandler(craftSvc, logger).WithItems(itemSvc)
 	gatherSvc := gathering.NewService(itemSvc, craftRepo)    // DD-244
 	activitySvc.WithGathering(gatherSvc).WithBagRoom(invSvc) // DD-246: a full bag refuses new runs
 	logger.Info("crafting wired",

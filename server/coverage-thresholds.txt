@@ -11,7 +11,7 @@ internal/classskill           91
 internal/combat               86
 internal/consumable           80
 internal/contentpack          88
-internal/crafting             81
+internal/crafting             82
 internal/gathering            85
 internal/domain/auth          81
 internal/domain/character     78

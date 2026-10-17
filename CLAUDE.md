@@ -137,6 +137,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 63. **E-posta teslimi: Brevo HTTPS API (bitti — kod)** — Sprint 63, DD-247. `mail.BrevoSender`; `BREVO_API_KEY` + `MAIL_FROM` (+ `MAIL_FROM_NAME`) varsa SMTP yerine kullanılır (Render ücretsiz SMTP portlarını engelliyor). Şifre değişince / sıfırlanınca "Şifren değişti" güvenlik bildirimi. Etkinleştirme: Brevo hesabı + doğrulanmış gönderici + API anahtarı → Render ortam değişkenleri (`PUBLIC_BASE_URL` de gerekli).
 
+64. **Atölye meslek sayfaları + yığın 999 + av hayvanı görselleri (bitti)** — Sprint 64, DD-248. Üretim: meslek listesi → `ProfessionScreen` (tarifler, ada dokununca açılan özellik paneli); `GET /v1/recipes` `output` alanı. 99'luk yığınlar 999. Avcılık kaynakları `assets/animals/<hayvan>.png` gösterir (`huntAnimal`, liste `assets/animals/README.md`); hayvan ganimet tablosu beklemede.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

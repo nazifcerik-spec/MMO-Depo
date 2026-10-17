@@ -16,7 +16,7 @@ items:
     base_value_copper: 2
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 1, tier: 0 }
@@ -28,7 +28,7 @@ items:
     base_value_copper: 3
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 4, tier: 0 }
@@ -40,7 +40,7 @@ items:
     base_value_copper: 3
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 7, tier: 0 }
@@ -52,7 +52,7 @@ items:
     base_value_copper: 4
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 10, tier: 1 }
@@ -64,7 +64,7 @@ items:
     base_value_copper: 4
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 12, tier: 1 }
@@ -76,7 +76,7 @@ items:
     base_value_copper: 5
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 14, tier: 1 }
@@ -88,7 +88,7 @@ items:
     base_value_copper: 5
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 16, tier: 1 }
@@ -100,7 +100,7 @@ items:
     base_value_copper: 6
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 18, tier: 1 }
@@ -112,7 +112,7 @@ items:
     base_value_copper: 6
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 20, tier: 2 }
@@ -124,7 +124,7 @@ items:
     base_value_copper: 7
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 22, tier: 2 }
@@ -136,7 +136,7 @@ items:
     base_value_copper: 8
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 24, tier: 2 }
@@ -148,7 +148,7 @@ items:
     base_value_copper: 9
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 26, tier: 2 }
@@ -160,7 +160,7 @@ items:
     base_value_copper: 10
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 28, tier: 2 }
@@ -172,7 +172,7 @@ items:
     base_value_copper: 11
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 30, tier: 3 }
@@ -184,7 +184,7 @@ items:
     base_value_copper: 14
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 33, tier: 3 }
@@ -196,7 +196,7 @@ items:
     base_value_copper: 16
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 36, tier: 3 }
@@ -208,7 +208,7 @@ items:
     base_value_copper: 19
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 39, tier: 3 }
@@ -220,7 +220,7 @@ items:
     base_value_copper: 23
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 42, tier: 3 }
@@ -232,7 +232,7 @@ items:
     base_value_copper: 28
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 45, tier: 4 }
@@ -244,7 +244,7 @@ items:
     base_value_copper: 37
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 50, tier: 4 }
@@ -256,7 +256,7 @@ items:
     base_value_copper: 49
     base_weight_g: 600
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 55, tier: 4 }
@@ -268,7 +268,7 @@ items:
     base_value_copper: 66
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 60, tier: 5 }
@@ -280,7 +280,7 @@ items:
     base_value_copper: 88
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 65, tier: 5 }
@@ -292,7 +292,7 @@ items:
     base_value_copper: 118
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 70, tier: 5 }
@@ -304,7 +304,7 @@ items:
     base_value_copper: 158
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 75, tier: 6 }
@@ -316,7 +316,7 @@ items:
     base_value_copper: 212
     base_weight_g: 300
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 80, tier: 6 }
@@ -328,7 +328,7 @@ items:
     base_value_copper: 283
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 85, tier: 6 }
@@ -340,7 +340,7 @@ items:
     base_value_copper: 379
     base_weight_g: 1200
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 90, tier: 7 }
@@ -352,7 +352,7 @@ items:
     base_value_copper: 507
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 95, tier: 7 }
@@ -364,7 +364,7 @@ items:
     base_value_copper: 679
     base_weight_g: 300
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: hunting, level: 100, tier: 7 }
@@ -378,7 +378,7 @@ items:
     base_value_copper: 2
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 1, tier: 0 }
@@ -390,7 +390,7 @@ items:
     base_value_copper: 3
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 4, tier: 0 }
@@ -402,7 +402,7 @@ items:
     base_value_copper: 3
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 7, tier: 0 }
@@ -414,7 +414,7 @@ items:
     base_value_copper: 4
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 10, tier: 1 }
@@ -426,7 +426,7 @@ items:
     base_value_copper: 4
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 12, tier: 1 }
@@ -438,7 +438,7 @@ items:
     base_value_copper: 5
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 14, tier: 1 }
@@ -450,7 +450,7 @@ items:
     base_value_copper: 5
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 16, tier: 1 }
@@ -462,7 +462,7 @@ items:
     base_value_copper: 6
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 18, tier: 1 }
@@ -474,7 +474,7 @@ items:
     base_value_copper: 6
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 20, tier: 2 }
@@ -486,7 +486,7 @@ items:
     base_value_copper: 7
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 22, tier: 2 }
@@ -498,7 +498,7 @@ items:
     base_value_copper: 8
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 24, tier: 2 }
@@ -510,7 +510,7 @@ items:
     base_value_copper: 9
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 26, tier: 2 }
@@ -522,7 +522,7 @@ items:
     base_value_copper: 10
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 28, tier: 2 }
@@ -534,7 +534,7 @@ items:
     base_value_copper: 11
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 30, tier: 3 }
@@ -546,7 +546,7 @@ items:
     base_value_copper: 14
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 33, tier: 3 }
@@ -558,7 +558,7 @@ items:
     base_value_copper: 16
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 36, tier: 3 }
@@ -570,7 +570,7 @@ items:
     base_value_copper: 19
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 39, tier: 3 }
@@ -582,7 +582,7 @@ items:
     base_value_copper: 23
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 42, tier: 3 }
@@ -594,7 +594,7 @@ items:
     base_value_copper: 28
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 45, tier: 4 }
@@ -606,7 +606,7 @@ items:
     base_value_copper: 37
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 50, tier: 4 }
@@ -618,7 +618,7 @@ items:
     base_value_copper: 49
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 55, tier: 4 }
@@ -630,7 +630,7 @@ items:
     base_value_copper: 66
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 60, tier: 5 }
@@ -642,7 +642,7 @@ items:
     base_value_copper: 88
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 65, tier: 5 }
@@ -654,7 +654,7 @@ items:
     base_value_copper: 118
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 70, tier: 5 }
@@ -666,7 +666,7 @@ items:
     base_value_copper: 158
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 75, tier: 6 }
@@ -678,7 +678,7 @@ items:
     base_value_copper: 212
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 80, tier: 6 }
@@ -690,7 +690,7 @@ items:
     base_value_copper: 283
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 85, tier: 6 }
@@ -702,7 +702,7 @@ items:
     base_value_copper: 379
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 90, tier: 7 }
@@ -714,7 +714,7 @@ items:
     base_value_copper: 507
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 95, tier: 7 }
@@ -726,7 +726,7 @@ items:
     base_value_copper: 679
     base_weight_g: 40
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: herbalism, level: 100, tier: 7 }
@@ -740,7 +740,7 @@ items:
     base_value_copper: 2
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 1, tier: 0 }
@@ -752,7 +752,7 @@ items:
     base_value_copper: 3
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 4, tier: 0 }
@@ -764,7 +764,7 @@ items:
     base_value_copper: 3
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 7, tier: 0 }
@@ -776,7 +776,7 @@ items:
     base_value_copper: 4
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 10, tier: 1 }
@@ -788,7 +788,7 @@ items:
     base_value_copper: 4
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 12, tier: 1 }
@@ -800,7 +800,7 @@ items:
     base_value_copper: 5
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 14, tier: 1 }
@@ -812,7 +812,7 @@ items:
     base_value_copper: 5
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 16, tier: 1 }
@@ -824,7 +824,7 @@ items:
     base_value_copper: 6
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 18, tier: 1 }
@@ -836,7 +836,7 @@ items:
     base_value_copper: 6
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 20, tier: 2 }
@@ -848,7 +848,7 @@ items:
     base_value_copper: 7
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 22, tier: 2 }
@@ -860,7 +860,7 @@ items:
     base_value_copper: 8
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 24, tier: 2 }
@@ -872,7 +872,7 @@ items:
     base_value_copper: 9
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 26, tier: 2 }
@@ -884,7 +884,7 @@ items:
     base_value_copper: 10
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 28, tier: 2 }
@@ -896,7 +896,7 @@ items:
     base_value_copper: 11
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 30, tier: 3 }
@@ -908,7 +908,7 @@ items:
     base_value_copper: 14
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 33, tier: 3 }
@@ -920,7 +920,7 @@ items:
     base_value_copper: 16
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 36, tier: 3 }
@@ -932,7 +932,7 @@ items:
     base_value_copper: 19
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 39, tier: 3 }
@@ -944,7 +944,7 @@ items:
     base_value_copper: 23
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 42, tier: 3 }
@@ -956,7 +956,7 @@ items:
     base_value_copper: 28
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 45, tier: 4 }
@@ -968,7 +968,7 @@ items:
     base_value_copper: 37
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 50, tier: 4 }
@@ -980,7 +980,7 @@ items:
     base_value_copper: 49
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 55, tier: 4 }
@@ -992,7 +992,7 @@ items:
     base_value_copper: 66
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 60, tier: 5 }
@@ -1004,7 +1004,7 @@ items:
     base_value_copper: 88
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 65, tier: 5 }
@@ -1016,7 +1016,7 @@ items:
     base_value_copper: 118
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 70, tier: 5 }
@@ -1028,7 +1028,7 @@ items:
     base_value_copper: 158
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 75, tier: 6 }
@@ -1040,7 +1040,7 @@ items:
     base_value_copper: 212
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 80, tier: 6 }
@@ -1052,7 +1052,7 @@ items:
     base_value_copper: 283
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 85, tier: 6 }
@@ -1064,7 +1064,7 @@ items:
     base_value_copper: 379
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 90, tier: 7 }
@@ -1076,7 +1076,7 @@ items:
     base_value_copper: 507
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 95, tier: 7 }
@@ -1088,7 +1088,7 @@ items:
     base_value_copper: 679
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: woodcutting, level: 100, tier: 7 }
@@ -1102,7 +1102,7 @@ items:
     base_value_copper: 2
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 1, tier: 0 }
@@ -1114,7 +1114,7 @@ items:
     base_value_copper: 3
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 4, tier: 0 }
@@ -1126,7 +1126,7 @@ items:
     base_value_copper: 3
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 7, tier: 0 }
@@ -1138,7 +1138,7 @@ items:
     base_value_copper: 4
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 10, tier: 1 }
@@ -1150,7 +1150,7 @@ items:
     base_value_copper: 4
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 12, tier: 1 }
@@ -1162,7 +1162,7 @@ items:
     base_value_copper: 5
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 14, tier: 1 }
@@ -1174,7 +1174,7 @@ items:
     base_value_copper: 5
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 16, tier: 1 }
@@ -1186,7 +1186,7 @@ items:
     base_value_copper: 6
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 18, tier: 1 }
@@ -1198,7 +1198,7 @@ items:
     base_value_copper: 6
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 20, tier: 2 }
@@ -1210,7 +1210,7 @@ items:
     base_value_copper: 7
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 22, tier: 2 }
@@ -1222,7 +1222,7 @@ items:
     base_value_copper: 8
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 24, tier: 2 }
@@ -1234,7 +1234,7 @@ items:
     base_value_copper: 9
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 26, tier: 2 }
@@ -1246,7 +1246,7 @@ items:
     base_value_copper: 10
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 28, tier: 2 }
@@ -1258,7 +1258,7 @@ items:
     base_value_copper: 11
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 30, tier: 3 }
@@ -1270,7 +1270,7 @@ items:
     base_value_copper: 14
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 33, tier: 3 }
@@ -1282,7 +1282,7 @@ items:
     base_value_copper: 16
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 36, tier: 3 }
@@ -1294,7 +1294,7 @@ items:
     base_value_copper: 19
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 39, tier: 3 }
@@ -1306,7 +1306,7 @@ items:
     base_value_copper: 23
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 42, tier: 3 }
@@ -1318,7 +1318,7 @@ items:
     base_value_copper: 28
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 45, tier: 4 }
@@ -1330,7 +1330,7 @@ items:
     base_value_copper: 37
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 50, tier: 4 }
@@ -1342,7 +1342,7 @@ items:
     base_value_copper: 49
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 55, tier: 4 }
@@ -1354,7 +1354,7 @@ items:
     base_value_copper: 66
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 60, tier: 5 }
@@ -1366,7 +1366,7 @@ items:
     base_value_copper: 88
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 65, tier: 5 }
@@ -1378,7 +1378,7 @@ items:
     base_value_copper: 118
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 70, tier: 5 }
@@ -1390,7 +1390,7 @@ items:
     base_value_copper: 158
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 75, tier: 6 }
@@ -1402,7 +1402,7 @@ items:
     base_value_copper: 212
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 80, tier: 6 }
@@ -1414,7 +1414,7 @@ items:
     base_value_copper: 283
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 85, tier: 6 }
@@ -1426,7 +1426,7 @@ items:
     base_value_copper: 379
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 90, tier: 7 }
@@ -1438,7 +1438,7 @@ items:
     base_value_copper: 507
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 95, tier: 7 }
@@ -1450,7 +1450,7 @@ items:
     base_value_copper: 679
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: fishing, level: 100, tier: 7 }
@@ -1464,7 +1464,7 @@ items:
     base_value_copper: 2
     base_weight_g: 400
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 1, tier: 0 }
@@ -1476,7 +1476,7 @@ items:
     base_value_copper: 3
     base_weight_g: 400
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 4, tier: 0 }
@@ -1488,7 +1488,7 @@ items:
     base_value_copper: 3
     base_weight_g: 400
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 7, tier: 0 }
@@ -1500,7 +1500,7 @@ items:
     base_value_copper: 4
     base_weight_g: 150
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 10, tier: 1 }
@@ -1512,7 +1512,7 @@ items:
     base_value_copper: 4
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 12, tier: 1 }
@@ -1524,7 +1524,7 @@ items:
     base_value_copper: 5
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 14, tier: 1 }
@@ -1536,7 +1536,7 @@ items:
     base_value_copper: 5
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 16, tier: 1 }
@@ -1548,7 +1548,7 @@ items:
     base_value_copper: 6
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 18, tier: 1 }
@@ -1560,7 +1560,7 @@ items:
     base_value_copper: 6
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 20, tier: 2 }
@@ -1572,7 +1572,7 @@ items:
     base_value_copper: 7
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 22, tier: 2 }
@@ -1584,7 +1584,7 @@ items:
     base_value_copper: 8
     base_weight_g: 400
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 24, tier: 2 }
@@ -1596,7 +1596,7 @@ items:
     base_value_copper: 9
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 26, tier: 2 }
@@ -1608,7 +1608,7 @@ items:
     base_value_copper: 10
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 28, tier: 2 }
@@ -1620,7 +1620,7 @@ items:
     base_value_copper: 11
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 30, tier: 3 }
@@ -1632,7 +1632,7 @@ items:
     base_value_copper: 14
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 33, tier: 3 }
@@ -1644,7 +1644,7 @@ items:
     base_value_copper: 16
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 36, tier: 3 }
@@ -1656,7 +1656,7 @@ items:
     base_value_copper: 19
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 39, tier: 3 }
@@ -1668,7 +1668,7 @@ items:
     base_value_copper: 23
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 42, tier: 3 }
@@ -1680,7 +1680,7 @@ items:
     base_value_copper: 28
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 45, tier: 4 }
@@ -1692,7 +1692,7 @@ items:
     base_value_copper: 37
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 50, tier: 4 }
@@ -1704,7 +1704,7 @@ items:
     base_value_copper: 49
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 55, tier: 4 }
@@ -1716,7 +1716,7 @@ items:
     base_value_copper: 66
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 60, tier: 5 }
@@ -1728,7 +1728,7 @@ items:
     base_value_copper: 88
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 65, tier: 5 }
@@ -1740,7 +1740,7 @@ items:
     base_value_copper: 118
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 70, tier: 5 }
@@ -1752,7 +1752,7 @@ items:
     base_value_copper: 158
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 75, tier: 6 }
@@ -1764,7 +1764,7 @@ items:
     base_value_copper: 212
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 80, tier: 6 }
@@ -1776,7 +1776,7 @@ items:
     base_value_copper: 283
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 85, tier: 6 }
@@ -1788,7 +1788,7 @@ items:
     base_value_copper: 379
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 90, tier: 7 }
@@ -1800,7 +1800,7 @@ items:
     base_value_copper: 507
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 95, tier: 7 }
@@ -1812,7 +1812,7 @@ items:
     base_value_copper: 679
     base_weight_g: 250
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
     gather: { kind: mining, level: 100, tier: 7 }

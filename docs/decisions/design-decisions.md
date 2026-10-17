@@ -2231,6 +2231,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-248 — Atölye Meslek Sayfaları, Yığın 999, Av Hayvanı Görselleri
+**Karar:** (1) Atölye → Üretim yalnız meslek listesini gösterir (seviye, tarif sayısı, öğren); öğrenilmiş mesleğe dokunmak ayrı sayfa açar (`ProfessionScreen`): o mesleğin tarifleri, eşya adına dokununca aşağı açılan özellik paneli (tür/yuva, bonuslar, kullanım etkisi, seviye/sınıf şartı, ağırlık, yığın, beceri XP'si). Bunun için `GET /v1/recipes` satırlarına `output` (çıktı şablonunun özellikleri; `crafting.Handler.WithItems`). (2) Yığın sınırı 99 olan tüm şablonlar (toplanan 150 kaynak + 29 eşya) 999; 20'lik iksir yığınları değişmedi. (3) Toplama → Avcılık'ta kaynak satırı, görseli varsa hayvanın resmini gösterir: `client/assets/animals/<hayvan>.png`, hayvan kodu = kaynak kodu eksi `_pelt/_hide/_feather/_scale` (`huntAnimal`); dosya listesi `assets/animals/README.md`. Avdan çıkacak eşyalar (hayvan başı ganimet tablosu) henüz değişmedi — kullanıcıyla belirlenecek.
+**Reason:** Kullanıcı istekleri.
+**Alternatives:** Tarifleri açılır meslek kartlarında tutmak (liste yine uzun kalır), ayrı eşya şablonu ucu (tarif yanıtına eklemek tek istek).
+**Consequences:** Ağırlık sınırı yumuşak olduğu için 999'luk yığınlar ağırlık göstergesini kolayca aşar (ret yok). Hayvan resimleri APK'ya gömülür (yeni resim = yeni APK).
+**Tarih:** 2026-10-17
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

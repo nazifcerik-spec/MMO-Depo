@@ -182,6 +182,10 @@ class FakeBackend {
                       {'code': 'bass', 'level': 20, 'tier': 2},
                       {'code': 'golden_carp', 'level': 70, 'tier': 5},
                     ]
+                  : k == 'hunting'
+                  ? [
+                      {'code': 'forest_rat_pelt', 'level': 1, 'tier': 0},
+                    ]
                   : [
                       {'code': 'raw_stone', 'level': 1, 'tier': 0},
                     ],
@@ -400,6 +404,15 @@ class FakeBackend {
             'gold_cost_copper': 5,
             'output_template_code': 'potion_hp_small',
             'output_stack': 1,
+            'profession_xp_reward': 10,
+            'output': {
+              'item_class': 'consumable',
+              'item_subclass': 'potion',
+              'min_level': 2,
+              'weight_grams': 100,
+              'max_stack': 20,
+              'use_effect': {'kind': 'heal_hp', 'amount': 60},
+            },
           },
           {
             'code': 'recipe_potion_mp_small',

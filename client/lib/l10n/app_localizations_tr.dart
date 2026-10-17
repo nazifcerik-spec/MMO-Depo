@@ -723,6 +723,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get learn => 'Öğren';
 
   @override
+  String recipeCount(int count) {
+    return '$count tarif';
+  }
+
+  @override
+  String get itemType => 'Tür';
+
+  @override
+  String get stackSize => 'Yığın';
+
+  @override
+  String get skillXpReward => 'Beceri XP';
+
+  @override
   String get learnHint => 'Tariflerini açmak için bu mesleği öğren.';
 
   @override

@@ -1394,6 +1394,30 @@ abstract class AppLocalizations {
   /// **'Learn'**
   String get learn;
 
+  /// No description provided for @recipeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recipes'**
+  String recipeCount(int count);
+
+  /// No description provided for @itemType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get itemType;
+
+  /// No description provided for @stackSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Stack'**
+  String get stackSize;
+
+  /// No description provided for @skillXpReward.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill XP'**
+  String get skillXpReward;
+
   /// No description provided for @learnHint.
   ///
   /// In en, this message translates to:

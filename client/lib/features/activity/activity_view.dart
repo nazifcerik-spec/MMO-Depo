@@ -427,12 +427,23 @@ class _NodeTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: Space.md, vertical: Space.sm),
               child: Row(
                 children: [
-                  ItemArt(
-                    code: node.code,
-                    icon: locked ? Icons.lock_outline : activityIcon(kind),
-                    color: color,
-                    size: 26,
-                  ),
+                  if (kind == 'hunting' && ItemImages.animalPath(huntAnimal(node.code)) != null)
+                    // Hunting shows the animal itself.
+                    Image.asset(
+                      ItemImages.animalPath(huntAnimal(node.code))!,
+                      width: 44,
+                      height: 44,
+                      cacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
+                      errorBuilder: (_, _, _) =>
+                          ItemArt(code: node.code, icon: activityIcon(kind), color: color, size: 26),
+                    )
+                  else
+                    ItemArt(
+                      code: node.code,
+                      icon: locked ? Icons.lock_outline : activityIcon(kind),
+                      color: color,
+                      size: 26,
+                    ),
                   const SizedBox(width: Space.md),
                   Expanded(
                     child: Text(

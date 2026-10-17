@@ -11,6 +11,7 @@ class Recipe {
     required this.output,
     required this.outputStack,
     required this.xpReward,
+    this.info,
   });
 
   factory Recipe.fromJson(Map<String, dynamic> j) {
@@ -27,6 +28,7 @@ class Recipe {
       output: j['output_template_code'] as String,
       outputStack: n('output_stack'),
       xpReward: n('profession_xp_reward'),
+      info: j['output'] is Map<String, dynamic> ? ItemInfo.fromJson(j['output'] as Map<String, dynamic>) : null,
     );
   }
 
@@ -40,6 +42,57 @@ class Recipe {
   final String output;
   final int outputStack;
   final int xpReward;
+
+  /// What the recipe makes; null when the server sent no details.
+  final ItemInfo? info;
+}
+
+/// A recipe output's properties (GET /v1/recipes `output`).
+class ItemInfo {
+  const ItemInfo({
+    required this.itemClass,
+    required this.itemSubclass,
+    this.minLevel = 1,
+    this.equipSlot,
+    this.classRestriction,
+    this.bonuses = const [],
+    this.healHp = 0,
+    this.weightGrams = 0,
+    this.maxStack = 1,
+  });
+
+  factory ItemInfo.fromJson(Map<String, dynamic> j) {
+    int n(String k) => (j[k] as num?)?.toInt() ?? 0;
+    final raw = j['stat_bonuses'];
+    return ItemInfo(
+      itemClass: j['item_class'] as String? ?? '',
+      itemSubclass: j['item_subclass'] as String? ?? '',
+      minLevel: n('min_level'),
+      equipSlot: j['equip_slot'] as String?,
+      classRestriction: j['class_restriction'] as String?,
+      weightGrams: n('weight_grams'),
+      maxStack: n('max_stack'),
+      healHp: switch (j['use_effect']) {
+        {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
+      bonuses: [
+        if (raw is List)
+          for (final b in raw.whereType<Map<String, dynamic>>())
+            StatBonus(b['kind'] as String? ?? '', b['target'] as String? ?? '', (b['amount'] as num?)?.toDouble() ?? 0),
+      ],
+    );
+  }
+
+  final String itemClass;
+  final String itemSubclass;
+  final int minLevel;
+  final String? equipSlot;
+  final String? classRestriction;
+  final List<StatBonus> bonuses;
+  final int healHp;
+  final int weightGrams;
+  final int maxStack;
 }
 
 /// A learned profession's progress.

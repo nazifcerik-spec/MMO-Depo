@@ -88,6 +88,10 @@ class Loot {
   List<LootStack> get stacks => stackLoot(items);
 }
 
+/// The animal a hunting resource comes from: `wolf_pelt` → `wolf`
+/// (its picture is `assets/animals/wolf.png`).
+String huntAnimal(String nodeCode) => nodeCode.replaceFirst(RegExp(r'_(pelt|hide|feather|scale)$'), '');
+
 /// One resource of a gathering profession (DD-244).
 class GatherNode {
   const GatherNode({required this.code, required this.level, required this.tier});

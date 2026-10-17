@@ -13,11 +13,25 @@ import (
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/item"
 )
 
 type Handler struct {
-	svc *Service
-	log *slog.Logger
+	svc   *Service
+	log   *slog.Logger
+	items ItemCatalog // nil = recipes without output details
+}
+
+// ItemCatalog describes recipe outputs (item.Service satisfies).
+type ItemCatalog interface {
+	Catalog() *item.Catalog
+}
+
+// WithItems adds each recipe's output properties to GET /recipes, so the
+// workshop can show what an item does before it is made.
+func (h *Handler) WithItems(c ItemCatalog) *Handler {
+	h.items = c
+	return h
 }
 
 func NewHandler(svc *Service, logger *slog.Logger) *Handler {
@@ -46,11 +60,21 @@ func (h *Handler) Recipes(w http.ResponseWriter, r *http.Request) {
 	filterProf := r.URL.Query().Get("profession")
 	all := h.svc.ListRecipes()
 	out := make([]map[string]any, 0, len(all))
+	var cat *item.Catalog
+	if h.items != nil {
+		cat = h.items.Catalog()
+	}
 	for _, rec := range all {
 		if filterProf != "" && rec.ProfessionCode != filterProf {
 			continue
 		}
-		out = append(out, recipeRow(rec))
+		row := recipeRow(rec)
+		if cat != nil {
+			if t, err := cat.Get(rec.OutputTemplateCode); err == nil {
+				row["output"] = outputRow(t)
+			}
+		}
+		out = append(out, row)
 	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "recipes": out})
 }
@@ -172,6 +196,27 @@ func recipeRow(r Recipe) map[string]any {
 		"output_stack":         r.OutputStack,
 		"profession_xp_reward": r.ProfessionXPReward,
 	}
+}
+
+// outputRow is what a recipe makes: class, requirements, bonuses, effect.
+func outputRow(t item.Template) map[string]any {
+	row := map[string]any{
+		"item_class":        t.ItemClass,
+		"item_subclass":     t.ItemSubclass,
+		"min_level":         t.MinLevel,
+		"base_value_copper": t.BaseValueCopper,
+		"weight_grams":      t.BaseWeightG,
+		"max_stack":         t.MaxStack,
+		"equip_slot":        t.EquipSlot,
+		"class_restriction": t.ClassRestriction,
+	}
+	if len(t.StatBonuses) > 0 {
+		row["stat_bonuses"] = json.RawMessage(t.StatBonuses)
+	}
+	if t.UseEffect != nil {
+		row["use_effect"] = t.UseEffect
+	}
+	return row
 }
 
 func writeErr(w http.ResponseWriter, r *http.Request, err error) {

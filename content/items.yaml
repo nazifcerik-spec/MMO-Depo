@@ -34,7 +34,7 @@ items:
     base_value_copper: 9
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
 
   - code: yew_log
@@ -45,7 +45,7 @@ items:
     base_value_copper: 30
     base_weight_g: 1000
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
 
   # Retired by DD-244 (not in the gathering tables): linseed, mandrake,
@@ -58,7 +58,7 @@ items:
     base_value_copper: 7
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
 
   - code: mandrake
@@ -69,7 +69,7 @@ items:
     base_value_copper: 12
     base_weight_g: 50
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
 
   - code: king_bloom
@@ -80,7 +80,7 @@ items:
     base_value_copper: 60
     base_weight_g: 60
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
 
   # --- Smelting bars (DD-243, DD-244): ore + coal at the furnace ---
@@ -92,7 +92,7 @@ items:
     base_value_copper: 5458
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -104,7 +104,7 @@ items:
     base_value_copper: 4082
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -116,7 +116,7 @@ items:
     base_value_copper: 3058
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -128,7 +128,7 @@ items:
     base_value_copper: 1830
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -140,7 +140,7 @@ items:
     base_value_copper: 1376
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -152,7 +152,7 @@ items:
     base_value_copper: 1030
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -164,7 +164,7 @@ items:
     base_value_copper: 586
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -176,7 +176,7 @@ items:
     base_value_copper: 442
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -188,7 +188,7 @@ items:
     base_value_copper: 336
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -200,7 +200,7 @@ items:
     base_value_copper: 248
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -212,7 +212,7 @@ items:
     base_value_copper: 190
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -224,7 +224,7 @@ items:
     base_value_copper: 147
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -236,7 +236,7 @@ items:
     base_value_copper: 86
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -248,7 +248,7 @@ items:
     base_value_copper: 74
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -260,7 +260,7 @@ items:
     base_value_copper: 64
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -272,7 +272,7 @@ items:
     base_value_copper: 58
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -284,7 +284,7 @@ items:
     base_value_copper: 48
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -296,7 +296,7 @@ items:
     base_value_copper: 38
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -308,7 +308,7 @@ items:
     base_value_copper: 29
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -320,7 +320,7 @@ items:
     base_value_copper: 26
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -332,7 +332,7 @@ items:
     base_value_copper: 26
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -344,7 +344,7 @@ items:
     base_value_copper: 22
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -356,7 +356,7 @@ items:
     base_value_copper: 22
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 
@@ -368,7 +368,7 @@ items:
     base_value_copper: 19
     base_weight_g: 500
     stackable: true
-    max_stack: 99
+    max_stack: 999
     bind_kind: boe
     affixable: false
 

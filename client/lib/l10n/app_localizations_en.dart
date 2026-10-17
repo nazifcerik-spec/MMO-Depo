@@ -723,6 +723,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get learn => 'Learn';
 
   @override
+  String recipeCount(int count) {
+    return '$count recipes';
+  }
+
+  @override
+  String get itemType => 'Type';
+
+  @override
+  String get stackSize => 'Stack';
+
+  @override
+  String get skillXpReward => 'Skill XP';
+
+  @override
   String get learnHint => 'Learn this profession to unlock its recipes.';
 
   @override

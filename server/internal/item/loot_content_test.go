@@ -17,6 +17,7 @@ func TestShippedGatheringTables(t *testing.T) {
 	var tmpls []item.Template
 	for _, it := range p.Items {
 		if it.Gather != nil {
+			require.Equal(t, int32(999), it.MaxStack, "%s: gathered stacks hold 999", it.Code)
 			tmpls = append(tmpls, item.Template{Code: it.Code, GatherKind: it.Gather.Kind,
 				GatherLevel: int16(it.Gather.Level), GatherTier: int16(it.Gather.Tier)})
 		}

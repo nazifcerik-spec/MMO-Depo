@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:otter/app/app.dart';
 import 'package:otter/features/activity/activity_view.dart';
+import 'package:otter/features/activity/activity_models.dart';
+import 'package:otter/features/inventory/item_images.dart';
 import 'package:otter/core/token_store.dart';
 import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/character/models.dart';
@@ -215,6 +217,20 @@ void main() {
     expect(find.text('Choose an activity'), findsOneWidget);
     expect(be.activeActivity, isNull);
     expect(be.sheetGets, greaterThan(sheetsBefore), reason: 'reveal bumps other tabs');
+  });
+
+  testWidgets('hunting resources show the animal when its picture ships', (tester) async {
+    ItemImages.animals = {'forest_rat'};
+    addTearDown(() => ItemImages.animals = const {});
+    await _inGame(tester);
+    await tester.tap(find.text('Gather'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Hunting'));
+    await tester.pumpAndSettle();
+    expect(huntAnimal('forest_rat_pelt'), 'forest_rat');
+    expect(huntAnimal('dragon_scale'), 'dragon');
+    final img = tester.widget<Image>(find.byType(Image).first);
+    expect(((img.image as ResizeImage).imageProvider as AssetImage).assetName, 'assets/animals/forest_rat.png');
   });
 
   testWidgets('abandon asks first and forfeits', (tester) async {
@@ -504,6 +520,18 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Learn').first);
     await tester.pumpAndSettle();
     expect(be.skills, {'alchemy': 1});
+    expect(find.text('Linseed 3/2'), findsNothing, reason: 'recipes live on the profession page');
+    expect(find.text('2 recipes'), findsOneWidget);
+
+    // Tapping the profession opens its recipes; tapping a name unfolds it.
+    await tester.tap(find.text('Alchemy'));
+    await tester.pumpAndSettle();
+    expect(find.text('Restores 60 HP'), findsNothing);
+    await tester.tap(find.text('Potion Hp Small'));
+    await tester.pumpAndSettle();
+    expect(find.text('Restores 60 HP'), findsOneWidget);
+    expect(find.text('Requires level'), findsOneWidget);
+    expect(find.text('Stack'), findsOneWidget);
     expect(find.text('Linseed 3/2'), findsOneWidget);
     expect(find.text('Needs skill 3'), findsOneWidget);
 
@@ -1064,6 +1092,8 @@ void main() {
       'rarity': 'common',
     });
     await tester.tap(find.byIcon(Icons.handyman_outlined).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Alchemy'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Craft').first);
     await tester.pumpAndSettle();

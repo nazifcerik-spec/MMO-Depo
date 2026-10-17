@@ -46,6 +46,17 @@ func TestHTTPGatheringProfessions(t *testing.T) {
 	after := items(p.ok("GET", p.path("/gathering"), nil), "professions")[0]
 	require.Equal(t, gather["level"], after["level"], "a replay grants no XP")
 
+	// Recipes describe what they make (workshop item details).
+	var helm map[string]any
+	for _, r := range items(p.ok("GET", "/v1/recipes?profession=blacksmithing", nil), "recipes") {
+		if r["code"] == "recipe_helm_leather" {
+			helm = r["output"].(map[string]any)
+		}
+	}
+	require.NotNil(t, helm)
+	require.Equal(t, "helm", helm["equip_slot"])
+	require.NotEmpty(t, helm["stat_bonuses"])
+
 	// Gathering professions are not learned by hand.
 	p.fail("POST", p.path("/professions/learn"), map[string]any{"profession_code": "mining"}, 404, "E_UNKNOWN_PROFESSION")
 }
