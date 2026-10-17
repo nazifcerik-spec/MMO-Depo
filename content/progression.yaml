@@ -1,0 +1,196 @@
+# Character progression (DD-250): XP curve, level reward rules, class
+# promotion tree, talent trees. Skill unlocks per class node live in
+# skills.yaml (spec + unlock_level). Loaded by contentpack and installed into
+# the leveling engine; nothing here is hardcoded in gameplay code.
+
+level_cap: 1000
+
+# minutes(L) = a + b·L^c ; xp(L→L+1) = ceil(minutes × baseline).
+# kind: table + table: [ ... 999 values ... ] replaces the formula.
+xp_curve:
+  kind: formula
+  baseline_xp_per_minute: 1000
+  a: 3.75006670
+  b: 0.00121846427
+  c: 1.69337967
+
+xp_multiplier: 1.0            # global XP modifier (events can raise it later)
+afk_combat_xp_per_minute: 1000 # AFK hunts/dungeons pay this per minute of fighting
+
+attribute_points:
+  every: 2
+  amount: 1
+  milestones: { 100: 5, 300: 5, 600: 5, 850: 5, 1000: 5 }   # 500 + 25 = 525
+
+talent_points: { from: 100, every: 20, until: 980, amount: 1 } # 45 total
+talent_tree_points: 25
+
+titles:
+  100: veteran
+  200: elite
+  300: champion
+  400: hero
+  500: legendary
+  600: mythic
+  700: ancient
+  800: ascendant
+  900: immortal
+  1000: eternal
+
+milestones: { awakening: 600, ultimate: 700, capstone: 850, mastery: 1000 }
+
+# Raw attribute points count at decreasing effectiveness (combat scaling only;
+# requirements use raw values).
+attribute_scaling:
+  - { up_to: 100, effectiveness: 1.0 }
+  - { up_to: 250, effectiveness: 0.8 }
+  - { up_to: 400, effectiveness: 0.55 }
+  - { up_to: 0,   effectiveness: 0.35 }
+
+caps: { crit_pct: 60, evasion_pct: 40, block_pct: 60, dmg_reduction_pct: 75, hit_pct: 100 }
+
+classes:
+  - code: warrior
+    name_key: class.warrior
+    role_tags: [melee, physical]
+    resource: { kind: rage, max: 100, per_hit: 8 }
+    base_stats: { strength: 10, vitality: 10, dexterity: 7, intelligence: 4, wisdom: 5, luck: 5 }
+    # Reference formulas (DD-250 §12). Bases and per-level terms (not in the
+    # reference) are tuned by the balance simulation (internal/balance): with
+    # allocatable points instead of automatic growth, Warrior still meets the
+    # hunt/dungeon targets of the level-1..25 content.
+    derived:
+      hp_base: 150
+      hp_per_level: 16
+      hp_per_vit: 18
+      attack_base: 15
+      armor_base: 8
+      attack_per_level: 4.0
+      attack_per_str: 2.2
+      attack_per_dex: 0.4
+      armor_per_level: 1.8
+      armor_per_vit: 1.2
+      crit_base: 5
+      crit_per_dex: 0.05
+      hit_base: 90
+      hit_per_dex: 0.5
+      dodge_per_dex: 0.04
+      block_per_str: 0.03
+    equipment_permissions: [sword, axe, mace, spear, greatsword, shield]
+
+  - code: guardian
+    parent: warrior
+    required_level: 100
+    name_key: class.guardian
+    role_tags: [tank, defense, sustain, threat]
+    equipment_permissions: [sword, axe, mace, shield]
+
+  - code: executioner
+    parent: warrior
+    required_level: 100
+    name_key: class.executioner
+    role_tags: [physical_dps, execute, aggressive]
+    equipment_permissions: [sword, axe, mace, spear, greatsword]
+
+  - code: iron_fortress
+    parent: guardian
+    required_level: 300
+    name_key: class.iron_fortress
+    role_tags: [pure_tank, block, damage_reduction, barrier]
+    equipment_permissions: [sword, mace, shield]
+    mastery:
+      title: the_unbreakable
+      badge: badge_iron_fortress
+      frame: frame_iron_fortress
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+        - { kind: mult_add, target: defense, amount: 0.02 }
+
+  - code: warlord
+    parent: guardian
+    required_level: 300
+    name_key: class.warlord
+    role_tags: [tank, bruiser, party_support, command]
+    equipment_permissions: [sword, axe, mace, shield, spear]
+    mastery:
+      title: lord_of_battle
+      badge: badge_warlord
+      frame: frame_warlord
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: berserker
+    parent: executioner
+    required_level: 300
+    name_key: class.berserker
+    role_tags: [high_risk_dps, low_hp_scaling, lifesteal, attack_speed]
+    equipment_permissions: [axe, greatsword, mace]
+    mastery:
+      title: bloodbound
+      badge: badge_berserker
+      frame: frame_berserker
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: weapon_master
+    parent: executioner
+    required_level: 300
+    name_key: class.weapon_master
+    role_tags: [sustained_dps, weapon_techniques, combo, adaptive]
+    equipment_permissions: [sword, axe, mace, spear, greatsword]
+    mastery:
+      title: grandmaster_of_arms
+      badge: badge_weapon_master
+      frame: frame_weapon_master
+      modifiers:
+        - { kind: flat, target: crit_dmg_pct, amount: 2 }
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+# Talent points start at 100. Each tree: 25 spendable points + one capstone
+# (needs character level 850 and 25 points in its tree; costs 1 point).
+talent_trees:
+  - code: warrior_defense
+    class: warrior
+    talents:
+      - { code: warrior_defense_toughness, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: warrior_defense_plating,   max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: warrior_defense_shieldwork, max_rank: 5, modifiers: [{ kind: flat, target: block_pct, amount: 1 }] }
+      - { code: warrior_defense_steadfast, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: warrior_defense_riposte,   max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.01 }] }
+      - code: warrior_defense_living_fortress
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+          - { kind: flat, target: block_pct, amount: 5 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: warrior_arms
+    class: warrior
+    talents:
+      - { code: warrior_arms_weapon_focus, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: warrior_arms_accuracy,     max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: warrior_arms_precision,    max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: warrior_arms_combo,        max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 2 }] }
+      - { code: warrior_arms_footwork,     max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - code: warrior_arms_perfect_technique
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: crit_pct, amount: 5 }
+          - { kind: mult_add, target: attack, amount: 0.05 }
+
+  - code: warrior_blood
+    class: warrior
+    talents:
+      - { code: warrior_blood_cruelty,     max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: warrior_blood_fury,        max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.01 }] }
+      - { code: warrior_blood_leech,       max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: warrior_blood_executioner, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: warrior_blood_desperation, max_rank: 5, modifiers: [{ kind: flat, target: missing_hp_dmg_pct, amount: 3 }] }
+      - code: warrior_blood_frenzy
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: lifesteal_pct, amount: 5 }
+          - { kind: mult_add, target: attack, amount: 0.05 }

@@ -1303,6 +1303,88 @@ void main() {
     expect(find.text('Lvl 6+'), findsOneWidget, reason: 'level 3 rogue: eviscerate still locked');
   });
 
+  testWidgets('leveling: promotion at the gate, attributes, talents, MAX at the cap', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.leveling = {
+      'level': 100,
+      'level_cap': 1000,
+      'xp': 0,
+      'xp_to_next': 6719,
+      'maxed': false,
+      'class_code': 'warrior',
+      'spec_code': 'warrior',
+      'path': ['warrior'],
+      'promotion': {
+        'available': true,
+        'overflow_xp': 25000,
+        'choices': [
+          {
+            'code': 'guardian',
+            'role_tags': ['tank'],
+          },
+          {
+            'code': 'executioner',
+            'role_tags': ['physical_dps'],
+          },
+        ],
+      },
+      'attributes': {
+        'available': 3,
+        'raw': {'strength': 10, 'vitality': 10, 'dexterity': 7, 'intelligence': 4, 'wisdom': 5, 'luck': 5},
+      },
+      'talents': {'available': 2},
+      'title': 'veteran',
+      'mastery': {'level': 1000},
+      'next_milestone': {'level': 100, 'kind': 'promotion'},
+    };
+    be.sheetGets = 0;
+    await tester.drag(_list, const Offset(0, 300)); // pull to refresh: the card loads
+    await tester.pumpAndSettle();
+    expect(find.text('PROMOTION AVAILABLE'), findsOneWidget);
+    expect(find.text('25000 XP is waiting for your choice'), findsOneWidget);
+
+    await tester.tap(find.text('PROMOTION AVAILABLE'));
+    await tester.pumpAndSettle();
+    expect(find.text('Guardian'), findsOneWidget);
+    expect(find.text('Executioner'), findsOneWidget);
+    await tester.tap(find.text('Guardian'));
+    await tester.pumpAndSettle();
+    expect(find.text('Become Guardian?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Choose'));
+    await tester.pumpAndSettle();
+    expect(be.promotedTo, 'guardian');
+    expect(find.text('PROMOTION AVAILABLE'), findsNothing, reason: 'the card reloads after choosing');
+
+    await tester.tap(find.text('Attributes · 3 points'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('+ Strength'));
+    await tester.tap(find.byTooltip('+ Strength'));
+    await tester.tap(find.byTooltip('+ Vitality'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Save'));
+    await tester.pumpAndSettle();
+    expect(be.lastAllocation, {'strength': 2, 'vitality': 1});
+
+    await tester.tap(find.text('Talents · 2 points'));
+    await tester.pumpAndSettle();
+    expect(find.text('Needs level 850 and 25 points in this tree'), findsOneWidget, reason: 'capstone locked');
+    await tester.tap(find.byIcon(Icons.add_circle_outline).first);
+    await tester.pumpAndSettle();
+    expect(be.learnedTalents, ['warrior_defense_toughness']);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    be.leveling!['level'] = 1000;
+    be.leveling!['maxed'] = true;
+    be.leveling!['xp_to_next'] = 0;
+    be.leveling!['mastery'] = {'level': 1000, 'unlocked': true, 'title': 'the_unbreakable'};
+    be.leveling!.remove('next_milestone');
+    await tester.drag(_list, const Offset(0, 300));
+    await tester.pumpAndSettle();
+    expect(find.text('MAX'), findsOneWidget);
+    expect(find.text('Class mastery: The Unbreakable'), findsOneWidget);
+  });
+
   testWidgets('Turkish locale renders translated copy', (tester) async {
     await _boot(tester, FakeBackend(), locale: const Locale('tr'));
     expect(find.text('Giriş yap'), findsOneWidget);

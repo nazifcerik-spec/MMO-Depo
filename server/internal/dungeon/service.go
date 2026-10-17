@@ -13,8 +13,10 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/progression"
+	"math"
 )
 
 // --- Ports ------------------------------------------------------------------
@@ -39,7 +41,7 @@ type ItemGranter interface {
 
 // XPGranter — character.Service.GrantXP satisfies.
 type XPGranter interface {
-	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64) (*character.XPGrantResult, error)
+	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64, src character.XPSource) (*character.XPGrantResult, error)
 }
 
 // SheetFetcher — character.Service satisfies.
@@ -300,7 +302,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, fmt.Errorf("dungeon: unmarshal snapshot: %w", err)
 	}
 
-	run := Roll(c.Seed, snapshot, tmpl, s.mobs.Catalog(), combat.DefaultMaxTurns, s.rngNew)
+	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl)},
+		combat.DefaultMaxTurns, s.rngNew)
 
 	// Item mint — same idempotency pattern as hunt (source_ref_id = contract.ID).
 	// Gear (DD-229): a GearDropPct chance per wave kill, and a guaranteed,
@@ -408,7 +411,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 	var xpResult *character.XPGrantResult
 	if s.xp != nil && run.TotalXP > 0 {
-		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, run.TotalXP)
+		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, run.TotalXP, character.XPSource{
+			Kind: "dungeon", ID: c.ID.String(), Metadata: map[string]any{"dungeon": c.DungeonCode, "cleared": run.Cleared}})
 		if err != nil {
 			s.log.WarnContext(ctx, "dungeon: xp grant failed (contract already revealed, no retry)",
 				slog.String("run", c.ID.String()), slog.String("err", err.Error()))
@@ -502,4 +506,27 @@ func seedFromIDs(runID, characterID uuid.UUID) int64 {
 		acc *= 1099511628211
 	}
 	return int64(acc)
+}
+
+// afkXPMobs pays every kill the AFK combat rate (DD-250) instead of the
+// mob's content XP.
+type afkXPMobs struct {
+	inner MobLookup
+	xp    int32
+}
+
+func (m afkXPMobs) Get(code string) (combat.Mob, bool) {
+	mob, ok := m.inner.Get(code)
+	mob.XPReward = m.xp
+	return mob, ok
+}
+
+// afkXPPerKill spreads the run's minutes × afk_combat_xp_per_minute over its
+// encounters.
+func afkXPPerKill(durationSecs int32, tmpl Template) int32 {
+	n := tmpl.TotalEncounters()
+	if n <= 0 {
+		return 0
+	}
+	return int32(math.Round(leveling.Current().AFKCombatXPPerMinute * float64(durationSecs) / 60 / float64(n)))
 }

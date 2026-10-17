@@ -53,6 +53,8 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 		&c.SpecCode, &c.Level, &c.XP, &state, &c.LocationID, &locRegion,
 		&c.CreatedAt, &c.UpdatedAt, &c.LastPlayedAt, &c.DeleteGraceAt, &c.Version,
 		&c.HPStored, &c.HPUpdatedAt,
+		&c.Alloc.Strength, &c.Alloc.Vitality, &c.Alloc.Dexterity, &c.Alloc.Intelligence, &c.Alloc.Wisdom, &c.Alloc.Luck,
+		&c.OverflowXP, &c.PostCapXP,
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -70,7 +72,9 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 const baseSelect = `SELECT id, account_id, name, name_normalized, race_code, class_code,
 	                       spec_code, level, xp, state, location_id, location_region_code,
 	                       created_at, updated_at, last_played_at, delete_grace_at, version,
-	                       hp_current, hp_updated_at
+	                       hp_current, hp_updated_at,
+	                       attr_str, attr_vit, attr_dex, attr_int, attr_wis, attr_luck,
+	                       promotion_overflow_xp, postcap_xp
 	                  FROM character.character`
 
 func (r *PgRepo) Get(ctx context.Context, id uuid.UUID) (*Character, error) {
@@ -159,64 +163,6 @@ func (r *PgRepo) SetDeleteGrace(ctx context.Context, id uuid.UUID, expiresAt tim
 // bracket in application code (Postgres has no native "compute next threshold"),
 // then writes level+xp+version in one UPDATE. Repeated rollovers happen inside
 // the loop so a huge XP grant can leap several levels at once.
-func (r *PgRepo) AddXP(ctx context.Context, id uuid.UUID, delta int64) (*Character, bool, error) {
-	if delta < 0 {
-		return nil, false, ErrInvalidXP
-	}
-	tx, err := r.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
-	if err != nil {
-		return nil, false, err
-	}
-	defer func() { _ = tx.Rollback(ctx) }()
-
-	var (
-		level int16
-		xp    int64
-	)
-	err = tx.QueryRow(ctx, `SELECT level, xp FROM character.character WHERE id=$1 FOR UPDATE`, id).
-		Scan(&level, &xp)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, false, ErrNotFound
-		}
-		return nil, false, err
-	}
-
-	leveled := false
-	xp += delta
-	for {
-		needed := XPToNext(int(level))
-		if xp < needed || int(level) >= LevelCap {
-			break
-		}
-		xp -= needed
-		level++
-		leveled = true
-	}
-	// At cap the excess XP is intentionally kept — the client can still show
-	// "full bar"; Phase 02 prestige/paragon consumes the carry.
-
-	_, err = tx.Exec(ctx, `
-		UPDATE character.character
-		   SET level = $2, xp = $3, updated_at = now(), version = version + 1
-		 WHERE id = $1`, id, level, xp)
-	if err != nil {
-		return nil, false, err
-	}
-	if err := tx.Commit(ctx); err != nil {
-		return nil, false, err
-	}
-	// Re-fetch to return a full aggregate (state, timestamps, version).
-	c, gerr := r.Get(ctx, id)
-	if gerr != nil {
-		return nil, false, gerr
-	}
-	return c, leveled, nil
-}
-
-// SetLocation writes location_region_code. Passing empty string clears the
-// column (NULL) — reserved for admin/reset flows; travel.Complete never
-// clears, only assigns the destination.
 func (r *PgRepo) SetLocation(ctx context.Context, id uuid.UUID, regionCode string) error {
 	var val any
 	if regionCode == "" {

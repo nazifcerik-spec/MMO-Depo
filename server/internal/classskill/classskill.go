@@ -1,6 +1,7 @@
-// Package classskill serves class skills v1 (Sprint 42, DD-222): passives
-// feed the sheet modifier stack, actives are auto-cast in combat. What a
-// character has follows from class + level alone — no per-character state.
+// Package classskill serves class skills (Sprint 42, DD-222; DD-250):
+// passives feed the sheet modifier stack, actives are auto-cast in combat.
+// What a character has follows from its class path (base class → promotions)
+// and level alone — no per-character state.
 package classskill
 
 import (
@@ -18,6 +19,7 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
 
@@ -34,6 +36,22 @@ type Skill struct {
 	MPCost        int32            `json:"mp_cost,omitempty"`
 	CooldownTurns int              `json:"cooldown_turns,omitempty"`
 	Modifiers     []skill.Modifier `json:"modifiers,omitempty"`
+
+	// DD-250: owning class node (base class or promotion) and data-driven
+	// activation; the same definition serves manual and AFK play.
+	Spec   string `json:"spec"`
+	Config Config `json:"config"`
+}
+
+// Config is a skill's activation data (content.class_skill.config).
+type Config struct {
+	Category       string   `json:"category,omitempty"`        // skill | passive | awakening | ultimate
+	ActivationMode string   `json:"activation_mode,omitempty"` // active | stance | passive
+	SelfHPBelow    int32    `json:"self_hp_below,omitempty"`   // auto-trigger: own HP% <=
+	TargetHPBelow  int32    `json:"target_hp_below,omitempty"` // auto-trigger: target HP% <=
+	ResourceGain   int32    `json:"resource_gain,omitempty"`
+	DurationTurns  int      `json:"duration_turns,omitempty"`
+	Requires       []string `json:"requires,omitempty"` // equipment tags (e.g. shield)
 }
 
 // Catalog groups skills per class; actives in cast-priority order.
@@ -51,18 +69,38 @@ func NewCatalog(list []Skill) *Catalog {
 	})
 	c := &Catalog{byClass: map[string][]Skill{}}
 	for _, s := range list {
+		if s.Spec == "" {
+			s.Spec = s.Class
+		}
 		c.byClass[s.Class] = append(c.byClass[s.Class], s)
 	}
 	return c
 }
 
-// ForClass lists every skill of a class (locked ones included).
+// ForClass lists every skill of a base class (all branches, locked ones included).
 func (c *Catalog) ForClass(class string) []Skill { return c.byClass[class] }
 
-// Passives returns the modifiers of the passives unlocked at level.
-func (c *Catalog) Passives(class string, level int) []skill.Modifier {
+// owned: skills of the base class whose owning node is on the path.
+func (c *Catalog) owned(path []string) []Skill {
+	if len(path) == 0 {
+		return nil
+	}
+	var out []Skill
+	for _, s := range c.byClass[path[0]] {
+		for _, p := range path {
+			if s.Spec == p {
+				out = append(out, s)
+				break
+			}
+		}
+	}
+	return out
+}
+
+// Passives returns the modifiers of the passives the path has unlocked at level.
+func (c *Catalog) Passives(path []string, level int) []skill.Modifier {
 	var out []skill.Modifier
-	for _, s := range c.byClass[class] {
+	for _, s := range c.owned(path) {
 		if s.Kind == "passive" && int(s.UnlockLevel) <= level {
 			out = append(out, s.Modifiers...)
 		}
@@ -70,16 +108,30 @@ func (c *Catalog) Passives(class string, level int) []skill.Modifier {
 	return out
 }
 
-// Actives returns the unlocked active skills in cast-priority order.
-func (c *Catalog) Actives(class string, level int) []combat.Skill {
+// Actives returns the path's unlocked active skills in cast-priority order.
+func (c *Catalog) Actives(path []string, level int) []combat.Skill {
 	var out []combat.Skill
-	for _, s := range c.byClass[class] {
+	for _, s := range c.owned(path) {
 		if s.Kind == "active" && int(s.UnlockLevel) <= level {
 			out = append(out, combat.Skill{Code: s.Code, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost,
-				CooldownTurns: s.CooldownTurns})
+				CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: s.Config.SelfHPBelow,
+				TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns})
 		}
 	}
 	return out
+}
+
+// pathOf is a sheet's class path from the leveling engine.
+func pathOf(sheet *character.Sheet) []string {
+	spec := sheet.Class
+	if sheet.Spec != nil && *sheet.Spec != "" {
+		spec = *sheet.Spec
+	}
+	path := leveling.Current().Path(spec)
+	if len(path) == 0 || path[0] != sheet.Class {
+		return []string{sheet.Class}
+	}
+	return path
 }
 
 // Service holds the hot-swappable catalog.
@@ -100,16 +152,20 @@ func (s *Service) Catalog() *Catalog { return s.cat.Load() }
 func (s *Service) Reload(ctx context.Context) error {
 	rows, err := s.pool.Query(ctx, `
 		SELECT code, display_name_key, class_code, unlock_level, kind, sort_order,
-		       COALESCE(effect, ''), power, mp_cost, cooldown_turns, modifiers
+		       COALESCE(effect, ''), power, mp_cost, cooldown_turns, modifiers,
+		       COALESCE(spec_code, ''), config
 		  FROM content.class_skill`)
 	if err != nil {
 		return err
 	}
 	list, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (Skill, error) {
 		var k Skill
-		var mods []byte
+		var mods, cfg []byte
 		if err := r.Scan(&k.Code, &k.NameKey, &k.Class, &k.UnlockLevel, &k.Kind, &k.SortOrder,
-			&k.Effect, &k.Power, &k.MPCost, &k.CooldownTurns, &mods); err != nil {
+			&k.Effect, &k.Power, &k.MPCost, &k.CooldownTurns, &mods, &k.Spec, &cfg); err != nil {
+			return k, err
+		}
+		if err := json.Unmarshal(cfg, &k.Config); err != nil {
 			return k, err
 		}
 		return k, json.Unmarshal(mods, &k.Modifiers)
@@ -122,14 +178,32 @@ func (s *Service) Reload(ctx context.Context) error {
 }
 
 // PassiveModifiers is a skill.ModifierSource: unlocked passives for the
-// sheet's class and level.
+// sheet's class path and level.
 func (s *Service) PassiveModifiers(_ context.Context, _ uuid.UUID, sheet character.Sheet) ([]skill.Modifier, error) {
-	return s.cat.Load().Passives(sheet.Class, sheet.Level), nil
+	return s.cat.Load().Passives(pathOf(&sheet), sheet.Level), nil
 }
 
 // ActiveSkills gives combat the unlocked actives for a sheet (hunt/dungeon).
 func (s *Service) ActiveSkills(sheet *character.Sheet) []combat.Skill {
-	return s.cat.Load().Actives(sheet.Class, sheet.Level)
+	return s.cat.Load().Actives(pathOf(sheet), sheet.Level)
+}
+
+// Unlocks lists every skill as a leveling unlock (contentpack installs them
+// into the progression engine for milestones and unlock events).
+func Unlocks(list []Skill) []leveling.Unlock {
+	out := make([]leveling.Unlock, 0, len(list))
+	for _, s := range list {
+		spec := s.Spec
+		if spec == "" {
+			spec = s.Class
+		}
+		cat := s.Config.Category
+		if cat == "" {
+			cat = map[bool]string{true: "passive", false: "skill"}[s.Kind == "passive"]
+		}
+		out = append(out, leveling.Unlock{Code: s.Code, Spec: spec, Level: int(s.UnlockLevel), Category: cat})
+	}
+	return out
 }
 
 // List serves GET /v1/classes/{class}/skills (public; content only).

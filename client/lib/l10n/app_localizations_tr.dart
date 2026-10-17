@@ -183,7 +183,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get statVit => 'DAY';
 
   @override
-  String get statCha => 'KAR';
+  String get statCha => 'BİL';
 
   @override
   String get statLuck => 'ŞANS';
@@ -1778,5 +1778,120 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String rewardLevelUp(int level) {
     return 'Seviye $level!';
+  }
+
+  @override
+  String get levelMax => 'MAKS';
+
+  @override
+  String get promotionAvailable => 'TERFİ HAZIR';
+
+  @override
+  String get promotionChoose => 'Seç';
+
+  @override
+  String promotionConfirm(String name) {
+    return '$name olunsun mu?';
+  }
+
+  @override
+  String get promotionBody => 'Bu seçim sınıfını kalıcı olarak belirler.';
+
+  @override
+  String nextMilestone(int level, String what) {
+    return 'Sıradaki: Sv $level · $what';
+  }
+
+  @override
+  String get msPromotion => 'Sınıf terfisi';
+
+  @override
+  String msAwakening(String name) {
+    return 'Uyanış: $name';
+  }
+
+  @override
+  String msUltimate(String name) {
+    return 'Nihai: $name';
+  }
+
+  @override
+  String get msCapstone => 'Yetenek zirvesi';
+
+  @override
+  String get msMastery => 'Sınıf ustalığı';
+
+  @override
+  String msTitle(String name) {
+    return 'Unvan: $name';
+  }
+
+  @override
+  String estMinutes(int n) {
+    return '~$n dk';
+  }
+
+  @override
+  String estHours(String h) {
+    return '~$h sa';
+  }
+
+  @override
+  String overflowHeld(int xp) {
+    return '$xp XP seçimini bekliyor';
+  }
+
+  @override
+  String attributePointsBtn(int n) {
+    return 'Nitelikler · $n puan';
+  }
+
+  @override
+  String talentPointsBtn(int n) {
+    return 'Yetenekler · $n puan';
+  }
+
+  @override
+  String get talentsTitle => 'Yetenek ağaçları';
+
+  @override
+  String capstoneLocked(int level, int points) {
+    return 'Sv $level ve bu ağaçta $points puan gerekir';
+  }
+
+  @override
+  String masteryUnlocked(String title) {
+    return 'Sınıf ustalığı: $title';
+  }
+
+  @override
+  String get errPromotionUnavailable => 'Bu terfi şu an alınamaz.';
+
+  @override
+  String get errNotEnoughPoints => 'Yeterli puan yok.';
+
+  @override
+  String get errTalentMaxed => 'Bu yetenek zaten en üst kademede.';
+
+  @override
+  String get errCapstoneLocked => 'Zirve yeteneği için seviye ve dolu ağaç gerekir.';
+
+  @override
+  String get errSpecRequirement => 'Uzmanlığın bu eşyayı kullanamaz.';
+
+  @override
+  String get errAttributeRequirement => 'Niteliklerin bu eşya için yetersiz.';
+
+  @override
+  String get errBusyCombat => 'Savaşta, AFK görevde veya zindandayken olmaz.';
+
+  @override
+  String skillGuard(int pct, int turns) {
+    return '$turns tur +%$pct zırh';
+  }
+
+  @override
+  String skillEmpower(int pct, int turns) {
+    return '$turns tur +%$pct saldırı';
   }
 }

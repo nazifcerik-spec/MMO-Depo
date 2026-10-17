@@ -6,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
 import 'app_localizations_tr.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -90,7 +92,7 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('tr')];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('es'), Locale('tr'), Locale('zh')];
 
   /// No description provided for @appTitle.
   ///
@@ -407,7 +409,7 @@ abstract class AppLocalizations {
   /// No description provided for @statAgi.
   ///
   /// In en, this message translates to:
-  /// **'AGI'**
+  /// **'DEX'**
   String get statAgi;
 
   /// No description provided for @statInt.
@@ -425,7 +427,7 @@ abstract class AppLocalizations {
   /// No description provided for @statCha.
   ///
   /// In en, this message translates to:
-  /// **'CHA'**
+  /// **'WIS'**
   String get statCha;
 
   /// No description provided for @statLuck.
@@ -3241,6 +3243,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Level {level}!'**
   String rewardLevelUp(int level);
+
+  /// No description provided for @levelMax.
+  ///
+  /// In en, this message translates to:
+  /// **'MAX'**
+  String get levelMax;
+
+  /// No description provided for @promotionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'PROMOTION AVAILABLE'**
+  String get promotionAvailable;
+
+  /// No description provided for @promotionChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get promotionChoose;
+
+  /// No description provided for @promotionConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Become {name}?'**
+  String promotionConfirm(String name);
+
+  /// No description provided for @promotionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This choice shapes your class for good.'**
+  String get promotionBody;
+
+  /// No description provided for @nextMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Lv {level} · {what}'**
+  String nextMilestone(int level, String what);
+
+  /// No description provided for @msPromotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Class promotion'**
+  String get msPromotion;
+
+  /// No description provided for @msAwakening.
+  ///
+  /// In en, this message translates to:
+  /// **'Awakening: {name}'**
+  String msAwakening(String name);
+
+  /// No description provided for @msUltimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Ultimate: {name}'**
+  String msUltimate(String name);
+
+  /// No description provided for @msCapstone.
+  ///
+  /// In en, this message translates to:
+  /// **'Talent capstone'**
+  String get msCapstone;
+
+  /// No description provided for @msMastery.
+  ///
+  /// In en, this message translates to:
+  /// **'Class mastery'**
+  String get msMastery;
+
+  /// No description provided for @msTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title: {name}'**
+  String msTitle(String name);
+
+  /// No description provided for @estMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'~{n} min'**
+  String estMinutes(int n);
+
+  /// No description provided for @estHours.
+  ///
+  /// In en, this message translates to:
+  /// **'~{h} h'**
+  String estHours(String h);
+
+  /// No description provided for @overflowHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP is waiting for your choice'**
+  String overflowHeld(int xp);
+
+  /// No description provided for @attributePointsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Attributes · {n} points'**
+  String attributePointsBtn(int n);
+
+  /// No description provided for @talentPointsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Talents · {n} points'**
+  String talentPointsBtn(int n);
+
+  /// No description provided for @talentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talents'**
+  String get talentsTitle;
+
+  /// No description provided for @capstoneLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs level {level} and {points} points in this tree'**
+  String capstoneLocked(int level, int points);
+
+  /// No description provided for @masteryUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Class mastery: {title}'**
+  String masteryUnlocked(String title);
+
+  /// No description provided for @errPromotionUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'That promotion is not available.'**
+  String get errPromotionUnavailable;
+
+  /// No description provided for @errNotEnoughPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough points.'**
+  String get errNotEnoughPoints;
+
+  /// No description provided for @errTalentMaxed.
+  ///
+  /// In en, this message translates to:
+  /// **'That talent is already at max rank.'**
+  String get errTalentMaxed;
+
+  /// No description provided for @errCapstoneLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'The capstone needs its level and a full tree.'**
+  String get errCapstoneLocked;
+
+  /// No description provided for @errSpecRequirement.
+  ///
+  /// In en, this message translates to:
+  /// **'Your specialization cannot use this item.'**
+  String get errSpecRequirement;
+
+  /// No description provided for @errAttributeRequirement.
+  ///
+  /// In en, this message translates to:
+  /// **'Your attributes are too low for this item.'**
+  String get errAttributeRequirement;
+
+  /// No description provided for @errBusyCombat.
+  ///
+  /// In en, this message translates to:
+  /// **'Not while in combat, AFK or a dungeon.'**
+  String get errBusyCombat;
+
+  /// No description provided for @skillGuard.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% armor for {turns} turns'**
+  String skillGuard(int pct, int turns);
+
+  /// No description provided for @skillEmpower.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% attack for {turns} turns'**
+  String skillEmpower(int pct, int turns);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -3252,7 +3428,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'tr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'tr', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -3263,8 +3439,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
     case 'tr':
       return AppLocalizationsTr();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

@@ -12,12 +12,16 @@ import (
 // fresh max pool; the level travels along for the level-gap rule (DD-229).
 func TestFromSheet(t *testing.T) {
 	s := &character.Sheet{Level: 7, Primary: character.PrimaryStats{Agility: 100},
+		Derived:   character.DerivedStats{EvasionPct: 40, BlockPct: 8, DmgReductionPct: 3},
 		Resources: character.Resources{HPCurrent: 37, HPMax: 250}}
 	c := FromSheet(s)
 	require.Equal(t, int32(37), c.HPCurrent)
 	require.Equal(t, int32(250), c.HPMax)
 	require.Equal(t, int16(7), c.Level)
-	require.Equal(t, int32(40), c.EvasionPct, "evasion is capped")
+	require.Equal(t, int32(40), c.EvasionPct, "evasion comes from the sheet (capped there)")
+	require.Equal(t, int32(8), c.BlockPct)
+	require.Equal(t, int32(3), c.DmgReductionPct)
+	require.Empty(t, c.Resource, "MP classes")
 }
 
 func TestLevelGap(t *testing.T) {

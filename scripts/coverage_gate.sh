@@ -12,7 +12,8 @@
 #     reads lower than the profile mode).
 #
 #   scripts/coverage_gate.sh lcov client/coverage/lcov.info 80
-#     Total line coverage of an lcov file must be >= the given percent.
+#     Total line coverage of an lcov file must be >= the given percent
+#     (generated lib/l10n/app_localizations*.dart excluded).
 #
 # Thresholds sit ~2 points under the last measured value (docs/testing: "fail
 # on coverage drop > 2%"); raise them when coverage improves, never lower them
@@ -77,8 +78,11 @@ go)
 lcov)
   file=${2:?lcov file required}
   min=${3:?minimum percent required}
+  # Generated localization classes (flutter gen-l10n) are not measured: one
+  # getter per message and language, mostly fallbacks (DD-250).
   awk -F: -v min="$min" '
-    /^LF:/ { lf += $2 } /^LH:/ { lh += $2 }
+    /^SF:/ { skip = ($0 ~ /l10n.app_localizations/) }
+    /^LF:/ && !skip { lf += $2 } /^LH:/ && !skip { lh += $2 }
     END {
       pct = lf ? 100 * lh / lf : 0
       printf "%s total line coverage %.1f%% (min %.1f%%)\n", (pct + 0.0001 < min ? "FAIL" : "ok  "), pct, min

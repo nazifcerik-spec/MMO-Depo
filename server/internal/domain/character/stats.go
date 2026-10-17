@@ -1,8 +1,9 @@
 package character
 
 import (
-	"math"
 	"time"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // PrimaryStats are the six per-character attributes. Full modifier stack (flat
@@ -30,11 +31,21 @@ type Resources struct {
 }
 
 // DerivedStats are computed from PrimaryStats. Values are rounded down.
+// The percent extras (DD-250) come from class formulas, passives, talents
+// and gear; zero for anyone without them.
 type DerivedStats struct {
 	Attack  int `json:"attack"`
 	Defense int `json:"defense"`
 	CritPct int `json:"crit_pct"` // percentage points (5 = 5%)
 	HitPct  int `json:"hit_pct"`
+
+	EvasionPct      int `json:"evasion_pct"`
+	BlockPct        int `json:"block_pct,omitempty"`
+	CritDmgPct      int `json:"crit_dmg_pct,omitempty"`
+	ExecutePct      int `json:"execute_pct,omitempty"`
+	MissingHPDmgPct int `json:"missing_hp_dmg_pct,omitempty"`
+	LifestealPct    int `json:"lifesteal_pct,omitempty"`
+	DmgReductionPct int `json:"dmg_reduction_pct,omitempty"`
 }
 
 // Sheet is the compound "read one screen" response for the character sheet UI.
@@ -53,6 +64,11 @@ type Sheet struct {
 	Derived   DerivedStats `json:"derived"`
 	Resources Resources    `json:"resources"`
 	State     string       `json:"state"`
+
+	// Combat resource of the class (DD-250): "rage" (starts empty, fills on
+	// hits) or empty for the MP-based classes.
+	ResourceKind string `json:"resource_kind,omitempty"`
+	ResourceMax  int    `json:"resource_max,omitempty"`
 }
 
 // classBase is each class's level-1 primary block; growthPerLevel is what
@@ -132,38 +148,69 @@ func deriveResources(p PrimaryStats) Resources {
 // skill.ComputeSheetFor without modifiers).
 func deriveStats(class string, p PrimaryStats) DerivedStats {
 	return DerivedStats{
-		Attack:  mainStatValue(class, p) * 2,
-		Defense: p.Vitality,
-		CritPct: 5 + p.Luck/2,
-		HitPct:  90 + p.Agility/2,
+		Attack:     mainStatValue(class, p) * 2,
+		Defense:    p.Vitality,
+		CritPct:    5 + p.Luck/2,
+		HitPct:     90 + p.Agility/2,
+		EvasionPct: min(p.Agility/2, 40),
 	}
 }
 
-// XPToNext returns the XP required to reach level+1.
-func XPToNext(level int) int64 {
-	if level < 1 {
-		level = 1
+// XPToNext returns the XP required to reach level+1 (0 at the cap), from the
+// leveling engine's curve (DD-250).
+func XPToNext(level int) int64 { return leveling.Current().XPToNext(level) }
+
+// basePrimary is a character's raw attributes before gear: the class's
+// configured base stats (DD-250; no automatic growth — players allocate
+// points), or the legacy per-level growth for classes not yet migrated,
+// plus the allocated points.
+func basePrimary(c *Character) PrimaryStats {
+	var p PrimaryStats
+	if k, ok := leveling.Current().Class(c.ClassCode); ok && k.BaseStats != nil {
+		b := k.BaseStats
+		p = PrimaryStats{Strength: b.Strength, Agility: b.Dexterity, Intelligence: b.Intelligence,
+			Vitality: b.Vitality, Charisma: b.Wisdom, Luck: b.Luck}
+	} else {
+		p = BasePrimary(c.ClassCode, int(c.Level))
 	}
-	return int64(math.Round(50 * math.Pow(float64(level), 2.2)))
+	a := c.Alloc
+	p.Strength += a.Strength
+	p.Agility += a.Dexterity
+	p.Intelligence += a.Intelligence
+	p.Vitality += a.Vitality
+	p.Charisma += a.Wisdom
+	p.Luck += a.Luck
+	return p
+}
+
+// classResource is the base class's combat resource (Warrior: Rage).
+func classResource(class string) (string, int) {
+	if k, ok := leveling.Current().Class(class); ok && k.Resource != nil {
+		return k.Resource.Kind, k.Resource.Max
+	}
+	return "", 0
 }
 
 // buildSheet renders a Sheet from the stored Character. Stateless — no repo
 // lookups; caller passes the resolved character in.
 func buildSheet(c *Character) Sheet {
-	p := BasePrimary(c.ClassCode, int(c.Level))
+	p := basePrimary(c)
+	kind, rmax := classResource(c.ClassCode)
 	return Sheet{
-		ID:        c.ID.String(),
-		Name:      c.Name,
-		Race:      c.RaceCode,
-		Class:     c.ClassCode,
-		Spec:      c.SpecCode,
-		Level:     int(c.Level),
-		XP:        c.XP,
-		XPToNext:  XPToNext(int(c.Level)),
-		Primary:   p,
-		Derived:   deriveStats(c.ClassCode, p),
-		Resources: deriveResources(p),
-		State:     string(c.State),
+		ResourceKind: kind,
+		ResourceMax:  rmax,
+		ID:           c.ID.String(),
+		Name:         c.Name,
+		Race:         c.RaceCode,
+		Class:        c.ClassCode,
+		Spec:         c.SpecCode,
+		Level:        int(c.Level),
+		XP:           c.XP,
+		XPToNext:     XPToNext(int(c.Level)),
+		Primary:      p,
+		Derived:      deriveStats(c.ClassCode, p),
+		Resources:    deriveResources(p),
+		State:        string(c.State),
 	}
 }
 

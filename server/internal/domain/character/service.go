@@ -2,7 +2,6 @@ package character
 
 import (
 	"context"
-	"encoding/json"
 	"log/slog"
 	"time"
 
@@ -287,46 +286,6 @@ func (s *Service) Rename(ctx context.Context, characterID, accountID uuid.UUID, 
 // XPGrantResult reports what the grant did: the character AFTER the update
 // plus whether one or more level thresholds were crossed. Used by hunt/dungeon
 // reveal handlers to surface "you leveled up" to the client.
-type XPGrantResult struct {
-	Character *Character
-	LeveledUp bool
-}
-
-// MarshalJSON keeps the reveal payload to what clients need — never the full
-// character row (account id, timestamps, internal state).
-func (r XPGrantResult) MarshalJSON() ([]byte, error) {
-	out := struct {
-		Level     int16 `json:"level"`
-		XP        int64 `json:"xp"`
-		LeveledUp bool  `json:"leveled_up"`
-	}{LeveledUp: r.LeveledUp}
-	if r.Character != nil {
-		out.Level, out.XP = r.Character.Level, r.Character.XP
-	}
-	return json.Marshal(out)
-}
-
-// GrantXP awards experience without an ownership check — reveal handlers
-// upstream have already validated that the character belongs to the caller
-// (activity contract ownership, hunt contract ownership, etc). Refuses
-// negative deltas via ErrInvalidXP.
-func (s *Service) GrantXP(ctx context.Context, characterID uuid.UUID, delta int64) (*XPGrantResult, error) {
-	if delta < 0 {
-		return nil, ErrInvalidXP
-	}
-	c, leveled, err := s.repo.AddXP(ctx, characterID, delta)
-	if err != nil {
-		return nil, err
-	}
-	if leveled {
-		s.log.InfoContext(ctx, "character leveled up",
-			slog.String("character_id", characterID.String()),
-			slog.Int("new_level", int(c.Level)),
-		)
-	}
-	return &XPGrantResult{Character: c, LeveledUp: leveled}, nil
-}
-
 // --- Location (Sprint 16) --------------------------------------------------
 
 // GetLocation returns the character's current region code, or empty when the

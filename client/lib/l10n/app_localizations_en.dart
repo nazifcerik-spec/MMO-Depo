@@ -174,7 +174,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statStr => 'STR';
 
   @override
-  String get statAgi => 'AGI';
+  String get statAgi => 'DEX';
 
   @override
   String get statInt => 'INT';
@@ -183,7 +183,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statVit => 'VIT';
 
   @override
-  String get statCha => 'CHA';
+  String get statCha => 'WIS';
 
   @override
   String get statLuck => 'LUCK';
@@ -1778,5 +1778,120 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String rewardLevelUp(int level) {
     return 'Level $level!';
+  }
+
+  @override
+  String get levelMax => 'MAX';
+
+  @override
+  String get promotionAvailable => 'PROMOTION AVAILABLE';
+
+  @override
+  String get promotionChoose => 'Choose';
+
+  @override
+  String promotionConfirm(String name) {
+    return 'Become $name?';
+  }
+
+  @override
+  String get promotionBody => 'This choice shapes your class for good.';
+
+  @override
+  String nextMilestone(int level, String what) {
+    return 'Next: Lv $level · $what';
+  }
+
+  @override
+  String get msPromotion => 'Class promotion';
+
+  @override
+  String msAwakening(String name) {
+    return 'Awakening: $name';
+  }
+
+  @override
+  String msUltimate(String name) {
+    return 'Ultimate: $name';
+  }
+
+  @override
+  String get msCapstone => 'Talent capstone';
+
+  @override
+  String get msMastery => 'Class mastery';
+
+  @override
+  String msTitle(String name) {
+    return 'Title: $name';
+  }
+
+  @override
+  String estMinutes(int n) {
+    return '~$n min';
+  }
+
+  @override
+  String estHours(String h) {
+    return '~$h h';
+  }
+
+  @override
+  String overflowHeld(int xp) {
+    return '$xp XP is waiting for your choice';
+  }
+
+  @override
+  String attributePointsBtn(int n) {
+    return 'Attributes · $n points';
+  }
+
+  @override
+  String talentPointsBtn(int n) {
+    return 'Talents · $n points';
+  }
+
+  @override
+  String get talentsTitle => 'Talents';
+
+  @override
+  String capstoneLocked(int level, int points) {
+    return 'Needs level $level and $points points in this tree';
+  }
+
+  @override
+  String masteryUnlocked(String title) {
+    return 'Class mastery: $title';
+  }
+
+  @override
+  String get errPromotionUnavailable => 'That promotion is not available.';
+
+  @override
+  String get errNotEnoughPoints => 'Not enough points.';
+
+  @override
+  String get errTalentMaxed => 'That talent is already at max rank.';
+
+  @override
+  String get errCapstoneLocked => 'The capstone needs its level and a full tree.';
+
+  @override
+  String get errSpecRequirement => 'Your specialization cannot use this item.';
+
+  @override
+  String get errAttributeRequirement => 'Your attributes are too low for this item.';
+
+  @override
+  String get errBusyCombat => 'Not while in combat, AFK or a dungeon.';
+
+  @override
+  String skillGuard(int pct, int turns) {
+    return '+$pct% armor for $turns turns';
+  }
+
+  @override
+  String skillEmpower(int pct, int turns) {
+    return '+$pct% attack for $turns turns';
   }
 }

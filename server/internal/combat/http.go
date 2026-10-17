@@ -15,6 +15,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
+	"github.com/otter/server/internal/leveling"
 )
 
 // Handler exposes the dev-only combat simulator. Used by the dev console to
@@ -128,7 +129,7 @@ func (h *Handler) Simulate(w http.ResponseWriter, r *http.Request) {
 // simulate). Fights start at the current HP (DD-218); evasion is agi/2
 // capped at 40; Level feeds the level-gap rule (DD-229).
 func FromSheet(s *character.Sheet) Combatant {
-	return Combatant{
+	c := Combatant{
 		Name:       "player", // stable label: turn logs never carry character names
 		HPMax:      int32(s.Resources.HPMax),
 		HPCurrent:  int32(s.Resources.HPCurrent),
@@ -136,10 +137,24 @@ func FromSheet(s *character.Sheet) Combatant {
 		Defense:    int32(s.Derived.Defense),
 		CritPct:    int32(s.Derived.CritPct),
 		HitPct:     int32(s.Derived.HitPct),
-		EvasionPct: min(int32(s.Primary.Agility)/2, 40),
+		EvasionPct: int32(s.Derived.EvasionPct),
 		MPMax:      int32(s.Resources.MPMax),
 		Level:      int16(s.Level),
+
+		BlockPct:        int32(s.Derived.BlockPct),
+		CritDmgPct:      int32(s.Derived.CritDmgPct),
+		ExecutePct:      int32(s.Derived.ExecutePct),
+		MissingHPDmgPct: int32(s.Derived.MissingHPDmgPct),
+		LifestealPct:    int32(s.Derived.LifestealPct),
+		DmgReductionPct: int32(s.Derived.DmgReductionPct),
 	}
+	if s.ResourceKind == "rage" {
+		c.Resource, c.MPMax = "rage", int32(s.ResourceMax)
+		if k, ok := leveling.Current().Class(s.Class); ok && k.Resource != nil {
+			c.ResourcePerHit = int32(k.Resource.PerHit)
+		}
+	}
+	return c
 }
 
 func summarizeCombatant(c Combatant) map[string]any {

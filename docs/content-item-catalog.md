@@ -1,6 +1,6 @@
 # Oyundaki Eşyalar
 
-Toplam **245** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
+Toplam **246** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
 
 ## Silahlar (30)
 
@@ -37,7 +37,7 @@ Toplam **245** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Şövalye Kılıcı | `sword_knight` | kılıç | Ana el | Savaşçı | 20 | +54 Saldırı, +7 GÜÇ, +4 DAY | 11g 3b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Büyük Kılıç | `sword_runed` | kılıç | Ana el | Savaşçı | 25 | +66 Saldırı, +9 GÜÇ, +5 DAY | 15g 30b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 
-## Zırhlar (30)
+## Zırhlar (31)
 
 | Ad | Kod | Tür | Yuva | Sınıf | Sv | Bonuslar | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|---|
@@ -71,6 +71,7 @@ Toplam **245** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Çelik Bacaklık | `legs_steel` | zırh | Bacak | Hepsi | 15 | +6 Savunma, +3 DAY | 5g 9b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Bacaklığı | `legs_knight` | zırh | Bacak | Hepsi | 20 | +7 Savunma, +4 DAY | 7g 72b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Bacaklık | `legs_runed` | zırh | Bacak | Hepsi | 25 | +8 Savunma, +5 DAY | 10g 71b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Titan Siper Kalkanı | `titan_bulwark_shield` | zırh | Yan el | Savaşçı | 600 | +400 Savunma, +10 block_pct, +5% Can | 25a | 9 kg | Av zaferi %4 / zindan boss'u |
 
 ## Tüketilebilirler (6)
 

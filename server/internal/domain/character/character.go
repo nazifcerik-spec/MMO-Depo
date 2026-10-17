@@ -19,6 +19,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // State is the character lifecycle marker.
@@ -53,6 +55,20 @@ type Character struct {
 	// HP persistence (DD-218). HPStored nil = full. See EffectiveHP.
 	HPStored    *int32
 	HPUpdatedAt *time.Time
+
+	// Progression (DD-250): allocated raw attribute points, XP held at a
+	// promotion gate, XP earned past the level cap.
+	Alloc      leveling.Stats
+	OverflowXP int64
+	PostCapXP  int64
+}
+
+// Spec is the character's current class node (the base class until promoted).
+func (c *Character) Spec() string {
+	if c.SpecCode != nil && *c.SpecCode != "" {
+		return *c.SpecCode
+	}
+	return c.ClassCode
 }
 
 // IsPlayable returns true when the character can be used in-game. Frozen or
@@ -98,10 +114,9 @@ var (
 )
 
 // LevelCap matches the CHECK constraint on the character.level column
-// (migrations/0004_character.up.sql). Keeping the value here — instead of
-// hard-coding it inside AddXP — lets XP rollover stop at the cap without
-// tripping the constraint on write.
-const LevelCap = 60
+// (migration 0036, DD-250). The leveling engine's configured cap must not
+// exceed it.
+const LevelCap = 1000
 
 // ValidationError attaches a field to ErrValidation for HTTP error mapping.
 type ValidationError struct {

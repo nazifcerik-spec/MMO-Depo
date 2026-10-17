@@ -65,7 +65,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		       base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
 		       no_trade, no_sell, affixable,
 		       equip_slot, class_restriction, stat_bonuses, use_effect,
-		       COALESCE(gather_kind, ''), COALESCE(gather_level, 0), COALESCE(gather_tier, 0)
+		       COALESCE(gather_kind, ''), COALESCE(gather_level, 0), COALESCE(gather_tier, 0), requirements
 		  FROM content.item_template`
 	rows, err := pool.Query(ctx, q)
 	if err != nil {
@@ -78,13 +78,13 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		var t Template
 		var bind string
 		var bonuses []byte
-		var useEffect []byte
+		var useEffect, reqs []byte
 		if err := rows.Scan(
 			&t.Code, &t.DisplayNameKey, &t.ItemClass, &t.ItemSubclass, &t.MinLevel,
 			&t.BaseValueCopper, &t.BaseWeightG, &t.Stackable, &t.MaxStack, &bind,
 			&t.NoTrade, &t.NoSell, &t.Affixable,
 			&t.EquipSlot, &t.ClassRestriction, &bonuses, &useEffect,
-			&t.GatherKind, &t.GatherLevel, &t.GatherTier,
+			&t.GatherKind, &t.GatherLevel, &t.GatherTier, &reqs,
 		); err != nil {
 			return nil, fmt.Errorf("scan item template: %w", err)
 		}
@@ -94,6 +94,12 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 			t.UseEffect = new(UseEffect)
 			if err := json.Unmarshal(useEffect, t.UseEffect); err != nil {
 				return nil, fmt.Errorf("item %s: bad use_effect: %w", t.Code, err)
+			}
+		}
+		if len(reqs) > 0 {
+			t.Requirements = new(Requirements)
+			if err := json.Unmarshal(reqs, t.Requirements); err != nil {
+				return nil, fmt.Errorf("item %s: bad requirements: %w", t.Code, err)
 			}
 		}
 		list = append(list, t)

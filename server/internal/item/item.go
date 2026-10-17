@@ -58,6 +58,7 @@ type Template struct {
 	ClassRestriction *string // 'warrior'|... nil for universal
 	StatBonuses      []byte  // JSONB — parsed via skill.DecodeModifiers on demand
 	UseEffect        *UseEffect
+	Requirements     *Requirements // DD-250: class branch + raw attribute minimums
 
 	// Gathering node (DD-244): profession, unlock level 1..100, tier 0..7.
 	// Empty kind = not gathered.
@@ -114,3 +115,12 @@ var (
 	// ErrValidation wraps input-shape rejection.
 	ErrValidation = errors.New("item: validation")
 )
+
+// Requirements are an item's equip requirements beyond MinLevel and
+// ClassRestriction (DD-250 §34). Attribute minimums use RAW attributes.
+type Requirements struct {
+	Spec      string `json:"spec,omitempty"` // a class node the wearer's path must include
+	Strength  int    `json:"strength,omitempty"`
+	Vitality  int    `json:"vitality,omitempty"`
+	Dexterity int    `json:"dexterity,omitempty"`
+}

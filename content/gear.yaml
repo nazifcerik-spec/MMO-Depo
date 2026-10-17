@@ -925,3 +925,21 @@ items:
     stat_bonuses:
       - { kind: flat, target: defense, amount: 5 }
       - { kind: flat, target: hit_pct, amount: 3 }
+
+  # --- Warrior specialization gear (DD-250): class branch + raw attributes ---
+  - code: titan_bulwark_shield
+    display_name_key: item.titan_bulwark_shield
+    item_class: armor
+    item_subclass: shield
+    min_level: 600
+    base_value_copper: 250000
+    base_weight_g: 9000
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian, strength: 220, vitality: 300 }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 400 }
+      - { kind: flat, target: block_pct, amount: 10 }
+      - { kind: mult_add, target: hp_max, amount: 0.05 }

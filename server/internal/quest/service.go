@@ -38,7 +38,7 @@ type CharacterFetcher interface {
 
 // XPGranter grants character XP (character.Service).
 type XPGranter interface {
-	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64) (*character.XPGrantResult, error)
+	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64, src character.XPSource) (*character.XPGrantResult, error)
 }
 
 // EventPublisher pushes WS events (wsgateway adapter); nil-safe.
@@ -394,7 +394,8 @@ func (s *Service) TurnIn(ctx context.Context, char, account uuid.UUID, code stri
 	}
 	out := &TurnInResult{Code: code, RewardXP: t.RewardXP, RewardGold: t.RewardGold}
 	if t.RewardXP > 0 && s.xp != nil {
-		if out.XP, err = s.xp.GrantXP(ctx, char, t.RewardXP); err != nil {
+		if out.XP, err = s.xp.GrantXP(ctx, char, t.RewardXP, character.XPSource{Kind: "quest", ID: id.String(),
+			Metadata: map[string]any{"quest": code}}); err != nil {
 			s.log.ErrorContext(ctx, "quest: xp grant failed after turn-in (not retried)",
 				slog.String("quest_id", id.String()), slog.String("err", err.Error()))
 		}

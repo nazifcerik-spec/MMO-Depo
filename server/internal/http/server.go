@@ -75,6 +75,7 @@ type Deps struct {
 	DungeonHandler    *dungeon.Handler
 	WorldHandler      *world.Handler
 	CraftingHandler   *crafting.Handler
+	ProgressionDev    ProgressionDev // dev-only XP grant + respec (DD-250)
 	GatheringHandler  *gathering.Handler
 	WSHandler         *wsgateway.Handler
 	PartyHandler      *party.Handler
@@ -275,6 +276,17 @@ func NewRouter(d Deps) http.Handler {
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/rename", charHandler.Rename)
 
+				// --- Leveling + class progression (DD-250) ---
+				r.Get("/leveling", charHandler.Progression)
+				r.Get("/leveling/events", charHandler.EventsHTTP)
+				r.Get("/talents", charHandler.TalentsView)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/promotion", charHandler.Promote)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/attributes", charHandler.Allocate)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/talents/{code}", charHandler.LearnTalentHTTP)
+
 				// --- Activity (character-scoped) ---
 				r.Get("/activity/active", activityHandler.Active)
 				r.Get("/activity/history", activityHandler.History)
@@ -466,6 +478,8 @@ func NewRouter(d Deps) http.Handler {
 			if d.ClassSkills != nil {
 				r.Get("/classes/{class}/skills", d.ClassSkills.List)
 			}
+			// --- Public progression definitions (DD-250) ---
+			r.Get("/progression/config", character.ProgressionConfig)
 
 			// --- Dungeon contract-scoped + public catalog ---
 			if d.DungeonHandler != nil {
@@ -589,6 +603,10 @@ func NewRouter(d Deps) http.Handler {
 			if d.CombatHandler != nil {
 				r.Post("/dev/combat/simulate", d.CombatHandler.Simulate)
 			}
+			if d.ProgressionDev != nil {
+				r.Post("/dev/character/{id}/xp", d.ProgressionDev.GrantXP)
+				r.Post("/dev/character/{id}/respec", d.ProgressionDev.Respec)
+			}
 		})
 
 		// --- Smoke echo (idempotency + rate limit + optional auth/character) ---
@@ -673,4 +691,10 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 		"echo":        payload,
 		"server_time": time.Now().UTC().Format(time.RFC3339Nano),
 	})
+}
+
+// ProgressionDev are the dev-only progression tools (404 outside ENV=dev).
+type ProgressionDev interface {
+	GrantXP(w http.ResponseWriter, r *http.Request)
+	Respec(w http.ResponseWriter, r *http.Request)
 }

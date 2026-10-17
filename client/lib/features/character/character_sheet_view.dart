@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
 import '../progression/progression_screen.dart' show bonusText;
 import 'character_repository.dart';
+import 'leveling.dart';
 import 'models.dart';
 import '../../shared/content_names.dart';
 
@@ -38,6 +39,8 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   late CharacterSheet _sheet = widget.initial;
   int? _gold;
   List<ClassSkill>? _skills;
+  LevelingSummary? _leveling;
+  late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
 
   @override
   void initState() {
@@ -81,6 +84,54 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
       });
       widget.onSheet?.call(_sheet);
     }
+    try {
+      final lv = await _levelingRepo.summary();
+      if (mounted) setState(() => _leveling = lv);
+    } on ApiError {
+      // Optional card: the sheet stays usable without it.
+    }
+  }
+
+  /// Skills of the character's class path (base class → promotions);
+  /// other branches stay hidden.
+  bool _onPath(ClassSkill k) {
+    final path = _leveling?.path ?? [_sheet.classCode];
+    return k.spec.isEmpty || path.contains(k.spec);
+  }
+
+  /// After a progression change: reload here and let every tab follow.
+  void _changed() {
+    widget.dataVersion.value++;
+  }
+
+  Future<void> _promote() async {
+    final lv = _leveling;
+    if (lv == null) return;
+    final choice = await showPromotionSheet(context, lv);
+    if (choice == null || !mounted) return;
+    if (await levelingAction(context, () => _levelingRepo.promote(choice))) _changed();
+  }
+
+  Future<void> _attributes() async {
+    final lv = _leveling;
+    if (lv == null) return;
+    final add = await showModalBottomSheet<Map<String, int>>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: Palette.bgSurface,
+      builder: (_) => AttributeSheet(summary: lv),
+    );
+    if (add == null || !mounted) return;
+    if (await levelingAction(context, () => _levelingRepo.allocate(add))) _changed();
+  }
+
+  Future<void> _talents() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => TalentsScreen(repo: _levelingRepo, dataVersion: widget.dataVersion),
+      ),
+    );
   }
 
   Future<void> _refresh() async {
@@ -138,7 +189,10 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               bar(l.stamina, 'stamina', Palette.success),
               bar(l.energy, 'energy', Palette.warning),
               const Divider(height: Space.xl, color: Palette.borderSubtle),
-              StatBar(label: l.xp, value: s.xpProgress, color: Palette.epic, valueText: l.xpValue(s.xp, s.xpToNext)),
+              if (_leveling case final lv?)
+                LevelingCard(summary: lv, onPromote: _promote, onAttributes: _attributes, onTalents: _talents)
+              else
+                StatBar(label: l.xp, value: s.xpProgress, color: Palette.epic, valueText: l.xpValue(s.xp, s.xpToNext)),
             ],
           ),
           const SizedBox(height: Space.lg),
@@ -176,7 +230,10 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
             const SizedBox(height: Space.lg),
             _Section(
               title: l.skills,
-              children: [for (final k in _skills!) _SkillRow(skill: k, level: s.level)],
+              children: [
+                for (final k in _skills!)
+                  if (_onPath(k)) _SkillRow(skill: k, level: s.level),
+              ],
             ),
           ],
           if (widget.onOpenProgress != null) ...[
@@ -197,8 +254,15 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
 String skillName(String code) => ContentNames.of('skill', code, humanize(code.substring(code.indexOf('_') + 1)));
 
 String skillDescription(AppLocalizations l, ClassSkill k) {
+  final authored = ContentNames.of('skill', '${k.code}.desc', '');
+  if (authored.isNotEmpty) return authored;
   if (!k.active) return k.modifiers.map((m) => bonusText(l, m)).join(' · ');
-  final effect = k.effect == 'heal' ? l.skillHeal(k.power) : l.skillStrike(k.power);
+  final effect = switch (k.effect) {
+    'heal' => l.skillHeal(k.power),
+    'guard' => l.skillGuard(k.power, k.durationTurns),
+    'empower' => l.skillEmpower(k.power, k.durationTurns),
+    _ => l.skillStrike(k.power),
+  };
   return [effect, if (k.mpCost > 0) l.skillMp(k.mpCost), l.skillCooldown(k.cooldownTurns)].join(' · ');
 }
 

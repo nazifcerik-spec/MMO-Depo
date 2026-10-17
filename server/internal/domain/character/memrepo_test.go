@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // --- MemoryRepo ------------------------------------------------------
@@ -120,32 +122,24 @@ func (r *MemoryRepo) SetDeleteGrace(_ context.Context, id uuid.UUID, expiresAt t
 
 // AddXP is the in-memory implementation of the level-rollover behaviour.
 // The Postgres impl uses a transaction to make xp update + level-up atomic.
-func (r *MemoryRepo) AddXP(_ context.Context, id uuid.UUID, delta int64) (*Character, bool, error) {
+func (r *MemoryRepo) GrantXP(_ context.Context, id uuid.UUID, delta int64, src XPSource, cfg *leveling.Config) (*Grant, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	if delta < 0 {
-		return nil, false, ErrInvalidXP
+		return nil, ErrInvalidXP
 	}
 	c, ok := r.rows[id]
 	if !ok {
-		return nil, false, ErrNotFound
+		return nil, ErrNotFound
 	}
-	leveledUp := false
-	c.XP += delta
-	for {
-		needed := XPToNext(int(c.Level))
-		if c.XP < needed || c.Level >= LevelCap {
-			break
-		}
-		c.XP -= needed
-		c.Level++
-		leveledUp = true
-	}
+	from := int(c.Level)
+	st, gained := cfg.Advance(leveling.State{Spec: c.Spec(), Level: from, XP: c.XP, Overflow: c.OverflowXP, PostCap: c.PostCapXP}, delta)
+	c.Level, c.XP, c.OverflowXP, c.PostCapXP = int16(st.Level), st.XP, st.Overflow, st.PostCap
 	c.UpdatedAt = time.Now().UTC()
 	c.Version++
 	r.rows[id] = c
 	cp := c
-	return &cp, leveledUp, nil
+	return &Grant{Character: &cp, FromLevel: from, LevelsGained: gained}, nil
 }
 
 // SetLocation / GetLocation — in-memory. LocationRegionCode lives alongside

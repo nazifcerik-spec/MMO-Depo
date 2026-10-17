@@ -16,6 +16,7 @@ import 'package:otter/core/token_store.dart';
 import 'package:otter/features/activity/activity_repository.dart';
 import 'package:otter/features/adventure/adventure_repository.dart';
 import 'package:otter/features/character/character_repository.dart';
+import 'package:otter/features/character/leveling.dart';
 import 'package:otter/features/character/models.dart';
 import 'package:otter/features/events/event_repository.dart';
 import 'package:otter/features/inventory/inventory_repository.dart';
@@ -77,6 +78,18 @@ void main() {
     final skills = await chars.classSkills('warrior');
     expect(skills.where((s) => s.active && s.unlockLevel == 1), isNotEmpty);
     expect(skills.where((s) => !s.active).first.modifiers, isNotEmpty);
+    expect(skills.map((s) => s.spec), containsAll(['warrior', 'guardian', 'iron_fortress']), reason: 'DD-250 tree');
+
+    // Leveling (DD-250): level 1 of 1000, Rage, first objective, no points yet.
+    final lv = await LevelingRepository(a.api, a.id).summary();
+    expect(lv.level, 1);
+    expect(lv.levelCap, 1000);
+    expect(lv.spec, 'warrior');
+    expect(lv.next!.level, 10, reason: 'Guard unlocks at 10');
+    expect(lv.attributePoints, 0);
+    final board = await LevelingRepository(a.api, a.id).talents();
+    expect(board.trees, hasLength(3));
+    await expectLater(LevelingRepository(a.api, a.id).promote('guardian'), apiError('E_PROMOTION_UNAVAILABLE'));
   });
 
   test('gathering: start, active preview, early reveal, stop guard', () async {

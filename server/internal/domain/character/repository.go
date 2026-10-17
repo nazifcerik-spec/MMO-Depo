@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // Repository is the persistence contract for the character domain.
@@ -28,12 +30,10 @@ type Repository interface {
 	// CancelDeleteGrace transitions state='delete_grace' → 'active'.
 	CancelDeleteGrace(ctx context.Context, id uuid.UUID) error
 
-	// AddXP atomically increments xp by delta (must be >= 0) and, when the new
-	// total crosses one or more level thresholds, promotes the character's
-	// level with the leftover xp carried into the new bracket. Returns the
-	// character AFTER the update so callers can see the new level/xp without a
-	// re-fetch. Level cap enforced by CHECK constraint on the column.
-	AddXP(ctx context.Context, id uuid.UUID, delta int64) (*Character, bool, error)
+	// GrantXP applies an XP grant in one transaction (DD-250): source
+	// idempotency, level-ups through the leveling engine, gate overflow, level
+	// rewards / unlocks / titles / events. See Service.GrantXP.
+	GrantXP(ctx context.Context, id uuid.UUID, amount int64, src XPSource, cfg *leveling.Config) (*Grant, error)
 
 	// SetLocation writes the character's `location_region_code`. Sprint 16
 	// world/travel completion path is the only writer today.

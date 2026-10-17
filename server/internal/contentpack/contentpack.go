@@ -27,6 +27,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
 
@@ -34,24 +35,33 @@ import (
 
 // Item mirrors content.item_template + Sprint 11 columns.
 type Item struct {
-	Code             string      `yaml:"code"`
-	DisplayNameKey   string      `yaml:"display_name_key"`
-	ItemClass        string      `yaml:"item_class"`
-	ItemSubclass     string      `yaml:"item_subclass"`
-	MinLevel         int16       `yaml:"min_level"`
-	BaseValueCopper  int64       `yaml:"base_value_copper"`
-	BaseWeightG      int32       `yaml:"base_weight_g"`
-	Stackable        bool        `yaml:"stackable"`
-	MaxStack         int32       `yaml:"max_stack"`
-	BindKind         string      `yaml:"bind_kind"`
-	NoTrade          bool        `yaml:"no_trade"`
-	NoSell           bool        `yaml:"no_sell"`
-	Affixable        bool        `yaml:"affixable"`
-	EquipSlot        string      `yaml:"equip_slot"`
-	ClassRestriction string      `yaml:"class_restriction"`
-	StatBonuses      []StatBonus `yaml:"stat_bonuses"`
-	UseEffect        *UseEffect  `yaml:"use_effect"`
-	Gather           *Gather     `yaml:"gather"`
+	Code             string        `yaml:"code"`
+	DisplayNameKey   string        `yaml:"display_name_key"`
+	ItemClass        string        `yaml:"item_class"`
+	ItemSubclass     string        `yaml:"item_subclass"`
+	MinLevel         int16         `yaml:"min_level"`
+	BaseValueCopper  int64         `yaml:"base_value_copper"`
+	BaseWeightG      int32         `yaml:"base_weight_g"`
+	Stackable        bool          `yaml:"stackable"`
+	MaxStack         int32         `yaml:"max_stack"`
+	BindKind         string        `yaml:"bind_kind"`
+	NoTrade          bool          `yaml:"no_trade"`
+	NoSell           bool          `yaml:"no_sell"`
+	Affixable        bool          `yaml:"affixable"`
+	EquipSlot        string        `yaml:"equip_slot"`
+	ClassRestriction string        `yaml:"class_restriction"`
+	StatBonuses      []StatBonus   `yaml:"stat_bonuses"`
+	UseEffect        *UseEffect    `yaml:"use_effect"`
+	Gather           *Gather       `yaml:"gather"`
+	Requirements     *Requirements `yaml:"requirements"`
+}
+
+// Requirements: class branch + raw attribute minimums (DD-250 §34).
+type Requirements struct {
+	Spec      string `yaml:"spec" json:"spec,omitempty"`
+	Strength  int    `yaml:"strength" json:"strength,omitempty"`
+	Vitality  int    `yaml:"vitality" json:"vitality,omitempty"`
+	Dexterity int    `yaml:"dexterity" json:"dexterity,omitempty"`
 }
 
 // Gather makes an item a gathering node (DD-244): which gathering
@@ -322,6 +332,11 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		}
 	}
 
+	if p.Progression != nil {
+		if err := leveling.Install(p.Progression); err != nil {
+			return res, fmt.Errorf("contentpack: progression: %w", err)
+		}
+	}
 	for _, r := range l.reloaders {
 		if err := r.Reload(ctx); err != nil {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
@@ -357,6 +372,7 @@ type Pack struct {
 	Recipes     []Recipe
 	Quests      []Quest
 	Skills      []ClassSkill
+	Progression *leveling.Config // nil = engine defaults (no progression.yaml)
 	Strings     *Strings
 }
 
@@ -431,6 +447,26 @@ func Read(dir string) (*Pack, error) {
 	if p.Skills, err = loadSkillsFile(f("skills.yaml")); err != nil {
 		return nil, err
 	}
+	if p.Progression, err = loadProgressionFile(f("progression.yaml"), p.Skills); err != nil {
+		return nil, err
+	}
+	for _, it := range p.Items {
+		rq := it.Requirements
+		if rq == nil {
+			continue
+		}
+		if it.EquipSlot == "" || rq.Strength < 0 || rq.Vitality < 0 || rq.Dexterity < 0 {
+			return nil, fmt.Errorf("item %s: requirements need an equippable item and non-negative attributes", it.Code)
+		}
+		if rq.Spec != "" {
+			if p.Progression == nil {
+				return nil, fmt.Errorf("item %s: requirement spec %q without progression.yaml", it.Code, rq.Spec)
+			}
+			if _, ok := p.Progression.Class(rq.Spec); !ok {
+				return nil, fmt.Errorf("item %s: unknown requirement spec %q", it.Code, rq.Spec)
+			}
+		}
+	}
 	r := refs{
 		mobs:     codeSet(p.Mobs, func(m Mob) string { return m.Code }),
 		dungeons: codeSet(p.Dungeons, func(d Dungeon) string { return d.Code }),
@@ -448,6 +484,7 @@ func Read(dir string) (*Pack, error) {
 	if err := validateStrings(p.Strings, p); err != nil {
 		return nil, err
 	}
+	p.Strings.fillFallbacks()
 	return p, nil
 }
 
@@ -927,8 +964,8 @@ INSERT INTO content.item_template (
   code, display_name_key, item_class, item_subclass, min_level,
   base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
   no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect,
-  gather_kind, gather_level, gather_tier
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+  gather_kind, gather_level, gather_tier, requirements
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   item_class         = EXCLUDED.item_class,
@@ -949,6 +986,7 @@ ON CONFLICT (code) DO UPDATE SET
   gather_kind        = EXCLUDED.gather_kind,
   gather_level       = EXCLUDED.gather_level,
   gather_tier        = EXCLUDED.gather_tier,
+  requirements       = EXCLUDED.requirements,
   version            = content.item_template.version + 1`
 
 	for _, it := range items {
@@ -970,6 +1008,12 @@ ON CONFLICT (code) DO UPDATE SET
 				return fmt.Errorf("item %s: marshal use_effect: %w", it.Code, err)
 			}
 		}
+		var reqs []byte // nil → SQL NULL (no extra requirements)
+		if it.Requirements != nil {
+			if reqs, err = json.Marshal(it.Requirements); err != nil {
+				return fmt.Errorf("item %s: marshal requirements: %w", it.Code, err)
+			}
+		}
 		var gKind *string // nil → SQL NULL (not a gathering node)
 		var gLevel, gTier *int16
 		if g := it.Gather; g != nil {
@@ -980,7 +1024,7 @@ ON CONFLICT (code) DO UPDATE SET
 			it.BaseValueCopper, it.BaseWeightG, it.Stackable, maxStack, bindKind,
 			it.NoTrade, it.NoSell, it.Affixable,
 			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses, useEffect,
-			gKind, gLevel, gTier,
+			gKind, gLevel, gTier, reqs,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert item %s: %w", it.Code, err)

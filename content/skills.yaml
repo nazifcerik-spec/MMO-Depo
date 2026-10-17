@@ -12,39 +12,508 @@
 #                  hp_max/mp_max/energy_max/stamina_max
 
 skills:
-  # --- Warrior ---------------------------------------------------------------
-  - code: warrior_cleave
-    display_name_key: skill.warrior_cleave
+  # --- Warrior (DD-250) --------------------------------------------------------
+  # Rage resource (starts empty, +8 per landed hit). spec = the class node that
+  # owns the skill (warrior, guardian, ..., weapon_master). auto_trigger is the
+  # passive-only (AFK) rule; the same definition serves active play.
+  - code: warrior_strike
+    display_name_key: skill.warrior_strike
     class: warrior
     unlock_level: 1
     kind: active
-    sort_order: 20
+    sort_order: 90
     effect: strike
-    power: 160
-    mp_cost: 10
-    cooldown_turns: 3
-  - code: warrior_second_wind
-    display_name_key: skill.warrior_second_wind
-    class: warrior
-    unlock_level: 6
-    kind: active
-    sort_order: 10
-    effect: heal
-    power: 25
-    mp_cost: 25
-    cooldown_turns: 8
-  - code: warrior_iron_skin
-    display_name_key: skill.warrior_iron_skin
-    class: warrior
-    unlock_level: 3
-    kind: passive
-    modifiers: [{ kind: mult_add, target: defense, amount: 0.10 }]
-  - code: warrior_vigor
-    display_name_key: skill.warrior_vigor
+    power: 110
+    mp_cost: 0
+    cooldown_turns: 1
+    resource_gain: 15
+  - code: warrior_guard
+    display_name_key: skill.warrior_guard
     class: warrior
     unlock_level: 10
+    kind: active
+    activation_mode: stance
+    sort_order: 30
+    effect: guard
+    power: 30
+    duration_turns: 3
+    mp_cost: 20
+    cooldown_turns: 6
+    auto_trigger: { self_hp_below: 70 }
+  - code: warrior_heavy_slash
+    display_name_key: skill.warrior_heavy_slash
+    class: warrior
+    unlock_level: 25
+    kind: active
+    sort_order: 40
+    effect: strike
+    power: 190
+    mp_cost: 40
+    cooldown_turns: 3
+  - code: warrior_battle_hardened
+    display_name_key: skill.warrior_battle_hardened
+    class: warrior
+    unlock_level: 50
     kind: passive
-    modifiers: [{ kind: flat, target: vit, amount: 3 }]
+    modifiers:
+      - { kind: mult_add, target: attack, amount: 0.05 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 3 }
+  - code: warrior_execute
+    display_name_key: skill.warrior_execute
+    class: warrior
+    unlock_level: 75
+    kind: active
+    sort_order: 10
+    effect: strike
+    power: 300
+    mp_cost: 30
+    cooldown_turns: 2
+    auto_trigger: { target_hp_below: 35 }
+
+  # Guardian (Lv100: tank / defense / sustain / threat)
+  - code: guardian_unyielding
+    display_name_key: skill.guardian_unyielding
+    class: warrior
+    spec: guardian
+    unlock_level: 100
+    kind: passive
+    modifiers:
+      - { kind: mult_add, target: defense, amount: 0.12 }
+      - { kind: flat, target: block_pct, amount: 8 }
+  - code: guardian_shield_slam
+    display_name_key: skill.guardian_shield_slam
+    class: warrior
+    spec: guardian
+    unlock_level: 100
+    kind: active
+    sort_order: 35
+    effect: strike
+    power: 160
+    mp_cost: 25
+    cooldown_turns: 3
+    requires: [shield]
+  - code: guardian_taunt
+    display_name_key: skill.guardian_taunt
+    class: warrior
+    spec: guardian
+    unlock_level: 150
+    kind: active
+    sort_order: 32
+    effect: guard
+    power: 15
+    duration_turns: 2
+    mp_cost: 10
+    cooldown_turns: 5
+  - code: guardian_last_stand
+    display_name_key: skill.guardian_last_stand
+    class: warrior
+    spec: guardian
+    unlock_level: 200
+    kind: active
+    sort_order: 5
+    effect: guard
+    power: 50
+    duration_turns: 3
+    mp_cost: 20
+    cooldown_turns: 12
+    auto_trigger: { self_hp_below: 25 }
+  - code: guardian_counterguard
+    display_name_key: skill.guardian_counterguard
+    class: warrior
+    spec: guardian
+    unlock_level: 250
+    kind: passive
+    modifiers:
+      - { kind: flat, target: block_pct, amount: 5 }
+      - { kind: mult_add, target: attack, amount: 0.04 }
+
+  # Executioner (Lv100: physical DPS / execute)
+  - code: executioner_instinct
+    display_name_key: skill.executioner_instinct
+    class: warrior
+    spec: executioner
+    unlock_level: 100
+    kind: passive
+    modifiers:
+      - { kind: flat, target: execute_pct, amount: 15 }
+      - { kind: flat, target: crit_dmg_pct, amount: 5 }
+  - code: executioner_reckless_strike
+    display_name_key: skill.executioner_reckless_strike
+    class: warrior
+    spec: executioner
+    unlock_level: 100
+    kind: active
+    sort_order: 35
+    effect: strike
+    power: 220
+    mp_cost: 35
+    cooldown_turns: 3
+  - code: executioner_rend
+    display_name_key: skill.executioner_rend
+    class: warrior
+    spec: executioner
+    unlock_level: 150
+    kind: active
+    sort_order: 45
+    effect: strike
+    power: 150
+    mp_cost: 20
+    cooldown_turns: 4
+  - code: executioner_blood_rush
+    display_name_key: skill.executioner_blood_rush
+    class: warrior
+    spec: executioner
+    unlock_level: 200
+    kind: active
+    sort_order: 25
+    effect: empower
+    power: 20
+    duration_turns: 3
+    mp_cost: 20
+    cooldown_turns: 8
+  - code: executioner_finishing_blow
+    display_name_key: skill.executioner_finishing_blow
+    class: warrior
+    spec: executioner
+    unlock_level: 250
+    kind: active
+    sort_order: 8
+    effect: strike
+    power: 350
+    mp_cost: 40
+    cooldown_turns: 4
+    auto_trigger: { target_hp_below: 20 }
+
+  # Iron Fortress (Lv300, Guardian)
+  - code: iron_fortress_bulwark
+    display_name_key: skill.iron_fortress_bulwark
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 300
+    kind: passive
+    modifiers:
+      - { kind: flat, target: dmg_reduction_pct, amount: 8 }
+      - { kind: flat, target: block_pct, amount: 5 }
+  - code: iron_fortress_fortress_stance
+    display_name_key: skill.iron_fortress_fortress_stance
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 300
+    kind: active
+    activation_mode: stance
+    sort_order: 28
+    effect: guard
+    power: 40
+    duration_turns: 4
+    mp_cost: 20
+    cooldown_turns: 8
+  - code: iron_fortress_shield_wall
+    display_name_key: skill.iron_fortress_shield_wall
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 350
+    kind: active
+    sort_order: 4
+    effect: guard
+    power: 70
+    duration_turns: 3
+    mp_cost: 30
+    cooldown_turns: 10
+    auto_trigger: { self_hp_below: 40 }
+  - code: iron_fortress_retaliation
+    display_name_key: skill.iron_fortress_retaliation
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 400
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }]
+  - code: iron_fortress_stoneheart
+    display_name_key: skill.iron_fortress_stoneheart
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 450
+    kind: passive
+    modifiers: [{ kind: mult_add, target: hp_max, amount: 0.05 }]
+  - code: iron_fortress_bastion
+    display_name_key: skill.iron_fortress_bastion
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 500
+    kind: active
+    sort_order: 6
+    effect: heal
+    power: 15
+    mp_cost: 25
+    cooldown_turns: 10
+    auto_trigger: { self_hp_below: 50 }
+  - code: iron_fortress_deflect
+    display_name_key: skill.iron_fortress_deflect
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 550
+    kind: passive
+    modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 4 }]
+  - code: iron_fortress_aegis_rebound
+    display_name_key: skill.iron_fortress_aegis_rebound
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 600
+    category: awakening
+    kind: passive
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.08 }
+      - { kind: flat, target: block_pct, amount: 5 }
+  - code: iron_fortress_unbreakable
+    display_name_key: skill.iron_fortress_unbreakable
+    class: warrior
+    spec: iron_fortress
+    unlock_level: 700
+    category: ultimate
+    kind: active
+    sort_order: 2
+    effect: guard
+    power: 150
+    duration_turns: 3
+    mp_cost: 50
+    cooldown_turns: 20
+    auto_trigger: { self_hp_below: 30 }
+
+  # Warlord (Lv300, Guardian)
+  - code: warlord_commanding_presence
+    display_name_key: skill.warlord_commanding_presence
+    class: warrior
+    spec: warlord
+    unlock_level: 300
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }]
+  - code: warlord_rallying_cry
+    display_name_key: skill.warlord_rallying_cry
+    class: warrior
+    spec: warlord
+    unlock_level: 350
+    kind: active
+    sort_order: 26
+    effect: empower
+    power: 20
+    duration_turns: 3
+    mp_cost: 20
+    cooldown_turns: 8
+  - code: warlord_banner_of_war
+    display_name_key: skill.warlord_banner_of_war
+    class: warrior
+    spec: warlord
+    unlock_level: 400
+    kind: passive
+    modifiers:
+      - { kind: mult_add, target: attack, amount: 0.04 }
+      - { kind: mult_add, target: defense, amount: 0.04 }
+  - code: warlord_tactical_command
+    display_name_key: skill.warlord_tactical_command
+    class: warrior
+    spec: warlord
+    unlock_level: 450
+    kind: passive
+    modifiers: [{ kind: flat, target: crit_pct, amount: 3 }]
+  - code: warlord_challenge
+    display_name_key: skill.warlord_challenge
+    class: warrior
+    spec: warlord
+    unlock_level: 500
+    kind: active
+    sort_order: 31
+    effect: guard
+    power: 30
+    duration_turns: 2
+    mp_cost: 15
+    cooldown_turns: 6
+  - code: warlord_frontline_leader
+    display_name_key: skill.warlord_frontline_leader
+    class: warrior
+    spec: warlord
+    unlock_level: 550
+    kind: passive
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.05 }
+      - { kind: mult_add, target: attack, amount: 0.03 }
+  - code: warlord_war_banner
+    display_name_key: skill.warlord_war_banner
+    class: warrior
+    spec: warlord
+    unlock_level: 600
+    category: awakening
+    kind: active
+    sort_order: 22
+    effect: empower
+    power: 30
+    duration_turns: 4
+    mp_cost: 30
+    cooldown_turns: 10
+  - code: warlord_march_of_conquest
+    display_name_key: skill.warlord_march_of_conquest
+    class: warrior
+    spec: warlord
+    unlock_level: 700
+    category: ultimate
+    kind: active
+    sort_order: 3
+    effect: empower
+    power: 80
+    duration_turns: 3
+    mp_cost: 50
+    cooldown_turns: 20
+
+  # Berserker (Lv300, Executioner)
+  - code: berserker_blood_fury
+    display_name_key: skill.berserker_blood_fury
+    class: warrior
+    spec: berserker
+    unlock_level: 300
+    kind: passive
+    modifiers: [{ kind: flat, target: missing_hp_dmg_pct, amount: 30 }]
+  - code: berserker_frenzy
+    display_name_key: skill.berserker_frenzy
+    class: warrior
+    spec: berserker
+    unlock_level: 350
+    kind: active
+    sort_order: 24
+    effect: empower
+    power: 25
+    duration_turns: 3
+    mp_cost: 20
+    cooldown_turns: 7
+  - code: berserker_bloodthirst
+    display_name_key: skill.berserker_bloodthirst
+    class: warrior
+    spec: berserker
+    unlock_level: 400
+    kind: passive
+    modifiers: [{ kind: flat, target: lifesteal_pct, amount: 5 }]
+  - code: berserker_pain_is_power
+    display_name_key: skill.berserker_pain_is_power
+    class: warrior
+    spec: berserker
+    unlock_level: 450
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.06 }]
+  - code: berserker_reckless_onslaught
+    display_name_key: skill.berserker_reckless_onslaught
+    class: warrior
+    spec: berserker
+    unlock_level: 500
+    kind: active
+    sort_order: 34
+    effect: strike
+    power: 260
+    mp_cost: 45
+    cooldown_turns: 4
+  - code: berserker_death_defiance
+    display_name_key: skill.berserker_death_defiance
+    class: warrior
+    spec: berserker
+    unlock_level: 550
+    kind: active
+    sort_order: 1
+    effect: heal
+    power: 25
+    mp_cost: 0
+    cooldown_turns: 15
+    auto_trigger: { self_hp_below: 20 }
+  - code: berserker_last_breath
+    display_name_key: skill.berserker_last_breath
+    class: warrior
+    spec: berserker
+    unlock_level: 600
+    category: awakening
+    kind: passive
+    modifiers:
+      - { kind: flat, target: lifesteal_pct, amount: 5 }
+      - { kind: flat, target: missing_hp_dmg_pct, amount: 10 }
+  - code: berserker_avatar_of_rage
+    display_name_key: skill.berserker_avatar_of_rage
+    class: warrior
+    spec: berserker
+    unlock_level: 700
+    category: ultimate
+    kind: active
+    sort_order: 3
+    effect: empower
+    power: 100
+    duration_turns: 3
+    mp_cost: 60
+    cooldown_turns: 20
+
+  # Weapon Master (Lv300, Executioner)
+  - code: weapon_master_adaptive_arsenal
+    display_name_key: skill.weapon_master_adaptive_arsenal
+    class: warrior
+    spec: weapon_master
+    unlock_level: 300
+    kind: passive
+    modifiers:
+      - { kind: flat, target: crit_pct, amount: 5 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+  - code: weapon_master_precision_strike
+    display_name_key: skill.weapon_master_precision_strike
+    class: warrior
+    spec: weapon_master
+    unlock_level: 350
+    kind: active
+    sort_order: 33
+    effect: strike
+    power: 200
+    mp_cost: 30
+    cooldown_turns: 3
+  - code: weapon_master_weapon_shift
+    display_name_key: skill.weapon_master_weapon_shift
+    class: warrior
+    spec: weapon_master
+    unlock_level: 400
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }]
+  - code: weapon_master_flow_state
+    display_name_key: skill.weapon_master_flow_state
+    class: warrior
+    spec: weapon_master
+    unlock_level: 450
+    kind: passive
+    modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 15 }]
+  - code: weapon_master_perfect_counter
+    display_name_key: skill.weapon_master_perfect_counter
+    class: warrior
+    spec: weapon_master
+    unlock_level: 500
+    kind: passive
+    modifiers: [{ kind: flat, target: evasion_pct, amount: 5 }]
+  - code: weapon_master_arsenal_mastery
+    display_name_key: skill.weapon_master_arsenal_mastery
+    class: warrior
+    spec: weapon_master
+    unlock_level: 550
+    kind: passive
+    modifiers: [{ kind: mult_add, target: attack, amount: 0.06 }]
+  - code: weapon_master_perfect_sequence
+    display_name_key: skill.weapon_master_perfect_sequence
+    class: warrior
+    spec: weapon_master
+    unlock_level: 600
+    category: awakening
+    kind: passive
+    modifiers:
+      - { kind: flat, target: crit_pct, amount: 5 }
+      - { kind: mult_add, target: attack, amount: 0.05 }
+  - code: weapon_master_thousand_cuts
+    display_name_key: skill.weapon_master_thousand_cuts
+    class: warrior
+    spec: weapon_master
+    unlock_level: 700
+    category: ultimate
+    kind: active
+    sort_order: 3
+    effect: strike
+    power: 500
+    mp_cost: 60
+    cooldown_turns: 15
 
   # --- Mage ------------------------------------------------------------------
   - code: mage_fire_bolt

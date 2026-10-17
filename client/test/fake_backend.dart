@@ -26,6 +26,13 @@ class FakeBackend {
   String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
   int gatherLevel = 20;
+
+  // --- leveling (DD-250) ---
+  /// null = endpoint missing (older server): the sheet falls back to its XP bar.
+  Map<String, dynamic>? leveling;
+  String? promotedTo;
+  Map<String, dynamic>? lastAllocation;
+  final learnedTalents = <String>[];
   int? lastCraftCount;
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
@@ -160,6 +167,8 @@ class FakeBackend {
     if (mk != null) return mk;
     final gr = _groups(req, path, body);
     if (gr != null) return gr;
+    final lv = _leveling(req, path, body);
+    if (lv != null) return lv;
     final meta = _meta(req, path, body);
     if (meta != null) return meta;
     final qs = _quests(req, path);
@@ -1036,5 +1045,52 @@ class FakeBackend {
       return json(200, {'ok': true});
     }
     return null;
+  }
+
+  http.Response? _leveling(http.Request req, String path, Map body) {
+    final m = RegExp(r'^/v1/character/[^/]+/(leveling|promotion|attributes|talents(/[^/]+)?)$').firstMatch(path);
+    if (m == null) return null;
+    final lv = leveling;
+    if (lv == null) return error(404, 'E_NOT_FOUND');
+    switch ((req.method, m[1]!)) {
+      case ('GET', 'leveling'):
+        return json(200, lv);
+      case ('POST', 'promotion'):
+        promotedTo = body['choice'] as String;
+        lv['spec_code'] = promotedTo;
+        lv['path'] = [...(lv['path'] as List), promotedTo];
+        lv['promotion'] = {'available': false, 'overflow_xp': 0};
+        lv['level'] = 104;
+        return json(200, {'spec_code': promotedTo, 'level': 104, 'levels_gained': 4});
+      case ('POST', 'attributes'):
+        lastAllocation = Map<String, dynamic>.from(body);
+        final a = lv['attributes'] as Map<String, dynamic>;
+        a['available'] = (a['available'] as int) - body.values.fold<int>(0, (s, v) => s + (v as int));
+        return json(200, {'allocated': body});
+      case ('GET', 'talents'):
+        return json(200, {
+          'earned': 2,
+          'spent': learnedTalents.length,
+          'available': 2 - learnedTalents.length,
+          'tree_points': 25,
+          'capstone_level': 850,
+          'level': lv['level'],
+          'trees': [
+            {
+              'code': 'warrior_defense',
+              'points': learnedTalents.length,
+              'talents': [
+                {'code': 'warrior_defense_toughness', 'max_rank': 5, 'rank': learnedTalents.length},
+                {'code': 'warrior_defense_living_fortress', 'max_rank': 1, 'rank': 0, 'capstone': true},
+              ],
+            },
+          ],
+        });
+      case ('POST', final t) when t.startsWith('talents/'):
+        if (learnedTalents.length >= 2) return error(409, 'E_NOT_ENOUGH_POINTS');
+        learnedTalents.add(t.substring('talents/'.length));
+        return json(200, {'rank': learnedTalents.length});
+    }
+    return error(404, 'E_NOT_FOUND');
   }
 }

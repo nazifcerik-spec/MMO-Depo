@@ -13,18 +13,20 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
-		"ErrBagFull":          ErrBagFull,
-		"ErrClassRestriction": ErrClassRestriction,
-		"ErrInvalidSplit":     ErrInvalidSplit,
-		"ErrLevelRequirement": ErrLevelRequirement,
-		"ErrLocked":           ErrLocked,
-		"ErrNotEquippable":    ErrNotEquippable,
-		"ErrNotFound":         ErrNotFound,
-		"ErrNotStackable":     ErrNotStackable,
-		"ErrNothingEquipped":  ErrNothingEquipped,
-		"ErrSlotOccupied":     ErrSlotOccupied,
-		"ErrSlotOutOfRange":   ErrSlotOutOfRange,
-		"ErrUnknownEquipSlot": ErrUnknownEquipSlot,
+		"ErrBagFull":              ErrBagFull,
+		"ErrClassRestriction":     ErrClassRestriction,
+		"ErrInvalidSplit":         ErrInvalidSplit,
+		"ErrLevelRequirement":     ErrLevelRequirement,
+		"ErrLocked":               ErrLocked,
+		"ErrNotEquippable":        ErrNotEquippable,
+		"ErrNotFound":             ErrNotFound,
+		"ErrNotStackable":         ErrNotStackable,
+		"ErrNothingEquipped":      ErrNothingEquipped,
+		"ErrSlotOccupied":         ErrSlotOccupied,
+		"ErrSlotOutOfRange":       ErrSlotOutOfRange,
+		"ErrUnknownEquipSlot":     ErrUnknownEquipSlot,
+		"ErrSpecRequirement":      ErrSpecRequirement,
+		"ErrAttributeRequirement": ErrAttributeRequirement,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

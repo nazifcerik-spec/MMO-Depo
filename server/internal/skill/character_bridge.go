@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/domain/character"
+	"github.com/otter/server/internal/leveling"
 )
 
 // EquippedFetcher exposes what the sheet computer needs from inventory:
@@ -87,7 +88,11 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		CHA:  base.Primary.Charisma,
 		Luck: base.Primary.Luck,
 	}
-	computed := ComputeSheetFor(basePrimary, Target(character.MainStat(base.Class)), mods)
+	var formula *Formula
+	if k, ok := leveling.Current().Class(base.Class); ok && k.Derived != nil {
+		formula = &Formula{Derived: *k.Derived, Level: base.Level}
+	}
+	computed := ComputeSheetWith(basePrimary, Target(character.MainStat(base.Class)), mods, formula)
 
 	// Merge computed back into character.Sheet's shape.
 	base.Primary = character.PrimaryStats{
@@ -103,6 +108,14 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		Defense: computed.Derived.Defense,
 		CritPct: computed.Derived.CritPct,
 		HitPct:  computed.Derived.HitPct,
+
+		EvasionPct:      computed.Derived.EvasionPct,
+		BlockPct:        computed.Derived.BlockPct,
+		CritDmgPct:      computed.Derived.CritDmgPct,
+		ExecutePct:      computed.Derived.ExecutePct,
+		MissingHPDmgPct: computed.Derived.MissingHPDmgPct,
+		LifestealPct:    computed.Derived.LifestealPct,
+		DmgReductionPct: computed.Derived.DmgReductionPct,
 	}
 	base.Resources = character.Resources{
 		HPCurrent: computed.Resources.HPMax, HPMax: computed.Resources.HPMax,

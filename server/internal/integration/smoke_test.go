@@ -71,7 +71,7 @@ func TestContentPackAndCatalogs(t *testing.T) {
 
 	skills := classskill.NewService(p)
 	require.NoError(t, skills.Reload(ctx))
-	require.NotEmpty(t, skills.Catalog().Actives("warrior", 1), "every class starts with an active")
+	require.NotEmpty(t, skills.Catalog().Actives([]string{"warrior"}, 1), "every class starts with an active")
 }
 
 // A system→system transfer goes through the real ledger path; the same

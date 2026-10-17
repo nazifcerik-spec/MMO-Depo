@@ -16,6 +16,7 @@ import (
 
 	"github.com/otter/server/internal/clienterr"
 	"github.com/otter/server/internal/domain/auth"
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -462,7 +463,18 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 		if h.clientErrs != nil {
 			r.Get("/internal/ops/client-errors", h.ClientErrorList)
 		}
+		r.Get("/internal/ops/progression", h.Progression)
 	})
+}
+
+// Progression — GET /internal/ops/progression: the live progression
+// definitions (XP curve + table, level rewards, promotions, talents,
+// unlocks) for inspection (DD-250 §42). Changes go through content review.
+func (h *Handler) Progression(w http.ResponseWriter, r *http.Request) {
+	if _, ok := h.allow(w, r, perm(r, PermCharacterRead), false); !ok {
+		return
+	}
+	character.ProgressionConfig(w, r)
 }
 
 // ClientErrorList — GET /internal/ops/client-errors?platform=android&limit=N.

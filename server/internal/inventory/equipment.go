@@ -4,10 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
 
@@ -49,6 +51,49 @@ type characterView struct {
 	ID        uuid.UUID
 	Level     int16
 	ClassCode string
+	Path      []string       // class path (base → specialization), DD-250
+	Raw       leveling.Stats // raw attributes (requirements ignore diminishing returns)
+}
+
+// Profile is what equip checks read about a character (DD-250 §34).
+type Profile struct {
+	Level int16
+	Class string
+	Path  []string
+	Raw   leveling.Stats
+}
+
+// ProfileFetcher returns a character's equip profile.
+type ProfileFetcher func(ctx context.Context, id uuid.UUID) (Profile, error)
+
+func (f ProfileFetcher) Get(ctx context.Context, id uuid.UUID) (*characterView, error) {
+	p, err := f(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return &characterView{ID: id, Level: p.Level, ClassCode: p.Class, Path: p.Path, Raw: p.Raw}, nil
+}
+
+// meetsRequirements checks a template against a character: class, level,
+// class branch and raw attribute minimums.
+func meetsRequirements(tmpl item.Template, c *characterView) error {
+	if tmpl.ClassRestriction != nil && *tmpl.ClassRestriction != "" && *tmpl.ClassRestriction != c.ClassCode {
+		return ErrClassRestriction
+	}
+	if int16(tmpl.MinLevel) > c.Level {
+		return ErrLevelRequirement
+	}
+	rq := tmpl.Requirements
+	if rq == nil {
+		return nil
+	}
+	if rq.Spec != "" && !slices.Contains(c.Path, rq.Spec) {
+		return ErrSpecRequirement
+	}
+	if c.Raw.Strength < rq.Strength || c.Raw.Vitality < rq.Vitality || c.Raw.Dexterity < rq.Dexterity {
+		return ErrAttributeRequirement
+	}
+	return nil
 }
 
 // SimpleCharFetcher wraps any function returning (level, class) for an id.
@@ -148,16 +193,13 @@ func (s *EquipmentService) Equip(ctx context.Context, characterID, itemID uuid.U
 		return "", ErrUnknownEquipSlot
 	}
 
-	// Class + level check.
+	// Class, level, branch and attribute requirements.
 	char, err := s.charView.Get(ctx, characterID)
 	if err != nil {
 		return "", err
 	}
-	if tmpl.ClassRestriction != nil && *tmpl.ClassRestriction != "" && *tmpl.ClassRestriction != char.ClassCode {
-		return "", ErrClassRestriction
-	}
-	if int16(tmpl.MinLevel) > char.Level {
-		return "", ErrLevelRequirement
+	if err := meetsRequirements(tmpl, char); err != nil {
+		return "", err
 	}
 
 	// If existing item in that slot, unequip first.
@@ -233,4 +275,34 @@ func (s *EquipmentService) unequipToFreeBag(ctx context.Context, repo EquippedRe
 		return ErrBagFull
 	}
 	return repo.UnequipItem(ctx, itemID, characterID, free)
+}
+
+// UnequipInvalid moves every equipped item the character may no longer wear
+// (e.g. after a specialization change) back to the bag. Returns how many
+// moved; a full bag stops it with ErrBagFull.
+func (s *EquipmentService) UnequipInvalid(ctx context.Context, characterID uuid.UUID) (int, error) {
+	repo, ok := s.inv.repo.(EquippedRepo)
+	if !ok {
+		return 0, fmt.Errorf("inventory: repository does not implement EquippedRepo")
+	}
+	char, err := s.charView.Get(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	worn, err := repo.Equipped(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	moved := 0
+	for _, it := range worn {
+		tmpl, err := s.items.Catalog().Get(it.TemplateCode)
+		if err != nil || meetsRequirements(tmpl, char) == nil {
+			continue
+		}
+		if err := s.unequipToFreeBag(ctx, repo, characterID, it.InstanceID); err != nil {
+			return moved, err
+		}
+		moved++
+	}
+	return moved, nil
 }

@@ -88,6 +88,11 @@ var (
 	// trade / mail / craft / admin escrow).
 	ErrLocked = errors.New("inventory: item locked by " + "")
 
+	// ErrSpecRequirement / ErrAttributeRequirement: the item needs another
+	// class branch or more raw attributes (DD-250 §34).
+	ErrSpecRequirement      = errors.New("inventory: class branch requirement not met")
+	ErrAttributeRequirement = errors.New("inventory: attribute requirement not met")
+
 	// ErrBagFull is returned when the bag has no free slot for a new item.
 	ErrBagFull = errors.New("inventory: bag full")
 

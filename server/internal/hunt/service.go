@@ -13,8 +13,10 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/progression"
+	"math"
 )
 
 // --- Ports (kept narrow — hunt does not "own" the underlying services) ------
@@ -35,7 +37,7 @@ type ItemGranter interface {
 
 // XPGranter awards experience — character.Service satisfies via GrantXP.
 type XPGranter interface {
-	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64) (*character.XPGrantResult, error)
+	GrantXP(ctx context.Context, characterID uuid.UUID, delta int64, src character.XPSource) (*character.XPGrantResult, error)
 }
 
 // SheetFetcher builds a live sheet (with equipped bonuses). character.Service
@@ -279,6 +281,9 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, ErrUnknownMob
 	}
 
+	// Character XP per victory comes from the AFK combat rate (DD-250):
+	// minutes of fighting × afk_combat_xp_per_minute.
+	mob.XPReward = AFKXPPerVictory(c.EncounterSecs)
 	hr := Roll(c.Seed, snapshot, mob, planned, combat.DefaultMaxTurns, s.rngNew)
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------
@@ -360,7 +365,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 	var xpResult *character.XPGrantResult
 	if s.xp != nil && hr.TotalXP > 0 {
-		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, hr.TotalXP)
+		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, hr.TotalXP, character.XPSource{
+			Kind: "hunt", ID: c.ID.String(), Metadata: map[string]any{"mob": c.MobCode, "victories": hr.Victories}})
 		if err != nil {
 			s.log.WarnContext(ctx, "hunt: xp grant failed (contract already revealed, no retry)",
 				slog.String("hunt", c.ID.String()), slog.String("err", err.Error()))
@@ -459,4 +465,10 @@ func newLevel(x *character.XPGrantResult) int {
 		return 0
 	}
 	return int(x.Character.Level)
+}
+
+// AFKXPPerVictory is one victory's character XP at the AFK combat rate for
+// an encounter of encounterSecs.
+func AFKXPPerVictory(encounterSecs int32) int32 {
+	return int32(math.Round(leveling.Current().AFKCombatXPPerMinute * float64(encounterSecs) / 60))
 }

@@ -18,6 +18,8 @@ package skill
 import (
 	"encoding/json"
 	"math"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // ModifierKind identifies how the modifier combines into the stack.
@@ -50,6 +52,17 @@ const (
 	TargetMPMax   Target = "mp_max"
 	TargetEnMax   Target = "energy_max"
 	TargetStaMax  Target = "stamina_max"
+
+	// Combat extras (DD-250): flat percentage points, capped by the leveling
+	// configuration. Zero unless a class formula, passive, talent or item
+	// gives them.
+	TargetEvasionPct      Target = "evasion_pct"
+	TargetBlockPct        Target = "block_pct"
+	TargetCritDmgPct      Target = "crit_dmg_pct"
+	TargetExecutePct      Target = "execute_pct"
+	TargetMissingHPDmgPct Target = "missing_hp_dmg_pct"
+	TargetLifestealPct    Target = "lifesteal_pct"
+	TargetDmgReductionPct Target = "dmg_reduction_pct"
 )
 
 // KnownKinds / KnownTargets are what ComputeSheet understands; content
@@ -62,6 +75,8 @@ var (
 		TargetSTR: true, TargetAGI: true, TargetINT: true, TargetVIT: true, TargetCHA: true, TargetLuck: true,
 		TargetAttack: true, TargetDefense: true, TargetCritPct: true, TargetHitPct: true,
 		TargetHPMax: true, TargetMPMax: true, TargetEnMax: true, TargetStaMax: true,
+		TargetEvasionPct: true, TargetBlockPct: true, TargetCritDmgPct: true, TargetExecutePct: true,
+		TargetMissingHPDmgPct: true, TargetLifestealPct: true, TargetDmgReductionPct: true,
 	}
 )
 
@@ -94,12 +109,20 @@ type Primary struct {
 	Luck int `json:"luck"`
 }
 
-// Derived is the four combat-derived stats.
+// Derived is the combat-derived stats.
 type Derived struct {
 	Attack  int `json:"attack"`
 	Defense int `json:"defense"`
 	CritPct int `json:"crit_pct"`
 	HitPct  int `json:"hit_pct"`
+
+	EvasionPct      int `json:"evasion_pct"`
+	BlockPct        int `json:"block_pct"`
+	CritDmgPct      int `json:"crit_dmg_pct"`
+	ExecutePct      int `json:"execute_pct"`
+	MissingHPDmgPct int `json:"missing_hp_dmg_pct"`
+	LifestealPct    int `json:"lifesteal_pct"`
+	DmgReductionPct int `json:"dmg_reduction_pct"`
 }
 
 // Resources are the runtime pools (max only — current is game-state).
@@ -124,6 +147,31 @@ func ComputeSheet(base Primary, mods []Modifier) Sheet { return ComputeSheetFor(
 // comes from the class's main stat (DD-229: TargetSTR, TargetAGI or TargetINT).
 // Formulas for derived / resource maxes are placeholder v1.
 func ComputeSheetFor(base Primary, main Target, mods []Modifier) Sheet {
+	return ComputeSheetWith(base, main, mods, nil)
+}
+
+// Formula is a class's configuration-driven derived-stat formula at a level
+// (DD-250); nil keeps the v1 formulas.
+type Formula struct {
+	leveling.Derived
+	Level int
+}
+
+// FromLeveling converts progression modifiers.
+func FromLeveling(list []leveling.Modifier) []Modifier {
+	out := make([]Modifier, len(list))
+	for i, m := range list {
+		out[i] = Modifier{Kind: ModifierKind(m.Kind), Target: Target(m.Target), Amount: m.Amount}
+	}
+	return out
+}
+
+// ComputeSheetWith is ComputeSheetFor with an optional class formula. Raw
+// attributes scale through the configured diminishing returns (DD-250 §11)
+// — identical below the first bracket — and percent stats respect caps.
+func ComputeSheetWith(base Primary, main Target, mods []Modifier, f *Formula) Sheet {
+	cfg := leveling.Current()
+	eff := cfg.EffectiveAttribute
 	// 1. Primary stats.
 	str := applyStack(float64(base.STR), filterTarget(mods, TargetSTR))
 	agi := applyStack(float64(base.AGI), filterTarget(mods, TargetAGI))
@@ -144,16 +192,33 @@ func ComputeSheetFor(base Primary, main Target, mods []Modifier) Sheet {
 	// 2. Derived — compute from FINAL primary, then apply their own mods.
 	// Base formulas use integer division to give predictable half-values
 	// (e.g. Luck 5 → +2 crit, not +2.5 that rounds to +3).
-	attackBase := float64(primary.STR * 2)
+	whole := func(v int) int { return int(eff(v)) }
+	attackBase := float64(whole(primary.STR) * 2)
 	switch main {
 	case TargetAGI:
-		attackBase = float64(primary.AGI * 2)
+		attackBase = float64(whole(primary.AGI) * 2)
 	case TargetINT:
-		attackBase = float64(primary.INT * 2)
+		attackBase = float64(whole(primary.INT) * 2)
 	}
-	defenseBase := float64(primary.VIT)
-	critBase := float64(5 + primary.Luck/2)
-	hitBase := float64(90 + primary.AGI/2)
+	defenseBase := float64(whole(primary.VIT))
+	critBase := float64(5 + whole(primary.Luck)/2)
+	hitBase := float64(90 + whole(primary.AGI)/2)
+	evasionBase := float64(min(whole(primary.AGI)/2, 40))
+	blockBase := 0.0
+	hpBase := 100.0 + float64(whole(primary.VIT))*10.0
+	if f != nil {
+		lvl := float64(f.Level)
+		attackBase = f.AttackBase + f.AttackPerLevel*lvl + f.AttackPerStr*eff(primary.STR) + f.AttackPerDex*eff(primary.AGI)
+		defenseBase = f.ArmorBase + f.ArmorPerLevel*lvl + f.ArmorPerVit*eff(primary.VIT)
+		critBase = f.CritBase + f.CritPerDex*eff(primary.AGI)
+		hitBase = f.HitBase + f.HitPerDex*eff(primary.AGI)
+		evasionBase = f.DodgeBase + f.DodgePerDex*eff(primary.AGI)
+		blockBase = f.BlockPerStr * eff(primary.STR)
+		hpBase = f.HPBase + f.HPPerLevel*lvl + f.HPPerVit*eff(primary.VIT)
+	}
+	pct := func(t Target, base float64) int {
+		return intClamp(cfg.Cap(string(t), applyStack(base, filterTarget(mods, t))), 0, 100)
+	}
 
 	attack := applyStack(attackBase, filterTarget(mods, TargetAttack))
 	defense := applyStack(defenseBase, filterTarget(mods, TargetDefense))
@@ -163,13 +228,20 @@ func ComputeSheetFor(base Primary, main Target, mods []Modifier) Sheet {
 	derived := Derived{
 		Attack:  intClamp(attack, 0, 99999),
 		Defense: intClamp(defense, 0, 99999),
-		CritPct: intClamp(crit, 0, 100),
-		HitPct:  intClamp(hit, 0, 100),
+		CritPct: intClamp(cfg.Cap(string(TargetCritPct), crit), 0, 100),
+		HitPct:  intClamp(cfg.Cap(string(TargetHitPct), hit), 0, 100),
+
+		EvasionPct:      pct(TargetEvasionPct, evasionBase),
+		BlockPct:        pct(TargetBlockPct, blockBase),
+		CritDmgPct:      intClamp(applyStack(0, filterTarget(mods, TargetCritDmgPct)), 0, 1000),
+		ExecutePct:      intClamp(applyStack(0, filterTarget(mods, TargetExecutePct)), 0, 1000),
+		MissingHPDmgPct: intClamp(applyStack(0, filterTarget(mods, TargetMissingHPDmgPct)), 0, 1000),
+		LifestealPct:    pct(TargetLifestealPct, 0),
+		DmgReductionPct: pct(TargetDmgReductionPct, 0),
 	}
 
 	// 3. Resources — HP scales with VIT, MP with INT (placeholder).
-	hpBase := 100.0 + float64(primary.VIT)*10.0
-	mpBase := 50.0 + float64(primary.INT)*5.0
+	mpBase := 50.0 + float64(whole(primary.INT))*5.0
 	enBase := 100.0
 	staBase := 100.0
 

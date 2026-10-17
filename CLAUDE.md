@@ -141,6 +141,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 65. **AFK süreleri 1/3/6 sa (bitti)** — Sprint 65, DD-249. Toplama + av seçenekleri 1/3/6 sa (`activityDurations` = `huntDurations`); sunucu tavanı 6 sa (`activity.MaxDurationSeconds`, `hunt.MaxHuntSeconds`). Zindanlar sabit süreli.
 
+66. **Seviye 1–1000 + Savaşçı sınıf ilerlemesi (bitti)** — Sprint 66, DD-250. Migration 0036 (seviye CHECK 1000, `attr_*`, `promotion_overflow_xp`, `postcap_xp`, `character.xp_grant/progression_event/class_history/talent`, `class_skill.spec_code/config`, `item_template.requirements`, seviye + ustalık unvanları). `internal/leveling` (eğri formül/tablo, ödül kaydı, sınıf ağacı, yetenek ağaçları, açılımlar, kilometre taşı, simülatör testi). Tek XP yolu `character.Service.GrantXP(…, XPSource)` (tx, kaynak başı bir kez, kapı taşması, `onLevelUp`). Uçlar `/character/{id}/{leveling,leveling/events,promotion,attributes,talents}`, `/v1/progression/config`, ops + dev. Savaş: Öfke, guard/empower, tetikleyiciler, yeni yüzde statlar. İstemci: ilerleme kartı, terfi, nitelik, yetenek ağacı; dil en/tr/es/zh. Kapsam kapısı üretilmiş l10n dosyalarını saymaz.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -85,25 +85,91 @@ func applyLevelGap(p *Combatant, mobLevel int16) {
 	p.Defense = p.Defense * max(0, 100-GapDefensePerLevel*gap) / 100
 }
 
-// caster tracks one combatant's MP and skill cooldowns for an encounter.
+// caster tracks one combatant's resource (MP or Rage), skill cooldowns and
+// timed buffs for an encounter.
 type caster struct {
 	mp    int32
+	rage  bool
 	ready []int // turn from which skill i may be cast again
+	atk   buff
+	def   buff
+}
+
+// buff is a timed stat bonus: delta is reverted when its turn comes.
+type buff struct {
+	until int
+	delta int32
 }
 
 func newCaster(c *Combatant) *caster {
-	return &caster{mp: c.MPMax, ready: make([]int, len(c.Skills))}
+	k := &caster{mp: c.MPMax, ready: make([]int, len(c.Skills)), rage: c.Resource == "rage"}
+	if k.rage {
+		k.mp = 0 // Rage builds up during the fight
+	}
+	return k
 }
+
+func (k *caster) expire(turn int, self *Combatant) {
+	if k.atk.delta != 0 && turn >= k.atk.until {
+		self.Attack -= k.atk.delta
+		k.atk = buff{}
+	}
+	if k.def.delta != 0 && turn >= k.def.until {
+		self.Defense -= k.def.delta
+		k.def = buff{}
+	}
+}
+
+// gain adds resource after an action: Rage per landed hit plus the skill's
+// own gain, capped at the pool size.
+func (k *caster) gain(self *Combatant, rec TurnRecord, sk *Skill) {
+	if !k.rage {
+		return
+	}
+	if rec.Hit && rec.Damage > 0 {
+		k.mp += self.ResourcePerHit
+	}
+	if sk != nil {
+		k.mp += sk.Gain
+	}
+	k.mp = min(k.mp, self.MPMax)
+}
+
+func pctAtOrBelow(cur, max, pct int32) bool { return int64(cur)*100 <= int64(max)*int64(pct) }
 
 // act picks the first usable skill (list order = priority) or attacks.
 func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
-	for i, sk := range self.Skills {
+	k.expire(turn, self)
+	for i := range self.Skills {
+		sk := &self.Skills[i]
 		if turn < k.ready[i] || sk.MPCost > k.mp {
 			continue
 		}
+		if sk.SelfHPBelow > 0 && !pctAtOrBelow(self.HPCurrent, self.HPMax, sk.SelfHPBelow) {
+			continue
+		}
+		if sk.TargetHPBelow > 0 && !pctAtOrBelow(target.HPCurrent, target.HPMax, sk.TargetHPBelow) {
+			continue
+		}
 		switch sk.Effect {
+		case EffectGuard, EffectEmpower:
+			b := &k.def
+			stat := &self.Defense
+			if sk.Effect == EffectEmpower {
+				b, stat = &k.atk, &self.Attack
+			}
+			if b.delta != 0 {
+				continue // already up
+			}
+			delta := max(1, *stat*sk.Power/100)
+			*stat += delta
+			*b = buff{until: turn + max(1, sk.DurationTurns), delta: delta}
+			k.spend(i, turn, *sk)
+			k.gain(self, TurnRecord{}, sk)
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
+				TargetHPAft: self.HPCurrent}
 		case EffectHeal:
-			if self.HPCurrent*2 > self.HPMax {
+			if sk.SelfHPBelow == 0 && self.HPCurrent*2 > self.HPMax {
 				continue // not worth it yet
 			}
 			heal := self.HPMax * sk.Power / 100
@@ -111,17 +177,20 @@ func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
 				heal = self.HPMax - self.HPCurrent
 			}
 			self.HPCurrent += heal
-			k.spend(i, turn, sk)
+			k.spend(i, turn, *sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
 				Heal: heal, TargetHPAft: self.HPCurrent}
 		case EffectStrike:
-			k.spend(i, turn, sk)
+			k.spend(i, turn, *sk)
 			rec := swing(r, turn, self, target, sk.Power)
 			rec.Skill = sk.Code
+			k.gain(self, rec, sk)
 			return rec
 		}
 	}
-	return resolveSwing(r, turn, self, target)
+	rec := resolveSwing(r, turn, self, target)
+	k.gain(self, rec, nil)
+	return rec
 }
 
 func (k *caster) spend(i, turn int, sk Skill) {
@@ -154,6 +223,7 @@ func swing(r RNG, turn int, attacker, defender *Combatant, powerPct int32) TurnR
 	if powerPct != 100 {
 		dmg = max(1, dmg*powerPct/100)
 	}
+	dmg = progressionDamage(r, dmg, crit, attacker, defender)
 	defender.HPCurrent -= dmg
 	if defender.HPCurrent < 0 {
 		defender.HPCurrent = 0
@@ -177,4 +247,36 @@ func (s *Session) validate() error {
 		return invalid("both combatants have zero attack — deadlock")
 	}
 	return nil
+}
+
+// progressionDamage applies the DD-250 combat extras in a fixed order. With
+// all of them zero it returns dmg untouched and draws no RNG.
+func progressionDamage(r RNG, dmg int32, crit bool, a, d *Combatant) int32 {
+	if a.CritDmgPct == 0 && a.ExecutePct == 0 && a.MissingHPDmgPct == 0 && a.LifestealPct == 0 &&
+		d.DmgReductionPct == 0 && d.BlockPct == 0 {
+		return dmg
+	}
+	bonus := int64(100)
+	if crit && a.CritDmgPct > 0 {
+		bonus += int64(a.CritDmgPct)
+	}
+	if a.ExecutePct > 0 && pctAtOrBelow(d.HPCurrent, d.HPMax, ExecuteThresholdPct) {
+		bonus += int64(a.ExecutePct)
+	}
+	if a.MissingHPDmgPct > 0 && a.HPMax > 0 {
+		bonus += int64(a.MissingHPDmgPct) * int64(a.HPMax-a.HPCurrent) / int64(a.HPMax)
+	}
+	out := int64(dmg) * bonus / 100
+	if d.DmgReductionPct > 0 {
+		out = out * int64(100-min(d.DmgReductionPct, 90)) / 100
+	}
+	if d.BlockPct > 0 && int32(r.Uint64()%100) < d.BlockPct {
+		out /= 2
+	}
+	out = max(out, 1)
+	if a.LifestealPct > 0 {
+		heal := int32(out * int64(a.LifestealPct) / 100)
+		a.HPCurrent = min(a.HPMax, a.HPCurrent+heal)
+	}
+	return int32(out)
 }

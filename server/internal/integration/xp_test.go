@@ -11,6 +11,7 @@ import (
 
 	"github.com/otter/server/internal/crafting"
 	"github.com/otter/server/internal/domain/character"
+	"github.com/otter/server/internal/leveling"
 )
 
 // XP rollover on the real rows: multi-level leaps, the cap, bad input.
@@ -19,18 +20,28 @@ func TestXPRollover(t *testing.T) {
 	p := w.player("warrior", 1)
 
 	chars := character.NewPgRepo(w.p)
-	_, _, err := chars.AddXP(w.ctx, p.ID, -1)
+	cfg := leveling.Current()
+	src := character.XPSource{Kind: "test"}
+	_, err := chars.GrantXP(w.ctx, p.ID, -1, src, cfg)
 	require.ErrorIs(t, err, character.ErrInvalidXP)
-	_, _, err = chars.AddXP(w.ctx, uuid.New(), 1)
+	_, err = chars.GrantXP(w.ctx, uuid.New(), 1, src, cfg)
 	require.ErrorIs(t, err, character.ErrNotFound)
-	c, up, err := chars.AddXP(w.ctx, p.ID, 1<<40)
+	// A class without promotion gates (mage) runs straight to the cap.
+	m := w.player("mage", 1)
+	g, err := chars.GrantXP(w.ctx, m.ID, 1<<40, src, cfg)
 	require.NoError(t, err)
-	require.True(t, up)
-	require.Equal(t, int16(character.LevelCap), c.Level, "a huge grant stops at the cap")
-	again, up, err := chars.AddXP(w.ctx, p.ID, 10)
+	require.NotEmpty(t, g.LevelsGained)
+	require.Equal(t, int16(character.LevelCap), g.Character.Level, "a huge grant stops at the cap")
+	again, err := chars.GrantXP(w.ctx, m.ID, 10, src, cfg)
 	require.NoError(t, err)
-	require.False(t, up)
-	require.Equal(t, c.XP+10, again.XP, "XP past the cap is kept")
+	require.Empty(t, again.LevelsGained)
+	require.Equal(t, g.Character.PostCapXP+10, again.Character.PostCapXP, "XP past the cap is kept")
+	// A warrior stops at its first promotion gate instead.
+	g, err = chars.GrantXP(w.ctx, p.ID, 1<<40, src, cfg)
+	require.NoError(t, err)
+	require.Equal(t, int16(100), g.Character.Level)
+	require.True(t, g.PromotionAvailable)
+	require.Positive(t, g.Character.OverflowXP)
 
 	profs := crafting.NewPgRepo(w.p)
 	_, _, err = profs.AddXP(w.ctx, p.ID, "alchemy", 5, 60)

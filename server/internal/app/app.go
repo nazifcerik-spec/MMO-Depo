@@ -35,6 +35,7 @@ import (
 	"github.com/otter/server/internal/idempotency"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
@@ -135,14 +136,15 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	)
 
 	// --- Equipment + Skill Engine (Sprint 11) ---
-	// EquipmentService needs a small character read (level + class) — bridge
-	// via SimpleCharFetcher so we don't couple inventory to character types.
-	charFetch := inventory.SimpleCharFetcher(func(ctx context.Context, id uuid.UUID) (int16, string, error) {
+	// EquipmentService reads an equip profile (level, class path, raw
+	// attributes — DD-250) without coupling inventory to character types.
+	charFetch := inventory.ProfileFetcher(func(ctx context.Context, id uuid.UUID) (inventory.Profile, error) {
 		c, err := charSvc.GetOwnedInternal(ctx, id)
 		if err != nil {
-			return 0, "", err
+			return inventory.Profile{}, err
 		}
-		return c.Level, c.ClassCode, nil
+		return inventory.Profile{Level: c.Level, Class: c.ClassCode,
+			Path: leveling.Current().Path(c.Spec()), Raw: character.RawAttributes(c)}, nil
 	})
 	equipSvc := inventory.NewEquipmentService(invSvc, itemSvc, charFetch)
 	// Wire sheet computer: character.Sheet now uses skill.ComputeSheet with equipped bonuses.
@@ -275,6 +277,11 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Class skills (DD-222): passives → sheet stack, actives → combat snapshots.
 	classSkills := classskill.NewService(pool)
 	sheetAdapter.WithModifierSource(classSkills.PassiveModifiers)
+	// Promotion stat modifiers, talents and class mastery (DD-250).
+	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID, sheet character.Sheet) ([]skill.Modifier, error) {
+		mods, err := charSvc.ProgressionModifiers(ctx, id, sheet)
+		return skill.FromLeveling(mods), err
+	})
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
@@ -370,6 +377,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		DungeonHandler:    dungHandler,
 		WorldHandler:      worldHandler,
 		CraftingHandler:   craftHandler,
+		ProgressionDev:    &progressionDev{chars: charSvc, busy: busyChecker{pool}, gear: equipSvc},
 		GatheringHandler:  gathering.NewHandler(gatherSvc),
 		WSHandler:         wsHandler,
 		PartyHandler:      partyHandler,

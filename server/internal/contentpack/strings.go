@@ -11,6 +11,8 @@ import (
 	"strings"
 
 	"gopkg.in/yaml.v3"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // Strings are the content names per language (DD-230): "<kind>.<code>" →
@@ -23,15 +25,46 @@ type Strings struct {
 // DefaultLang answers languages without a file.
 const DefaultLang = "en"
 
-// Lookup returns a language's table, falling back to DefaultLang.
+// CompleteLangs must name every content code; other languages (zh-cn, es,
+// DD-250) may be partial — they must cover the progression keys and fall
+// back to DefaultLang for the rest.
+var CompleteLangs = map[string]bool{"en": true, "tr": true}
+
+// Lookup returns a language's table ("zh" finds "zh-cn"), falling back to
+// DefaultLang.
 func (s *Strings) Lookup(lang string) map[string]string {
 	if s == nil {
 		return nil
 	}
-	if t, ok := s.ByLang[strings.ToLower(lang)]; ok {
+	lang = strings.ToLower(lang)
+	if t, ok := s.ByLang[lang]; ok {
 		return t
 	}
+	want, _, _ := strings.Cut(lang, "-") // "es-es" → "es", "zh" → "zh"
+	if t, ok := s.ByLang[want]; ok {
+		return t
+	}
+	for code, t := range s.ByLang {
+		if base, _, _ := strings.Cut(code, "-"); base == want {
+			return t
+		}
+	}
 	return s.ByLang[DefaultLang]
+}
+
+// fillFallbacks completes partial languages with DefaultLang names.
+func (s *Strings) fillFallbacks() {
+	base := s.ByLang[DefaultLang]
+	for lang, m := range s.ByLang {
+		if CompleteLangs[lang] {
+			continue
+		}
+		for k, v := range base {
+			if _, ok := m[k]; !ok {
+				m[k] = v
+			}
+		}
+	}
 }
 
 func loadStrings(dir string) (*Strings, error) {
@@ -51,7 +84,7 @@ func loadStrings(dir string) (*Strings, error) {
 		if err := yaml.Unmarshal(raw, &m); err != nil {
 			return nil, fmt.Errorf("parse %s: %w", f, err)
 		}
-		lang := strings.TrimSuffix(filepath.Base(f), ".yaml")
+		lang := strings.ToLower(strings.TrimSuffix(filepath.Base(f), ".yaml"))
 		out.ByLang[lang] = m
 		h.Write([]byte(lang))
 		h.Write(raw)
@@ -79,9 +112,16 @@ func validateStrings(s *Strings, p *Pack) error {
 				return fmt.Errorf("i18n %s: %s not in %s.yaml", lang, k, DefaultLang)
 			}
 		}
-		for k := range base {
+		if CompleteLangs[lang] {
+			for k := range base {
+				if _, ok := m[k]; !ok {
+					return fmt.Errorf("i18n %s: missing %s", lang, k)
+				}
+			}
+		}
+		for _, k := range progressionKeys(p) {
 			if _, ok := m[k]; !ok {
-				return fmt.Errorf("i18n %s: missing %s", lang, k)
+				return fmt.Errorf("i18n %s: missing progression key %s", lang, k)
 			}
 		}
 	}
@@ -125,4 +165,42 @@ func validateStrings(s *Strings, p *Pack) error {
 		return errors.New("i18n: no name for " + strings.Join(missing, ", "))
 	}
 	return nil
+}
+
+// progressionKeys are the player-facing progression strings every language
+// must carry (DD-250): class nodes and roles, level and mastery titles,
+// talents and trees, the skills of progression classes (name + description)
+// and the attribute names.
+func progressionKeys(p *Pack) []string {
+	c := p.Progression
+	if c == nil {
+		return nil
+	}
+	var keys []string
+	classes := map[string]bool{}
+	for _, k := range c.Classes {
+		classes[k.Code] = true
+		keys = append(keys, "class."+k.Code, "class."+k.Code+".role")
+		if k.Mastery != nil {
+			keys = append(keys, "title."+k.Mastery.Title)
+		}
+	}
+	for _, t := range c.Titles {
+		keys = append(keys, "title."+t)
+	}
+	for _, t := range c.Trees {
+		keys = append(keys, "talent_tree."+t.Code)
+		for _, tl := range t.Talents {
+			keys = append(keys, "talent."+tl.Code, "talent."+tl.Code+".desc")
+		}
+	}
+	for _, s := range p.Skills {
+		if classes[s.Class] {
+			keys = append(keys, "skill."+s.Code, "skill."+s.Code+".desc")
+		}
+	}
+	for _, a := range leveling.Attributes {
+		keys = append(keys, "attribute."+a)
+	}
+	return keys
 }

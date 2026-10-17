@@ -48,12 +48,28 @@ type Combatant struct {
 	// Level drives the level-gap rule (DD-229). Zero = unknown (old
 	// snapshots): no gap applies, so their replays stay identical.
 	Level int16 `json:",omitempty"`
+
+	// Progression extras (DD-250). All zero = the v1 rules exactly (no extra
+	// RNG draws), so older snapshots replay unchanged.
+	Resource        string `json:",omitempty"` // "rage": the MP pool starts empty and fills on hits
+	ResourcePerHit  int32  `json:",omitempty"`
+	BlockPct        int32  `json:",omitempty"` // chance to halve an incoming hit
+	CritDmgPct      int32  `json:",omitempty"` // extra crit damage %
+	ExecutePct      int32  `json:",omitempty"` // extra damage % vs targets at <= ExecuteThresholdPct HP
+	MissingHPDmgPct int32  `json:",omitempty"` // up to this extra damage % as own HP drops
+	LifestealPct    int32  `json:",omitempty"` // heal this % of damage dealt
+	DmgReductionPct int32  `json:",omitempty"` // incoming damage reduced by this %
 }
+
+// ExecuteThresholdPct is the target HP share below which ExecutePct applies.
+const ExecuteThresholdPct = 35
 
 // Skill effects.
 const (
-	EffectStrike = "strike" // hit roll as usual, damage × Power/100
-	EffectHeal   = "heal"   // restore Power% of HPMax; only used at <= 50% HP
+	EffectStrike  = "strike"  // hit roll as usual, damage × Power/100
+	EffectHeal    = "heal"    // restore Power% of HPMax; only used at <= 50% HP (or SelfHPBelow)
+	EffectGuard   = "guard"   // +Power% defense for DurationTurns
+	EffectEmpower = "empower" // +Power% attack for DurationTurns
 )
 
 // Skill is one active class skill, auto-cast on the combatant's turn: the
@@ -62,9 +78,16 @@ const (
 type Skill struct {
 	Code          string
 	Effect        string
-	Power         int32 // strike: damage percent (170 = 1.7×); heal: % of HPMax
-	MPCost        int32
-	CooldownTurns int // turns until it can be cast again (>= 1)
+	Power         int32 // strike: damage percent (170 = 1.7×); heal: % of HPMax; guard/empower: % bonus
+	MPCost        int32 // resource cost (MP or Rage)
+	CooldownTurns int   // turns until it can be cast again (>= 1)
+
+	// Data-driven activation (DD-250): the same definition drives manual
+	// play and passive-only (AFK) auto-casting.
+	Gain          int32 `json:",omitempty"` // resource gained on cast (Rage builders)
+	SelfHPBelow   int32 `json:",omitempty"` // only when own HP% is at or below this
+	TargetHPBelow int32 `json:",omitempty"` // only when target HP% is at or below this
+	DurationTurns int   `json:",omitempty"` // guard / empower length
 }
 
 // Clone returns a copy whose Skills slice is not shared.

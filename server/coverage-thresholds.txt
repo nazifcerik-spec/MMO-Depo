@@ -7,21 +7,22 @@
 # package                     min%
 internal/activity             81
 internal/admin                34
-internal/classskill           91
-internal/combat               86
+internal/classskill           92
+internal/combat               88
 internal/consumable           80
 internal/contentpack          88
 internal/crafting             82
 internal/gathering            85
 internal/domain/auth          81
-internal/domain/character     78
-internal/dungeon              80
+internal/domain/character     79
+internal/dungeon              81
 internal/economy              79
 internal/guild                80
 internal/http/apierr          98
 internal/http/middleware      91
-internal/hunt                 79
+internal/hunt                 80
 internal/inventory            78
+internal/leveling             90
 internal/item                 87
 internal/mail                 50
 internal/market               80
