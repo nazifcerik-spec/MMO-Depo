@@ -1,16 +1,9 @@
 /// Wire models for gathering activities (server/internal/activity).
 const activityKinds = ['mining', 'fishing', 'woodcutting', 'herbalism', 'hunting'];
 
-/// Server bounds: 60s .. 12h. The 1-minute option exists for dev builds.
-const activityDurations = [
-  Duration(minutes: 15),
-  Duration(minutes: 30),
-  Duration(hours: 1),
-  Duration(hours: 2),
-  Duration(hours: 4),
-  Duration(hours: 8),
-  Duration(hours: 12),
-];
+/// AFK run lengths (DD-249): 1, 3 or 6 hours (server cap 6h). The
+/// 1-minute option exists for dev builds.
+const activityDurations = [Duration(hours: 1), Duration(hours: 3), Duration(hours: 6)];
 
 class LootItem {
   const LootItem({

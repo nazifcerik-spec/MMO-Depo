@@ -2240,6 +2240,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-249 — AFK Süreleri 1 / 3 / 6 Saat
+**Karar:** Toplama ve av için seçilebilen süreler yalnız 1 sa, 3 sa, 6 sa (varsayılan 1 sa; dev sürümünde ek 1/5 dk test seçenekleri durur). Sunucu tavanı 12 sa → 6 sa (`activity.MaxDurationSeconds`, `hunt.MaxHuntSeconds`); alt sınır değişmedi (erken toplama zaten süreyle orantılı ödüllendirir). Zindan süreleri şablon başına sabit kalır (15–30 dk).
+**Reason:** Kullanıcı isteği.
+**Alternatives:** Sunucuda yalnız bu üç değeri kabul etmek (testler ve dev kısa süreleri bozulur; kısa süre ekonomik avantaj sağlamaz).
+**Consequences:** 6 saatten uzun kontratlar reddedilir (`E_VALIDATION`); mevcut uzun kontratlar normal biter.
+**Tarih:** 2026-10-17
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -180,7 +180,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
 
   /// The player picked [_mob] themselves; otherwise it follows the level.
   bool _mobPicked = false;
-  Duration _duration = huntDurations[1];
+  Duration _duration = huntDurations.first;
 
   List<Duration> get _durations => [if (AppConfig.flavor == 'dev') const Duration(minutes: 5), ...huntDurations];
 

@@ -191,15 +191,15 @@ void main() {
     expect(find.text('10 / 64 XP'), findsOneWidget);
     expect(find.text('Unlocks at level 70'), findsOneWidget);
     await tester.tap(find.text('Salmon'));
-    await _gatherScrollTo(tester, '2h 00m');
-    await tester.tap(find.text('2h 00m'));
+    await _gatherScrollTo(tester, '3h 00m');
+    await tester.tap(find.text('3h 00m'));
     await tester.pump();
     await _gatherScrollTo(tester, 'Start Fishing');
     await tester.tap(find.text('Start Fishing'));
     await tester.pumpAndSettle();
     expect(be.activeActivity!['kind'], 'fishing');
     expect(be.activeActivity!['target'], 'salmon');
-    expect(be.activeActivity!['duration_seconds'], 7200);
+    expect(be.activeActivity!['duration_seconds'], 10800);
     expect(find.textContaining('left'), findsOneWidget);
 
     final sheetsBefore = be.sheetGets;
@@ -424,7 +424,12 @@ void main() {
     expect(be.activeHunt, isNull);
 
     await tester.tap(find.text('Giant Rat'));
-    await tester.tap(find.text('30m'));
+    // AFK lengths are 1 / 3 / 6 hours (DD-249).
+    for (final d in ['1h 00m', '3h 00m', '6h 00m']) {
+      expect(find.text(d), findsOneWidget);
+    }
+    expect(find.text('30m'), findsNothing);
+    await tester.tap(find.text('6h 00m'));
     await tester.pump();
     await tester.tap(find.text('Start hunt'));
     await tester.pumpAndSettle();

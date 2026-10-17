@@ -42,7 +42,7 @@ class _ActivityViewState extends State<ActivityView> {
   bool _busy = false;
 
   String _kind = activityKinds.first;
-  Duration _duration = activityDurations[2];
+  Duration _duration = activityDurations.first;
 
   /// kind → profession; empty until loaded (or if it fails: the server then
   /// picks the best resource itself).

@@ -244,8 +244,19 @@ func TestActive_NoActiveReturnsNotFound(t *testing.T) {
 // guard against int32 overflow in ExpiresAt computation.
 func TestExpiresAt_Correct(t *testing.T) {
 	svc, _, _, char, acct := newFixtures(t)
-	res, _ := svc.Start(context.Background(), activity.StartRequest{
-		CharacterID: char.ID, AccountID: acct, Kind: activity.KindMining, DurationSeconds: 12 * 3600,
+	res, err := svc.Start(context.Background(), activity.StartRequest{
+		CharacterID: char.ID, AccountID: acct, Kind: activity.KindMining, DurationSeconds: 6 * 3600,
 	})
-	require.WithinDuration(t, res.Contract.StartedAt.Add(12*time.Hour), res.Contract.ExpiresAt, time.Second)
+	require.NoError(t, err)
+	require.WithinDuration(t, res.Contract.StartedAt.Add(6*time.Hour), res.Contract.ExpiresAt, time.Second)
+}
+
+// AFK runs are 1 / 3 / 6 hours (DD-249): longer is refused.
+func TestStart_SixHourCap(t *testing.T) {
+	svc, _, _, char, acct := newFixtures(t)
+	_, err := svc.Start(context.Background(), activity.StartRequest{
+		CharacterID: char.ID, AccountID: acct, Kind: activity.KindMining, DurationSeconds: 6*3600 + 1,
+	})
+	var ve *activity.ValidationError
+	require.ErrorAs(t, err, &ve)
 }

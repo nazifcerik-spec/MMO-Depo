@@ -107,7 +107,6 @@ const DefaultEncounterSeconds = 120
 // client bypass rate limits by requesting sub-second encounters.
 const MinEncounterSeconds = 30
 
-// MaxHuntSeconds caps a single hunt duration at 12 hours — matches the
-// existing activity long-form cap and prevents runaway JSON blobs in the
-// reveal log.
-const MaxHuntSeconds = 12 * 60 * 60
+// MaxHuntSeconds caps a single hunt at 6 hours: AFK runs are 1 / 3 / 6 h
+// (DD-249), matching the activity cap; also bounds the reveal log.
+const MaxHuntSeconds = 6 * 60 * 60

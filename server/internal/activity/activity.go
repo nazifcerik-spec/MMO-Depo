@@ -133,6 +133,6 @@ func (e *ValidationError) Unwrap() error { return ErrValidation }
 
 // Duration limits (v1). Config Phase 02.
 const (
-	MinDurationSeconds = int32(60)        // 1 minute
-	MaxDurationSeconds = int32(12 * 3600) // 12 hours
+	MinDurationSeconds = int32(60)       // 1 minute
+	MaxDurationSeconds = int32(6 * 3600) // 6 hours: AFK runs are 1 / 3 / 6 h (DD-249)
 )

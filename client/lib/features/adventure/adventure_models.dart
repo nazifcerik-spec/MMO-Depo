@@ -1,14 +1,8 @@
 import '../activity/activity_models.dart';
 
-/// Hunt durations (server cap 12h). Dungeons have a fixed duration per template.
-const huntDurations = [
-  Duration(minutes: 30),
-  Duration(hours: 1),
-  Duration(hours: 2),
-  Duration(hours: 4),
-  Duration(hours: 8),
-  Duration(hours: 12),
-];
+/// AFK hunt lengths (DD-249), same as gathering: 1, 3 or 6 hours (server cap
+/// 6h). Dungeons have a fixed duration per template.
+const huntDurations = activityDurations;
 
 class MobInfo {
   const MobInfo({

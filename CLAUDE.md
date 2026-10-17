@@ -139,6 +139,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 64. **Atölye meslek sayfaları + yığın 999 + av hayvanı görselleri (bitti)** — Sprint 64, DD-248. Üretim: meslek listesi → `ProfessionScreen` (tarifler, ada dokununca açılan özellik paneli); `GET /v1/recipes` `output` alanı. 99'luk yığınlar 999. Avcılık kaynakları `assets/animals/<hayvan>.png` gösterir (`huntAnimal`, liste `assets/animals/README.md`); hayvan ganimet tablosu beklemede.
 
+65. **AFK süreleri 1/3/6 sa (bitti)** — Sprint 65, DD-249. Toplama + av seçenekleri 1/3/6 sa (`activityDurations` = `huntDurations`); sunucu tavanı 6 sa (`activity.MaxDurationSeconds`, `hunt.MaxHuntSeconds`). Zindanlar sabit süreli.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
