@@ -297,6 +297,23 @@ func (s *Service) ClaimMail(ctx context.Context, actor, account, mailID uuid.UUI
 	if err := s.chars.Owns(ctx, actor, account); err != nil {
 		return nil, err
 	}
+	if s.slots != nil {
+		var n int
+		if err := s.pool.QueryRow(ctx, `
+			SELECT count(*) FROM inventory.item_instance WHERE locked_ref_id = $1 AND lock_owner = 'mail'`,
+			mailID).Scan(&n); err != nil {
+			return nil, err
+		}
+		if n > 0 {
+			free, err := s.slots.FreeSlots(ctx, actor)
+			if err != nil {
+				return nil, err
+			}
+			if free < n {
+				return nil, ErrBagFull
+			}
+		}
+	}
 	var claimed []item.Instance
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		var gold int64

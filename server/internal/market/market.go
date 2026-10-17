@@ -113,6 +113,7 @@ var (
 	ErrPriceMismatch      = errors.New("market: price changed")
 	ErrListingCap         = errors.New("market: 50 active listings max")
 	ErrSelfBuy            = errors.New("market: cannot buy your own listing")
+	ErrBagFull            = errors.New("market: bag full")
 	ErrNotSeller          = errors.New("market: not your listing")
 	ErrIdempotencyMissing = errors.New("market: Idempotency-Key header required")
 )

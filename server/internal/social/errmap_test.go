@@ -28,6 +28,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrNotFriends":         ErrNotFriends,
 		"ErrNotInChannel":       ErrNotInChannel,
 		"ErrNothingToClaim":     ErrNothingToClaim,
+		"ErrBagFull":            ErrBagFull,
 		"ErrSelfTarget":         ErrSelfTarget,
 		"ErrTargetNotFound":     ErrTargetNotFound,
 		"ErrTooLong":            ErrTooLong,

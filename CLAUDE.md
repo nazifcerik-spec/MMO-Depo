@@ -133,6 +133,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 61. **Çanta + bildirim + üretim kolaylıkları (bitti)** — Sprint 61, DD-245. Çanta sıralama (görünüm; `sortBag`), uzun bas + sürükle çoklu seçim → toplu sat / yok et. Bağlı eşya dükkâna satılır, geri alımda yeniden bağlanır (`vendor.Repository.Rebind`). `DELETE /v1/notifications/{id}` + istemcide girdi başı çöp kutusu. `POST /craft` `count` 1..100 (parti malzemesi önce kontrol, yarıda durursa yapılan döner) + istemci adet seçici. Seviye anında: kabuk `ValueNotifier` seviye → Macera panelleri; toplama sekmesi `dataVersion`'da meslek seviyelerini yeniler.
 
+62. **Çanta 100 slot + dolu çanta kapısı (bitti)** — Sprint 62, DD-246. `BagSlotCap` 100. `inventory.Service.HasRoom` (boş slot ya da yığında yer) / `FreeSlots`. Ödemeden önce `E_BAG_FULL` (409): dükkân alım/geri alım, üretim (birim başı), pazar alımı, posta eki alma, toplama/av/zindan başlangıcı (`WithBagRoom`). İstemci: dolu çantada sayaç uyarı rengi. Entegrasyon: `TestHTTPFullBagRefusesNewItems`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

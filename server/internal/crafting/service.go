@@ -26,6 +26,8 @@ type CatalogLookup interface {
 type InventoryConsumer interface {
 	Available(ctx context.Context, characterID uuid.UUID, templateCode string) (int32, error)
 	ConsumeAll(ctx context.Context, characterID uuid.UUID, needs []inventory.Need) error
+	// HasRoom: is there bag room for the output (DD-246)?
+	HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error)
 }
 
 // ItemMinter is the output-producing capability. item.Service.MintExact satisfies.
@@ -144,6 +146,13 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 			return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, in.Quantity, have, inventory.ErrInsufficient)
 		}
 		needs = append(needs, inventory.Need{TemplateCode: in.TemplateCode, Quantity: in.Quantity})
+	}
+
+	// --- A full bag refuses the craft before anything is spent (DD-246).
+	if ok, err := s.inv.HasRoom(ctx, characterID, recipe.OutputTemplateCode, recipe.OutputStack); err != nil {
+		return nil, err
+	} else if !ok {
+		return nil, inventory.ErrBagFull
 	}
 
 	// --- Debit gold (fresh key per attempt; HTTP retries are deduped one

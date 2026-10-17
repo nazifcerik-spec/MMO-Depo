@@ -154,6 +154,7 @@ var (
 	ErrUnknownDungeon   = errors.New("dungeon: unknown dungeon_code")
 	ErrUnknownMob       = errors.New("dungeon: wave references unknown mob")
 	ErrTooWounded       = errors.New("dungeon: character has no hp left")
+	ErrBagFull          = errors.New("dungeon: bag full")
 	ErrLevelRequirement = errors.New("dungeon: character level below min_level")
 	ErrValidation       = errors.New("dungeon: validation")
 )

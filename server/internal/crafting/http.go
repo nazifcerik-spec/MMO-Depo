@@ -192,6 +192,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_INSUFFICIENT_GOLD", "not enough gold")
 	case errors.Is(err, ErrValidation):
 		apierr.Write(w, r, http.StatusBadRequest, "E_VALIDATION", "invalid input")
+	case errors.Is(err, inventory.ErrBagFull):
+		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag is full")
 	default:
 		if errors.Is(err, inventory.ErrInsufficient) {
 			apierr.Write(w, r, http.StatusConflict, "E_INSUFFICIENT_MATERIALS", err.Error())

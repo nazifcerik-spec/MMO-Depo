@@ -90,6 +90,7 @@ type Service struct {
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
 	gather   Gathering // gathering professions (DD-244); nil = gold only
+	bag      BagRoom   // nil = no room check
 	cfg      ServiceConfig
 	log      *slog.Logger
 }
@@ -202,6 +203,15 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 			return nil, err
 		}
 		snapshot.Target, snapshot.TargetTier = node.Code, node.Tier
+	}
+	if s.bag != nil {
+		ok, err := s.bag.HasRoom(ctx, req.CharacterID, snapshot.Target, 1)
+		if err != nil {
+			return nil, err
+		}
+		if !ok {
+			return nil, ErrBagFull
+		}
 	}
 
 	contract := Contract{

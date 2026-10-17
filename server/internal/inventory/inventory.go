@@ -23,7 +23,7 @@ import (
 // v1 caps. Phase 02 makes these config-driven per character (bag expansion,
 // STR-based weight, etc.).
 const (
-	BagSlotCap     = 60
+	BagSlotCap     = 100    // DD-246
 	WeightCapGrams = 25_000 // 25 kg baseline (soft cap in v1 — no reject yet)
 )
 

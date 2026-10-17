@@ -67,6 +67,7 @@ type Service struct {
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	hp       HPWriter
 	skills   SkillSource
+	bag      BagRoom // nil = no room check (DD-246)
 }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
@@ -88,6 +89,15 @@ func (s *Service) WithHPWriter(w HPWriter) *Service { s.hp = w; return s }
 type SkillSource func(sheet *character.Sheet) []combat.Skill
 
 // WithSkills freezes unlocked class actives into the start snapshot.
+// WithBagRoom refuses to start a run while the bag is full (DD-246).
+func (s *Service) WithBagRoom(b BagRoom) *Service { s.bag = b; return s }
+
+// BagRoom tells whether the bag can take more items (DD-246);
+// inventory.Service satisfies. An empty templateCode asks for an empty slot.
+type BagRoom interface {
+	HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error)
+}
+
 func (s *Service) WithSkills(src SkillSource) *Service { s.skills = src; return s }
 
 // NewService wires the service. rngNew is the RNG factory (activity.NewRNG in
@@ -169,6 +179,15 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 	if sheet.Resources.HPCurrent < 1 {
 		return nil, ErrTooWounded
+	}
+	if s.bag != nil {
+		ok, err := s.bag.HasRoom(ctx, req.CharacterID, "", 1)
+		if err != nil {
+			return nil, err
+		}
+		if !ok {
+			return nil, ErrBagFull
+		}
 	}
 	snapshot := combat.FromSheet(sheet)
 	// Resting between encounters: the out-of-combat regen (DD-218) over the

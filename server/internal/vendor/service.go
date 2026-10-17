@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
 )
 
@@ -19,6 +20,20 @@ import (
 // Kept as a narrow interface — inventory.Service satisfies it.
 type InventoryDeleter interface {
 	Delete(ctx context.Context, characterID, itemID uuid.UUID) error
+	// HasRoom: can the bag take the item (DD-246)?
+	HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error)
+}
+
+// ensureRoom refuses a purchase the bag can't hold, before any gold moves.
+func (s *Service) ensureRoom(ctx context.Context, characterID uuid.UUID, templateCode string) error {
+	ok, err := s.invDel.HasRoom(ctx, characterID, templateCode, 1)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return inventory.ErrBagFull
+	}
+	return nil
 }
 
 // ItemFetcher exposes the item read+catalog needed by vendor.
@@ -221,6 +236,9 @@ func (s *Service) Buy(ctx context.Context, req BuyRequest) (*BuyResult, error) {
 	if price <= 0 {
 		return nil, &ValidationError{Field: "price", Message: "vendor price must be positive"}
 	}
+	if err := s.ensureRoom(ctx, req.CharacterID, req.TemplateCode); err != nil {
+		return nil, err
+	}
 
 	// Debit ledger FIRST (idempotent via key). Item mint follows; if it fails,
 	// the retry hits ledger idempotency (no double debit) + re-attempts mint.
@@ -420,6 +438,13 @@ func (s *Service) Buyback(ctx context.Context, characterID, buybackID uuid.UUID,
 	now := s.cfg.Now().UTC()
 	if now.After(entry.ExpiresAt) {
 		return nil, ErrBuybackExpired
+	}
+	var snapCode struct {
+		TemplateCode string `json:"template_code"`
+	}
+	_ = json.Unmarshal(entry.ItemSnapshot, &snapCode)
+	if err := s.ensureRoom(ctx, characterID, snapCode.TemplateCode); err != nil {
+		return nil, err
 	}
 
 	// Debit gold once per buyback entry (not per request): two concurrent

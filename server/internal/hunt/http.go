@@ -232,6 +232,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_HUNT_ACTIVE", "character already has an active hunt")
 	case errors.Is(err, ErrNotActive):
 		apierr.Write(w, r, http.StatusConflict, "E_HUNT_NOT_ACTIVE", "hunt is not active")
+	case errors.Is(err, ErrBagFull):
+		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag is full")
 	case errors.Is(err, ErrTooWounded):
 		apierr.Write(w, r, http.StatusConflict, "E_TOO_WOUNDED", "rest or heal before fighting")
 	case errors.Is(err, ErrUnknownMob):

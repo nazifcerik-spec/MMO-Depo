@@ -190,8 +190,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		crafting.DefaultServiceConfig(), logger,
 	)
 	craftHandler := crafting.NewHandler(craftSvc, logger)
-	gatherSvc := gathering.NewService(itemSvc, craftRepo) // DD-244
-	activitySvc.WithGathering(gatherSvc)
+	gatherSvc := gathering.NewService(itemSvc, craftRepo)    // DD-244
+	activitySvc.WithGathering(gatherSvc).WithBagRoom(invSvc) // DD-246: a full bag refuses new runs
 	logger.Info("crafting wired",
 		"professions", len(craftCat.AllProfessions()),
 		"recipes", len(craftCat.AllRecipes()))
@@ -275,8 +275,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Class skills (DD-222): passives → sheet stack, actives → combat snapshots.
 	classSkills := classskill.NewService(pool)
 	sheetAdapter.WithModifierSource(classSkills.PassiveModifiers)
-	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc)
-	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc)
+	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
+	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---

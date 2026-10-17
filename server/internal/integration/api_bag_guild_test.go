@@ -10,6 +10,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
+
+	"github.com/otter/server/internal/inventory"
 )
 
 func (c *hc) slotOf(id string) float64 {
@@ -51,7 +53,7 @@ func TestHTTPInventoryOps(t *testing.T) {
 	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 7, "target_slot": 41}, 400, "E_INVALID_SPLIT")
 	p.fail("POST", inv(sword, "/split"), map[string]any{"amount": 1, "target_slot": 41}, 409, "E_NOT_STACKABLE")
 	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": 40}, 409, "E_SLOT_OCCUPIED")
-	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": 60}, 400, "E_SLOT_OUT_OF_RANGE")
+	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": inventory.BagSlotCap}, 400, "E_SLOT_OUT_OF_RANGE")
 	p.fail("POST", inv(uuid.NewString(), "/split"), map[string]any{"amount": 1, "target_slot": 41}, 404, "E_NOT_FOUND")
 	p.fail("POST", inv("nope", "/split"), map[string]any{"amount": 1, "target_slot": 41}, 400, "E_INVALID_ID")
 	p.fail("POST", inv(ore, "/split"), "{", 400, "E_INVALID_JSON")
@@ -112,7 +114,7 @@ func TestHTTPInventoryOps(t *testing.T) {
 	p.ok("POST", p.path("/equip/"+sword), map[string]any{})
 
 	// Full bag: unequipping has nowhere to go; overflow waits until there is room.
-	for n := len(items(p.ok("GET", p.path("/inventory"), nil), "items")); n < 60; n++ {
+	for n := len(items(p.ok("GET", p.path("/inventory"), nil), "items")); n < inventory.BagSlotCap; n++ {
 		w.give(me, "helm_iron", 1)
 	}
 	p.fail("POST", p.path("/unequip/mainhand"), map[string]any{}, 409, "E_BAG_FULL")

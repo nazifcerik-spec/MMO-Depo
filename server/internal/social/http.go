@@ -240,6 +240,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		{ErrAttachmentInvalid, 400, "E_ATTACHMENT_INVALID"},
 		{ErrHasAttachments, 409, "E_HAS_ATTACHMENTS"},
 		{ErrNothingToClaim, 409, "E_NOTHING_TO_CLAIM"},
+		{ErrBagFull, 409, "E_BAG_FULL"},
 		{ErrBadChannel, 400, "E_BAD_CHANNEL"},
 		{ErrNotInChannel, 409, "E_NOT_IN_CHANNEL"},
 		{ErrIdempotencyMissing, 400, "E_IDEMPOTENCY_KEY_REQUIRED"},

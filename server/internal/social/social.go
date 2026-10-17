@@ -50,6 +50,7 @@ var (
 	ErrAttachmentInvalid  = errors.New("social: attachment must be your own unlocked, unbound, unequipped item")
 	ErrHasAttachments     = errors.New("social: claim attachments before deleting")
 	ErrNothingToClaim     = errors.New("social: nothing to claim")
+	ErrBagFull            = errors.New("social: bag full")
 	ErrBadChannel         = errors.New("social: unknown chat channel")
 	ErrNotInChannel       = errors.New("social: not a member of that channel")
 	ErrIdempotencyMissing = errors.New("social: Idempotency-Key header required")
@@ -64,6 +65,8 @@ type Owner interface {
 // SlotAssigner places claimed mail items into the bag. inventory.Service satisfies.
 type SlotAssigner interface {
 	AssignSlots(ctx context.Context, ownerID uuid.UUID, instances []item.Instance) error
+	// FreeSlots: empty bag slots, so a claim never overflows the bag (DD-246).
+	FreeSlots(ctx context.Context, characterID uuid.UUID) (int, error)
 }
 
 // Publisher delivers WS events. wsgateway.KindPayloadAdapter satisfies.

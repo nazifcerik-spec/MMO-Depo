@@ -57,6 +57,41 @@ func (s *Service) View(ctx context.Context, characterID uuid.UUID) (*View, error
 	}, nil
 }
 
+// --- Room checks (DD-246) ------------------------------------------------------
+
+// HasRoom reports whether qty more of templateCode fit in the bag: in an empty
+// slot, or (stackables) on top of the character's existing stacks. An empty
+// templateCode asks for an empty slot only. Flows that add items (buying,
+// crafting, claiming, starting a gathering/combat run) check this first so a
+// full bag refuses them instead of overflowing.
+func (s *Service) HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error) {
+	occupied, err := s.repo.OccupiedSlots(ctx, characterID)
+	if err != nil {
+		return false, err
+	}
+	if len(occupied) < BagSlotCap || templateCode == "" {
+		return len(occupied) < BagSlotCap, nil
+	}
+	stacks, err := s.repo.StackableMergeCandidates(ctx, characterID, templateCode)
+	if err != nil {
+		return false, err
+	}
+	var space int32
+	for _, st := range stacks {
+		space += max(0, st.MaxStack-st.StackQuantity)
+	}
+	return space >= qty, nil
+}
+
+// FreeSlots is how many bag slots are empty.
+func (s *Service) FreeSlots(ctx context.Context, characterID uuid.UUID) (int, error) {
+	occupied, err := s.repo.OccupiedSlots(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	return max(0, BagSlotCap-len(occupied)), nil
+}
+
 // --- AssignSlots (item.SlotAssigner impl) -----------------------------------
 
 // AssignSlots satisfies item.SlotAssigner. Called by item.Service after batch

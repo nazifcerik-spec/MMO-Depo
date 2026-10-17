@@ -112,6 +112,10 @@ var (
 	// (already revealed or cancelled).
 	ErrNotActive = errors.New("activity: contract not active")
 
+	// ErrBagFull is returned when a gathering run would start with no room
+	// for what it gathers (DD-246).
+	ErrBagFull = errors.New("activity: bag full")
+
 	// ErrValidation wraps input-shape rejection.
 	ErrValidation = errors.New("activity: validation")
 )

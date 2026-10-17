@@ -24,6 +24,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrPriceMismatch":      ErrPriceMismatch,
 		"ErrPriceOutOfRange":    ErrPriceOutOfRange,
 		"ErrSelfBuy":            ErrSelfBuy,
+		"ErrBagFull":            ErrBagFull,
 		"ErrUnavailable":        ErrUnavailable,
 	} {
 		t.Run(name, func(t *testing.T) {

@@ -238,6 +238,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusNotFound, "E_UNKNOWN_DUNGEON", "dungeon_code not in catalog")
 	case errors.Is(err, ErrLevelRequirement):
 		apierr.Write(w, r, http.StatusForbidden, "E_LEVEL_REQUIREMENT", "character level below min_level")
+	case errors.Is(err, ErrBagFull):
+		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag is full")
 	case errors.Is(err, ErrTooWounded):
 		apierr.Write(w, r, http.StatusConflict, "E_TOO_WOUNDED", "rest or heal before fighting")
 	case errors.Is(err, ErrUnknownMob):

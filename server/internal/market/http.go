@@ -155,6 +155,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		{ErrPriceMismatch, 409, "E_PRICE_MISMATCH"},
 		{ErrListingCap, 409, "E_MARKET_LISTING_CAP"},
 		{ErrSelfBuy, 409, "E_SELF_BUY"},
+		{ErrBagFull, 409, "E_BAG_FULL"},
 		{ErrNotSeller, 403, "E_NOT_SELLER"},
 		{ErrIdempotencyMissing, 400, "E_IDEMPOTENCY_KEY_REQUIRED"},
 		{economy.ErrInsufficientBalance, 409, "E_INSUFFICIENT_GOLD"},

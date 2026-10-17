@@ -2213,6 +2213,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-246 — Çanta 100 Slot; Dolu Çanta Yeni Eşyayı Reddeder
+**Karar:** `inventory.BagSlotCap` 60 → 100 (DB sınırı zaten 240). `inventory.Service.HasRoom(char, şablon, adet)`: boş slot varsa evet; yoksa yalnız mevcut yığınların boş kapasitesi adet kadarsa evet (boş şablon = yalnız boş slot). `FreeSlots`. Eşya ekleyen her akış işlemden ve ödemeden ÖNCE kontrol eder, yer yoksa 409 `E_BAG_FULL`: dükkân alımı ve geri alım, üretim (her birim — toplu üretim yer bitince durur ve yapılanı döner), pazar alımı, posta eki alma (ek sayısı kadar boş slot), toplama başlangıcı (seçilen kaynak için yer), av ve zindan başlangıcı (boş slot). Kuşanılan eşyayı çıkarma zaten `E_BAG_FULL` veriyordu. İstemci: çanta dolunca sayaç uyarı renginde; hata metni "Çantan dolu.".
+**Reason:** Kullanıcı isteği: 100 eşyalık çanta, 100/100'de üretim/satın alma vb. engellensin. Önceden dolu çantada yeni eşyalar slotsuz (görünmez) taşma olarak kalıyordu.
+**Alternatives:** Doluyken her şeyi reddetmek (yığına sığan iksir alımını da engellerdi — gereksiz katı), taşmayı postaya göndermek (Phase 02).
+**Consequences:** Kontrol ile ekleme arasında yarış (eşzamanlı iki istek) nadiren taşmaya düşer; taşma davranışı yedek olarak duruyor (yer açılınca çanta görünümünde yerleşir). Başlamış bir av/toplama sırasında çanta dolarsa teslimdeki ganimet de taşmaya düşer — teslim engellenmez (kontrat kilitlenmesin). Pazar ilanı iptali eşyayı satıcıya her durumda geri verir.
+**Tarih:** 2026-10-17
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

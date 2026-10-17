@@ -350,7 +350,8 @@ class _InventoryViewState extends State<InventoryView> {
             Text(
               '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
               style: text.bodySmall?.copyWith(
-                color: bag.weightGrams > bag.weightCapGrams ? Palette.warning : null,
+                // Full bag (DD-246): buying, crafting and new runs are refused.
+                color: bag.weightGrams > bag.weightCapGrams || bag.slotsUsed >= bag.slotCap ? Palette.warning : null,
                 fontFeatures: numeric,
               ),
             ),

@@ -19,6 +19,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrSlotBusy":       ErrSlotBusy,
 		"ErrUnknownTarget":  ErrUnknownTarget,
 		"ErrGatherLevelLow": ErrGatherLevelLow,
+		"ErrBagFull":        ErrBagFull,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

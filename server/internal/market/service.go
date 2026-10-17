@@ -27,6 +27,8 @@ type CatalogSource interface {
 
 type SlotAssigner interface {
 	AssignSlots(ctx context.Context, ownerID uuid.UUID, instances []item.Instance) error
+	// HasRoom: can the buyer's bag take the listing (DD-246)?
+	HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error)
 }
 
 type EventPublisher interface {
@@ -229,6 +231,18 @@ func (s *Service) writeReverse(ctx context.Context, key string, entries []econom
 func (s *Service) Buy(ctx context.Context, actor, account, listingID uuid.UUID, expectedUnit *int64) (*Listing, error) {
 	if err := s.chars.Owns(ctx, actor, account); err != nil {
 		return nil, err
+	}
+	if s.slots != nil {
+		var code string
+		var qty int32
+		if s.pool.QueryRow(ctx, `SELECT template_code, stack_quantity FROM market.listing WHERE id = $1`, listingID).
+			Scan(&code, &qty) == nil {
+			if ok, err := s.slots.HasRoom(ctx, actor, code, qty); err != nil {
+				return nil, err
+			} else if !ok {
+				return nil, ErrBagFull
+			}
+		}
 	}
 	var seller uuid.UUID
 	var total int64

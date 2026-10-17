@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/otter/server/internal/domain/character"
+	"github.com/otter/server/internal/inventory"
 )
 
 // Every domain error must map to a client status: an unmapped one reaches
@@ -22,6 +23,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrNotFound":             ErrNotFound,
 		"ErrProfessionNotLearned": ErrProfessionNotLearned,
 		"ErrSkillTooLow":          ErrSkillTooLow,
+		"ErrBagFull":              inventory.ErrBagFull,
 		"ErrUnknownProfession":    ErrUnknownProfession,
 		"ErrUnknownRecipe":        ErrUnknownRecipe,
 		"ErrValidation":           ErrValidation,

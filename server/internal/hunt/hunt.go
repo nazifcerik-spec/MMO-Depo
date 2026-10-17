@@ -92,6 +92,7 @@ var (
 	ErrNotActive  = errors.New("hunt: contract not active")
 	ErrUnknownMob = errors.New("hunt: unknown mob_code")
 	ErrTooWounded = errors.New("hunt: character has no hp left")
+	ErrBagFull    = errors.New("hunt: bag full")
 	ErrValidation = errors.New("hunt: validation")
 )
 

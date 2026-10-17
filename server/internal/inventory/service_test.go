@@ -40,7 +40,7 @@ func TestView_EmptyBag(t *testing.T) {
 	require.Empty(t, view.Items)
 	require.Equal(t, 0, view.SlotsUsed)
 	require.Equal(t, int64(0), view.WeightGrams)
-	require.Equal(t, 60, view.SlotCap)
+	require.Equal(t, inventory.BagSlotCap, view.SlotCap)
 }
 
 func TestView_ComputesWeight(t *testing.T) {
@@ -129,7 +129,7 @@ func TestMove_OutOfRange(t *testing.T) {
 	owner := uuid.New()
 	id := seedItem(repo, owner, "iron_ore", 5, 99, 0, true)
 
-	require.ErrorIs(t, svc.Move(context.Background(), owner, id, 60), inventory.ErrSlotOutOfRange)
+	require.ErrorIs(t, svc.Move(context.Background(), owner, id, inventory.BagSlotCap), inventory.ErrSlotOutOfRange)
 	require.ErrorIs(t, svc.Move(context.Background(), owner, id, -1), inventory.ErrSlotOutOfRange)
 }
 
@@ -232,7 +232,7 @@ func TestAssignSlots_BagFullOverflow(t *testing.T) {
 	svc, repo := newSvc()
 	owner := uuid.New()
 
-	// Fill all 60 slots with non-stackable items so no merge is possible.
+	// Fill every slot with non-stackable items so no merge is possible.
 	for s := inventory.Slot(0); s < inventory.BagSlotCap; s++ {
 		seedItem(repo, owner, "sword_iron", 1, 1, s, false)
 	}
@@ -251,7 +251,7 @@ func TestAssignSlots_BagFullOverflow(t *testing.T) {
 	require.NoError(t, svc.AssignSlots(context.Background(), owner, []item.Instance{inst}))
 
 	view, _ := svc.View(context.Background(), owner)
-	require.Equal(t, 60, view.SlotsUsed, "overflow item stays unslotted")
+	require.Equal(t, inventory.BagSlotCap, view.SlotsUsed, "overflow item stays unslotted")
 }
 
 // Overflow (unslotted, unlocked, unequipped) shows up in the bag as soon as a
@@ -272,14 +272,14 @@ func TestView_SlotsOverflowWhenRoom(t *testing.T) {
 
 	view, err := svc.View(context.Background(), owner)
 	require.NoError(t, err)
-	require.Equal(t, 60, view.SlotsUsed, "bag full: overflow waits")
+	require.Equal(t, inventory.BagSlotCap, view.SlotsUsed, "bag full: overflow waits")
 
 	view, err = svc.View(context.Background(), owner)
 	require.NoError(t, err)
 	require.NoError(t, svc.Delete(context.Background(), owner, view.Items[0].InstanceID))
 	view, err = svc.View(context.Background(), owner)
 	require.NoError(t, err)
-	require.Equal(t, 60, view.SlotsUsed)
+	require.Equal(t, inventory.BagSlotCap, view.SlotsUsed)
 	ids := map[uuid.UUID]bool{}
 	for _, it := range view.Items {
 		ids[it.InstanceID] = true
@@ -315,5 +315,35 @@ func mkInstance(owner uuid.UUID, tmpl string, stack int32) item.Instance {
 		StackQuantity:    stack,
 		Rarity:           item.RarityCommon,
 		CreatedAt:        time.Now(),
+	}
+}
+
+// HasRoom / FreeSlots (DD-246): a full bag still takes stackables that fit on
+// an existing stack, nothing else.
+func TestHasRoom_FullBag(t *testing.T) {
+	svc, repo := newSvc()
+	owner := uuid.New()
+	ctx := context.Background()
+	ok, err := svc.HasRoom(ctx, owner, "", 1)
+	require.NoError(t, err)
+	require.True(t, ok)
+	for s := inventory.Slot(0); s < inventory.BagSlotCap-1; s++ {
+		seedItem(repo, owner, "sword_iron", 1, 1, s, false)
+	}
+	free, err := svc.FreeSlots(ctx, owner)
+	require.NoError(t, err)
+	require.Equal(t, 1, free)
+	seedItem(repo, owner, "iron_ore", 90, 99, inventory.BagSlotCap-1, true) // last slot: a stack with 9 room
+
+	free, _ = svc.FreeSlots(ctx, owner)
+	require.Zero(t, free)
+	for _, c := range []struct {
+		code string
+		qty  int32
+		want bool
+	}{{"", 1, false}, {"sword_iron", 1, false}, {"iron_ore", 9, true}, {"iron_ore", 10, false}} {
+		ok, err := svc.HasRoom(ctx, owner, c.code, c.qty)
+		require.NoError(t, err)
+		require.Equal(t, c.want, ok, "%s x%d", c.code, c.qty)
 	}
 }

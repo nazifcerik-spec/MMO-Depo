@@ -40,6 +40,18 @@ type Gathering interface {
 	AddXP(ctx context.Context, characterID uuid.UUID, kind Kind, xp int) (GatherProgress, error)
 }
 
+// BagRoom tells whether the bag can take more items (DD-246);
+// inventory.Service satisfies. An empty templateCode asks for an empty slot.
+type BagRoom interface {
+	HasRoom(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32) (bool, error)
+}
+
+// WithBagRoom refuses to start a run while the bag has no room (DD-246).
+func (s *Service) WithBagRoom(b BagRoom) *Service {
+	s.bag = b
+	return s
+}
+
 // WithGathering turns on gathering professions (DD-244). Without it a
 // contract gathers nothing but gold (tests, transition).
 func (s *Service) WithGathering(g Gathering) *Service {

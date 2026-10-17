@@ -22,6 +22,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrNotFound":            ErrNotFound,
 		"ErrSlotBusy":            ErrSlotBusy,
 		"ErrTooWounded":          ErrTooWounded,
+		"ErrBagFull":             ErrBagFull,
 		"ErrUnknownMob":          ErrUnknownMob,
 		"ErrValidation":          ErrValidation,
 	} {

@@ -92,6 +92,7 @@ type fakeInv struct {
 	calls    []consumeCall
 	shortage map[string]bool
 	have     int32 // 0 = plenty
+	full     bool  // HasRoom says no
 	failAt   int   // ConsumeAll fails once this many calls were made (0 = never)
 }
 
@@ -103,6 +104,10 @@ func (f *fakeInv) Available(_ context.Context, _ uuid.UUID, tmpl string) (int32,
 		return f.have, nil
 	}
 	return 1 << 20, nil
+}
+
+func (f *fakeInv) HasRoom(context.Context, uuid.UUID, string, int32) (bool, error) {
+	return !f.full, nil
 }
 
 func (f *fakeInv) ConsumeAll(_ context.Context, _ uuid.UUID, needs []inventory.Need) error {
@@ -211,6 +216,19 @@ func TestCraftMany_Batch(t *testing.T) {
 	res, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 5)
 	require.NoError(t, err)
 	require.Equal(t, 2, res.Count)
+}
+
+func TestCraft_FullBagRefusesBeforeSpending(t *testing.T) {
+	svc, _, inv, minter := newTestSvc(t)
+	ctx := context.Background()
+	charID, acct := uuid.New(), uuid.New()
+	_, err := svc.Learn(ctx, charID, acct, "alchemy")
+	require.NoError(t, err)
+	inv.full = true
+	_, err = svc.Craft(ctx, charID, acct, "recipe_potion")
+	require.ErrorIs(t, err, inventory.ErrBagFull)
+	require.Empty(t, inv.calls, "nothing consumed")
+	require.Nil(t, minter.lastMint)
 }
 
 func TestCraft_HappyPathConsumesInputsAndGrantsXP(t *testing.T) {
