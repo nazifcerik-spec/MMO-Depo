@@ -1,6 +1,6 @@
 """Extend the gear ladder past level 25 (DD-254, DD-255): a tier for every
 class weapon line and the five armor slots at 35, 50, 65, 80, 95 and then
-every 25 levels (110 ... 285), continuing the level 1-25 progression.
+every 25 levels (110 ... 585), continuing the level 1-25 progression.
 Writes a generated block into content/gear.yaml and item names in en, tr,
 zh-CN and es.
 
@@ -31,6 +31,18 @@ TIERS = [
     (235, 'phoenix', L('Phoenix', 'Anka', '凤凰', 'fénix')),
     (260, 'dreadforged', L('Dreadforged', 'Dehşet Dövme', '恐铸', 'forja del terror')),
     (285, 'sovereign', L('Sovereign', 'Hükümdar', '君王', 'soberano')),
+    (310, 'coral', L('Coral', 'Mercan', '珊瑚', 'coral')),
+    (335, 'drakebone', L('Drakebone', 'Ejderha Kemiği', '龙骨', 'hueso de dragón')),
+    (360, 'mistwoven', L('Mistwoven', 'Sis Örgü', '雾织', 'niebla')),
+    (385, 'prismatic', L('Prismatic', 'Prizmatik', '棱彩', 'prisma')),
+    (410, 'magmaforged', L('Magmaforged', 'Magma Dövme', '熔铸', 'magma')),
+    (435, 'tempest', L('Tempest', 'Bora', '风暴', 'tempestad')),
+    (460, 'voidtouched', L('Voidtouched', 'Hiçlik', '虚空', 'vacío')),
+    (485, 'seraphic', L('Seraphic', 'Melek', '炽天使', 'serafín')),
+    (510, 'eclipse', L('Eclipse', 'Tutulma', '日蚀', 'eclipse')),
+    (535, 'wyrmlord', L('Wyrmlord', 'Ejder Lordu', '龙王', 'señor dragón')),
+    (560, 'celestine', L('Celestine', 'Göksel', '天界', 'celestial')),
+    (585, 'eternal', L('Eternal', 'Ebedi', '永恒', 'eternidad')),
 ]
 
 # Tiers 35-95 were tuned by hand (DD-254); later tiers follow the same lines.

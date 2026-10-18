@@ -2303,6 +2303,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-256 — Sv 300–600 dünyası: Ejdersırtı Adaları
+**Karar:** Yeni kıta Ejdersırtı Adaları (Sv 300, Taç Mezarlığı ↔ Fırtına Kıyısı bağlantısı): Fırtına Kıyısı 300, Ejder Yamaçları 350, Sis Ormanı 400, Kristal Mağaralar 450, Volkanik Ada 500, Taht Zirveleri 550; 36 mob (10 seviyede bir + 6 zindan boss'u), 6 zindan (Batık Filo 328, Kuluçka Mağarası 378, Kayıp Koru 428, Kristal Kalp 478, Volkan Kalbi 528, Ejder Tahtı 578; 60 dk), adlar en/tr/zh-CN/es. Sv 300+ zindan boss'ları yeni `overlord` arketipi (can ×1,85, saldırı ×1,3, savunma ×1,25; zindan bunu ayrıca ×2 can ×1,2 saldırı yapar). Ekipman merdiveni 310–585 (12 kademe, 180 eşya, 4 dil). Denge simülasyonu Sv 1–590; Sv 300'den itibaren 40 uzmanlığın her biri ayrı ölçülür. Mob eğrisi değişmedi: Sv 600'de ortalama oyuncu eğrinin %5 can / %14 saldırı önünde, hedefler tutuyor.
+**Reason:** Kullanıcı isteği (300–600 içeriği).
+**Alternatives:** Mob eğrisini oyuncu ortalamasına yeniden oturtmak (300–600 avları zorlaşırdı; hedefler zaten tutuyor).
+**Consequences:** 300–600 zindanları giriş seviyesinde ortalama %98, en zayıf uzmanlıkta %71–92 temizlenir (Peygamber gibi destek uzmanlıkları en zayıf). Uyanış (Sv 600) sonrası içerik yok. Entegrasyon testlerinde lonca etiketleri artık 5 karakter [A-Z0-9] (paylaşılan dev DB'de birikmiş loncalarla çakışıyordu).
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

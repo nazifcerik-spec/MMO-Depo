@@ -72,6 +72,18 @@ func randHex(n int) string {
 	return hex.EncodeToString(b)
 }
 
+// randTag is a guild tag that will not collide with the guilds earlier runs
+// left in the shared dev database: 5 of [A-Z0-9] (60M combinations).
+func randTag() string {
+	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	b := make([]byte, 5)
+	_, _ = rand.Read(b)
+	for i := range b {
+		b[i] = alphabet[int(b[i])%len(alphabet)]
+	}
+	return string(b)
+}
+
 // player creates an account plus a level-`level` character with a unique name.
 func (w *testEnv) player(class string, level int16) player {
 	w.t.Helper()

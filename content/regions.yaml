@@ -77,6 +77,13 @@ regions:
     travel_seconds_from_parent: 0
     safe: true
 
+  - code: dragonspine_isles
+    display_name_key: region.dragonspine_isles
+    kind: continent
+    min_level: 300
+    travel_seconds_from_parent: 0
+    safe: true
+
   - code: misty_marshes
     display_name_key: region.misty_marshes
     kind: zone
@@ -188,6 +195,102 @@ regions:
     min_level: 278
     travel_seconds_from_parent: 300
     safe: false
+
+  - code: storm_coast
+    display_name_key: region.storm_coast
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 300
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: sunken_fleet
+    display_name_key: region.sunken_fleet
+    kind: dungeon
+    parent_code: storm_coast
+    min_level: 328
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: dragon_slopes
+    display_name_key: region.dragon_slopes
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 350
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: brood_cavern
+    display_name_key: region.brood_cavern
+    kind: dungeon
+    parent_code: dragon_slopes
+    min_level: 378
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: mist_forest
+    display_name_key: region.mist_forest
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 400
+    travel_seconds_from_parent: 420
+    safe: false
+
+  - code: lost_grove
+    display_name_key: region.lost_grove
+    kind: dungeon
+    parent_code: mist_forest
+    min_level: 428
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: crystal_caves
+    display_name_key: region.crystal_caves
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 450
+    travel_seconds_from_parent: 480
+    safe: false
+
+  - code: crystal_heart
+    display_name_key: region.crystal_heart
+    kind: dungeon
+    parent_code: crystal_caves
+    min_level: 478
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: volcanic_isle
+    display_name_key: region.volcanic_isle
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 500
+    travel_seconds_from_parent: 540
+    safe: false
+
+  - code: volcano_heart
+    display_name_key: region.volcano_heart
+    kind: dungeon
+    parent_code: volcanic_isle
+    min_level: 528
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: throne_peaks
+    display_name_key: region.throne_peaks
+    kind: zone
+    parent_code: dragonspine_isles
+    min_level: 550
+    travel_seconds_from_parent: 600
+    safe: false
+
+  - code: dragon_throne
+    display_name_key: region.dragon_throne
+    kind: dungeon
+    parent_code: throne_peaks
+    min_level: 578
+    travel_seconds_from_parent: 300
+    safe: false
   # <<< generated: regions
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
@@ -202,4 +305,10 @@ region_links:
   - { region_a_code: burnt_forest, region_b_code: crown_plains, travel_seconds: 300 }
   - { region_a_code: burnt_forest, region_b_code: salt_desert, travel_seconds: 300 }
   - { region_a_code: crown_graveyard, region_b_code: salt_desert, travel_seconds: 300 }
+  - { region_a_code: crown_graveyard, region_b_code: storm_coast, travel_seconds: 300 }
+  - { region_a_code: dragon_slopes, region_b_code: storm_coast, travel_seconds: 300 }
+  - { region_a_code: dragon_slopes, region_b_code: mist_forest, travel_seconds: 300 }
+  - { region_a_code: crystal_caves, region_b_code: mist_forest, travel_seconds: 300 }
+  - { region_a_code: crystal_caves, region_b_code: volcanic_isle, travel_seconds: 300 }
+  - { region_a_code: throne_peaks, region_b_code: volcanic_isle, travel_seconds: 300 }
   # <<< generated: links

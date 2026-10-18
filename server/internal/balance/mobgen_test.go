@@ -32,7 +32,7 @@ func TestMobCurve(t *testing.T) {
 	bh, ba, bd := base(25)
 	kh, kd := bh/a25, bd/a25
 	ka := (ba - 0.5*d25) / h25
-	for _, l := range []int{25, 50, 75, 100, 110, 125, 135, 150, 160, 175, 185, 200, 210, 225, 235, 250, 260, 275, 285, 300} {
+	for _, l := range []int{100, 200, 300, 310, 335, 360, 385, 410, 435, 460, 485, 510, 535, 560, 585, 600} {
 		a, d, h := mean(l)
 		ch, ca, cd := base(l)
 		fmt.Printf("L%-3d player atk %5.0f def %5.0f hp %6.0f | fitted mob hp %6.0f atk %5.0f def %4.0f | v1 curve hp %5.0f atk %4.0f def %3.0f\n",

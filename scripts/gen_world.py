@@ -25,6 +25,7 @@ ARCH = {
     'crit': (1.05, 1.18, 1.0, 17, 10),
     'elite': (1.4, 1.15, 1.2, 9, 5),
     'chief': (1.2, 1.08, 1.1, 7, 5),  # dungeon bosses (the dungeon doubles HP, +20% attack)
+    'overlord': (1.85, 1.3, 1.25, 10, 5),  # level 300+ dungeon bosses
 }
 
 ZONES = [
@@ -74,6 +75,8 @@ ZONES = [
 CONTINENTS = [
     dict(code='broken_crown', level=100,
          name=L('Kingdom of the Broken Crown', 'Kırık Taç Krallığı', '断冠王国', 'Reino de la Corona Rota')),
+    dict(code='dragonspine_isles', level=300,
+         name=L('Dragonspine Isles', 'Ejdersırtı Adaları', '龙脊群岛', 'Islas Espinadragón')),
 ]
 
 ZONES += [
@@ -129,6 +132,88 @@ ZONES += [
          dungeon=dict(code='royal_crypt', level=278, minutes=60, waves=['royal_skeleton', 'tomb_keeper', 'soul_drinker'],
                       boss='crypt_lord_malachar', gold=115000, xp=170000,
                       name=L('Royal Crypt', 'Kraliyet Kriptası', '王室地穴', 'Cripta Real'))),
+]
+
+
+ZONES += [
+    dict(code='storm_coast', parent='dragonspine_isles', level=300, travel=300, link='crown_graveyard',
+         name=L('Storm Coast', 'Fırtına Kıyısı', '风暴海岸', 'Costa de las Tormentas'),
+         mobs=[
+             ('sea_raider', 310, 'normal', L('Sea Raider', 'Deniz Haydudu', '海上掠夺者', 'Saqueador del Mar')),
+             ('storm_bird', 320, 'evasive', L('Storm Bird', 'Fırtına Kuşu', '风暴鸟', 'Pájaro de Tormenta')),
+             ('coral_golem', 330, 'tank', L('Coral Golem', 'Mercan Golemi', '珊瑚魔像', 'Gólem de Coral')),
+             ('admiral_drask', 332, 'overlord', L('Admiral Drask', 'Amiral Drask', '德拉斯克上将', 'Almirante Drask')),
+             ('siren', 340, 'glass', L('Siren', 'Siren', '塞壬', 'Sirena')),
+             ('kraken_spawn', 350, 'elite', L('Kraken Spawn', 'Kraken Yavrusu', '海妖幼崽', 'Cría de Kraken')),
+         ],
+         dungeon=dict(code='sunken_fleet', level=328, minutes=60, waves=['sea_raider', 'storm_bird', 'coral_golem'],
+                      boss='admiral_drask', gold=150000, xp=230000,
+                      name=L('Sunken Fleet', 'Batık Filo', '沉没舰队', 'Flota Hundida'))),
+    dict(code='dragon_slopes', parent='dragonspine_isles', level=350, travel=360, link='storm_coast',
+         name=L('Dragon Slopes', 'Ejder Yamaçları', '龙之山坡', 'Laderas del Dragón'),
+         mobs=[
+             ('young_dragon', 360, 'crit', L('Young Dragon', 'Genç Ejder', '幼龙', 'Dragón Joven')),
+             ('dragon_cultist', 370, 'glass', L('Dragon Cultist', 'Ejder Kültisti', '龙之信徒', 'Cultista del Dragón')),
+             ('lava_lizard', 380, 'tank', L('Lava Lizard', 'Lav Kertenkelesi', '熔岩蜥蜴', 'Lagarto de Lava')),
+             ('mother_dragon_vyrna', 382, 'overlord', L('Mother Dragon Vyrna', 'Ana Ejder Vyrna', '母龙薇尔娜', 'Dragona Madre Vyrna')),
+             ('winged_wyvern', 390, 'evasive', L('Winged Wyvern', 'Kanatlı Wyvern', '飞翼双足龙', 'Guiverno Alado')),
+             ('dragon_guard', 400, 'elite', L('Dragon Guard', 'Ejder Muhafızı', '龙之卫士', 'Guardia del Dragón')),
+         ],
+         dungeon=dict(code='brood_cavern', level=378, minutes=60, waves=['young_dragon', 'dragon_cultist', 'lava_lizard'],
+                      boss='mother_dragon_vyrna', gold=190000, xp=320000,
+                      name=L('Brood Cavern', 'Kuluçka Mağarası', '巢穴洞窟', 'Caverna de la Nidada'))),
+    dict(code='mist_forest', parent='dragonspine_isles', level=400, travel=420, link='dragon_slopes',
+         name=L('Mist Forest', 'Sis Ormanı', '迷雾森林', 'Bosque de la Niebla'),
+         mobs=[
+             ('fey_wolf', 410, 'evasive', L('Fey Wolf', 'Peri Kurdu', '妖精狼', 'Lobo Feérico')),
+             ('mist_stalker', 420, 'crit', L('Mist Stalker', 'Sis Avcısı', '迷雾潜行者', 'Acechador de la Niebla')),
+             ('ancient_treant', 430, 'tank', L('Ancient Treant', 'Kadim Treant', '远古树人', 'Ent Ancestral')),
+             ('spirit_queen_sylwen', 432, 'overlord', L('Spirit Queen Sylwen', 'Ruh Kraliçesi Sylwen', '灵魂女王希尔温', 'Reina Espiritual Sylwen')),
+             ('shadow_elf', 440, 'glass', L('Shadow Elf', 'Gölge Elfi', '暗影精灵', 'Elfo Sombrío')),
+             ('forest_spirit', 450, 'elite', L('Forest Spirit', 'Orman Ruhu', '森林之灵', 'Espíritu del Bosque')),
+         ],
+         dungeon=dict(code='lost_grove', level=428, minutes=60, waves=['fey_wolf', 'mist_stalker', 'ancient_treant'],
+                      boss='spirit_queen_sylwen', gold=240000, xp=430000,
+                      name=L('Lost Grove', 'Kayıp Koru', '失落林地', 'Arboleda Perdida'))),
+    dict(code='crystal_caves', parent='dragonspine_isles', level=450, travel=480, link='mist_forest',
+         name=L('Crystal Caves', 'Kristal Mağaralar', '水晶洞穴', 'Cuevas de Cristal'),
+         mobs=[
+             ('crystal_spider', 460, 'crit', L('Crystal Spider', 'Kristal Örümcek', '水晶蜘蛛', 'Araña de Cristal')),
+             ('stone_eater', 470, 'tank', L('Stone Eater', 'Taş Yiyen', '食石者', 'Devorador de Piedra')),
+             ('light_elemental', 480, 'glass', L('Light Elemental', 'Işık Elementali', '光元素', 'Elemental de Luz')),
+             ('crystal_titan', 482, 'overlord', L('Crystal Titan', 'Kristal Titan', '水晶泰坦', 'Titán de Cristal')),
+             ('crystal_dragon', 490, 'evasive', L('Crystal Dragon', 'Kristal Ejder', '水晶龙', 'Dragón de Cristal')),
+             ('cave_titan', 500, 'elite', L('Cave Titan', 'Mağara Titanı', '洞穴泰坦', 'Titán de las Cavernas')),
+         ],
+         dungeon=dict(code='crystal_heart', level=478, minutes=60, waves=['crystal_spider', 'stone_eater', 'light_elemental'],
+                      boss='crystal_titan', gold=300000, xp=560000,
+                      name=L('Crystal Heart', 'Kristal Kalp', '水晶之心', 'Corazón de Cristal'))),
+    dict(code='volcanic_isle', parent='dragonspine_isles', level=500, travel=540, link='crystal_caves',
+         name=L('Volcanic Isle', 'Volkanik Ada', '火山岛', 'Isla Volcánica'),
+         mobs=[
+             ('magma_golem', 510, 'tank', L('Magma Golem', 'Magma Golemi', '岩浆魔像', 'Gólem de Magma')),
+             ('fire_giant', 520, 'normal', L('Fire Giant', 'Ateş Devi', '火巨人', 'Gigante de Fuego')),
+             ('ash_dragon', 530, 'crit', L('Ash Dragon', 'Kül Ejderi', '灰烬龙', 'Dragón de Ceniza')),
+             ('fire_lord_ignar', 532, 'overlord', L('Fire Lord Ignar', 'Ateş Lordu Ignar', '火焰领主伊格纳', 'Señor del Fuego Ignar')),
+             ('volcano_shaman', 540, 'glass', L('Volcano Shaman', 'Volkan Şamanı', '火山萨满', 'Chamán del Volcán')),
+             ('volcano_warden', 550, 'elite', L('Volcano Warden', 'Volkan Bekçisi', '火山守卫', 'Guardián del Volcán')),
+         ],
+         dungeon=dict(code='volcano_heart', level=528, minutes=60, waves=['magma_golem', 'fire_giant', 'ash_dragon'],
+                      boss='fire_lord_ignar', gold=370000, xp=720000,
+                      name=L('Volcano Heart', 'Volkan Kalbi', '火山之心', 'Corazón del Volcán'))),
+    dict(code='throne_peaks', parent='dragonspine_isles', level=550, travel=600, link='volcanic_isle',
+         name=L('Throne Peaks', 'Taht Zirveleri', '王座峰', 'Picos del Trono'),
+         mobs=[
+             ('dragon_knight', 560, 'normal', L('Dragon Knight', 'Ejder Şövalyesi', '龙骑士', 'Caballero Dragón')),
+             ('ancient_wyvern', 570, 'evasive', L('Ancient Wyvern', 'Kadim Wyvern', '远古双足龙', 'Guiverno Ancestral')),
+             ('dragon_sorcerer', 580, 'glass', L('Dragon Sorcerer', 'Ejder Büyücüsü', '龙之术士', 'Hechicero Dragón')),
+             ('dragon_king_azhorath', 582, 'overlord', L('Dragon King Azhorath', 'Ejder Kral Azhorath', '龙王阿兹霍拉斯', 'Rey Dragón Azhorath')),
+             ('throne_guardian', 590, 'tank', L('Throne Guardian', 'Taht Muhafızı', '王座守护者', 'Guardián del Trono')),
+             ('elder_dragon', 600, 'elite', L('Elder Dragon', 'Yaşlı Ejder', '古龙', 'Dragón Anciano')),
+         ],
+         dungeon=dict(code='dragon_throne', level=578, minutes=60, waves=['dragon_knight', 'ancient_wyvern', 'dragon_sorcerer'],
+                      boss='dragon_king_azhorath', gold=450000, xp=900000,
+                      name=L('Dragon Throne', 'Ejder Tahtı', '龙之王座', 'Trono del Dragón'))),
 ]
 
 

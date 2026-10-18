@@ -122,7 +122,7 @@ func TestGuildLifecycle(t *testing.T) {
 	ev := &events{}
 	svc := guild.NewService(w.p, w.chars, w.txn, nil).WithPublisher(ev)
 	lead, off, mem := w.player("warrior", 5), w.player("mage", 5), w.player("rogue", 5)
-	name, tag := "Wolves "+randHex(3), strings.ToUpper("W"+randHex(2)) // the server stores tags upper-case
+	name, tag := "Wolves "+randHex(3), randTag() // upper-case, as the server stores tags
 
 	create := func(p player, n, tg, key string) (*guild.Guild, error) {
 		return svc.Create(w.ctx, p.ID, p.Account, guild.CreateRequest{Name: n, Tag: tg, IdempotencyKey: key})

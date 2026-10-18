@@ -153,6 +153,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 71. **Sv 100–300 dünyası + ganimet sınırı (bitti)** — Sprint 71, DD-255. Kırık Taç Krallığı (4 bölge, 24 mob, 4 zindan, 4 dil), ekipman merdiveni 110–285 (120 eşya) ve tüm merdiven adları 4 dilde (`scripts/i18n_util.py`). Ganimet karakter seviyesiyle sınırlı (`activity.DropLevel`), ekipman havuzu tam en yüksek kademe. Seviye farkı saldırı kaybı %10/sv (5 sv muafiyet). Denge simülasyonu Sv 1–300, 100'den itibaren iki terfi yolu.
 
+72. **Sv 300–600 dünyası (bitti)** — Sprint 72, DD-256. Ejdersırtı Adaları (6 bölge, 36 mob, 6 zindan, `overlord` boss arketipi, 4 dil), ekipman merdiveni 310–585 (180 eşya). Denge simülasyonu Sv 1–590, 300'den itibaren 40 uzmanlık. Test lonca etiketi `randTag()`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

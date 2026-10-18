@@ -143,4 +143,76 @@ dungeons:
     boss_mob_code: crypt_lord_malachar
     bonus_gold_copper: 115000
     bonus_xp: 170000
+
+  - code: sunken_fleet
+    display_name_key: dungeon.sunken_fleet
+    min_level: 328
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: sea_raider, count: 3 }
+      - { mob_code: storm_bird, count: 3 }
+      - { mob_code: coral_golem, count: 2 }
+    boss_mob_code: admiral_drask
+    bonus_gold_copper: 150000
+    bonus_xp: 230000
+
+  - code: brood_cavern
+    display_name_key: dungeon.brood_cavern
+    min_level: 378
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: young_dragon, count: 3 }
+      - { mob_code: dragon_cultist, count: 3 }
+      - { mob_code: lava_lizard, count: 2 }
+    boss_mob_code: mother_dragon_vyrna
+    bonus_gold_copper: 190000
+    bonus_xp: 320000
+
+  - code: lost_grove
+    display_name_key: dungeon.lost_grove
+    min_level: 428
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: fey_wolf, count: 3 }
+      - { mob_code: mist_stalker, count: 3 }
+      - { mob_code: ancient_treant, count: 2 }
+    boss_mob_code: spirit_queen_sylwen
+    bonus_gold_copper: 240000
+    bonus_xp: 430000
+
+  - code: crystal_heart
+    display_name_key: dungeon.crystal_heart
+    min_level: 478
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: crystal_spider, count: 3 }
+      - { mob_code: stone_eater, count: 3 }
+      - { mob_code: light_elemental, count: 2 }
+    boss_mob_code: crystal_titan
+    bonus_gold_copper: 300000
+    bonus_xp: 560000
+
+  - code: volcano_heart
+    display_name_key: dungeon.volcano_heart
+    min_level: 528
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: magma_golem, count: 3 }
+      - { mob_code: fire_giant, count: 3 }
+      - { mob_code: ash_dragon, count: 2 }
+    boss_mob_code: fire_lord_ignar
+    bonus_gold_copper: 370000
+    bonus_xp: 720000
+
+  - code: dragon_throne
+    display_name_key: dungeon.dragon_throne
+    min_level: 578
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: dragon_knight, count: 3 }
+      - { mob_code: ancient_wyvern, count: 3 }
+      - { mob_code: dragon_sorcerer, count: 2 }
+    boss_mob_code: dragon_king_azhorath
+    bonus_gold_copper: 450000
+    bonus_xp: 900000
   # <<< generated: dungeons

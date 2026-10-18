@@ -4,7 +4,6 @@ package integration
 
 import (
 	"fmt"
-	"strings"
 	"sync"
 	"testing"
 
@@ -130,7 +129,7 @@ func TestHTTPGuildLifecycle(t *testing.T) {
 	a.mint(200_000)
 	require.Nil(t, a.ok("GET", a.path("/guild"), nil)["guild"])
 
-	g := a.ok("POST", a.path("/guild"), map[string]any{"name": "Guild " + randHex(4), "tag": strings.ToUpper(randHex(2))})
+	g := a.ok("POST", a.path("/guild"), map[string]any{"name": "Guild " + randHex(4), "tag": randTag()})
 	guildID := g["guild"].(map[string]any)["id"].(string)
 
 	inv := a.ok("POST", a.path("/guild/invite"), map[string]any{"target_name": b.name})
@@ -175,7 +174,7 @@ func TestHTTPGuildCreateRace(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			codes[i], _ = p.call("POST", p.path("/guild"), map[string]any{"name": name, "tag": strings.ToUpper(randHex(2))})
+			codes[i], _ = p.call("POST", p.path("/guild"), map[string]any{"name": name, "tag": randTag()})
 		}()
 	}
 	wg.Wait()

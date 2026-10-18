@@ -115,21 +115,26 @@ func simAlloc(class string, level int) leveling.Stats {
 	return st
 }
 
-// builds are what the targets test at a level: the base class below the
-// first promotion; from it, each class's two promotions ("class/promotion")
-// with their skills (DD-255).
+// builds are what the targets test at a level: every class path open at it
+// — the base class below 100, its two promotions from 100
+// ("class/promotion"), the four specializations from 300 (DD-255, DD-256).
 func builds(level int) []string {
 	cfg := leveling.Current()
+	var expand func(path string, node string) []string
+	expand = func(path, node string) []string {
+		kids := cfg.Choices(node, level)
+		if len(kids) == 0 {
+			return []string{path}
+		}
+		var out []string
+		for _, k := range kids {
+			out = append(out, expand(path+"/"+k.Code, k.Code)...)
+		}
+		return out
+	}
 	var out []string
 	for _, c := range classes {
-		kids := cfg.Choices(c, level)
-		if len(kids) == 0 {
-			out = append(out, c)
-			continue
-		}
-		for _, k := range kids {
-			out = append(out, c+"/"+k.Code)
-		}
+		out = append(out, expand(c, c)...)
 	}
 	return out
 }
@@ -220,7 +225,8 @@ func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 }
 
 var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
-	110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290}
+	110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
+	310, 330, 350, 370, 390, 410, 430, 450, 470, 490, 510, 530, 550, 570, 590}
 
 // toughGap is how far above the character a mob must be dangerous.
 func toughGap(int) int { return 5 }

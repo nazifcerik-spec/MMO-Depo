@@ -430,7 +430,7 @@ func TestHTTPSocialAndEconomy(t *testing.T) {
 	b.ok("POST", b.path("/party/kick"), map[string]any{"target_character_id": a.char})
 	b.ok("POST", b.path("/party/disband"), map[string]any{})
 
-	g := a.ok("POST", a.path("/guild"), map[string]any{"name": "Http " + randHex(3), "tag": "H" + randHex(2)[:3]})
+	g := a.ok("POST", a.path("/guild"), map[string]any{"name": "Http " + randHex(3), "tag": randTag()})
 	gid := g["guild"].(map[string]any)["id"].(string)
 	a.ok("GET", "/v1/guilds/"+gid, nil)
 	a.ok("POST", a.path("/guild/invite"), map[string]any{"target_name": b.name})

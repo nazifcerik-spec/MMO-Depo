@@ -746,4 +746,472 @@ mobs:
     xp_reward: 91917
     gold_copper_min: 20909
     gold_copper_max: 52272
+
+  - code: sea_raider
+    display_name_key: mob.sea_raider
+    level: 310
+    hp_max: 7900
+    attack: 679
+    defense: 249
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 96868
+    gold_copper_min: 21963
+    gold_copper_max: 54908
+
+  - code: storm_bird
+    display_name_key: mob.storm_bird
+    level: 320
+    hp_max: 7742
+    attack: 805
+    defense: 257
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 101915
+    gold_copper_min: 23035
+    gold_copper_max: 57588
+
+  - code: coral_golem
+    display_name_key: mob.coral_golem
+    level: 330
+    hp_max: 14700
+    attack: 721
+    defense: 504
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 107059
+    gold_copper_min: 24123
+    gold_copper_max: 60308
+
+  - code: admiral_drask
+    display_name_key: mob.admiral_drask
+    level: 332
+    hp_max: 15632
+    attack: 943
+    defense: 333
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 108099
+    gold_copper_min: 24342
+    gold_copper_max: 60855
+
+  - code: siren
+    display_name_key: mob.siren
+    level: 340
+    hp_max: 7785
+    attack: 1113
+    defense: 205
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 112297
+    gold_copper_min: 25228
+    gold_copper_max: 63070
+
+  - code: kraken_spawn
+    display_name_key: mob.kraken_spawn
+    level: 350
+    hp_max: 12460
+    attack: 877
+    defense: 337
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 117628
+    gold_copper_min: 26349
+    gold_copper_max: 65872
+
+  - code: young_dragon
+    display_name_key: mob.young_dragon
+    level: 360
+    hp_max: 9608
+    attack: 925
+    defense: 289
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 123051
+    gold_copper_min: 27486
+    gold_copper_max: 68715
+
+  - code: dragon_cultist
+    display_name_key: mob.dragon_cultist
+    level: 370
+    hp_max: 8460
+    attack: 1208
+    defense: 223
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 128565
+    gold_copper_min: 28639
+    gold_copper_max: 71598
+
+  - code: lava_lizard
+    display_name_key: mob.lava_lizard
+    level: 380
+    hp_max: 16888
+    attack: 826
+    defense: 580
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 134169
+    gold_copper_min: 29808
+    gold_copper_max: 74520
+
+  - code: mother_dragon_vyrna
+    display_name_key: mob.mother_dragon_vyrna
+    level: 382
+    hp_max: 17945
+    attack: 1079
+    defense: 383
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 135301
+    gold_copper_min: 30044
+    gold_copper_max: 75110
+
+  - code: winged_wyvern
+    display_name_key: mob.winged_wyvern
+    level: 390
+    hp_max: 9405
+    attack: 974
+    defense: 313
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 139863
+    gold_copper_min: 30992
+    gold_copper_max: 77480
+
+  - code: dragon_guard
+    display_name_key: mob.dragon_guard
+    level: 400
+    hp_max: 14210
+    attack: 998
+    defense: 385
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 145645
+    gold_copper_min: 32192
+    gold_copper_max: 80480
+
+  - code: fey_wolf
+    display_name_key: mob.fey_wolf
+    level: 410
+    hp_max: 9880
+    attack: 1022
+    defense: 329
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 151514
+    gold_copper_min: 33407
+    gold_copper_max: 83518
+
+  - code: mist_stalker
+    display_name_key: mob.mist_stalker
+    level: 420
+    hp_max: 11182
+    attack: 1074
+    defense: 337
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 157470
+    gold_copper_min: 34636
+    gold_copper_max: 86590
+
+  - code: ancient_treant
+    display_name_key: mob.ancient_treant
+    level: 430
+    hp_max: 19075
+    attack: 931
+    defense: 656
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 163512
+    gold_copper_min: 35881
+    gold_copper_max: 89702
+
+  - code: spirit_queen_sylwen
+    display_name_key: mob.spirit_queen_sylwen
+    level: 432
+    hp_max: 20258
+    attack: 1216
+    defense: 433
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 164730
+    gold_copper_min: 36131
+    gold_copper_max: 90328
+
+  - code: shadow_elf
+    display_name_key: mob.shadow_elf
+    level: 440
+    hp_max: 10035
+    attack: 1428
+    defense: 265
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 169638
+    gold_copper_min: 37140
+    gold_copper_max: 92850
+
+  - code: forest_spirit
+    display_name_key: mob.forest_spirit
+    level: 450
+    hp_max: 15960
+    attack: 1119
+    defense: 433
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 175849
+    gold_copper_min: 38413
+    gold_copper_max: 96032
+
+  - code: crystal_spider
+    display_name_key: mob.crystal_spider
+    level: 460
+    hp_max: 12232
+    attack: 1173
+    defense: 369
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 182143
+    gold_copper_min: 39700
+    gold_copper_max: 99250
+
+  - code: stone_eater
+    display_name_key: mob.stone_eater
+    level: 470
+    hp_max: 20825
+    attack: 1015
+    defense: 716
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 188520
+    gold_copper_min: 41002
+    gold_copper_max: 102505
+
+  - code: light_elemental
+    display_name_key: mob.light_elemental
+    level: 480
+    hp_max: 10935
+    attack: 1554
+    defense: 289
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 194978
+    gold_copper_min: 42317
+    gold_copper_max: 105792
+
+  - code: crystal_titan
+    display_name_key: mob.crystal_titan
+    level: 482
+    hp_max: 22570
+    attack: 1352
+    defense: 483
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 196280
+    gold_copper_min: 42582
+    gold_copper_max: 106455
+
+  - code: crystal_dragon
+    display_name_key: mob.crystal_dragon
+    level: 490
+    hp_max: 11780
+    attack: 1216
+    defense: 393
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 201518
+    gold_copper_min: 43647
+    gold_copper_max: 109118
+
+  - code: cave_titan
+    display_name_key: mob.cave_titan
+    level: 500
+    hp_max: 17710
+    attack: 1240
+    defense: 481
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 208138
+    gold_copper_min: 44990
+    gold_copper_max: 112475
+
+  - code: magma_golem
+    display_name_key: mob.magma_golem
+    level: 510
+    hp_max: 22575
+    attack: 1099
+    defense: 777
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 214839
+    gold_copper_min: 46346
+    gold_copper_max: 115865
+
+  - code: fire_giant
+    display_name_key: mob.fire_giant
+    level: 520
+    hp_max: 13150
+    attack: 1120
+    defense: 417
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 221618
+    gold_copper_min: 47716
+    gold_copper_max: 119290
+
+  - code: ash_dragon
+    display_name_key: mob.ash_dragon
+    level: 530
+    hp_max: 14070
+    attack: 1346
+    defense: 425
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 228476
+    gold_copper_min: 49099
+    gold_copper_max: 122748
+
+  - code: fire_lord_ignar
+    display_name_key: mob.fire_lord_ignar
+    level: 532
+    hp_max: 24882
+    attack: 1489
+    defense: 533
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 229857
+    gold_copper_min: 49377
+    gold_copper_max: 123442
+
+  - code: volcano_shaman
+    display_name_key: mob.volcano_shaman
+    level: 540
+    hp_max: 12285
+    attack: 1743
+    defense: 325
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 235413
+    gold_copper_min: 50495
+    gold_copper_max: 126238
+
+  - code: volcano_warden
+    display_name_key: mob.volcano_warden
+    level: 550
+    hp_max: 19460
+    attack: 1360
+    defense: 529
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 242427
+    gold_copper_min: 51904
+    gold_copper_max: 129760
+
+  - code: dragon_knight
+    display_name_key: mob.dragon_knight
+    level: 560
+    hp_max: 14150
+    attack: 1204
+    defense: 449
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 249517
+    gold_copper_min: 53326
+    gold_copper_max: 133315
+
+  - code: ancient_wyvern
+    display_name_key: mob.ancient_wyvern
+    level: 570
+    hp_max: 13680
+    attack: 1409
+    defense: 457
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 256685
+    gold_copper_min: 54761
+    gold_copper_max: 136902
+
+  - code: dragon_sorcerer
+    display_name_key: mob.dragon_sorcerer
+    level: 580
+    hp_max: 13185
+    attack: 1869
+    defense: 349
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 263928
+    gold_copper_min: 56208
+    gold_copper_max: 140520
+
+  - code: dragon_king_azhorath
+    display_name_key: mob.dragon_king_azhorath
+    level: 582
+    hp_max: 27195
+    attack: 1625
+    defense: 583
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 265385
+    gold_copper_min: 56499
+    gold_copper_max: 141248
+
+  - code: throne_guardian
+    display_name_key: mob.throne_guardian
+    level: 590
+    hp_max: 26075
+    attack: 1267
+    defense: 899
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 271246
+    gold_copper_min: 57668
+    gold_copper_max: 144170
+
+  - code: elder_dragon
+    display_name_key: mob.elder_dragon
+    level: 600
+    hp_max: 21210
+    attack: 1481
+    defense: 577
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 278639
+    gold_copper_min: 59140
+    gold_copper_max: 147850
   # <<< generated: mobs
