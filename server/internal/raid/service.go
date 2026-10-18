@@ -14,6 +14,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
@@ -637,6 +638,9 @@ func lockForming(ctx context.Context, tx pgx.Tx, runID uuid.UUID) error {
 }
 
 func uniqueErr(err error) error {
+	if b := action.FromDB(err); b != err {
+		return b // busy with another action (DD-263)
+	}
 	var pgErr *pgconn.PgError
 	if !errors.As(err, &pgErr) || pgErr.Code != "23505" {
 		return err

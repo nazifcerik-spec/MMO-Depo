@@ -2082,4 +2082,138 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errRaidWeeklyLocked => 'Bu baskını bu hafta zaten temizledin.';
+
+  @override
+  String errCharacterBusy(String action) {
+    return 'Önce karakterinin yaptığı işi bitir: $action.';
+  }
+
+  @override
+  String get busyGathering => 'toplama';
+
+  @override
+  String get busyHunt => 'av';
+
+  @override
+  String get busyDungeon => 'zindan';
+
+  @override
+  String get busyRaid => 'baskın';
+
+  @override
+  String get busyTravel => 'yolculuk';
+
+  @override
+  String get busyCrafting => 'üretim';
+
+  @override
+  String get errCraftActive => 'Zaten bir üretim sürüyor.';
+
+  @override
+  String get errCraftTooLong => 'Bu iş 6 saatten uzun sürer.';
+
+  @override
+  String craftEach(String time) {
+    return 'Tanesi $time';
+  }
+
+  @override
+  String craftTotal(String time) {
+    return 'Toplam $time';
+  }
+
+  @override
+  String craftRunning(String item, int count) {
+    return 'Üretiliyor: $item ×$count';
+  }
+
+  @override
+  String craftProgress(int done, int count) {
+    return '$done/$count hazır';
+  }
+
+  @override
+  String get craftDone => 'Hepsi bitti — topla';
+
+  @override
+  String get craftCollectEarlyTitle => 'Şimdi toplansın mı?';
+
+  @override
+  String craftCollectEarlyBody(int done, int rest) {
+    return 'Biten $done eşya teslim edilir; kalan $rest adedin malzemesi ve altını iade edilir.';
+  }
+
+  @override
+  String craftCollected(int made, int refunded) {
+    return '$made üretildi, $refunded iade edildi';
+  }
+
+  @override
+  String get craftBusyHint => 'Üretim zaman alır; bu sürede karakterin başka iş yapamaz.';
+
+  @override
+  String get eventHowTitle => 'Nasıl katılırım';
+
+  @override
+  String get eventRewardsTitle => 'Ödüller';
+
+  @override
+  String eventStepEnlist(int level) {
+    return 'Başlamadan 24 saat önceden bitene kadar kaydol (Sv $level+).';
+  }
+
+  @override
+  String eventStepRegion(String region) {
+    return 'Kaydolurken $region bölgesinde ol.';
+  }
+
+  @override
+  String eventStepPower(int power) {
+    return 'Gücün kayıt anında dondurulur: saldırı × 2 + savunma + can ÷ 10. Şu anki gücün: $power.';
+  }
+
+  @override
+  String eventStepScore(int tier) {
+    return 'Puan = güç × katıldığın dakika; başlangıçtan (daha sonra kaydolursan kayıt anından) sayılır. En fazla $tier. kademeye çıkar.';
+  }
+
+  @override
+  String get eventStepGoal =>
+      'Herkes birlikte hedefe ulaşırsa ödüller en üst kademeye kadar çıkar; ulaşılamazsa en fazla 2. kademe.';
+
+  @override
+  String get eventStepPaid => 'Ödüller etkinlik kapanınca otomatik ödenir. Kaydolmak diğer işlerini engellemez.';
+
+  @override
+  String eventTier(int tier, String score) {
+    return '$tier. kademe · $score+ puan';
+  }
+
+  @override
+  String eventTierTokens(int count) {
+    return '+$count etkinlik jetonu';
+  }
+
+  @override
+  String eventEstimate(String score, int tier) {
+    return 'Şimdi katılırsan: yaklaşık $score puan → $tier. kademe';
+  }
+
+  @override
+  String eventEstimateNone(String score) {
+    return 'Şimdi katılırsan: yaklaşık $score puan — kademeye yetmez';
+  }
+
+  @override
+  String seasonalHow(int count) {
+    return 'Etkinlik sürdükçe günde bir kez $count etkinlik jetonu al (gün 00:00 UTC’de başlar).';
+  }
+
+  @override
+  String seasonalBenefit(int count) {
+    return 'Jetonlar hesabında birikir (bakiye: $count).';
+  }
+
+  @override
+  String get eventDetails => 'Ayrıntılar';
 }

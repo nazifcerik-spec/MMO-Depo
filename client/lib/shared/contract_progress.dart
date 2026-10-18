@@ -17,12 +17,17 @@ class ContractProgress extends StatefulWidget {
     required this.endsAt,
     required this.doneLabel,
     this.onComplete,
+    this.detail,
   });
 
   final DateTime startedAt;
   final DateTime endsAt;
   final String doneLabel;
   final VoidCallback? onComplete;
+
+  /// Extra live line under the time left (e.g. units finished), rebuilt by
+  /// the same tick.
+  final String Function(DateTime now)? detail;
 
   static bool isDone(DateTime endsAt) => !DateTime.now().isBefore(endsAt);
 
@@ -82,6 +87,11 @@ class _ContractProgressState extends State<ContractProgress> {
             fontWeight: done ? FontWeight.w700 : FontWeight.w400,
           ),
         ),
+        if (widget.detail case final d? when !done)
+          Text(
+            d(now),
+            style: const TextStyle(color: Palette.textSecondary, fontSize: 12, fontFeatures: numeric),
+          ),
       ],
     );
   }

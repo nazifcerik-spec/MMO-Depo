@@ -10,6 +10,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"github.com/otter/server/internal/action"
 )
 
 // Repository is the persistence contract for the dungeon domain.
@@ -88,7 +90,7 @@ func (r *PgRepo) Create(ctx context.Context, c *Contract) error {
 		if pgUniqueViolation(err) {
 			return ErrSlotBusy
 		}
-		return err
+		return action.FromDB(err) // busy with another action (DD-263)
 	}
 	return nil
 }

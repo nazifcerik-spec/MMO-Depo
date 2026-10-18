@@ -3741,6 +3741,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You already cleared this raid this week.'**
   String get errRaidWeeklyLocked;
+
+  /// No description provided for @errCharacterBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish what your character is doing first: {action}.'**
+  String errCharacterBusy(String action);
+
+  /// No description provided for @busyGathering.
+  ///
+  /// In en, this message translates to:
+  /// **'gathering'**
+  String get busyGathering;
+
+  /// No description provided for @busyHunt.
+  ///
+  /// In en, this message translates to:
+  /// **'hunt'**
+  String get busyHunt;
+
+  /// No description provided for @busyDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'dungeon'**
+  String get busyDungeon;
+
+  /// No description provided for @busyRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'raid'**
+  String get busyRaid;
+
+  /// No description provided for @busyTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'travel'**
+  String get busyTravel;
+
+  /// No description provided for @busyCrafting.
+  ///
+  /// In en, this message translates to:
+  /// **'crafting'**
+  String get busyCrafting;
+
+  /// No description provided for @errCraftActive.
+  ///
+  /// In en, this message translates to:
+  /// **'A crafting job is already running.'**
+  String get errCraftActive;
+
+  /// No description provided for @errCraftTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'That job would take more than 6 hours.'**
+  String get errCraftTooLong;
+
+  /// No description provided for @craftEach.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} each'**
+  String craftEach(String time);
+
+  /// No description provided for @craftTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total {time}'**
+  String craftTotal(String time);
+
+  /// No description provided for @craftRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting {item} ×{count}'**
+  String craftRunning(String item, int count);
+
+  /// No description provided for @craftProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done}/{count} ready'**
+  String craftProgress(int done, int count);
+
+  /// No description provided for @craftDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done — collect'**
+  String get craftDone;
+
+  /// No description provided for @craftCollectEarlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect now?'**
+  String get craftCollectEarlyTitle;
+
+  /// No description provided for @craftCollectEarlyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The {done} finished items are delivered; the materials and gold of the other {rest} come back.'**
+  String craftCollectEarlyBody(int done, int rest);
+
+  /// No description provided for @craftCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'{made} made, {refunded} refunded'**
+  String craftCollected(int made, int refunded);
+
+  /// No description provided for @craftBusyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting takes time; your character does nothing else meanwhile.'**
+  String get craftBusyHint;
+
+  /// No description provided for @eventHowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to take part'**
+  String get eventHowTitle;
+
+  /// No description provided for @eventRewardsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get eventRewardsTitle;
+
+  /// No description provided for @eventStepEnlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Enlist from 24 hours before it starts until it ends (level {level}+).'**
+  String eventStepEnlist(int level);
+
+  /// No description provided for @eventStepRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Be in {region} when you enlist.'**
+  String eventStepRegion(String region);
+
+  /// No description provided for @eventStepPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: {power}.'**
+  String eventStepPower(int power);
+
+  /// No description provided for @eventStepScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier {tier}.'**
+  String eventStepScore(int tier);
+
+  /// No description provided for @eventStepGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.'**
+  String get eventStepGoal;
+
+  /// No description provided for @eventStepPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards are paid automatically when it closes. Enlisting does not stop your other actions.'**
+  String get eventStepPaid;
+
+  /// No description provided for @eventTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier {tier} · {score}+ points'**
+  String eventTier(int tier, String score);
+
+  /// No description provided for @eventTierTokens.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} event tokens'**
+  String eventTierTokens(int count);
+
+  /// No description provided for @eventEstimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Join now: about {score} points → tier {tier}'**
+  String eventEstimate(String score, int tier);
+
+  /// No description provided for @eventEstimateNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Join now: about {score} points — not enough for a tier'**
+  String eventEstimateNone(String score);
+
+  /// No description provided for @seasonalHow.
+  ///
+  /// In en, this message translates to:
+  /// **'While the event runs, claim {count} event tokens once a day (the day starts at 00:00 UTC).'**
+  String seasonalHow(int count);
+
+  /// No description provided for @seasonalBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Tokens stay on your account (balance: {count}).'**
+  String seasonalBenefit(int count);
+
+  /// No description provided for @eventDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get eventDetails;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

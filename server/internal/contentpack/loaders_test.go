@@ -59,7 +59,7 @@ func TestValidateProfessions(t *testing.T) {
 
 func TestValidateRecipes(t *testing.T) {
 	ok := func() Recipe {
-		return Recipe{Code: "r", ProfessionCode: "p", MinSkill: 1, OutputTemplateCode: "o", OutputStack: 1,
+		return Recipe{Code: "r", ProfessionCode: "p", MinSkill: 1, OutputTemplateCode: "o", OutputStack: 1, CraftSeconds: 30,
 			Inputs: []RecipeInput{{TemplateCode: "a", Quantity: 1}}}
 	}
 	require.NoError(t, validateRecipes([]Recipe{ok()}))
@@ -71,6 +71,8 @@ func TestValidateRecipes(t *testing.T) {
 		"output stack":    func(r *Recipe) { r.OutputStack = 0 },
 		"negative gold":   func(r *Recipe) { r.GoldCostCopper = -1 },
 		"negative xp":     func(r *Recipe) { r.ProfessionXPReward = -1 },
+		"no craft time":   func(r *Recipe) { r.CraftSeconds = 0 },
+		"craft too long":  func(r *Recipe) { r.CraftSeconds = 3601 },
 		"no inputs":       func(r *Recipe) { r.Inputs = nil },
 		"empty input":     func(r *Recipe) { r.Inputs[0].TemplateCode = "" },
 		"zero quantity":   func(r *Recipe) { r.Inputs[0].Quantity = 0 },

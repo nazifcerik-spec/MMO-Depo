@@ -119,7 +119,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	recRows, err := pool.Query(ctx, `
 		SELECT code, display_name_key, profession_code, min_skill,
 		       inputs, gold_cost_copper,
-		       output_template_code, output_stack, profession_xp_reward, version
+		       output_template_code, output_stack, profession_xp_reward, craft_seconds, version
 		  FROM content.recipe
 		 ORDER BY profession_code, min_skill, code`)
 	if err != nil {
@@ -133,7 +133,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		if err := recRows.Scan(
 			&r.Code, &r.DisplayNameKey, &r.ProfessionCode, &r.MinSkill,
 			&inputsJSON, &r.GoldCostCopper,
-			&r.OutputTemplateCode, &r.OutputStack, &r.ProfessionXPReward, &r.Version,
+			&r.OutputTemplateCode, &r.OutputStack, &r.ProfessionXPReward, &r.CraftSeconds, &r.Version,
 		); err != nil {
 			return nil, fmt.Errorf("recipe scan: %w", err)
 		}

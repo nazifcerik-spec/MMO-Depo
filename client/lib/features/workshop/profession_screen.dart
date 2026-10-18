@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import '../inventory/item_widgets.dart';
@@ -10,6 +11,92 @@ import 'workshop_view.dart' show professionName;
 
 /// Server cap on one batch (crafting.MaxCraftCount).
 const maxCraftCount = 100;
+
+/// Server cap on one job's length (crafting.MaxJobSeconds, DD-264).
+const maxCraftJobSeconds = 6 * 3600;
+
+/// Asks before an early collection, which refunds the unfinished units.
+Future<bool> confirmEarlyCollect(BuildContext context, CraftJob job) async {
+  final done = job.done(DateTime.now());
+  if (done >= job.count) return true;
+  final l = AppLocalizations.of(context);
+  return confirmAction(
+    context,
+    title: l.craftCollectEarlyTitle,
+    body: l.craftCollectEarlyBody(done, job.count - done),
+    action: l.collect,
+  );
+}
+
+/// Collects [job] and says what came of it; bag and gold changed.
+Future<void> collectCraftJob(
+  BuildContext context,
+  WorkshopRepository repo,
+  CraftJob job,
+  ValueNotifier<int> dataVersion,
+) async {
+  final res = await repo.collectCraft(job.id);
+  if (!context.mounted) return;
+  final l = AppLocalizations.of(context);
+  toast(
+    context,
+    Text(
+      [
+        if (res.made > 0) l.crafted(itemName(res.output), res.stack),
+        if (res.refunded > 0) l.craftCollected(res.made, res.refunded),
+        if (res.leveledUp) l.skillUp(professionName(l, job.profession), res.skillAfter),
+      ].join(' · '),
+    ),
+  );
+  dataVersion.value++;
+}
+
+/// The running crafting job: what, live progress, collect (any time).
+class CraftJobCard extends StatelessWidget {
+  const CraftJobCard({super.key, required this.job, required this.onCollect, this.onComplete});
+
+  final CraftJob job;
+  final VoidCallback? onCollect;
+  final VoidCallback? onComplete;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Card(
+      margin: const EdgeInsets.only(bottom: Space.md),
+      child: Padding(
+        padding: const EdgeInsets.all(Space.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.handyman_outlined, color: Palette.accent),
+                const SizedBox(width: Space.sm),
+                Expanded(
+                  child: Text(
+                    l.craftRunning(itemName(job.output), job.count),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: Space.md),
+            ContractProgress(
+              startedAt: job.startedAt,
+              endsAt: job.readyAt,
+              doneLabel: l.craftDone,
+              onComplete: onComplete,
+              detail: (now) => l.craftProgress(job.done(now), job.count),
+            ),
+            const SizedBox(height: Space.md),
+            FilledButton(onPressed: onCollect, child: Text(l.collect)),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// One profession's recipes. Tapping an item's name unfolds its properties;
 /// Craft asks how many when more than one can be made. Reloads on
@@ -30,6 +117,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
   Skill? _skill;
   Map<String, int> _have = const {};
   int _gold = 0;
+  CraftJob? _job;
 
   @override
   void initState() {
@@ -51,6 +139,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
       widget.repo.skills(),
       widget.repo.materials(),
       widget.repo.gold(),
+      widget.repo.activeCraft().then<Object>((j) => j ?? false),
     ]);
     _recipes = [
       for (final rec in r[0] as List<Recipe>)
@@ -59,6 +148,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
     _skill = (r[1] as Map<String, Skill>)[widget.profession];
     _have = r[2] as Map<String, int>;
     _gold = r[3] as int;
+    _job = r[4] is CraftJob ? r[4] as CraftJob : null;
   }
 
   /// How many crafts the bag and purse allow now (capped like the server).
@@ -71,6 +161,8 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
       if (can < n) n = can;
     }
     if (rec.goldCost > 0 && _gold ~/ rec.goldCost < n) n = _gold ~/ rec.goldCost;
+    final byTime = maxCraftJobSeconds ~/ (rec.craftSeconds <= 0 ? 1 : rec.craftSeconds);
+    if (byTime < n) n = byTime;
     return n;
   }
 
@@ -79,25 +171,21 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
     final count = max > 1
         ? await showDialog<int>(
             context: context,
-            builder: (_) => _CraftCountDialog(name: itemName(rec.output), max: max),
+            builder: (_) => _CraftCountDialog(name: itemName(rec.output), max: max, unitSeconds: rec.craftSeconds),
           )
         : 1;
     if (count == null || count < 1 || !mounted) return;
     await run(() async {
-      final l = AppLocalizations.of(context);
-      final res = await widget.repo.craft(rec.code, count: count);
+      final job = await widget.repo.craft(rec.code, count: count);
       if (!mounted) return;
-      toast(
-        context,
-        Text(
-          [
-            l.crafted(itemName(res.output), res.stack),
-            if (res.leveledUp) l.skillUp(professionName(l, rec.profession), res.skillAfter),
-          ].join(' · '),
-        ),
-      );
-      widget.dataVersion.value++; // bag + gold changed; this page reloads via the listener
+      setState(() => _job = job);
+      widget.dataVersion.value++; // materials + gold taken; this page reloads via the listener
     });
+  }
+
+  Future<void> _collect(CraftJob job) async {
+    if (!await confirmEarlyCollect(context, job) || !mounted) return;
+    await run(() => collectCraftJob(context, widget.repo, job, widget.dataVersion));
   }
 
   @override
@@ -119,12 +207,15 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
                 ),
                 const SizedBox(height: Space.md),
               ],
+              if (_job case final job?)
+                CraftJobCard(job: job, onCollect: () => _collect(job), onComplete: () => setState(() {})),
               for (final rec in _recipes)
                 _RecipeTile(
                   recipe: rec,
                   have: _have,
                   skill: skill?.level ?? 0,
-                  onCraft: _maxCrafts(rec) > 0 ? () => _craft(rec) : null,
+                  // One job at a time (DD-263).
+                  onCraft: _job == null && _maxCrafts(rec) > 0 ? () => _craft(rec) : null,
                 ),
             ],
           ),
@@ -210,16 +301,16 @@ class _RecipeTileState extends State<_RecipeTile> {
                   ),
               ],
             ),
-            if (r.goldCost > 0 || r.minSkill > widget.skill)
-              Wrap(
-                spacing: Space.sm,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  if (r.goldCost > 0) GoldText(r.goldCost, size: 12),
-                  if (r.minSkill > widget.skill)
-                    Text(l.requiresSkill(r.minSkill), style: small?.copyWith(color: Palette.danger)),
-                ],
-              ),
+            Wrap(
+              spacing: Space.sm,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(l.craftEach(shortDuration(l, Duration(seconds: r.craftSeconds))), style: small),
+                if (r.goldCost > 0) GoldText(r.goldCost, size: 12),
+                if (r.minSkill > widget.skill)
+                  Text(l.requiresSkill(r.minSkill), style: small?.copyWith(color: Palette.danger)),
+              ],
+            ),
             AnimatedSize(
               duration: const Duration(milliseconds: 180),
               alignment: Alignment.topCenter,
@@ -290,10 +381,11 @@ class _Details extends StatelessWidget {
 
 /// Quantity picker: slider plus −/+ and a "max" shortcut.
 class _CraftCountDialog extends StatefulWidget {
-  const _CraftCountDialog({required this.name, required this.max});
+  const _CraftCountDialog({required this.name, required this.max, required this.unitSeconds});
 
   final String name;
   final int max;
+  final int unitSeconds;
 
   @override
   State<_CraftCountDialog> createState() => _CraftCountDialogState();
@@ -335,6 +427,9 @@ class _CraftCountDialogState extends State<_CraftCountDialog> {
             divisions: widget.max - 1,
             onChanged: (v) => _set(v.round()),
           ),
+          Text(l.craftTotal(shortDuration(l, Duration(seconds: widget.unitSeconds * _n)))),
+          const SizedBox(height: Space.xs),
+          Text(l.craftBusyHint, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
         ],
       ),
       actions: [

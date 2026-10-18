@@ -2,6 +2,7 @@ package crafting
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -105,9 +106,15 @@ func (s *Service) List(ctx context.Context, characterID, accountID uuid.UUID) ([
 	return s.repo.List(ctx, characterID)
 }
 
-// --- Craft (the reveal-shaped orchestrator) --------------------------------
+// --- Timed crafting (DD-264) -------------------------------------------------
 
-func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, recipeCode string) (*CraftResult, error) {
+// Start begins a job of count units. Everything the whole job needs is
+// checked first; the job row claims the character's one action (DD-263),
+// then the gold and inputs are taken. A start that cannot pay undoes itself.
+func (s *Service) Start(ctx context.Context, characterID, accountID uuid.UUID, recipeCode string, count int) (*Job, error) {
+	if count < 1 || count > MaxCraftCount {
+		return nil, fmt.Errorf("%w: count must be 1..%d", ErrValidation, MaxCraftCount)
+	}
 	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
 		return nil, err
 	}
@@ -116,179 +123,221 @@ func (s *Service) Craft(ctx context.Context, characterID, accountID uuid.UUID, r
 	if !ok {
 		return nil, ErrUnknownRecipe
 	}
-	prof, ok := cat.Profession(recipe.ProfessionCode)
-	if !ok {
-		// Content bug: recipe references a profession that no longer exists.
+	if _, ok := cat.Profession(recipe.ProfessionCode); !ok {
 		return nil, fmt.Errorf("%w: recipe %s references profession %q not in catalog",
 			ErrUnknownProfession, recipe.Code, recipe.ProfessionCode)
 	}
-
-	// Skill gate.
 	cp, err := s.repo.Get(ctx, characterID, recipe.ProfessionCode)
+	if errors.Is(err, ErrNotFound) {
+		return nil, ErrProfessionNotLearned
+	}
 	if err != nil {
-		if errors.Is(err, ErrNotFound) {
-			return nil, ErrProfessionNotLearned
-		}
 		return nil, err
 	}
 	if cp.Level < recipe.MinSkill {
 		return nil, ErrSkillTooLow
 	}
-
-	// --- Pre-check inputs so a craft that cannot run never touches gold.
+	unit := recipe.CraftSeconds
+	if unit < 1 {
+		unit = DefaultCraftSeconds
+	}
+	if int64(unit)*int64(count) > MaxJobSeconds {
+		return nil, ErrJobTooLong
+	}
 	needs := make([]inventory.Need, 0, len(recipe.Inputs))
 	for _, in := range recipe.Inputs {
+		need := in.Quantity * int32(count)
 		have, err := s.inv.Available(ctx, characterID, in.TemplateCode)
 		if err != nil {
 			return nil, err
 		}
-		if have < in.Quantity {
-			return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, in.Quantity, have, inventory.ErrInsufficient)
+		if have < need {
+			return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, need, have, inventory.ErrInsufficient)
 		}
-		needs = append(needs, inventory.Need{TemplateCode: in.TemplateCode, Quantity: in.Quantity})
+		needs = append(needs, inventory.Need{TemplateCode: in.TemplateCode, Quantity: need})
 	}
-
-	// --- A full bag refuses the craft before anything is spent (DD-246).
+	// A full bag refuses the job before anything is spent (DD-246).
 	if ok, err := s.inv.HasRoom(ctx, characterID, recipe.OutputTemplateCode, recipe.OutputStack); err != nil {
 		return nil, err
 	} else if !ok {
 		return nil, inventory.ErrBagFull
 	}
 
-	// --- Debit gold (fresh key per attempt; HTTP retries are deduped one
-	// layer higher by the Idempotency middleware).
 	now := s.cfg.Now().UTC()
-	var goldTxnID uuid.UUID
-	goldEntries := []economy.Entry{
-		{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: characterID, Delta: -recipe.GoldCostCopper},
-		{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemVendorSink, Delta: recipe.GoldCostCopper},
+	job := &Job{ID: uuid.New(), CharacterID: characterID, Recipe: recipe, Count: count, UnitSeconds: unit,
+		StartedAt: now, ReadyAt: now.Add(time.Duration(unit) * time.Duration(count) * time.Second), State: JobActive}
+	if err := s.repo.CreateJob(ctx, job); err != nil {
+		return nil, err
 	}
-	if recipe.GoldCostCopper > 0 {
-		res, err := s.txn.Write(ctx, economy.Intent{
-			Kind:           "crafting_craft",
-			RefKind:        "recipe",
-			RefID:          uuid.New(), // per-craft unique ref
-			IdempotencyKey: fmt.Sprintf("craft-%s-%s-%d", recipe.Code, characterID.String(), now.UnixNano()),
-			Entries:        goldEntries,
+	cost := recipe.GoldCostCopper * int64(count)
+	var paid bool
+	if cost > 0 {
+		_, err := s.txn.Write(ctx, economy.Intent{
+			Kind: "crafting_craft", RefKind: "crafting_job", RefID: job.ID,
+			IdempotencyKey: "craft-job-" + job.ID.String(),
+			Entries:        goldMove(characterID, -cost),
 		})
 		if err != nil {
+			s.undoStart(ctx, job, false, cost)
 			if errors.Is(err, economy.ErrInsufficientBalance) {
 				return nil, ErrInsufficientGold
 			}
 			return nil, fmt.Errorf("craft gold debit: %w", err)
 		}
-		goldTxnID = res.TxnID
+		paid = true
 	}
-
-	// --- Consume every input in one transaction. Losing a race with another
-	// spend after the pre-check refunds the gold, so a failed craft is free.
+	// One transaction for every input; losing a race with another spend
+	// after the pre-check undoes the job and refunds the gold.
 	if err := s.inv.ConsumeAll(ctx, characterID, needs); err != nil {
-		if goldTxnID != uuid.Nil {
-			refund := make([]economy.Entry, len(goldEntries))
-			for i, e := range goldEntries {
-				e.Delta = -e.Delta
-				refund[i] = e
-			}
-			if _, rerr := s.txn.Write(ctx, economy.Intent{
-				Kind: "crafting_refund", RefKind: "ledger_txn", RefID: goldTxnID,
-				IdempotencyKey: "craft-refund-" + goldTxnID.String(), Entries: refund,
-			}); rerr != nil {
-				s.log.ErrorContext(ctx, "crafting: gold refund failed — manual reconcile needed",
-					slog.String("txn", goldTxnID.String()), slog.String("err", rerr.Error()))
-			}
-		}
+		s.undoStart(ctx, job, paid, cost)
 		return nil, fmt.Errorf("craft consume: %w", err)
 	}
-
-	// --- Mint output.
-	out, err := s.items.MintExact(ctx, characterID, recipe.OutputTemplateCode, recipe.OutputStack, "craft", uuid.New())
-	if err != nil {
-		return nil, fmt.Errorf("craft mint: %w", err)
-	}
-
-	// --- Grant profession XP.
-	skillBefore := cp.Level
-	updated, leveled, err := s.repo.AddXP(ctx, characterID, recipe.ProfessionCode, recipe.ProfessionXPReward, prof.MaxLevel)
-	if err != nil {
-		s.log.WarnContext(ctx, "crafting: xp grant failed after successful craft",
-			slog.String("recipe", recipe.Code), slog.String("err", err.Error()))
-		updated = cp // best-effort — show pre-XP state so client still gets a result
-	}
-
-	// --- Audit log (best-effort).
-	var goldPtr *uuid.UUID
-	if goldTxnID != uuid.Nil {
-		goldPtr = &goldTxnID
-	}
-	if err := s.repo.InsertCraftLog(ctx, characterID, recipe.Code, &out.ID, goldPtr, now); err != nil {
-		s.log.WarnContext(ctx, "crafting: audit log insert failed", slog.String("err", err.Error()))
-	}
-
-	progression.RecordIf(ctx, s.progress, characterID,
-		progression.Event{Kind: progression.EventItemCrafted, Amount: 1},
-		progression.Event{Kind: progression.EventItemCrafted + ":" + out.TemplateCode, Amount: 1})
-
-	return &CraftResult{
-		OutputInstanceID:   out.ID,
-		OutputTemplateCode: out.TemplateCode,
-		OutputStack:        out.StackQuantity,
-		GoldTxnID:          goldTxnID,
-		ProfessionCode:     recipe.ProfessionCode,
-		SkillBefore:        skillBefore,
-		SkillAfter:         updated.Level,
-		XPGained:           recipe.ProfessionXPReward,
-		LeveledUp:          leveled,
-		Count:              1,
-	}, nil
+	return job, nil
 }
 
-// CraftMany crafts recipeCode up to count times (DD-245). Materials for the
-// whole batch are checked first, so a batch that cannot start changes
-// nothing; a later failure (e.g. gold runs out) stops the batch and returns
-// what was made. Each craft keeps Craft's own guarantees.
-func (s *Service) CraftMany(ctx context.Context, characterID, accountID uuid.UUID, recipeCode string, count int) (*CraftResult, error) {
-	if count < 1 || count > MaxCraftCount {
-		return nil, fmt.Errorf("%w: count must be 1..%d", ErrValidation, MaxCraftCount)
+// goldMove moves delta copper into (negative: out of) the character's purse
+// against the vendor sink.
+func goldMove(characterID uuid.UUID, delta int64) []economy.Entry {
+	return []economy.Entry{
+		{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: characterID, Delta: delta},
+		{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemVendorSink, Delta: -delta},
 	}
-	if count > 1 {
-		if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
+}
+
+func (s *Service) undoStart(ctx context.Context, job *Job, paid bool, cost int64) {
+	if paid {
+		if _, err := s.txn.Write(ctx, economy.Intent{
+			Kind: "crafting_refund", RefKind: "crafting_job", RefID: job.ID,
+			IdempotencyKey: "craft-start-refund-" + job.ID.String(), Entries: goldMove(job.CharacterID, cost),
+		}); err != nil {
+			s.log.ErrorContext(ctx, "crafting: gold refund failed — manual reconcile needed",
+				slog.String("job", job.ID.String()), slog.String("err", err.Error()))
+		}
+	}
+	if err := s.repo.DeleteJob(ctx, job.ID); err != nil {
+		s.log.ErrorContext(ctx, "crafting: undo job failed", slog.String("job", job.ID.String()), slog.String("err", err.Error()))
+	}
+}
+
+// Active is the character's running job (nil when idle).
+func (s *Service) Active(ctx context.Context, characterID, accountID uuid.UUID) (*Job, error) {
+	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
+		return nil, err
+	}
+	j, err := s.repo.ActiveJob(ctx, characterID)
+	if errors.Is(err, ErrNotFound) {
+		return nil, nil
+	}
+	return j, err
+}
+
+// Collect ends the job: finished units are minted and pay XP, the rest is
+// refunded. A second call returns the stored result.
+func (s *Service) Collect(ctx context.Context, characterID, accountID, jobID uuid.UUID) (*CraftResult, error) {
+	if err := s.chars.Owns(ctx, characterID, accountID); err != nil {
+		return nil, err
+	}
+	job, err := s.repo.GetJob(ctx, jobID)
+	if err != nil {
+		return nil, err
+	}
+	if job.CharacterID != characterID {
+		return nil, ErrNotFound
+	}
+	if job.State != JobActive {
+		return replay(job), nil
+	}
+	now := s.cfg.Now().UTC()
+	made := job.Done(now)
+	first, err := s.repo.FinishJob(ctx, job.ID, made, now)
+	if err != nil {
+		return nil, err
+	}
+	if !first { // a parallel collect won
+		if job, err = s.repo.GetJob(ctx, jobID); err != nil {
 			return nil, err
 		}
-		if recipe, ok := s.catalog.Catalog().Recipe(recipeCode); ok {
-			for _, in := range recipe.Inputs {
-				have, err := s.inv.Available(ctx, characterID, in.TemplateCode)
-				if err != nil {
-					return nil, err
-				}
-				if need := in.Quantity * int32(count); have < need {
-					return nil, fmt.Errorf("craft consume %s x%d (have %d): %w", in.TemplateCode, need, have, inventory.ErrInsufficient)
-				}
-			}
-		}
+		return replay(job), nil
 	}
-	var total *CraftResult
-	for i := 0; i < count; i++ {
-		res, err := s.Craft(ctx, characterID, accountID, recipeCode)
+
+	rec := job.Recipe
+	res := &CraftResult{OutputTemplateCode: rec.OutputTemplateCode, ProfessionCode: rec.ProfessionCode,
+		Count: job.Count, Made: made, Refunded: job.Count - made}
+	for i := 0; i < made; i++ {
+		out, err := s.items.MintExact(ctx, characterID, rec.OutputTemplateCode, rec.OutputStack, "craft", job.ID)
 		if err != nil {
-			if total == nil {
-				return nil, err
-			}
-			s.log.InfoContext(ctx, "crafting: batch stopped early",
-				slog.Int("made", total.Count), slog.Int("asked", count), slog.String("err", err.Error()))
-			break
+			return nil, fmt.Errorf("craft mint: %w", err)
 		}
-		if total == nil {
-			total = res
-			continue
-		}
-		total.OutputInstanceID = res.OutputInstanceID
-		total.OutputStack += res.OutputStack
-		total.SkillAfter = res.SkillAfter
-		total.XPGained += res.XPGained
-		total.LeveledUp = total.LeveledUp || res.LeveledUp
-		total.Count++
+		res.OutputInstanceID = out.ID
+		res.OutputStack += out.StackQuantity
 	}
-	return total, nil
+	if rest := job.Count - made; rest > 0 {
+		if err := s.refund(ctx, job, rest); err != nil {
+			return nil, err
+		}
+	}
+	if made > 0 {
+		maxLevel := int16(100)
+		if p, ok := s.catalog.Catalog().Profession(rec.ProfessionCode); ok {
+			maxLevel = p.MaxLevel
+		}
+		before, err := s.repo.Get(ctx, characterID, rec.ProfessionCode)
+		if err == nil {
+			res.SkillBefore, res.SkillAfter = before.Level, before.Level
+		}
+		res.XPGained = rec.ProfessionXPReward * int32(made)
+		updated, leveled, err := s.repo.AddXP(ctx, characterID, rec.ProfessionCode, res.XPGained, maxLevel)
+		if err != nil {
+			s.log.WarnContext(ctx, "crafting: xp grant failed after a collected job",
+				slog.String("job", job.ID.String()), slog.String("err", err.Error()))
+		} else {
+			res.SkillAfter, res.LeveledUp = updated.Level, leveled
+		}
+		out := res.OutputInstanceID
+		if err := s.repo.InsertCraftLog(ctx, characterID, rec.Code, &out, nil, now); err != nil {
+			s.log.WarnContext(ctx, "crafting: audit log insert failed", slog.String("err", err.Error()))
+		}
+		progression.RecordIf(ctx, s.progress, characterID,
+			progression.Event{Kind: progression.EventItemCrafted, Amount: int64(made)},
+			progression.Event{Kind: progression.EventItemCrafted + ":" + rec.OutputTemplateCode, Amount: int64(made)})
+	}
+	if body, err := json.Marshal(res); err == nil {
+		if err := s.repo.SaveJobResult(ctx, job.ID, body); err != nil {
+			s.log.WarnContext(ctx, "crafting: result not stored", slog.String("err", err.Error()))
+		}
+	}
+	return res, nil
+}
+
+// refund returns the gold and inputs of rest unfinished units.
+func (s *Service) refund(ctx context.Context, job *Job, rest int) error {
+	rec := job.Recipe
+	if cost := rec.GoldCostCopper * int64(rest); cost > 0 {
+		if _, err := s.txn.Write(ctx, economy.Intent{
+			Kind: "crafting_refund", RefKind: "crafting_job", RefID: job.ID,
+			IdempotencyKey: "craft-refund-" + job.ID.String(), Entries: goldMove(job.CharacterID, cost),
+		}); err != nil {
+			return fmt.Errorf("craft refund gold: %w", err)
+		}
+	}
+	for _, in := range rec.Inputs {
+		for left := in.Quantity * int32(rest); left > 0; {
+			got, err := s.items.MintExact(ctx, job.CharacterID, in.TemplateCode, left, "craft_refund", job.ID)
+			if err != nil {
+				return fmt.Errorf("craft refund %s: %w", in.TemplateCode, err)
+			}
+			left -= max(got.StackQuantity, 1)
+		}
+	}
+	return nil
+}
+
+func replay(job *Job) *CraftResult {
+	res := &CraftResult{OutputTemplateCode: job.Recipe.OutputTemplateCode, ProfessionCode: job.Recipe.ProfessionCode,
+		Count: job.Count}
+	_ = json.Unmarshal(job.Result, res)
+	res.Replayed = true
+	return res
 }
 
 // --- Public catalog readers ------------------------------------------------

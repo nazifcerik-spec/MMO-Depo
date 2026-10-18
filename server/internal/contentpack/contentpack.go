@@ -207,6 +207,7 @@ type Recipe struct {
 	OutputTemplateCode string        `yaml:"output_template_code"`
 	OutputStack        int32         `yaml:"output_stack"`
 	ProfessionXPReward int32         `yaml:"profession_xp_reward"`
+	CraftSeconds       int32         `yaml:"craft_seconds"` // per unit (DD-264)
 }
 
 type RecipeInput struct {
@@ -795,6 +796,9 @@ func validateRecipes(recipes []Recipe) error {
 		if r.ProfessionXPReward < 0 {
 			return fmt.Errorf("recipe %s: profession_xp_reward must be >= 0", r.Code)
 		}
+		if r.CraftSeconds < 1 || r.CraftSeconds > 3600 {
+			return fmt.Errorf("recipe %s: craft_seconds must be 1..3600", r.Code)
+		}
 		if len(r.Inputs) == 0 {
 			return fmt.Errorf("recipe %s: at least one input required", r.Code)
 		}
@@ -1215,8 +1219,8 @@ func (l *Loader) upsertRecipes(ctx context.Context, recipes []Recipe) error {
 INSERT INTO content.recipe (
   code, display_name_key, profession_code, min_skill,
   inputs, gold_cost_copper,
-  output_template_code, output_stack, profession_xp_reward
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+  output_template_code, output_stack, profession_xp_reward, craft_seconds
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key     = EXCLUDED.display_name_key,
   profession_code      = EXCLUDED.profession_code,
@@ -1226,6 +1230,7 @@ ON CONFLICT (code) DO UPDATE SET
   output_template_code = EXCLUDED.output_template_code,
   output_stack         = EXCLUDED.output_stack,
   profession_xp_reward = EXCLUDED.profession_xp_reward,
+  craft_seconds        = EXCLUDED.craft_seconds,
   version              = content.recipe.version + 1`
 	for _, r := range recipes {
 		inputs, err := json.Marshal(r.Inputs)
@@ -1235,7 +1240,7 @@ ON CONFLICT (code) DO UPDATE SET
 		_, err = tx.Exec(ctx, q,
 			r.Code, r.DisplayNameKey, r.ProfessionCode, r.MinSkill,
 			inputs, r.GoldCostCopper,
-			r.OutputTemplateCode, r.OutputStack, r.ProfessionXPReward,
+			r.OutputTemplateCode, r.OutputStack, r.ProfessionXPReward, r.CraftSeconds,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert recipe %s: %w", r.Code, err)

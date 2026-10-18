@@ -11,6 +11,7 @@ class Recipe {
     required this.output,
     required this.outputStack,
     required this.xpReward,
+    this.craftSeconds = 60,
     this.info,
   });
 
@@ -28,6 +29,7 @@ class Recipe {
       output: j['output_template_code'] as String,
       outputStack: n('output_stack'),
       xpReward: n('profession_xp_reward'),
+      craftSeconds: (j['craft_seconds'] as num?)?.toInt() ?? 60,
       info: j['output'] is Map<String, dynamic> ? ItemInfo.fromJson(j['output'] as Map<String, dynamic>) : null,
     );
   }
@@ -42,6 +44,9 @@ class Recipe {
   final String output;
   final int outputStack;
   final int xpReward;
+
+  /// Time per unit (DD-264).
+  final int craftSeconds;
 
   /// What the recipe makes; null when the server sent no details.
   final ItemInfo? info;
@@ -105,12 +110,63 @@ class Skill {
 }
 
 class CraftResult {
-  const CraftResult({required this.output, required this.stack, required this.skillAfter, required this.leveledUp});
+  const CraftResult({
+    required this.output,
+    required this.stack,
+    required this.skillAfter,
+    required this.leveledUp,
+    this.made = 0,
+    this.refunded = 0,
+  });
 
   final String output;
   final int stack;
   final int skillAfter;
   final bool leveledUp;
+
+  /// Units delivered and units whose materials + gold came back (DD-264).
+  final int made;
+  final int refunded;
+}
+
+/// A timed crafting job (DD-264): [count] units, [unitSeconds] each.
+class CraftJob {
+  const CraftJob({
+    required this.id,
+    required this.recipe,
+    required this.profession,
+    required this.output,
+    required this.count,
+    required this.unitSeconds,
+    required this.startedAt,
+    required this.readyAt,
+  });
+
+  factory CraftJob.fromJson(Map<String, dynamic> j) => CraftJob(
+    id: j['id'] as String,
+    recipe: j['recipe_code'] as String? ?? '',
+    profession: j['profession_code'] as String? ?? '',
+    output: j['output_template_code'] as String? ?? '',
+    count: (j['count'] as num?)?.toInt() ?? 1,
+    unitSeconds: (j['unit_seconds'] as num?)?.toInt() ?? 60,
+    startedAt: DateTime.parse(j['started_at'] as String),
+    readyAt: DateTime.parse(j['ready_at'] as String),
+  );
+
+  final String id;
+  final String recipe;
+  final String profession;
+  final String output;
+  final int count;
+  final int unitSeconds;
+  final DateTime startedAt;
+  final DateTime readyAt;
+
+  /// Units finished at [now] (the server counts the same way).
+  int done(DateTime now) {
+    final n = now.difference(startedAt).inSeconds ~/ (unitSeconds <= 0 ? 1 : unitSeconds);
+    return n.clamp(0, count);
+  }
 }
 
 class Offer {
@@ -197,14 +253,29 @@ class WorkshopRepository {
 
   Future<void> learn(String profession) => api.post('$_char/professions/learn', {'profession_code': profession});
 
-  /// Crafts [count] at once (DD-245); the server checks the whole batch.
-  Future<CraftResult> craft(String recipe, {int count = 1}) async {
-    final j = await api.post('$_char/craft', {'recipe_code': recipe, if (count > 1) 'count': count});
+  /// Starts a timed job of [count] units (DD-264); the server checks and
+  /// takes the whole job's materials and gold up front.
+  Future<CraftJob> craft(String recipe, {int count = 1}) async => CraftJob.fromJson(
+    (await api.post('$_char/craft', {'recipe_code': recipe, if (count > 1) 'count': count}))['job']
+        as Map<String, dynamic>,
+  );
+
+  /// The running job, or null.
+  Future<CraftJob?> activeCraft() async {
+    final j = (await api.get('$_char/craft/active'))['job'];
+    return j is Map<String, dynamic> ? CraftJob.fromJson(j) : null;
+  }
+
+  /// Ends the job: finished units delivered, the rest refunded (idempotent).
+  Future<CraftResult> collectCraft(String id) async {
+    final j = await api.post('$_char/craft/$id/collect', const {});
     return CraftResult(
-      output: j['output_template_code'] as String,
-      stack: (j['output_stack'] as num?)?.toInt() ?? 1,
+      output: j['output_template_code'] as String? ?? '',
+      stack: (j['output_stack'] as num?)?.toInt() ?? 0,
       skillAfter: (j['skill_after'] as num?)?.toInt() ?? 0,
       leveledUp: j['leveled_up'] as bool? ?? false,
+      made: (j['made'] as num?)?.toInt() ?? 0,
+      refunded: (j['refunded'] as num?)?.toInt() ?? 0,
     );
   }
 

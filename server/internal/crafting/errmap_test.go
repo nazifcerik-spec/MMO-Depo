@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/inventory"
 )
@@ -16,6 +17,9 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
+		"action.ErrBusy":          &action.BusyError{Kind: "hunt"}, // one action at a time (DD-263)
+		"ErrJobActive":            ErrJobActive,
+		"ErrJobTooLong":           ErrJobTooLong,
 		"character.ErrForbidden":  character.ErrForbidden, // service ownership checks
 		"character.ErrNotFound":   character.ErrNotFound,
 		"ErrForbidden":            ErrForbidden,

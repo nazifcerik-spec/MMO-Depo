@@ -171,16 +171,10 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		return nil, ErrLevelRequirement
 	}
 
-	// Weekly lockout gate — refuse if character already cleared this week.
+	// Solo dungeons have no weekly lockout (DD-262): rewards follow the
+	// character's level instead, as in hunting.
 	now := s.cfg.Now().UTC()
 	weekKey := ISOWeek(now)
-	locked, err := s.repo.HasLockout(ctx, req.CharacterID, tmpl.Code, weekKey)
-	if err != nil {
-		return nil, err
-	}
-	if locked {
-		return nil, ErrWeeklyLockout
-	}
 	if s.bag != nil {
 		ok, err := s.bag.HasRoom(ctx, req.CharacterID, "", 1)
 		if err != nil {
@@ -302,8 +296,10 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, fmt.Errorf("dungeon: unmarshal snapshot: %w", err)
 	}
 
-	if boss, ok := s.mobs.Catalog().Get(tmpl.BossMobCode); ok { // boss bonus follows the same level rule (DD-254)
-		tmpl.BonusXP = leveling.Current().ScaleMobXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level))
+	if boss, ok := s.mobs.Catalog().Get(tmpl.BossMobCode); ok { // boss bonus follows the same level rule (DD-254, DD-262)
+		cfg := leveling.Current()
+		tmpl.BonusXP = cfg.ScaleMobXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level))
+		tmpl.BonusGoldCopper = int64(math.Round(float64(tmpl.BonusGoldCopper) * cfg.MobXPFactor(int(snapshot.Level), int(boss.Level))))
 	}
 	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl), int(snapshot.Level)},
 		combat.DefaultMaxTurns, s.rngNew)
@@ -364,7 +360,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, err
 	}
 	weekKey := ISOWeek(c.StartedAt)
-	lockoutWritten := run.Cleared
+	lockoutWritten := false // unlimited runs (DD-262)
 
 	// HP write-back (deterministic, retry-safe; see hunt.Reveal). The run is
 	// resolved as of its end.

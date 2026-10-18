@@ -39,6 +39,12 @@ class FakeBackend {
   Map<String, dynamic>? lastAllocation;
   final learnedTalents = <String>[];
   int? lastCraftCount;
+
+  /// The running crafting job (DD-264); null when idle.
+  Map<String, dynamic>? craftJob;
+
+  /// When set, starting a hunt is refused: busy with this action (DD-263).
+  String? busyWith;
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
@@ -412,6 +418,11 @@ class FakeBackend {
     if (path.endsWith('/hunt/active')) return json(200, {'contract': activeHunt});
     if (path.endsWith('/dungeon/active')) return json(200, {'contract': activeDungeon});
     if (RegExp(r'^/v1/character/[^/]+/hunt$').hasMatch(path)) {
+      if (busyWith case final kind?) {
+        return json(409, {
+          'error': {'code': 'E_CHARACTER_BUSY', 'message': 'finish the current action first', 'field': kind},
+        });
+      }
       if (activeHunt != null) return error(409, 'E_HUNT_ACTIVE');
       activeHunt = _contract(
         'hunt-1',
@@ -508,6 +519,7 @@ class FakeBackend {
             'output_template_code': 'potion_hp_small',
             'output_stack': 1,
             'profession_xp_reward': 10,
+            'craft_seconds': 30,
             'output': {
               'item_class': 'consumable',
               'item_subclass': 'potion',
@@ -541,18 +553,45 @@ class FakeBackend {
       skills[body['profession_code'] as String] = 1;
       return json(200, {'profession_code': body['profession_code'], 'level': 1});
     }
+    if (path.endsWith('/craft/active')) return json(200, {'job': craftJob});
     if (path.endsWith('/craft')) {
+      if (craftJob != null) return error(409, 'E_CRAFT_ACTIVE');
       final n = body['count'] as int? ?? 1;
       lastCraftCount = n;
       final seed = bag.firstWhere((i) => i['template_code'] == 'linseed');
       seed['stack_quantity'] = (seed['stack_quantity'] as int) - 2 * n;
+      final now = DateTime.now().toUtc();
+      craftJob = {
+        'id': 'job-1',
+        'recipe_code': 'recipe_potion_hp_small',
+        'profession_code': 'alchemy',
+        'output_template_code': 'potion_hp_small',
+        'output_stack': 1,
+        'count': n,
+        'unit_seconds': 30,
+        'started_at': now.toIso8601String(),
+        'ready_at': now.add(Duration(seconds: 30 * n)).toIso8601String(),
+        'done': 0,
+        'state': 'active',
+      };
+      return json(201, {'job': craftJob});
+    }
+    if (path.endsWith('/craft/job-1/collect')) {
+      final j = craftJob!;
+      final n = j['count'] as int;
+      final made = DateTime.now().toUtc().isBefore(DateTime.parse(j['ready_at'] as String)) ? 0 : n;
+      final seed = bag.firstWhere((i) => i['template_code'] == 'linseed');
+      seed['stack_quantity'] = (seed['stack_quantity'] as int) + 2 * (n - made);
+      craftJob = null;
       return json(200, {
         'output_template_code': 'potion_hp_small',
-        'output_stack': n,
+        'output_stack': made,
         'count': n,
+        'made': made,
+        'refunded': n - made,
         'skill_before': 1,
-        'skill_after': 2,
-        'leveled_up': true,
+        'skill_after': made > 0 ? 2 : 1,
+        'leveled_up': made > 0,
       });
     }
     if (path == '/v1/vendor/general_ironhold/buy') {

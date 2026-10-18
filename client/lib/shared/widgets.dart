@@ -49,6 +49,9 @@ String errorText(AppLocalizations l, Object error) {
     'E_RAID_NOT_RUNNING' => l.errNotActive,
     'E_RAID_NOT_READY' => l.errNotReady,
     'E_RAID_WEEKLY_LOCKED' => l.errRaidWeeklyLocked,
+    'E_CHARACTER_BUSY' => l.errCharacterBusy(busyName(l, error.field)),
+    'E_CRAFT_ACTIVE' => l.errCraftActive,
+    'E_CRAFT_TOO_LONG' => l.errCraftTooLong,
     'E_NO_ROUTE' => l.errNoRoute,
     'E_INSUFFICIENT_GOLD' => l.errInsufficientGold,
     'E_INSUFFICIENT_MATERIALS' => l.errInsufficientMaterials,
@@ -109,6 +112,17 @@ String errorText(AppLocalizations l, Object error) {
     _ => l.errGeneric(error.code),
   };
 }
+
+/// What a busy character is doing (DD-263), as the server names it.
+String busyName(AppLocalizations l, String? kind) => switch (kind) {
+  'gathering' => l.busyGathering,
+  'hunt' => l.busyHunt,
+  'dungeon' => l.busyDungeon,
+  'raid' => l.busyRaid,
+  'travel' => l.busyTravel,
+  'crafting' => l.busyCrafting,
+  _ => kind ?? '',
+};
 
 String raceName(AppLocalizations l, String code) => switch (code) {
   'human' => l.raceHuman,

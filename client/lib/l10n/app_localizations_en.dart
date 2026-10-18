@@ -2082,4 +2082,139 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errRaidWeeklyLocked => 'You already cleared this raid this week.';
+
+  @override
+  String errCharacterBusy(String action) {
+    return 'Finish what your character is doing first: $action.';
+  }
+
+  @override
+  String get busyGathering => 'gathering';
+
+  @override
+  String get busyHunt => 'hunt';
+
+  @override
+  String get busyDungeon => 'dungeon';
+
+  @override
+  String get busyRaid => 'raid';
+
+  @override
+  String get busyTravel => 'travel';
+
+  @override
+  String get busyCrafting => 'crafting';
+
+  @override
+  String get errCraftActive => 'A crafting job is already running.';
+
+  @override
+  String get errCraftTooLong => 'That job would take more than 6 hours.';
+
+  @override
+  String craftEach(String time) {
+    return '$time each';
+  }
+
+  @override
+  String craftTotal(String time) {
+    return 'Total $time';
+  }
+
+  @override
+  String craftRunning(String item, int count) {
+    return 'Crafting $item ×$count';
+  }
+
+  @override
+  String craftProgress(int done, int count) {
+    return '$done/$count ready';
+  }
+
+  @override
+  String get craftDone => 'All done — collect';
+
+  @override
+  String get craftCollectEarlyTitle => 'Collect now?';
+
+  @override
+  String craftCollectEarlyBody(int done, int rest) {
+    return 'The $done finished items are delivered; the materials and gold of the other $rest come back.';
+  }
+
+  @override
+  String craftCollected(int made, int refunded) {
+    return '$made made, $refunded refunded';
+  }
+
+  @override
+  String get craftBusyHint => 'Crafting takes time; your character does nothing else meanwhile.';
+
+  @override
+  String get eventHowTitle => 'How to take part';
+
+  @override
+  String get eventRewardsTitle => 'Rewards';
+
+  @override
+  String eventStepEnlist(int level) {
+    return 'Enlist from 24 hours before it starts until it ends (level $level+).';
+  }
+
+  @override
+  String eventStepRegion(String region) {
+    return 'Be in $region when you enlist.';
+  }
+
+  @override
+  String eventStepPower(int power) {
+    return 'Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: $power.';
+  }
+
+  @override
+  String eventStepScore(int tier) {
+    return 'Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier $tier.';
+  }
+
+  @override
+  String get eventStepGoal =>
+      'If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.';
+
+  @override
+  String get eventStepPaid =>
+      'Rewards are paid automatically when it closes. Enlisting does not stop your other actions.';
+
+  @override
+  String eventTier(int tier, String score) {
+    return 'Tier $tier · $score+ points';
+  }
+
+  @override
+  String eventTierTokens(int count) {
+    return '+$count event tokens';
+  }
+
+  @override
+  String eventEstimate(String score, int tier) {
+    return 'Join now: about $score points → tier $tier';
+  }
+
+  @override
+  String eventEstimateNone(String score) {
+    return 'Join now: about $score points — not enough for a tier';
+  }
+
+  @override
+  String seasonalHow(int count) {
+    return 'While the event runs, claim $count event tokens once a day (the day starts at 00:00 UTC).';
+  }
+
+  @override
+  String seasonalBenefit(int count) {
+    return 'Tokens stay on your account (balance: $count).';
+  }
+
+  @override
+  String get eventDetails => 'Details';
 }

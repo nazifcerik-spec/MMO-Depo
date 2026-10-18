@@ -2082,4 +2082,137 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errRaidWeeklyLocked => '你本周已通关该团队副本。';
+
+  @override
+  String errCharacterBusy(String action) {
+    return '请先完成角色当前的行动：$action。';
+  }
+
+  @override
+  String get busyGathering => '采集';
+
+  @override
+  String get busyHunt => '狩猎';
+
+  @override
+  String get busyDungeon => '地下城';
+
+  @override
+  String get busyRaid => '团队副本';
+
+  @override
+  String get busyTravel => '旅行';
+
+  @override
+  String get busyCrafting => '制作';
+
+  @override
+  String get errCraftActive => '已有制作正在进行。';
+
+  @override
+  String get errCraftTooLong => '该制作将超过 6 小时。';
+
+  @override
+  String craftEach(String time) {
+    return '每件 $time';
+  }
+
+  @override
+  String craftTotal(String time) {
+    return '共 $time';
+  }
+
+  @override
+  String craftRunning(String item, int count) {
+    return '正在制作 $item ×$count';
+  }
+
+  @override
+  String craftProgress(int done, int count) {
+    return '$done/$count 已完成';
+  }
+
+  @override
+  String get craftDone => '全部完成——领取';
+
+  @override
+  String get craftCollectEarlyTitle => '现在领取？';
+
+  @override
+  String craftCollectEarlyBody(int done, int rest) {
+    return '交付已完成的 $done 件；其余 $rest 件的材料和金币将退还。';
+  }
+
+  @override
+  String craftCollected(int made, int refunded) {
+    return '制作 $made 件，退还 $refunded 件';
+  }
+
+  @override
+  String get craftBusyHint => '制作需要时间，期间角色无法进行其他行动。';
+
+  @override
+  String get eventHowTitle => '如何参与';
+
+  @override
+  String get eventRewardsTitle => '奖励';
+
+  @override
+  String eventStepEnlist(int level) {
+    return '可在开始前 24 小时至结束前报名（$level 级以上）。';
+  }
+
+  @override
+  String eventStepRegion(String region) {
+    return '报名时需位于 $region。';
+  }
+
+  @override
+  String eventStepPower(int power) {
+    return '报名时冻结战力：攻击 × 2 + 防御 + 生命 ÷ 10。你当前的战力：$power。';
+  }
+
+  @override
+  String eventStepScore(int tier) {
+    return '积分 = 战力 × 参与分钟数，从开始（或更晚报名时从报名起）计算，最高到第 $tier 档。';
+  }
+
+  @override
+  String get eventStepGoal => '若全服共同达成目标，奖励可达最高档；否则最高第 2 档。';
+
+  @override
+  String get eventStepPaid => '活动结束时自动发放奖励。报名不影响你的其他行动。';
+
+  @override
+  String eventTier(int tier, String score) {
+    return '第 $tier 档 · $score+ 积分';
+  }
+
+  @override
+  String eventTierTokens(int count) {
+    return '+$count 活动代币';
+  }
+
+  @override
+  String eventEstimate(String score, int tier) {
+    return '现在参加：约 $score 积分 → 第 $tier 档';
+  }
+
+  @override
+  String eventEstimateNone(String score) {
+    return '现在参加：约 $score 积分——不足一档';
+  }
+
+  @override
+  String seasonalHow(int count) {
+    return '活动期间每天可领取一次 $count 个活动代币（每天从 UTC 00:00 开始）。';
+  }
+
+  @override
+  String seasonalBenefit(int count) {
+    return '代币保存在你的账号中（余额：$count）。';
+  }
+
+  @override
+  String get eventDetails => '详情';
 }

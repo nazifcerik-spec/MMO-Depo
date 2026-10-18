@@ -1566,5 +1566,175 @@
   "errAlreadyInRaid": "You are already in a raid.",
   "errRaidNotOpen": "This raid is no longer open.",
   "errRaidNotEnough": "Not enough members to start.",
-  "errRaidWeeklyLocked": "You already cleared this raid this week."
+  "errRaidWeeklyLocked": "You already cleared this raid this week.",
+  "errCharacterBusy": "Finish what your character is doing first: {action}.",
+  "@errCharacterBusy": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "busyGathering": "gathering",
+  "busyHunt": "hunt",
+  "busyDungeon": "dungeon",
+  "busyRaid": "raid",
+  "busyTravel": "travel",
+  "busyCrafting": "crafting",
+  "errCraftActive": "A crafting job is already running.",
+  "errCraftTooLong": "That job would take more than 6 hours.",
+  "craftEach": "{time} each",
+  "@craftEach": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "craftTotal": "Total {time}",
+  "@craftTotal": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "craftRunning": "Crafting {item} ×{count}",
+  "@craftRunning": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "craftProgress": "{done}/{count} ready",
+  "@craftProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "craftDone": "All done — collect",
+  "craftCollectEarlyTitle": "Collect now?",
+  "craftCollectEarlyBody": "The {done} finished items are delivered; the materials and gold of the other {rest} come back.",
+  "@craftCollectEarlyBody": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "rest": {
+        "type": "int"
+      }
+    }
+  },
+  "craftCollected": "{made} made, {refunded} refunded",
+  "@craftCollected": {
+    "placeholders": {
+      "made": {
+        "type": "int"
+      },
+      "refunded": {
+        "type": "int"
+      }
+    }
+  },
+  "craftBusyHint": "Crafting takes time; your character does nothing else meanwhile.",
+  "eventHowTitle": "How to take part",
+  "eventRewardsTitle": "Rewards",
+  "eventStepEnlist": "Enlist from 24 hours before it starts until it ends (level {level}+).",
+  "@eventStepEnlist": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "eventStepRegion": "Be in {region} when you enlist.",
+  "@eventStepRegion": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStepPower": "Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: {power}.",
+  "@eventStepPower": {
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
+  "eventStepScore": "Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier {tier}.",
+  "@eventStepScore": {
+    "placeholders": {
+      "tier": {
+        "type": "int"
+      }
+    }
+  },
+  "eventStepGoal": "If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.",
+  "eventStepPaid": "Rewards are paid automatically when it closes. Enlisting does not stop your other actions.",
+  "eventTier": "Tier {tier} · {score}+ points",
+  "@eventTier": {
+    "placeholders": {
+      "tier": {
+        "type": "int"
+      },
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTierTokens": "+{count} event tokens",
+  "@eventTierTokens": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventEstimate": "Join now: about {score} points → tier {tier}",
+  "@eventEstimate": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "int"
+      }
+    }
+  },
+  "eventEstimateNone": "Join now: about {score} points — not enough for a tier",
+  "@eventEstimateNone": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "seasonalHow": "While the event runs, claim {count} event tokens once a day (the day starts at 00:00 UTC).",
+  "@seasonalHow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "seasonalBenefit": "Tokens stay on your account (balance: {count}).",
+  "@seasonalBenefit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventDetails": "Details"
 }

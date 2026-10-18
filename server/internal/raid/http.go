@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -127,6 +128,9 @@ func ids(w http.ResponseWriter, r *http.Request) (acct, char uuid.UUID, ok bool)
 }
 
 func writeErr(w http.ResponseWriter, r *http.Request, err error) {
+	if action.Write(w, r, err) {
+		return
+	}
 	type mapping struct {
 		status int
 		code   string

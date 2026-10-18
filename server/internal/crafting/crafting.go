@@ -4,14 +4,16 @@
 // gates access to recipes. Learning is idempotent (no-op on re-learn); levelling
 // happens automatically via XP grants at each successful craft.
 //
-// Crafting is server-authoritative and INSTANT (no AFK contract in v1):
-//  1. Verify profession learned + skill >= recipe.min_skill.
-//  2. Verify bag has all input stacks (ConsumeByTemplate refuses on shortage).
-//  3. Debit gold via ledger (if recipe.gold_cost > 0) — vendor-sink pattern.
-//  4. Consume inputs (atomic; rolls back on shortage).
-//  5. Mint output via item.Service.MintExact (auto-slot).
-//  6. Grant profession XP (level rollover with cap).
-//  7. Append audit row to crafting.craft_log.
+// Crafting is server-authoritative and TIMED (DD-264): a job of count units,
+// each taking the recipe's craft_seconds.
+//
+//	Start:   skill gate → materials + gold for the whole job checked → job row
+//	         claimed (one action at a time, DD-263) → gold debited → inputs
+//	         consumed (a failure undoes the job and refunds the gold).
+//	Collect: any time. The units finished so far are minted and pay their
+//	         profession XP; the unfinished rest is refunded (gold + inputs).
+//	         Idempotent: the job row flips to collected once and stores the
+//	         result.
 //
 // Design decisions:
 //   - Content lives in `content.profession` + `content.recipe`; catalog is
@@ -63,6 +65,7 @@ type Recipe struct {
 	OutputTemplateCode string
 	OutputStack        int32
 	ProfessionXPReward int32
+	CraftSeconds       int32 // per unit (DD-264)
 	Version            int32
 }
 
@@ -90,8 +93,45 @@ type CraftResult struct {
 	SkillAfter         int16     `json:"skill_after"`
 	XPGained           int32     `json:"xp_gained"`
 	LeveledUp          bool      `json:"leveled_up"`
-	Count              int       `json:"count"` // crafts made by this request (DD-245)
+	Count              int       `json:"count"`    // units the job was started with (DD-245)
+	Made               int       `json:"made"`     // units delivered (DD-264)
+	Refunded           int       `json:"refunded"` // unfinished units whose gold + inputs came back
+	Replayed           bool      `json:"replayed,omitempty"`
 }
+
+// Job states.
+const (
+	JobActive    = "active"
+	JobCollected = "collected"
+)
+
+// Job is a timed crafting run (DD-264). Recipe is frozen at start.
+type Job struct {
+	ID          uuid.UUID
+	CharacterID uuid.UUID
+	Recipe      Recipe
+	Count       int
+	UnitSeconds int32
+	StartedAt   time.Time
+	ReadyAt     time.Time
+	State       string
+	Result      []byte
+}
+
+// Done is how many units are finished at now.
+func (j *Job) Done(now time.Time) int {
+	if j.UnitSeconds <= 0 {
+		return j.Count
+	}
+	n := int(now.Sub(j.StartedAt) / (time.Duration(j.UnitSeconds) * time.Second))
+	return max(0, min(j.Count, n))
+}
+
+// MaxJobSeconds caps one job, like the AFK activities (6 h).
+const MaxJobSeconds = 6 * 60 * 60
+
+// DefaultCraftSeconds applies to a recipe without a time.
+const DefaultCraftSeconds = 60
 
 // MaxCraftCount caps one batch request (DD-245).
 const MaxCraftCount = 100
@@ -107,6 +147,8 @@ var (
 	ErrSkillTooLow          = errors.New("crafting: skill level below min_skill")
 	ErrInsufficientGold     = errors.New("crafting: insufficient gold")
 	ErrValidation           = errors.New("crafting: validation")
+	ErrJobActive            = errors.New("crafting: a crafting job is already running")
+	ErrJobTooLong           = errors.New("crafting: job longer than MaxJobSeconds")
 )
 
 // --- Tuning -----------------------------------------------------------------

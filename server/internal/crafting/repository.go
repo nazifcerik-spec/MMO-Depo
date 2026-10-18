@@ -2,12 +2,16 @@ package crafting
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"github.com/otter/server/internal/action"
 )
 
 // Repository is the persistence contract for character professions + audit log.
@@ -30,6 +34,17 @@ type Repository interface {
 	// InsertCraftLog appends an audit row. Non-blocking on failure would be
 	// acceptable but v1 returns the error so the client sees any DB issue.
 	InsertCraftLog(ctx context.Context, characterID uuid.UUID, recipeCode string, outputID *uuid.UUID, goldTxnID *uuid.UUID, now time.Time) error
+
+	// Timed jobs (DD-264). CreateJob refuses a busy character
+	// (action.ErrBusy) or a second job (ErrJobActive).
+	CreateJob(ctx context.Context, j *Job) error
+	ActiveJob(ctx context.Context, characterID uuid.UUID) (*Job, error) // ErrNotFound when idle
+	GetJob(ctx context.Context, id uuid.UUID) (*Job, error)
+	// DeleteJob undoes a start that could not pay.
+	DeleteJob(ctx context.Context, id uuid.UUID) error
+	// FinishJob flips an active job to collected; false when it already was.
+	FinishJob(ctx context.Context, id uuid.UUID, made int, now time.Time) (bool, error)
+	SaveJobResult(ctx context.Context, id uuid.UUID, result []byte) error
 }
 
 type PgRepo struct{ pool *pgxpool.Pool }
@@ -149,5 +164,62 @@ func (r *PgRepo) InsertCraftLog(ctx context.Context, characterID uuid.UUID, reci
 		  (character_id, recipe_code, output_instance_id, gold_txn_id, crafted_at)
 		VALUES ($1, $2, $3, $4, $5)`
 	_, err := r.pool.Exec(ctx, q, characterID, recipeCode, outputID, goldTxnID, now)
+	return err
+}
+
+// --- Timed jobs (DD-264) ------------------------------------------------------
+
+func (r *PgRepo) CreateJob(ctx context.Context, j *Job) error {
+	rec, err := json.Marshal(j.Recipe)
+	if err != nil {
+		return err
+	}
+	_, err = r.pool.Exec(ctx, `
+		INSERT INTO crafting.job (id, character_id, recipe_code, recipe, count, unit_seconds, started_at, ready_at, state)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'active')`,
+		j.ID, j.CharacterID, j.Recipe.Code, rec, j.Count, j.UnitSeconds, j.StartedAt, j.ReadyAt)
+	var pgErr *pgconn.PgError
+	if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+		return ErrJobActive
+	}
+	return action.FromDB(err)
+}
+
+const jobSelect = `SELECT id, character_id, recipe, count, unit_seconds, started_at, ready_at, state, result FROM crafting.job`
+
+func (r *PgRepo) scanJob(row pgx.Row) (*Job, error) {
+	var j Job
+	var rec []byte
+	if err := row.Scan(&j.ID, &j.CharacterID, &rec, &j.Count, &j.UnitSeconds, &j.StartedAt, &j.ReadyAt, &j.State, &j.Result); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return &j, json.Unmarshal(rec, &j.Recipe)
+}
+
+func (r *PgRepo) ActiveJob(ctx context.Context, characterID uuid.UUID) (*Job, error) {
+	return r.scanJob(r.pool.QueryRow(ctx, jobSelect+` WHERE character_id = $1 AND state = 'active'`, characterID))
+}
+
+func (r *PgRepo) GetJob(ctx context.Context, id uuid.UUID) (*Job, error) {
+	return r.scanJob(r.pool.QueryRow(ctx, jobSelect+` WHERE id = $1`, id))
+}
+
+func (r *PgRepo) DeleteJob(ctx context.Context, id uuid.UUID) error {
+	_, err := r.pool.Exec(ctx, `DELETE FROM crafting.job WHERE id = $1 AND state = 'active'`, id)
+	return err
+}
+
+func (r *PgRepo) FinishJob(ctx context.Context, id uuid.UUID, made int, now time.Time) (bool, error) {
+	tag, err := r.pool.Exec(ctx, `
+		UPDATE crafting.job SET state = 'collected', made = $2, collected_at = $3
+		 WHERE id = $1 AND state = 'active'`, id, made, now)
+	return tag.RowsAffected() == 1, err
+}
+
+func (r *PgRepo) SaveJobResult(ctx context.Context, id uuid.UUID, result []byte) error {
+	_, err := r.pool.Exec(ctx, `UPDATE crafting.job SET result = $2 WHERE id = $1`, id, result)
 	return err
 }

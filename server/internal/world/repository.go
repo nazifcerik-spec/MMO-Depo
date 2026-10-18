@@ -9,6 +9,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"github.com/otter/server/internal/action"
 )
 
 // TravelRepository is the persistence contract for the travel domain.
@@ -68,7 +70,7 @@ func (r *PgRepo) Create(ctx context.Context, t *Travel) error {
 		if pgUniqueViolation(err) {
 			return ErrTravelInProgress
 		}
-		return err
+		return action.FromDB(err) // busy with another action (DD-263)
 	}
 	return nil
 }

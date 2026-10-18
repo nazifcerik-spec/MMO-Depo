@@ -370,6 +370,10 @@ func NewRouter(d Deps) http.Handler {
 						Post("/professions/learn", d.CraftingHandler.Learn)
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/craft", d.CraftingHandler.Craft)
+					// Timed jobs (DD-264).
+					r.Get("/craft/active", d.CraftingHandler.ActiveJob)
+					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+						Post("/craft/{job_id}/collect", d.CraftingHandler.Collect)
 				}
 
 				// --- Party (Sprint 20) ---

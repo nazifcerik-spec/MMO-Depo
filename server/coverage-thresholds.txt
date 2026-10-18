@@ -5,6 +5,7 @@
 # integration suite (internal/integration, run in CI against a real DB).
 #
 # package                     min%
+internal/action               98
 internal/activity             81
 internal/admin                34
 internal/classskill           92

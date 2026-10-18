@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -225,6 +226,9 @@ func travelRow(t *Travel, _ any) map[string]any {
 }
 
 func writeErr(w http.ResponseWriter, r *http.Request, err error) {
+	if action.Write(w, r, err) {
+		return
+	}
 	switch {
 	case errors.Is(err, ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "travel not found")

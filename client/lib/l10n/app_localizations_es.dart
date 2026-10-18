@@ -2082,4 +2082,138 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errRaidWeeklyLocked => 'Ya completaste esta incursión esta semana.';
+
+  @override
+  String errCharacterBusy(String action) {
+    return 'Termina primero lo que hace tu personaje: $action.';
+  }
+
+  @override
+  String get busyGathering => 'recolección';
+
+  @override
+  String get busyHunt => 'caza';
+
+  @override
+  String get busyDungeon => 'mazmorra';
+
+  @override
+  String get busyRaid => 'incursión';
+
+  @override
+  String get busyTravel => 'viaje';
+
+  @override
+  String get busyCrafting => 'fabricación';
+
+  @override
+  String get errCraftActive => 'Ya hay una fabricación en curso.';
+
+  @override
+  String get errCraftTooLong => 'Ese trabajo duraría más de 6 horas.';
+
+  @override
+  String craftEach(String time) {
+    return '$time cada uno';
+  }
+
+  @override
+  String craftTotal(String time) {
+    return 'Total $time';
+  }
+
+  @override
+  String craftRunning(String item, int count) {
+    return 'Fabricando $item ×$count';
+  }
+
+  @override
+  String craftProgress(int done, int count) {
+    return '$done/$count listos';
+  }
+
+  @override
+  String get craftDone => 'Todo listo: recoge';
+
+  @override
+  String get craftCollectEarlyTitle => '¿Recoger ahora?';
+
+  @override
+  String craftCollectEarlyBody(int done, int rest) {
+    return 'Se entregan los $done objetos terminados; los materiales y el oro de los otros $rest se devuelven.';
+  }
+
+  @override
+  String craftCollected(int made, int refunded) {
+    return '$made fabricados, $refunded devueltos';
+  }
+
+  @override
+  String get craftBusyHint => 'Fabricar lleva tiempo; mientras tanto tu personaje no hace nada más.';
+
+  @override
+  String get eventHowTitle => 'Cómo participar';
+
+  @override
+  String get eventRewardsTitle => 'Recompensas';
+
+  @override
+  String eventStepEnlist(int level) {
+    return 'Inscríbete desde 24 horas antes de que empiece hasta que termine (nivel $level+).';
+  }
+
+  @override
+  String eventStepRegion(String region) {
+    return 'Debes estar en $region al inscribirte.';
+  }
+
+  @override
+  String eventStepPower(int power) {
+    return 'Tu poder se fija al inscribirte: ataque × 2 + defensa + PV ÷ 10. El tuyo ahora: $power.';
+  }
+
+  @override
+  String eventStepScore(int tier) {
+    return 'Puntos = poder × minutos de asistencia, desde el inicio (o desde que te inscribes, si es después). Se detiene en el nivel $tier.';
+  }
+
+  @override
+  String get eventStepGoal =>
+      'Si entre todos se alcanza el objetivo, las recompensas llegan al nivel máximo; si no, se detienen en el nivel 2.';
+
+  @override
+  String get eventStepPaid => 'Las recompensas se pagan solas al cerrar. Inscribirte no detiene tus otras acciones.';
+
+  @override
+  String eventTier(int tier, String score) {
+    return 'Nivel $tier · $score+ puntos';
+  }
+
+  @override
+  String eventTierTokens(int count) {
+    return '+$count fichas de evento';
+  }
+
+  @override
+  String eventEstimate(String score, int tier) {
+    return 'Si te unes ahora: unos $score puntos → nivel $tier';
+  }
+
+  @override
+  String eventEstimateNone(String score) {
+    return 'Si te unes ahora: unos $score puntos, no alcanza un nivel';
+  }
+
+  @override
+  String seasonalHow(int count) {
+    return 'Mientras dure el evento, reclama $count fichas una vez al día (el día empieza a las 00:00 UTC).';
+  }
+
+  @override
+  String seasonalBenefit(int count) {
+    return 'Las fichas se guardan en tu cuenta (saldo: $count).';
+  }
+
+  @override
+  String get eventDetails => 'Detalles';
 }

@@ -22,6 +22,8 @@ class WorldEvent {
     required this.state,
     required this.tiers,
     required this.enlisted,
+    this.afkCapTier = 0,
+    this.powerNow = 0,
     this.region,
     this.myPower,
     this.myScore,
@@ -47,6 +49,8 @@ class WorldEvent {
         ),
     ],
     enlisted: j['enlisted'] == true,
+    afkCapTier: (j['afk_cap_tier'] as num?)?.toInt() ?? 0,
+    powerNow: (j['power_now'] as num?)?.toInt() ?? 0,
     region: j['region_code'] as String?,
     myPower: (j['my_power'] as num?)?.toInt(),
     myScore: (j['my_score'] as num?)?.toInt(),
@@ -64,6 +68,12 @@ class WorldEvent {
   final String state; // scheduled | active | succeeded | failed
   final List<RewardTier> tiers;
   final bool enlisted;
+
+  /// AFK score stops at this tier's min score (0 = no cap).
+  final int afkCapTier;
+
+  /// The character's power if it enlisted now.
+  final int powerNow;
   final String? region;
   final int? myPower;
   final int? myScore;
@@ -71,6 +81,31 @@ class WorldEvent {
 
   bool get open => state == 'scheduled' || state == 'active';
   double get progress => goal <= 0 ? 0 : (total / goal).clamp(0, 1).toDouble();
+
+  List<RewardTier> get sortedTiers => [...tiers]..sort((a, b) => a.minScore.compareTo(b.minScore));
+
+  /// The highest score attendance can reach (0 = uncapped).
+  int get capScore => afkCapTier >= 1 && afkCapTier <= tiers.length ? sortedTiers[afkCapTier - 1].minScore : 0;
+
+  /// What enlisting at [now] would score: power × minutes left, capped (the
+  /// server's Contribution rule; display only).
+  int estimateScore(DateTime now) {
+    final from = now.isAfter(startsAt) ? now : startsAt;
+    final minutes = endsAt.difference(from).inMinutes;
+    if (minutes <= 0) return 0;
+    final s = powerNow * minutes;
+    return capScore > 0 && s > capScore ? capScore : s;
+  }
+
+  /// 1-based tier a score reaches (0 = none).
+  int tierFor(int score) {
+    var t = 0;
+    final list = sortedTiers;
+    for (var i = 0; i < list.length; i++) {
+      if (score >= list[i].minScore) t = i + 1;
+    }
+    return t;
+  }
 }
 
 class SeasonalEvent {

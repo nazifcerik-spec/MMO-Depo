@@ -1,13 +1,11 @@
 // Package dungeon implements the AFK dungeon run (Sprint 15).
 //
 // A dungeon is an ordered list of mob waves + a boss encounter, resolved
-// analytically at reveal time using the Sprint 13 combat pipeline. Unlike
-// hunts (Sprint 14) each dungeon carries a **weekly lockout**: a successful
-// clear inserts a row into `dungeon.weekly_lockout` for (character, dungeon,
-// ISO week). Start refuses when a lockout row exists, so the character has
-// exactly one paying clear per dungeon per week — matches Diablo 3 / WoW
-// rift-style weekly cadence and keeps the reward economy from being farmable
-// on a loop.
+// analytically at reveal time using the Sprint 13 combat pipeline. Solo
+// dungeons can be run any number of times (DD-262): like hunts, their XP,
+// boss bonus and loot follow the character's level (mobs far below pay
+// less, loot is capped at the character's level). Raids (group templates,
+// DD-261) keep the weekly lockout in `dungeon.weekly_lockout`.
 //
 // Design decisions:
 //   - Template = ordered waves + boss code. Each wave has (mob_code, count);
@@ -20,10 +18,9 @@
 //     reveal returns E_NOT_READY.
 //   - Player death mid-run halts the reveal at that encounter. Rewards up
 //     to (but not including) the fatal wave are still granted, matching the
-//     "you fought bravely" pattern; NO lockout row is written on wipe, so
-//     the character can retry the same week.
-//   - Boss kill grants the lockout row + a guaranteed rare drop tier bonus
-//     on top of the accumulated wave loot.
+//     "you fought bravely" pattern.
+//   - Boss kill grants a guaranteed rare drop tier bonus on top of the
+//     accumulated wave loot.
 package dungeon
 
 import (
@@ -167,5 +164,5 @@ var (
 // --- Tuning -----------------------------------------------------------------
 
 // MaxDungeonSeconds caps a single run at 1 hour — dungeons are meant to be
-// shorter than long hunts so weekly lockout has meaningful pacing.
+// shorter than long hunts.
 const MaxDungeonSeconds = 60 * 60

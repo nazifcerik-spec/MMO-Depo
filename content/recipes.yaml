@@ -10,6 +10,7 @@
 #   output_template_code  üretilen item template
 #   output_stack          üretilen stack miktarı
 #   profession_xp_reward  başarılı craft'ta verilen meslek XP'si
+#   craft_seconds         birim başı üretim süresi (DD-264)
 
 recipes:
   # --- Alchemy ---
@@ -23,6 +24,7 @@ recipes:
     output_template_code: potion_hp_small
     output_stack: 1
     profession_xp_reward: 15
+    craft_seconds: 35
 
   # recipe_potion_mp_small retired by migration 0034 until mana persists
   # between fights (DD-241); the item template stays.
@@ -38,6 +40,7 @@ recipes:
     output_template_code: potion_hp_medium
     output_stack: 1
     profession_xp_reward: 30
+    craft_seconds: 45
 
   - code: recipe_potion_hp_large
     display_name_key: recipe.hp_large
@@ -50,6 +53,7 @@ recipes:
     output_template_code: potion_hp_large
     output_stack: 1
     profession_xp_reward: 50
+    craft_seconds: 60
 
   - code: recipe_potion_hp_xlarge
     display_name_key: recipe.hp_xlarge
@@ -62,6 +66,7 @@ recipes:
     output_template_code: potion_hp_xlarge
     output_stack: 1
     profession_xp_reward: 80
+    craft_seconds: 90
 
   - code: recipe_potion_hp_huge
     display_name_key: recipe.hp_huge
@@ -74,6 +79,7 @@ recipes:
     output_template_code: potion_hp_huge
     output_stack: 1
     profession_xp_reward: 120
+    craft_seconds: 120
 
   # --- Blacksmithing (DD-229): leather set from skill 1, iron set + iron
   # weapons, scale set at skill 10. Higher tiers drop from hunts/dungeons. ---
@@ -88,6 +94,7 @@ recipes:
     output_template_code: helm_leather
     output_stack: 1
     profession_xp_reward: 15
+    craft_seconds: 150
 
   - code: recipe_chest_leather
     display_name_key: recipe.chest_leather
@@ -99,6 +106,7 @@ recipes:
     output_template_code: chest_leather
     output_stack: 1
     profession_xp_reward: 25
+    craft_seconds: 225
 
   - code: recipe_legs_leather
     display_name_key: recipe.legs_leather
@@ -110,6 +118,7 @@ recipes:
     output_template_code: legs_leather
     output_stack: 1
     profession_xp_reward: 20
+    craft_seconds: 180
 
   - code: recipe_boots_leather
     display_name_key: recipe.boots_leather
@@ -121,6 +130,7 @@ recipes:
     output_template_code: boots_leather
     output_stack: 1
     profession_xp_reward: 15
+    craft_seconds: 150
 
   - code: recipe_gloves_leather
     display_name_key: recipe.gloves_leather
@@ -132,6 +142,7 @@ recipes:
     output_template_code: gloves_leather
     output_stack: 1
     profession_xp_reward: 12
+    craft_seconds: 150
 
   - code: recipe_helm_iron
     display_name_key: recipe.helm_iron
@@ -143,6 +154,7 @@ recipes:
     output_template_code: helm_iron
     output_stack: 1
     profession_xp_reward: 35
+    craft_seconds: 210
 
   - code: recipe_chest_iron
     display_name_key: recipe.chest_iron
@@ -155,6 +167,7 @@ recipes:
     output_template_code: chest_iron
     output_stack: 1
     profession_xp_reward: 45
+    craft_seconds: 315
 
   - code: recipe_legs_iron
     display_name_key: recipe.legs_iron
@@ -166,6 +179,7 @@ recipes:
     output_template_code: legs_iron
     output_stack: 1
     profession_xp_reward: 40
+    craft_seconds: 250
 
   - code: recipe_boots_iron
     display_name_key: recipe.boots_iron
@@ -177,6 +191,7 @@ recipes:
     output_template_code: boots_iron
     output_stack: 1
     profession_xp_reward: 30
+    craft_seconds: 210
 
   - code: recipe_gloves_iron
     display_name_key: recipe.gloves_iron
@@ -188,6 +203,7 @@ recipes:
     output_template_code: gloves_iron
     output_stack: 1
     profession_xp_reward: 25
+    craft_seconds: 210
 
   - code: recipe_sword_iron
     display_name_key: recipe.sword_iron
@@ -200,6 +216,7 @@ recipes:
     output_template_code: sword_iron
     output_stack: 1
     profession_xp_reward: 40
+    craft_seconds: 405
 
   - code: recipe_mace_iron
     display_name_key: recipe.mace_iron
@@ -212,6 +229,7 @@ recipes:
     output_template_code: mace_iron
     output_stack: 1
     profession_xp_reward: 40
+    craft_seconds: 405
 
   - code: recipe_dagger_iron
     display_name_key: recipe.dagger_iron
@@ -224,6 +242,7 @@ recipes:
     output_template_code: dagger_iron
     output_stack: 1
     profession_xp_reward: 35
+    craft_seconds: 405
 
   - code: recipe_bow_hunting
     display_name_key: recipe.bow_hunting
@@ -236,6 +255,7 @@ recipes:
     output_template_code: bow_hunting
     output_stack: 1
     profession_xp_reward: 35
+    craft_seconds: 405
 
   - code: recipe_staff_apprentice
     display_name_key: recipe.staff_apprentice
@@ -248,6 +268,7 @@ recipes:
     output_template_code: staff_apprentice
     output_stack: 1
     profession_xp_reward: 35
+    craft_seconds: 405
 
   - code: recipe_helm_scale
     display_name_key: recipe.helm_scale
@@ -260,6 +281,7 @@ recipes:
     output_template_code: helm_scale
     output_stack: 1
     profession_xp_reward: 60
+    craft_seconds: 420
 
   - code: recipe_chest_scale
     display_name_key: recipe.chest_scale
@@ -273,6 +295,7 @@ recipes:
     output_template_code: chest_scale
     output_stack: 1
     profession_xp_reward: 80
+    craft_seconds: 630
 
   - code: recipe_legs_scale
     display_name_key: recipe.legs_scale
@@ -285,6 +308,7 @@ recipes:
     output_template_code: legs_scale
     output_stack: 1
     profession_xp_reward: 70
+    craft_seconds: 505
 
   - code: recipe_boots_scale
     display_name_key: recipe.boots_scale
@@ -297,6 +321,7 @@ recipes:
     output_template_code: boots_scale
     output_stack: 1
     profession_xp_reward: 55
+    craft_seconds: 420
 
   - code: recipe_gloves_scale
     display_name_key: recipe.gloves_scale
@@ -309,6 +334,7 @@ recipes:
     output_template_code: gloves_scale
     output_stack: 1
     profession_xp_reward: 50
+    craft_seconds: 420
 
   # --- Smelting (DD-243, DD-244): skill = ore gathering level - 13 ---
   - code: recipe_aluminium_bar
@@ -322,6 +348,7 @@ recipes:
     output_template_code: aluminium_bar
     output_stack: 1
     profession_xp_reward: 48
+    craft_seconds: 30
 
   - code: recipe_lead_bar
     display_name_key: recipe.lead_bar
@@ -334,6 +361,7 @@ recipes:
     output_template_code: lead_bar
     output_stack: 1
     profession_xp_reward: 48
+    craft_seconds: 30
 
   - code: recipe_iron_bar
     display_name_key: recipe.iron_bar
@@ -346,6 +374,7 @@ recipes:
     output_template_code: iron_bar
     output_stack: 1
     profession_xp_reward: 48
+    craft_seconds: 35
 
   - code: recipe_tin_bar
     display_name_key: recipe.tin_bar
@@ -358,6 +387,7 @@ recipes:
     output_template_code: tin_bar
     output_stack: 1
     profession_xp_reward: 48
+    craft_seconds: 40
 
   - code: recipe_copper_bar
     display_name_key: recipe.copper_bar
@@ -370,6 +400,7 @@ recipes:
     output_template_code: copper_bar
     output_stack: 1
     profession_xp_reward: 72
+    craft_seconds: 40
 
   - code: recipe_bronze_bar
     display_name_key: recipe.bronze_bar
@@ -382,6 +413,7 @@ recipes:
     output_template_code: bronze_bar
     output_stack: 1
     profession_xp_reward: 72
+    craft_seconds: 45
 
   - code: recipe_zinc_bar
     display_name_key: recipe.zinc_bar
@@ -394,6 +426,7 @@ recipes:
     output_template_code: zinc_bar
     output_stack: 1
     profession_xp_reward: 72
+    craft_seconds: 50
 
   - code: recipe_nickel_bar
     display_name_key: recipe.nickel_bar
@@ -406,6 +439,7 @@ recipes:
     output_template_code: nickel_bar
     output_stack: 1
     profession_xp_reward: 104
+    craft_seconds: 55
 
   - code: recipe_chromium_bar
     display_name_key: recipe.chromium_bar
@@ -418,6 +452,7 @@ recipes:
     output_template_code: chromium_bar
     output_stack: 1
     profession_xp_reward: 104
+    craft_seconds: 60
 
   - code: recipe_cobalt_bar
     display_name_key: recipe.cobalt_bar
@@ -430,6 +465,7 @@ recipes:
     output_template_code: cobalt_bar
     output_stack: 1
     profession_xp_reward: 104
+    craft_seconds: 65
 
   - code: recipe_silver_bar
     display_name_key: recipe.silver_bar
@@ -442,6 +478,7 @@ recipes:
     output_template_code: silver_bar
     output_stack: 1
     profession_xp_reward: 104
+    craft_seconds: 70
 
   - code: recipe_gold_bar
     display_name_key: recipe.gold_bar
@@ -454,6 +491,7 @@ recipes:
     output_template_code: gold_bar
     output_stack: 1
     profession_xp_reward: 104
+    craft_seconds: 75
 
   - code: recipe_electrum_bar
     display_name_key: recipe.electrum_bar
@@ -466,6 +504,7 @@ recipes:
     output_template_code: electrum_bar
     output_stack: 1
     profession_xp_reward: 216
+    craft_seconds: 80
 
   - code: recipe_tungsten_bar
     display_name_key: recipe.tungsten_bar
@@ -478,6 +517,7 @@ recipes:
     output_template_code: tungsten_bar
     output_stack: 1
     profession_xp_reward: 216
+    craft_seconds: 85
 
   - code: recipe_titanium_bar
     display_name_key: recipe.titanium_bar
@@ -490,6 +530,7 @@ recipes:
     output_template_code: titanium_bar
     output_stack: 1
     profession_xp_reward: 216
+    craft_seconds: 95
 
   - code: recipe_palladium_bar
     display_name_key: recipe.palladium_bar
@@ -502,6 +543,7 @@ recipes:
     output_template_code: palladium_bar
     output_stack: 1
     profession_xp_reward: 300
+    craft_seconds: 100
 
   - code: recipe_rhodium_bar
     display_name_key: recipe.rhodium_bar
@@ -514,6 +556,7 @@ recipes:
     output_template_code: rhodium_bar
     output_stack: 1
     profession_xp_reward: 300
+    craft_seconds: 110
 
   - code: recipe_platinum_bar
     display_name_key: recipe.platinum_bar
@@ -526,6 +569,7 @@ recipes:
     output_template_code: platinum_bar
     output_stack: 1
     profession_xp_reward: 300
+    craft_seconds: 115
 
   - code: recipe_osmium_bar
     display_name_key: recipe.osmium_bar
@@ -538,6 +582,7 @@ recipes:
     output_template_code: osmium_bar
     output_stack: 1
     profession_xp_reward: 544
+    craft_seconds: 125
 
   - code: recipe_iridium_bar
     display_name_key: recipe.iridium_bar
@@ -550,6 +595,7 @@ recipes:
     output_template_code: iridium_bar
     output_stack: 1
     profession_xp_reward: 544
+    craft_seconds: 130
 
   - code: recipe_starsteel_bar
     display_name_key: recipe.starsteel_bar
@@ -562,6 +608,7 @@ recipes:
     output_template_code: starsteel_bar
     output_stack: 1
     profession_xp_reward: 544
+    craft_seconds: 140
 
   - code: recipe_mythril_bar
     display_name_key: recipe.mythril_bar
@@ -574,6 +621,7 @@ recipes:
     output_template_code: mythril_bar
     output_stack: 1
     profession_xp_reward: 900
+    craft_seconds: 145
 
   - code: recipe_orichalcum_bar
     display_name_key: recipe.orichalcum_bar
@@ -586,6 +634,7 @@ recipes:
     output_template_code: orichalcum_bar
     output_stack: 1
     profession_xp_reward: 900
+    craft_seconds: 155
 
   - code: recipe_adamantite_bar
     display_name_key: recipe.adamantite_bar
@@ -598,3 +647,4 @@ recipes:
     output_template_code: adamantite_bar
     output_stack: 1
     profession_xp_reward: 900
+    craft_seconds: 160

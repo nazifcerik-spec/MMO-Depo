@@ -59,6 +59,8 @@ type SpawnView struct {
 	EndsAt         time.Time  `json:"ends_at"`
 	State          string     `json:"state"`
 	Tiers          []Tier     `json:"tiers"`
+	AFKCapTier     int16      `json:"afk_cap_tier"` // AFK score stops at this tier's min_score (0 = no cap)
+	PowerNow       int        `json:"power_now"`    // the character's power if it enlisted now
 	Enlisted       bool       `json:"enlisted"`
 	MyPower        *int       `json:"my_power,omitempty"`
 	MyScore        *int64     `json:"my_score,omitempty"`
@@ -72,9 +74,13 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) ([]SpawnVie
 	if err := s.chars.Owns(ctx, char, account); err != nil {
 		return nil, err
 	}
+	power := 0 // shown in the event's explanation
+	if sheet, err := s.chars.Sheet(ctx, char, account); err == nil {
+		power = Power(sheet.Derived.Attack, sheet.Derived.Defense, sheet.Resources.HPMax)
+	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT sp.id, t.code, t.kind, t.display_name_key, t.min_level, t.region_code, t.hp_base,
-		       sp.total_score, sp.starts_at, sp.ends_at, sp.state, t.tiers,
+		       sp.total_score, sp.starts_at, sp.ends_at, sp.state, t.tiers, t.afk_cap_tier,
 		       a.character_id IS NOT NULL, a.power, a.contribution_score, a.reward_tier, a.rewarded_at
 		  FROM worldevent.spawn sp
 		  JOIN content.world_event_template t ON t.code = sp.template_code
@@ -89,7 +95,7 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) ([]SpawnVie
 		var tiers []byte
 		var score *int64
 		err := r.Scan(&v.ID, &v.TemplateCode, &v.Kind, &v.DisplayNameKey, &v.MinLevel, &v.RegionCode, &v.GoalScore,
-			&v.TotalScore, &v.StartsAt, &v.EndsAt, &v.State, &tiers,
+			&v.TotalScore, &v.StartsAt, &v.EndsAt, &v.State, &tiers, &v.AFKCapTier,
 			&v.Enlisted, &v.MyPower, &score, &v.MyTier, &v.RewardedAt)
 		if err == nil {
 			err = json.Unmarshal(tiers, &v.Tiers)
@@ -97,6 +103,7 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) ([]SpawnVie
 		if v.Enlisted {
 			v.MyScore = score
 		}
+		v.PowerNow = power
 		return v, err
 	})
 }

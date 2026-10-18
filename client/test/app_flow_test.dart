@@ -715,11 +715,25 @@ void main() {
 
     final crafts = find.widgetWithText(FilledButton, 'Craft');
     expect(tester.widget<FilledButton>(crafts.at(1)).onPressed, isNull, reason: 'skill 1 < min 3');
+    expect(find.text('30s each'), findsOneWidget);
+    expect(find.text('1m each'), findsOneWidget, reason: 'no time from the server: 60 s');
     await tester.tap(crafts.first);
     await tester.pumpAndSettle();
-    expect(find.text('Crafted Potion Hp Small ×1 · Alchemy is now level 2'), findsOneWidget);
-    expect(find.text('Linseed 1/2'), findsOneWidget, reason: 'materials reload after crafting');
+    // A timed job (DD-264): materials taken, nothing made yet, one job at a time.
+    expect(find.text('Crafting Potion Hp Small ×1'), findsOneWidget);
+    expect(find.text('0/1 ready'), findsOneWidget);
+    expect(find.text('Linseed 1/2'), findsOneWidget, reason: 'materials reload after starting');
     expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Craft').first).onPressed, isNull);
+
+    // The job is over server-side: collect without a question.
+    be.craftJob!['started_at'] = DateTime.now().toUtc().subtract(const Duration(minutes: 1)).toIso8601String();
+    be.craftJob!['ready_at'] = DateTime.now().toUtc().toIso8601String();
+    await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Collect'));
+    await tester.pumpAndSettle();
+    expect(find.text('Crafted Potion Hp Small ×1 · Alchemy is now level 2'), findsOneWidget);
+    expect(find.text('Crafting Potion Hp Small ×1'), findsNothing);
   });
 
   testWidgets('shop: affordable buy with price guard, buy back a sold item', (tester) async {
@@ -1280,11 +1294,24 @@ void main() {
     await tester.pump();
     await tester.tap(find.text('max 3'));
     await tester.pump();
+    expect(find.text('Total 1m'), findsOneWidget);
     await tester.tap(find.text('Craft ×3'));
     await tester.pumpAndSettle();
     expect(be.lastCraftCount, 3);
-    expect(find.textContaining('Potion Hp Small ×3'), findsOneWidget);
+    expect(find.text('Crafting Potion Hp Small ×3'), findsOneWidget);
     expect(find.text('Linseed 1/2'), findsOneWidget);
+
+    // Collecting early asks first and refunds the unfinished units.
+    await tester.tap(find.widgetWithText(FilledButton, 'Collect'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('The 0 finished items are delivered; the materials and gold of the other 3 come back.'),
+      findsOneWidget,
+    );
+    await tester.tap(find.widgetWithText(FilledButton, 'Collect').last);
+    await tester.pumpAndSettle();
+    expect(find.text('0 made, 3 refunded'), findsOneWidget);
+    expect(find.text('Linseed 7/2'), findsOneWidget);
   });
 
   testWidgets('notifications: badge, read one / all, live bump, settings keep quiet hours', (tester) async {
@@ -1422,6 +1449,66 @@ void main() {
 
     await tester.scrollUntilVisible(find.text('Your score 1800 · reward tier 2'), 200, scrollable: _list);
     expect(find.textContaining('World boss · Victory'), findsOneWidget);
+  });
+
+  testWidgets('one action at a time: a busy character is told what to finish first', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.busyWith = 'crafting';
+    await tester.tap(find.byIcon(Icons.explore_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Start hunt'));
+    await tester.pumpAndSettle();
+    expect(find.text('Finish what your character is doing first: crafting.'), findsOneWidget);
+    expect(be.activeHunt, isNull);
+  });
+
+  testWidgets('events: tapping one explains how to take part and what it pays', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    final now = DateTime.now().toUtc();
+    be.worldEvents.add({
+      'id': 's-1',
+      'template_code': 'greenwood_incursion',
+      'kind': 'invasion',
+      'min_level': 1,
+      'region_code': 'greenwood',
+      'goal_score': 500000,
+      'total_score': 0,
+      'starts_at': now.subtract(const Duration(minutes: 10)).toIso8601String(),
+      'ends_at': now.add(const Duration(minutes: 50)).toIso8601String(),
+      'state': 'active',
+      'tiers': [
+        {'min_score': 1000, 'gold_copper': 500, 'event_tokens': 5},
+        {'min_score': 3000, 'gold_copper': 2000, 'event_tokens': 10},
+        {'min_score': 6000, 'gold_copper': 5000, 'event_tokens': 20},
+      ],
+      'afk_cap_tier': 2,
+      'power_now': 100,
+      'enlisted': false,
+    });
+    await tester.tap(find.text('Adventure'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Events'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Greenwood Incursion'));
+    await tester.pumpAndSettle();
+    expect(find.text('How to take part'), findsOneWidget);
+    expect(find.text('Be in Greenwood when you enlist.'), findsOneWidget);
+    expect(find.textContaining('Yours now: 100.'), findsOneWidget);
+    expect(find.textContaining('It stops at tier 2.'), findsOneWidget);
+    final sheet = find.byType(Scrollable).last; // the sheet sits on top
+    await tester.scrollUntilVisible(find.text('Join now: about 3000 points → tier 2'), 200, scrollable: sheet);
+    expect(find.text('Tier 3 · 6000+ points'), findsOneWidget);
+    expect(find.text('+20 event tokens'), findsOneWidget);
+    // 100 power × ~50 minutes = 5000, capped at tier 2's 3000.
+    expect(find.text('Join now: about 3000 points → tier 2'), findsOneWidget);
+    Navigator.of(tester.element(find.text('Join now: about 3000 points → tier 2'))).pop();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Harvest Festival 2026'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('claim 15 event tokens once a day'), findsOneWidget);
+    expect(find.text('Tokens stay on your account (balance: 0).'), findsOneWidget);
   });
 
   testWidgets('quests: accept, live completion badge, turn in with reward + level up, abandon daily', (tester) async {

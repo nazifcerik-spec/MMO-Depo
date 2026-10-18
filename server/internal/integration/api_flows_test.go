@@ -33,22 +33,44 @@ func TestHTTPSuccessFlows(t *testing.T) {
 	// Crafting: learn, gather the inputs, craft, profession XP.
 	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "alchemy"})
 	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "alchemy"}) // idempotent
-	w.give(me, "common_grass", 4)
-	crafted := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"})
-	require.NotEmpty(t, crafted)
-	// Batch (DD-245): checked for the whole batch up front.
-	w.give(me, "common_grass", 6) // 1 left + 6 = 7: two crafts, not three
+	// A timed job (DD-264), checked for the whole job up front.
+	w.give(me, "common_grass", 7) // two units, not three
 	p.fail("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small", "count": 3}, 409, "E_INSUFFICIENT_MATERIALS")
-	batch := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small", "count": 2})
-	require.Equal(t, 2.0, batch["count"])
-	require.Equal(t, 1.0, p.stackOf("common_grass"))
+	job := p.ok("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small", "count": 2})["job"].(map[string]any)
+	require.Equal(t, 2.0, job["count"])
+	require.Equal(t, 0.0, job["done"])
+	require.Equal(t, 1.0, p.stackOf("common_grass"), "inputs taken at start")
+	require.Equal(t, job["id"], p.ok("GET", p.path("/craft/active"), nil)["job"].(map[string]any)["id"])
+	w.give(me, "common_grass", 3)
+	p.fail("POST", p.path("/craft"), map[string]any{"recipe_code": "recipe_potion_hp_small"}, 409, "E_CRAFT_ACTIVE")
+
+	// One action at a time (DD-263): crafting blocks a hunt and gathering.
+	busy := func(path string, body map[string]any) {
+		t.Helper()
+		code, out := p.call("POST", p.path(path), body)
+		require.Equal(t, 409, code, "%s %v", path, out)
+		e := out["error"].(map[string]any)
+		require.Equal(t, "E_CHARACTER_BUSY", e["code"])
+		require.Equal(t, "crafting", e["field"])
+	}
+	busy("/hunt", map[string]any{"mob_code": "young_boar", "duration_seconds": 600})
+	busy("/activity", map[string]any{"kind": "mining", "duration_seconds": 3600})
+
+	_, err := w.p.Exec(w.ctx, `UPDATE crafting.job SET started_at = started_at - interval '1 hour',
+		ready_at = ready_at - interval '1 hour' WHERE id = $1`, job["id"])
+	require.NoError(t, err)
+	made := p.ok("POST", p.path("/craft/"+job["id"].(string)+"/collect"), map[string]any{})
+	require.Equal(t, 2.0, made["made"])
+	require.Equal(t, 0.0, made["refunded"])
+	require.Equal(t, 2.0, p.stackOf("potion_hp_small"))
+	require.Nil(t, p.ok("GET", p.path("/craft/active"), nil)["job"])
 	profs := items(p.ok("GET", p.path("/professions"), nil), "professions")
 	require.Positive(t, profs[0]["xp"].(float64)+profs[0]["level"].(float64)-1, "%v", profs)
 	potion := p.bagItem("potion_hp_small")
 	require.NotEmpty(t, potion)
 
 	// Consumables: heal when wounded, not during a fight, not for gear.
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET hp_current = 5, hp_updated_at = now() WHERE id = $1`, id)
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET hp_current = 5, hp_updated_at = now() WHERE id = $1`, id)
 	require.NoError(t, err)
 	used := p.ok("POST", p.path("/items/"+potion+"/use"), map[string]any{})
 	require.Greater(t, used["hp_current"].(float64), 5.0, "%v", used)

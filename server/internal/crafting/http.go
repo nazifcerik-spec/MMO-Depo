@@ -5,10 +5,12 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
@@ -148,15 +150,10 @@ type craftBody struct {
 	Count      int    `json:"count,omitempty"` // default 1 (DD-245)
 }
 
+// Craft starts a timed job (DD-264): 201 with the job.
 func (h *Handler) Craft(w http.ResponseWriter, r *http.Request) {
-	acct := httpctx.AccountID(r.Context())
-	if acct == uuid.Nil {
-		apierr.Write(w, r, http.StatusUnauthorized, "E_UNAUTHENTICATED", "auth required")
-		return
-	}
-	charID, err := uuid.Parse(chi.URLParam(r, "id"))
-	if err != nil {
-		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+	acct, charID, ok := ids(w, r)
+	if !ok {
 		return
 	}
 	var body craftBody
@@ -167,12 +164,79 @@ func (h *Handler) Craft(w http.ResponseWriter, r *http.Request) {
 	if body.Count == 0 {
 		body.Count = 1
 	}
-	res, err := h.svc.CraftMany(r.Context(), charID, acct, body.RecipeCode, body.Count)
+	job, err := h.svc.Start(r.Context(), charID, acct, body.RecipeCode, body.Count)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusCreated, map[string]any{"job": jobView(job, h.svc.cfg.Now())})
+}
+
+// ActiveJob is the running job, or {"job": null}.
+func (h *Handler) ActiveJob(w http.ResponseWriter, r *http.Request) {
+	acct, charID, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	job, err := h.svc.Active(r.Context(), charID, acct)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	var view map[string]any
+	if job != nil {
+		view = jobView(job, h.svc.cfg.Now())
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"job": view})
+}
+
+// Collect ends a job: finished units delivered, the rest refunded.
+func (h *Handler) Collect(w http.ResponseWriter, r *http.Request) {
+	acct, charID, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	jobID, err := uuid.Parse(chi.URLParam(r, "job_id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", "invalid job id")
+		return
+	}
+	res, err := h.svc.Collect(r.Context(), charID, acct, jobID)
 	if err != nil {
 		writeErr(w, r, err)
 		return
 	}
 	apierr.WriteJSON(w, http.StatusOK, res)
+}
+
+func jobView(j *Job, now time.Time) map[string]any {
+	return map[string]any{
+		"id":                   j.ID.String(),
+		"recipe_code":          j.Recipe.Code,
+		"profession_code":      j.Recipe.ProfessionCode,
+		"output_template_code": j.Recipe.OutputTemplateCode,
+		"output_stack":         j.Recipe.OutputStack,
+		"count":                j.Count,
+		"unit_seconds":         j.UnitSeconds,
+		"started_at":           j.StartedAt,
+		"ready_at":             j.ReadyAt,
+		"done":                 j.Done(now),
+		"state":                j.State,
+	}
+}
+
+func ids(w http.ResponseWriter, r *http.Request) (acct, char uuid.UUID, ok bool) {
+	acct = httpctx.AccountID(r.Context())
+	if acct == uuid.Nil {
+		apierr.Write(w, r, http.StatusUnauthorized, "E_UNAUTHENTICATED", "auth required")
+		return acct, char, false
+	}
+	char, err := uuid.Parse(chi.URLParam(r, "id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return acct, char, false
+	}
+	return acct, char, true
 }
 
 // --- shared -----------------------------------------------------------------
@@ -195,6 +259,7 @@ func recipeRow(r Recipe) map[string]any {
 		"output_template_code": r.OutputTemplateCode,
 		"output_stack":         r.OutputStack,
 		"profession_xp_reward": r.ProfessionXPReward,
+		"craft_seconds":        r.CraftSeconds,
 	}
 }
 
@@ -220,6 +285,9 @@ func outputRow(t item.Template) map[string]any {
 }
 
 func writeErr(w http.ResponseWriter, r *http.Request, err error) {
+	if action.Write(w, r, err) {
+		return
+	}
 	switch {
 	case errors.Is(err, ErrNotFound):
 		apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "not found")
@@ -235,6 +303,10 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_SKILL_TOO_LOW", "skill level below recipe min_skill")
 	case errors.Is(err, ErrInsufficientGold):
 		apierr.Write(w, r, http.StatusConflict, "E_INSUFFICIENT_GOLD", "not enough gold")
+	case errors.Is(err, ErrJobActive):
+		apierr.Write(w, r, http.StatusConflict, "E_CRAFT_ACTIVE", "a crafting job is already running")
+	case errors.Is(err, ErrJobTooLong):
+		apierr.Write(w, r, http.StatusBadRequest, "E_CRAFT_TOO_LONG", "job longer than 6 hours")
 	case errors.Is(err, ErrValidation):
 		apierr.Write(w, r, http.StatusBadRequest, "E_VALIDATION", "invalid input")
 	case errors.Is(err, inventory.ErrBagFull):

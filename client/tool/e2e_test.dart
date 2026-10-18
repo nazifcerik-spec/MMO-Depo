@@ -173,6 +173,8 @@ void main() {
     await adv.travel(open.first.region.code);
     final moving = await adv.location();
     expect(moving.travel, isNotNull);
+    // One action at a time (DD-263): travelling blocks a hunt.
+    await expectLater(adv.startHunt('young_boar', const Duration(hours: 1)), apiError('E_CHARACTER_BUSY'));
     await adv.cancelTravel(moving.travel!.id);
     expect((await adv.location()).travel, isNull);
   });

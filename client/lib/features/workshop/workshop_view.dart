@@ -98,6 +98,7 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
   List<String> _professions = const [];
   List<Recipe> _recipes = const [];
   Map<String, Skill> _skills = const {};
+  CraftJob? _job;
 
   @override
   void initState() {
@@ -114,10 +115,21 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
 
   @override
   Future<void> fetch() async {
-    final r = await Future.wait<Object>([widget.repo.professions(), widget.repo.recipes(), widget.repo.skills()]);
+    final r = await Future.wait<Object>([
+      widget.repo.professions(),
+      widget.repo.recipes(),
+      widget.repo.skills(),
+      widget.repo.activeCraft().then<Object>((j) => j ?? false),
+    ]);
     _professions = r[0] as List<String>;
     _recipes = r[1] as List<Recipe>;
     _skills = r[2] as Map<String, Skill>;
+    _job = r[3] is CraftJob ? r[3] as CraftJob : null;
+  }
+
+  Future<void> _collect(CraftJob job) async {
+    if (!await confirmEarlyCollect(context, job) || !mounted) return;
+    await run(() => collectCraftJob(context, widget.repo, job, widget.dataVersion));
   }
 
   Future<void> _learn(String p) => run(() async {
@@ -137,6 +149,8 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
     final text = Theme.of(context).textTheme;
     return frame(
       () => [
+        if (_job case final job?)
+          CraftJobCard(job: job, onCollect: () => _collect(job), onComplete: () => setState(() {})),
         for (final p in _professions)
           Card(
             margin: const EdgeInsets.only(bottom: Space.md),

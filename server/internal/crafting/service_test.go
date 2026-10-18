@@ -18,10 +18,11 @@ import (
 type memRepo struct {
 	rows map[string]*CharacterProfession // "charID|profession" → row
 	logs int
+	jobs map[uuid.UUID]*Job
 }
 
 func newMemRepo() *memRepo {
-	return &memRepo{rows: map[string]*CharacterProfession{}}
+	return &memRepo{rows: map[string]*CharacterProfession{}, jobs: map[uuid.UUID]*Job{}}
 }
 
 func key(id uuid.UUID, code string) string { return id.String() + "|" + code }
@@ -80,6 +81,51 @@ func (m *memRepo) InsertCraftLog(_ context.Context, _ uuid.UUID, _ string, _ *uu
 	return nil
 }
 
+func (m *memRepo) CreateJob(_ context.Context, j *Job) error {
+	for _, x := range m.jobs {
+		if x.CharacterID == j.CharacterID && x.State == JobActive {
+			return ErrJobActive
+		}
+	}
+	c := *j
+	m.jobs[j.ID] = &c
+	return nil
+}
+
+func (m *memRepo) ActiveJob(_ context.Context, id uuid.UUID) (*Job, error) {
+	for _, x := range m.jobs {
+		if x.CharacterID == id && x.State == JobActive {
+			c := *x
+			return &c, nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (m *memRepo) GetJob(_ context.Context, id uuid.UUID) (*Job, error) {
+	if x, ok := m.jobs[id]; ok {
+		c := *x
+		return &c, nil
+	}
+	return nil, ErrNotFound
+}
+
+func (m *memRepo) DeleteJob(_ context.Context, id uuid.UUID) error { delete(m.jobs, id); return nil }
+
+func (m *memRepo) FinishJob(_ context.Context, id uuid.UUID, _ int, _ time.Time) (bool, error) {
+	x, ok := m.jobs[id]
+	if !ok || x.State != JobActive {
+		return false, nil
+	}
+	x.State = JobCollected
+	return true, nil
+}
+
+func (m *memRepo) SaveJobResult(_ context.Context, id uuid.UUID, result []byte) error {
+	m.jobs[id].Result = result
+	return nil
+}
+
 type fakeCatalog struct{ inner *Catalog }
 
 func (f *fakeCatalog) Catalog() *Catalog { return f.inner }
@@ -111,7 +157,7 @@ func (f *fakeInv) HasRoom(context.Context, uuid.UUID, string, int32) (bool, erro
 }
 
 func (f *fakeInv) ConsumeAll(_ context.Context, _ uuid.UUID, needs []inventory.Need) error {
-	if f.failAt > 0 && len(f.calls) >= f.failAt {
+	if f.failAt < 0 || (f.failAt > 0 && len(f.calls) >= f.failAt) {
 		return inventory.ErrInsufficient
 	}
 	for _, n := range needs {
@@ -122,6 +168,7 @@ func (f *fakeInv) ConsumeAll(_ context.Context, _ uuid.UUID, needs []inventory.N
 
 type fakeItemMinter struct {
 	lastMint *item.Instance
+	minted   map[string]int32
 }
 
 func (f *fakeItemMinter) MintExact(_ context.Context, ownerID uuid.UUID, tmpl string, qty int32, srcKind string, srcRef uuid.UUID) (*item.Instance, error) {
@@ -130,6 +177,10 @@ func (f *fakeItemMinter) MintExact(_ context.Context, ownerID uuid.UUID, tmpl st
 		StackQuantity: qty, Rarity: "common",
 	}
 	f.lastMint = inst
+	if f.minted == nil {
+		f.minted = map[string]int32{}
+	}
+	f.minted[tmpl] += qty
 	return inst, nil
 }
 
@@ -147,7 +198,7 @@ func newTestSvc(t *testing.T) (*Service, *memRepo, *fakeInv, *fakeItemMinter) {
 			{Code: "mining", DisplayNameKey: "p.m", MaxLevel: 100, Kind: KindGathering},
 		},
 		[]Recipe{{
-			Code: "recipe_potion", ProfessionCode: "alchemy", MinSkill: 1,
+			Code: "recipe_potion", ProfessionCode: "alchemy", MinSkill: 1, CraftSeconds: 30,
 			Inputs:             []RecipeInput{{TemplateCode: "linseed", Quantity: 2}},
 			GoldCostCopper:     0, // skip ledger in tests
 			OutputTemplateCode: "potion_hp_small", OutputStack: 1, ProfessionXPReward: 100,
@@ -155,6 +206,10 @@ func newTestSvc(t *testing.T) (*Service, *memRepo, *fakeInv, *fakeItemMinter) {
 			Code: "recipe_forge", ProfessionCode: "alchemy", MinSkill: 10, // above starting level
 			Inputs:             []RecipeInput{{TemplateCode: "iron_ore", Quantity: 3}},
 			OutputTemplateCode: "sword_iron", OutputStack: 1, ProfessionXPReward: 40,
+		}, {
+			Code: "recipe_slow", ProfessionCode: "alchemy", MinSkill: 1, CraftSeconds: 4 * 3600,
+			Inputs:             []RecipeInput{{TemplateCode: "linseed", Quantity: 1}},
+			OutputTemplateCode: "potion_hp_small", OutputStack: 1,
 		}},
 	)
 	repo := newMemRepo()
@@ -163,9 +218,14 @@ func newTestSvc(t *testing.T) (*Service, *memRepo, *fakeInv, *fakeItemMinter) {
 	svc := NewService(repo, &fakeCatalog{cat}, inv, minter,
 		economy.NewMemoryTxnService(map[string]economy.Currency{}),
 		fakeOwner{},
-		DefaultServiceConfig(), nil)
+		ServiceConfig{Now: func() time.Time { return clock }}, nil)
+	clock = now
 	return svc, repo, inv, minter
 }
+
+// now is the tests' start time; clock is what the service reads.
+var now = time.Date(2026, 10, 18, 12, 0, 0, 0, time.UTC)
+var clock = now
 
 func TestLearn_IdempotentReturnsRowUnchanged(t *testing.T) {
 	svc, _, _, _ := newTestSvc(t)
@@ -185,115 +245,93 @@ func TestLearn_GatheringProfessionIsNotLearnable(t *testing.T) {
 	require.ErrorIs(t, err, ErrUnknownProfession, "gathering levels come from activities")
 }
 
-func TestCraftMany_Batch(t *testing.T) {
+// learned starts a character with alchemy learned.
+func learned(t *testing.T, svc *Service) (uuid.UUID, uuid.UUID) {
+	t.Helper()
+	charID, acct := uuid.New(), uuid.New()
+	_, err := svc.Learn(context.Background(), charID, acct, "alchemy")
+	require.NoError(t, err)
+	return charID, acct
+}
+
+func TestStart_ValidatesBeforeSpending(t *testing.T) {
 	svc, _, inv, _ := newTestSvc(t)
 	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
+	charID, acct := learned(t, svc)
 
-	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 0)
+	_, err := svc.Start(ctx, charID, acct, "recipe_potion", 0)
 	require.ErrorIs(t, err, ErrValidation)
-	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", MaxCraftCount+1)
+	_, err = svc.Start(ctx, charID, acct, "recipe_potion", MaxCraftCount+1)
 	require.ErrorIs(t, err, ErrValidation)
+	_, err = svc.Start(ctx, charID, acct, "recipe_ghost", 1)
+	require.ErrorIs(t, err, ErrUnknownRecipe)
+	_, err = svc.Start(ctx, charID, acct, "recipe_forge", 1) // min_skill 10 vs level 1
+	require.ErrorIs(t, err, ErrSkillTooLow)
+	_, err = svc.Start(ctx, uuid.New(), acct, "recipe_potion", 1)
+	require.ErrorIs(t, err, ErrProfessionNotLearned)
+	_, err = svc.Start(ctx, charID, acct, "recipe_slow", 2) // 2 × 4 h > 6 h
+	require.ErrorIs(t, err, ErrJobTooLong)
 
-	res, err := svc.CraftMany(ctx, charID, acct, "recipe_potion", 3)
-	require.NoError(t, err)
-	require.Equal(t, 3, res.Count)
-	require.Equal(t, int32(3), res.OutputStack)
-	require.Equal(t, int32(300), res.XPGained)
-	require.True(t, res.LeveledUp)
-	require.Len(t, inv.calls, 3)
-
-	// Not enough for the whole batch: nothing is made.
-	inv.calls, inv.have = nil, 5 // 2 per craft → 2 crafts possible, 3 asked
-	_, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 3)
+	inv.have = 5 // 2 per unit: 2 units possible, 3 asked
+	_, err = svc.Start(ctx, charID, acct, "recipe_potion", 3)
 	require.ErrorIs(t, err, inventory.ErrInsufficient)
-	require.Empty(t, inv.calls)
-
-	// A craft failing mid-batch stops it and reports what was made.
-	inv.have, inv.failAt = 0, 2
-	res, err = svc.CraftMany(ctx, charID, acct, "recipe_potion", 5)
-	require.NoError(t, err)
-	require.Equal(t, 2, res.Count)
-}
-
-func TestCraft_FullBagRefusesBeforeSpending(t *testing.T) {
-	svc, _, inv, minter := newTestSvc(t)
-	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
-	inv.full = true
-	_, err = svc.Craft(ctx, charID, acct, "recipe_potion")
+	inv.have, inv.full = 0, true
+	_, err = svc.Start(ctx, charID, acct, "recipe_potion", 1)
 	require.ErrorIs(t, err, inventory.ErrBagFull)
 	require.Empty(t, inv.calls, "nothing consumed")
-	require.Nil(t, minter.lastMint)
 }
 
-func TestCraft_HappyPathConsumesInputsAndGrantsXP(t *testing.T) {
+func TestJob_CollectDeliversFinishedAndRefundsTheRest(t *testing.T) {
 	svc, repo, inv, minter := newTestSvc(t)
 	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
+	charID, acct := learned(t, svc)
 
-	res, err := svc.Craft(ctx, charID, acct, "recipe_potion")
+	job, err := svc.Start(ctx, charID, acct, "recipe_potion", 4) // 30 s each
 	require.NoError(t, err)
-	require.Equal(t, "potion_hp_small", res.OutputTemplateCode)
-	require.Equal(t, int32(1), res.OutputStack)
-	require.NotZero(t, res.OutputInstanceID)
-	require.Equal(t, int32(100), res.XPGained)
-	require.True(t, res.LeveledUp, "100 xp at level 1 crosses the 64 threshold, not 64+67")
-	require.Equal(t, int16(2), res.SkillAfter)
+	require.Equal(t, now.Add(2*time.Minute), job.ReadyAt)
+	require.Equal(t, []consumeCall{{Template: "linseed", Qty: 8}}, inv.calls, "the whole job's inputs at start")
+	_, err = svc.Start(ctx, charID, acct, "recipe_potion", 1)
+	require.ErrorIs(t, err, ErrJobActive)
+	active, err := svc.Active(ctx, charID, acct)
+	require.NoError(t, err)
+	require.Equal(t, job.ID, active.ID)
 
-	require.Equal(t, []consumeCall{{Template: "linseed", Qty: 2}}, inv.calls)
-	require.NotNil(t, minter.lastMint)
-	require.Equal(t, 1, repo.logs, "audit log written")
+	clock = now.Add(65 * time.Second) // two units done
+	require.Equal(t, 2, job.Done(clock))
+	res, err := svc.Collect(ctx, charID, acct, job.ID)
+	require.NoError(t, err)
+	require.Equal(t, 2, res.Made)
+	require.Equal(t, 2, res.Refunded)
+	require.Equal(t, int32(2), res.OutputStack)
+	require.Equal(t, int32(200), res.XPGained)
+	require.True(t, res.LeveledUp)
+	require.Equal(t, int16(1), res.SkillBefore)
+	require.Equal(t, 1, repo.logs)
+	require.Equal(t, map[string]int32{"potion_hp_small": 2, "linseed": 4}, minter.minted, "two potions; four linseed back")
+
+	again, err := svc.Collect(ctx, charID, acct, job.ID)
+	require.NoError(t, err)
+	require.True(t, again.Replayed)
+	require.Equal(t, 2, again.Made)
+	require.Equal(t, int32(2), minter.minted["potion_hp_small"], "collected once")
+	idle, err := svc.Active(ctx, charID, acct)
+	require.NoError(t, err)
+	require.Nil(t, idle)
+
+	_, err = svc.Collect(ctx, uuid.New(), acct, job.ID)
+	require.ErrorIs(t, err, ErrNotFound, "someone else's job")
 }
 
-func TestCraft_RefusesUnlearnedProfession(t *testing.T) {
-	svc, _, _, _ := newTestSvc(t)
+func TestJob_ConsumeRaceUndoesTheStart(t *testing.T) {
+	svc, repo, inv, _ := newTestSvc(t)
 	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Craft(ctx, charID, acct, "recipe_potion")
-	require.ErrorIs(t, err, ErrProfessionNotLearned)
-}
-
-func TestCraft_RefusesLowSkill(t *testing.T) {
-	svc, _, _, _ := newTestSvc(t)
-	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
-	_, err = svc.Craft(ctx, charID, acct, "recipe_forge") // min_skill 10 vs level 1
-	require.ErrorIs(t, err, ErrSkillTooLow)
-}
-
-func TestCraft_RefusesUnknownRecipe(t *testing.T) {
-	svc, _, _, _ := newTestSvc(t)
-	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
-	_, err = svc.Craft(ctx, charID, acct, "recipe_ghost")
-	require.ErrorIs(t, err, ErrUnknownRecipe)
-}
-
-func TestCraft_InventoryShortageBubblesUpBeforeMint(t *testing.T) {
-	svc, _, inv, minter := newTestSvc(t)
-	ctx := context.Background()
-	charID, acct := uuid.New(), uuid.New()
-	_, err := svc.Learn(ctx, charID, acct, "alchemy")
-	require.NoError(t, err)
-	inv.shortage = map[string]bool{"linseed": true}
-
-	_, err = svc.Craft(ctx, charID, acct, "recipe_potion")
+	charID, acct := learned(t, svc)
+	inv.failAt = -1
+	_, err := svc.Start(ctx, charID, acct, "recipe_potion", 1)
 	require.ErrorIs(t, err, inventory.ErrInsufficient)
-	require.Nil(t, minter.lastMint, "mint must not run when inputs failed")
-	require.Empty(t, inv.calls, "the pre-check stops before anything is consumed (or charged)")
+	require.Empty(t, repo.jobs, "the job row is gone")
+	require.Equal(t, 3, (&Job{Count: 3}).Done(now), "no unit time: all done")
 }
-
 func TestProfessionXPToNext_MonotonicByLevel(t *testing.T) {
 	require.Equal(t, int32(64), ProfessionXPToNext(1))
 	require.Equal(t, int32(67), ProfessionXPToNext(2))

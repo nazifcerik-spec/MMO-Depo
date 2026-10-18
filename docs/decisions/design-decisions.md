@@ -2352,7 +2352,43 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 **Karar:** Baskın, `group_max > 1` olan bir zindan şablonudur (`content/dungeons.yaml`, `group_min`/`group_max`); haftalık kilidi zindanlarla paylaşır (`dungeon.weekly_lockout`, `contract_id` = üye satırı). Altı baskın, her sınıf kilometre taşında bir: Kuzey Kalesi Kuşatması (100), Taçsız Kral'ın Sarayı (300), Ejder Kral'ın İni (600), Zaman Lordu'nun Kulesi (700), Başmeleklerin Düşüşü (850), Düşmüş Tanrı'nın Tahtı (1000); 60 dk, 3–5 kişi. Akış: parti lideri lobi açar → parti üyeleri katılır (her biri için seviye, haftalık kilit, can, çanta kontrolü ve savaş anlık görüntüsünün dondurulması) → lider en az `group_min` kişiyle başlatır (partiden ayrılanlar düşer; sonra kimse giremez/çıkamaz) → süre dolunca her üye kendi ödülünü toplar. Savaş: yeni `combat.Group` — her tur yaşayan her oyuncu sırayla hareket eder; iyileştirme, iyileştirme-zamanla ve kalkan en yaralı müttefike gider (tek kişilik savaşta kendisi; 1 kişilik grup tek kişilik savaşla birebir aynı); mob en yüksek savunmalı oyuncuya (tank) vurur, boss her 3. vuruşta tüm gruba %60 güçte alan saldırısı yapar ve sersemletilemez; düşen oyuncu baskın boyunca düşük kalır. Dalga mobları grup için ×3 can; boss'lar yeni `titan` (Sv ≤300: can ×30, saldırı ×3,2) / `elder_titan` (600+: saldırı ×4,8) arketipi, `raid_boss: true` — av listesinde yok, av başlatmayı reddeder, yalnız baskında boss olabilir (contentpack doğrular). Savaş seed + dondurulmuş anlık görüntülerden deterministik: her üye aynı kaydı görür. Ödül kişisel: her öldürme AFK savaş XP oranı (üyenin seviyesine göre ölçekli) + mobun altını (bölünmez), boss bonusu (zindanın 3 katı), garanti nadir eşya ve 2 garanti ekipman (boss kademesi, `DropLevel` ile karakter seviyesine sınırlı), dalga başına %4 ekipman; kendi zar atışları. Toplama idempotent (ledger `raid-reveal-<üye>`, eşya kaynağı üye satırı, saklı sonuç). Migration 0038 (`raid.run`, `raid.member`, parti başı tek açık lobi, karakter başı tek etkin baskın, `group_min/max`, `raid_boss`). Uçlar: `GET /v1/raids`, `GET/POST /v1/character/{id}/raid`, `POST /v1/character/{id}/raid/{raid_id}/{join|leave|start|reveal}`; lobi değişince partiye WS `raid.changed`. İstemci: Macera → Zindan içinde "Zindanlar | Baskınlar" seçimi.
 **Reason:** Dünya senaryosundaki kilometre taşı baskınları grup savaşı istiyordu; motor tek kişilikti. Ayrı bir şablon/kilit sistemi yerine zindanı genişletmek içerik, doğrulama, ad ve kilit altyapısını yeniden kullanır. Hazır-onay yerine katılma adımı: kimsenin zamanı onu katılmadan bağlanmaz.
 **Alternatives:** 10–25 kişilik lonca baskını (docs/guild/raid.md, Phase 02 — parti tavanı 5, DD-128); lider dağıtımlı ganimet (master loot) — v1 kişisel ganimet; konumsal mekanikler (Phase 03).
-**Consequences:** `TestRaidTargets`: her baskın kendi seviyesinde 10 karışık 5'li grupla ortalama ≥ %70, en kötü grup ≥ %40 temizler; 3 kişi ortalama ≤ %30 (ölçülen ortalamalar: 5'li %94–100, 3'lü %0–26). Baskın boss'unu tek başına avlamak mümkün değil. Bilinen sınırlama v1: baskın sürerken üye başka av/zindan başlatabilir (zindanlar da birbirini engellemiyor).
+**Consequences:** `TestRaidTargets`: her baskın kendi seviyesinde 10 karışık 5'li grupla ortalama ≥ %70, en kötü grup ≥ %40 temizler; 3 kişi ortalama ≤ %30 (ölçülen ortalamalar: 5'li %94–100, 3'lü %0–26). Baskın boss'unu tek başına avlamak mümkün değil. Bilinen sınırlama v1: baskın sürerken üye başka av/zindan başlatabilir (zindanlar da birbirini engellemiyor) — DD-263 ile kapandı.
+**Tarih:** 2026-10-18
+
+---
+
+## DD-262 — Solo zindanlar sınırsız; ödül seviyeye göre
+**Karar:** Solo zindanların haftalık kilidi kalktı: başlatma kilide bakmaz, toplama kilit satırı yazmaz (`dungeon.weekly_lockout` yalnız baskınlarda, DD-261). Ödül avdaki gibi karakter seviyesine göre: öldürme başına AFK savaş XP'si ve boss bonus XP'si `mob_level_xp` bantlarıyla (DD-254), boss bonus altını da aynı çarpanla ölçeklenir (yeni); eşya ve ekipman düşüşü karakter seviyesiyle sınırlı (`DropLevel`, DD-255). Seviye kapısı aynen kalır: `min_level` altındaki karakter zindana giremez, baskında her üye için ayrı kontrol edilir (`E_LEVEL_REQUIREMENT`).
+**Reason:** Kullanıcı isteği: zindan tekrar oynanabilir olsun, ama aşağı seviye içerikte kazanç avdaki gibi düşsün.
+**Alternatives:** Günlük giriş hakkı (yine sınır koyar); bonus altını ölçeklememek (yüksek seviyeli karakter düşük zindanı altın için döndürürdü).
+**Consequences:** Zindan süresi (30–60 dk) ve tek işlem kuralı (DD-263) tekrar hızını sınırlar. `TestHTTPDungeonsUnlimitedAndLevelGated`: aynı hafta iki temizleme, seviye kapısı, baskın üyesi seviye kapısı.
+**Tarih:** 2026-10-18
+
+---
+
+## DD-263 — Tek işlem kuralı
+**Karar:** Karakter aynı anda yalnız bir iş yapar: toplama, av, zindan, baskın (lobiye katılmak dahil, ödül toplanana kadar), yolculuk veya üretim. Kural veritabanında: `character.active_action` görünümü her iş tablosunun etkin satırlarının birleşimi; her iş tablosuna `BEFORE INSERT` tetikleyicisi `character.claim_action(kind)` — `pg_advisory_xact_lock(karakter)` ile eşzamanlı başlatmaları sıraya koyar, başka türde etkin iş varsa SQLSTATE `OT001` (HINT = meşgul tür) fırlatır. Serbest bırakma yok: iş kendi satırı etkin durumdan çıkınca sayılmaz. Yeni `internal/action` (`ErrBusy`, `FromDB`, `Write`) → 409 `E_CHARACTER_BUSY`, `field` = meşgul tür; istemci "Önce karakterinin yaptığı işi bitir: av." der. Dünya etkinliğine kaydolmak iş sayılmaz (yalnız güç anlık görüntüsü).
+**Reason:** Kullanıcı isteği; ayrıca paralel AFK işlerle çift ilerleme açığını kapatır.
+**Alternatives:** Ortak "iş yuvası" tablosu (her bitiş yolunda serbest bırakma gerekir — unutulan bir yol karakteri kilitler); servislerde ön kontrol (yarışta iki iş birden girer).
+**Consequences:** Migration 0039. `TestHTTPOneActionAtATime`: her tür diğerini engeller; dört farklı iş aynı anda başlatılınca tam biri kazanır. Bitmiş ama toplanmamış iş (av, zindan, baskın) de engeller: önce topla.
+**Tarih:** 2026-10-18
+
+---
+
+## DD-264 — Süreli üretim
+**Karar:** Üretim anlık değil, iş: `content/recipes.yaml` `craft_seconds` (birim başı; ergitme 30 sn + beceri×1,5 sn, iksir 30 sn + beceri×3 sn, ekipman (120 sn + beceri×30 sn) × parça çarpanı — göğüs/silah 1,5, bacak 1,2; 30 sn – 10,5 dk). `POST /craft {recipe_code, count}` işin tamamını önden kontrol eder (beceri, malzeme, altın, çanta, toplam ≤ 6 sa), `crafting.job` satırını açar (tek işlem, DD-263; tarif donmuş JSON), altını ve malzemeyi o an alır; ödeyemeyen başlangıç kendini geri alır. `POST /craft/{job_id}/collect` her an: biten birimler basılır ve meslek XP'si verir, bitmeyenlerin altını (`craft-refund-<iş>`) ve malzemesi iade edilir; iş bir kez `collected` olur, sonuç saklanır (tekrar = aynı yanıt). `GET /craft/active`. İstemci: tarifte "Tanesi 30 sn", adet seçicide toplam süre, süren iş kartı (canlı "x/y hazır"), erken toplamada iade onayı; üretim sürerken üret düğmeleri pasif.
+**Reason:** Kullanıcı isteği; üretim de diğer işler gibi zaman ister.
+**Alternatives:** Malzemeyi toplamada almak (iş sırasında satılırsa yarım kalır); iptalde iade yok (100 adetlik iş yanlışlıkla başlarsa kayıp).
+**Consequences:** Meslek XP'si birim başı aynı. Bilinen sınırlama v1: üretim bitince bildirim gönderilmez (istemci ilerlemeyi gösterir).
+**Tarih:** 2026-10-18
+
+---
+
+## DD-265 — Etkinlik açıklaması
+**Karar:** Macera → Etkinlik'te karta dokununca alt pencere: nasıl katılınır (kayıt penceresi + seviye, istila bölgesi, güç formülü ve şu anki güç, puan = güç × dakika ve AFK tavan kademesi, topluluk hedefi → kademe sınırı, ödül kapanışta otomatik, kaydolmak diğer işleri engellemez), kademe ödülleri (puan eşiği, altın, jeton) ve şimdi katılırsa tahmini puan/kademe. Sezonluk etkinlik: günlük jeton ve bakiye. Sunucu etkinlik listesine `afk_cap_tier` ve `power_now` ekler.
+**Reason:** Kullanıcı isteği: oyuncu ne yapması gerektiğini ve ne kazanacağını görsün.
+**Alternatives:** Statik yardım metni (gerçek ödülleri/tavanı göstermez).
+**Consequences:** Tahmin istemcide sunucunun `Contribution` kuralının kopyası, yalnız gösterim.
 **Tarih:** 2026-10-18
 
 ---
