@@ -2,8 +2,8 @@
 
 One picture per animal, shown on the Gather tab when Hunting is chosen.
 Name the file after the animal (the hunting resource's code without
-`_pelt` / `_hide` / `_feather` / `_scale`). Square, transparent, any size —
-it is resized to 128×128 like item art.
+`_pelt` / `_hide` / `_feather` / `_scale`). Square, transparent, 256×256 (larger sources go to the git-ignored
+`client/art_originals/animals/` and are resized).
 
 | File | Resource | Level |
 |---|---|---|

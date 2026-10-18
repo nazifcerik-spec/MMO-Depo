@@ -9,6 +9,7 @@ import 'item_images.dart';
 IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClass, subclass)) {
   ('weapon', _) => Icons.hardware,
   ('armor', _) => Icons.shield_outlined,
+  ('consumable', 'food') => Icons.restaurant_outlined, // cooking (DD-268)
   ('consumable', _) => Icons.local_drink_outlined,
   (_, 'ore') => Icons.landscape_outlined,
   (_, 'bar') => Icons.view_stream_outlined,

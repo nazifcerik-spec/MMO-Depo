@@ -15,7 +15,7 @@ professions:
 
   - code: cooking
     display_name_key: profession.cooking
-    max_level: 60
+    max_level: 100 # dishes up to fishing level 100 (DD-268)
 
   - code: smelting # ore + coal → bar (DD-243)
     display_name_key: profession.smelting

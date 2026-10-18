@@ -648,3 +648,257 @@ recipes:
     output_stack: 1
     profession_xp_reward: 900
     craft_seconds: 160
+
+  # >>> generated: cooking (scripts/gen_cooking.py)
+  - code: recipe_cook_grilled_guppy
+    display_name_key: recipe.cook_grilled_guppy
+    profession_code: cooking
+    min_skill: 1
+    inputs:
+      - { template_code: tiny_guppy, quantity: 2 }
+      - { template_code: common_grass, quantity: 1 }
+      - { template_code: young_sapling, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: food_grilled_guppy
+    output_stack: 2
+    profession_xp_reward: 40
+    craft_seconds: 20
+
+  - code: recipe_cook_sardine_skewer
+    display_name_key: recipe.cook_sardine_skewer
+    profession_code: cooking
+    min_skill: 4
+    inputs:
+      - { template_code: river_sardine, quantity: 2 }
+      - { template_code: dandelion, quantity: 1 }
+      - { template_code: poplar_log, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: food_sardine_skewer
+    output_stack: 2
+    profession_xp_reward: 40
+    craft_seconds: 30
+
+  - code: recipe_cook_minnow_soup
+    display_name_key: recipe.cook_minnow_soup
+    profession_code: cooking
+    min_skill: 6
+    inputs:
+      - { template_code: minnow, quantity: 2 }
+      - { template_code: wild_mint, quantity: 1 }
+      - { template_code: willow_log, quantity: 1 }
+    gold_cost_copper: 2
+    output_template_code: food_minnow_soup
+    output_stack: 2
+    profession_xp_reward: 40
+    craft_seconds: 30
+
+  - code: recipe_cook_pike_fillet
+    display_name_key: recipe.cook_pike_fillet
+    profession_code: cooking
+    min_skill: 9
+    inputs:
+      - { template_code: small_pike, quantity: 2 }
+      - { template_code: chamomile, quantity: 1 }
+      - { template_code: fir_log, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: food_pike_fillet
+    output_stack: 2
+    profession_xp_reward: 60
+    craft_seconds: 40
+
+  - code: recipe_cook_lavender_carp
+    display_name_key: recipe.cook_lavender_carp
+    profession_code: cooking
+    min_skill: 11
+    inputs:
+      - { template_code: common_carp, quantity: 2 }
+      - { template_code: lavender, quantity: 1 }
+      - { template_code: pine_log, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: food_lavender_carp
+    output_stack: 2
+    profession_xp_reward: 60
+    craft_seconds: 40
+
+  - code: recipe_cook_herb_trout
+    display_name_key: recipe.cook_herb_trout
+    profession_code: cooking
+    min_skill: 14
+    inputs:
+      - { template_code: river_trout, quantity: 2 }
+      - { template_code: bitterroot, quantity: 1 }
+      - { template_code: cedar_log, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: food_herb_trout
+    output_stack: 2
+    profession_xp_reward: 60
+    craft_seconds: 50
+
+  - code: recipe_cook_smoked_salmon
+    display_name_key: recipe.cook_smoked_salmon
+    profession_code: cooking
+    min_skill: 16
+    inputs:
+      - { template_code: salmon, quantity: 2 }
+      - { template_code: healing_moss, quantity: 1 }
+      - { template_code: oak_log, quantity: 1 }
+    gold_cost_copper: 5
+    output_template_code: food_smoked_salmon
+    output_stack: 2
+    profession_xp_reward: 60
+    craft_seconds: 50
+
+  - code: recipe_cook_bass_stew
+    display_name_key: recipe.cook_bass_stew
+    profession_code: cooking
+    min_skill: 18
+    inputs:
+      - { template_code: bass, quantity: 2 }
+      - { template_code: marsh_reed, quantity: 1 }
+      - { template_code: beech_log, quantity: 1 }
+    gold_cost_copper: 10
+    output_template_code: food_bass_stew
+    output_stack: 2
+    profession_xp_reward: 90
+    craft_seconds: 55
+
+  - code: recipe_cook_tuna_steak
+    display_name_key: recipe.cook_tuna_steak
+    profession_code: cooking
+    min_skill: 25
+    inputs:
+      - { template_code: bluefin_tuna, quantity: 2 }
+      - { template_code: wild_ginseng, quantity: 1 }
+      - { template_code: teak_log, quantity: 1 }
+    gold_cost_copper: 10
+    output_template_code: food_tuna_steak
+    output_stack: 2
+    profession_xp_reward: 90
+    craft_seconds: 70
+
+  - code: recipe_cook_royal_carp_feast
+    display_name_key: recipe.cook_royal_carp_feast
+    profession_code: cooking
+    min_skill: 30
+    inputs:
+      - { template_code: royal_carp, quantity: 2 }
+      - { template_code: dreamroot, quantity: 1 }
+      - { template_code: ebony_log, quantity: 1 }
+    gold_cost_copper: 20
+    output_template_code: food_royal_carp_feast
+    output_stack: 2
+    profession_xp_reward: 180
+    craft_seconds: 80
+
+  - code: recipe_cook_sturgeon_pie
+    display_name_key: recipe.cook_sturgeon_pie
+    profession_code: cooking
+    min_skill: 38
+    inputs:
+      - { template_code: golden_sturgeon, quantity: 2 }
+      - { template_code: ghost_mushroom, quantity: 1 }
+      - { template_code: blackwood_log, quantity: 1 }
+    gold_cost_copper: 20
+    output_template_code: food_sturgeon_pie
+    output_stack: 2
+    profession_xp_reward: 180
+    craft_seconds: 95
+
+  - code: recipe_cook_swordfish_grill
+    display_name_key: recipe.cook_swordfish_grill
+    profession_code: cooking
+    min_skill: 40
+    inputs:
+      - { template_code: crimson_swordfish, quantity: 2 }
+      - { template_code: stormflower, quantity: 1 }
+      - { template_code: crystal_birch_log, quantity: 1 }
+    gold_cost_copper: 40
+    output_template_code: food_swordfish_grill
+    output_stack: 2
+    profession_xp_reward: 260
+    craft_seconds: 100
+
+  - code: recipe_cook_frostfin_chowder
+    display_name_key: recipe.cook_frostfin_chowder
+    profession_code: cooking
+    min_skill: 50
+    inputs:
+      - { template_code: frostfin_salmon, quantity: 2 }
+      - { template_code: frostbloom, quantity: 1 }
+      - { template_code: frostpine_log, quantity: 1 }
+    gold_cost_copper: 40
+    output_template_code: food_frostfin_chowder
+    output_stack: 2
+    profession_xp_reward: 260
+    craft_seconds: 120
+
+  - code: recipe_cook_marlin_platter
+    display_name_key: recipe.cook_marlin_platter
+    profession_code: cooking
+    min_skill: 58
+    inputs:
+      - { template_code: ghost_marlin, quantity: 2 }
+      - { template_code: spirit_lotus, quantity: 1 }
+      - { template_code: spiritwood_log, quantity: 1 }
+    gold_cost_copper: 80
+    output_template_code: food_marlin_platter
+    output_stack: 2
+    profession_xp_reward: 460
+    craft_seconds: 135
+
+  - code: recipe_cook_dragonblood_serpentfish
+    display_name_key: recipe.cook_dragonblood_serpentfish
+    profession_code: cooking
+    min_skill: 68
+    inputs:
+      - { template_code: crystal_serpentfish, quantity: 2 }
+      - { template_code: dragonblood_herb, quantity: 1 }
+      - { template_code: starbark_log, quantity: 1 }
+    gold_cost_copper: 150
+    output_template_code: food_dragonblood_serpentfish
+    output_stack: 2
+    profession_xp_reward: 760
+    craft_seconds: 155
+
+  - code: recipe_cook_moonfish_delicacy
+    display_name_key: recipe.cook_moonfish_delicacy
+    profession_code: cooking
+    min_skill: 76
+    inputs:
+      - { template_code: astral_moonfish, quantity: 2 }
+      - { template_code: void_orchid, quantity: 1 }
+      - { template_code: dragonheart_log, quantity: 1 }
+    gold_cost_copper: 150
+    output_template_code: food_moonfish_delicacy
+    output_stack: 2
+    profession_xp_reward: 760
+    craft_seconds: 170
+
+  - code: recipe_cook_phoenix_koi_feast
+    display_name_key: recipe.cook_phoenix_koi_feast
+    profession_code: cooking
+    min_skill: 81
+    inputs:
+      - { template_code: phoenix_koi, quantity: 2 }
+      - { template_code: celestial_lotus, quantity: 1 }
+      - { template_code: voidwood_log, quantity: 1 }
+    gold_cost_copper: 250
+    output_template_code: food_phoenix_koi_feast
+    output_stack: 2
+    profession_xp_reward: 1100
+    craft_seconds: 180
+
+  - code: recipe_cook_leviathan_banquet
+    display_name_key: recipe.cook_leviathan_banquet
+    profession_code: cooking
+    min_skill: 90
+    inputs:
+      - { template_code: ancient_leviathan_scale, quantity: 2 }
+      - { template_code: worldroot, quantity: 1 }
+      - { template_code: worldtree_log, quantity: 1 }
+    gold_cost_copper: 250
+    output_template_code: food_leviathan_banquet
+    output_stack: 2
+    profession_xp_reward: 1100
+    craft_seconds: 200
+  # <<< generated: cooking

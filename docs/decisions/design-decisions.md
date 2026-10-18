@@ -2411,6 +2411,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-268 — Aşçılık tarifleri
+**Karar:** Aşçılık 18 yemekle dolduruldu (`python scripts/gen_cooking.py` → `items.yaml` + `recipes.yaml` üretilmiş blok, 4 dilde adlar). Her tarif: o bantta 2 balık + 1 ot + 1 odun (ateş) → 2 yemek; balıkçılık seviyesine paralel (balık Sv 1–100, beceri ≈ 0,9 × balık seviyesi). Yemek `consumable/food`, `use_effect: heal_hp` ≈ aynı seviyedeki mob canının %35'i (Izgara Lepistes 60 → Leviathan Kraliyet Şöleni 930), `min_level` = balık seviyesi, yığın 50. Altın ve meslek XP'si ergitme gibi kademe başı; süre 20 sn + 2 sn × beceri. Aşçılık meslek tavanı 60 → 100.
+**Reason:** Kullanıcı isteği; meslek vardı ama hiç tarifi yoktu. Avcılık et değil post verdiği için malzeme balıkçılık + bitki toplama + odunculuk.
+**Alternatives:** Geçici güç bufları (henüz tüketilebilir yalnız `heal_hp` destekliyor; ayrı iş).
+**Consequences:** Yemekler iksirlerden zayıf ama toplama malzemesinden ucuza çıkar. İstemcide yemek ikonu. Hayvan görselleri 256×256'ya küçültüldü (75 MB → 3,5 MB; orijinaller git dışında `client/art_originals/`), iki dosya adı düzeltildi (`ancient_phoenix`, `black_panther`).
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

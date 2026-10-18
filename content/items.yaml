@@ -443,3 +443,221 @@ items:
     stackable: true
     max_stack: 20
     bind_kind: boe
+
+  # >>> generated: cooking (scripts/gen_cooking.py)
+  - code: food_grilled_guppy
+    display_name_key: item.food_grilled_guppy
+    item_class: consumable
+    item_subclass: food
+    min_level: 1
+    base_value_copper: 6
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 60 }
+
+  - code: food_sardine_skewer
+    display_name_key: item.food_sardine_skewer
+    item_class: consumable
+    item_subclass: food
+    min_level: 4
+    base_value_copper: 9
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 90 }
+
+  - code: food_minnow_soup
+    display_name_key: item.food_minnow_soup
+    item_class: consumable
+    item_subclass: food
+    min_level: 7
+    base_value_copper: 9
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 115 }
+
+  - code: food_pike_fillet
+    display_name_key: item.food_pike_fillet
+    item_class: consumable
+    item_subclass: food
+    min_level: 10
+    base_value_copper: 12
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 140 }
+
+  - code: food_lavender_carp
+    display_name_key: item.food_lavender_carp
+    item_class: consumable
+    item_subclass: food
+    min_level: 12
+    base_value_copper: 12
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 160 }
+
+  - code: food_herb_trout
+    display_name_key: item.food_herb_trout
+    item_class: consumable
+    item_subclass: food
+    min_level: 16
+    base_value_copper: 15
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 190 }
+
+  - code: food_smoked_salmon
+    display_name_key: item.food_smoked_salmon
+    item_class: consumable
+    item_subclass: food
+    min_level: 18
+    base_value_copper: 18
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 210 }
+
+  - code: food_bass_stew
+    display_name_key: item.food_bass_stew
+    item_class: consumable
+    item_subclass: food
+    min_level: 20
+    base_value_copper: 18
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 225 }
+
+  - code: food_tuna_steak
+    display_name_key: item.food_tuna_steak
+    item_class: consumable
+    item_subclass: food
+    min_level: 28
+    base_value_copper: 30
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 300 }
+
+  - code: food_royal_carp_feast
+    display_name_key: item.food_royal_carp_feast
+    item_class: consumable
+    item_subclass: food
+    min_level: 33
+    base_value_copper: 42
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 340 }
+
+  - code: food_sturgeon_pie
+    display_name_key: item.food_sturgeon_pie
+    item_class: consumable
+    item_subclass: food
+    min_level: 42
+    base_value_copper: 69
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 420 }
+
+  - code: food_swordfish_grill
+    display_name_key: item.food_swordfish_grill
+    item_class: consumable
+    item_subclass: food
+    min_level: 45
+    base_value_copper: 84
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 445 }
+
+  - code: food_frostfin_chowder
+    display_name_key: item.food_frostfin_chowder
+    item_class: consumable
+    item_subclass: food
+    min_level: 55
+    base_value_copper: 147
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 535 }
+
+  - code: food_marlin_platter
+    display_name_key: item.food_marlin_platter
+    item_class: consumable
+    item_subclass: food
+    min_level: 65
+    base_value_copper: 264
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 620 }
+
+  - code: food_dragonblood_serpentfish
+    display_name_key: item.food_dragonblood_serpentfish
+    item_class: consumable
+    item_subclass: food
+    min_level: 75
+    base_value_copper: 474
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 710 }
+
+  - code: food_moonfish_delicacy
+    display_name_key: item.food_moonfish_delicacy
+    item_class: consumable
+    item_subclass: food
+    min_level: 85
+    base_value_copper: 849
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 795 }
+
+  - code: food_phoenix_koi_feast
+    display_name_key: item.food_phoenix_koi_feast
+    item_class: consumable
+    item_subclass: food
+    min_level: 90
+    base_value_copper: 1137
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 840 }
+
+  - code: food_leviathan_banquet
+    display_name_key: item.food_leviathan_banquet
+    item_class: consumable
+    item_subclass: food
+    min_level: 100
+    base_value_copper: 2037
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_hp, amount: 925 }
+  # <<< generated: cooking

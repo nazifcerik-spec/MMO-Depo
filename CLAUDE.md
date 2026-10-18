@@ -171,6 +171,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 80. **Altı yeni ırk (bitti)** — Sprint 80, DD-267. Trol, Hortlak, Karanlık Elf, Drakari, Tauren, Gnom (yalnız görünüş); sunucu izin listesi + istemci adları/tanımları 4 dilde; oluşturma ekranında 4'lü kart ızgarası.
 
+81. **Aşçılık + görsel küçültme (bitti)** — Sprint 81, DD-268. `scripts/gen_cooking.py`: 18 yemek (2 balık + ot + odun → 2 yemek, can yeniler, balıkçılık Sv 1–100'e paralel), aşçılık tavanı 100. Hayvan görselleri 256×256 (orijinaller `client/art_originals/`, git dışı).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

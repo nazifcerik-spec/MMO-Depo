@@ -1,6 +1,6 @@
 # Oyundaki Eşyalar
 
-Toplam **891** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
+Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
 
 ## Silahlar (470)
 
@@ -718,10 +718,28 @@ Toplam **891** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Kadim Çağ Bacaklık | `legs_primordial` | zırh | Bacak | Hepsi | 985 | +280 Savunma, +156 DAY | 12a 70g 38b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Titan Siper Kalkanı | `titan_bulwark_shield` | zırh | Yan el | Savaşçı | 600 | +400 Savunma, +10 block_pct, +5% Can | 25a | 9 kg | Av zaferi %4 / zindan boss'u |
 
-## Tüketilebilirler (6)
+## Tüketilebilirler (24)
 
 | Ad | Kod | Tür | Sv | Etki | Yığın | Değer | Ağırlık | Nereden | Kullanıldığı yer |
 |---|---|---|---|---|---|---|---|---|---|
+| Izgara Lepistes | `food_grilled_guppy` | food | 1 | Kullan: +60 Can | 50 | 6b | 0.2 kg | Üretim: Aşçılık 1+ (2× Minik Lepistes, 1× Sıradan Ot, 1× Fidan Dalı, 2b) | — |
+| Sardalya Şiş | `food_sardine_skewer` | food | 4 | Kullan: +90 Can | 50 | 9b | 0.2 kg | Üretim: Aşçılık 4+ (2× Nehir Sardalyası, 1× Karahindiba, 1× Kavak Kütüğü, 2b) | — |
+| Naneli Balık Çorbası | `food_minnow_soup` | food | 7 | Kullan: +115 Can | 50 | 9b | 0.2 kg | Üretim: Aşçılık 6+ (2× Golyan, 1× Yabani Nane, 1× Söğüt Kütüğü, 2b) | — |
+| Turna Fileto | `food_pike_fillet` | food | 10 | Kullan: +140 Can | 50 | 12b | 0.2 kg | Üretim: Aşçılık 9+ (2× Küçük Turna, 1× Papatya, 1× Köknar Kütüğü, 5b) | — |
+| Lavantalı Sazan | `food_lavender_carp` | food | 12 | Kullan: +160 Can | 50 | 12b | 0.2 kg | Üretim: Aşçılık 11+ (2× Sazan, 1× Lavanta, 1× Çam Kütüğü, 5b) | — |
+| Otlu Alabalık | `food_herb_trout` | food | 16 | Kullan: +190 Can | 50 | 15b | 0.2 kg | Üretim: Aşçılık 14+ (2× Dere Alabalığı, 1× Acıkök, 1× Sedir Kütüğü, 5b) | — |
+| Füme Somon | `food_smoked_salmon` | food | 18 | Kullan: +210 Can | 50 | 18b | 0.2 kg | Üretim: Aşçılık 16+ (2× Somon, 1× Şifalı Yosun, 1× Meşe Kütüğü, 5b) | — |
+| Levrek Güveci | `food_bass_stew` | food | 20 | Kullan: +225 Can | 50 | 18b | 0.2 kg | Üretim: Aşçılık 18+ (2× Tatlı Su Levreği, 1× Bataklık Sazı, 1× Kayın Kütüğü, 10b) | — |
+| Ginsengli Ton Balığı | `food_tuna_steak` | food | 28 | Kullan: +300 Can | 50 | 30b | 0.2 kg | Üretim: Aşçılık 25+ (2× Mavi Yüzgeçli Ton, 1× Yaban Ginsengi, 1× Tik Kütüğü, 10b) | — |
+| Kraliyet Sazanı Ziyafeti | `food_royal_carp_feast` | food | 33 | Kullan: +340 Can | 50 | 42b | 0.2 kg | Üretim: Aşçılık 30+ (2× Kraliyet Sazanı, 1× Düş Kökü, 1× Abanoz Kütüğü, 20b) | — |
+| Mantarlı Mersin Turtası | `food_sturgeon_pie` | food | 42 | Kullan: +420 Can | 50 | 69b | 0.2 kg | Üretim: Aşçılık 38+ (2× Altın Mersin, 1× Hayalet Mantarı, 1× Kara Odun Kütüğü, 20b) | — |
+| Fırtına Izgarası Kılıçbalığı | `food_swordfish_grill` | food | 45 | Kullan: +445 Can | 50 | 84b | 0.2 kg | Üretim: Aşçılık 40+ (2× Kızıl Kılıçbalığı, 1× Fırtına Çiçeği, 1× Kristal Huş Kütüğü, 40b) | — |
+| Ayaz Somon Çorbası | `food_frostfin_chowder` | food | 55 | Kullan: +535 Can | 50 | 1g 47b | 0.2 kg | Üretim: Aşçılık 50+ (2× Ayaz Yüzgeçli Somon, 1× Ayaz Çiçeği, 1× Ayaz Çamı Kütüğü, 40b) | — |
+| Ruh Marlini Tabağı | `food_marlin_platter` | food | 65 | Kullan: +620 Can | 50 | 2g 64b | 0.2 kg | Üretim: Aşçılık 58+ (2× Hayalet Marlin, 1× Ruh Nilüferi, 1× Ruhağacı Kütüğü, 80b) | — |
+| Ejderkanlı Yılanbalığı | `food_dragonblood_serpentfish` | food | 75 | Kullan: +710 Can | 50 | 4g 74b | 0.2 kg | Üretim: Aşçılık 68+ (2× Kristal Yılanbalığı, 1× Ejderkanı Otu, 1× Yıldızkabuğu Kütüğü, 1g 50b) | — |
+| Yıldız Aybalığı Lezzeti | `food_moonfish_delicacy` | food | 85 | Kullan: +795 Can | 50 | 8g 49b | 0.2 kg | Üretim: Aşçılık 76+ (2× Yıldız Aybalığı, 1× Boşluk Orkidesi, 1× Ejderyüreği Kütüğü, 1g 50b) | — |
+| Anka Koi Ziyafeti | `food_phoenix_koi_feast` | food | 90 | Kullan: +840 Can | 50 | 11g 37b | 0.2 kg | Üretim: Aşçılık 81+ (2× Anka Koisi, 1× Göksel Nilüfer, 1× Boşlukağacı Kütüğü, 2g 50b) | — |
+| Leviathan Kraliyet Şöleni | `food_leviathan_banquet` | food | 100 | Kullan: +925 Can | 50 | 20g 37b | 0.2 kg | Üretim: Aşçılık 90+ (2× Göksel Leviathan, 1× Dünya Kökü, 1× Dünya Ağacı Kütüğü, 2g 50b) | — |
 | Küçük Can İksiri | `potion_hp_small` | iksir | 1 | Kullan: +60 Can | 20 | 20b | 0.2 kg | Dükkân (20b); Üretim: Simya 1+ (3× Sıradan Ot, 5b) | — |
 | Küçük Mana İksiri | `potion_mp_small` | iksir | 1 | — | 20 | 20b | 0.2 kg | — | — |
 | Orta Boy Can İksiri | `potion_hp_medium` | iksir | 5 | Kullan: +150 Can | 20 | 60b | 0.25 kg | Dükkân (60b); Üretim: Simya 5+ (2× Papatya, 1× Yabani Nane, 15b) | — |
@@ -762,67 +780,67 @@ Toplam **891** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Fırtına Kartalı Tüyü | `storm_eagle_feather` | tüy | 1 | — | 999 | 28b | 0.05 kg | Avcılık Sv 45 (T4, Nadir); Av/zindan (mob Sv ≥ 12) | — |
 | Yaban Hindisi Tüyü | `wild_turkey_feather` | tüy | 1 | — | 999 | 5b | 0.05 kg | Avcılık Sv 16 (T1, Sıradan); Av/zindan (mob Sv ≥ 4) | — |
 | Uçurum Ejderbalığı | `abyssal_dragonfish` | balık | 1 | — | 999 | 5g 7b | 0.5 kg | Balıkçılık Sv 95 (T7, Mitik) | — |
-| Göksel Leviathan | `ancient_leviathan_scale` | balık | 1 | — | 999 | 6g 79b | 0.5 kg | Balıkçılık Sv 100 (T7, Mitik) | — |
-| Yıldız Aybalığı | `astral_moonfish` | balık | 1 | — | 999 | 2g 83b | 0.5 kg | Balıkçılık Sv 85 (T6, Efsanevi) | — |
-| Tatlı Su Levreği | `bass` | balık | 1 | — | 999 | 6b | 0.5 kg | Balıkçılık Sv 20 (T2, Seçkin) | — |
-| Mavi Yüzgeçli Ton | `bluefin_tuna` | balık | 1 | — | 999 | 10b | 0.5 kg | Balıkçılık Sv 28 (T2, Seçkin) | — |
-| Sazan | `common_carp` | balık | 1 | — | 999 | 4b | 0.5 kg | Balıkçılık Sv 12 (T1, Sıradan) | — |
-| Kızıl Kılıçbalığı | `crimson_swordfish` | balık | 1 | — | 999 | 28b | 0.5 kg | Balıkçılık Sv 45 (T4, Nadir) | — |
-| Kristal Yılanbalığı | `crystal_serpentfish` | balık | 1 | — | 999 | 1g 58b | 0.5 kg | Balıkçılık Sv 75 (T6, Efsanevi) | — |
+| Göksel Leviathan | `ancient_leviathan_scale` | balık | 1 | — | 999 | 6g 79b | 0.5 kg | Balıkçılık Sv 100 (T7, Mitik) | Leviathan Kraliyet Şöleni |
+| Yıldız Aybalığı | `astral_moonfish` | balık | 1 | — | 999 | 2g 83b | 0.5 kg | Balıkçılık Sv 85 (T6, Efsanevi) | Yıldız Aybalığı Lezzeti |
+| Tatlı Su Levreği | `bass` | balık | 1 | — | 999 | 6b | 0.5 kg | Balıkçılık Sv 20 (T2, Seçkin) | Levrek Güveci |
+| Mavi Yüzgeçli Ton | `bluefin_tuna` | balık | 1 | — | 999 | 10b | 0.5 kg | Balıkçılık Sv 28 (T2, Seçkin) | Ginsengli Ton Balığı |
+| Sazan | `common_carp` | balık | 1 | — | 999 | 4b | 0.5 kg | Balıkçılık Sv 12 (T1, Sıradan) | Lavantalı Sazan |
+| Kızıl Kılıçbalığı | `crimson_swordfish` | balık | 1 | — | 999 | 28b | 0.5 kg | Balıkçılık Sv 45 (T4, Nadir) | Fırtına Izgarası Kılıçbalığı |
+| Kristal Yılanbalığı | `crystal_serpentfish` | balık | 1 | — | 999 | 1g 58b | 0.5 kg | Balıkçılık Sv 75 (T6, Efsanevi) | Ejderkanlı Yılanbalığı |
 | Zümrüt Turnası | `emerald_pike` | balık | 1 | — | 999 | 16b | 0.5 kg | Balıkçılık Sv 36 (T3, Seçkin) | — |
-| Ayaz Yüzgeçli Somon | `frostfin_salmon` | balık | 1 | — | 999 | 49b | 0.5 kg | Balıkçılık Sv 55 (T4, Nadir) | — |
-| Hayalet Marlin | `ghost_marlin` | balık | 1 | — | 999 | 88b | 0.5 kg | Balıkçılık Sv 65 (T5, Destansı) | — |
+| Ayaz Yüzgeçli Somon | `frostfin_salmon` | balık | 1 | — | 999 | 49b | 0.5 kg | Balıkçılık Sv 55 (T4, Nadir) | Ayaz Somon Çorbası |
+| Hayalet Marlin | `ghost_marlin` | balık | 1 | — | 999 | 88b | 0.5 kg | Balıkçılık Sv 65 (T5, Destansı) | Ruh Marlini Tabağı |
 | İmparatorluk Altın Koisi | `golden_carp` | balık | 1 | — | 999 | 1g 18b | 0.5 kg | Balıkçılık Sv 70 (T5, Destansı) | — |
-| Altın Mersin | `golden_sturgeon` | balık | 1 | — | 999 | 23b | 0.5 kg | Balıkçılık Sv 42 (T3, Seçkin) | — |
+| Altın Mersin | `golden_sturgeon` | balık | 1 | — | 999 | 23b | 0.5 kg | Balıkçılık Sv 42 (T3, Seçkin) | Mantarlı Mersin Turtası |
 | Göl Levreği | `lake_perch` | balık | 1 | — | 999 | 7b | 0.5 kg | Balıkçılık Sv 22 (T2, Seçkin) | — |
-| Golyan | `minnow` | balık | 1 | — | 999 | 3b | 0.5 kg | Balıkçılık Sv 7 (T0, Sıradan) | — |
+| Golyan | `minnow` | balık | 1 | — | 999 | 3b | 0.5 kg | Balıkçılık Sv 7 (T0, Sıradan) | Naneli Balık Çorbası |
 | Obsidyen Ton | `obsidian_tuna` | balık | 1 | — | 999 | 66b | 0.5 kg | Balıkçılık Sv 60 (T5, Destansı) | — |
-| Anka Koisi | `phoenix_koi` | balık | 1 | — | 999 | 3g 79b | 0.5 kg | Balıkçılık Sv 90 (T7, Mitik) | — |
+| Anka Koisi | `phoenix_koi` | balık | 1 | — | 999 | 3g 79b | 0.5 kg | Balıkçılık Sv 90 (T7, Mitik) | Anka Koi Ziyafeti |
 | Gökkuşağı Alabalığı | `rainbow_trout` | balık | 1 | — | 999 | 11b | 0.5 kg | Balıkçılık Sv 30 (T3, Seçkin) | — |
 | Kırmızı Mercan | `red_snapper` | balık | 1 | — | 999 | 8b | 0.5 kg | Balıkçılık Sv 24 (T2, Seçkin) | — |
 | Nehir Yayını | `river_catfish` | balık | 1 | — | 999 | 9b | 0.5 kg | Balıkçılık Sv 26 (T2, Seçkin) | — |
-| Nehir Sardalyası | `river_sardine` | balık | 1 | — | 999 | 3b | 0.5 kg | Balıkçılık Sv 4 (T0, Sıradan) | — |
-| Dere Alabalığı | `river_trout` | balık | 1 | — | 999 | 5b | 0.5 kg | Balıkçılık Sv 16 (T1, Sıradan) | — |
-| Kraliyet Sazanı | `royal_carp` | balık | 1 | — | 999 | 14b | 0.5 kg | Balıkçılık Sv 33 (T3, Seçkin) | — |
-| Somon | `salmon` | balık | 1 | — | 999 | 6b | 0.5 kg | Balıkçılık Sv 18 (T1, Sıradan) | — |
+| Nehir Sardalyası | `river_sardine` | balık | 1 | — | 999 | 3b | 0.5 kg | Balıkçılık Sv 4 (T0, Sıradan) | Sardalya Şiş |
+| Dere Alabalığı | `river_trout` | balık | 1 | — | 999 | 5b | 0.5 kg | Balıkçılık Sv 16 (T1, Sıradan) | Otlu Alabalık |
+| Kraliyet Sazanı | `royal_carp` | balık | 1 | — | 999 | 14b | 0.5 kg | Balıkçılık Sv 33 (T3, Seçkin) | Kraliyet Sazanı Ziyafeti |
+| Somon | `salmon` | balık | 1 | — | 999 | 6b | 0.5 kg | Balıkçılık Sv 18 (T1, Sıradan) | Füme Somon |
 | Gümüş Barakuda | `silver_barracuda` | balık | 1 | — | 999 | 19b | 0.5 kg | Balıkçılık Sv 39 (T3, Seçkin) | — |
 | Gümüş Ringa | `silver_herring` | balık | 1 | — | 999 | 5b | 0.5 kg | Balıkçılık Sv 14 (T1, Sıradan) | — |
-| Küçük Turna | `small_pike` | balık | 1 | — | 999 | 4b | 0.5 kg | Balıkçılık Sv 10 (T1, Sıradan) | — |
+| Küçük Turna | `small_pike` | balık | 1 | — | 999 | 4b | 0.5 kg | Balıkçılık Sv 10 (T1, Sıradan) | Turna Fileto |
 | Fırtına Pullu Yılanbalığı | `stormscale_eel` | balık | 1 | — | 999 | 37b | 0.5 kg | Balıkçılık Sv 50 (T4, Nadir) | — |
-| Minik Lepistes | `tiny_guppy` | balık | 1 | — | 999 | 2b | 0.5 kg | Balıkçılık Sv 1 (T0, Sıradan) | — |
+| Minik Lepistes | `tiny_guppy` | balık | 1 | — | 999 | 2b | 0.5 kg | Balıkçılık Sv 1 (T0, Sıradan) | Izgara Lepistes |
 | Boşluk Fenerbalığı | `void_angler` | balık | 1 | — | 999 | 2g 12b | 0.5 kg | Balıkçılık Sv 80 (T6, Efsanevi) | — |
 | Kömür | `coal` | yakıt | 1 | — | 999 | 4b | 0.15 kg | Madencilik Sv 10 (T1, Sıradan) | Alüminyum Külçesi, Kurşun Külçesi, Demir Külçesi, Kalay Külçesi, Bakır Külçesi, Bronz Külçesi, Çinko Külçesi, Nikel Külçesi, Krom Külçesi, Kobalt Külçesi, Gümüş Külçesi, Altın Külçesi, Elektrum Külçesi, Tungsten Külçesi, Titanyum Külçesi, Paladyum Külçesi, Rodyum Külçesi, Platin Külçesi, Osmiyum Külçesi, İridyum Külçesi, Yıldız Çeliği Külçesi, Mitril Külçesi, Orikalkum Külçesi, Adamantit Külçesi |
 | Kadim Adamotu | `ancient_mandrake` | bitki | 1 | — | 999 | 1g 18b | 0.04 kg | Şifacılık Sv 70 (T5, Destansı) | — |
 | Yıldız Çiçeği | `astral_bloom` | bitki | 1 | — | 999 | 2g 12b | 0.04 kg | Şifacılık Sv 80 (T6, Efsanevi) | — |
-| Acıkök | `bitterroot` | bitki | 1 | — | 999 | 5b | 0.04 kg | Şifacılık Sv 16 (T1, Sıradan) | — |
+| Acıkök | `bitterroot` | bitki | 1 | — | 999 | 5b | 0.04 kg | Şifacılık Sv 16 (T1, Sıradan) | Otlu Alabalık |
 | Kan Dikeni | `bloodthorn` | bitki | 1 | — | 999 | 19b | 0.04 kg | Şifacılık Sv 39 (T3, Seçkin) | — |
 | Mavi Devedikeni | `blue_thistle` | bitki | 1 | — | 999 | 7b | 0.04 kg | Şifacılık Sv 22 (T2, Seçkin) | — |
-| Göksel Nilüfer | `celestial_lotus` | bitki | 1 | — | 999 | 3g 79b | 0.04 kg | Şifacılık Sv 90 (T7, Mitik) | — |
-| Papatya | `chamomile` | bitki | 1 | — | 999 | 4b | 0.04 kg | Şifacılık Sv 10 (T1, Sıradan) | Orta Boy Can İksiri, Büyük Boy Can İksiri, Çırak Asası |
-| Sıradan Ot | `common_grass` | bitki | 1 | — | 999 | 2b | 0.04 kg | Şifacılık Sv 1 (T0, Sıradan) | Küçük Can İksiri |
-| Karahindiba | `dandelion` | bitki | 1 | — | 999 | 3b | 0.04 kg | Şifacılık Sv 4 (T0, Sıradan) | — |
-| Ejderkanı Otu | `dragonblood_herb` | bitki | 1 | — | 999 | 1g 58b | 0.04 kg | Şifacılık Sv 75 (T6, Efsanevi) | — |
-| Düş Kökü | `dreamroot` | bitki | 1 | — | 999 | 14b | 0.04 kg | Şifacılık Sv 33 (T3, Seçkin) | — |
+| Göksel Nilüfer | `celestial_lotus` | bitki | 1 | — | 999 | 3g 79b | 0.04 kg | Şifacılık Sv 90 (T7, Mitik) | Anka Koi Ziyafeti |
+| Papatya | `chamomile` | bitki | 1 | — | 999 | 4b | 0.04 kg | Şifacılık Sv 10 (T1, Sıradan) | Orta Boy Can İksiri, Büyük Boy Can İksiri, Çırak Asası, Turna Fileto |
+| Sıradan Ot | `common_grass` | bitki | 1 | — | 999 | 2b | 0.04 kg | Şifacılık Sv 1 (T0, Sıradan) | Küçük Can İksiri, Izgara Lepistes |
+| Karahindiba | `dandelion` | bitki | 1 | — | 999 | 3b | 0.04 kg | Şifacılık Sv 4 (T0, Sıradan) | Sardalya Şiş |
+| Ejderkanı Otu | `dragonblood_herb` | bitki | 1 | — | 999 | 1g 58b | 0.04 kg | Şifacılık Sv 75 (T6, Efsanevi) | Ejderkanlı Yılanbalığı |
+| Düş Kökü | `dreamroot` | bitki | 1 | — | 999 | 14b | 0.04 kg | Şifacılık Sv 33 (T3, Seçkin) | Kraliyet Sazanı Ziyafeti |
 | Kor Yaprağı | `emberleaf` | bitki | 1 | — | 999 | 37b | 0.04 kg | Şifacılık Sv 50 (T4, Nadir) | — |
-| Ayaz Çiçeği | `frostbloom` | bitki | 1 | — | 999 | 49b | 0.04 kg | Şifacılık Sv 55 (T4, Nadir) | — |
-| Hayalet Mantarı | `ghost_mushroom` | bitki | 1 | — | 999 | 23b | 0.04 kg | Şifacılık Sv 42 (T3, Seçkin) | — |
+| Ayaz Çiçeği | `frostbloom` | bitki | 1 | — | 999 | 49b | 0.04 kg | Şifacılık Sv 55 (T4, Nadir) | Ayaz Somon Çorbası |
+| Hayalet Mantarı | `ghost_mushroom` | bitki | 1 | — | 999 | 23b | 0.04 kg | Şifacılık Sv 42 (T3, Seçkin) | Mantarlı Mersin Turtası |
 | Altın Yonca | `golden_clover` | bitki | 1 | — | 999 | 11b | 0.04 kg | Şifacılık Sv 30 (T3, Seçkin) | — |
-| Şifalı Yosun | `healing_moss` | bitki | 1 | — | 999 | 6b | 0.04 kg | Şifacılık Sv 18 (T1, Sıradan) | — |
-| Lavanta | `lavender` | bitki | 1 | — | 999 | 4b | 0.04 kg | Şifacılık Sv 12 (T1, Sıradan) | — |
+| Şifalı Yosun | `healing_moss` | bitki | 1 | — | 999 | 6b | 0.04 kg | Şifacılık Sv 18 (T1, Sıradan) | Füme Somon |
+| Lavanta | `lavender` | bitki | 1 | — | 999 | 4b | 0.04 kg | Şifacılık Sv 12 (T1, Sıradan) | Lavantalı Sazan |
 | Keten Tohumu | `linseed` | bitki | 1 | — | 999 | 7b | 0.05 kg | — | — |
-| Bataklık Sazı | `marsh_reed` | bitki | 1 | — | 999 | 6b | 0.04 kg | Şifacılık Sv 20 (T2, Seçkin) | — |
+| Bataklık Sazı | `marsh_reed` | bitki | 1 | — | 999 | 6b | 0.04 kg | Şifacılık Sv 20 (T2, Seçkin) | Levrek Güveci |
 | Ay Gölgesi | `moonshade` | bitki | 1 | — | 999 | 66b | 0.04 kg | Şifacılık Sv 60 (T5, Destansı) | — |
 | Güzelavrat Otu | `nightshade` | bitki | 1 | — | 999 | 9b | 0.04 kg | Şifacılık Sv 26 (T2, Seçkin) | — |
 | Anka Çiçeği | `phoenix_petal` | bitki | 1 | — | 999 | 5g 7b | 0.04 kg | Şifacılık Sv 95 (T7, Mitik) | — |
 | Kızıl Adaçayı | `red_sage` | bitki | 1 | — | 999 | 8b | 0.04 kg | Şifacılık Sv 24 (T2, Seçkin) | Büyük Boy Can İksiri, Ekstra Büyük Can İksiri |
 | Gümüş Yaprak | `silverleaf` | bitki | 1 | — | 999 | 16b | 0.04 kg | Şifacılık Sv 36 (T3, Seçkin) | Ekstra Büyük Can İksiri, Çok Büyük Can İksiri |
-| Ruh Nilüferi | `spirit_lotus` | bitki | 1 | — | 999 | 88b | 0.04 kg | Şifacılık Sv 65 (T5, Destansı) | Çok Büyük Can İksiri |
-| Fırtına Çiçeği | `stormflower` | bitki | 1 | — | 999 | 28b | 0.04 kg | Şifacılık Sv 45 (T4, Nadir) | — |
+| Ruh Nilüferi | `spirit_lotus` | bitki | 1 | — | 999 | 88b | 0.04 kg | Şifacılık Sv 65 (T5, Destansı) | Çok Büyük Can İksiri, Ruh Marlini Tabağı |
+| Fırtına Çiçeği | `stormflower` | bitki | 1 | — | 999 | 28b | 0.04 kg | Şifacılık Sv 45 (T4, Nadir) | Fırtına Izgarası Kılıçbalığı |
 | Ayçiçeği | `sunflower` | bitki | 1 | — | 999 | 5b | 0.04 kg | Şifacılık Sv 14 (T1, Sıradan) | — |
-| Boşluk Orkidesi | `void_orchid` | bitki | 1 | — | 999 | 2g 83b | 0.04 kg | Şifacılık Sv 85 (T6, Efsanevi) | — |
-| Yaban Ginsengi | `wild_ginseng` | bitki | 1 | — | 999 | 10b | 0.04 kg | Şifacılık Sv 28 (T2, Seçkin) | — |
-| Yabani Nane | `wild_mint` | bitki | 1 | — | 999 | 3b | 0.04 kg | Şifacılık Sv 7 (T0, Sıradan) | Orta Boy Can İksiri |
-| Dünya Kökü | `worldroot` | bitki | 1 | — | 999 | 6g 79b | 0.04 kg | Şifacılık Sv 100 (T7, Mitik) | — |
+| Boşluk Orkidesi | `void_orchid` | bitki | 1 | — | 999 | 2g 83b | 0.04 kg | Şifacılık Sv 85 (T6, Efsanevi) | Yıldız Aybalığı Lezzeti |
+| Yaban Ginsengi | `wild_ginseng` | bitki | 1 | — | 999 | 10b | 0.04 kg | Şifacılık Sv 28 (T2, Seçkin) | Ginsengli Ton Balığı |
+| Yabani Nane | `wild_mint` | bitki | 1 | — | 999 | 3b | 0.04 kg | Şifacılık Sv 7 (T0, Sıradan) | Orta Boy Can İksiri, Naneli Balık Çorbası |
+| Dünya Kökü | `worldroot` | bitki | 1 | — | 999 | 6g 79b | 0.04 kg | Şifacılık Sv 100 (T7, Mitik) | Leviathan Kraliyet Şöleni |
 | Adamotu | `mandrake` | bitki | 5 | — | 999 | 12b | 0.05 kg | — | — |
 | Kral Çiçeği | `king_bloom` | bitki | 20 | — | 999 | 60b | 0.06 kg | — | — |
 | Kadim Mamut Postu | `ancient_mammoth_hide` | post | 1 | — | 999 | 1g 18b | 1.2 kg | Avcılık Sv 70 (T5, Destansı); Av/zindan (mob Sv ≥ 18) | — |
@@ -838,35 +856,35 @@ Toplam **891** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Boşluk Behemotu Derisi | `void_behemoth_hide` | post | 1 | — | 999 | 3g 79b | 1.2 kg | Avcılık Sv 90 (T7, Mitik); Av/zindan (mob Sv ≥ 23) | — |
 | Yaban Mandası Derisi | `wild_buffalo_hide` | post | 1 | — | 999 | 11b | 1.2 kg | Avcılık Sv 30 (T3, Seçkin); Av/zindan (mob Sv ≥ 8) | — |
 | Dişbudak Kütüğü | `ash_log` | kütük | 1 | — | 999 | 7b | 1 kg | Odunculuk Sv 22 (T2, Seçkin) | — |
-| Kayın Kütüğü | `beech_log` | kütük | 1 | — | 999 | 6b | 1 kg | Odunculuk Sv 20 (T2, Seçkin) | — |
+| Kayın Kütüğü | `beech_log` | kütük | 1 | — | 999 | 6b | 1 kg | Odunculuk Sv 20 (T2, Seçkin) | Levrek Güveci |
 | Huş Kütüğü | `birch_log` | kütük | 1 | — | 999 | 5b | 1 kg | Odunculuk Sv 14 (T1, Sıradan) | — |
-| Kara Odun Kütüğü | `blackwood_log` | kütük | 1 | — | 999 | 23b | 1 kg | Odunculuk Sv 42 (T3, Seçkin) | — |
+| Kara Odun Kütüğü | `blackwood_log` | kütük | 1 | — | 999 | 23b | 1 kg | Odunculuk Sv 42 (T3, Seçkin) | Mantarlı Mersin Turtası |
 | Kanağacı Kütüğü | `bloodwood_log` | kütük | 1 | — | 999 | 66b | 1 kg | Odunculuk Sv 60 (T5, Destansı) | — |
-| Sedir Kütüğü | `cedar_log` | kütük | 1 | — | 999 | 5b | 1 kg | Odunculuk Sv 16 (T1, Sıradan) | — |
+| Sedir Kütüğü | `cedar_log` | kütük | 1 | — | 999 | 5b | 1 kg | Odunculuk Sv 16 (T1, Sıradan) | Otlu Alabalık |
 | Göksel Dişbudak Kütüğü | `celestial_ash_log` | kütük | 1 | — | 999 | 5g 7b | 1 kg | Odunculuk Sv 95 (T7, Mitik) | — |
-| Kristal Huş Kütüğü | `crystal_birch_log` | kütük | 1 | — | 999 | 28b | 1 kg | Odunculuk Sv 45 (T4, Nadir) | — |
-| Ejderyüreği Kütüğü | `dragonheart_log` | kütük | 1 | — | 999 | 2g 83b | 1 kg | Odunculuk Sv 85 (T6, Efsanevi) | — |
-| Abanoz Kütüğü | `ebony_log` | kütük | 1 | — | 999 | 14b | 1 kg | Odunculuk Sv 33 (T3, Seçkin) | — |
+| Kristal Huş Kütüğü | `crystal_birch_log` | kütük | 1 | — | 999 | 28b | 1 kg | Odunculuk Sv 45 (T4, Nadir) | Fırtına Izgarası Kılıçbalığı |
+| Ejderyüreği Kütüğü | `dragonheart_log` | kütük | 1 | — | 999 | 2g 83b | 1 kg | Odunculuk Sv 85 (T6, Efsanevi) | Yıldız Aybalığı Lezzeti |
+| Abanoz Kütüğü | `ebony_log` | kütük | 1 | — | 999 | 14b | 1 kg | Odunculuk Sv 33 (T3, Seçkin) | Kraliyet Sazanı Ziyafeti |
 | Korağacı Kütüğü | `emberwood_log` | kütük | 1 | — | 999 | 37b | 1 kg | Odunculuk Sv 50 (T4, Nadir) | — |
-| Köknar Kütüğü | `fir_log` | kütük | 1 | — | 999 | 4b | 1 kg | Odunculuk Sv 10 (T1, Sıradan) | — |
-| Ayaz Çamı Kütüğü | `frostpine_log` | kütük | 1 | — | 999 | 49b | 1 kg | Odunculuk Sv 55 (T4, Nadir) | — |
+| Köknar Kütüğü | `fir_log` | kütük | 1 | — | 999 | 4b | 1 kg | Odunculuk Sv 10 (T1, Sıradan) | Turna Fileto |
+| Ayaz Çamı Kütüğü | `frostpine_log` | kütük | 1 | — | 999 | 49b | 1 kg | Odunculuk Sv 55 (T4, Nadir) | Ayaz Somon Çorbası |
 | Altın Meşe Kütüğü | `golden_oak_log` | kütük | 1 | — | 999 | 19b | 1 kg | Odunculuk Sv 39 (T3, Seçkin) | — |
 | Kadim Demirağaç Kütüğü | `ironwood_log` | kütük | 1 | — | 999 | 1g 18b | 1 kg | Odunculuk Sv 70 (T5, Destansı) | — |
 | Maun Kütüğü | `mahogany_log` | kütük | 1 | — | 999 | 11b | 1 kg | Odunculuk Sv 30 (T3, Seçkin) | — |
 | Akçaağaç Kütüğü | `maple_log` | kütük | 1 | — | 999 | 8b | 1 kg | Odunculuk Sv 24 (T2, Seçkin) | — |
 | Ayağacı Kütüğü | `moonwood_log` | kütük | 1 | — | 999 | 2g 12b | 1 kg | Odunculuk Sv 80 (T6, Efsanevi) | — |
-| Meşe Kütüğü | `oak_log` | kütük | 1 | — | 999 | 6b | 1 kg | Odunculuk Sv 18 (T1, Sıradan) | Demir Kılıç, Demir Topuz, Demir Hançer, Av Yayı, Çırak Asası |
-| Çam Kütüğü | `pine_log` | kütük | 1 | — | 999 | 4b | 1 kg | Odunculuk Sv 12 (T1, Sıradan) | — |
-| Kavak Kütüğü | `poplar_log` | kütük | 1 | — | 999 | 3b | 1 kg | Odunculuk Sv 4 (T0, Sıradan) | — |
+| Meşe Kütüğü | `oak_log` | kütük | 1 | — | 999 | 6b | 1 kg | Odunculuk Sv 18 (T1, Sıradan) | Demir Kılıç, Demir Topuz, Demir Hançer, Av Yayı, Çırak Asası, Füme Somon |
+| Çam Kütüğü | `pine_log` | kütük | 1 | — | 999 | 4b | 1 kg | Odunculuk Sv 12 (T1, Sıradan) | Lavantalı Sazan |
+| Kavak Kütüğü | `poplar_log` | kütük | 1 | — | 999 | 3b | 1 kg | Odunculuk Sv 4 (T0, Sıradan) | Sardalya Şiş |
 | Gümüş Söğüt Kütüğü | `silver_willow_log` | kütük | 1 | — | 999 | 16b | 1 kg | Odunculuk Sv 36 (T3, Seçkin) | — |
-| Ruhağacı Kütüğü | `spiritwood_log` | kütük | 1 | — | 999 | 88b | 1 kg | Odunculuk Sv 65 (T5, Destansı) | — |
-| Yıldızkabuğu Kütüğü | `starbark_log` | kütük | 1 | — | 999 | 1g 58b | 1 kg | Odunculuk Sv 75 (T6, Efsanevi) | — |
-| Tik Kütüğü | `teak_log` | kütük | 1 | — | 999 | 10b | 1 kg | Odunculuk Sv 28 (T2, Seçkin) | — |
-| Boşlukağacı Kütüğü | `voidwood_log` | kütük | 1 | — | 999 | 3g 79b | 1 kg | Odunculuk Sv 90 (T7, Mitik) | — |
+| Ruhağacı Kütüğü | `spiritwood_log` | kütük | 1 | — | 999 | 88b | 1 kg | Odunculuk Sv 65 (T5, Destansı) | Ruh Marlini Tabağı |
+| Yıldızkabuğu Kütüğü | `starbark_log` | kütük | 1 | — | 999 | 1g 58b | 1 kg | Odunculuk Sv 75 (T6, Efsanevi) | Ejderkanlı Yılanbalığı |
+| Tik Kütüğü | `teak_log` | kütük | 1 | — | 999 | 10b | 1 kg | Odunculuk Sv 28 (T2, Seçkin) | Ginsengli Ton Balığı |
+| Boşlukağacı Kütüğü | `voidwood_log` | kütük | 1 | — | 999 | 3g 79b | 1 kg | Odunculuk Sv 90 (T7, Mitik) | Anka Koi Ziyafeti |
 | Ceviz Kütüğü | `walnut_log` | kütük | 1 | — | 999 | 9b | 1 kg | Odunculuk Sv 26 (T2, Seçkin) | — |
-| Söğüt Kütüğü | `willow_log` | kütük | 1 | — | 999 | 3b | 1 kg | Odunculuk Sv 7 (T0, Sıradan) | — |
-| Dünya Ağacı Kütüğü | `worldtree_log` | kütük | 1 | — | 999 | 6g 79b | 1 kg | Odunculuk Sv 100 (T7, Mitik) | — |
-| Fidan Dalı | `young_sapling` | kütük | 1 | — | 999 | 2b | 1 kg | Odunculuk Sv 1 (T0, Sıradan) | — |
+| Söğüt Kütüğü | `willow_log` | kütük | 1 | — | 999 | 3b | 1 kg | Odunculuk Sv 7 (T0, Sıradan) | Naneli Balık Çorbası |
+| Dünya Ağacı Kütüğü | `worldtree_log` | kütük | 1 | — | 999 | 6g 79b | 1 kg | Odunculuk Sv 100 (T7, Mitik) | Leviathan Kraliyet Şöleni |
+| Fidan Dalı | `young_sapling` | kütük | 1 | — | 999 | 2b | 1 kg | Odunculuk Sv 1 (T0, Sıradan) | Izgara Lepistes |
 | Adamantit Cevheri | `adamantite_ore` | cevher | 1 | — | 999 | 6g 79b | 0.25 kg | Madencilik Sv 100 (T7, Mitik) | Adamantit Külçesi |
 | Alüminyum Cevheri | `aluminium_ore` | cevher | 1 | — | 999 | 4b | 0.25 kg | Madencilik Sv 12 (T1, Sıradan) | Alüminyum Külçesi |
 | Bronz Cevheri | `bronze_ore` | cevher | 1 | — | 999 | 7b | 0.25 kg | Madencilik Sv 22 (T2, Seçkin) | Bronz Külçesi |

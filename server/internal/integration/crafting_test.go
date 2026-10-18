@@ -101,3 +101,27 @@ func TestCraftingEarlyCollectRefunds(t *testing.T) {
 	require.True(t, again.Replayed)
 	require.Equal(t, 1, w.count(p, "potion_hp_small"), "collected once")
 }
+
+// Cooking (DD-268): a fish, a herb and a log make two dishes that heal.
+func TestCookingMakesFood(t *testing.T) {
+	w := newWorld(t)
+	now := time.Now().UTC()
+	svc := newCrafting(t, w, &now)
+	p := w.player("warrior", 1)
+	w.gold(p, 1_000)
+	_, err := svc.Learn(w.ctx, p.ID, p.Account, "cooking")
+	require.NoError(t, err)
+	w.give(p, "tiny_guppy", 2)
+	w.give(p, "common_grass", 1)
+	w.give(p, "young_sapling", 1)
+	job, err := svc.Start(w.ctx, p.ID, p.Account, "recipe_cook_grilled_guppy", 1)
+	require.NoError(t, err)
+	now = job.ReadyAt
+	res, err := svc.Collect(w.ctx, p.ID, p.Account, job.ID)
+	require.NoError(t, err)
+	require.Equal(t, 1, res.Made)
+	require.Equal(t, 2, w.count(p, "food_grilled_guppy"))
+	var effect []byte
+	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT use_effect FROM content.item_template WHERE code = 'food_grilled_guppy'`).Scan(&effect))
+	require.Contains(t, string(effect), "heal_hp")
+}
