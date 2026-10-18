@@ -69,7 +69,14 @@ regions:
     travel_seconds_from_parent: 300
     safe: false
 
-  # >>> generated: regions 25-100 (scripts/gen_world.py)
+  # >>> generated: regions (scripts/gen_world.py)
+  - code: broken_crown
+    display_name_key: region.broken_crown
+    kind: continent
+    min_level: 100
+    travel_seconds_from_parent: 0
+    safe: true
+
   - code: misty_marshes
     display_name_key: region.misty_marshes
     kind: zone
@@ -117,14 +124,82 @@ regions:
     min_level: 88
     travel_seconds_from_parent: 300
     safe: false
-  # <<< generated: regions 25-100
+
+  - code: crown_plains
+    display_name_key: region.crown_plains
+    kind: zone
+    parent_code: broken_crown
+    min_level: 100
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: rebel_camp
+    display_name_key: region.rebel_camp
+    kind: dungeon
+    parent_code: crown_plains
+    min_level: 128
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: burnt_forest
+    display_name_key: region.burnt_forest
+    kind: zone
+    parent_code: broken_crown
+    min_level: 150
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: fire_root
+    display_name_key: region.fire_root
+    kind: dungeon
+    parent_code: burnt_forest
+    min_level: 178
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: salt_desert
+    display_name_key: region.salt_desert
+    kind: zone
+    parent_code: broken_crown
+    min_level: 200
+    travel_seconds_from_parent: 420
+    safe: false
+
+  - code: buried_palace
+    display_name_key: region.buried_palace
+    kind: dungeon
+    parent_code: salt_desert
+    min_level: 228
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: crown_graveyard
+    display_name_key: region.crown_graveyard
+    kind: zone
+    parent_code: broken_crown
+    min_level: 250
+    travel_seconds_from_parent: 480
+    safe: false
+
+  - code: royal_crypt
+    display_name_key: region.royal_crypt
+    kind: dungeon
+    parent_code: crown_graveyard
+    min_level: 278
+    travel_seconds_from_parent: 300
+    safe: false
+  # <<< generated: regions
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
 region_links:
   - { region_a_code: greenwood, region_b_code: whispering_reach, travel_seconds: 300 }
 
-  # >>> generated: links 25-100 (scripts/gen_world.py)
+  # >>> generated: links (scripts/gen_world.py)
   - { region_a_code: emberpeak, region_b_code: misty_marshes, travel_seconds: 300 }
   - { region_a_code: iron_mountains, region_b_code: misty_marshes, travel_seconds: 300 }
   - { region_a_code: iron_mountains, region_b_code: northern_keep_ruins, travel_seconds: 300 }
-  # <<< generated: links 25-100
+  - { region_a_code: crown_plains, region_b_code: northern_keep_ruins, travel_seconds: 300 }
+  - { region_a_code: burnt_forest, region_b_code: crown_plains, travel_seconds: 300 }
+  - { region_a_code: burnt_forest, region_b_code: salt_desert, travel_seconds: 300 }
+  - { region_a_code: crown_graveyard, region_b_code: salt_desert, travel_seconds: 300 }
+  # <<< generated: links

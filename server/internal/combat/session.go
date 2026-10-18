@@ -80,10 +80,10 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 // cannot outlast far stronger mobs; dungeon bosses a few levels up are
 // unaffected.
 const (
-	GapHitPerLevel     = 4 // hit chance points lost per level of gap
-	GapDefensePerLevel = 6 // defense percent lost per level of gap
-	GapAttackGrace     = 5 // levels of gap before attack is lost
-	GapAttackPerLevel  = 6 // attack percent lost per level beyond the grace
+	GapHitPerLevel     = 4  // hit chance points lost per level of gap
+	GapDefensePerLevel = 6  // defense percent lost per level of gap
+	GapAttackGrace     = 5  // levels of gap before attack is lost
+	GapAttackPerLevel  = 10 // attack percent lost per level beyond the grace
 )
 
 func applyLevelGap(p *Combatant, mobLevel int16) {

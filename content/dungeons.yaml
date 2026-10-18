@@ -59,7 +59,7 @@ dungeons:
     bonus_gold_copper: 5000
     bonus_xp: 9000
 
-  # >>> generated: dungeons 25-100 (scripts/gen_world.py)
+  # >>> generated: dungeons (scripts/gen_world.py)
   - code: sunken_temple
     display_name_key: dungeon.sunken_temple
     min_level: 38
@@ -95,4 +95,52 @@ dungeons:
     boss_mob_code: fallen_lord_varn
     bonus_gold_copper: 25000
     bonus_xp: 30000
-  # <<< generated: dungeons 25-100
+
+  - code: rebel_camp
+    display_name_key: dungeon.rebel_camp
+    min_level: 128
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: rebel_rider, count: 3 }
+      - { mob_code: plains_lion, count: 3 }
+      - { mob_code: raider_mage, count: 2 }
+    boss_mob_code: rebel_king_orrin
+    bonus_gold_copper: 40000
+    bonus_xp: 50000
+
+  - code: fire_root
+    display_name_key: dungeon.fire_root
+    min_level: 178
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: ash_wolf, count: 3 }
+      - { mob_code: flame_spirit, count: 3 }
+      - { mob_code: cinder_treant, count: 2 }
+    boss_mob_code: burnt_mother_tree
+    bonus_gold_copper: 60000
+    bonus_xp: 80000
+
+  - code: buried_palace
+    display_name_key: dungeon.buried_palace
+    min_level: 228
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: sand_scorpion, count: 3 }
+      - { mob_code: desert_viper, count: 3 }
+      - { mob_code: salt_elemental, count: 2 }
+    boss_mob_code: pharaoh_seth_ka
+    bonus_gold_copper: 85000
+    bonus_xp: 120000
+
+  - code: royal_crypt
+    display_name_key: dungeon.royal_crypt
+    min_level: 278
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: royal_skeleton, count: 3 }
+      - { mob_code: tomb_keeper, count: 3 }
+      - { mob_code: soul_drinker, count: 2 }
+    boss_mob_code: crypt_lord_malachar
+    bonus_gold_copper: 115000
+    bonus_xp: 170000
+  # <<< generated: dungeons

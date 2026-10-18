@@ -34,6 +34,16 @@ type CharacterFetcher interface {
 // Populated from the item service (Sprint 8). Kept as a plain struct here so
 // the activity package doesn't import item (which would cycle — item already
 // imports activity for Kind).
+// DropLevel is the level a fight's loot comes from: the mob's, capped at
+// the character's (DD-255), so hunting far stronger mobs never pays better
+// gear or hides. playerLevel 0 (unknown) keeps the mob's level.
+func DropLevel(mobLevel, playerLevel int) int {
+	if playerLevel > 0 && playerLevel < mobLevel {
+		return playerLevel
+	}
+	return mobLevel
+}
+
 // GearDrop asks Grant for equipment on top of the material roll (DD-229):
 // Guaranteed pieces plus one Pct% chance per roll, from the gear Class can use
 // in the tier at Level. Boss improves the rarity odds. Zero value: no gear.

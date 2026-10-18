@@ -113,12 +113,16 @@ func TestHTTPDungeonBossDropsGear(t *testing.T) {
 	res := p.ok("POST", "/v1/dungeon/"+id+"/reveal", map[string]any{})
 	require.Equal(t, true, res["run"].(map[string]any)["cleared"], "level 16 clears a level 6 dungeon")
 
-	// Boss goblin_raider is level 8: the level-5 tier (iron).
-	tier := map[string]bool{"sword_iron": true, "helm_iron": true, "chest_iron": true, "legs_iron": true,
-		"boots_iron": true, "gloves_iron": true}
+	// Boss goblin_raider is level 8: equipment from the highest tier it
+	// reaches, the level-5 iron tier.
 	var gear []map[string]any
 	for _, it := range items(res, "items") {
-		if tier[it["template_code"].(string)] {
+		var lvl int16
+		var slot *string
+		require.NoError(t, w.p.QueryRow(w.ctx, `SELECT min_level, equip_slot FROM content.item_template WHERE code = $1`,
+			it["template_code"]).Scan(&lvl, &slot))
+		if slot != nil {
+			require.Equal(t, int16(5), lvl, "%v: gear from the highest tier the boss reaches", it["template_code"])
 			gear = append(gear, it)
 		}
 	}

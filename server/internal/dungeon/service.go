@@ -318,7 +318,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 			return nil, err
 		}
 		boss, _ := s.mobs.Catalog().Get(tmpl.BossMobCode)
-		gear = activity.GearDrop{Class: sheet.Class, Level: int(boss.Level), Rolls: run.Victories, Pct: GearDropPct}
+		gear = activity.GearDrop{Class: sheet.Class, Level: activity.DropLevel(int(boss.Level), int(snapshot.Level)),
+			Rolls: run.Victories, Pct: GearDropPct}
 		if run.BossKilled {
 			gear.Rolls--
 			gear.Guaranteed, gear.Boss = 1, true
@@ -329,7 +330,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		// Hides follow the dungeon's boss level (DD-244).
 		boss, _ := s.mobs.Catalog().Get(tmpl.BossMobCode)
 		granted, err = s.items.Grant(ctx, c.CharacterID, c.ID, c.Seed, activity.Drops{
-			Kind: activity.KindHunting, MobLevel: int(boss.Level),
+			Kind: activity.KindHunting, MobLevel: activity.DropLevel(int(boss.Level), int(snapshot.Level)),
 			Common: run.CommonDrops, Rare: run.RareDrops, Legendary: run.LegendaryDrops, Gear: gear,
 		})
 		if err != nil {

@@ -2294,6 +2294,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-255 — Sv 100–300 dünyası, ganimet seviye sınırı, ekipman adları 4 dil
+**Karar:** (1) Kırık Taç Krallığı (yeni kıta, Sv 100): Taç Ovaları 100, Yanık Orman 150, Tuz Çölü 200, Taç Mezarlığı 250; 24 mob (10 seviyede bir + zindan boss'ları), 4 zindan (Asiler Kampı 128, Ateş Kökü 178, Gömülü Saray 228, Kraliyet Kriptası 278; boss `elite`, girişin 4 üstünde), Kuzey Kalesi Harabeleri ↔ Taç Ovaları bağlantısı, adlar en/tr/zh-CN/es (`scripts/gen_world.py`, ortak `scripts/i18n_util.py`). (2) Ekipman merdiveni 110–285 (25 seviyede bir 8 kademe, 120 eşya); 35–95 kademeleri aynen korunur; tüm merdiven eşyalarının adları artık 4 dilde (`scripts/gen_gear_ladder.py`). (3) **Ganimet seviye sınırı:** av/zindan ekipmanı ve derisi mobun seviyesinden, en çok karakterin seviyesinden düşer (`activity.DropLevel`). Ekipman havuzu ulaşılan en yüksek kademenin kendisidir (önceki "5 seviyelik pencere" seyrek kademelerde 1. kademe eşyaları da içeriyordu); şart taşıyan özel eşyalar rastgele düşmez. (4) Seviye farkı saldırı kaybı 5 seviyelik muafiyetten sonra seviye başı %10. (5) Denge simülasyonu Sv 1–300, Sv 100'den itibaren her sınıfın iki terfi yolu ayrı ölçülür (beceriler dahil). "Dışarıdan seviye mob tehlikeli" hedefi yalnız Sv < 25: sonrasında tank/şifacı yollar çok üstteki moblara dayanabilir, ama XP dakika başı sabit ve ganimet karakter seviyesiyle sınırlı olduğundan üst seviyede avlanmak kâr getirmez.
+**Reason:** Kullanıcı isteği (adlar + 100–300 içeriği); ölçüm, güvenli yolların üst seviye mobdan daha iyi ganimet topladığını gösterdi.
+**Alternatives:** Üst seviye avı yasaklamak; seviye farkı cezasını şifacıları da öldürecek kadar sertleştirmek (zindan boss'larını bozar).
+**Consequences:** 100–300 zindanları giriş seviyesinde %78–100 temizlenir. Mevcut eşyaların zh/es adları (merdiven dışı) hâlâ İngilizceye düşer. İçerik Sv 300'de bitiyor.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

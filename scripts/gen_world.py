@@ -1,4 +1,4 @@
-"""World content past level 25 (DD-254): zones, mobs and dungeons, with
+"""World content past level 25 (DD-254, DD-255): zones, mobs and dungeons, with
 names in en, tr, zh-CN and es. Mob stats follow the content's level curve
 (hp 150+25L, attack 28+2.1L, defense 1+0.8L, xp 10·L^1.6) × archetype — the
 same curve the level 1-25 mobs use, which the balance package confirms still
@@ -8,7 +8,10 @@ Run from the repository root: python scripts/gen_world.py
 """
 import io
 import os
-import re
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+from i18n_util import merge  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(__file__), '..', 'content')
 L = lambda en, tr, zh, es: dict(en=en, tr=tr, zh=zh, es=es)
@@ -67,6 +70,68 @@ ZONES = [
 ]
 
 
+# Continents beyond Sundermere (root regions; zones hang under them).
+CONTINENTS = [
+    dict(code='broken_crown', level=100,
+         name=L('Kingdom of the Broken Crown', 'Kırık Taç Krallığı', '断冠王国', 'Reino de la Corona Rota')),
+]
+
+ZONES += [
+    dict(code='crown_plains', parent='broken_crown', level=100, travel=300, link='northern_keep_ruins',
+         name=L('Crown Plains', 'Taç Ovaları', '王冠平原', 'Llanuras de la Corona'),
+         mobs=[
+             ('rebel_rider', 110, 'normal', L('Rebel Rider', 'Asi Süvari', '叛军骑兵', 'Jinete Rebelde')),
+             ('plains_lion', 120, 'crit', L('Plains Lion', 'Ova Aslanı', '平原狮', 'León de las Llanuras')),
+             ('raider_mage', 130, 'evasive', L('Raider Mage', 'Yağmacı Büyücü', '掠夺法师', 'Mago Saqueador')),
+             ('rebel_king_orrin', 132, 'elite', L('Rebel King Orrin', 'Asi Kral Orrin', '叛王奥林', 'Rey Rebelde Orrin')),
+             ('war_bear', 140, 'tank', L('War Bear', 'Savaş Ayısı', '战熊', 'Oso de Guerra')),
+             ('black_lancer', 150, 'elite', L('Black Lancer', 'Kara Mızrakçı', '黑枪骑士', 'Lancero Negro')),
+         ],
+         dungeon=dict(code='rebel_camp', level=128, minutes=60, waves=['rebel_rider', 'plains_lion', 'raider_mage'],
+                      boss='rebel_king_orrin', gold=40000, xp=50000,
+                      name=L('Rebel Camp', 'Asiler Kampı', '叛军营地', 'Campamento Rebelde'))),
+    dict(code='burnt_forest', parent='broken_crown', level=150, travel=360, link='crown_plains',
+         name=L('Burnt Forest', 'Yanık Orman', '焦土森林', 'Bosque Calcinado'),
+         mobs=[
+             ('ash_wolf', 160, 'evasive', L('Ash Wolf', 'Kül Kurdu', '灰烬狼', 'Lobo de Ceniza')),
+             ('flame_spirit', 170, 'glass', L('Flame Spirit', 'Alev Ruhu', '火焰之灵', 'Espíritu de Llama')),
+             ('cinder_treant', 180, 'tank', L('Cinder Treant', 'Kömür Treanti', '余烬树人', 'Ent de Ceniza')),
+             ('burnt_mother_tree', 182, 'elite', L('Burnt Mother Tree', 'Yanık Ana Ağaç', '焦灼母树', 'Árbol Madre Calcinado')),
+             ('crimson_harpy', 190, 'crit', L('Crimson Harpy', 'Kızıl Harpya', '赤红鹰身女妖', 'Arpía Carmesí')),
+             ('scorched_shaman', 200, 'elite', L('Scorched Shaman', 'Yanık Şaman', '焦灼萨满', 'Chamán Abrasado')),
+         ],
+         dungeon=dict(code='fire_root', level=178, minutes=60, waves=['ash_wolf', 'flame_spirit', 'cinder_treant'],
+                      boss='burnt_mother_tree', gold=60000, xp=80000,
+                      name=L('Fire Root', 'Ateş Kökü', '火之根', 'Raíz de Fuego'))),
+    dict(code='salt_desert', parent='broken_crown', level=200, travel=420, link='burnt_forest',
+         name=L('Salt Desert', 'Tuz Çölü', '盐之沙漠', 'Desierto de Sal'),
+         mobs=[
+             ('sand_scorpion', 210, 'crit', L('Sand Scorpion', 'Kum Akrebi', '沙蝎', 'Escorpión de Arena')),
+             ('desert_viper', 220, 'evasive', L('Desert Viper', 'Çöl Yılanı', '沙漠蝰蛇', 'Víbora del Desierto')),
+             ('salt_elemental', 230, 'tank', L('Salt Elemental', 'Tuz Elementali', '盐元素', 'Elemental de Sal')),
+             ('pharaoh_seth_ka', 232, 'elite', L('Pharaoh Seth-Ka', 'Firavun Seth-Ka', '法老塞特卡', 'Faraón Seth-Ka')),
+             ('mummy_priest', 240, 'glass', L('Mummy Priest', 'Mumya Rahip', '木乃伊祭司', 'Sacerdote Momia')),
+             ('sand_worm', 250, 'elite', L('Sand Worm', 'Kum Solucanı', '沙虫', 'Gusano de Arena')),
+         ],
+         dungeon=dict(code='buried_palace', level=228, minutes=60, waves=['sand_scorpion', 'desert_viper', 'salt_elemental'],
+                      boss='pharaoh_seth_ka', gold=85000, xp=120000,
+                      name=L('Buried Palace', 'Gömülü Saray', '掩埋宫殿', 'Palacio Enterrado'))),
+    dict(code='crown_graveyard', parent='broken_crown', level=250, travel=480, link='salt_desert',
+         name=L('Crown Graveyard', 'Taç Mezarlığı', '王冠墓地', 'Cementerio de la Corona'),
+         mobs=[
+             ('royal_skeleton', 260, 'normal', L('Royal Skeleton', 'Kraliyet İskeleti', '王室骷髅', 'Esqueleto Real')),
+             ('tomb_keeper', 270, 'tank', L('Tomb Keeper', 'Mezar Bekçisi', '墓穴看守', 'Guardián de Tumbas')),
+             ('soul_drinker', 280, 'glass', L('Soul Drinker', 'Ruh Emici', '噬魂者', 'Bebedor de Almas')),
+             ('crypt_lord_malachar', 282, 'elite', L('Crypt Lord Malachar', 'Mezar Lordu Malachar', '墓穴领主玛拉卡', 'Señor de la Cripta Malachar')),
+             ('black_knight', 290, 'crit', L('Black Knight', 'Kara Şövalye', '黑骑士', 'Caballero Negro')),
+             ('crownless_king', 300, 'elite', L('Crownless King', 'Taçsız Kral', '无冕之王', 'Rey sin Corona')),
+         ],
+         dungeon=dict(code='royal_crypt', level=278, minutes=60, waves=['royal_skeleton', 'tomb_keeper', 'soul_drinker'],
+                      boss='crypt_lord_malachar', gold=115000, xp=170000,
+                      name=L('Royal Crypt', 'Kraliyet Kriptası', '王室地穴', 'Cripta Real'))),
+]
+
+
 def mob_yaml(code, level, arch):
     hm, am, dm, crit, eva = ARCH[arch]
     gold = round(503 * (level / 25) ** 1.5)
@@ -88,10 +153,14 @@ def put(key, n):
         names[lang][key] = n[lang]
 
 
+for c in CONTINENTS:
+    put('region.' + c['code'], c['name'])
+    regions.append('\n'.join(['  - code: ' + c['code'], '    display_name_key: region.' + c['code'], '    kind: continent',
+                              '    min_level: %d' % c['level'], '    travel_seconds_from_parent: 0', '    safe: true']))
 for z in ZONES:
     put('region.' + z['code'], z['name'])
     regions.append('\n'.join(['  - code: ' + z['code'], '    display_name_key: region.' + z['code'], '    kind: zone',
-                              '    parent_code: sundermere', '    min_level: %d' % z['level'],
+                              '    parent_code: ' + z.get('parent', 'sundermere'), '    min_level: %d' % z['level'],
                               '    travel_seconds_from_parent: %d' % z['travel'], '    safe: false']))
     a, b = sorted([z['code'], z['link']])
     links.append('  - { region_a_code: %s, region_b_code: %s, travel_seconds: 300 }' % (a, b))
@@ -138,35 +207,17 @@ def block(s, name, body, before=None):
 
 
 for fname, name, body, before in [
-    ('mobs.yaml', 'mobs 25-100', '\n\n'.join(mobs), None),
-    ('dungeons.yaml', 'dungeons 25-100', '\n\n'.join(dungeons), None),
+    ('mobs.yaml', 'mobs', '\n\n'.join(mobs), None),
+    ('dungeons.yaml', 'dungeons', '\n\n'.join(dungeons), None),
 ]:
     p = os.path.join(ROOT, fname)
     s, crlf = read(p)
     write(p, block(s, name, body, before), crlf)
 p = os.path.join(ROOT, 'regions.yaml')
 s, crlf = read(p)
-s = block(s, 'regions 25-100', '\n\n'.join(regions), before='# Non-parent shortcuts.')
-s = block(s, 'links 25-100', '\n'.join(links))
+s = block(s, 'regions', '\n\n'.join(regions), before='# Non-parent shortcuts.')
+s = block(s, 'links', '\n'.join(links))
 write(p, s, crlf)
 
-FILES = {'en': 'en', 'tr': 'tr', 'zh': 'zh-CN', 'es': 'es'}
-for lang, fname in FILES.items():
-    p = os.path.join(ROOT, 'i18n', fname + '.yaml')
-    s, crlf = read(p)
-    lines = s.split('\n')
-    for key, value in sorted(names[lang].items()):
-        line = '%s: "%s"' % (key, value)
-        idx = {re.match(r'^([\w.\-]+):', l).group(1): i for i, l in enumerate(lines) if re.match(r'^[\w.\-]+:\s*"', l)}
-        if key in idx:
-            lines[idx[key]] = line
-            continue
-        kind = key.split('.', 1)[0]
-        same = sorted(k for k in idx if k.split('.', 1)[0] == kind)
-        if same:
-            after = [k for k in same if k > key]
-            lines.insert(idx[after[0]] if after else idx[same[-1]] + 1, line)
-        else:  # partial languages: new section at the end
-            lines += ['', '# --- %s ---' % kind, line] if lines[-1] != '' else ['# --- %s ---' % kind, line, '']
-    write(p, '\n'.join(lines).rstrip('\n') + '\n', crlf)
+merge(names)
 print('mobs', len(mobs), 'dungeons', len(dungeons), 'regions', len(regions))

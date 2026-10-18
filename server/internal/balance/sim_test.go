@@ -76,7 +76,8 @@ func load(t *testing.T) *world {
 
 // kit is the best gear the content offers a class at a level: per slot, the
 // usable item with the highest level requirement.
-func (w *world) kit(class string, level int) []contentpack.Item {
+func (w *world) kit(build string, level int) []contentpack.Item {
+	class, _, _ := strings.Cut(build, "/")
 	best := map[string]contentpack.Item{}
 	for _, it := range w.items {
 		if it.EquipSlot == "" || int(it.MinLevel) > level || (it.ClassRestriction != "" && it.ClassRestriction != class) {
@@ -114,11 +115,33 @@ func simAlloc(class string, level int) leveling.Stats {
 	return st
 }
 
-// player builds the combatant the way hunts do: base sheet (class base +
-// allocated points) → gear + class passives → derived stats (class formula
-// when configured); actives for the auto-cast; the class resource.
-func (w *world) player(class string, level int, gear []contentpack.Item) combat.Combatant {
+// builds are what the targets test at a level: the base class below the
+// first promotion; from it, each class's two promotions ("class/promotion")
+// with their skills (DD-255).
+func builds(level int) []string {
 	cfg := leveling.Current()
+	var out []string
+	for _, c := range classes {
+		kids := cfg.Choices(c, level)
+		if len(kids) == 0 {
+			out = append(out, c)
+			continue
+		}
+		for _, k := range kids {
+			out = append(out, c+"/"+k.Code)
+		}
+	}
+	return out
+}
+
+// player builds the combatant the way hunts do: base sheet (class base +
+// allocated points) → gear + path passives → derived stats (class formula
+// when configured); path actives for the auto-cast; the class resource.
+// build is a class or "class/promotion".
+func (w *world) player(build string, level int, gear []contentpack.Item) combat.Combatant {
+	cfg := leveling.Current()
+	path := strings.Split(build, "/")
+	class := path[0]
 	ch := &character.Character{ClassCode: class, Level: int16(level), Alloc: simAlloc(class, level)}
 	raw := character.RawAttributes(ch)
 	b := character.PrimaryStats{Strength: raw.Strength, Agility: raw.Dexterity, Intelligence: raw.Intelligence,
@@ -129,7 +152,7 @@ func (w *world) player(class string, level int, gear []contentpack.Item) combat.
 			mods = append(mods, skill.Modifier{Kind: skill.ModifierKind(sb.Kind), Target: skill.Target(sb.Target), Amount: sb.Amount})
 		}
 	}
-	mods = append(mods, w.skills.Passives([]string{class}, level)...)
+	mods = append(mods, w.skills.Passives(path, level)...)
 	mods = append(mods, skill.FromLeveling(cfg.SoloAdaptationModifiers(class, false))...) // hunting alone
 	var formula *skill.Formula
 	k, hasClass := cfg.Class(class)
@@ -142,7 +165,7 @@ func (w *world) player(class string, level int, gear []contentpack.Item) combat.
 	p := combat.Combatant{Name: "player", HPMax: int32(s.Resources.HPMax), HPCurrent: int32(s.Resources.HPMax),
 		Attack: int32(d.Attack), Defense: int32(d.Defense), CritPct: int32(d.CritPct),
 		HitPct: int32(d.HitPct), EvasionPct: int32(d.EvasionPct), MPMax: int32(s.Resources.MPMax),
-		Skills:            w.skills.Actives([]string{class}, level),
+		Skills:            w.skills.Actives(path, level),
 		Level:             int16(level),
 		RegenPerEncounter: int32(float64(encSeconds/2) * character.HPRegenPer2s(s.Primary.VIT)),
 		BlockPct:          int32(d.BlockPct), CritDmgPct: int32(d.CritDmgPct), ExecutePct: int32(d.ExecutePct),
@@ -196,15 +219,11 @@ func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 	return o
 }
 
-var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}
+var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+	110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290}
 
 // toughGap is how far above the character a mob must be dangerous.
-func toughGap(level int) int {
-	if level < 25 {
-		return 5
-	}
-	return 10
-}
+func toughGap(int) int { return 5 }
 
 // toughFor is the first mob at least gap levels above (nil when none).
 func (w *world) toughFor(level, gap int) *combat.Mob {
@@ -289,7 +308,7 @@ func TestBalanceTargets(t *testing.T) {
 	prevMin := 0.0
 	for _, lv := range levels {
 		m := w.mobFor(lv)
-		for _, c := range classes {
+		for _, c := range builds(lv) {
 			kit := simulate(w.player(c, lv, w.kit(c, lv)), m, lv)
 			require.LessOrEqual(t, kit.deathRate, 0.10, "%s L%d: an hour at %s with level gear must be safe", c, lv, m.Code)
 			// At-level AFK hunting earns close to the curve's baseline rate
@@ -297,10 +316,11 @@ func TestBalanceTargets(t *testing.T) {
 			baseline := float64(character.XPToNext(lv)) / leveling.Current().Curve.BaselineXPPerMinute
 			require.Greater(t, kit.minPerLevel, 0.0)
 			require.LessOrEqual(t, kit.minPerLevel, baseline*1.25, "%s L%d: minutes per level vs baseline", c, lv)
-			// Out-levelled mobs must be dangerous: 5 levels up in the starting
-			// content; past it, sustain skills carry supports through +5, so
-			// the bar is 10 levels up (DD-254).
-			if tm := w.toughFor(lv, toughGap(lv)); tm != nil {
+			// Out-levelled mobs must be dangerous in the starting content.
+			// Past it, sustain skills let tanks and healers outlast stronger
+			// mobs, so out-levelling is made unprofitable instead: XP pays per
+			// minute and loot is capped at the character's level (DD-255).
+			if tm := w.toughFor(lv, toughGap(lv)); lv < 25 && tm != nil {
 				up := simulate(w.player(c, lv, w.kit(c, lv)), *tm, lv)
 				require.GreaterOrEqual(t, up.deathRate, 0.25, "%s L%d vs %s: out-levelled mobs must be dangerous", c, lv, tm.Code)
 			}
@@ -311,7 +331,7 @@ func TestBalanceTargets(t *testing.T) {
 
 	for _, d := range w.dungeons {
 		var lo, hi float64 = 1, 0
-		for _, c := range classes {
+		for _, c := range builds(int(d.MinLevel)) {
 			at := w.clearRate(c, int(d.MinLevel), d)
 			lo, hi = min(lo, at), max(hi, at)
 			require.GreaterOrEqual(t, at, 0.30, "%s %s at min level: clearable", c, d.Code)

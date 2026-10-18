@@ -297,12 +297,13 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		if err != nil {
 			return nil, err
 		}
-		gear = activity.GearDrop{Class: sheet.Class, Level: int(mob.Level), Rolls: hr.Victories, Pct: GearDropPct}
+		gear = activity.GearDrop{Class: sheet.Class, Level: activity.DropLevel(int(mob.Level), int(snapshot.Level)),
+			Rolls: hr.Victories, Pct: GearDropPct}
 	}
 	var granted []activity.GrantedItem
 	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops+gear.Rolls) > 0 {
 		granted, err = s.items.Grant(ctx, c.CharacterID, c.ID, c.Seed, activity.Drops{
-			Kind: activity.KindHunting, MobLevel: int(mob.Level),
+			Kind: activity.KindHunting, MobLevel: activity.DropLevel(int(mob.Level), int(snapshot.Level)),
 			Common: hr.CommonDrops, Rare: hr.RareDrops, Legendary: hr.LegendaryDrops, Gear: gear,
 		})
 		if err != nil {

@@ -109,7 +109,7 @@ func TestLevelGapAttackPenalty(t *testing.T) {
 	require.Equal(t, int32(90-4*4), p.HitPct)
 	p = base
 	applyLevelGap(&p, 60)
-	require.Equal(t, int32(1000*(100-6*5)/100), p.Attack, "10 levels up: 5 beyond the grace")
+	require.Equal(t, int32(1000*(100-10*5)/100), p.Attack, "10 levels up: 5 beyond the grace")
 	require.Equal(t, int32(100*(100-6*10)/100), p.Defense)
 	p = base
 	applyLevelGap(&p, 90)

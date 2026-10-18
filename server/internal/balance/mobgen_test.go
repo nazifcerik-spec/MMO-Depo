@@ -15,13 +15,14 @@ func TestMobCurve(t *testing.T) {
 	}
 	w := load(t)
 	mean := func(level int) (atk, def, hp float64) {
-		for _, c := range classes {
+		bs := builds(level)
+		for _, c := range bs {
 			p := w.player(c, level, w.kit(c, level))
 			atk += float64(p.Attack)
 			def += float64(p.Defense)
 			hp += float64(p.HPMax)
 		}
-		n := float64(len(classes))
+		n := float64(len(bs))
 		return atk / n, def / n, hp / n
 	}
 	base := func(l int) (float64, float64, float64) {
@@ -31,7 +32,7 @@ func TestMobCurve(t *testing.T) {
 	bh, ba, bd := base(25)
 	kh, kd := bh/a25, bd/a25
 	ka := (ba - 0.5*d25) / h25
-	for _, l := range []int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100} {
+	for _, l := range []int{25, 50, 75, 100, 110, 125, 135, 150, 160, 175, 185, 200, 210, 225, 235, 250, 260, 275, 285, 300} {
 		a, d, h := mean(l)
 		ch, ca, cd := base(l)
 		fmt.Printf("L%-3d player atk %5.0f def %5.0f hp %6.0f | fitted mob hp %6.0f atk %5.0f def %4.0f | v1 curve hp %5.0f atk %4.0f def %3.0f\n",
