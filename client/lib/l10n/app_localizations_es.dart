@@ -1991,4 +1991,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get classInfoFailed => 'No se pudieron cargar los detalles de la clase.';
+
+  @override
+  String xpShare(int pct) {
+    return 'PX $pct%';
+  }
 }

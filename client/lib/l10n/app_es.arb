@@ -62,5 +62,6 @@
   "masteryAt": "Maestría Nv {level}: {title}",
   "classInfoFailed": "No se pudieron cargar los detalles de la clase.",
   "levelShort": "Nv {level}",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "xpShare": "PX {pct}%"
 }

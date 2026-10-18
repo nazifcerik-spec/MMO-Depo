@@ -58,3 +58,41 @@ dungeons:
     boss_mob_code: ashen_lich
     bonus_gold_copper: 5000
     bonus_xp: 9000
+
+  # >>> generated: dungeons 25-100 (scripts/gen_world.py)
+  - code: sunken_temple
+    display_name_key: dungeon.sunken_temple
+    min_level: 38
+    duration_seconds: 2700         # 45 minutes
+    waves:
+      - { mob_code: mist_leech, count: 3 }
+      - { mob_code: mud_golem, count: 3 }
+      - { mob_code: bog_witch, count: 2 }
+    boss_mob_code: marsh_queen
+    bonus_gold_copper: 8000
+    bonus_xp: 12000
+
+  - code: forgotten_mine
+    display_name_key: dungeon.forgotten_mine
+    min_level: 63
+    duration_seconds: 3000         # 50 minutes
+    waves:
+      - { mob_code: mountain_troll, count: 3 }
+      - { mob_code: dwarf_ghost, count: 3 }
+      - { mob_code: rock_eagle, count: 2 }
+    boss_mob_code: iron_king
+    bonus_gold_copper: 15000
+    bonus_xp: 20000
+
+  - code: northern_keep
+    display_name_key: dungeon.northern_keep
+    min_level: 88
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: ghost_guard, count: 3 }
+      - { mob_code: cursed_archer, count: 3 }
+      - { mob_code: bone_rider, count: 2 }
+    boss_mob_code: fallen_lord_varn
+    bonus_gold_copper: 25000
+    bonus_xp: 30000
+  # <<< generated: dungeons 25-100

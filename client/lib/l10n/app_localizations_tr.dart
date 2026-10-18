@@ -1991,4 +1991,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get classInfoFailed => 'Sınıf bilgileri yüklenemedi.';
+
+  @override
+  String xpShare(int pct) {
+    return 'XP %$pct';
+  }
 }

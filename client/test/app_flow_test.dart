@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:otter/features/adventure/adventure_models.dart';
 import 'package:otter/shared/content_names.dart';
 import 'package:otter/features/character/class_catalog.dart';
 import 'package:otter/app/app.dart';
@@ -1529,6 +1530,15 @@ void main() {
     await tester.tap(find.text('Etkinlik'));
     await tester.pumpAndSettle();
     expect(find.text('Şu an planlı dünya etkinliği yok.'), findsOneWidget); // layout overflow would fail the test
+  });
+
+  test('mobXPPercent follows the server bands (DD-254)', () {
+    const bands = [MobXPBand(10, 1), MobXPBand(25, 0.5), MobXPBand(0, 0.1)];
+    expect(mobXPPercent(bands, 40, 45), 100, reason: 'above the character');
+    expect(mobXPPercent(bands, 40, 30), 100);
+    expect(mobXPPercent(bands, 40, 29), 50);
+    expect(mobXPPercent(bands, 40, 1), 10);
+    expect(mobXPPercent(const [], 40, 1), 100, reason: 'older server: no bands');
   });
 
   test('splitCopper', () {

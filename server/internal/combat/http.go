@@ -208,5 +208,8 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 	w.Header().Set("Cache-Control", "public, max-age=300")
-	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "mobs": out})
+	// xp_bands: how combat XP falls off for mobs below the character
+	// (DD-254); the client shows each mob's share, the server applies it.
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "mobs": out,
+		"xp_bands": leveling.Current().MobLevelXP})
 }

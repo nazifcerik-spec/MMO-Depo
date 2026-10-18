@@ -302,7 +302,10 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, fmt.Errorf("dungeon: unmarshal snapshot: %w", err)
 	}
 
-	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl)},
+	if boss, ok := s.mobs.Catalog().Get(tmpl.BossMobCode); ok { // boss bonus follows the same level rule (DD-254)
+		tmpl.BonusXP = leveling.Current().ScaleMobXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level))
+	}
+	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl), int(snapshot.Level)},
 		combat.DefaultMaxTurns, s.rngNew)
 
 	// Item mint — same idempotency pattern as hunt (source_ref_id = contract.ID).
@@ -509,15 +512,16 @@ func seedFromIDs(runID, characterID uuid.UUID) int64 {
 }
 
 // afkXPMobs pays every kill the AFK combat rate (DD-250) instead of the
-// mob's content XP.
+// mob's content XP, scaled for mobs far below the character (DD-254).
 type afkXPMobs struct {
 	inner MobLookup
 	xp    int32
+	level int // the character's level in the run's snapshot
 }
 
 func (m afkXPMobs) Get(code string) (combat.Mob, bool) {
 	mob, ok := m.inner.Get(code)
-	mob.XPReward = m.xp
+	mob.XPReward = leveling.Current().ScaleMobXP(m.xp, m.level, int(mob.Level))
 	return mob, ok
 }
 

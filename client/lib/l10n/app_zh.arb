@@ -62,5 +62,6 @@
   "masteryAt": "{level}级精通：{title}",
   "classInfoFailed": "无法加载职业信息。",
   "levelShort": "{level}级",
-  "close": "关闭"
+  "close": "关闭",
+  "xpShare": "经验 {pct}%"
 }

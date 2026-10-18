@@ -6,22 +6,30 @@ import (
 	"github.com/otter/server/internal/activity"
 )
 
-// GearTierSpan is how many levels below the source level gear can come from:
-// a level-12 mob drops the level-10 tier (min level in (7, 12]).
+// GearTierSpan is how many levels a gear tier spans below its top: a drop
+// comes from the highest tier the source level reaches, min levels in
+// (top-5, top] — a level-12 mob drops the level-10 tier, a level-45 mob the
+// level-35 tier once tiers grow sparser (DD-254).
 const GearTierSpan = 5
 
 // GearPool lists, sorted, the equipment a class can use from the tier at
 // level (DD-229).
 func GearPool(cat *Catalog, class string, level int) []string {
+	usable := func(t Template) bool {
+		return t.IsEquippable() && int(t.MinLevel) <= level &&
+			(t.ClassRestriction == nil || *t.ClassRestriction == "" || *t.ClassRestriction == class)
+	}
+	top := 0
+	for _, t := range cat.All() {
+		if usable(t) && int(t.MinLevel) > top {
+			top = int(t.MinLevel)
+		}
+	}
 	var out []string
 	for _, t := range cat.All() {
-		if !t.IsEquippable() || int(t.MinLevel) > level || int(t.MinLevel) <= level-GearTierSpan {
-			continue
+		if usable(t) && int(t.MinLevel) > top-GearTierSpan {
+			out = append(out, t.Code)
 		}
-		if t.ClassRestriction != nil && *t.ClassRestriction != "" && *t.ClassRestriction != class {
-			continue
-		}
-		out = append(out, t.Code)
 	}
 	sort.Strings(out)
 	return out

@@ -282,8 +282,10 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}
 
 	// Character XP per victory comes from the AFK combat rate (DD-250):
-	// minutes of fighting × afk_combat_xp_per_minute.
-	mob.XPReward = AFKXPPerVictory(c.EncounterSecs)
+	// minutes of fighting × afk_combat_xp_per_minute, scaled down for mobs
+	// far below the character (DD-254; the snapshot's level, so a level-up
+	// mid-hunt does not change the reward).
+	mob.XPReward = leveling.Current().ScaleMobXP(AFKXPPerVictory(c.EncounterSecs), int(snapshot.Level), int(mob.Level))
 	hr := Roll(c.Seed, snapshot, mob, planned, combat.DefaultMaxTurns, s.rngNew)
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------

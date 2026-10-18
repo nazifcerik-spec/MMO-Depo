@@ -100,3 +100,22 @@ func TestHTTPHuntXPIsCanonical(t *testing.T) {
 	victories := res["hunt"].(map[string]any)["victories"].(float64)
 	require.Equal(t, victories*2000, float64(amount), "AFK rate: 1000 XP per minute of 2-minute encounters")
 }
+
+// DD-254: a mob far below the character pays a tenth of the AFK rate.
+func TestHTTPGrayMobPaysLess(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "warrior")
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 40 WHERE id = $1`, p.char)
+	require.NoError(t, err)
+	mobs := p.ok("GET", "/v1/mobs", nil)
+	require.Len(t, mobs["xp_bands"], 3)
+	h := p.ok("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600})
+	hid := h["contract"].(map[string]any)["id"].(string)
+	_, err = w.p.Exec(w.ctx, `
+		UPDATE hunt.contract SET started_at = now() - interval '61 minutes', expires_at = now() - interval '1 minute'
+		 WHERE id = $1`, hid)
+	require.NoError(t, err)
+	res := p.ok("POST", "/v1/hunt/"+hid+"/reveal", map[string]any{})["hunt"].(map[string]any)
+	require.Positive(t, res["victories"])
+	require.Equal(t, res["victories"].(float64)*200, res["total_xp"], "level 40 vs level 1: 10% of 2000 per victory")
+}

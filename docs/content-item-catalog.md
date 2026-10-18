@@ -1,43 +1,123 @@
 # Oyundaki Eşyalar
 
-Toplam **246** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
+Toplam **351** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
 
-## Silahlar (30)
+## Silahlar (110)
 
 | Ad | Kod | Tür | Yuva | Sınıf | Sv | Bonuslar | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|---|
-| Kısa Yay | `bow_short` | yay | Ana el | Avcı | 1 | +6 Saldırı, +1 ÇEV, +2 İsabet % | 42b | 1.4 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
-| Av Yayı | `bow_hunting` | yay | Ana el | Avcı | 5 | +16 Saldırı, +2 ÇEV, +2 İsabet % | 1g 64b | 1.4 kg | Üretim: Demircilik 5+ (4× Meşe Kütüğü, 2× Yaban Tavşanı Postu, 20b); Av zaferi %4 / zindan boss'u |
-| Porsuk Yayı | `bow_yew` | yay | Ana el | Avcı | 10 | +29 Saldırı, +4 ÇEV, +3 İsabet % | 4g 9b | 1.4 kg | Av zaferi %4 / zindan boss'u |
-| Bileşik Yay | `bow_composite` | yay | Ana el | Avcı | 15 | +42 Saldırı, +6 ÇEV, +3 İsabet % | 7g 27b | 1.4 kg | Av zaferi %4 / zindan boss'u |
-| Uzun Yay | `bow_longbow` | yay | Ana el | Avcı | 20 | +54 Saldırı, +7 ÇEV, +4 İsabet % | 11g 3b | 1.4 kg | Av zaferi %4 / zindan boss'u |
-| Ejder Kemiği Yayı | `bow_dragonbone` | yay | Ana el | Avcı | 25 | +66 Saldırı, +9 ÇEV, +4 İsabet % | 15g 30b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Sade Lavta | `lute_simple` | lute | Ana el | Hepsi | 1 | +6 Saldırı, +1 Şans, +1 ÇEV | 42b | 1.6 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Akçaağaç Lavta | `lute_maple` | lute | Ana el | Hepsi | 5 | +16 Saldırı, +2 Şans, +1 ÇEV | 1g 64b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Gümüş Telli Lavta | `lute_silver` | lute | Ana el | Hepsi | 10 | +29 Saldırı, +4 Şans, +2 ÇEV | 4g 9b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Konser Lavtası | `lute_concert` | lute | Ana el | Hepsi | 15 | +42 Saldırı, +6 Şans, +3 ÇEV | 7g 27b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Büyülü Lavta | `lute_enchanted` | lute | Ana el | Hepsi | 20 | +54 Saldırı, +7 Şans, +4 ÇEV | 11g 3b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Efsaneler Lavtası | `lute_legend` | lute | Ana el | Hepsi | 25 | +66 Saldırı, +9 Şans, +5 ÇEV | 15g 30b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Lavta | `lute_mithril` | lute | Ana el | Hepsi | 35 | +88 Saldırı, +12 Şans, +7 ÇEV | 23g 72b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Lavta | `lute_adamant` | lute | Ana el | Hepsi | 50 | +120 Saldırı, +16 Şans, +9 ÇEV | 37g 64b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Lavta | `lute_wyrmforged` | lute | Ana el | Hepsi | 65 | +152 Saldırı, +21 Şans, +12 ÇEV | 52g 94b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Lavta | `lute_starforged` | lute | Ana el | Hepsi | 80 | +184 Saldırı, +25 Şans, +14 ÇEV | 68g 85b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Lavta | `lute_titan` | lute | Ana el | Hepsi | 95 | +216 Saldırı, +30 Şans, +17 ÇEV | 86g 60b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Tahta Topuz | `mace_wooden` | topuz | Ana el | Hepsi | 1 | +6 Saldırı, +1 ZEK, +1 DAY | 42b | 2.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Demir Topuz | `mace_iron` | topuz | Ana el | Hepsi | 5 | +16 Saldırı, +2 ZEK, +2 DAY | 1g 64b | 2.8 kg | Üretim: Demircilik 5+ (5× Demir Cevheri, 2× Meşe Kütüğü, 25b); Av zaferi %4 / zindan boss'u |
+| Kutsanmış Topuz | `mace_blessed` | topuz | Ana el | Hepsi | 10 | +29 Saldırı, +4 ZEK, +3 DAY | 4g 9b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Gümüş Topuz | `mace_silver` | topuz | Ana el | Hepsi | 15 | +42 Saldırı, +6 ZEK, +4 DAY | 7g 27b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kutsal Topuz | `mace_holy` | topuz | Ana el | Hepsi | 20 | +54 Saldırı, +7 ZEK, +5 DAY | 11g 3b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| İlahi Topuz | `mace_divine` | topuz | Ana el | Hepsi | 25 | +66 Saldırı, +9 ZEK, +6 DAY | 15g 30b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Topuz | `mace_mithril` | topuz | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 DAY | 23g 72b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Topuz | `mace_adamant` | topuz | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 DAY | 37g 64b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Topuz | `mace_wyrmforged` | topuz | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 DAY | 52g 94b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Topuz | `mace_starforged` | topuz | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 DAY | 68g 85b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Titan Topuz | `mace_titan` | topuz | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 DAY | 86g 60b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Bronz Orak | `sickle_bronze` | sickle | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 DAY | 42b | 1.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Demir Orak | `sickle_iron` | sickle | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 DAY | 1g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ay Orağı | `sickle_moon` | sickle | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 DAY | 4g 9b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Dikenli Orak | `sickle_thorn` | sickle | Ana el | Hepsi | 15 | +42 Saldırı, +6 KAR, +3 DAY | 7g 27b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Koru Orağı | `sickle_grove` | sickle | Ana el | Hepsi | 20 | +54 Saldırı, +7 KAR, +4 DAY | 11g 3b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Orak | `sickle_ancient` | sickle | Ana el | Hepsi | 25 | +66 Saldırı, +9 KAR, +5 DAY | 15g 30b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Orak | `sickle_mithril` | sickle | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 DAY | 23g 72b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Orak | `sickle_adamant` | sickle | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 DAY | 37g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Orak | `sickle_wyrmforged` | sickle | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 DAY | 52g 94b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Orak | `sickle_starforged` | sickle | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 DAY | 68g 85b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Titan Orak | `sickle_titan` | sickle | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 DAY | 86g 60b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Söğüt Asa | `staff_willow` | asa | Ana el | Büyücü | 1 | +6 Saldırı, +1 ZEK, +14 Mana | 42b | 1.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Çırak Asası | `staff_apprentice` | asa | Ana el | Büyücü | 5 | +16 Saldırı, +2 ZEK, +30 Mana | 1g 64b | 1.8 kg | Üretim: Demircilik 5+ (4× Meşe Kütüğü, 2× Papatya, 20b); Av zaferi %4 / zindan boss'u |
 | Usta Asası | `staff_adept` | asa | Ana el | Büyücü | 10 | +29 Saldırı, +4 ZEK, +50 Mana | 4g 9b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Kristal Asa | `staff_crystal` | asa | Ana el | Büyücü | 15 | +42 Saldırı, +6 ZEK, +70 Mana | 7g 27b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Gizemli Asa | `staff_arcane` | asa | Ana el | Büyücü | 20 | +54 Saldırı, +7 ZEK, +90 Mana | 11g 3b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Yıldız Asası | `staff_astral` | asa | Ana el | Büyücü | 25 | +66 Saldırı, +9 ZEK, +110 Mana | 15g 30b | 1.8 kg | Av zaferi %4 / zindan boss'u |
-| Tahta Topuz | `mace_wooden` | topuz | Ana el | Rahip | 1 | +6 Saldırı, +1 ZEK, +1 DAY | 42b | 2.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
-| Demir Topuz | `mace_iron` | topuz | Ana el | Rahip | 5 | +16 Saldırı, +2 ZEK, +2 DAY | 1g 64b | 2.8 kg | Üretim: Demircilik 5+ (5× Demir Cevheri, 2× Meşe Kütüğü, 25b); Av zaferi %4 / zindan boss'u |
-| Kutsanmış Topuz | `mace_blessed` | topuz | Ana el | Rahip | 10 | +29 Saldırı, +4 ZEK, +3 DAY | 4g 9b | 2.8 kg | Av zaferi %4 / zindan boss'u |
-| Gümüş Topuz | `mace_silver` | topuz | Ana el | Rahip | 15 | +42 Saldırı, +6 ZEK, +4 DAY | 7g 27b | 2.8 kg | Av zaferi %4 / zindan boss'u |
-| Kutsal Topuz | `mace_holy` | topuz | Ana el | Rahip | 20 | +54 Saldırı, +7 ZEK, +5 DAY | 11g 3b | 2.8 kg | Av zaferi %4 / zindan boss'u |
-| İlahi Topuz | `mace_divine` | topuz | Ana el | Rahip | 25 | +66 Saldırı, +9 ZEK, +6 DAY | 15g 30b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Asa | `staff_mithril` | asa | Ana el | Büyücü | 35 | +88 Saldırı, +12 ZEK, +150 Mana | 23g 72b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Asa | `staff_adamant` | asa | Ana el | Büyücü | 50 | +120 Saldırı, +16 ZEK, +200 Mana | 37g 64b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Asa | `staff_wyrmforged` | asa | Ana el | Büyücü | 65 | +152 Saldırı, +21 ZEK, +250 Mana | 52g 94b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Asa | `staff_starforged` | asa | Ana el | Büyücü | 80 | +184 Saldırı, +25 ZEK, +300 Mana | 68g 85b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Titan Asa | `staff_titan` | asa | Ana el | Büyücü | 95 | +216 Saldırı, +30 ZEK, +350 Mana | 86g 60b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Bez Sargılar | `fist_wraps` | fist_weapon | Ana el | Hepsi | 1 | +6 Saldırı, +1 ÇEV, +1 DAY | 42b | 1.2 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Demir Muşta | `fist_iron` | fist_weapon | Ana el | Hepsi | 5 | +16 Saldırı, +2 ÇEV, +1 DAY | 1g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kaplan Pençeleri | `fist_tiger` | fist_weapon | Ana el | Hepsi | 10 | +29 Saldırı, +4 ÇEV, +2 DAY | 4g 9b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Çelik Cestus | `fist_steel` | fist_weapon | Ana el | Hepsi | 15 | +42 Saldırı, +6 ÇEV, +3 DAY | 7g 27b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Yumrukları | `fist_dragon` | fist_weapon | Ana el | Hepsi | 20 | +54 Saldırı, +7 ÇEV, +4 DAY | 11g 3b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Yumruklar | `fist_celestial` | fist_weapon | Ana el | Hepsi | 25 | +66 Saldırı, +9 ÇEV, +5 DAY | 15g 30b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Muşta | `fist_mithril` | fist_weapon | Ana el | Hepsi | 35 | +88 Saldırı, +12 ÇEV, +7 DAY | 23g 72b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Muşta | `fist_adamant` | fist_weapon | Ana el | Hepsi | 50 | +120 Saldırı, +16 ÇEV, +9 DAY | 37g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Muşta | `fist_wyrmforged` | fist_weapon | Ana el | Hepsi | 65 | +152 Saldırı, +21 ÇEV, +12 DAY | 52g 94b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Muşta | `fist_starforged` | fist_weapon | Ana el | Hepsi | 80 | +184 Saldırı, +25 ÇEV, +14 DAY | 68g 85b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Titan Muşta | `fist_titan` | fist_weapon | Ana el | Hepsi | 95 | +216 Saldırı, +30 ÇEV, +17 DAY | 86g 60b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Meşe Tokmak | `hammer_oak` | two_handed_mace | Ana el | Hepsi | 1 | +6 Saldırı, +1 DAY, +1 GÜÇ | 42b | 3.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Demir Savaş Çekici | `hammer_iron` | two_handed_mace | Ana el | Hepsi | 5 | +16 Saldırı, +2 DAY, +1 GÜÇ | 1g 64b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Kutsanmış Çekiç | `hammer_blessed` | two_handed_mace | Ana el | Hepsi | 10 | +29 Saldırı, +4 DAY, +2 GÜÇ | 4g 9b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Gümüş Savaş Çekici | `hammer_silver` | two_handed_mace | Ana el | Hepsi | 15 | +42 Saldırı, +6 DAY, +3 GÜÇ | 7g 27b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Işıltılı Çekiç | `hammer_radiant` | two_handed_mace | Ana el | Hepsi | 20 | +54 Saldırı, +7 DAY, +4 GÜÇ | 11g 3b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Kutsal İntikamcı | `hammer_sacred` | two_handed_mace | Ana el | Hepsi | 25 | +66 Saldırı, +9 DAY, +5 GÜÇ | 15g 30b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Savaş Çekici | `hammer_mithril` | two_handed_mace | Ana el | Hepsi | 35 | +88 Saldırı, +12 DAY, +7 GÜÇ | 23g 72b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Savaş Çekici | `hammer_adamant` | two_handed_mace | Ana el | Hepsi | 50 | +120 Saldırı, +16 DAY, +9 GÜÇ | 37g 64b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Savaş Çekici | `hammer_wyrmforged` | two_handed_mace | Ana el | Hepsi | 65 | +152 Saldırı, +21 DAY, +12 GÜÇ | 52g 94b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Savaş Çekici | `hammer_starforged` | two_handed_mace | Ana el | Hepsi | 80 | +184 Saldırı, +25 DAY, +14 GÜÇ | 68g 85b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Titan Savaş Çekici | `hammer_titan` | two_handed_mace | Ana el | Hepsi | 95 | +216 Saldırı, +30 DAY, +17 GÜÇ | 86g 60b | 3.5 kg | Av zaferi %4 / zindan boss'u |
+| Kısa Yay | `bow_short` | yay | Ana el | Hepsi | 1 | +6 Saldırı, +1 ÇEV, +2 İsabet % | 42b | 1.4 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Av Yayı | `bow_hunting` | yay | Ana el | Hepsi | 5 | +16 Saldırı, +2 ÇEV, +2 İsabet % | 1g 64b | 1.4 kg | Üretim: Demircilik 5+ (4× Meşe Kütüğü, 2× Yaban Tavşanı Postu, 20b); Av zaferi %4 / zindan boss'u |
+| Porsuk Yayı | `bow_yew` | yay | Ana el | Hepsi | 10 | +29 Saldırı, +4 ÇEV, +3 İsabet % | 4g 9b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Bileşik Yay | `bow_composite` | yay | Ana el | Hepsi | 15 | +42 Saldırı, +6 ÇEV, +3 İsabet % | 7g 27b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Uzun Yay | `bow_longbow` | yay | Ana el | Hepsi | 20 | +54 Saldırı, +7 ÇEV, +4 İsabet % | 11g 3b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Kemiği Yayı | `bow_dragonbone` | yay | Ana el | Hepsi | 25 | +66 Saldırı, +9 ÇEV, +4 İsabet % | 15g 30b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Yay | `bow_mithril` | yay | Ana el | Hepsi | 35 | +88 Saldırı, +12 ÇEV, +5 İsabet % | 23g 72b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Yay | `bow_adamant` | yay | Ana el | Hepsi | 50 | +120 Saldırı, +16 ÇEV, +5 İsabet % | 37g 64b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Yay | `bow_wyrmforged` | yay | Ana el | Hepsi | 65 | +152 Saldırı, +21 ÇEV, +6 İsabet % | 52g 94b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Yay | `bow_starforged` | yay | Ana el | Hepsi | 80 | +184 Saldırı, +25 ÇEV, +6 İsabet % | 68g 85b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Titan Yay | `bow_titan` | yay | Ana el | Hepsi | 95 | +216 Saldırı, +30 ÇEV, +7 İsabet % | 86g 60b | 1.4 kg | Av zaferi %4 / zindan boss'u |
 | Paslı Hançer | `dagger_rusty` | hançer | Ana el | Haydut | 1 | +6 Saldırı, +1 ÇEV, +1 Kritik % | 42b | 0.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Hançer | `dagger_iron` | hançer | Ana el | Haydut | 5 | +16 Saldırı, +2 ÇEV, +1 Kritik % | 1g 64b | 0.8 kg | Üretim: Demircilik 5+ (3× Demir Cevheri, 1× Meşe Kütüğü, 20b); Av zaferi %4 / zindan boss'u |
 | Tırtıklı Hançer | `dagger_serrated` | hançer | Ana el | Haydut | 10 | +29 Saldırı, +4 ÇEV, +2 Kritik % | 4g 9b | 0.8 kg | Av zaferi %4 / zindan boss'u |
 | Çelik Hançer | `dagger_steel` | hançer | Ana el | Haydut | 15 | +42 Saldırı, +6 ÇEV, +2 Kritik % | 7g 27b | 0.8 kg | Av zaferi %4 / zindan boss'u |
 | Gölge Hançeri | `dagger_shadow` | hançer | Ana el | Haydut | 20 | +54 Saldırı, +7 ÇEV, +3 Kritik % | 11g 3b | 0.8 kg | Av zaferi %4 / zindan boss'u |
 | Zehir Dişi | `dagger_venom` | hançer | Ana el | Haydut | 25 | +66 Saldırı, +9 ÇEV, +4 Kritik % | 15g 30b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Hançer | `dagger_mithril` | hançer | Ana el | Haydut | 35 | +88 Saldırı, +12 ÇEV, +4 Kritik % | 23g 72b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Hançer | `dagger_adamant` | hançer | Ana el | Haydut | 50 | +120 Saldırı, +16 ÇEV, +5 Kritik % | 37g 64b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Hançer | `dagger_wyrmforged` | hançer | Ana el | Haydut | 65 | +152 Saldırı, +21 ÇEV, +5 Kritik % | 52g 94b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Hançer | `dagger_starforged` | hançer | Ana el | Haydut | 80 | +184 Saldırı, +25 ÇEV, +6 Kritik % | 68g 85b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Titan Hançer | `dagger_titan` | hançer | Ana el | Haydut | 95 | +216 Saldırı, +30 ÇEV, +6 Kritik % | 86g 60b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Oyma Totem | `totem_carved` | totem_focus | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 ZEK | 42b | 1.7 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kemik Totem | `totem_bone` | totem_focus | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 ZEK | 1g 64b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Ruh Totemi | `totem_spirit` | totem_focus | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 ZEK | 4g 9b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Taş Put | `totem_stone` | totem_focus | Ana el | Hepsi | 15 | +42 Saldırı, +6 KAR, +3 ZEK | 7g 27b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Gök Gürültüsü Putu | `totem_thunder` | totem_focus | Ana el | Hepsi | 20 | +54 Saldırı, +7 KAR, +4 ZEK | 11g 3b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Ata Totemi | `totem_ancestral` | totem_focus | Ana el | Hepsi | 25 | +66 Saldırı, +9 KAR, +5 ZEK | 15g 30b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Totem | `totem_mithril` | totem_focus | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 ZEK | 23g 72b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Totem | `totem_adamant` | totem_focus | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 ZEK | 37g 64b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Totem | `totem_wyrmforged` | totem_focus | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 ZEK | 52g 94b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Totem | `totem_starforged` | totem_focus | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 ZEK | 68g 85b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Titan Totem | `totem_titan` | totem_focus | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 ZEK | 86g 60b | 1.7 kg | Av zaferi %4 / zindan boss'u |
 | Talim Kılıcı | `sword_training` | kılıç | Ana el | Savaşçı | 1 | +6 Saldırı, +1 GÜÇ, +1 DAY | 42b | 2.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Kılıç | `sword_iron` | kılıç | Ana el | Savaşçı | 5 | +16 Saldırı, +2 GÜÇ, +1 DAY | 1g 64b | 2.5 kg | Üretim: Demircilik 5+ (5× Demir Cevheri, 1× Meşe Kütüğü, 25b); Av zaferi %4 / zindan boss'u |
 | Su Verilmiş Kılıç | `sword_tempered` | kılıç | Ana el | Savaşçı | 10 | +29 Saldırı, +4 GÜÇ, +2 DAY | 4g 9b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 | Çelik Uzun Kılıç | `sword_steel` | kılıç | Ana el | Savaşçı | 15 | +42 Saldırı, +6 GÜÇ, +3 DAY | 7g 27b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Kılıcı | `sword_knight` | kılıç | Ana el | Savaşçı | 20 | +54 Saldırı, +7 GÜÇ, +4 DAY | 11g 3b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Büyük Kılıç | `sword_runed` | kılıç | Ana el | Savaşçı | 25 | +66 Saldırı, +9 GÜÇ, +5 DAY | 15g 30b | 2.5 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Kılıç | `sword_mithril` | kılıç | Ana el | Savaşçı | 35 | +88 Saldırı, +12 GÜÇ, +7 DAY | 23g 72b | 2.5 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Kılıç | `sword_adamant` | kılıç | Ana el | Savaşçı | 50 | +120 Saldırı, +16 GÜÇ, +9 DAY | 37g 64b | 2.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Kılıç | `sword_wyrmforged` | kılıç | Ana el | Savaşçı | 65 | +152 Saldırı, +21 GÜÇ, +12 DAY | 52g 94b | 2.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Kılıç | `sword_starforged` | kılıç | Ana el | Savaşçı | 80 | +184 Saldırı, +25 GÜÇ, +14 DAY | 68g 85b | 2.5 kg | Av zaferi %4 / zindan boss'u |
+| Titan Kılıç | `sword_titan` | kılıç | Ana el | Savaşçı | 95 | +216 Saldırı, +30 GÜÇ, +17 DAY | 86g 60b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 
-## Zırhlar (31)
+## Zırhlar (56)
 
 | Ad | Kod | Tür | Yuva | Sınıf | Sv | Bonuslar | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|---|
@@ -47,30 +127,55 @@ Toplam **246** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Çelik Çizme | `boots_steel` | zırh | Çizme | Hepsi | 15 | +3 Savunma, +2 ÇEV | 3g 27b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Çizmesi | `boots_knight` | zırh | Çizme | Hepsi | 20 | +4 Savunma, +3 ÇEV | 4g 96b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Çizme | `boots_runed` | zırh | Çizme | Hepsi | 25 | +5 Savunma, +4 ÇEV | 6g 88b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Çizme | `boots_mithril` | zırh | Çizme | Hepsi | 35 | +7 Savunma, +5 ÇEV | 10g 66b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Çizme | `boots_adamant` | zırh | Çizme | Hepsi | 50 | +9 Savunma, +7 ÇEV | 16g 92b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Çizme | `boots_wyrmforged` | zırh | Çizme | Hepsi | 65 | +11 Savunma, +9 ÇEV | 23g 80b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Çizme | `boots_starforged` | zırh | Çizme | Hepsi | 80 | +13 Savunma, +11 ÇEV | 30g 96b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Titan Çizme | `boots_titan` | zırh | Çizme | Hepsi | 95 | +15 Savunma, +13 ÇEV | 38g 94b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Deri Göğüslük | `chest_leather` | zırh | Göğüs | Hepsi | 1 | +2 Savunma, +14 Can | 34b | 4 kg | Dükkân (34b); Üretim: Demircilik 1+ (4× Orman Faresi Postu, 8b); Av zaferi %4 / zindan boss'u |
 | Demir Göğüslük | `chest_iron` | zırh | Göğüs | Hepsi | 5 | +4 Savunma, +30 Can | 1g 31b | 4 kg | Üretim: Demircilik 3+ (6× Demir Cevheri, 2× Yaban Tavşanı Postu, 30b); Av zaferi %4 / zindan boss'u |
 | Pul Göğüslük | `chest_scale` | zırh | Göğüs | Hepsi | 10 | +6 Savunma, +50 Can | 3g 27b | 4 kg | Üretim: Demircilik 10+ (6× Bakır Cevheri, 3× Kalay Cevheri, 2× Yaban Kurdu Postu, 1g 40b); Av zaferi %4 / zindan boss'u |
 | Çelik Göğüslük | `chest_steel` | zırh | Göğüs | Hepsi | 15 | +7 Savunma, +70 Can | 5g 82b | 4 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Göğüslüğü | `chest_knight` | zırh | Göğüs | Hepsi | 20 | +9 Savunma, +90 Can | 8g 82b | 4 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Göğüslük | `chest_runed` | zırh | Göğüs | Hepsi | 25 | +11 Savunma, +110 Can | 12g 24b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Göğüslük | `chest_mithril` | zırh | Göğüs | Hepsi | 35 | +14 Savunma, +150 Can | 18g 97b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Göğüslük | `chest_adamant` | zırh | Göğüs | Hepsi | 50 | +19 Savunma, +210 Can | 30g 11b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Göğüslük | `chest_wyrmforged` | zırh | Göğüs | Hepsi | 65 | +24 Savunma, +270 Can | 42g 35b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Göğüslük | `chest_starforged` | zırh | Göğüs | Hepsi | 80 | +29 Savunma, +330 Can | 55g 8b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Titan Göğüslük | `chest_titan` | zırh | Göğüs | Hepsi | 95 | +34 Savunma, +390 Can | 69g 28b | 4 kg | Av zaferi %4 / zindan boss'u |
 | Deri Eldiven | `gloves_leather` | zırh | Eldiven | Hepsi | 1 | +1 Savunma, +1 İsabet % | 17b | 0.7 kg | Dükkân (17b); Üretim: Demircilik 1+ (1× Orman Faresi Postu, 4b); Av zaferi %4 / zindan boss'u |
 | Demir Eldiven | `gloves_iron` | zırh | Eldiven | Hepsi | 5 | +2 Savunma, +1 İsabet % | 66b | 0.7 kg | Üretim: Demircilik 3+ (2× Demir Cevheri, 12b); Av zaferi %4 / zindan boss'u |
 | Pul Eldiven | `gloves_scale` | zırh | Eldiven | Hepsi | 10 | +2 Savunma, +2 İsabet % | 1g 64b | 0.7 kg | Üretim: Demircilik 10+ (2× Bakır Cevheri, 1× Yaban Kurdu Postu, 60b); Av zaferi %4 / zindan boss'u |
 | Çelik Eldiven | `gloves_steel` | zırh | Eldiven | Hepsi | 15 | +3 Savunma, +2 İsabet % | 2g 91b | 0.7 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Eldiveni | `gloves_knight` | zırh | Eldiven | Hepsi | 20 | +4 Savunma, +3 İsabet % | 4g 41b | 0.7 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Eldiven | `gloves_runed` | zırh | Eldiven | Hepsi | 25 | +5 Savunma, +3 İsabet % | 6g 12b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Eldiven | `gloves_mithril` | zırh | Eldiven | Hepsi | 35 | +7 Savunma, +4 İsabet % | 9g 49b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Eldiven | `gloves_adamant` | zırh | Eldiven | Hepsi | 50 | +9 Savunma, +5 İsabet % | 15g 6b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Eldiven | `gloves_wyrmforged` | zırh | Eldiven | Hepsi | 65 | +11 Savunma, +6 İsabet % | 21g 18b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Eldiven | `gloves_starforged` | zırh | Eldiven | Hepsi | 80 | +13 Savunma, +7 İsabet % | 27g 54b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Titan Eldiven | `gloves_titan` | zırh | Eldiven | Hepsi | 95 | +15 Savunma, +8 İsabet % | 34g 64b | 0.7 kg | Av zaferi %4 / zindan boss'u |
 | Deri Kask | `helm_leather` | zırh | Kask | Hepsi | 1 | +1 Savunma, +1 DAY | 21b | 1.8 kg | Dükkân (21b); Üretim: Demircilik 1+ (2× Orman Faresi Postu, 5b); Av zaferi %4 / zindan boss'u |
 | Demir Kask | `helm_iron` | zırh | Kask | Hepsi | 5 | +2 Savunma, +1 DAY | 82b | 1.8 kg | Üretim: Demircilik 3+ (4× Demir Cevheri, 20b); Av zaferi %4 / zindan boss'u |
 | Pul Kask | `helm_scale` | zırh | Kask | Hepsi | 10 | +3 Savunma, +2 DAY | 2g 4b | 1.8 kg | Üretim: Demircilik 10+ (4× Bakır Cevheri, 2× Kalay Cevheri, 80b); Av zaferi %4 / zindan boss'u |
 | Çelik Kask | `helm_steel` | zırh | Kask | Hepsi | 15 | +4 Savunma, +2 DAY | 3g 64b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Kaskı | `helm_knight` | zırh | Kask | Hepsi | 20 | +5 Savunma, +3 DAY | 5g 52b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Kask | `helm_runed` | zırh | Kask | Hepsi | 25 | +6 Savunma, +4 DAY | 7g 65b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Kask | `helm_mithril` | zırh | Kask | Hepsi | 35 | +8 Savunma, +5 DAY | 11g 86b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Kask | `helm_adamant` | zırh | Kask | Hepsi | 50 | +10 Savunma, +7 DAY | 18g 82b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Kask | `helm_wyrmforged` | zırh | Kask | Hepsi | 65 | +13 Savunma, +9 DAY | 26g 47b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Kask | `helm_starforged` | zırh | Kask | Hepsi | 80 | +15 Savunma, +11 DAY | 34g 42b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Titan Kask | `helm_titan` | zırh | Kask | Hepsi | 95 | +18 Savunma, +13 DAY | 43g 30b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Deri Bacaklık | `legs_leather` | zırh | Bacak | Hepsi | 1 | +1 Savunma, +1 DAY | 29b | 3 kg | Dükkân (29b); Üretim: Demircilik 1+ (3× Orman Faresi Postu, 6b); Av zaferi %4 / zindan boss'u |
 | Demir Bacaklık | `legs_iron` | zırh | Bacak | Hepsi | 5 | +2 Savunma, +1 DAY | 1g 15b | 3 kg | Üretim: Demircilik 3+ (5× Demir Cevheri, 25b); Av zaferi %4 / zindan boss'u |
 | Pul Bacaklık | `legs_scale` | zırh | Bacak | Hepsi | 10 | +4 Savunma, +2 DAY | 2g 86b | 3 kg | Üretim: Demircilik 10+ (5× Bakır Cevheri, 3× Kalay Cevheri, 1g 10b); Av zaferi %4 / zindan boss'u |
 | Çelik Bacaklık | `legs_steel` | zırh | Bacak | Hepsi | 15 | +6 Savunma, +3 DAY | 5g 9b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Şövalye Bacaklığı | `legs_knight` | zırh | Bacak | Hepsi | 20 | +7 Savunma, +4 DAY | 7g 72b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Rünlü Bacaklık | `legs_runed` | zırh | Bacak | Hepsi | 25 | +8 Savunma, +5 DAY | 10g 71b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Bacaklık | `legs_mithril` | zırh | Bacak | Hepsi | 35 | +11 Savunma, +7 DAY | 16g 60b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Bacaklık | `legs_adamant` | zırh | Bacak | Hepsi | 50 | +15 Savunma, +9 DAY | 26g 35b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Bacaklık | `legs_wyrmforged` | zırh | Bacak | Hepsi | 65 | +19 Savunma, +11 DAY | 37g 6b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Bacaklık | `legs_starforged` | zırh | Bacak | Hepsi | 80 | +23 Savunma, +13 DAY | 48g 20b | 3 kg | Av zaferi %4 / zindan boss'u |
+| Titan Bacaklık | `legs_titan` | zırh | Bacak | Hepsi | 95 | +27 Savunma, +15 DAY | 60g 62b | 3 kg | Av zaferi %4 / zindan boss'u |
 | Titan Siper Kalkanı | `titan_bulwark_shield` | zırh | Yan el | Savaşçı | 600 | +400 Savunma, +10 block_pct, +5% Can | 25a | 9 kg | Av zaferi %4 / zindan boss'u |
 
 ## Tüketilebilirler (6)

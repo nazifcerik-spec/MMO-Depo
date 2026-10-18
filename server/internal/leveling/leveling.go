@@ -305,9 +305,12 @@ type Config struct {
 	// SoloAdaptation converts Ratio of a support specialization's
 	// support_power into attack when no party is active.
 	SoloAdaptation SoloAdaptation `yaml:"solo_adaptation" json:"solo_adaptation"`
-	Classes        []Class        `yaml:"classes" json:"classes"`
-	Trees          []Tree         `yaml:"talent_trees" json:"talent_trees"`
-	Unlocks        []Unlock       `yaml:"-" json:"unlocks"`
+	// MobLevelXP scales combat XP by how far a mob is below the character
+	// (ascending MaxBelow, the last band open-ended). Empty = always full.
+	MobLevelXP []MobXPBand `yaml:"mob_level_xp" json:"mob_level_xp"`
+	Classes    []Class     `yaml:"classes" json:"classes"`
+	Trees      []Tree      `yaml:"talent_trees" json:"talent_trees"`
+	Unlocks    []Unlock    `yaml:"-" json:"unlocks"`
 
 	table    []int64
 	classes  map[string]*Class
@@ -315,6 +318,13 @@ type Config struct {
 	talents  map[string]*Talent
 	treeOf   map[string]*Tree
 	rewards  map[int][]Reward
+}
+
+// MobXPBand: combat XP from a mob up to MaxBelow levels under the
+// character pays Factor (MaxBelow 0 = any larger gap; DD-254).
+type MobXPBand struct {
+	MaxBelow int     `yaml:"max_below" json:"max_below"`
+	Factor   float64 `yaml:"factor" json:"factor"`
 }
 
 // SoloAdaptation is the solo conversion rule of support classes.
@@ -432,6 +442,12 @@ func (c *Config) Prepare() error {
 	for _, k := range c.classes {
 		if err := validateClass(k, families); err != nil {
 			return err
+		}
+	}
+	for i, b := range c.MobLevelXP {
+		last := i == len(c.MobLevelXP)-1
+		if b.Factor < 0 || b.Factor > 1 || (last != (b.MaxBelow == 0)) || (i > 0 && !last && b.MaxBelow <= c.MobLevelXP[i-1].MaxBelow) {
+			return errors.New("leveling: mob_level_xp bands need ascending max_below, factors 0..1 and an open last band")
 		}
 	}
 	if c.SoloAdaptation.Ratio < 0 || c.SoloAdaptation.Ratio > 1 {
@@ -938,4 +954,26 @@ func (c *Config) ResourceOf(spec string) *Resource {
 		return root.Resource
 	}
 	return k.Resource
+}
+
+// MobXPFactor is the share of combat XP a mob of mobLevel pays a character
+// of playerLevel (DD-254): full at or above the character's level and within
+// the first band, less the further below. Unknown levels (0) pay in full, so
+// older contract snapshots keep their rewards.
+func (c *Config) MobXPFactor(playerLevel, mobLevel int) float64 {
+	gap := playerLevel - mobLevel
+	if playerLevel <= 0 || mobLevel <= 0 || gap <= 0 || len(c.MobLevelXP) == 0 {
+		return 1
+	}
+	for _, b := range c.MobLevelXP {
+		if b.MaxBelow == 0 || gap <= b.MaxBelow {
+			return b.Factor
+		}
+	}
+	return 1
+}
+
+// ScaleMobXP applies MobXPFactor to an XP amount (rounded, never negative).
+func (c *Config) ScaleMobXP(xp int32, playerLevel, mobLevel int) int32 {
+	return int32(math.Round(float64(xp) * c.MobXPFactor(playerLevel, mobLevel)))
 }

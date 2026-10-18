@@ -178,7 +178,7 @@ const (
 
 func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 	var o outcome
-	m.XPReward = hunt.AFKXPPerVictory(encSeconds) // reveal pays the AFK combat rate (DD-250)
+	m.XPReward = leveling.Current().ScaleMobXP(hunt.AFKXPPerVictory(encSeconds), level, int(m.Level)) // as the reveal pays (DD-250, DD-254)
 	for s := int64(1); s <= seeds; s++ {
 		r := hunt.Roll(s*7919, p, m, encPerHour, maxTurns, func(seed int64) combat.RNG { return activity.NewRNG(seed) })
 		if r.StoppedOnDeath {
@@ -196,12 +196,20 @@ func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 	return o
 }
 
-var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25}
+var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}
 
-// toughFor is the first mob at least five levels above (nil when none).
-func (w *world) toughFor(level int) *combat.Mob {
+// toughGap is how far above the character a mob must be dangerous.
+func toughGap(level int) int {
+	if level < 25 {
+		return 5
+	}
+	return 10
+}
+
+// toughFor is the first mob at least gap levels above (nil when none).
+func (w *world) toughFor(level, gap int) *combat.Mob {
 	for i := range w.mobs {
-		if int(w.mobs[i].Level) >= level+5 {
+		if int(w.mobs[i].Level) >= level+gap {
 			return &w.mobs[i]
 		}
 	}
@@ -229,7 +237,7 @@ func TestBalanceMatrix(t *testing.T) {
 			kit := simulate(w.player(c, lv, w.kit(c, lv)), m, lv)
 			bare := simulate(w.player(c, lv, nil), m, lv)
 			up := "  -"
-			if tm := w.toughFor(lv); tm != nil {
+			if tm := w.toughFor(lv, toughGap(lv)); tm != nil {
 				up = fmt.Sprintf("%3.0f", simulate(w.player(c, lv, w.kit(c, lv)), *tm, lv).deathRate*100)
 			}
 			fmt.Fprintf(&b, " | %3.0f %3.0f %s %6.0f    ", kit.deathRate*100, bare.deathRate*100, up, kit.minPerLevel)
@@ -289,7 +297,10 @@ func TestBalanceTargets(t *testing.T) {
 			baseline := float64(character.XPToNext(lv)) / leveling.Current().Curve.BaselineXPPerMinute
 			require.Greater(t, kit.minPerLevel, 0.0)
 			require.LessOrEqual(t, kit.minPerLevel, baseline*1.25, "%s L%d: minutes per level vs baseline", c, lv)
-			if tm := w.toughFor(lv); tm != nil {
+			// Out-levelled mobs must be dangerous: 5 levels up in the starting
+			// content; past it, sustain skills carry supports through +5, so
+			// the bar is 10 levels up (DD-254).
+			if tm := w.toughFor(lv, toughGap(lv)); tm != nil {
 				up := simulate(w.player(c, lv, w.kit(c, lv)), *tm, lv)
 				require.GreaterOrEqual(t, up.deathRate, 0.25, "%s L%d vs %s: out-levelled mobs must be dangerous", c, lv, tm.Code)
 			}

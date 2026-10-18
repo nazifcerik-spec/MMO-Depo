@@ -60,6 +60,14 @@ equipment_families:
    sickle, nature_focus, lute, harp, flute, rapier, ritual_axe, totem_focus]
 armor_types: [cloth, light, medium, heavy]
 
+# Combat XP from mobs below the character's level (DD-254): full within 10
+# levels, half up to 25 below, a tenth beyond. Mobs at or above the
+# character always pay in full.
+mob_level_xp:
+  - { max_below: 10, factor: 1.0 }
+  - { max_below: 25, factor: 0.5 }
+  - { max_below: 0,  factor: 0.1 }
+
 # Support specializations without a party convert this share of their
 # support_power into attack (Solo Adaptation, DD-252).
 solo_adaptation: { ratio: 0.35 }

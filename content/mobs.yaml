@@ -199,3 +199,239 @@ mobs:
     xp_reward: 1687
     gold_copper_min: 416
     gold_copper_max: 1040
+
+  # >>> generated: mobs 25-100 (scripts/gen_world.py)
+  - code: mist_leech
+    display_name_key: mob.mist_leech
+    level: 30
+    hp_max: 855
+    attack: 105
+    defense: 25
+    crit_pct: 9
+    hit_pct: 88
+    evasion_pct: 20
+    xp_reward: 2309
+    gold_copper_min: 661
+    gold_copper_max: 1652
+
+  - code: mud_golem
+    display_name_key: mob.mud_golem
+    level: 35
+    hp_max: 1794
+    attack: 102
+    defense: 55
+    crit_pct: 5
+    hit_pct: 89
+    evasion_pct: 2
+    xp_reward: 2955
+    gold_copper_min: 833
+    gold_copper_max: 2082
+
+  - code: bog_witch
+    display_name_key: mob.bog_witch
+    level: 40
+    hp_max: 1035
+    attack: 168
+    defense: 25
+    crit_pct: 11
+    hit_pct: 90
+    evasion_pct: 5
+    xp_reward: 3658
+    gold_copper_min: 1018
+    gold_copper_max: 2545
+
+  - code: marsh_queen
+    display_name_key: mob.marsh_queen
+    level: 42
+    hp_max: 1440
+    attack: 125
+    defense: 38
+    crit_pct: 7
+    hit_pct: 90
+    evasion_pct: 5
+    xp_reward: 3955
+    gold_copper_min: 1095
+    gold_copper_max: 2738
+
+  - code: venom_lizard
+    display_name_key: mob.venom_lizard
+    level: 45
+    hp_max: 1339
+    attack: 145
+    defense: 37
+    crit_pct: 17
+    hit_pct: 91
+    evasion_pct: 10
+    xp_reward: 4417
+    gold_copper_min: 1215
+    gold_copper_max: 3038
+
+  - code: drowned_knight
+    display_name_key: mob.drowned_knight
+    level: 50
+    hp_max: 1960
+    attack: 153
+    defense: 49
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 5228
+    gold_copper_min: 1423
+    gold_copper_max: 3558
+
+  - code: mountain_troll
+    display_name_key: mob.mountain_troll
+    level: 55
+    hp_max: 2669
+    attack: 144
+    defense: 86
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 6089
+    gold_copper_min: 1641
+    gold_copper_max: 4102
+
+  - code: dwarf_ghost
+    display_name_key: mob.dwarf_ghost
+    level: 60
+    hp_max: 1568
+    attack: 177
+    defense: 49
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 6999
+    gold_copper_min: 1870
+    gold_copper_max: 4675
+
+  - code: rock_eagle
+    display_name_key: mob.rock_eagle
+    level: 65
+    hp_max: 1598
+    attack: 247
+    defense: 40
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 7955
+    gold_copper_min: 2109
+    gold_copper_max: 5272
+
+  - code: iron_king
+    display_name_key: mob.iron_king
+    level: 67
+    hp_max: 2190
+    attack: 182
+    defense: 60
+    crit_pct: 7
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 8351
+    gold_copper_min: 2207
+    gold_copper_max: 5518
+
+  - code: iron_spider
+    display_name_key: mob.iron_spider
+    level: 70
+    hp_max: 1995
+    attack: 206
+    defense: 57
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 8957
+    gold_copper_min: 2357
+    gold_copper_max: 5892
+
+  - code: mine_warden
+    display_name_key: mob.mine_warden
+    level: 75
+    hp_max: 2835
+    attack: 213
+    defense: 73
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 10002
+    gold_copper_min: 2614
+    gold_copper_max: 6535
+
+  - code: ghost_guard
+    display_name_key: mob.ghost_guard
+    level: 80
+    hp_max: 2150
+    attack: 196
+    defense: 65
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 11090
+    gold_copper_min: 2879
+    gold_copper_max: 7198
+
+  - code: cursed_archer
+    display_name_key: mob.cursed_archer
+    level: 85
+    hp_max: 2048
+    attack: 310
+    defense: 52
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 12220
+    gold_copper_min: 3153
+    gold_copper_max: 7882
+
+  - code: bone_rider
+    display_name_key: mob.bone_rider
+    level: 90
+    hp_max: 2520
+    attack: 256
+    defense: 73
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 13390
+    gold_copper_min: 3436
+    gold_copper_max: 8590
+
+  - code: fallen_lord_varn
+    display_name_key: mob.fallen_lord_varn
+    level: 92
+    hp_max: 2940
+    attack: 239
+    defense: 82
+    crit_pct: 7
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 13869
+    gold_copper_min: 3551
+    gold_copper_max: 8878
+
+  - code: keep_gargoyle
+    display_name_key: mob.keep_gargoyle
+    level: 95
+    hp_max: 4419
+    attack: 228
+    defense: 146
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 14600
+    gold_copper_min: 3726
+    gold_copper_max: 9315
+
+  - code: fallen_commander
+    display_name_key: mob.fallen_commander
+    level: 100
+    hp_max: 3710
+    attack: 274
+    defense: 97
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 15849
+    gold_copper_min: 4024
+    gold_copper_max: 10060
+  # <<< generated: mobs 25-100

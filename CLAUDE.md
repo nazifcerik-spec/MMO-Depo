@@ -149,6 +149,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 69. **Karakter oluşturmada sınıf bilgisi (bitti)** — Sprint 69, DD-253. `GET /v1/classes` (70 düğüm + toplam nitelik puanı + kilometre taşları). Oluşturma ekranında sınıf kartı: tanıtım (`class.<sınıf>.intro`, 4 dil), kaynak, nitelik odağı + taban çubuklar, ekipman (`equipment.<aile>`), Sv 1–75 yetenekleri, piramit sınıf yolu (dokununca düğüm yetenekleri penceresi + ustalık unvanı). `ClassCatalog` / `ClassInfoCard` / `ClassPathPyramid` (istemci), sınıf ikonları geçici Material ikonları.
 
+70. **Seviye farkına göre XP + Sv 25–100 dünyası (bitti)** — Sprint 70, DD-254. `mob_level_xp` bantları (10 aşağı tam, 25 aşağı %50, ötesi %10) av + zindan ödülünde; `/v1/mobs` `xp_bands`, istemcide mob başına XP %. Seviye farkı: 5 seviye sonrası seviye başı %6 saldırı kaybı. `python scripts/gen_world.py` (3 bölge, 18 mob, 3 zindan, 4 dil), `python scripts/gen_gear_ladder.py` (Sv 35–95, 75 eşya); ekipman düşüşü en yüksek ulaşılan kademeden. Denge simülasyonu Sv 100'e kadar (dışarıdan seviye kuralı Sv 25 sonrası +10).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

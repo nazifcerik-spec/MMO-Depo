@@ -3579,6 +3579,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Class details couldn\'t load.'**
   String get classInfoFailed;
+
+  /// No description provided for @xpShare.
+  ///
+  /// In en, this message translates to:
+  /// **'XP {pct}%'**
+  String xpShare(int pct);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1991,4 +1991,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get classInfoFailed => '无法加载职业信息。';
+
+  @override
+  String xpShare(int pct) {
+    return '经验 $pct%';
+  }
 }

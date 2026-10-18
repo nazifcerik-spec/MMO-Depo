@@ -99,3 +99,22 @@ func TestGenericResourceStartAndRegen(t *testing.T) {
 	require.Equal(t, int32(10), k.mp)
 	require.True(t, Effects[EffectStun] && Timed(EffectDot) && !Timed(EffectStrike))
 }
+
+// DD-254: past five levels of gap the player also loses attack.
+func TestLevelGapAttackPenalty(t *testing.T) {
+	base := Combatant{Level: 50, HitPct: 90, Defense: 100, Attack: 1000}
+	p := base
+	applyLevelGap(&p, 54)
+	require.Equal(t, int32(1000), p.Attack, "within the grace: attack kept")
+	require.Equal(t, int32(90-4*4), p.HitPct)
+	p = base
+	applyLevelGap(&p, 60)
+	require.Equal(t, int32(1000*(100-6*5)/100), p.Attack, "10 levels up: 5 beyond the grace")
+	require.Equal(t, int32(100*(100-6*10)/100), p.Defense)
+	p = base
+	applyLevelGap(&p, 90)
+	require.Equal(t, int32(100), p.Attack, "never below 10%")
+	p = Combatant{Attack: 1000}
+	applyLevelGap(&p, 90)
+	require.Equal(t, int32(1000), p.Attack, "unknown level: no gap rule")
+}

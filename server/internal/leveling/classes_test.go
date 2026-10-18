@@ -66,3 +66,35 @@ func TestClassValidationAndQueries(t *testing.T) {
 		require.Error(t, c.Prepare(), name)
 	}
 }
+
+// DD-254: combat XP falls off for mobs far below the character.
+func TestMobXPFactor(t *testing.T) {
+	c := validConfig()
+	c.MobLevelXP = []leveling.MobXPBand{{MaxBelow: 10, Factor: 1}, {MaxBelow: 25, Factor: 0.5}, {Factor: 0.1}}
+	require.NoError(t, c.Prepare())
+	for _, tc := range []struct {
+		player, mob int
+		want        float64
+	}{
+		{40, 50, 1}, {40, 40, 1}, {40, 30, 1}, {40, 29, 0.5}, {40, 15, 0.5}, {40, 14, 0.1}, {500, 1, 0.1},
+		{0, 1, 1}, {40, 0, 1}, // unknown level (older snapshots): full
+	} {
+		require.Equal(t, tc.want, c.MobXPFactor(tc.player, tc.mob), "player %d mob %d", tc.player, tc.mob)
+	}
+	require.Equal(t, int32(1000), c.ScaleMobXP(2000, 40, 20))
+	require.Equal(t, int32(200), c.ScaleMobXP(2000, 40, 1))
+
+	for name, bands := range map[string][]leveling.MobXPBand{
+		"open band not last": {{MaxBelow: 0, Factor: 1}, {MaxBelow: 10, Factor: 0.5}},
+		"no open band":       {{MaxBelow: 10, Factor: 1}},
+		"descending":         {{MaxBelow: 20, Factor: 1}, {MaxBelow: 10, Factor: 0.5}, {Factor: 0.1}},
+		"factor":             {{MaxBelow: 10, Factor: 2}, {Factor: 0.1}},
+	} {
+		c := validConfig()
+		c.MobLevelXP = bands
+		require.Error(t, c.Prepare(), name)
+	}
+	empty := validConfig()
+	require.NoError(t, empty.Prepare())
+	require.Equal(t, 1.0, empty.MobXPFactor(500, 1), "no bands: always full")
+}

@@ -20,10 +20,17 @@ class AdventureRepository {
 
   // --- hunt -----------------------------------------------------------------
 
-  Future<List<MobInfo>> mobs() async => _mobs ??= [
-    for (final m in ((await api.get('/v1/mobs'))['mobs'] as List? ?? const []).cast<Map<String, dynamic>>())
-      MobInfo.fromJson(m),
-  ];
+  /// XP fall-off for low-level mobs, filled by [mobs].
+  List<MobXPBand> xpBands = const [];
+
+  Future<List<MobInfo>> mobs() async {
+    if (_mobs case final cached?) return cached;
+    final j = await api.get('/v1/mobs');
+    xpBands = [
+      for (final b in (j['xp_bands'] as List? ?? const []).cast<Map<String, dynamic>>()) MobXPBand.fromJson(b),
+    ];
+    return _mobs = [for (final m in (j['mobs'] as List? ?? const []).cast<Map<String, dynamic>>()) MobInfo.fromJson(m)];
+  }
 
   Future<CombatContract?> activeHunt() async => _contract(await api.get('$_char/hunt/active'), 'mob_code');
 

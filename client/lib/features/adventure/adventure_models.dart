@@ -4,6 +4,28 @@ import '../activity/activity_models.dart';
 /// 6h). Dungeons have a fixed duration per template.
 const huntDurations = activityDurations;
 
+/// Combat XP share for a mob [maxBelow] levels under the character
+/// (DD-254); maxBelow 0 closes the list.
+class MobXPBand {
+  const MobXPBand(this.maxBelow, this.factor);
+
+  factory MobXPBand.fromJson(Map<String, dynamic> j) =>
+      MobXPBand((j['max_below'] as num?)?.toInt() ?? 0, (j['factor'] as num?)?.toDouble() ?? 1);
+
+  final int maxBelow;
+  final double factor;
+}
+
+/// Percent of full combat XP a mob pays (display only; the server decides).
+int mobXPPercent(List<MobXPBand> bands, int playerLevel, int mobLevel) {
+  final gap = playerLevel - mobLevel;
+  if (gap <= 0) return 100;
+  for (final b in bands) {
+    if (b.maxBelow == 0 || gap <= b.maxBelow) return (b.factor * 100).round();
+  }
+  return 100;
+}
+
 class MobInfo {
   const MobInfo({
     required this.code,

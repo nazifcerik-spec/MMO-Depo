@@ -276,6 +276,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
             mob: m,
             selected: m.code == _mob,
             overLevel: m.level > widget.level,
+            xpPercent: mobXPPercent(widget.repo.xpBands, widget.level, m.level),
             onTap: () => setState(() {
               _mob = m.code;
               _mobPicked = true;
@@ -312,11 +313,20 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
 }
 
 class _MobTile extends StatelessWidget {
-  const _MobTile({required this.mob, required this.selected, required this.overLevel, required this.onTap});
+  const _MobTile({
+    required this.mob,
+    required this.selected,
+    required this.overLevel,
+    required this.onTap,
+    this.xpPercent = 100,
+  });
 
   final MobInfo mob;
   final bool selected;
   final bool overLevel;
+
+  /// Share of full combat XP (DD-254): low-level mobs pay less.
+  final int xpPercent;
   final VoidCallback onTap;
 
   @override
@@ -364,8 +374,16 @@ class _MobTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  l.xpGain(mob.xpReward),
-                  style: const TextStyle(fontSize: 12, color: Palette.epic, fontWeight: FontWeight.w600),
+                  l.xpShare(xpPercent),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: switch (xpPercent) {
+                      >= 100 => Palette.epic,
+                      >= 50 => Palette.warning,
+                      _ => Palette.textMuted,
+                    },
+                  ),
                 ),
               ],
             ),

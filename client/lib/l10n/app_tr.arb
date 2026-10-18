@@ -580,5 +580,6 @@
   "skillTagUltimate": "nihai",
   "skillCostCd": "Maliyet {cost} · bekleme {cd} tur",
   "masteryAt": "Sv {level} ustalığı: {title}",
-  "classInfoFailed": "Sınıf bilgileri yüklenemedi."
+  "classInfoFailed": "Sınıf bilgileri yüklenemedi.",
+  "xpShare": "XP %{pct}"
 }

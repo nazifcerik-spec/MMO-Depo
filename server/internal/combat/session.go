@@ -75,10 +75,15 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 }
 
 // Level-gap rule (DD-229): fighting a mob above your level costs accuracy
-// and armor, so out-levelled content is dangerous whatever the gear.
+// and armor, so out-levelled content is dangerous whatever the gear. Past
+// GapAttackGrace levels it also costs attack (DD-254), so healing classes
+// cannot outlast far stronger mobs; dungeon bosses a few levels up are
+// unaffected.
 const (
 	GapHitPerLevel     = 4 // hit chance points lost per level of gap
 	GapDefensePerLevel = 6 // defense percent lost per level of gap
+	GapAttackGrace     = 5 // levels of gap before attack is lost
+	GapAttackPerLevel  = 6 // attack percent lost per level beyond the grace
 )
 
 func applyLevelGap(p *Combatant, mobLevel int16) {
@@ -88,6 +93,9 @@ func applyLevelGap(p *Combatant, mobLevel int16) {
 	gap := int32(mobLevel - p.Level)
 	p.HitPct -= GapHitPerLevel * gap
 	p.Defense = p.Defense * max(0, 100-GapDefensePerLevel*gap) / 100
+	if over := gap - GapAttackGrace; over > 0 {
+		p.Attack = max(1, p.Attack*max(10, 100-GapAttackPerLevel*over)/100)
+	}
 }
 
 // caster tracks one combatant's resource, skill cooldowns and timed

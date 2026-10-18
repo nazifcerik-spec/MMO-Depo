@@ -69,6 +69,62 @@ regions:
     travel_seconds_from_parent: 300
     safe: false
 
+  # >>> generated: regions 25-100 (scripts/gen_world.py)
+  - code: misty_marshes
+    display_name_key: region.misty_marshes
+    kind: zone
+    parent_code: sundermere
+    min_level: 25
+    travel_seconds_from_parent: 420
+    safe: false
+
+  - code: sunken_temple
+    display_name_key: region.sunken_temple
+    kind: dungeon
+    parent_code: misty_marshes
+    min_level: 38
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: iron_mountains
+    display_name_key: region.iron_mountains
+    kind: zone
+    parent_code: sundermere
+    min_level: 50
+    travel_seconds_from_parent: 480
+    safe: false
+
+  - code: forgotten_mine
+    display_name_key: region.forgotten_mine
+    kind: dungeon
+    parent_code: iron_mountains
+    min_level: 63
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: northern_keep_ruins
+    display_name_key: region.northern_keep_ruins
+    kind: zone
+    parent_code: sundermere
+    min_level: 75
+    travel_seconds_from_parent: 540
+    safe: false
+
+  - code: northern_keep
+    display_name_key: region.northern_keep
+    kind: dungeon
+    parent_code: northern_keep_ruins
+    min_level: 88
+    travel_seconds_from_parent: 300
+    safe: false
+  # <<< generated: regions 25-100
+
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
 region_links:
   - { region_a_code: greenwood, region_b_code: whispering_reach, travel_seconds: 300 }
+
+  # >>> generated: links 25-100 (scripts/gen_world.py)
+  - { region_a_code: emberpeak, region_b_code: misty_marshes, travel_seconds: 300 }
+  - { region_a_code: iron_mountains, region_b_code: misty_marshes, travel_seconds: 300 }
+  - { region_a_code: iron_mountains, region_b_code: northern_keep_ruins, travel_seconds: 300 }
+  # <<< generated: links 25-100

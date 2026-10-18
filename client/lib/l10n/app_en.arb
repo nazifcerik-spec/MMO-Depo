@@ -1498,5 +1498,13 @@
       }
     }
   },
-  "classInfoFailed": "Class details couldn't load."
+  "classInfoFailed": "Class details couldn't load.",
+  "xpShare": "XP {pct}%",
+  "@xpShare": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  }
 }

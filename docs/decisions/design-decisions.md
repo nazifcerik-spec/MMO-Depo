@@ -2285,6 +2285,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-254 — Seviye farkına göre XP + Sv 25–100 dünyası
+**Karar:** (1) Savaş XP'si mobun karaktere göre seviyesine bağlı: en fazla 10 seviye aşağısı tam, 11–25 aşağısı %50, daha aşağısı %10; kendi seviyesi ve üstü her zaman tam (`progression.yaml` `mob_level_xp` bantları, `leveling.MobXPFactor/ScaleMobXP`). Av ve zindan (dalga + boss bonusu) ödülü sözleşmedeki oyuncu anlık görüntüsünün seviyesine göre ölçeklenir; seviyesi bilinmeyen eski görüntüler tam alır. `GET /v1/mobs` `xp_bands` döner; istemci av listesinde mob başına "XP %…" gösterir (hesap sunucuda). (2) Seviye farkı kuralına 5 seviyelik muafiyetten sonra seviye başı %6 saldırı kaybı eklendi (en az %10); zindan boss'ları (+2…+4) etkilenmez, çok üstteki moblar şifacı sınıflar için de ölümcül olur. (3) Sv 25–100 içeriği `scripts/gen_world.py` ile: 3 bölge (Sisli Bataklıklar 25, Demir Dağlar 50, Kuzey Kalesi Harabeleri 75 + bağlantılar), 18 mob (5 seviyede bir; mevcut eğri hp 150+25L, saldırı 28+2,1L, savunma 1+0,8L × arketip: normal/tank/glass/evasive/crit/elite/chief), 3 zindan (Batık Tapınak 38, Unutulmuş Maden 63, Kuzey Kalesi 88; boss girişin 4 seviye üstünde, `chief`), adlar en/tr/zh-CN/es. (4) Ekipman merdiveni `scripts/gen_gear_ladder.py` ile Sv 35/50/65/80/95 kademeleri (10 sınıf silahı + 5 zırh = 75 eşya, en/tr adları). Ekipman düşüşü artık kaynağın ulaştığı en yüksek kademeden (`item.GearPool`; kademeler seyrekleşince de düşer). Denge: `internal/balance` seviyeleri 100'e kadar; hedefler aynı, "dışarıdan seviye" kuralı Sv < 25'te +5, sonrasında +10 (beceri setleri ve iyileştirme +5'i aşılabilir kılıyor). `TestMobCurve` (MOBCURVE=1) eğrinin ekipmanlı ortalama oyuncuya uyduğunu gösterir.
+**Reason:** XP mob seviyesinden bağımsızdı (Sv 500 karakter Sv 1 mobdan tam XP alıyordu); içerik Sv 25'te bitiyordu.
+**Alternatives:** Mob başına sabit XP (AFK oranından kopar); seviye farkını oyuncu tarafında engellemek (av başlatmayı yasaklamak).
+**Consequences:** Oyuncu her ~10 seviyede yeni moba geçer. Yeni zindanlar giriş seviyesinde eskilerden kolay (%74–100 temizleme). İçerik Sv 100'de bitiyor; sonraki dönemler aynı betiklerle eklenecek. Baskınlar ertelendi.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
