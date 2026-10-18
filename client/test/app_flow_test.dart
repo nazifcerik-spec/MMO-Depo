@@ -282,6 +282,10 @@ void main() {
     for (final r in ['Human', 'Elf', 'Dwarf', 'Orc', 'Troll', 'Undead', 'Dark Elf', 'Drakari', 'Tauren', 'Gnome']) {
       expect(find.text(r), findsOneWidget, reason: 'race $r (DD-267)');
     }
+    // One size for every card, however long the name or lore.
+    final cards = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_RaceCard');
+    final sizes = {for (final e in cards.evaluate()) tester.getSize(find.byWidget(e.widget))};
+    expect(sizes, hasLength(1), reason: '$sizes');
     expect(find.text('Your race sets your look; it does not change attributes.'), findsOneWidget);
     await tester.ensureVisible(find.text('Dark Elf'));
     await tester.pumpAndSettle();

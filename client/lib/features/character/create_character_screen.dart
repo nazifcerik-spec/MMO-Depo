@@ -208,7 +208,7 @@ class _ClassStrip extends StatelessWidget {
                           color: c == selected ? classColor(c).withValues(alpha: 0.18) : Palette.bgElevated,
                           border: Border.all(
                             color: c == selected ? classColor(c) : Palette.borderStrong,
-                            width: c == selected ? 2 : 1,
+                            width: _border,
                           ),
                         ),
                         child: Icon(
@@ -544,19 +544,13 @@ class _Skills extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(Radii.md),
                                 border: Border.all(
                                   color: s.code == selected ? color : Palette.borderStrong,
-                                  width: s.code == selected ? 2 : 1,
+                                  width: _border,
                                 ),
                               ),
                               child: Icon(skillIcon(s), size: 20, color: s.active ? color : Palette.epic),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              ContentNames.of('skill', s.code),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 11),
-                            ),
+                            _Lines(ContentNames.of('skill', s.code), lines: 2, style: const TextStyle(fontSize: 11)),
                             Text(
                               l.levelShort(s.unlockLevel),
                               style: const TextStyle(fontSize: 11, color: Palette.textMuted),
@@ -770,7 +764,7 @@ class _RaceCard extends StatelessWidget {
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Radii.md),
-            border: Border.all(color: selected ? Palette.accent : Palette.borderSubtle, width: selected ? 2 : 1),
+            border: Border.all(color: selected ? Palette.accent : Palette.borderSubtle, width: _border),
           ),
           child: Column(
             children: [
@@ -784,14 +778,8 @@ class _RaceCard extends StatelessWidget {
                     : Image.asset(path, fit: BoxFit.cover, errorBuilder: (_, _, _) => fallback),
               ),
               const SizedBox(height: 4),
-              Text(name, style: TextStyle(fontSize: 13, fontWeight: selected ? FontWeight.w600 : FontWeight.w400)),
-              Text(
-                desc,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 11, color: Palette.textSecondary),
-              ),
+              _Lines(name, lines: 1, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+              _Lines(desc, lines: 2, style: const TextStyle(fontSize: 11, color: Palette.textSecondary)),
             ],
           ),
         ),
@@ -815,6 +803,38 @@ class _Chip extends StatelessWidget {
     ),
     child: Text(label, style: const TextStyle(fontSize: 11, color: Palette.textSecondary)),
   );
+}
+
+/// One border width for every selectable item; selection changes only the
+/// colour, so nothing shifts when it is picked.
+const _border = 1.5;
+
+/// Text in a box exactly [lines] tall whatever its length, so items of the
+/// same kind line up: one line scales a long word down, more lines ellipsize.
+class _Lines extends StatelessWidget {
+  const _Lines(this.text, {required this.lines, required this.style});
+
+  final String text;
+  final int lines;
+  final TextStyle style;
+
+  static const _height = 1.3;
+
+  @override
+  Widget build(BuildContext context) {
+    final st = style.copyWith(height: _height);
+    final scale = MediaQuery.textScalerOf(context).scale(st.fontSize ?? 14);
+    return SizedBox(
+      height: lines * scale * _height,
+      width: double.infinity,
+      child: lines == 1
+          ? FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(text, maxLines: 1, style: st),
+            )
+          : Text(text, textAlign: TextAlign.center, maxLines: lines, overflow: TextOverflow.ellipsis, style: st),
+    );
+  }
 }
 
 /// Asks for the name, then creates the character (pops with it).
