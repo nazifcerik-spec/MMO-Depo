@@ -120,19 +120,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get raceOrc => 'Orc';
 
   @override
-  String get classWarrior => 'Warrior';
+  String get classWarrior => 'Guerrero';
 
   @override
-  String get classMage => 'Mage';
+  String get classMage => 'Mago';
 
   @override
-  String get classHunter => 'Hunter';
-
-  @override
-  String get classPriest => 'Priest';
-
-  @override
-  String get classRogue => 'Rogue';
+  String get classRogue => 'Pícaro';
 
   @override
   String levelLine(int level, String cls, String race) {
@@ -1894,4 +1888,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String skillEmpower(int pct, int turns) {
     return '+$pct% de ataque durante $turns turnos';
   }
+
+  @override
+  String get classRanger => 'Explorador';
+
+  @override
+  String get classCleric => 'Clérigo';
+
+  @override
+  String get classMonk => 'Monje';
+
+  @override
+  String get classPaladin => 'Paladín';
+
+  @override
+  String get classDruid => 'Druida';
+
+  @override
+  String get classBard => 'Bardo';
+
+  @override
+  String get classShaman => 'Chamán';
+
+  @override
+  String get errEquipmentPermission => 'Tu clase no puede usar este tipo de equipo.';
 }

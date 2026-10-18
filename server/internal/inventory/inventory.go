@@ -92,6 +92,9 @@ var (
 	// class branch or more raw attributes (DD-250 §34).
 	ErrSpecRequirement      = errors.New("inventory: class branch requirement not met")
 	ErrAttributeRequirement = errors.New("inventory: attribute requirement not met")
+	// ErrEquipmentPermission: the class path may not use this equipment
+	// family (progression equipment_permissions, DD-252).
+	ErrEquipmentPermission = errors.New("inventory: equipment family not permitted")
 
 	// ErrBagFull is returned when the bag has no free slot for a new item.
 	ErrBagFull = errors.New("inventory: bag full")

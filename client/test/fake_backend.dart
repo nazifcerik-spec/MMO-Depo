@@ -85,6 +85,7 @@ class FakeBackend {
       'energy_current': 50,
       'energy_max': 100,
     },
+    if (c['class_code'] == 'ranger') ...{'resource_kind': 'focus', 'resource_max': 100},
   };
 
   MockClient client() => MockClient((req) async {

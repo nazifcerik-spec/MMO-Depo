@@ -282,6 +282,9 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		mods, err := charSvc.ProgressionModifiers(ctx, id, sheet)
 		return skill.FromLeveling(mods), err
 	})
+	// Solo Adaptation (DD-252): support paths convert part of their support
+	// power into attack while not grouped.
+	sheetAdapter.WithModifierSource(soloAdaptation{pool}.Modifiers)
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)

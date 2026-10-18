@@ -109,6 +109,25 @@ type Primary struct {
 	Luck int `json:"luck"`
 }
 
+// Get returns a primary stat by its leveling attribute name.
+func (p Primary) Get(name string) int {
+	switch name {
+	case "strength":
+		return p.STR
+	case "vitality":
+		return p.VIT
+	case "dexterity":
+		return p.AGI
+	case "intelligence":
+		return p.INT
+	case "wisdom":
+		return p.CHA
+	case "luck":
+		return p.Luck
+	}
+	return 0
+}
+
 // Derived is the combat-derived stats.
 type Derived struct {
 	Attack  int `json:"attack"`
@@ -206,15 +225,19 @@ func ComputeSheetWith(base Primary, main Target, mods []Modifier, f *Formula) Sh
 	evasionBase := float64(min(whole(primary.AGI)/2, 40))
 	blockBase := 0.0
 	hpBase := 100.0 + float64(whole(primary.VIT))*10.0
+	mpBase := 50.0 + float64(whole(primary.INT))*5.0
 	if f != nil {
-		lvl := float64(f.Level)
-		attackBase = f.AttackBase + f.AttackPerLevel*lvl + f.AttackPerStr*eff(primary.STR) + f.AttackPerDex*eff(primary.AGI)
-		defenseBase = f.ArmorBase + f.ArmorPerLevel*lvl + f.ArmorPerVit*eff(primary.VIT)
-		critBase = f.CritBase + f.CritPerDex*eff(primary.AGI)
-		hitBase = f.HitBase + f.HitPerDex*eff(primary.AGI)
-		evasionBase = f.DodgeBase + f.DodgePerDex*eff(primary.AGI)
-		blockBase = f.BlockPerStr * eff(primary.STR)
-		hpBase = f.HPBase + f.HPPerLevel*lvl + f.HPPerVit*eff(primary.VIT)
+		attr := func(name string) float64 { return eff(primary.Get(name)) }
+		attackBase = f.Attack.Eval(f.Level, attr)
+		defenseBase = f.Armor.Eval(f.Level, attr)
+		critBase = f.Crit.Eval(f.Level, attr)
+		hitBase = f.Hit.Eval(f.Level, attr)
+		evasionBase = f.Dodge.Eval(f.Level, attr)
+		blockBase = f.Block.Eval(f.Level, attr)
+		hpBase = f.HP.Eval(f.Level, attr)
+		if f.MP != nil {
+			mpBase = f.MP.Eval(f.Level, attr)
+		}
 	}
 	pct := func(t Target, base float64) int {
 		return intClamp(cfg.Cap(string(t), applyStack(base, filterTarget(mods, t))), 0, 100)
@@ -240,8 +263,8 @@ func ComputeSheetWith(base Primary, main Target, mods []Modifier, f *Formula) Sh
 		DmgReductionPct: pct(TargetDmgReductionPct, 0),
 	}
 
-	// 3. Resources — HP scales with VIT, MP with INT (placeholder).
-	mpBase := 50.0 + float64(whole(primary.INT))*5.0
+	// 3. Resources — HP from the class formula, MP from INT unless the
+	// class formula has an MP term.
 	enBase := 100.0
 	staBase := 100.0
 

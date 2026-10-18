@@ -85,6 +85,29 @@ var unlockEvent = map[string]string{
 // gained it records the registry rewards (points, titles, promotion, capstone,
 // mastery) and the unlocks of the class path at that level. Each record is
 // keyed, so replays and retries add nothing.
+// grantAchievement unlocks a mastery achievement once and adds its points
+// (no gold reward: the ledger is not part of this transaction). Unknown
+// codes are skipped (content not loaded yet).
+func grantAchievement(ctx context.Context, tx pgx.Tx, id uuid.UUID, code string) error {
+	if code == "" {
+		return nil
+	}
+	tag, err := tx.Exec(ctx, `
+		INSERT INTO progression.achievement_progress (character_id, achievement_code, progress_current, unlocked_at)
+		SELECT $1, code, progress_target, now() FROM content.achievement_template WHERE code = $2::varchar
+		ON CONFLICT (character_id, achievement_code) DO UPDATE
+		   SET progress_current = EXCLUDED.progress_current, unlocked_at = EXCLUDED.unlocked_at
+		 WHERE progression.achievement_progress.unlocked_at IS NULL`, id, code)
+	if err != nil || tag.RowsAffected() == 0 {
+		return err
+	}
+	_, err = tx.Exec(ctx, `
+		UPDATE character.character SET achievement_points = achievement_points +
+		       (SELECT point_value FROM content.achievement_template WHERE code = $2::varchar)
+		 WHERE id = $1`, id, code)
+	return err
+}
+
 func onLevelUp(ctx context.Context, tx pgx.Tx, id uuid.UUID, spec string, levels []int, cfg *leveling.Config, rec *[]string) error {
 	path := cfg.Path(spec)
 	note := func(kind string, fresh bool, err error) error {
@@ -123,8 +146,12 @@ func onLevelUp(ctx context.Context, tx pgx.Tx, id uuid.UUID, spec string, levels
 			case leveling.RewardMastery:
 				if k, found := cfg.Class(spec); found && k.Mastery != nil {
 					if err = grantTitle(ctx, tx, id, k.Mastery.Title, "class_mastery"); err == nil {
+						err = grantAchievement(ctx, tx, id, k.Mastery.Achievement)
+					}
+					if err == nil {
 						ok, err = event(ctx, tx, id, EventMastery, spec, l, map[string]any{
-							"title": k.Mastery.Title, "badge": k.Mastery.Badge, "frame": k.Mastery.Frame})
+							"title": k.Mastery.Title, "badge": k.Mastery.Badge, "frame": k.Mastery.Frame,
+							"achievement": k.Mastery.Achievement, "prestige_eligible": k.Mastery.PrestigeEligible})
 						err = note(EventMastery, ok, err)
 					}
 				}

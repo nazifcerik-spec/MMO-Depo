@@ -126,12 +126,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get classMage => 'Büyücü';
 
   @override
-  String get classHunter => 'Avcı';
-
-  @override
-  String get classPriest => 'Rahip';
-
-  @override
   String get classRogue => 'Haydut';
 
   @override
@@ -1894,4 +1888,28 @@ class AppLocalizationsTr extends AppLocalizations {
   String skillEmpower(int pct, int turns) {
     return '$turns tur +%$pct saldırı';
   }
+
+  @override
+  String get classRanger => 'Korucu';
+
+  @override
+  String get classCleric => 'Rahip';
+
+  @override
+  String get classMonk => 'Keşiş';
+
+  @override
+  String get classPaladin => 'Paladin';
+
+  @override
+  String get classDruid => 'Druid';
+
+  @override
+  String get classBard => 'Ozan';
+
+  @override
+  String get classShaman => 'Şaman';
+
+  @override
+  String get errEquipmentPermission => 'Sınıfın bu ekipman türünü kullanamaz.';
 }

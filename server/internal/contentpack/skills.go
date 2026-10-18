@@ -6,9 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"slices"
 
 	"gopkg.in/yaml.v3"
 
+	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 )
 
@@ -34,20 +36,76 @@ type ClassSkill struct {
 	ResourceGain   int32       `yaml:"resource_gain"`
 	DurationTurns  int         `yaml:"duration_turns"`
 	Requires       []string    `yaml:"requires"`
+
+	// Shared skill data model (DD-252): descriptive fields the resolver
+	// does not need but admin, client and balance tools read.
+	Type       string   `yaml:"type"`        // DAMAGE | HEAL | BARRIER | BUFF | DEBUFF | DOT | HOT | STUN | ...
+	DamageType string   `yaml:"damage_type"` // physical | magic | holy | nature | fire | frost | ...
+	TargetType string   `yaml:"target_type"` // enemy | self | ally | party | area
+	Range      string   `yaml:"range"`       // melee | ranged
+	CastTime   int      `yaml:"cast_time"`   // turns (0 = instant)
+	Tags       []string `yaml:"tags"`
+	Passive    *Passive `yaml:"passive"` // passive trigger model
 }
 
-// AutoTrigger is the passive-only (AFK) cast rule.
+// AutoTrigger is the passive-only (AFK) cast rule; one skill definition
+// serves both modes. OnCooldown casts whenever ready and affordable.
 type AutoTrigger struct {
+	OnCooldown    bool  `yaml:"on_cooldown"`
 	SelfHPBelow   int32 `yaml:"self_hp_below"`
 	TargetHPBelow int32 `yaml:"target_hp_below"`
+	AllyHPBelow   int32 `yaml:"ally_hp_below"` // solo: the character is its own ally
+}
+
+func (a AutoTrigger) defined() bool {
+	return a.OnCooldown || a.SelfHPBelow > 0 || a.TargetHPBelow > 0 || a.AllyHPBelow > 0
+}
+
+// Passive is the shared passive model (DD-252). The applied effect is the
+// skill's modifiers (steady-state value); the rest documents when it acts.
+type Passive struct {
+	Trigger          string `yaml:"trigger" json:"trigger"`
+	Condition        string `yaml:"condition" json:"condition,omitempty"`
+	InternalCooldown int    `yaml:"internal_cooldown" json:"internal_cooldown,omitempty"`
+	StackLimit       int    `yaml:"stack_limit" json:"stack_limit,omitempty"`
+	Duration         int    `yaml:"duration" json:"duration,omitempty"`
+	Scaling          string `yaml:"scaling" json:"scaling,omitempty"`
 }
 
 type skillsFile struct {
 	Skills []ClassSkill `yaml:"skills"`
 }
 
+// skillTypes maps each data-model effect type to the resolver effects that
+// may implement it (DD-252).
+var skillTypes = map[string][]string{
+	"DAMAGE":             {"strike"},
+	"HEAL":               {"heal"},
+	"BARRIER":            {"barrier"},
+	"BUFF":               {"empower", "guard"},
+	"DEBUFF":             {"weaken"},
+	"DOT":                {"dot"},
+	"HOT":                {"hot"},
+	"STUN":               {"stun"},
+	"ROOT":               {"stun"},
+	"SILENCE":            {"stun", "weaken"},
+	"TAUNT":              {"guard"},
+	"DISPEL":             {"heal", "barrier"},
+	"RESOURCE_GAIN":      {"strike", "empower"},
+	"RESOURCE_DRAIN":     {"weaken", "strike"},
+	"COOLDOWN_REDUCTION": {"empower"},
+	"STAT_MODIFIER":      {},
+}
+
+// PassiveTriggers are the passive model's triggers.
+var PassiveTriggers = map[string]bool{
+	"ON_ATTACK": true, "ON_HIT": true, "ON_CRIT": true, "ON_BLOCK": true, "ON_DODGE": true, "ON_HEAL": true,
+	"ON_DAMAGE_TAKEN": true, "ON_KILL": true, "ON_DEBUFF_APPLIED": true, "ON_BUFF_APPLIED": true,
+	"ON_RESOURCE_SPENT": true, "ON_RESOURCE_GAINED": true, "ON_SKILL_CAST": true, "ON_LOW_HP": true,
+	"ON_COMBAT_START": true, "ON_COMBAT_END": true,
+}
+
 var (
-	skillEffects     = map[string]bool{"strike": true, "heal": true, "guard": true, "empower": true}
 	skillCategories  = map[string]bool{"": true, "skill": true, "passive": true, "awakening": true, "ultimate": true}
 	activationModes  = map[string]bool{"": true, "active": true, "stance": true, "passive": true}
 	equipRequirement = map[string]bool{"shield": true, "two_handed": true}
@@ -93,7 +151,13 @@ func validateSkills(skills []ClassSkill) error {
 		if !skillCategories[s.Category] || !activationModes[s.ActivationMode] {
 			return fmt.Errorf("skill %s: unknown category %q or activation_mode %q", s.Code, s.Category, s.ActivationMode)
 		}
-		for _, p := range []int32{s.AutoTrigger.SelfHPBelow, s.AutoTrigger.TargetHPBelow} {
+		if s.Type != "" {
+			allowed, ok := skillTypes[s.Type]
+			if !ok || (s.Kind == "active" && !slices.Contains(allowed, s.Effect)) || (s.Kind == "passive" && s.Type != "STAT_MODIFIER") {
+				return fmt.Errorf("skill %s: type %q does not fit %s/%s", s.Code, s.Type, s.Kind, s.Effect)
+			}
+		}
+		for _, p := range []int32{s.AutoTrigger.SelfHPBelow, s.AutoTrigger.TargetHPBelow, s.AutoTrigger.AllyHPBelow} {
 			if p < 0 || p > 100 {
 				return fmt.Errorf("skill %s: auto_trigger thresholds are 0..100", s.Code)
 			}
@@ -105,17 +169,27 @@ func validateSkills(skills []ClassSkill) error {
 		}
 		switch s.Kind {
 		case "active":
-			if !skillEffects[s.Effect] {
-				return fmt.Errorf("skill %s: effect %q not in strike|heal|guard|empower", s.Code, s.Effect)
+			if !combat.Effects[s.Effect] {
+				return fmt.Errorf("skill %s: unknown effect %q", s.Code, s.Effect)
 			}
-			if (s.Effect == "guard" || s.Effect == "empower") != (s.DurationTurns > 0) {
-				return fmt.Errorf("skill %s: guard/empower need duration_turns (and only they)", s.Code)
+			if combat.Timed(s.Effect) != (s.DurationTurns > 0) {
+				return fmt.Errorf("skill %s: timed effects need duration_turns (and only they)", s.Code)
+			}
+			if !s.AutoTrigger.defined() {
+				return fmt.Errorf("skill %s: active skills need an auto_trigger rule (passive-only play)", s.Code)
+			}
+			if s.Passive != nil {
+				return fmt.Errorf("skill %s: actives take no passive model", s.Code)
 			}
 			if s.ResourceGain < 0 {
 				return fmt.Errorf("skill %s: resource_gain must be >= 0", s.Code)
 			}
-			if s.Power < 1 || (s.Effect == "heal" && s.Power > 100) || s.Power > 1000 {
+			bounded := s.Effect == "heal" || s.Effect == "hot" || s.Effect == "barrier" || s.Effect == "weaken"
+			if s.Power < 1 || (bounded && s.Power > 100) || s.Power > 1000 {
 				return fmt.Errorf("skill %s: power out of range", s.Code)
+			}
+			if s.Effect == "stun" && int(s.CooldownTurns) < s.DurationTurns+2 {
+				return fmt.Errorf("skill %s: stun cooldown must exceed its duration by 2 (no stunlock)", s.Code)
 			}
 			if s.MPCost < 0 || s.CooldownTurns < 1 {
 				return fmt.Errorf("skill %s: mp_cost >= 0 and cooldown_turns >= 1 required", s.Code)
@@ -129,6 +203,13 @@ func validateSkills(skills []ClassSkill) error {
 			}
 			if len(s.Modifiers) == 0 {
 				return fmt.Errorf("skill %s: passive needs modifiers", s.Code)
+			}
+			if s.AutoTrigger.defined() {
+				return fmt.Errorf("skill %s: passives take no auto_trigger", s.Code)
+			}
+			if s.Passive != nil && (!PassiveTriggers[s.Passive.Trigger] || s.Passive.StackLimit < 0 ||
+				s.Passive.InternalCooldown < 0 || s.Passive.Duration < 0) {
+				return fmt.Errorf("skill %s: invalid passive model", s.Code)
 			}
 			for j, m := range s.Modifiers {
 				if !validModifierKinds(m.Kind) || !validStatTargets(m.Target) {
@@ -179,8 +260,11 @@ ON CONFLICT (code) DO UPDATE SET
 		}
 		cfg, err := json.Marshal(map[string]any{
 			"category": s.category(), "activation_mode": s.ActivationMode,
+			"on_cooldown": s.AutoTrigger.OnCooldown, "ally_hp_below": s.AutoTrigger.AllyHPBelow,
 			"self_hp_below": s.AutoTrigger.SelfHPBelow, "target_hp_below": s.AutoTrigger.TargetHPBelow,
 			"resource_gain": s.ResourceGain, "duration_turns": s.DurationTurns, "requires": s.Requires,
+			"type": s.Type, "damage_type": s.DamageType, "target_type": s.TargetType, "range": s.Range,
+			"cast_time": s.CastTime, "tags": s.Tags, "passive": s.Passive,
 		})
 		if err != nil {
 			return err

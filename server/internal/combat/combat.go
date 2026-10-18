@@ -51,26 +51,56 @@ type Combatant struct {
 
 	// Progression extras (DD-250). All zero = the v1 rules exactly (no extra
 	// RNG draws), so older snapshots replay unchanged.
-	Resource        string `json:",omitempty"` // "rage": the MP pool starts empty and fills on hits
+	// Resource names the class resource (DD-252). Empty = the v1 mana pool
+	// (MPMax, full every encounter, no regeneration). Otherwise the pool
+	// (MPMax) starts at ResourceStart (zero in older Rage snapshots) and
+	// grows by ResourcePerHit per landed hit and ResourcePerTurn per own turn.
+	Resource        string `json:",omitempty"`
 	ResourcePerHit  int32  `json:",omitempty"`
+	ResourcePerTurn int32  `json:",omitempty"`
+	ResourceStart   int32  `json:",omitempty"`
 	BlockPct        int32  `json:",omitempty"` // chance to halve an incoming hit
 	CritDmgPct      int32  `json:",omitempty"` // extra crit damage %
 	ExecutePct      int32  `json:",omitempty"` // extra damage % vs targets at <= ExecuteThresholdPct HP
 	MissingHPDmgPct int32  `json:",omitempty"` // up to this extra damage % as own HP drops
 	LifestealPct    int32  `json:",omitempty"` // heal this % of damage dealt
 	DmgReductionPct int32  `json:",omitempty"` // incoming damage reduced by this %
+
+	// Barrier absorbs incoming damage while up (runtime state of an
+	// encounter, never part of a snapshot).
+	Barrier int32 `json:"-"`
 }
 
 // ExecuteThresholdPct is the target HP share below which ExecutePct applies.
 const ExecuteThresholdPct = 35
 
-// Skill effects.
+// Skill effects (the reusable effect definitions, DD-252).
 const (
 	EffectStrike  = "strike"  // hit roll as usual, damage × Power/100
 	EffectHeal    = "heal"    // restore Power% of HPMax; only used at <= 50% HP (or SelfHPBelow)
 	EffectGuard   = "guard"   // +Power% defense for DurationTurns
 	EffectEmpower = "empower" // +Power% attack for DurationTurns
+	EffectBarrier = "barrier" // absorb shield of Power% HPMax for DurationTurns
+	EffectDot     = "dot"     // Power% of mitigated attack per turn for DurationTurns (no hit roll)
+	EffectHot     = "hot"     // Power% of HPMax healed per turn for DurationTurns
+	EffectWeaken  = "weaken"  // target defense -Power% for DurationTurns
+	EffectStun    = "stun"    // strike at Power%; on a hit the target loses DurationTurns swings
 )
+
+// Effects lists every effect the resolver runs.
+var Effects = map[string]bool{
+	EffectStrike: true, EffectHeal: true, EffectGuard: true, EffectEmpower: true, EffectBarrier: true,
+	EffectDot: true, EffectHot: true, EffectWeaken: true, EffectStun: true,
+}
+
+// Timed reports whether an effect needs DurationTurns.
+func Timed(effect string) bool {
+	switch effect {
+	case EffectGuard, EffectEmpower, EffectBarrier, EffectDot, EffectHot, EffectWeaken, EffectStun:
+		return true
+	}
+	return false
+}
 
 // Skill is one active class skill, auto-cast on the combatant's turn: the
 // first skill in list order that is off cooldown, affordable and useful is
@@ -87,7 +117,7 @@ type Skill struct {
 	Gain          int32 `json:",omitempty"` // resource gained on cast (Rage builders)
 	SelfHPBelow   int32 `json:",omitempty"` // only when own HP% is at or below this
 	TargetHPBelow int32 `json:",omitempty"` // only when target HP% is at or below this
-	DurationTurns int   `json:",omitempty"` // guard / empower length
+	DurationTurns int   `json:",omitempty"` // length of timed effects
 }
 
 // Clone returns a copy whose Skills slice is not shared.
@@ -104,8 +134,12 @@ type TurnRecord struct {
 	Target      string `json:"target"`
 	Hit         bool   `json:"hit"`
 	Crit        bool   `json:"crit,omitempty"`
-	Skill       string `json:"skill,omitempty"` // class skill used this swing
-	Heal        int32  `json:"heal,omitempty"`  // HP restored (heal skills)
+	Skill       string `json:"skill,omitempty"`     // class skill used this swing
+	Heal        int32  `json:"heal,omitempty"`      // HP restored (heal skills)
+	Tick        int32  `json:"tick,omitempty"`      // damage-over-time dealt at the start of the turn
+	TickHeal    int32  `json:"tick_heal,omitempty"` // heal-over-time restored at the start of the turn
+	Absorbed    int32  `json:"absorbed,omitempty"`  // damage a barrier took
+	Stunned     bool   `json:"stunned,omitempty"`   // actor lost this swing
 	Damage      int32  `json:"damage"`
 	TargetHPAft int32  `json:"target_hp_after"` // post-application, floored at 0
 }

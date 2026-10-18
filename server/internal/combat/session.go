@@ -48,7 +48,12 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 				Duration:    turn,
 			}, nil
 		}
-		// --- Mob swings ---
+		// --- Mob swings (unless stunned) ---
+		if caster.stunned(turn) {
+			log = append(log, TurnRecord{Turn: turn, Actor: s.Mob.Name, Target: s.Player.Name, Stunned: true,
+				TargetHPAft: s.Player.HPCurrent})
+			continue
+		}
 		log = append(log, resolveSwing(r, turn, &s.Mob, &s.Player))
 		if s.Player.HPCurrent <= 0 {
 			return &Result{
@@ -85,31 +90,45 @@ func applyLevelGap(p *Combatant, mobLevel int16) {
 	p.Defense = p.Defense * max(0, 100-GapDefensePerLevel*gap) / 100
 }
 
-// caster tracks one combatant's resource (MP or Rage), skill cooldowns and
-// timed buffs for an encounter.
+// caster tracks one combatant's resource, skill cooldowns and timed
+// effects for an encounter.
 type caster struct {
-	mp    int32
-	rage  bool
-	ready []int // turn from which skill i may be cast again
-	atk   buff
-	def   buff
+	mp     int32
+	pooled bool  // a class resource (DD-252): generated in combat
+	ready  []int // turn from which skill i may be cast again
+	atk    buff
+	def    buff
+	weak   buff // on the target's defense
+	dot    tick // on the target
+	hot    tick
+	shield int // turn the barrier fades (0 = none)
+	stun   int // the target skips its swings while turn < stun
 }
 
 // buff is a timed stat bonus: delta is reverted when its turn comes.
 type buff struct {
 	until int
 	delta int32
+	on    bool
+}
+
+// tick is a per-turn effect with turns left.
+type tick struct {
+	left   int
+	amount int32
 }
 
 func newCaster(c *Combatant) *caster {
-	k := &caster{mp: c.MPMax, ready: make([]int, len(c.Skills)), rage: c.Resource == "rage"}
-	if k.rage {
-		k.mp = 0 // Rage builds up during the fight
+	k := &caster{mp: c.MPMax, ready: make([]int, len(c.Skills)), pooled: c.Resource != ""}
+	if k.pooled {
+		k.mp = min(max(c.ResourceStart, 0), c.MPMax) // Rage, Chi, ... build up during the fight
 	}
 	return k
 }
 
-func (k *caster) expire(turn int, self *Combatant) {
+func (k *caster) stunned(turn int) bool { return turn < k.stun }
+
+func (k *caster) expire(turn int, self, target *Combatant) {
 	if k.atk.delta != 0 && turn >= k.atk.until {
 		self.Attack -= k.atk.delta
 		k.atk = buff{}
@@ -118,12 +137,34 @@ func (k *caster) expire(turn int, self *Combatant) {
 		self.Defense -= k.def.delta
 		k.def = buff{}
 	}
+	if k.weak.on && turn >= k.weak.until {
+		target.Defense += k.weak.delta
+		k.weak = buff{}
+	}
+	if k.shield != 0 && turn >= k.shield {
+		self.Barrier, k.shield = 0, 0
+	}
 }
 
-// gain adds resource after an action: Rage per landed hit plus the skill's
-// own gain, capped at the pool size.
+// ticks applies damage- and heal-over-time at the start of a turn.
+func (k *caster) ticks(self, target *Combatant) (dmg, heal int32) {
+	if k.dot.left > 0 {
+		dmg = min(k.dot.amount, target.HPCurrent)
+		target.HPCurrent -= dmg
+		k.dot.left--
+	}
+	if k.hot.left > 0 {
+		heal = min(k.hot.amount, self.HPMax-self.HPCurrent)
+		self.HPCurrent += heal
+		k.hot.left--
+	}
+	return dmg, heal
+}
+
+// gain adds resource after an action: per landed hit plus the skill's own
+// gain, capped at the pool size. The v1 mana pool does not regenerate.
 func (k *caster) gain(self *Combatant, rec TurnRecord, sk *Skill) {
-	if !k.rage {
+	if !k.pooled {
 		return
 	}
 	if rec.Hit && rec.Damage > 0 {
@@ -135,11 +176,30 @@ func (k *caster) gain(self *Combatant, rec TurnRecord, sk *Skill) {
 	k.mp = min(k.mp, self.MPMax)
 }
 
+// setupFloorPct: attack buffs and armor debuffs are not cast against a
+// target at or below this HP share (DD-252).
+const setupFloorPct = 40
+
 func pctAtOrBelow(cur, max, pct int32) bool { return int64(cur)*100 <= int64(max)*int64(pct) }
 
-// act picks the first usable skill (list order = priority) or attacks.
+// act runs the start-of-turn effects, then picks the first usable skill
+// (list order = priority) or attacks.
 func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
-	k.expire(turn, self)
+	k.expire(turn, self, target)
+	if k.pooled && self.ResourcePerTurn > 0 {
+		k.mp = min(k.mp+self.ResourcePerTurn, self.MPMax)
+	}
+	dmg, heal := k.ticks(self, target)
+	if target.HPCurrent <= 0 {
+		return TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Tick: dmg, TickHeal: heal}
+	}
+	rec := k.cast(r, turn, self, target)
+	rec.Tick, rec.TickHeal = dmg, heal
+	return rec
+}
+
+// cast uses the first usable skill or attacks.
+func (k *caster) cast(r RNG, turn int, self, target *Combatant) TurnRecord {
 	for i := range self.Skills {
 		sk := &self.Skills[i]
 		if turn < k.ready[i] || sk.MPCost > k.mp {
@@ -150,6 +210,9 @@ func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
 		}
 		if sk.TargetHPBelow > 0 && !pctAtOrBelow(target.HPCurrent, target.HPMax, sk.TargetHPBelow) {
 			continue
+		}
+		if (sk.Effect == EffectEmpower || sk.Effect == EffectWeaken) && pctAtOrBelow(target.HPCurrent, target.HPMax, setupFloorPct) {
+			continue // the target is nearly down: finish it instead of setting up
 		}
 		switch sk.Effect {
 		case EffectGuard, EffectEmpower:
@@ -180,12 +243,65 @@ func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
 			k.spend(i, turn, *sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
 				Heal: heal, TargetHPAft: self.HPCurrent}
-		case EffectStrike:
+		case EffectStrike, EffectStun:
+			if sk.Effect == EffectStun && k.stunned(turn+1) {
+				continue // still stunned: no chaining
+			}
 			k.spend(i, turn, *sk)
 			rec := swing(r, turn, self, target, sk.Power)
 			rec.Skill = sk.Code
+			if sk.Effect == EffectStun && rec.Hit {
+				k.stun = turn + max(1, sk.DurationTurns)
+			}
 			k.gain(self, rec, sk)
 			return rec
+		case EffectBarrier:
+			if k.shield != 0 {
+				continue
+			}
+			self.Barrier = max(1, self.HPMax*sk.Power/100)
+			k.shield = turn + max(1, sk.DurationTurns)
+			k.spend(i, turn, *sk)
+			k.gain(self, TurnRecord{}, sk)
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
+				TargetHPAft: self.HPCurrent}
+		case EffectHot:
+			if k.hot.left > 0 || (sk.SelfHPBelow == 0 && self.HPCurrent*10 > self.HPMax*7) {
+				continue // running already, or not hurt enough (default: <= 70% HP)
+			}
+			amount := max(1, self.HPMax*sk.Power/100)
+			heal := min(amount, self.HPMax-self.HPCurrent)
+			self.HPCurrent += heal
+			k.hot = tick{left: max(1, sk.DurationTurns) - 1, amount: amount}
+			k.spend(i, turn, *sk)
+			k.gain(self, TurnRecord{}, sk)
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
+				Heal: heal, TargetHPAft: self.HPCurrent}
+		case EffectDot:
+			if k.dot.left > 0 {
+				continue
+			}
+			raw := float64(self.Attack) - float64(target.Defense)*defenseMitigation
+			amount := max(1, int32(max(raw, MinDamageFloor)*float64(sk.Power)/100))
+			first := min(amount, target.HPCurrent)
+			target.HPCurrent -= first
+			k.dot = tick{left: max(1, sk.DurationTurns) - 1, amount: amount}
+			k.spend(i, turn, *sk)
+			rec := TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Skill: sk.Code,
+				Damage: first, TargetHPAft: target.HPCurrent}
+			k.gain(self, rec, sk)
+			return rec
+		case EffectWeaken:
+			if k.weak.on {
+				continue
+			}
+			delta := target.Defense * sk.Power / 100
+			target.Defense -= delta
+			k.weak = buff{until: turn + max(1, sk.DurationTurns), delta: delta, on: true}
+			k.spend(i, turn, *sk)
+			k.gain(self, TurnRecord{}, sk)
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Skill: sk.Code,
+				TargetHPAft: target.HPCurrent}
 		}
 	}
 	rec := resolveSwing(r, turn, self, target)
@@ -224,6 +340,11 @@ func swing(r RNG, turn int, attacker, defender *Combatant, powerPct int32) TurnR
 		dmg = max(1, dmg*powerPct/100)
 	}
 	dmg = progressionDamage(r, dmg, crit, attacker, defender)
+	if defender.Barrier > 0 {
+		rec.Absorbed = min(defender.Barrier, dmg)
+		defender.Barrier -= rec.Absorbed
+		dmg -= rec.Absorbed
+	}
 	defender.HPCurrent -= dmg
 	if defender.HPCurrent < 0 {
 		defender.HPCurrent = 0

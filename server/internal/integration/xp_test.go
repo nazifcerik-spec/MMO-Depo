@@ -26,8 +26,10 @@ func TestXPRollover(t *testing.T) {
 	require.ErrorIs(t, err, character.ErrInvalidXP)
 	_, err = chars.GrantXP(w.ctx, uuid.New(), 1, src, cfg)
 	require.ErrorIs(t, err, character.ErrNotFound)
-	// A class without promotion gates (mage) runs straight to the cap.
-	m := w.player("mage", 1)
+	// A final specialization has no gate left and runs straight to the cap.
+	m := w.player("mage", 300)
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET spec_code = 'pyromancer' WHERE id = $1`, m.ID)
+	require.NoError(t, err)
 	g, err := chars.GrantXP(w.ctx, m.ID, 1<<40, src, cfg)
 	require.NoError(t, err)
 	require.NotEmpty(t, g.LevelsGained)

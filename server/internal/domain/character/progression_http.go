@@ -64,11 +64,13 @@ type PointsView struct {
 }
 
 type MasteryView struct {
-	Level    int    `json:"level"`
-	Unlocked bool   `json:"unlocked"`
-	Title    string `json:"title,omitempty"`
-	Badge    string `json:"badge,omitempty"`
-	Frame    string `json:"frame,omitempty"`
+	Level            int    `json:"level"`
+	Unlocked         bool   `json:"unlocked"`
+	Title            string `json:"title,omitempty"`
+	Badge            string `json:"badge,omitempty"`
+	Frame            string `json:"frame,omitempty"`
+	Achievement      string `json:"achievement,omitempty"`
+	PrestigeEligible bool   `json:"prestige_eligible,omitempty"`
 }
 
 type MilestoneView struct {
@@ -151,6 +153,8 @@ func (s *Service) ProgressionSummary(ctx context.Context, id, accountID uuid.UUI
 	if k, ok := cfg.Class(spec); ok && k.Mastery != nil {
 		out.Mastery.Title, out.Mastery.Badge, out.Mastery.Frame = k.Mastery.Title, k.Mastery.Badge, k.Mastery.Frame
 		out.Mastery.Unlocked = level >= cfg.Milestones.Mastery
+		out.Mastery.Achievement = k.Mastery.Achievement
+		out.Mastery.PrestigeEligible = out.Mastery.Unlocked && k.Mastery.PrestigeEligible
 	}
 	if m, ok := cfg.NextMilestone(spec, level); ok {
 		out.NextMilestone = &MilestoneView{Milestone: m, Minutes: cfg.EstimateMinutes(level, c.XP, m.Level)}

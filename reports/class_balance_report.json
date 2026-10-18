@@ -1,0 +1,2169 @@
+{
+  "description": "Development-only class balance report (DD-252): every final specialization simulated with the production combat engine against synthetic mobs calibrated to the field average at each level. Scores are 0..1 within the field at level 1000; aoe and group_value come from the design profile (the engine resolves single-target encounters).",
+  "generated_by": "go test ./internal/balance -run TestSpecializationBalance (BALANCE_REPORT=1)",
+  "levels": [
+    700,
+    1000
+  ],
+  "role_means": {
+    "dps_afk_safety": 0.9,
+    "dps_aoe": 0.478,
+    "dps_boss": 0.46,
+    "dps_group_value": 0.204,
+    "dps_kill_speed": 0.424,
+    "dps_survival": 0.132,
+    "support_afk_safety": 0.994,
+    "support_aoe": 0.167,
+    "support_boss": 0.407,
+    "support_group_value": 0.899,
+    "support_kill_speed": 0.162,
+    "support_survival": 0.322,
+    "tank_afk_safety": 0.992,
+    "tank_aoe": 0.048,
+    "tank_boss": 0.284,
+    "tank_group_value": 0.772,
+    "tank_kill_speed": 0.063,
+    "tank_survival": 0.526
+  },
+  "seeds": 60,
+  "specializations": [
+    {
+      "code": "iron_fortress",
+      "class": "warrior",
+      "promotion": "guardian",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "barrier_support",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "boss",
+        "afk",
+        "group"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 7.983333333333333,
+          "win_rate": 1,
+          "survival": 38.43333333333333,
+          "boss_win_rate": 1,
+          "boss_turns": 58.233333333333334,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 7.766666666666667,
+          "win_rate": 1,
+          "survival": 33.983333333333334,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 62.6271186440678,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.259,
+        "group_value": 0.789,
+        "kill_speed": 0.06,
+        "survival": 0.106
+      }
+    },
+    {
+      "code": "warlord",
+      "class": "warrior",
+      "promotion": "guardian",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "bruiser",
+        "buff_support",
+        "group_support"
+      ],
+      "support_power": 0.3,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 3,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group",
+        "dungeon"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 8.05,
+          "win_rate": 1,
+          "survival": 26.783333333333335,
+          "boss_win_rate": 0.8833333333333333,
+          "boss_turns": 45.20754716981132,
+          "afk_safety": 0.9666666666666667
+        },
+        "700": {
+          "kill_turns": 8.416666666666666,
+          "win_rate": 1,
+          "survival": 24.6,
+          "boss_win_rate": 0.6833333333333333,
+          "boss_turns": 46.36585365853659,
+          "afk_safety": 0.85
+        }
+      },
+      "scores": {
+        "afk_safety": 0.941,
+        "aoe": 0.333,
+        "boss": 0.295,
+        "group_value": 0.868,
+        "kill_speed": 0.058,
+        "survival": 0.066
+      }
+    },
+    {
+      "code": "berserker",
+      "class": "warrior",
+      "promotion": "executioner",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 2,
+        "group_value": 3,
+        "boss_value": 5,
+        "aoe_value": 4,
+        "afk_safety": 2
+      },
+      "strong_in": [
+        "boss",
+        "farming"
+      ],
+      "weak_in": [
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 6.05,
+          "win_rate": 1,
+          "survival": 138.41666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 26.95,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 6.383333333333334,
+          "win_rate": 1,
+          "survival": 34.583333333333336,
+          "boss_win_rate": 1,
+          "boss_turns": 31.55,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0.56,
+        "group_value": 0.263,
+        "kill_speed": 0.14,
+        "survival": 0.448
+      }
+    },
+    {
+      "code": "weapon_master",
+      "class": "warrior",
+      "promotion": "executioner",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "sustained_dps"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 2,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "solo",
+        "farming"
+      ],
+      "weak_in": [
+        "group"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.133333333333334,
+          "win_rate": 1,
+          "survival": 15.883333333333333,
+          "boss_win_rate": 0.7666666666666667,
+          "boss_turns": 23.456521739130434,
+          "afk_safety": 0.9
+        },
+        "700": {
+          "kill_turns": 5.65,
+          "win_rate": 1,
+          "survival": 12.833333333333334,
+          "boss_win_rate": 0.016666666666666666,
+          "boss_turns": 21,
+          "afk_safety": 0
+        }
+      },
+      "scores": {
+        "afk_safety": 0.824,
+        "aoe": 0.333,
+        "boss": 0.494,
+        "group_value": 0,
+        "kill_speed": 0.2,
+        "survival": 0.029
+      }
+    },
+    {
+      "code": "nightblade",
+      "class": "rogue",
+      "promotion": "assassin",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 2
+      },
+      "strong_in": [
+        "boss",
+        "solo"
+      ],
+      "weak_in": [
+        "aoe",
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 1.7333333333333334,
+          "win_rate": 1,
+          "survival": 16.8,
+          "boss_win_rate": 0.8666666666666667,
+          "boss_turns": 13.903846153846153,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 2.1333333333333333,
+          "win_rate": 1,
+          "survival": 15.583333333333334,
+          "boss_win_rate": 0.5333333333333333,
+          "boss_turns": 15.34375,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.941,
+        "group_value": 0,
+        "kill_speed": 0.966,
+        "survival": 0.032
+      }
+    },
+    {
+      "code": "poison_master",
+      "class": "rogue",
+      "promotion": "assassin",
+      "role": "dps",
+      "role_tags": [
+        "dot",
+        "debuff_support",
+        "sustained_dps"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 3,
+        "boss_value": 5,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.816666666666667,
+          "win_rate": 1,
+          "survival": 18.75,
+          "boss_win_rate": 1,
+          "boss_turns": 15.5,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.05,
+          "win_rate": 1,
+          "survival": 15.9,
+          "boss_win_rate": 0.9,
+          "boss_turns": 18.574074074074073,
+          "afk_safety": 0.95
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.974,
+        "group_value": 0.263,
+        "kill_speed": 0.521,
+        "survival": 0.039
+      }
+    },
+    {
+      "code": "blade_dancer",
+      "class": "rogue",
+      "promotion": "duelist",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "sustained_dps"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 3,
+        "aoe_value": 5,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "farming",
+        "aoe"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 1.6833333333333333,
+          "win_rate": 1,
+          "survival": 13.6,
+          "boss_win_rate": 0.8833333333333333,
+          "boss_turns": 13.339622641509434,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 2.066666666666667,
+          "win_rate": 1,
+          "survival": 12.766666666666667,
+          "boss_win_rate": 0.45,
+          "boss_turns": 14.703703703703704,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 1,
+        "boss": 1,
+        "group_value": 0,
+        "kill_speed": 1,
+        "survival": 0.021
+      }
+    },
+    {
+      "code": "trickster",
+      "class": "rogue",
+      "promotion": "duelist",
+      "role": "dps",
+      "role_tags": [
+        "control",
+        "melee_dps",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 5,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 3,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "solo"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.533333333333333,
+          "win_rate": 1,
+          "survival": 27.316666666666666,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 17.694915254237287,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.3,
+          "win_rate": 1,
+          "survival": 26.966666666666665,
+          "boss_win_rate": 0.95,
+          "boss_turns": 22.157894736842106,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.839,
+        "group_value": 0,
+        "kill_speed": 0.6,
+        "survival": 0.068
+      }
+    },
+    {
+      "code": "sharpshooter",
+      "class": "ranger",
+      "promotion": "marksman",
+      "role": "dps",
+      "role_tags": [
+        "ranged_dps",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss"
+      ],
+      "weak_in": [
+        "aoe"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.933333333333333,
+          "win_rate": 1,
+          "survival": 20.033333333333335,
+          "boss_win_rate": 0.9666666666666667,
+          "boss_turns": 18.413793103448278,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.15,
+          "win_rate": 1,
+          "survival": 12.3,
+          "boss_win_rate": 0.2,
+          "boss_turns": 17.416666666666668,
+          "afk_safety": 0.016666666666666666
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.793,
+        "group_value": 0,
+        "kill_speed": 0.493,
+        "survival": 0.043
+      }
+    },
+    {
+      "code": "crossbow_master",
+      "class": "ranger",
+      "promotion": "marksman",
+      "role": "dps",
+      "role_tags": [
+        "ranged_dps",
+        "sustained_dps"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 5,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss",
+        "dungeon"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.283333333333333,
+          "win_rate": 1,
+          "survival": 19.166666666666668,
+          "boss_win_rate": 0.8,
+          "boss_turns": 27.083333333333332,
+          "afk_safety": 0.43333333333333335
+        },
+        "700": {
+          "kill_turns": 5.616666666666666,
+          "win_rate": 1,
+          "survival": 12.433333333333334,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0
+        }
+      },
+      "scores": {
+        "afk_safety": 0,
+        "aoe": 0.333,
+        "boss": 0.446,
+        "group_value": 0.263,
+        "kill_speed": 0.189,
+        "survival": 0.04
+      }
+    },
+    {
+      "code": "beastmaster",
+      "class": "ranger",
+      "promotion": "scout",
+      "role": "dps",
+      "role_tags": [
+        "pet",
+        "ranged_dps",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 4,
+        "group_value": 2,
+        "boss_value": 3,
+        "aoe_value": 3,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "solo"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.85,
+          "win_rate": 1,
+          "survival": 51.63333333333333,
+          "boss_win_rate": 1,
+          "boss_turns": 29.05,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.2,
+          "win_rate": 1,
+          "survival": 26.35,
+          "boss_win_rate": 0.5333333333333333,
+          "boss_turns": 39.34375,
+          "afk_safety": 0.21666666666666667
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.52,
+        "group_value": 0,
+        "kill_speed": 0.222,
+        "survival": 0.151
+      }
+    },
+    {
+      "code": "trapper",
+      "class": "ranger",
+      "promotion": "scout",
+      "role": "dps",
+      "role_tags": [
+        "control",
+        "ranged_dps",
+        "dot"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 3,
+        "boss_value": 2,
+        "aoe_value": 5,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "aoe",
+        "farming"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 3.05,
+          "win_rate": 1,
+          "survival": 74.3,
+          "boss_win_rate": 1,
+          "boss_turns": 22.866666666666667,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.066666666666667,
+          "win_rate": 1,
+          "survival": 29.85,
+          "boss_win_rate": 0.9,
+          "boss_turns": 29.87037037037037,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 1,
+        "boss": 0.66,
+        "group_value": 0.263,
+        "kill_speed": 0.466,
+        "survival": 0.229
+      }
+    },
+    {
+      "code": "rune_master",
+      "class": "mage",
+      "promotion": "arcanist",
+      "role": "dps",
+      "role_tags": [
+        "magic_dps",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 4,
+        "aoe_value": 4,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "dungeon"
+      ],
+      "weak_in": [
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 1.9666666666666666,
+          "win_rate": 1,
+          "survival": 9.383333333333333,
+          "boss_win_rate": 0.13333333333333333,
+          "boss_turns": 10.75,
+          "afk_safety": 0.9666666666666667
+        },
+        "700": {
+          "kill_turns": 2,
+          "win_rate": 1,
+          "survival": 10.166666666666666,
+          "boss_win_rate": 0.016666666666666666,
+          "boss_turns": 13,
+          "afk_safety": 0.95
+        }
+      },
+      "scores": {
+        "afk_safety": 0.941,
+        "aoe": 0.667,
+        "boss": 0.187,
+        "group_value": 0.263,
+        "kill_speed": 0.828,
+        "survival": 0.007
+      }
+    },
+    {
+      "code": "chronomancer",
+      "class": "mage",
+      "promotion": "arcanist",
+      "role": "dps",
+      "role_tags": [
+        "control",
+        "magic_dps",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 3,
+        "aoe_value": 3,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group",
+        "afk"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.95,
+          "win_rate": 1,
+          "survival": 11.65,
+          "boss_win_rate": 0.06666666666666667,
+          "boss_turns": 15,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.1166666666666667,
+          "win_rate": 1,
+          "survival": 12.1,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.067,
+        "group_value": 0.526,
+        "kill_speed": 0.489,
+        "survival": 0.015
+      }
+    },
+    {
+      "code": "pyromancer",
+      "class": "mage",
+      "promotion": "elementalist",
+      "role": "dps",
+      "role_tags": [
+        "magic_dps",
+        "dot",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 2,
+        "group_value": 2,
+        "boss_value": 4,
+        "aoe_value": 5,
+        "afk_safety": 2
+      },
+      "strong_in": [
+        "farming",
+        "aoe"
+      ],
+      "weak_in": [
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.1333333333333333,
+          "win_rate": 1,
+          "survival": 7.383333333333334,
+          "boss_win_rate": 0.016666666666666666,
+          "boss_turns": 10,
+          "afk_safety": 0.6166666666666667
+        },
+        "700": {
+          "kill_turns": 2.3,
+          "win_rate": 1,
+          "survival": 8.083333333333334,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0.4
+        }
+      },
+      "scores": {
+        "afk_safety": 0.324,
+        "aoe": 1,
+        "boss": 0.025,
+        "group_value": 0,
+        "kill_speed": 0.749,
+        "survival": 0
+      }
+    },
+    {
+      "code": "cryomancer",
+      "class": "mage",
+      "promotion": "elementalist",
+      "role": "dps",
+      "role_tags": [
+        "control",
+        "magic_dps",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 3,
+        "aoe_value": 4,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "aoe"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 3.4166666666666665,
+          "win_rate": 1,
+          "survival": 11.55,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.783333333333333,
+          "win_rate": 1,
+          "survival": 12.15,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0,
+        "group_value": 0.263,
+        "kill_speed": 0.396,
+        "survival": 0.014
+      }
+    },
+    {
+      "code": "iron_body",
+      "class": "monk",
+      "promotion": "disciple",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "afk_safe"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "boss"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 6.816666666666666,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 35.63333333333333,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 6.633333333333334,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 39.56666666666667,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.424,
+        "group_value": 0.526,
+        "kill_speed": 0.103,
+        "survival": 1
+      }
+    },
+    {
+      "code": "spirit_walker",
+      "class": "monk",
+      "promotion": "disciple",
+      "role": "dps",
+      "role_tags": [
+        "bruiser",
+        "hot",
+        "afk_safe"
+      ],
+      "support_power": 0.2,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 3,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "solo"
+      ],
+      "weak_in": [
+        "aoe"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.916666666666667,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 25,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.383333333333334,
+          "win_rate": 1,
+          "survival": 290.65,
+          "boss_win_rate": 1,
+          "boss_turns": 30.533333333333335,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.604,
+        "group_value": 0.579,
+        "kill_speed": 0.217,
+        "survival": 1
+      }
+    },
+    {
+      "code": "combo_master",
+      "class": "monk",
+      "promotion": "fighter",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "sustained_dps"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 5,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss"
+      ],
+      "weak_in": [
+        "aoe"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.366666666666666,
+          "win_rate": 1,
+          "survival": 63.8,
+          "boss_win_rate": 1,
+          "boss_turns": 19.683333333333334,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 4.433333333333334,
+          "win_rate": 1,
+          "survival": 18.133333333333333,
+          "boss_win_rate": 0.7833333333333333,
+          "boss_turns": 22.72340425531915,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.767,
+        "group_value": 0,
+        "kill_speed": 0.268,
+        "survival": 0.193
+      }
+    },
+    {
+      "code": "storm_fist",
+      "class": "monk",
+      "promotion": "fighter",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "burst"
+      ],
+      "support_power": 0,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 4,
+        "aoe_value": 4,
+        "afk_safety": 2
+      },
+      "strong_in": [
+        "farming"
+      ],
+      "weak_in": [
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.116666666666666,
+          "win_rate": 1,
+          "survival": 149.1,
+          "boss_win_rate": 1,
+          "boss_turns": 18.483333333333334,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 4.583333333333333,
+          "win_rate": 1,
+          "survival": 23.1,
+          "boss_win_rate": 0.9666666666666667,
+          "boss_turns": 21.879310344827587,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0.817,
+        "group_value": 0,
+        "kill_speed": 0.296,
+        "survival": 0.484
+      }
+    },
+    {
+      "code": "high_priest",
+      "class": "cleric",
+      "promotion": "saint",
+      "role": "support",
+      "role_tags": [
+        "healer",
+        "hot",
+        "group_support"
+      ],
+      "support_power": 0.7,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 4,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group",
+        "dungeon"
+      ],
+      "weak_in": [
+        "solo",
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 8,
+          "win_rate": 1,
+          "survival": 26.333333333333332,
+          "boss_win_rate": 0.7833333333333333,
+          "boss_turns": 43.680851063829785,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 7.833333333333333,
+          "win_rate": 1,
+          "survival": 19.616666666666667,
+          "boss_win_rate": 0.11666666666666667,
+          "boss_turns": 39.42857142857143,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.271,
+        "group_value": 0.974,
+        "kill_speed": 0.06,
+        "survival": 0.065
+      }
+    },
+    {
+      "code": "aegis_priest",
+      "class": "cleric",
+      "promotion": "saint",
+      "role": "support",
+      "role_tags": [
+        "barrier_support",
+        "afk_safe",
+        "group_support"
+      ],
+      "support_power": 0.6,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "group",
+        "afk"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 10.5,
+          "win_rate": 1,
+          "survival": 23.233333333333334,
+          "boss_win_rate": 0.06666666666666667,
+          "boss_turns": 46.25,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 10.116666666666667,
+          "win_rate": 1,
+          "survival": 18.533333333333335,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.022,
+        "group_value": 0.947,
+        "kill_speed": 0,
+        "survival": 0.054
+      }
+    },
+    {
+      "code": "prophet",
+      "class": "cleric",
+      "promotion": "oracle",
+      "role": "support",
+      "role_tags": [
+        "buff_support",
+        "group_support"
+      ],
+      "support_power": 0.7,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "group"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 3.9,
+          "win_rate": 1,
+          "survival": 12.866666666666667,
+          "boss_win_rate": 0.06666666666666667,
+          "boss_turns": 26.5,
+          "afk_safety": 0.9666666666666667
+        },
+        "700": {
+          "kill_turns": 3.95,
+          "win_rate": 1,
+          "survival": 9.45,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0
+        }
+      },
+      "scores": {
+        "afk_safety": 0.941,
+        "aoe": 0.333,
+        "boss": 0.038,
+        "group_value": 0.974,
+        "kill_speed": 0.323,
+        "survival": 0.019
+      }
+    },
+    {
+      "code": "exorcist",
+      "class": "cleric",
+      "promotion": "oracle",
+      "role": "dps",
+      "role_tags": [
+        "magic_dps",
+        "debuff_support",
+        "control"
+      ],
+      "support_power": 0.3,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss",
+        "dungeon"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 3.283333333333333,
+          "win_rate": 1,
+          "survival": 11.433333333333334,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0.9833333333333333
+        },
+        "700": {
+          "kill_turns": 3.433333333333333,
+          "win_rate": 1,
+          "survival": 9.866666666666667,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0.25
+        }
+      },
+      "scores": {
+        "afk_safety": 0.971,
+        "aoe": 0.333,
+        "boss": 0,
+        "group_value": 0.342,
+        "kill_speed": 0.42,
+        "survival": 0.014
+      }
+    },
+    {
+      "code": "aegis_knight",
+      "class": "paladin",
+      "promotion": "protector",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "barrier_support",
+        "group_support",
+        "afk_safe"
+      ],
+      "support_power": 0.35,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "boss",
+        "group"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 10.166666666666666,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 78.03333333333333,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 10.783333333333333,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 81.68333333333334,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.194,
+        "group_value": 0.882,
+        "kill_speed": 0.006,
+        "survival": 1
+      }
+    },
+    {
+      "code": "lightwarden",
+      "class": "paladin",
+      "promotion": "protector",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "healer",
+        "group_support"
+      ],
+      "support_power": 0.45,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "group",
+        "afk"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 10.066666666666666,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 65.95,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 10.166666666666666,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 71.08333333333333,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.229,
+        "group_value": 0.908,
+        "kill_speed": 0.008,
+        "survival": 1
+      }
+    },
+    {
+      "code": "templar",
+      "class": "paladin",
+      "promotion": "crusader",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "buff_support",
+        "group_support"
+      ],
+      "support_power": 0.35,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 4,
+        "resource_efficiency": 3,
+        "group_value": 4,
+        "boss_value": 3,
+        "aoe_value": 4,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "group",
+        "farming"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.85,
+          "win_rate": 1,
+          "survival": 18.466666666666665,
+          "boss_win_rate": 0.2,
+          "boss_turns": 31.75,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.3,
+          "win_rate": 1,
+          "survival": 18.883333333333333,
+          "boss_win_rate": 0.15,
+          "boss_turns": 34.77777777777778,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0.095,
+        "group_value": 0.618,
+        "kill_speed": 0.222,
+        "survival": 0.038
+      }
+    },
+    {
+      "code": "justicar",
+      "class": "paladin",
+      "promotion": "crusader",
+      "role": "dps",
+      "role_tags": [
+        "melee_dps",
+        "burst",
+        "debuff_support"
+      ],
+      "support_power": 0.2,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss"
+      ],
+      "weak_in": [
+        "aoe"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.183333333333334,
+          "win_rate": 1,
+          "survival": 19.333333333333332,
+          "boss_win_rate": 0.23333333333333334,
+          "boss_turns": 31.928571428571427,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.8,
+          "win_rate": 1,
+          "survival": 20.066666666666666,
+          "boss_win_rate": 0.15,
+          "boss_turns": 35.77777777777778,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.11,
+        "group_value": 0.316,
+        "kill_speed": 0.196,
+        "survival": 0.041
+      }
+    },
+    {
+      "code": "life_binder",
+      "class": "druid",
+      "promotion": "grove_keeper",
+      "role": "support",
+      "role_tags": [
+        "healer",
+        "hot",
+        "group_support"
+      ],
+      "support_power": 0.7,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 4,
+        "resource_efficiency": 5,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 7.8,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 48.9,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 7.4,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 47.6,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.309,
+        "group_value": 0.974,
+        "kill_speed": 0.066,
+        "survival": 1
+      }
+    },
+    {
+      "code": "thorn_sage",
+      "class": "druid",
+      "promotion": "grove_keeper",
+      "role": "dps",
+      "role_tags": [
+        "dot",
+        "debuff_support",
+        "magic_dps"
+      ],
+      "support_power": 0.3,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 4,
+        "resource_efficiency": 4,
+        "group_value": 3,
+        "boss_value": 3,
+        "aoe_value": 4,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "aoe",
+        "afk"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 2.9833333333333334,
+          "win_rate": 1,
+          "survival": 27.816666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 31.7,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.0833333333333335,
+          "win_rate": 1,
+          "survival": 23.083333333333332,
+          "boss_win_rate": 1,
+          "boss_turns": 32.916666666666664,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0.476,
+        "group_value": 0.342,
+        "kill_speed": 0.481,
+        "survival": 0.07
+      }
+    },
+    {
+      "code": "bearwarden",
+      "class": "druid",
+      "promotion": "shapeshifter",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "afk_safe"
+      ],
+      "support_power": 0.05,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 5,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "boss",
+        "afk"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 7.75,
+          "win_rate": 1,
+          "survival": 79.25,
+          "boss_win_rate": 1,
+          "boss_turns": 53.916666666666664,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 7.083333333333333,
+          "win_rate": 1,
+          "survival": 38.88333333333333,
+          "boss_win_rate": 1,
+          "boss_turns": 55.416666666666664,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.28,
+        "group_value": 0.539,
+        "kill_speed": 0.068,
+        "survival": 0.246
+      }
+    },
+    {
+      "code": "mooncaller",
+      "class": "druid",
+      "promotion": "shapeshifter",
+      "role": "dps",
+      "role_tags": [
+        "magic_dps",
+        "burst"
+      ],
+      "support_power": 0.15,
+      "afk_profile": {
+        "kill_speed": 5,
+        "survivability": 2,
+        "resource_efficiency": 3,
+        "group_value": 2,
+        "boss_value": 4,
+        "aoe_value": 4,
+        "afk_safety": 2
+      },
+      "strong_in": [
+        "farming"
+      ],
+      "weak_in": [
+        "afk"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.783333333333333,
+          "win_rate": 1,
+          "survival": 15.183333333333334,
+          "boss_win_rate": 0.36666666666666664,
+          "boss_turns": 28.227272727272727,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 4.833333333333333,
+          "win_rate": 1,
+          "survival": 14.05,
+          "boss_win_rate": 0.05,
+          "boss_turns": 28.666666666666668,
+          "afk_safety": 0.8333333333333334
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.667,
+        "boss": 0.196,
+        "group_value": 0.039,
+        "kill_speed": 0.228,
+        "survival": 0.027
+      }
+    },
+    {
+      "code": "virtuoso",
+      "class": "bard",
+      "promotion": "minstrel",
+      "role": "support",
+      "role_tags": [
+        "buff_support",
+        "group_support"
+      ],
+      "support_power": 0.8,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "group"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.816666666666666,
+          "win_rate": 1,
+          "survival": 36.333333333333336,
+          "boss_win_rate": 1,
+          "boss_turns": 22.783333333333335,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.133333333333334,
+          "win_rate": 1,
+          "survival": 30.783333333333335,
+          "boss_win_rate": 1,
+          "boss_turns": 26.216666666666665,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.663,
+        "group_value": 1,
+        "kill_speed": 0.225,
+        "survival": 0.099
+      }
+    },
+    {
+      "code": "harmonist",
+      "class": "bard",
+      "promotion": "minstrel",
+      "role": "support",
+      "role_tags": [
+        "healer",
+        "hot",
+        "group_support"
+      ],
+      "support_power": 0.7,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 4,
+        "resource_efficiency": 5,
+        "group_value": 5,
+        "boss_value": 3,
+        "aoe_value": 2,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group",
+        "afk"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.866666666666666,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 29.666666666666668,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 6.1,
+          "win_rate": 1,
+          "survival": 300,
+          "boss_win_rate": 1,
+          "boss_turns": 33.43333333333333,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.509,
+        "group_value": 0.974,
+        "kill_speed": 0.151,
+        "survival": 1
+      }
+    },
+    {
+      "code": "war_chanter",
+      "class": "bard",
+      "promotion": "skald",
+      "role": "support",
+      "role_tags": [
+        "buff_support",
+        "melee_dps",
+        "group_support"
+      ],
+      "support_power": 0.5,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 3,
+        "resource_efficiency": 3,
+        "group_value": 5,
+        "boss_value": 3,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "group",
+        "dungeon"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 4.583333333333333,
+          "win_rate": 1,
+          "survival": 25.516666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 18.733333333333334,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 4.883333333333334,
+          "win_rate": 1,
+          "survival": 22.416666666666668,
+          "boss_win_rate": 1,
+          "boss_turns": 21.45,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.806,
+        "group_value": 0.921,
+        "kill_speed": 0.246,
+        "survival": 0.062
+      }
+    },
+    {
+      "code": "dirge_singer",
+      "class": "bard",
+      "promotion": "skald",
+      "role": "support",
+      "role_tags": [
+        "debuff_support",
+        "dot",
+        "control"
+      ],
+      "support_power": 0.4,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss",
+        "group"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.433333333333334,
+          "win_rate": 1,
+          "survival": 20.333333333333332,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 20.71186440677966,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 5.9,
+          "win_rate": 1,
+          "survival": 18.65,
+          "boss_win_rate": 0.9666666666666667,
+          "boss_turns": 22.551724137931036,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.717,
+        "group_value": 0.632,
+        "kill_speed": 0.178,
+        "survival": 0.044
+      }
+    },
+    {
+      "code": "earthwarden",
+      "class": "shaman",
+      "promotion": "totemist",
+      "role": "tank",
+      "role_tags": [
+        "tank",
+        "barrier_support",
+        "afk_safe"
+      ],
+      "support_power": 0.4,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 5,
+        "resource_efficiency": 4,
+        "group_value": 5,
+        "boss_value": 4,
+        "aoe_value": 2,
+        "afk_safety": 5
+      },
+      "strong_in": [
+        "afk",
+        "group"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 6.116666666666666,
+          "win_rate": 1,
+          "survival": 84.58333333333333,
+          "boss_win_rate": 1,
+          "boss_turns": 49.43333333333333,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 6.083333333333333,
+          "win_rate": 1,
+          "survival": 36.61666666666667,
+          "boss_win_rate": 1,
+          "boss_turns": 52.35,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.305,
+        "group_value": 0.895,
+        "kill_speed": 0.137,
+        "survival": 0.264
+      }
+    },
+    {
+      "code": "storm_totemist",
+      "class": "shaman",
+      "promotion": "totemist",
+      "role": "dps",
+      "role_tags": [
+        "magic_dps",
+        "burst"
+      ],
+      "support_power": 0.3,
+      "afk_profile": {
+        "kill_speed": 4,
+        "survivability": 2,
+        "resource_efficiency": 3,
+        "group_value": 3,
+        "boss_value": 3,
+        "aoe_value": 5,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "aoe",
+        "farming"
+      ],
+      "weak_in": [
+        "boss"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 5.616666666666666,
+          "win_rate": 1,
+          "survival": 15.983333333333333,
+          "boss_win_rate": 0.03333333333333333,
+          "boss_turns": 34,
+          "afk_safety": 0.8
+        },
+        "700": {
+          "kill_turns": 5.916666666666667,
+          "win_rate": 1,
+          "survival": 14.6,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0.1
+        }
+      },
+      "scores": {
+        "afk_safety": 0.647,
+        "aoe": 1,
+        "boss": 0.015,
+        "group_value": 0.342,
+        "kill_speed": 0.166,
+        "survival": 0.029
+      }
+    },
+    {
+      "code": "ancestor_sage",
+      "class": "shaman",
+      "promotion": "spirit_caller",
+      "role": "support",
+      "role_tags": [
+        "healer",
+        "hot",
+        "group_support"
+      ],
+      "support_power": 0.7,
+      "afk_profile": {
+        "kill_speed": 2,
+        "survivability": 4,
+        "resource_efficiency": 5,
+        "group_value": 5,
+        "boss_value": 3,
+        "aoe_value": 2,
+        "afk_safety": 4
+      },
+      "strong_in": [
+        "group"
+      ],
+      "weak_in": [
+        "solo"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 8.5,
+          "win_rate": 1,
+          "survival": 232.4,
+          "boss_win_rate": 1,
+          "boss_turns": 49.5,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 8.566666666666666,
+          "win_rate": 1,
+          "survival": 54.916666666666664,
+          "boss_win_rate": 1,
+          "boss_turns": 52.35,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0,
+        "boss": 0.305,
+        "group_value": 0.974,
+        "kill_speed": 0.045,
+        "survival": 0.769
+      }
+    },
+    {
+      "code": "hexer",
+      "class": "shaman",
+      "promotion": "spirit_caller",
+      "role": "support",
+      "role_tags": [
+        "debuff_support",
+        "dot",
+        "magic_dps"
+      ],
+      "support_power": 0.35,
+      "afk_profile": {
+        "kill_speed": 3,
+        "survivability": 3,
+        "resource_efficiency": 4,
+        "group_value": 4,
+        "boss_value": 4,
+        "aoe_value": 3,
+        "afk_safety": 3
+      },
+      "strong_in": [
+        "boss"
+      ],
+      "weak_in": [
+        "farming"
+      ],
+      "sim": {
+        "1000": {
+          "kill_turns": 3.9166666666666665,
+          "win_rate": 1,
+          "survival": 39.516666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 35.333333333333336,
+          "afk_safety": 1
+        },
+        "700": {
+          "kill_turns": 3.9166666666666665,
+          "win_rate": 1,
+          "survival": 21.483333333333334,
+          "boss_win_rate": 1,
+          "boss_turns": 40.43333333333333,
+          "afk_safety": 1
+        }
+      },
+      "scores": {
+        "afk_safety": 1,
+        "aoe": 0.333,
+        "boss": 0.427,
+        "group_value": 0.618,
+        "kill_speed": 0.321,
+        "survival": 0.11
+      }
+    }
+  ]
+}

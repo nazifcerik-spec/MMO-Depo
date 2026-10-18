@@ -322,18 +322,6 @@ abstract class AppLocalizations {
   /// **'Mage'**
   String get classMage;
 
-  /// No description provided for @classHunter.
-  ///
-  /// In en, this message translates to:
-  /// **'Hunter'**
-  String get classHunter;
-
-  /// No description provided for @classPriest.
-  ///
-  /// In en, this message translates to:
-  /// **'Priest'**
-  String get classPriest;
-
   /// No description provided for @classRogue.
   ///
   /// In en, this message translates to:
@@ -3417,6 +3405,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'+{pct}% attack for {turns} turns'**
   String skillEmpower(int pct, int turns);
+
+  /// No description provided for @classRanger.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranger'**
+  String get classRanger;
+
+  /// No description provided for @classCleric.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleric'**
+  String get classCleric;
+
+  /// No description provided for @classMonk.
+  ///
+  /// In en, this message translates to:
+  /// **'Monk'**
+  String get classMonk;
+
+  /// No description provided for @classPaladin.
+  ///
+  /// In en, this message translates to:
+  /// **'Paladin'**
+  String get classPaladin;
+
+  /// No description provided for @classDruid.
+  ///
+  /// In en, this message translates to:
+  /// **'Druid'**
+  String get classDruid;
+
+  /// No description provided for @classBard.
+  ///
+  /// In en, this message translates to:
+  /// **'Bard'**
+  String get classBard;
+
+  /// No description provided for @classShaman.
+  ///
+  /// In en, this message translates to:
+  /// **'Shaman'**
+  String get classShaman;
+
+  /// No description provided for @errEquipmentPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Your class cannot use this equipment type.'**
+  String get errEquipmentPermission;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -28,5 +28,16 @@
   "errAttributeRequirement": "你的属性不足以使用此物品。",
   "errBusyCombat": "战斗、挂机或地下城中无法进行。",
   "skillGuard": "{turns}回合护甲 +{pct}%",
-  "skillEmpower": "{turns}回合攻击 +{pct}%"
+  "skillEmpower": "{turns}回合攻击 +{pct}%",
+  "classRanger": "游侠",
+  "classCleric": "牧师",
+  "classMonk": "武僧",
+  "classPaladin": "圣骑士",
+  "classDruid": "德鲁伊",
+  "classBard": "吟游诗人",
+  "classShaman": "萨满",
+  "errEquipmentPermission": "你的职业无法使用此类装备。",
+  "classWarrior": "战士",
+  "classMage": "法师",
+  "classRogue": "盗贼"
 }

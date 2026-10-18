@@ -130,16 +130,19 @@ void main() {
 
     await tester.enterText(find.byType(TextFormField), 'Grim');
     await tester.tap(find.text('Dwarf'));
-    await tester.tap(find.text('Hunter'));
+    await tester.ensureVisible(find.text('Shaman'));
+    expect(find.text('Shaman'), findsOneWidget, reason: 'all ten classes are offered');
+    await tester.tap(find.text('Ranger'));
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(be.characters.single['race_code'], 'dwarf');
-    expect(find.text('Lvl 1 · Hunter · Dwarf'), findsOneWidget);
+    expect(find.text('Lvl 1 · Ranger · Dwarf'), findsOneWidget);
     expect(find.text('1/2 slots'), findsOneWidget);
 
     await tester.tap(find.text('Grim'));
     await tester.pumpAndSettle();
     expect(find.text('80/120'), findsOneWidget); // HP
+    expect(find.text('FOCUS'), findsOneWidget, reason: 'the class resource replaces the MP bar');
     expect(find.text('40 / 100'), findsOneWidget); // XP
     expect(find.text('Attributes'), findsOneWidget);
     expect(find.text('90%'), findsOneWidget); // hit

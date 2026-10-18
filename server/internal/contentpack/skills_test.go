@@ -16,13 +16,13 @@ func TestShippedSkillsValidate(t *testing.T) {
 			perClassStarter[s.Class] = true
 		}
 	}
-	require.Len(t, perClassStarter, 5, "every class starts with an active skill")
+	require.Len(t, perClassStarter, 10, "every class starts with an active skill")
 }
 
 func TestValidateSkills_Rejects(t *testing.T) {
 	active := func() ClassSkill {
 		return ClassSkill{Code: "a", DisplayNameKey: "k", Class: "mage", UnlockLevel: 1, Kind: "active",
-			Effect: "strike", Power: 150, MPCost: 5, CooldownTurns: 2}
+			Effect: "strike", Power: 150, MPCost: 5, CooldownTurns: 2, AutoTrigger: AutoTrigger{OnCooldown: true}}
 	}
 	passive := func() ClassSkill {
 		return ClassSkill{Code: "p", DisplayNameKey: "k", Class: "rogue", UnlockLevel: 3, Kind: "passive",
@@ -36,10 +36,20 @@ func TestValidateSkills_Rejects(t *testing.T) {
 		mut(&s)
 		cases[name] = s
 	}
-	add("class", active, func(s *ClassSkill) { s.Class = "bard" })
+	add("class", active, func(s *ClassSkill) { s.Class = "necromancer" })
 	add("level", active, func(s *ClassSkill) { s.UnlockLevel = 0 })
 	add("kind", active, func(s *ClassSkill) { s.Kind = "toggle" })
-	add("effect", active, func(s *ClassSkill) { s.Effect = "stun" })
+	add("effect", active, func(s *ClassSkill) { s.Effect = "explode" })
+	add("untimed stun", active, func(s *ClassSkill) { s.Effect = "stun" })
+	add("stunlock", active, func(s *ClassSkill) { s.Effect, s.DurationTurns, s.CooldownTurns = "stun", 2, 3 })
+	add("no auto rule", active, func(s *ClassSkill) { s.AutoTrigger = AutoTrigger{} })
+	add("type mismatch", active, func(s *ClassSkill) { s.Type = "HEAL" })
+	add("unknown type", active, func(s *ClassSkill) { s.Type = "MIND_CONTROL" })
+	add("barrier power", active, func(s *ClassSkill) { s.Effect, s.Power, s.DurationTurns = "barrier", 150, 3 })
+	add("active passive model", active, func(s *ClassSkill) { s.Passive = &Passive{Trigger: "ON_HIT"} })
+	add("passive trigger", passive, func(s *ClassSkill) { s.Passive = &Passive{Trigger: "ON_SNEEZE"} })
+	add("passive auto rule", passive, func(s *ClassSkill) { s.AutoTrigger.OnCooldown = true })
+	add("passive type", passive, func(s *ClassSkill) { s.Type = "DAMAGE" })
 	add("power", active, func(s *ClassSkill) { s.Power = 0 })
 	add("heal power", active, func(s *ClassSkill) { s.Effect, s.Power = "heal", 150 })
 	add("cooldown", active, func(s *ClassSkill) { s.CooldownTurns = 0 })

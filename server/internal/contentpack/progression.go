@@ -1,6 +1,7 @@
 package contentpack
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -80,6 +81,50 @@ func loadProgressionFile(path string, skills []ClassSkill) (*leveling.Config, er
 		}
 	}
 	return &c, nil
+}
+
+// upsertProgressionCatalog registers the level and mastery titles and the
+// mastery achievements (DD-252) so grants always find their rows.
+func (l *Loader) upsertProgressionCatalog(ctx context.Context, c *leveling.Config) error {
+	tx, err := l.DB.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = tx.Rollback(ctx) }()
+	// Level titles are prefixes ("Veteran Warrior"), mastery titles suffixes.
+	title := func(code, source, placement, rarity string) error {
+		_, err := tx.Exec(ctx, `
+			INSERT INTO content.title_template (code, display_key, placement, rarity, source_kind)
+			VALUES ($1::varchar, 'title.' || $1::varchar, $3, $4, $2)
+			ON CONFLICT (code) DO NOTHING`, code, source, placement, rarity)
+		return err
+	}
+	for _, t := range c.Titles {
+		if err := title(t, "level", "prefix", "rare"); err != nil {
+			return fmt.Errorf("title %s: %w", t, err)
+		}
+	}
+	for _, k := range c.Classes {
+		m := k.Mastery
+		if m == nil {
+			continue
+		}
+		if err := title(m.Title, "class_mastery", "suffix", "mythic"); err != nil {
+			return fmt.Errorf("title %s: %w", m.Title, err)
+		}
+		if m.Achievement == "" {
+			continue
+		}
+		if _, err := tx.Exec(ctx, `
+			INSERT INTO content.achievement_template
+			  (code, display_name_key, description_key, category, point_value, trigger_kind, progress_target, reward_title_code)
+			VALUES ($1::varchar, 'achievement.' || $1::varchar, 'achievement.' || $1::varchar, 'mastery', 100, 'class_mastery:' || $2::varchar, 1, $3)
+			ON CONFLICT (code) DO UPDATE SET reward_title_code = EXCLUDED.reward_title_code`,
+			m.Achievement, k.Code, m.Title); err != nil {
+			return fmt.Errorf("achievement %s: %w", m.Achievement, err)
+		}
+	}
+	return tx.Commit(ctx)
 }
 
 func (s ClassSkill) specCode() string {

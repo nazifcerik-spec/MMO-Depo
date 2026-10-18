@@ -25,6 +25,11 @@ vendors:
       - { template_code: bow_short }
       - { template_code: mace_wooden }
       - { template_code: dagger_rusty }
+      - { template_code: totem_carved }
+      - { template_code: lute_simple }
+      - { template_code: sickle_bronze }
+      - { template_code: hammer_oak }
+      - { template_code: fist_wraps }
       - { template_code: helm_leather }
       - { template_code: chest_leather }
       - { template_code: legs_leather }

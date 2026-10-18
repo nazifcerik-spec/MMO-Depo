@@ -120,19 +120,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get raceOrc => 'Orc';
 
   @override
-  String get classWarrior => 'Warrior';
+  String get classWarrior => '战士';
 
   @override
-  String get classMage => 'Mage';
+  String get classMage => '法师';
 
   @override
-  String get classHunter => 'Hunter';
-
-  @override
-  String get classPriest => 'Priest';
-
-  @override
-  String get classRogue => 'Rogue';
+  String get classRogue => '盗贼';
 
   @override
   String levelLine(int level, String cls, String race) {
@@ -1894,4 +1888,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String skillEmpower(int pct, int turns) {
     return '$turns回合攻击 +$pct%';
   }
+
+  @override
+  String get classRanger => '游侠';
+
+  @override
+  String get classCleric => '牧师';
+
+  @override
+  String get classMonk => '武僧';
+
+  @override
+  String get classPaladin => '圣骑士';
+
+  @override
+  String get classDruid => '德鲁伊';
+
+  @override
+  String get classBard => '吟游诗人';
+
+  @override
+  String get classShaman => '萨满';
+
+  @override
+  String get errEquipmentPermission => '你的职业无法使用此类装备。';
 }

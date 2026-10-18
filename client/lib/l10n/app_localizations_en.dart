@@ -126,12 +126,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get classMage => 'Mage';
 
   @override
-  String get classHunter => 'Hunter';
-
-  @override
-  String get classPriest => 'Priest';
-
-  @override
   String get classRogue => 'Rogue';
 
   @override
@@ -1894,4 +1888,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String skillEmpower(int pct, int turns) {
     return '+$pct% attack for $turns turns';
   }
+
+  @override
+  String get classRanger => 'Ranger';
+
+  @override
+  String get classCleric => 'Cleric';
+
+  @override
+  String get classMonk => 'Monk';
+
+  @override
+  String get classPaladin => 'Paladin';
+
+  @override
+  String get classDruid => 'Druid';
+
+  @override
+  String get classBard => 'Bard';
+
+  @override
+  String get classShaman => 'Shaman';
+
+  @override
+  String get errEquipmentPermission => 'Your class cannot use this equipment type.';
 }

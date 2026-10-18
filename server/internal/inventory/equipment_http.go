@@ -135,6 +135,8 @@ func writeEquipErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusForbidden, "E_LEVEL_REQUIREMENT", "character level too low")
 	case errors.Is(err, ErrSpecRequirement):
 		apierr.Write(w, r, http.StatusForbidden, "E_SPEC_REQUIREMENT", "your specialization cannot equip this item")
+	case errors.Is(err, ErrEquipmentPermission):
+		apierr.Write(w, r, http.StatusForbidden, "E_EQUIPMENT_PERMISSION", "your class cannot use this equipment type")
 	case errors.Is(err, ErrAttributeRequirement):
 		apierr.Write(w, r, http.StatusForbidden, "E_ATTRIBUTE_REQUIREMENT", "attributes too low for this item")
 	case errors.Is(err, ErrUnknownEquipSlot):

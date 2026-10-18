@@ -38,8 +38,6 @@
   "raceOrc": "Ork",
   "classWarrior": "Savaşçı",
   "classMage": "Büyücü",
-  "classHunter": "Avcı",
-  "classPriest": "Rahip",
   "classRogue": "Haydut",
   "levelLine": "Sv {level} · {cls} · {race}",
   "levelShort": "Sv {level}",
@@ -553,5 +551,13 @@
   "errAttributeRequirement": "Niteliklerin bu eşya için yetersiz.",
   "errBusyCombat": "Savaşta, AFK görevde veya zindandayken olmaz.",
   "skillGuard": "{turns} tur +%{pct} zırh",
-  "skillEmpower": "{turns} tur +%{pct} saldırı"
+  "skillEmpower": "{turns} tur +%{pct} saldırı",
+  "classRanger": "Korucu",
+  "classCleric": "Rahip",
+  "classMonk": "Keşiş",
+  "classPaladin": "Paladin",
+  "classDruid": "Druid",
+  "classBard": "Ozan",
+  "classShaman": "Şaman",
+  "errEquipmentPermission": "Sınıfın bu ekipman türünü kullanamaz."
 }

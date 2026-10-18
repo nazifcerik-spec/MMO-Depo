@@ -27,6 +27,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_CAPSTONE_LOCKED' => l.errCapstoneLocked,
     'E_SPEC_REQUIREMENT' => l.errSpecRequirement,
     'E_ATTRIBUTE_REQUIREMENT' => l.errAttributeRequirement,
+    'E_EQUIPMENT_PERMISSION' => l.errEquipmentPermission,
     'E_BUSY_COMBAT' => l.errBusyCombat,
     'E_GATHER_LEVEL' => l.errGatherLevel,
     'E_NOT_ACTIVE' => l.errNotActive,
@@ -110,10 +111,15 @@ String raceName(AppLocalizations l, String code) => switch (code) {
 
 String className(AppLocalizations l, String code) => switch (code) {
   'warrior' => l.classWarrior,
-  'mage' => l.classMage,
-  'hunter' => l.classHunter,
-  'priest' => l.classPriest,
   'rogue' => l.classRogue,
+  'ranger' => l.classRanger,
+  'mage' => l.classMage,
+  'monk' => l.classMonk,
+  'cleric' => l.classCleric,
+  'paladin' => l.classPaladin,
+  'druid' => l.classDruid,
+  'bard' => l.classBard,
+  'shaman' => l.classShaman,
   _ => code,
 };
 

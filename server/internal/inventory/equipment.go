@@ -83,6 +83,9 @@ func meetsRequirements(tmpl item.Template, c *characterView) error {
 	if int16(tmpl.MinLevel) > c.Level {
 		return ErrLevelRequirement
 	}
+	if len(c.Path) > 0 && !leveling.Current().CanUse(c.Path[len(c.Path)-1], tmpl.ItemSubclass) {
+		return ErrEquipmentPermission
+	}
 	rq := tmpl.Requirements
 	if rq == nil {
 		return nil

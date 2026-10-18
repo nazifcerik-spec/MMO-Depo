@@ -49,59 +49,72 @@ attribute_scaling:
 
 caps: { crit_pct: 60, evasion_pct: 40, block_pct: 60, dmg_reduction_pct: 75, hit_pct: 100 }
 
+# Equipment families (item subclasses) that class permissions govern, and
+# armor types (permission "<type>_armor"). Items whose subclass is not a
+# family (helm, ring, ...) are usable by everyone (DD-252).
+equipment_families:
+  [sword, axe, mace, greatsword, greataxe, spear, shield,
+   dagger, short_sword, dual_dagger, fist_weapon, throwing_knife,
+   bow, longbow, crossbow, short_spear,
+   staff, wand, orb, grimoire, tonfa, unarmed, holy_tome, two_handed_mace,
+   sickle, nature_focus, lute, harp, flute, rapier, ritual_axe, totem_focus]
+armor_types: [cloth, light, medium, heavy]
+
+# Support specializations without a party convert this share of their
+# support_power into attack (Solo Adaptation, DD-252).
+solo_adaptation: { ratio: 0.35 }
+
 classes:
   - code: warrior
     name_key: class.warrior
-    role_tags: [melee, physical]
-    resource: { kind: rage, max: 100, per_hit: 8 }
+    role_tags: [tank, melee_dps, bruiser]
+    resource: { kind: rage, max: 100, start_pct: 0, per_hit: 12, per_turn: 0 }
     base_stats: { strength: 10, vitality: 10, dexterity: 7, intelligence: 4, wisdom: 5, luck: 5 }
     # Reference formulas (DD-250 §12). Bases and per-level terms (not in the
     # reference) are tuned by the balance simulation (internal/balance): with
     # allocatable points instead of automatic growth, Warrior still meets the
     # hunt/dungeon targets of the level-1..25 content.
     derived:
-      hp_base: 150
-      hp_per_level: 16
-      hp_per_vit: 18
-      attack_base: 15
-      armor_base: 8
-      attack_per_level: 4.0
-      attack_per_str: 2.2
-      attack_per_dex: 0.4
-      armor_per_level: 1.8
-      armor_per_vit: 1.2
-      crit_base: 5
-      crit_per_dex: 0.05
-      hit_base: 90
-      hit_per_dex: 0.5
-      dodge_per_dex: 0.04
-      block_per_str: 0.03
-    equipment_permissions: [sword, axe, mace, spear, greatsword, shield]
+      hp:     { base: 150, per_level: 16, per: { vitality: 18 } }
+      attack: { base: 15, per_level: 4.0, per: { strength: 2.2, dexterity: 0.4 } }
+      armor:  { base: 8, per_level: 1.8, per: { vitality: 1.2 } }
+      crit:   { base: 5, per: { dexterity: 0.05 } }
+      hit:    { base: 90, per: { dexterity: 0.5 } }
+      dodge:  { per: { dexterity: 0.04 } }
+      block:  { per: { strength: 0.03 } }
+    primary_attribute: strength
+    secondary_attributes: [vitality]
+    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear, shield]
 
   - code: guardian
     parent: warrior
     required_level: 100
     name_key: class.guardian
-    role_tags: [tank, defense, sustain, threat]
-    equipment_permissions: [sword, axe, mace, shield]
+    role_tags: [tank, afk_safe]
+    equipment_permissions: [heavy_armor, sword, axe, mace, spear, shield]
 
   - code: executioner
     parent: warrior
     required_level: 100
     name_key: class.executioner
-    role_tags: [physical_dps, execute, aggressive]
-    equipment_permissions: [sword, axe, mace, spear, greatsword]
+    role_tags: [melee_dps, burst]
+    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear]
 
   - code: iron_fortress
     parent: guardian
     required_level: 300
     name_key: class.iron_fortress
-    role_tags: [pure_tank, block, damage_reduction, barrier]
-    equipment_permissions: [sword, mace, shield]
+    role_tags: [tank, barrier_support, afk_safe]
+    equipment_permissions: [heavy_armor, sword, mace, shield]
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 5, aoe_value: 2, afk_safety: 5 }
+    strong_in: [boss, afk, group]
+    weak_in: [farming]
     mastery:
       title: the_unbreakable
       badge: badge_iron_fortress
       frame: frame_iron_fortress
+      achievement: mastery_iron_fortress
+      prestige_eligible: true
       modifiers:
         - { kind: mult_add, target: hp_max, amount: 0.02 }
         - { kind: mult_add, target: defense, amount: 0.02 }
@@ -110,12 +123,18 @@ classes:
     parent: guardian
     required_level: 300
     name_key: class.warlord
-    role_tags: [tank, bruiser, party_support, command]
-    equipment_permissions: [sword, axe, mace, shield, spear]
+    role_tags: [tank, bruiser, buff_support, group_support]
+    equipment_permissions: [heavy_armor, sword, axe, mace, spear, shield]
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 3, group_value: 5, boss_value: 4, aoe_value: 3, afk_safety: 4 }
+    support_power: 0.3
+    strong_in: [group, dungeon]
+    weak_in: [solo]
     mastery:
       title: lord_of_battle
       badge: badge_warlord
       frame: frame_warlord
+      achievement: mastery_warlord
+      prestige_eligible: true
       modifiers:
         - { kind: mult_add, target: attack, amount: 0.02 }
 
@@ -123,12 +142,17 @@ classes:
     parent: executioner
     required_level: 300
     name_key: class.berserker
-    role_tags: [high_risk_dps, low_hp_scaling, lifesteal, attack_speed]
-    equipment_permissions: [axe, greatsword, mace]
+    role_tags: [melee_dps, burst]
+    equipment_permissions: [heavy_armor, sword, axe, greatsword, greataxe, mace]
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 2, group_value: 3, boss_value: 5, aoe_value: 4, afk_safety: 2 }
+    strong_in: [boss, farming]
+    weak_in: [afk]
     mastery:
       title: bloodbound
       badge: badge_berserker
       frame: frame_berserker
+      achievement: mastery_berserker
+      prestige_eligible: true
       modifiers:
         - { kind: mult_add, target: attack, amount: 0.02 }
 
@@ -136,15 +160,942 @@ classes:
     parent: executioner
     required_level: 300
     name_key: class.weapon_master
-    role_tags: [sustained_dps, weapon_techniques, combo, adaptive]
-    equipment_permissions: [sword, axe, mace, spear, greatsword]
+    role_tags: [melee_dps, sustained_dps]
+    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 4, group_value: 2, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [solo, farming]
+    weak_in: [group]
     mastery:
       title: grandmaster_of_arms
       badge: badge_weapon_master
       frame: frame_weapon_master
+      achievement: mastery_weapon_master
+      prestige_eligible: true
       modifiers:
         - { kind: flat, target: crit_dmg_pct, amount: 2 }
         - { kind: mult_add, target: attack, amount: 0.02 }
+
+  # >>> generated: classes (scripts/gen_classes.py)
+  - code: rogue
+    name_key: class.rogue
+    role_tags: [melee_dps, burst, sustained_dps, dot]
+    resource: { kind: energy, max: 100, start_pct: 60, per_hit: 0, per_turn: 12 }
+    base_stats: { strength: 6, vitality: 7, dexterity: 12, intelligence: 5, wisdom: 5, luck: 8 }
+    derived:
+      hp:     { base: 150, per_level: 16, per: { vitality: 17 } }
+      attack: { base: 16, per_level: 4.2, per: { dexterity: 2.2, luck: 0.4 } }
+      armor:  { base: 7, per_level: 1.7, per: { vitality: 1.1 } }
+      crit:   { base: 8, per: { luck: 0.08, dexterity: 0.03 } }
+      hit:    { base: 92, per: { dexterity: 0.5 } }
+      dodge:  { base: 3, per: { dexterity: 0.08 } }
+      block:  {  }
+    primary_attribute: dexterity
+    secondary_attributes: [luck]
+    equipment_permissions: [light_armor, dagger, short_sword, dual_dagger, fist_weapon, throwing_knife]
+
+  - code: assassin
+    parent: rogue
+    required_level: 100
+    name_key: class.assassin
+    role_tags: [melee_dps, burst]
+
+  - code: nightblade
+    parent: assassin
+    required_level: 300
+    name_key: class.nightblade
+    role_tags: [melee_dps, burst]
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 2, afk_safety: 2 }
+    strong_in: [boss, solo]
+    weak_in: [aoe, afk]
+    mastery:
+      title: master_of_shadows
+      badge: badge_nightblade
+      frame: frame_nightblade
+      achievement: mastery_nightblade
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: crit_dmg_pct, amount: 3 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: poison_master
+    parent: assassin
+    required_level: 300
+    name_key: class.poison_master
+    role_tags: [dot, debuff_support, sustained_dps]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 4, group_value: 3, boss_value: 5, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss]
+    weak_in: [farming]
+    mastery:
+      title: venom_sovereign
+      badge: badge_poison_master
+      frame: frame_poison_master
+      achievement: mastery_poison_master
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: duelist
+    parent: rogue
+    required_level: 100
+    name_key: class.duelist
+    role_tags: [melee_dps, sustained_dps]
+
+  - code: blade_dancer
+    parent: duelist
+    required_level: 300
+    name_key: class.blade_dancer
+    role_tags: [melee_dps, sustained_dps]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 2, boss_value: 3, aoe_value: 5, afk_safety: 3 }
+    strong_in: [farming, aoe]
+    weak_in: [boss]
+    mastery:
+      title: grand_blade_dancer
+      badge: badge_blade_dancer
+      frame: frame_blade_dancer
+      achievement: mastery_blade_dancer
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: trickster
+    parent: duelist
+    required_level: 300
+    name_key: class.trickster
+    role_tags: [control, melee_dps, afk_safe]
+    afk_profile: { kill_speed: 3, survivability: 5, resource_efficiency: 3, group_value: 2, boss_value: 3, aoe_value: 2, afk_safety: 5 }
+    strong_in: [afk, solo]
+    weak_in: [farming]
+    mastery:
+      title: master_trickster
+      badge: badge_trickster
+      frame: frame_trickster
+      achievement: mastery_trickster
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: evasion_pct, amount: 1 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: ranger
+    name_key: class.ranger
+    role_tags: [ranged_dps, pet, control]
+    resource: { kind: focus, max: 100, start_pct: 50, per_hit: 6, per_turn: 5 }
+    base_stats: { strength: 6, vitality: 7, dexterity: 12, intelligence: 5, wisdom: 6, luck: 7 }
+    derived:
+      hp:     { base: 160, per_level: 17, per: { vitality: 17 } }
+      attack: { base: 16, per_level: 4.4, per: { dexterity: 2.2, luck: 0.3 } }
+      armor:  { base: 8, per_level: 1.9, per: { vitality: 1.1 } }
+      crit:   { base: 7, per: { luck: 0.06 } }
+      hit:    { base: 93, per: { dexterity: 0.5 } }
+      dodge:  { base: 3, per: { dexterity: 0.07 } }
+      block:  {  }
+    primary_attribute: dexterity
+    secondary_attributes: [luck]
+    equipment_permissions: [light_armor, medium_armor, bow, longbow, crossbow, short_spear]
+
+  - code: marksman
+    parent: ranger
+    required_level: 100
+    name_key: class.marksman
+    role_tags: [ranged_dps, burst]
+
+  - code: sharpshooter
+    parent: marksman
+    required_level: 300
+    name_key: class.sharpshooter
+    role_tags: [ranged_dps, burst]
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 2, afk_safety: 3 }
+    strong_in: [boss]
+    weak_in: [aoe]
+    mastery:
+      title: legendary_marksman
+      badge: badge_sharpshooter
+      frame: frame_sharpshooter
+      achievement: mastery_sharpshooter
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: crit_pct, amount: 1 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: crossbow_master
+    parent: marksman
+    required_level: 300
+    name_key: class.crossbow_master
+    role_tags: [ranged_dps, sustained_dps]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 5, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss, dungeon]
+    weak_in: [farming]
+    mastery:
+      title: grand_arbalist
+      badge: badge_crossbow_master
+      frame: frame_crossbow_master
+      achievement: mastery_crossbow_master
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: scout
+    parent: ranger
+    required_level: 100
+    name_key: class.scout
+    role_tags: [ranged_dps, control, afk_safe]
+
+  - code: beastmaster
+    parent: scout
+    required_level: 300
+    name_key: class.beastmaster
+    role_tags: [pet, ranged_dps, afk_safe]
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 2, boss_value: 3, aoe_value: 3, afk_safety: 5 }
+    strong_in: [afk, solo]
+    weak_in: [boss]
+    mastery:
+      title: master_of_beasts
+      badge: badge_beastmaster
+      frame: frame_beastmaster
+      achievement: mastery_beastmaster
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.01 }
+        - { kind: mult_add, target: hp_max, amount: 0.01 }
+
+  - code: trapper
+    parent: scout
+    required_level: 300
+    name_key: class.trapper
+    role_tags: [control, ranged_dps, dot]
+    afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 4, group_value: 3, boss_value: 2, aoe_value: 5, afk_safety: 4 }
+    strong_in: [aoe, farming]
+    weak_in: [boss]
+    mastery:
+      title: grand_trapper
+      badge: badge_trapper
+      frame: frame_trapper
+      achievement: mastery_trapper
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: mage
+    name_key: class.mage
+    role_tags: [magic_dps, burst, dot, control]
+    resource: { kind: mana, max: 100, start_pct: 70, per_hit: 0, per_turn: 8 }
+    base_stats: { strength: 3, vitality: 6, dexterity: 5, intelligence: 13, wisdom: 9, luck: 6 }
+    derived:
+      hp:     { base: 140, per_level: 16, per: { vitality: 16 } }
+      attack: { base: 18, per_level: 4.4, per: { intelligence: 2.4, wisdom: 0.4 } }
+      armor:  { base: 6, per_level: 1.6, per: { vitality: 1 } }
+      crit:   { base: 6, per: { luck: 0.05 } }
+      hit:    { base: 92, per: { dexterity: 0.3, intelligence: 0.1 } }
+      dodge:  { per: { dexterity: 0.03 } }
+      block:  {  }
+    primary_attribute: intelligence
+    secondary_attributes: [wisdom]
+    equipment_permissions: [cloth_armor, staff, wand, orb, grimoire]
+
+  - code: arcanist
+    parent: mage
+    required_level: 100
+    name_key: class.arcanist
+    role_tags: [magic_dps, sustained_dps]
+
+  - code: rune_master
+    parent: arcanist
+    required_level: 300
+    name_key: class.rune_master
+    role_tags: [magic_dps, burst]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 4, aoe_value: 4, afk_safety: 3 }
+    strong_in: [dungeon]
+    weak_in: [afk]
+    mastery:
+      title: archmage_of_runes
+      badge: badge_rune_master
+      frame: frame_rune_master
+      achievement: mastery_rune_master
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: chronomancer
+    parent: arcanist
+    required_level: 300
+    name_key: class.chronomancer
+    role_tags: [control, magic_dps, afk_safe]
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 4, boss_value: 3, aoe_value: 3, afk_safety: 4 }
+    strong_in: [group, afk]
+    weak_in: [farming]
+    mastery:
+      title: master_of_time
+      badge: badge_chronomancer
+      frame: frame_chronomancer
+      achievement: mastery_chronomancer
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.01 }
+        - { kind: flat, target: dmg_reduction_pct, amount: 1 }
+
+  - code: elementalist
+    parent: mage
+    required_level: 100
+    name_key: class.elementalist
+    role_tags: [magic_dps, dot]
+
+  - code: pyromancer
+    parent: elementalist
+    required_level: 300
+    name_key: class.pyromancer
+    role_tags: [magic_dps, dot, burst]
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 2, group_value: 2, boss_value: 4, aoe_value: 5, afk_safety: 2 }
+    strong_in: [farming, aoe]
+    weak_in: [afk]
+    mastery:
+      title: flame_sovereign
+      badge: badge_pyromancer
+      frame: frame_pyromancer
+      achievement: mastery_pyromancer
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: cryomancer
+    parent: elementalist
+    required_level: 300
+    name_key: class.cryomancer
+    role_tags: [control, magic_dps, afk_safe]
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 3, group_value: 3, boss_value: 3, aoe_value: 4, afk_safety: 5 }
+    strong_in: [afk, aoe]
+    weak_in: [boss]
+    mastery:
+      title: lord_of_winter
+      badge: badge_cryomancer
+      frame: frame_cryomancer
+      achievement: mastery_cryomancer
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: dmg_reduction_pct, amount: 1 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: monk
+    name_key: class.monk
+    role_tags: [melee_dps, bruiser, tank]
+    resource: { kind: chi, max: 100, start_pct: 0, per_hit: 14, per_turn: 2 }
+    base_stats: { strength: 8, vitality: 8, dexterity: 10, intelligence: 5, wisdom: 8, luck: 6 }
+    derived:
+      hp:     { base: 140, per_level: 15, per: { vitality: 17 } }
+      attack: { base: 15, per_level: 4, per: { dexterity: 2, strength: 0.6 } }
+      armor:  { base: 6, per_level: 1.6, per: { vitality: 1.1, wisdom: 0.2 } }
+      crit:   { base: 6, per: { dexterity: 0.04 } }
+      hit:    { base: 91, per: { dexterity: 0.5 } }
+      dodge:  { base: 2, per: { dexterity: 0.07 } }
+      block:  {  }
+    primary_attribute: dexterity
+    secondary_attributes: [wisdom, strength]
+    equipment_permissions: [light_armor, medium_armor, fist_weapon, staff, tonfa, unarmed]
+
+  - code: disciple
+    parent: monk
+    required_level: 100
+    name_key: class.disciple
+    role_tags: [tank, bruiser, afk_safe]
+
+  - code: iron_body
+    parent: disciple
+    required_level: 300
+    name_key: class.iron_body
+    role_tags: [tank, afk_safe]
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 4, boss_value: 4, aoe_value: 2, afk_safety: 5 }
+    strong_in: [afk, boss]
+    weak_in: [farming]
+    mastery:
+      title: diamond_body
+      badge: badge_iron_body
+      frame: frame_iron_body
+      achievement: mastery_iron_body
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+        - { kind: mult_add, target: defense, amount: 0.01 }
+
+  - code: spirit_walker
+    parent: disciple
+    required_level: 300
+    name_key: class.spirit_walker
+    role_tags: [bruiser, hot, afk_safe]
+    support_power: 0.2
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 4, boss_value: 3, aoe_value: 2, afk_safety: 5 }
+    strong_in: [afk, solo]
+    weak_in: [aoe]
+    mastery:
+      title: enlightened_one
+      badge: badge_spirit_walker
+      frame: frame_spirit_walker
+      achievement: mastery_spirit_walker
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.01 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: fighter
+    parent: monk
+    required_level: 100
+    name_key: class.fighter
+    role_tags: [melee_dps, burst]
+
+  - code: combo_master
+    parent: fighter
+    required_level: 300
+    name_key: class.combo_master
+    role_tags: [melee_dps, sustained_dps]
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss]
+    weak_in: [aoe]
+    mastery:
+      title: grand_martial_master
+      badge: badge_combo_master
+      frame: frame_combo_master
+      achievement: mastery_combo_master
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: storm_fist
+    parent: fighter
+    required_level: 300
+    name_key: class.storm_fist
+    role_tags: [melee_dps, burst]
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 4, aoe_value: 4, afk_safety: 2 }
+    strong_in: [farming]
+    weak_in: [afk]
+    mastery:
+      title: storm_incarnate
+      badge: badge_storm_fist
+      frame: frame_storm_fist
+      achievement: mastery_storm_fist
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: crit_pct, amount: 1 }
+        - { kind: mult_add, target: attack, amount: 0.01 }
+
+  - code: cleric
+    name_key: class.cleric
+    role_tags: [healer, barrier_support, buff_support, group_support]
+    resource: { kind: mana, max: 100, start_pct: 70, per_hit: 0, per_turn: 8 }
+    base_stats: { strength: 4, vitality: 7, dexterity: 4, intelligence: 9, wisdom: 13, luck: 6 }
+    derived:
+      hp:     { base: 120, per_level: 12, per: { vitality: 15 } }
+      attack: { base: 15, per_level: 3.8, per: { wisdom: 2.2, intelligence: 0.4 } }
+      armor:  { base: 5, per_level: 1.3, per: { vitality: 1 } }
+      crit:   { base: 5, per: { luck: 0.04 } }
+      hit:    { base: 92, per: { wisdom: 0.2, dexterity: 0.2 } }
+      dodge:  { per: { dexterity: 0.03 } }
+      block:  {  }
+    primary_attribute: wisdom
+    secondary_attributes: [intelligence]
+    equipment_permissions: [cloth_armor, medium_armor, staff, mace, holy_tome, shield]
+    support_power: 0.5
+
+  - code: saint
+    parent: cleric
+    required_level: 100
+    name_key: class.saint
+    role_tags: [healer, barrier_support, group_support]
+    support_power: 0.6
+
+  - code: high_priest
+    parent: saint
+    required_level: 300
+    name_key: class.high_priest
+    role_tags: [healer, hot, group_support]
+    support_power: 0.7
+    afk_profile: { kill_speed: 2, survivability: 4, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 2, afk_safety: 4 }
+    strong_in: [group, dungeon]
+    weak_in: [solo, farming]
+    mastery:
+      title: saint_of_saints
+      badge: badge_high_priest
+      frame: frame_high_priest
+      achievement: mastery_high_priest
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: aegis_priest
+    parent: saint
+    required_level: 300
+    name_key: class.aegis_priest
+    role_tags: [barrier_support, afk_safe, group_support]
+    support_power: 0.6
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 2, afk_safety: 5 }
+    strong_in: [group, afk]
+    weak_in: [farming]
+    mastery:
+      title: aegis_of_heaven
+      badge: badge_aegis_priest
+      frame: frame_aegis_priest
+      achievement: mastery_aegis_priest
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: dmg_reduction_pct, amount: 1 }
+        - { kind: mult_add, target: hp_max, amount: 0.01 }
+
+  - code: oracle
+    parent: cleric
+    required_level: 100
+    name_key: class.oracle
+    role_tags: [buff_support, control, group_support]
+    support_power: 0.5
+
+  - code: prophet
+    parent: oracle
+    required_level: 300
+    name_key: class.prophet
+    role_tags: [buff_support, group_support]
+    support_power: 0.7
+    afk_profile: { kill_speed: 2, survivability: 3, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [group]
+    weak_in: [solo]
+    mastery:
+      title: grand_prophet
+      badge: badge_prophet
+      frame: frame_prophet
+      achievement: mastery_prophet
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: exorcist
+    parent: oracle
+    required_level: 300
+    name_key: class.exorcist
+    role_tags: [magic_dps, debuff_support, control]
+    support_power: 0.3
+    afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss, dungeon]
+    weak_in: [farming]
+    mastery:
+      title: divine_exorcist
+      badge: badge_exorcist
+      frame: frame_exorcist
+      achievement: mastery_exorcist
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: paladin
+    name_key: class.paladin
+    role_tags: [tank, healer, buff_support, melee_dps]
+    resource: { kind: conviction, max: 100, start_pct: 30, per_hit: 10, per_turn: 3 }
+    base_stats: { strength: 8, vitality: 10, dexterity: 5, intelligence: 5, wisdom: 9, luck: 5 }
+    derived:
+      hp:     { base: 135, per_level: 14, per: { vitality: 16 } }
+      attack: { base: 15, per_level: 3.8, per: { strength: 1.4, vitality: 1, wisdom: 0.4 } }
+      armor:  { base: 7, per_level: 1.6, per: { vitality: 1 } }
+      crit:   { base: 5, per: { luck: 0.04 } }
+      hit:    { base: 91, per: { dexterity: 0.4, wisdom: 0.1 } }
+      dodge:  { per: { dexterity: 0.03 } }
+      block:  { per: { strength: 0.03, vitality: 0.01 } }
+    primary_attribute: vitality
+    secondary_attributes: [strength, wisdom]
+    equipment_permissions: [heavy_armor, sword, mace, two_handed_mace, shield]
+    support_power: 0.15
+
+  - code: protector
+    parent: paladin
+    required_level: 100
+    name_key: class.protector
+    role_tags: [tank, barrier_support, afk_safe]
+
+  - code: aegis_knight
+    parent: protector
+    required_level: 300
+    name_key: class.aegis_knight
+    role_tags: [tank, barrier_support, group_support, afk_safe]
+    support_power: 0.35
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 5, aoe_value: 2, afk_safety: 5 }
+    strong_in: [boss, group]
+    weak_in: [farming]
+    mastery:
+      title: eternal_shield
+      badge: badge_aegis_knight
+      frame: frame_aegis_knight
+      achievement: mastery_aegis_knight
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: defense, amount: 0.02 }
+
+  - code: lightwarden
+    parent: protector
+    required_level: 300
+    name_key: class.lightwarden
+    role_tags: [tank, healer, group_support]
+    support_power: 0.45
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 2, afk_safety: 5 }
+    strong_in: [group, afk]
+    weak_in: [farming]
+    mastery:
+      title: warden_of_light
+      badge: badge_lightwarden
+      frame: frame_lightwarden
+      achievement: mastery_lightwarden
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: crusader
+    parent: paladin
+    required_level: 100
+    name_key: class.crusader
+    role_tags: [melee_dps, bruiser]
+
+  - code: templar
+    parent: crusader
+    required_level: 300
+    name_key: class.templar
+    role_tags: [melee_dps, buff_support, group_support]
+    support_power: 0.35
+    afk_profile: { kill_speed: 4, survivability: 4, resource_efficiency: 3, group_value: 4, boss_value: 3, aoe_value: 4, afk_safety: 3 }
+    strong_in: [group, farming]
+    weak_in: [boss]
+    mastery:
+      title: grand_templar
+      badge: badge_templar
+      frame: frame_templar
+      achievement: mastery_templar
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: justicar
+    parent: crusader
+    required_level: 300
+    name_key: class.justicar
+    role_tags: [melee_dps, burst, debuff_support]
+    support_power: 0.2
+    afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 5, aoe_value: 2, afk_safety: 3 }
+    strong_in: [boss]
+    weak_in: [aoe]
+    mastery:
+      title: supreme_justicar
+      badge: badge_justicar
+      frame: frame_justicar
+      achievement: mastery_justicar
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: druid
+    name_key: class.druid
+    role_tags: [hot, healer, bruiser, debuff_support]
+    resource: { kind: nature_energy, max: 100, start_pct: 50, per_hit: 4, per_turn: 8 }
+    base_stats: { strength: 5, vitality: 8, dexterity: 6, intelligence: 8, wisdom: 11, luck: 6 }
+    derived:
+      hp:     { base: 125, per_level: 13, per: { vitality: 16 } }
+      attack: { base: 15, per_level: 3.9, per: { wisdom: 2.2, intelligence: 0.4 } }
+      armor:  { base: 5, per_level: 1.4, per: { vitality: 1 } }
+      crit:   { base: 5, per: { luck: 0.05 } }
+      hit:    { base: 91, per: { dexterity: 0.4 } }
+      dodge:  { per: { dexterity: 0.04 } }
+      block:  {  }
+    primary_attribute: wisdom
+    secondary_attributes: [vitality, intelligence]
+    equipment_permissions: [cloth_armor, medium_armor, staff, sickle, nature_focus]
+    support_power: 0.35
+
+  - code: grove_keeper
+    parent: druid
+    required_level: 100
+    name_key: class.grove_keeper
+    role_tags: [healer, hot, group_support]
+    support_power: 0.55
+
+  - code: life_binder
+    parent: grove_keeper
+    required_level: 300
+    name_key: class.life_binder
+    role_tags: [healer, hot, group_support]
+    support_power: 0.7
+    afk_profile: { kill_speed: 2, survivability: 4, resource_efficiency: 5, group_value: 5, boss_value: 4, aoe_value: 2, afk_safety: 4 }
+    strong_in: [group]
+    weak_in: [solo]
+    mastery:
+      title: keeper_of_eternal_life
+      badge: badge_life_binder
+      frame: frame_life_binder
+      achievement: mastery_life_binder
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: thorn_sage
+    parent: grove_keeper
+    required_level: 300
+    name_key: class.thorn_sage
+    role_tags: [dot, debuff_support, magic_dps]
+    support_power: 0.3
+    afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 3, boss_value: 3, aoe_value: 4, afk_safety: 4 }
+    strong_in: [aoe, afk]
+    weak_in: [boss]
+    mastery:
+      title: ancient_thorn_sage
+      badge: badge_thorn_sage
+      frame: frame_thorn_sage
+      achievement: mastery_thorn_sage
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: shapeshifter
+    parent: druid
+    required_level: 100
+    name_key: class.shapeshifter
+    role_tags: [bruiser, tank, melee_dps]
+    support_power: 0.1
+
+  - code: bearwarden
+    parent: shapeshifter
+    required_level: 300
+    name_key: class.bearwarden
+    role_tags: [tank, afk_safe]
+    support_power: 0.05
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 4, boss_value: 5, aoe_value: 2, afk_safety: 5 }
+    strong_in: [boss, afk]
+    weak_in: [farming]
+    mastery:
+      title: primal_guardian
+      badge: badge_bearwarden
+      frame: frame_bearwarden
+      achievement: mastery_bearwarden
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.01 }
+        - { kind: mult_add, target: defense, amount: 0.01 }
+
+  - code: mooncaller
+    parent: shapeshifter
+    required_level: 300
+    name_key: class.mooncaller
+    role_tags: [magic_dps, burst]
+    support_power: 0.15
+    afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 4, aoe_value: 4, afk_safety: 2 }
+    strong_in: [farming]
+    weak_in: [afk]
+    mastery:
+      title: voice_of_the_moon
+      badge: badge_mooncaller
+      frame: frame_mooncaller
+      achievement: mastery_mooncaller
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: bard
+    name_key: class.bard
+    role_tags: [buff_support, debuff_support, healer, group_support]
+    resource: { kind: rhythm, max: 100, start_pct: 0, per_hit: 12, per_turn: 5 }
+    base_stats: { strength: 5, vitality: 6, dexterity: 8, intelligence: 7, wisdom: 8, luck: 10 }
+    derived:
+      hp:     { base: 145, per_level: 15, per: { vitality: 17 } }
+      attack: { base: 15, per_level: 4.1, per: { luck: 2.2, dexterity: 0.4 } }
+      armor:  { base: 7, per_level: 1.6, per: { vitality: 1.1 } }
+      crit:   { base: 7, per: { luck: 0.08 } }
+      hit:    { base: 92, per: { dexterity: 0.5 } }
+      dodge:  { base: 2, per: { dexterity: 0.06 } }
+      block:  {  }
+    primary_attribute: luck
+    secondary_attributes: [dexterity, wisdom]
+    equipment_permissions: [light_armor, lute, harp, flute, rapier]
+    support_power: 0.5
+
+  - code: minstrel
+    parent: bard
+    required_level: 100
+    name_key: class.minstrel
+    role_tags: [buff_support, healer, group_support]
+    support_power: 0.6
+
+  - code: virtuoso
+    parent: minstrel
+    required_level: 300
+    name_key: class.virtuoso
+    role_tags: [buff_support, group_support]
+    support_power: 0.8
+    afk_profile: { kill_speed: 2, survivability: 3, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [group]
+    weak_in: [solo]
+    mastery:
+      title: legendary_virtuoso
+      badge: badge_virtuoso
+      frame: frame_virtuoso
+      achievement: mastery_virtuoso
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.01 }
+        - { kind: flat, target: crit_pct, amount: 1 }
+
+  - code: harmonist
+    parent: minstrel
+    required_level: 300
+    name_key: class.harmonist
+    role_tags: [healer, hot, group_support]
+    support_power: 0.7
+    afk_profile: { kill_speed: 2, survivability: 4, resource_efficiency: 5, group_value: 5, boss_value: 3, aoe_value: 2, afk_safety: 4 }
+    strong_in: [group, afk]
+    weak_in: [solo]
+    mastery:
+      title: master_harmonist
+      badge: badge_harmonist
+      frame: frame_harmonist
+      achievement: mastery_harmonist
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: skald
+    parent: bard
+    required_level: 100
+    name_key: class.skald
+    role_tags: [debuff_support, buff_support, melee_dps]
+    support_power: 0.4
+
+  - code: war_chanter
+    parent: skald
+    required_level: 300
+    name_key: class.war_chanter
+    role_tags: [buff_support, melee_dps, group_support]
+    support_power: 0.5
+    afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 3, group_value: 5, boss_value: 3, aoe_value: 3, afk_safety: 3 }
+    strong_in: [group, dungeon]
+    weak_in: [solo]
+    mastery:
+      title: legendary_war_chanter
+      badge: badge_war_chanter
+      frame: frame_war_chanter
+      achievement: mastery_war_chanter
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: dirge_singer
+    parent: skald
+    required_level: 300
+    name_key: class.dirge_singer
+    role_tags: [debuff_support, dot, control]
+    support_power: 0.4
+    afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 4, group_value: 4, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss, group]
+    weak_in: [farming]
+    mastery:
+      title: singer_of_the_last_song
+      badge: badge_dirge_singer
+      frame: frame_dirge_singer
+      achievement: mastery_dirge_singer
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: shaman
+    name_key: class.shaman
+    role_tags: [buff_support, healer, debuff_support, magic_dps]
+    resource: { kind: spirit, max: 100, start_pct: 50, per_hit: 4, per_turn: 8 }
+    base_stats: { strength: 6, vitality: 8, dexterity: 5, intelligence: 8, wisdom: 11, luck: 6 }
+    derived:
+      hp:     { base: 135, per_level: 14, per: { vitality: 17 } }
+      attack: { base: 15, per_level: 3.9, per: { wisdom: 2.2, intelligence: 0.4 } }
+      armor:  { base: 7, per_level: 1.6, per: { vitality: 1.1 } }
+      crit:   { base: 5, per: { luck: 0.05 } }
+      hit:    { base: 91, per: { dexterity: 0.3, wisdom: 0.1 } }
+      dodge:  { per: { dexterity: 0.03 } }
+      block:  {  }
+    primary_attribute: wisdom
+    secondary_attributes: [intelligence]
+    equipment_permissions: [medium_armor, staff, ritual_axe, mace, totem_focus]
+    support_power: 0.4
+
+  - code: totemist
+    parent: shaman
+    required_level: 100
+    name_key: class.totemist
+    role_tags: [buff_support, group_support, afk_safe]
+    support_power: 0.5
+
+  - code: earthwarden
+    parent: totemist
+    required_level: 300
+    name_key: class.earthwarden
+    role_tags: [tank, barrier_support, afk_safe]
+    support_power: 0.4
+    afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 4, aoe_value: 2, afk_safety: 5 }
+    strong_in: [afk, group]
+    weak_in: [farming]
+    mastery:
+      title: guardian_of_the_earth
+      badge: badge_earthwarden
+      frame: frame_earthwarden
+      achievement: mastery_earthwarden
+      prestige_eligible: true
+      modifiers:
+        - { kind: flat, target: dmg_reduction_pct, amount: 1 }
+        - { kind: mult_add, target: hp_max, amount: 0.01 }
+
+  - code: storm_totemist
+    parent: totemist
+    required_level: 300
+    name_key: class.storm_totemist
+    role_tags: [magic_dps, burst]
+    support_power: 0.3
+    afk_profile: { kill_speed: 4, survivability: 2, resource_efficiency: 3, group_value: 3, boss_value: 3, aoe_value: 5, afk_safety: 3 }
+    strong_in: [aoe, farming]
+    weak_in: [boss]
+    mastery:
+      title: stormcaller_supreme
+      badge: badge_storm_totemist
+      frame: frame_storm_totemist
+      achievement: mastery_storm_totemist
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+
+  - code: spirit_caller
+    parent: shaman
+    required_level: 100
+    name_key: class.spirit_caller
+    role_tags: [healer, buff_support, group_support]
+    support_power: 0.55
+
+  - code: ancestor_sage
+    parent: spirit_caller
+    required_level: 300
+    name_key: class.ancestor_sage
+    role_tags: [healer, hot, group_support]
+    support_power: 0.7
+    afk_profile: { kill_speed: 2, survivability: 4, resource_efficiency: 5, group_value: 5, boss_value: 3, aoe_value: 2, afk_safety: 4 }
+    strong_in: [group]
+    weak_in: [solo]
+    mastery:
+      title: voice_of_the_ancestors
+      badge: badge_ancestor_sage
+      frame: frame_ancestor_sage
+      achievement: mastery_ancestor_sage
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: hexer
+    parent: spirit_caller
+    required_level: 300
+    name_key: class.hexer
+    role_tags: [debuff_support, dot, magic_dps]
+    support_power: 0.35
+    afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 4, group_value: 4, boss_value: 4, aoe_value: 3, afk_safety: 3 }
+    strong_in: [boss]
+    weak_in: [farming]
+    mastery:
+      title: grand_hexer
+      badge: badge_hexer
+      frame: frame_hexer
+      achievement: mastery_hexer
+      prestige_eligible: true
+      modifiers:
+        - { kind: mult_add, target: attack, amount: 0.02 }
+  # <<< generated: classes
 
 # Talent points start at 100. Each tree: 25 spendable points + one capstone
 # (needs character level 850 and 25 points in its tree; costs 1 point).
@@ -194,3 +1145,410 @@ talent_trees:
         modifiers:
           - { kind: flat, target: lifesteal_pct, amount: 5 }
           - { kind: mult_add, target: attack, amount: 0.05 }
+
+  # >>> generated: talent trees (scripts/gen_classes.py)
+  - code: rogue_assassination
+    class: rogue
+    talents:
+      - { code: rogue_assassination_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: rogue_assassination_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: rogue_assassination_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: rogue_assassination_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: rogue_assassination_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - code: rogue_assassination_perfect_kill
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: crit_pct, amount: 5 }
+          - { kind: flat, target: crit_dmg_pct, amount: 20 }
+
+  - code: rogue_combat
+    class: rogue
+    talents:
+      - { code: rogue_combat_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: rogue_combat_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: rogue_combat_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: rogue_combat_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: rogue_combat_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - code: rogue_combat_blade_storm_mastery
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_pct, amount: 3 }
+
+  - code: rogue_trickery
+    class: rogue
+    talents:
+      - { code: rogue_trickery_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - { code: rogue_trickery_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: rogue_trickery_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: rogue_trickery_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: rogue_trickery_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - code: rogue_trickery_untouchable
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: evasion_pct, amount: 5 }
+          - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+
+  - code: ranger_marksmanship
+    class: ranger
+    talents:
+      - { code: ranger_marksmanship_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: ranger_marksmanship_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: ranger_marksmanship_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: ranger_marksmanship_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: ranger_marksmanship_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - code: ranger_marksmanship_perfect_shot
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: crit_pct, amount: 5 }
+          - { kind: flat, target: crit_dmg_pct, amount: 15 }
+
+  - code: ranger_beastcraft
+    class: ranger
+    talents:
+      - { code: ranger_beastcraft_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: ranger_beastcraft_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: ranger_beastcraft_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: ranger_beastcraft_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: ranger_beastcraft_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - code: ranger_beastcraft_alpha_bond
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: ranger_survival
+    class: ranger
+    talents:
+      - { code: ranger_survival_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - { code: ranger_survival_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: ranger_survival_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: ranger_survival_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: ranger_survival_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - code: ranger_survival_master_hunter
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: evasion_pct, amount: 5 }
+          - { kind: flat, target: dmg_reduction_pct, amount: 4 }
+
+  - code: mage_arcane
+    class: mage
+    talents:
+      - { code: mage_arcane_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: mage_arcane_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: mage_arcane_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: mage_arcane_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: mage_arcane_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - code: mage_arcane_arcane_singularity
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.06 }
+          - { kind: flat, target: crit_dmg_pct, amount: 10 }
+
+  - code: mage_elemental
+    class: mage
+    talents:
+      - { code: mage_elemental_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: mage_elemental_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: mage_elemental_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: mage_elemental_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: mage_elemental_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - code: mage_elemental_elemental_avatar
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_pct, amount: 4 }
+
+  - code: mage_control
+    class: mage
+    talents:
+      - { code: mage_control_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: mage_control_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: mage_control_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - { code: mage_control_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: mage_control_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - code: mage_control_time_stop
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: monk_body
+    class: monk
+    talents:
+      - { code: monk_body_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: monk_body_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: monk_body_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: monk_body_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: monk_body_bulwark, max_rank: 5, modifiers: [{ kind: flat, target: block_pct, amount: 1 }] }
+      - code: monk_body_diamond_body
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+          - { kind: mult_add, target: hp_max, amount: 0.06 }
+
+  - code: monk_technique
+    class: monk
+    talents:
+      - { code: monk_technique_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: monk_technique_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: monk_technique_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: monk_technique_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: monk_technique_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - code: monk_technique_perfect_technique
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_pct, amount: 4 }
+
+  - code: monk_chi
+    class: monk
+    talents:
+      - { code: monk_chi_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: monk_chi_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: monk_chi_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: monk_chi_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - { code: monk_chi_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - code: monk_chi_infinite_flow
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.04 }
+          - { kind: flat, target: lifesteal_pct, amount: 4 }
+
+  - code: cleric_restoration
+    class: cleric
+    talents:
+      - { code: cleric_restoration_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: cleric_restoration_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: cleric_restoration_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: cleric_restoration_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: cleric_restoration_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - code: cleric_restoration_miracle
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: hp_max, amount: 0.06 }
+          - { kind: flat, target: lifesteal_pct, amount: 4 }
+
+  - code: cleric_barrier
+    class: cleric
+    talents:
+      - { code: cleric_barrier_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: cleric_barrier_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: cleric_barrier_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: cleric_barrier_bulwark, max_rank: 5, modifiers: [{ kind: flat, target: block_pct, amount: 1 }] }
+      - { code: cleric_barrier_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - code: cleric_barrier_divine_fortress
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 6 }
+          - { kind: mult_add, target: defense, amount: 0.05 }
+
+  - code: cleric_faith
+    class: cleric
+    talents:
+      - { code: cleric_faith_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: cleric_faith_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: cleric_faith_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: cleric_faith_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: cleric_faith_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - code: cleric_faith_divine_presence
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.06 }
+          - { kind: flat, target: crit_pct, amount: 3 }
+
+  - code: paladin_aegis
+    class: paladin
+    talents:
+      - { code: paladin_aegis_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: paladin_aegis_bulwark, max_rank: 5, modifiers: [{ kind: flat, target: block_pct, amount: 1 }] }
+      - { code: paladin_aegis_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: paladin_aegis_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: paladin_aegis_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - code: paladin_aegis_divine_bastion
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 6 }
+          - { kind: flat, target: block_pct, amount: 5 }
+
+  - code: paladin_aura
+    class: paladin
+    talents:
+      - { code: paladin_aura_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: paladin_aura_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: paladin_aura_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: paladin_aura_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: paladin_aura_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - code: paladin_aura_holy_presence
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.04 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: paladin_judgment
+    class: paladin
+    talents:
+      - { code: paladin_judgment_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: paladin_judgment_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: paladin_judgment_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: paladin_judgment_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: paladin_judgment_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - code: paladin_judgment_final_judgment
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: execute_pct, amount: 20 }
+          - { kind: mult_add, target: attack, amount: 0.04 }
+
+  - code: druid_growth
+    class: druid
+    talents:
+      - { code: druid_growth_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: druid_growth_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: druid_growth_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: druid_growth_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: druid_growth_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - code: druid_growth_world_tree
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: hp_max, amount: 0.06 }
+          - { kind: flat, target: lifesteal_pct, amount: 4 }
+
+  - code: druid_wild
+    class: druid
+    talents:
+      - { code: druid_wild_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: druid_wild_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: druid_wild_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: druid_wild_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - { code: druid_wild_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - code: druid_wild_primal_avatar
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.04 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: druid_nature
+    class: druid
+    talents:
+      - { code: druid_nature_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: druid_nature_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: druid_nature_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: druid_nature_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: druid_nature_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - code: druid_nature_natures_wrath
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_dmg_pct, amount: 12 }
+
+  - code: bard_melody
+    class: bard
+    talents:
+      - { code: bard_melody_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: bard_melody_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: bard_melody_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: bard_melody_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: bard_melody_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - code: bard_melody_grand_symphony
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.04 }
+          - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  - code: bard_rhythm
+    class: bard
+    talents:
+      - { code: bard_rhythm_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: bard_rhythm_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: bard_rhythm_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - { code: bard_rhythm_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: bard_rhythm_agility, max_rank: 5, modifiers: [{ kind: flat, target: evasion_pct, amount: 1 }] }
+      - code: bard_rhythm_battle_anthem
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_pct, amount: 3 }
+
+  - code: bard_discord
+    class: bard
+    talents:
+      - { code: bard_discord_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: bard_discord_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: bard_discord_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: bard_discord_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: bard_discord_desperation, max_rank: 5, modifiers: [{ kind: flat, target: missing_hp_dmg_pct, amount: 3 }] }
+      - code: bard_discord_final_dirge
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: execute_pct, amount: 20 }
+          - { kind: mult_add, target: attack, amount: 0.04 }
+
+  - code: shaman_totem
+    class: shaman
+    talents:
+      - { code: shaman_totem_plating, max_rank: 5, modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+      - { code: shaman_totem_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: shaman_totem_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: shaman_totem_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: shaman_totem_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - code: shaman_totem_totemic_dominion
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+          - { kind: mult_add, target: attack, amount: 0.04 }
+
+  - code: shaman_ancestor
+    class: shaman
+    talents:
+      - { code: shaman_ancestor_vigor, max_rank: 5, modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+      - { code: shaman_ancestor_leech, max_rank: 5, modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1 }] }
+      - { code: shaman_ancestor_wellspring, max_rank: 5, modifiers: [{ kind: mult_add, target: mp_max, amount: 0.04 }] }
+      - { code: shaman_ancestor_resolve, max_rank: 5, modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 1 }] }
+      - { code: shaman_ancestor_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - code: shaman_ancestor_ancestors_blessing
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: hp_max, amount: 0.06 }
+          - { kind: flat, target: lifesteal_pct, amount: 4 }
+
+  - code: shaman_element
+    class: shaman
+    talents:
+      - { code: shaman_element_might, max_rank: 5, modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+      - { code: shaman_element_ferocity, max_rank: 5, modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3 }] }
+      - { code: shaman_element_precision, max_rank: 5, modifiers: [{ kind: flat, target: crit_pct, amount: 1 }] }
+      - { code: shaman_element_ruthless, max_rank: 5, modifiers: [{ kind: flat, target: execute_pct, amount: 3 }] }
+      - { code: shaman_element_accuracy, max_rank: 5, modifiers: [{ kind: flat, target: hit_pct, amount: 1 }] }
+      - code: shaman_element_spirit_storm
+        max_rank: 1
+        capstone: true
+        modifiers:
+          - { kind: mult_add, target: attack, amount: 0.05 }
+          - { kind: flat, target: crit_pct, amount: 4 }
+  # <<< generated: talent trees

@@ -185,7 +185,18 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
           _Section(
             children: [
               bar(l.hp, 'hp', Palette.danger),
-              bar(l.mp, 'mp', Palette.info),
+              if (s.resourceKind.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.sm),
+                  child: StatBar(
+                    label: ContentNames.of('resource', s.resourceKind).toUpperCase(),
+                    value: 1,
+                    color: Palette.info,
+                    valueText: '${s.resourceMax}',
+                  ),
+                )
+              else
+                bar(l.mp, 'mp', Palette.info),
               bar(l.stamina, 'stamina', Palette.success),
               bar(l.energy, 'energy', Palette.warning),
               const Divider(height: Space.xl, color: Palette.borderSubtle),

@@ -65,8 +65,8 @@ type Sheet struct {
 	Resources Resources    `json:"resources"`
 	State     string       `json:"state"`
 
-	// Combat resource of the class (DD-250): "rage" (starts empty, fills on
-	// hits) or empty for the MP-based classes.
+	// Combat resource of the class (DD-250, DD-252): its kind (rage, energy,
+	// mana, ...) and pool size; empty for classes without one.
 	ResourceKind string `json:"resource_kind,omitempty"`
 	ResourceMax  int    `json:"resource_max,omitempty"`
 }
@@ -77,16 +77,16 @@ type Sheet struct {
 var classBase = map[string]PrimaryStats{
 	"warrior": {Strength: 15, Agility: 10, Intelligence: 8, Vitality: 15, Charisma: 10, Luck: 5},
 	"mage":    {Strength: 8, Agility: 10, Intelligence: 15, Vitality: 10, Charisma: 12, Luck: 5},
-	"hunter":  {Strength: 12, Agility: 15, Intelligence: 8, Vitality: 10, Charisma: 10, Luck: 5},
-	"priest":  {Strength: 8, Agility: 8, Intelligence: 12, Vitality: 12, Charisma: 15, Luck: 5},
+	"ranger":  {Strength: 12, Agility: 15, Intelligence: 8, Vitality: 10, Charisma: 10, Luck: 5},
+	"cleric":  {Strength: 8, Agility: 8, Intelligence: 12, Vitality: 12, Charisma: 15, Luck: 5},
 	"rogue":   {Strength: 10, Agility: 15, Intelligence: 10, Vitality: 10, Charisma: 8, Luck: 12},
 }
 
 var growthPerLevel = map[string]PrimaryStats{
 	"warrior": {Strength: 4, Agility: 1, Vitality: 2},
 	"mage":    {Intelligence: 5, Agility: 1, Vitality: 1, Charisma: 1},
-	"hunter":  {Agility: 4, Strength: 1, Vitality: 2, Luck: 1},
-	"priest":  {Intelligence: 4, Vitality: 2, Charisma: 2},
+	"ranger":  {Agility: 4, Strength: 1, Vitality: 2, Luck: 1},
+	"cleric":  {Intelligence: 4, Vitality: 2, Charisma: 2},
 	"rogue":   {Agility: 4, Vitality: 1, Luck: 2},
 }
 
@@ -107,13 +107,23 @@ func BasePrimary(class string, level int) PrimaryStats {
 	}
 }
 
-// MainStat names the primary stat behind a class's attack (DD-229):
-// "str", "agi" or "int".
+// MainStat names the primary stat behind a class's attack for the v1
+// formula (DD-229): "str", "agi" or "int". Configured classes name their
+// primary attribute (DD-252); their class formula drives attack anyway.
 func MainStat(class string) string {
+	if k, ok := leveling.Current().Class(class); ok && k.PrimaryAttribute != "" {
+		switch k.PrimaryAttribute {
+		case "dexterity", "luck":
+			return "agi"
+		case "intelligence", "wisdom":
+			return "int"
+		}
+		return "str"
+	}
 	switch class {
-	case "mage", "priest":
+	case "mage", "cleric":
 		return "int"
-	case "hunter", "rogue":
+	case "ranger", "rogue":
 		return "agi"
 	default:
 		return "str"
@@ -183,10 +193,11 @@ func basePrimary(c *Character) PrimaryStats {
 	return p
 }
 
-// classResource is the base class's combat resource (Warrior: Rage).
+// classResource is the base class's combat resource (Warrior: Rage; Max 0
+// = the mana pool, filled in by the sheet computer).
 func classResource(class string) (string, int) {
-	if k, ok := leveling.Current().Class(class); ok && k.Resource != nil {
-		return k.Resource.Kind, k.Resource.Max
+	if r := leveling.Current().ResourceOf(class); r != nil {
+		return r.Kind, r.Max
 	}
 	return "", 0
 }

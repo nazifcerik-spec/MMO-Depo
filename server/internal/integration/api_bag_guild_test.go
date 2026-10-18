@@ -195,12 +195,12 @@ func TestHTTPGuildCreateRace(t *testing.T) {
 // Every class gets its own base attributes; bad names and classes are refused.
 func TestHTTPCharacterClasses(t *testing.T) {
 	seen := map[string]bool{}
-	for _, class := range []string{"warrior", "mage", "hunter", "priest", "rogue"} {
+	for _, class := range []string{"warrior", "rogue", "ranger", "mage", "monk", "cleric", "paladin", "druid", "bard", "shaman"} {
 		p := newHTTPPlayer(t, class)
 		seen[fmt.Sprint(p.ok("GET", p.path("/sheet"), nil)["primary"])] = true
 	}
-	require.Len(t, seen, 5, "each class has distinct base attributes")
+	require.Len(t, seen, 10, "each class has distinct base attributes")
 	p := newHTTPPlayer(t, "warrior")
 	p.fail("POST", "/v1/character", map[string]any{"name": "x", "race_code": "human", "class_code": "warrior"}, 400, "")
-	p.fail("POST", "/v1/character", map[string]any{"name": "Valid" + randHex(3), "race_code": "human", "class_code": "bard"}, 400, "")
+	p.fail("POST", "/v1/character", map[string]any{"name": "Valid" + randHex(3), "race_code": "human", "class_code": "hunter"}, 400, "")
 }

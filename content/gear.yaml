@@ -201,7 +201,7 @@ items:
       - { kind: flat, target: mp_max, amount: 110 }
 
 
-  # --- hunter: bow ---
+  # --- ranger: bow ---
   - code: bow_short
     display_name_key: item.bow_short
     item_class: weapon
@@ -212,7 +212,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 6 }
       - { kind: flat, target: agi, amount: 1 }
@@ -228,7 +228,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 16 }
       - { kind: flat, target: agi, amount: 2 }
@@ -244,7 +244,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 29 }
       - { kind: flat, target: agi, amount: 4 }
@@ -260,7 +260,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 42 }
       - { kind: flat, target: agi, amount: 6 }
@@ -276,7 +276,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 54 }
       - { kind: flat, target: agi, amount: 7 }
@@ -292,14 +292,14 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: hunter
+    class_restriction: ranger
     stat_bonuses:
       - { kind: flat, target: attack, amount: 66 }
       - { kind: flat, target: agi, amount: 9 }
       - { kind: flat, target: hit_pct, amount: 4 }
 
 
-  # --- priest: mace ---
+  # --- cleric: mace ---
   - code: mace_wooden
     display_name_key: item.mace_wooden
     item_class: weapon
@@ -310,7 +310,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 6 }
       - { kind: flat, target: int, amount: 1 }
@@ -326,7 +326,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 16 }
       - { kind: flat, target: int, amount: 2 }
@@ -342,7 +342,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 29 }
       - { kind: flat, target: int, amount: 4 }
@@ -358,7 +358,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 42 }
       - { kind: flat, target: int, amount: 6 }
@@ -374,7 +374,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 54 }
       - { kind: flat, target: int, amount: 7 }
@@ -390,7 +390,7 @@ items:
     bind_kind: boe
     affixable: true
     equip_slot: mainhand
-    class_restriction: priest
+    class_restriction: cleric
     stat_bonuses:
       - { kind: flat, target: attack, amount: 66 }
       - { kind: flat, target: int, amount: 9 }
@@ -943,3 +943,495 @@ items:
       - { kind: flat, target: defense, amount: 400 }
       - { kind: flat, target: block_pct, amount: 10 }
       - { kind: mult_add, target: hp_max, amount: 0.05 }
+
+  # >>> generated: weapons (scripts/gen_classes.py)
+  # --- monk: fist_weapon ---
+
+  - code: fist_wraps
+    display_name_key: item.fist_wraps
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 1
+    base_value_copper: 42
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: agi, amount: 1 }
+      - { kind: flat, target: vit, amount: 1 }
+
+  - code: fist_iron
+    display_name_key: item.fist_iron
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 5
+    base_value_copper: 164
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 16 }
+      - { kind: flat, target: agi, amount: 2 }
+      - { kind: flat, target: vit, amount: 1 }
+
+  - code: fist_tiger
+    display_name_key: item.fist_tiger
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 10
+    base_value_copper: 409
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 29 }
+      - { kind: flat, target: agi, amount: 4 }
+      - { kind: flat, target: vit, amount: 2 }
+
+  - code: fist_steel
+    display_name_key: item.fist_steel
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 15
+    base_value_copper: 727
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: agi, amount: 6 }
+      - { kind: flat, target: vit, amount: 3 }
+
+  - code: fist_dragon
+    display_name_key: item.fist_dragon
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 20
+    base_value_copper: 1103
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: agi, amount: 7 }
+      - { kind: flat, target: vit, amount: 4 }
+
+  - code: fist_celestial
+    display_name_key: item.fist_celestial
+    item_class: weapon
+    item_subclass: fist_weapon
+    min_level: 25
+    base_value_copper: 1530
+    base_weight_g: 1200
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: monk
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: agi, amount: 9 }
+      - { kind: flat, target: vit, amount: 5 }
+
+  # --- paladin: two_handed_mace ---
+
+  - code: hammer_oak
+    display_name_key: item.hammer_oak
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 1
+    base_value_copper: 42
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: vit, amount: 1 }
+      - { kind: flat, target: str, amount: 1 }
+
+  - code: hammer_iron
+    display_name_key: item.hammer_iron
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 5
+    base_value_copper: 164
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 16 }
+      - { kind: flat, target: vit, amount: 2 }
+      - { kind: flat, target: str, amount: 1 }
+
+  - code: hammer_blessed
+    display_name_key: item.hammer_blessed
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 10
+    base_value_copper: 409
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 29 }
+      - { kind: flat, target: vit, amount: 4 }
+      - { kind: flat, target: str, amount: 2 }
+
+  - code: hammer_silver
+    display_name_key: item.hammer_silver
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 15
+    base_value_copper: 727
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: vit, amount: 6 }
+      - { kind: flat, target: str, amount: 3 }
+
+  - code: hammer_radiant
+    display_name_key: item.hammer_radiant
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 20
+    base_value_copper: 1103
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: vit, amount: 7 }
+      - { kind: flat, target: str, amount: 4 }
+
+  - code: hammer_sacred
+    display_name_key: item.hammer_sacred
+    item_class: weapon
+    item_subclass: two_handed_mace
+    min_level: 25
+    base_value_copper: 1530
+    base_weight_g: 3500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: paladin
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: vit, amount: 9 }
+      - { kind: flat, target: str, amount: 5 }
+
+  # --- druid: sickle ---
+
+  - code: sickle_bronze
+    display_name_key: item.sickle_bronze
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 1
+    base_value_copper: 42
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: cha, amount: 1 }
+      - { kind: flat, target: vit, amount: 1 }
+
+  - code: sickle_iron
+    display_name_key: item.sickle_iron
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 5
+    base_value_copper: 164
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 16 }
+      - { kind: flat, target: cha, amount: 2 }
+      - { kind: flat, target: vit, amount: 1 }
+
+  - code: sickle_moon
+    display_name_key: item.sickle_moon
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 10
+    base_value_copper: 409
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 29 }
+      - { kind: flat, target: cha, amount: 4 }
+      - { kind: flat, target: vit, amount: 2 }
+
+  - code: sickle_thorn
+    display_name_key: item.sickle_thorn
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 15
+    base_value_copper: 727
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: cha, amount: 6 }
+      - { kind: flat, target: vit, amount: 3 }
+
+  - code: sickle_grove
+    display_name_key: item.sickle_grove
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 20
+    base_value_copper: 1103
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: cha, amount: 7 }
+      - { kind: flat, target: vit, amount: 4 }
+
+  - code: sickle_ancient
+    display_name_key: item.sickle_ancient
+    item_class: weapon
+    item_subclass: sickle
+    min_level: 25
+    base_value_copper: 1530
+    base_weight_g: 1500
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: druid
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: cha, amount: 9 }
+      - { kind: flat, target: vit, amount: 5 }
+
+  # --- bard: lute ---
+
+  - code: lute_simple
+    display_name_key: item.lute_simple
+    item_class: weapon
+    item_subclass: lute
+    min_level: 1
+    base_value_copper: 42
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: luck, amount: 1 }
+      - { kind: flat, target: agi, amount: 1 }
+
+  - code: lute_maple
+    display_name_key: item.lute_maple
+    item_class: weapon
+    item_subclass: lute
+    min_level: 5
+    base_value_copper: 164
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 16 }
+      - { kind: flat, target: luck, amount: 2 }
+      - { kind: flat, target: agi, amount: 1 }
+
+  - code: lute_silver
+    display_name_key: item.lute_silver
+    item_class: weapon
+    item_subclass: lute
+    min_level: 10
+    base_value_copper: 409
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 29 }
+      - { kind: flat, target: luck, amount: 4 }
+      - { kind: flat, target: agi, amount: 2 }
+
+  - code: lute_concert
+    display_name_key: item.lute_concert
+    item_class: weapon
+    item_subclass: lute
+    min_level: 15
+    base_value_copper: 727
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: luck, amount: 6 }
+      - { kind: flat, target: agi, amount: 3 }
+
+  - code: lute_enchanted
+    display_name_key: item.lute_enchanted
+    item_class: weapon
+    item_subclass: lute
+    min_level: 20
+    base_value_copper: 1103
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: luck, amount: 7 }
+      - { kind: flat, target: agi, amount: 4 }
+
+  - code: lute_legend
+    display_name_key: item.lute_legend
+    item_class: weapon
+    item_subclass: lute
+    min_level: 25
+    base_value_copper: 1530
+    base_weight_g: 1600
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: bard
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: luck, amount: 9 }
+      - { kind: flat, target: agi, amount: 5 }
+
+  # --- shaman: totem_focus ---
+
+  - code: totem_carved
+    display_name_key: item.totem_carved
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 1
+    base_value_copper: 42
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: cha, amount: 1 }
+      - { kind: flat, target: int, amount: 1 }
+
+  - code: totem_bone
+    display_name_key: item.totem_bone
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 5
+    base_value_copper: 164
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 16 }
+      - { kind: flat, target: cha, amount: 2 }
+      - { kind: flat, target: int, amount: 1 }
+
+  - code: totem_spirit
+    display_name_key: item.totem_spirit
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 10
+    base_value_copper: 409
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 29 }
+      - { kind: flat, target: cha, amount: 4 }
+      - { kind: flat, target: int, amount: 2 }
+
+  - code: totem_stone
+    display_name_key: item.totem_stone
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 15
+    base_value_copper: 727
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: cha, amount: 6 }
+      - { kind: flat, target: int, amount: 3 }
+
+  - code: totem_thunder
+    display_name_key: item.totem_thunder
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 20
+    base_value_copper: 1103
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: cha, amount: 7 }
+      - { kind: flat, target: int, amount: 4 }
+
+  - code: totem_ancestral
+    display_name_key: item.totem_ancestral
+    item_class: weapon
+    item_subclass: totem_focus
+    min_level: 25
+    base_value_copper: 1530
+    base_weight_g: 1700
+    bind_kind: boe
+    affixable: true
+    equip_slot: mainhand
+    class_restriction: shaman
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: cha, amount: 9 }
+      - { kind: flat, target: int, amount: 5 }
+  # <<< generated: weapons

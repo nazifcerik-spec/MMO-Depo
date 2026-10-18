@@ -19,7 +19,7 @@ import (
 	"github.com/otter/server/internal/skill"
 )
 
-var classes = []string{"warrior", "mage", "hunter", "priest", "rogue"}
+var classes = []string{"warrior", "rogue", "ranger", "mage", "monk", "cleric", "paladin", "druid", "bard", "shaman"}
 
 type world struct {
 	items    []contentpack.Item
@@ -96,16 +96,22 @@ func (w *world) kit(class string, level int) []contentpack.Item {
 }
 
 // simAlloc spends a class's attribute points the way a player of its role
-// would (DD-250): Warrior 2 Strength : 1 Vitality. Classes with automatic
-// growth (not yet migrated) spend none.
+// would (DD-250, DD-252): 2 primary : 1 first secondary attribute.
 func simAlloc(class string, level int) leveling.Stats {
 	cfg := leveling.Current()
 	k, ok := cfg.Class(class)
-	if !ok || k.BaseStats == nil {
+	if !ok || k.BaseStats == nil || k.PrimaryAttribute == "" {
 		return leveling.Stats{}
 	}
 	n := cfg.AttributePointsEarned(level)
-	return leveling.Stats{Strength: n - n/3, Vitality: n / 3}
+	var st leveling.Stats
+	st.Add(k.PrimaryAttribute, n-n/3)
+	if len(k.SecondaryAttributes) > 0 {
+		st.Add(k.SecondaryAttributes[0], n/3)
+	} else {
+		st.Add(k.PrimaryAttribute, n/3)
+	}
+	return st
 }
 
 // player builds the combatant the way hunts do: base sheet (class base +
@@ -124,6 +130,7 @@ func (w *world) player(class string, level int, gear []contentpack.Item) combat.
 		}
 	}
 	mods = append(mods, w.skills.Passives([]string{class}, level)...)
+	mods = append(mods, skill.FromLeveling(cfg.SoloAdaptationModifiers(class, false))...) // hunting alone
 	var formula *skill.Formula
 	k, hasClass := cfg.Class(class)
 	if hasClass && k.Derived != nil {
@@ -140,9 +147,7 @@ func (w *world) player(class string, level int, gear []contentpack.Item) combat.
 		RegenPerEncounter: int32(float64(encSeconds/2) * character.HPRegenPer2s(s.Primary.VIT)),
 		BlockPct:          int32(d.BlockPct), CritDmgPct: int32(d.CritDmgPct), ExecutePct: int32(d.ExecutePct),
 		MissingHPDmgPct: int32(d.MissingHPDmgPct), LifestealPct: int32(d.LifestealPct), DmgReductionPct: int32(d.DmgReductionPct)}
-	if hasClass && k.Resource != nil && k.Resource.Kind == "rage" {
-		p.Resource, p.MPMax, p.ResourcePerHit = "rage", int32(k.Resource.Max), int32(k.Resource.PerHit)
-	}
+	combat.ApplyResource(&p, class)
 	return p
 }
 

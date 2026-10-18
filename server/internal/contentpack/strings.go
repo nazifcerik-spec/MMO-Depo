@@ -199,6 +199,14 @@ func progressionKeys(p *Pack) []string {
 			keys = append(keys, "skill."+s.Code, "skill."+s.Code+".desc")
 		}
 	}
+	for kind := range leveling.ResourceKinds {
+		keys = append(keys, "resource."+kind)
+	}
+	for _, k := range c.Classes {
+		if k.Mastery != nil && k.Mastery.Achievement != "" {
+			keys = append(keys, "achievement."+k.Mastery.Achievement)
+		}
+	}
 	for _, a := range leveling.Attributes {
 		keys = append(keys, "attribute."+a)
 	}

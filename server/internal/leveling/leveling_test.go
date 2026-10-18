@@ -155,7 +155,11 @@ func TestPointSchedules(t *testing.T) {
 		}
 		return out
 	}
-	require.ElementsMatch(t, []string{"ATTRIBUTE_POINTS:", "PROMOTION_UNLOCK:warrior", "TALENT_POINT:", "TITLE:veteran"}, types(100))
+	want := []string{"ATTRIBUTE_POINTS:", "TALENT_POINT:", "TITLE:veteran"}
+	for _, class := range []string{"warrior", "rogue", "ranger", "mage", "monk", "cleric", "paladin", "druid", "bard", "shaman"} {
+		want = append(want, "PROMOTION_UNLOCK:"+class)
+	}
+	require.ElementsMatch(t, want, types(100))
 	require.Contains(t, types(600), "AWAKENING:")
 	require.Contains(t, types(700), "ULTIMATE:")
 	require.Contains(t, types(850), "CAPSTONE_ELIGIBLE:")

@@ -333,6 +333,9 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	}
 
 	if p.Progression != nil {
+		if err := l.upsertProgressionCatalog(ctx, p.Progression); err != nil {
+			return res, fmt.Errorf("contentpack: progression catalog: %w", err)
+		}
 		if err := leveling.Install(p.Progression); err != nil {
 			return res, fmt.Errorf("contentpack: progression: %w", err)
 		}

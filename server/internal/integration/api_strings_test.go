@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/stretchr/testify/require"
 
 	"github.com/otter/server/internal/progression"
@@ -46,14 +47,13 @@ func TestHTTPContentStrings(t *testing.T) {
 	for kind, q := range seeded {
 		rows, err := w.p.Query(w.ctx, q)
 		require.NoError(t, err)
-		for rows.Next() {
-			var code string
-			require.NoError(t, rows.Scan(&code))
+		codes, err := pgx.CollectRows(rows, pgx.RowTo[string]) // closes rows before any assertion
+		require.NoError(t, err)
+		for _, code := range codes {
 			for _, s := range []map[string]any{trs, ens} {
 				require.NotEmpty(t, s[kind+"."+code], "%s.%s", kind, code)
 			}
 		}
-		rows.Close()
 	}
 	for _, tier := range progression.RepTierNames {
 		require.NotEmpty(t, trs["reptier."+tier], tier)

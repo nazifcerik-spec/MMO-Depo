@@ -123,5 +123,8 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		EnergyCurrent: computed.Resources.EnMax, EnergyMax: computed.Resources.EnMax,
 		StaminaCurrent: computed.Resources.StaMax, StaminaMax: computed.Resources.StaMax,
 	}
+	if base.ResourceKind != "" && base.ResourceMax == 0 {
+		base.ResourceMax = computed.Resources.MPMax // mana classes: the pool is MP
+	}
 	return base, nil
 }

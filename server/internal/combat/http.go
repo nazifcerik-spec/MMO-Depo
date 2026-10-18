@@ -148,13 +148,24 @@ func FromSheet(s *character.Sheet) Combatant {
 		LifestealPct:    int32(s.Derived.LifestealPct),
 		DmgReductionPct: int32(s.Derived.DmgReductionPct),
 	}
-	if s.ResourceKind == "rage" {
-		c.Resource, c.MPMax = "rage", int32(s.ResourceMax)
-		if k, ok := leveling.Current().Class(s.Class); ok && k.Resource != nil {
-			c.ResourcePerHit = int32(k.Resource.PerHit)
-		}
-	}
+	ApplyResource(&c, s.Class)
 	return c
+}
+
+// ApplyResource sets a combatant's class resource from the leveling
+// configuration (DD-252): pool size (Max, or the MP pool for Max 0),
+// starting share and generation. Classes without one keep the v1 mana pool.
+func ApplyResource(c *Combatant, class string) {
+	r := leveling.Current().ResourceOf(class)
+	if r == nil {
+		return
+	}
+	c.Resource = r.Kind
+	if r.Max > 0 {
+		c.MPMax = int32(r.Max)
+	}
+	c.ResourceStart = c.MPMax * int32(r.StartPct) / 100
+	c.ResourcePerHit, c.ResourcePerTurn = int32(r.PerHit), int32(r.PerTurn)
 }
 
 func summarizeCombatant(c Combatant) map[string]any {

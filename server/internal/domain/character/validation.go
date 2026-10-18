@@ -18,12 +18,18 @@ var (
 		"dwarf": true,
 		"orc":   true,
 	}
+	// The ten base classes (DD-252); promotions are content (progression.yaml).
 	knownClasses = map[string]bool{
 		"warrior": true,
-		"mage":    true,
-		"hunter":  true,
-		"priest":  true,
 		"rogue":   true,
+		"ranger":  true,
+		"mage":    true,
+		"monk":    true,
+		"cleric":  true,
+		"paladin": true,
+		"druid":   true,
+		"bard":    true,
+		"shaman":  true,
 	}
 )
 

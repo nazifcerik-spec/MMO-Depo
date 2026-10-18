@@ -54,6 +54,8 @@ class CharacterSheet {
     required this.derived,
     required this.resources,
     required this.state,
+    this.resourceKind = '',
+    this.resourceMax = 0,
   });
 
   factory CharacterSheet.fromJson(Map<String, dynamic> j) {
@@ -73,6 +75,8 @@ class CharacterSheet {
       derived: ints(j['derived']),
       resources: ints(j['resources']),
       state: j['state'] as String? ?? 'active',
+      resourceKind: j['resource_kind'] as String? ?? '',
+      resourceMax: (j['resource_max'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -94,6 +98,11 @@ class CharacterSheet {
   final Map<String, int> resources;
   final String state;
 
+  /// Class combat resource (DD-252): rage, energy, focus, mana, chi, ...
+  /// Empty on servers without one. Combat fills it per encounter.
+  final String resourceKind;
+  final int resourceMax;
+
   /// 0..1 progress toward the next level (1 at level cap).
   double get xpProgress => xpToNext <= 0 ? 1 : (xp / xpToNext).clamp(0, 1).toDouble();
 }
@@ -105,7 +114,9 @@ class CharacterSheet {
 }
 
 const races = ['human', 'elf', 'dwarf', 'orc'];
-const classes = ['warrior', 'mage', 'hunter', 'priest', 'rogue'];
+
+/// The ten base classes (DD-252), in the server's canonical order.
+const classes = ['warrior', 'rogue', 'ranger', 'mage', 'monk', 'cleric', 'paladin', 'druid', 'bard', 'shaman'];
 
 /// Mirrors the server rule so most mistakes are caught before a round trip.
 final characterNamePattern = RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,15}$');

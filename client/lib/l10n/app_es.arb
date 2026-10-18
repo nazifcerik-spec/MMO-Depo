@@ -28,5 +28,16 @@
   "errAttributeRequirement": "Tus atributos son demasiado bajos para este objeto.",
   "errBusyCombat": "No mientras estés en combate, AFK o en una mazmorra.",
   "skillGuard": "+{pct}% de armadura durante {turns} turnos",
-  "skillEmpower": "+{pct}% de ataque durante {turns} turnos"
+  "skillEmpower": "+{pct}% de ataque durante {turns} turnos",
+  "classRanger": "Explorador",
+  "classCleric": "Clérigo",
+  "classMonk": "Monje",
+  "classPaladin": "Paladín",
+  "classDruid": "Druida",
+  "classBard": "Bardo",
+  "classShaman": "Chamán",
+  "errEquipmentPermission": "Tu clase no puede usar este tipo de equipo.",
+  "classWarrior": "Guerrero",
+  "classMage": "Mago",
+  "classRogue": "Pícaro"
 }

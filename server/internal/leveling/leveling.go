@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"slices"
 	"sort"
 	"sync/atomic"
 )
@@ -112,41 +113,102 @@ func (s *Stats) Add(name string, n int) bool {
 	return true
 }
 
-// Derived is a class's configuration-driven derived-stat formula. Percent
-// values are percentage points; caps live in Config.Caps.
-type Derived struct {
-	HPBase         float64 `yaml:"hp_base" json:"hp_base"`
-	HPPerLevel     float64 `yaml:"hp_per_level" json:"hp_per_level"`
-	HPPerVit       float64 `yaml:"hp_per_vit" json:"hp_per_vit"`
-	AttackBase     float64 `yaml:"attack_base" json:"attack_base"`
-	ArmorBase      float64 `yaml:"armor_base" json:"armor_base"`
-	AttackPerLevel float64 `yaml:"attack_per_level" json:"attack_per_level"`
-	AttackPerStr   float64 `yaml:"attack_per_str" json:"attack_per_str"`
-	AttackPerDex   float64 `yaml:"attack_per_dex" json:"attack_per_dex"`
-	ArmorPerLevel  float64 `yaml:"armor_per_level" json:"armor_per_level"`
-	ArmorPerVit    float64 `yaml:"armor_per_vit" json:"armor_per_vit"`
-	CritBase       float64 `yaml:"crit_base" json:"crit_base"`
-	CritPerDex     float64 `yaml:"crit_per_dex" json:"crit_per_dex"`
-	HitBase        float64 `yaml:"hit_base" json:"hit_base"`
-	HitPerDex      float64 `yaml:"hit_per_dex" json:"hit_per_dex"`
-	DodgeBase      float64 `yaml:"dodge_base" json:"dodge_base"`
-	DodgePerDex    float64 `yaml:"dodge_per_dex" json:"dodge_per_dex"`
-	BlockPerStr    float64 `yaml:"block_per_str" json:"block_per_str"`
+// Term is one derived-stat formula: base + per_level·L + Σ coef·attribute,
+// where attributes are the effective (diminishing-return) values.
+type Term struct {
+	Base     float64            `yaml:"base" json:"base,omitempty"`
+	PerLevel float64            `yaml:"per_level" json:"per_level,omitempty"`
+	Per      map[string]float64 `yaml:"per" json:"per,omitempty"` // attribute name -> coefficient
 }
 
-// Resource is a class's combat resource (Warrior: Rage, starts empty).
+// Eval computes the term at a level; attr returns an attribute's effective value.
+func (t Term) Eval(level int, attr func(name string) float64) float64 {
+	v := t.Base + t.PerLevel*float64(level)
+	for _, name := range Attributes { // fixed order: identical float sums every call
+		if coef, ok := t.Per[name]; ok {
+			v += coef * attr(name)
+		}
+	}
+	return v
+}
+
+// Derived is a class's configuration-driven derived-stat formula (one
+// generic shape for every class, DD-252). Percent values are percentage
+// points; caps live in Config.Caps. A nil MP term keeps the v1 mana pool.
+type Derived struct {
+	HP     Term  `yaml:"hp" json:"hp"`
+	Attack Term  `yaml:"attack" json:"attack"`
+	Armor  Term  `yaml:"armor" json:"armor"`
+	Crit   Term  `yaml:"crit" json:"crit"`
+	Hit    Term  `yaml:"hit" json:"hit"`
+	Dodge  Term  `yaml:"dodge" json:"dodge"`
+	Block  Term  `yaml:"block" json:"block"`
+	MP     *Term `yaml:"mp" json:"mp,omitempty"`
+}
+
+func (d *Derived) terms() []Term {
+	out := []Term{d.HP, d.Attack, d.Armor, d.Crit, d.Hit, d.Dodge, d.Block}
+	if d.MP != nil {
+		out = append(out, *d.MP)
+	}
+	return out
+}
+
+// ResourceKinds are the combat resources the engine runs (DD-252).
+var ResourceKinds = map[string]bool{
+	"rage": true, "energy": true, "focus": true, "mana": true, "chi": true,
+	"conviction": true, "nature_energy": true, "rhythm": true, "spirit": true,
+}
+
+// Resource is a class's combat resource. Every encounter starts with
+// StartPct% of the pool; PerHit is gained on each landed hit and PerTurn at
+// the start of each own turn. Max 0 = the sheet's mana pool (mp_max).
 type Resource struct {
-	Kind   string `yaml:"kind" json:"kind"` // rage | mp
-	Max    int    `yaml:"max" json:"max"`
-	PerHit int    `yaml:"per_hit" json:"per_hit"` // gained on each landed hit
+	Kind     string `yaml:"kind" json:"kind"`
+	Max      int    `yaml:"max" json:"max"`
+	StartPct int    `yaml:"start_pct" json:"start_pct"`
+	PerHit   int    `yaml:"per_hit" json:"per_hit"`
+	PerTurn  int    `yaml:"per_turn" json:"per_turn"`
+}
+
+// RoleTags are the reusable role tags of class nodes (DD-252).
+var RoleTags = map[string]bool{
+	"tank": true, "bruiser": true, "melee_dps": true, "ranged_dps": true, "magic_dps": true,
+	"burst": true, "sustained_dps": true, "healer": true, "barrier_support": true, "buff_support": true,
+	"debuff_support": true, "control": true, "pet": true, "dot": true, "hot": true, "afk_safe": true,
+	"group_support": true,
+}
+
+// ContentTags name the content a specialization prefers or struggles in.
+var ContentTags = map[string]bool{
+	"boss": true, "farming": true, "aoe": true, "group": true, "solo": true, "afk": true, "dungeon": true,
+}
+
+// AFKProfile is a specialization's design metadata (1..5 each; balancing
+// targets, not combat stats).
+type AFKProfile struct {
+	KillSpeed          int `yaml:"kill_speed" json:"kill_speed"`
+	Survivability      int `yaml:"survivability" json:"survivability"`
+	ResourceEfficiency int `yaml:"resource_efficiency" json:"resource_efficiency"`
+	GroupValue         int `yaml:"group_value" json:"group_value"`
+	BossValue          int `yaml:"boss_value" json:"boss_value"`
+	AOEValue           int `yaml:"aoe_value" json:"aoe_value"`
+	AFKSafety          int `yaml:"afk_safety" json:"afk_safety"`
+}
+
+// Values lists the profile in a fixed order (for validation and reports).
+func (p AFKProfile) Values() []int {
+	return []int{p.KillSpeed, p.Survivability, p.ResourceEfficiency, p.GroupValue, p.BossValue, p.AOEValue, p.AFKSafety}
 }
 
 // Mastery is the Level-cap class mastery of a final specialization.
 type Mastery struct {
-	Title     string     `yaml:"title" json:"title"`
-	Badge     string     `yaml:"badge" json:"badge"`
-	Frame     string     `yaml:"frame" json:"frame"`
-	Modifiers []Modifier `yaml:"modifiers" json:"modifiers"`
+	Title            string     `yaml:"title" json:"title"`
+	Badge            string     `yaml:"badge" json:"badge"`
+	Frame            string     `yaml:"frame" json:"frame"`
+	Achievement      string     `yaml:"achievement" json:"achievement,omitempty"`
+	PrestigeEligible bool       `yaml:"prestige_eligible" json:"prestige_eligible"`
+	Modifiers        []Modifier `yaml:"modifiers" json:"modifiers"`
 }
 
 // Class is a node of the class tree: a base class (no parent) or a promotion.
@@ -162,6 +224,15 @@ type Class struct {
 	StatModifiers        []Modifier `yaml:"stat_modifiers" json:"stat_modifiers,omitempty"`
 	EquipmentPermissions []string   `yaml:"equipment_permissions" json:"equipment_permissions,omitempty"`
 	Mastery              *Mastery   `yaml:"mastery" json:"mastery,omitempty"`
+
+	// DD-252: attribute focus (base classes), balancing metadata (final
+	// specializations) and the support power Solo Adaptation converts.
+	PrimaryAttribute    string      `yaml:"primary_attribute" json:"primary_attribute,omitempty"`
+	SecondaryAttributes []string    `yaml:"secondary_attributes" json:"secondary_attributes,omitempty"`
+	AFKProfile          *AFKProfile `yaml:"afk_profile" json:"afk_profile,omitempty"`
+	SupportPower        float64     `yaml:"support_power" json:"support_power,omitempty"`
+	StrongIn            []string    `yaml:"strong_in" json:"strong_in,omitempty"`
+	WeakIn              []string    `yaml:"weak_in" json:"weak_in,omitempty"`
 
 	tier int
 	root string
@@ -227,9 +298,16 @@ type Config struct {
 	Scaling              []Bracket          `yaml:"attribute_scaling" json:"attribute_scaling"`
 	Caps                 map[string]float64 `yaml:"caps" json:"caps"`
 	LevelRewards         []LevelReward      `yaml:"level_rewards" json:"level_rewards,omitempty"`
-	Classes              []Class            `yaml:"classes" json:"classes"`
-	Trees                []Tree             `yaml:"talent_trees" json:"talent_trees"`
-	Unlocks              []Unlock           `yaml:"-" json:"unlocks"`
+	// Weapon/offhand families (item subclasses) and armor types that
+	// equipment permissions may name (DD-252).
+	EquipmentFamilies []string `yaml:"equipment_families" json:"equipment_families"`
+	ArmorTypes        []string `yaml:"armor_types" json:"armor_types"`
+	// SoloAdaptation converts Ratio of a support specialization's
+	// support_power into attack when no party is active.
+	SoloAdaptation SoloAdaptation `yaml:"solo_adaptation" json:"solo_adaptation"`
+	Classes        []Class        `yaml:"classes" json:"classes"`
+	Trees          []Tree         `yaml:"talent_trees" json:"talent_trees"`
+	Unlocks        []Unlock       `yaml:"-" json:"unlocks"`
 
 	table    []int64
 	classes  map[string]*Class
@@ -237,6 +315,11 @@ type Config struct {
 	talents  map[string]*Talent
 	treeOf   map[string]*Tree
 	rewards  map[int][]Reward
+}
+
+// SoloAdaptation is the solo conversion rule of support classes.
+type SoloAdaptation struct {
+	Ratio float64 `yaml:"ratio" json:"ratio"`
 }
 
 // Reward kinds (the registry, DD-250 §32) and progression event kinds.
@@ -338,6 +421,21 @@ func (c *Config) Prepare() error {
 		if k.Parent != "" && c.classes[k.Parent].RequiredLevel >= k.RequiredLevel {
 			return fmt.Errorf("leveling: class %s must require a higher level than its parent", k.Code)
 		}
+	}
+	families := map[string]bool{}
+	for _, f := range c.EquipmentFamilies {
+		families[f] = true
+	}
+	for _, a := range c.ArmorTypes {
+		families[a+"_armor"] = true
+	}
+	for _, k := range c.classes {
+		if err := validateClass(k, families); err != nil {
+			return err
+		}
+	}
+	if c.SoloAdaptation.Ratio < 0 || c.SoloAdaptation.Ratio > 1 {
+		return errors.New("leveling: solo_adaptation.ratio must be 0..1")
 	}
 	c.talents = map[string]*Talent{}
 	c.treeOf = map[string]*Tree{}
@@ -729,4 +827,115 @@ func (c *Config) EstimateMinutes(level int, xp int64, target int) float64 {
 // PromotionPending reports a reached, unchosen promotion gate.
 func (c *Config) PromotionPending(spec string, level int) bool {
 	return len(c.Choices(spec, level)) > 0
+}
+
+// validateClass checks one class node's data (DD-252).
+func validateClass(k *Class, families map[string]bool) error {
+	for _, t := range k.RoleTags {
+		if !RoleTags[t] {
+			return fmt.Errorf("leveling: class %s: unknown role tag %q", k.Code, t)
+		}
+	}
+	for _, t := range append(append([]string(nil), k.StrongIn...), k.WeakIn...) {
+		if !ContentTags[t] {
+			return fmt.Errorf("leveling: class %s: unknown content tag %q", k.Code, t)
+		}
+	}
+	for _, p := range k.EquipmentPermissions {
+		if !families[p] {
+			return fmt.Errorf("leveling: class %s: unknown equipment permission %q", k.Code, p)
+		}
+	}
+	if r := k.Resource; r != nil {
+		if !ResourceKinds[r.Kind] || r.Max < 0 || r.StartPct < 0 || r.StartPct > 100 || r.PerHit < 0 || r.PerTurn < 0 {
+			return fmt.Errorf("leveling: class %s: invalid resource", k.Code)
+		}
+	}
+	if k.Derived != nil {
+		for _, t := range k.Derived.terms() {
+			for name := range t.Per {
+				if !slices.Contains(Attributes, name) {
+					return fmt.Errorf("leveling: class %s: derived formula names unknown attribute %q", k.Code, name)
+				}
+			}
+		}
+	}
+	for _, a := range append([]string{k.PrimaryAttribute}, k.SecondaryAttributes...) {
+		if a != "" && !slices.Contains(Attributes, a) {
+			return fmt.Errorf("leveling: class %s: unknown attribute %q", k.Code, a)
+		}
+	}
+	if p := k.AFKProfile; p != nil {
+		for _, v := range p.Values() {
+			if v < 1 || v > 5 {
+				return fmt.Errorf("leveling: class %s: afk_profile values are 1..5", k.Code)
+			}
+		}
+	}
+	if k.SupportPower < 0 || k.SupportPower > 1 {
+		return fmt.Errorf("leveling: class %s: support_power must be 0..1", k.Code)
+	}
+	return nil
+}
+
+// Permissions are the equipment families a class path may use: the deepest
+// node on the path that declares any (empty = unrestricted).
+func (c *Config) Permissions(spec string) []string {
+	path := c.Path(spec)
+	for i := len(path) - 1; i >= 0; i-- {
+		if k, ok := c.classes[path[i]]; ok && len(k.EquipmentPermissions) > 0 {
+			return k.EquipmentPermissions
+		}
+	}
+	return nil
+}
+
+// IsFamily reports whether an item subclass is a governed equipment family.
+func (c *Config) IsFamily(subclass string) bool {
+	return slices.Contains(c.EquipmentFamilies, subclass)
+}
+
+// CanUse reports whether a class path may equip an item subclass: families
+// outside the governed list (armor pieces, jewelry) are always allowed.
+func (c *Config) CanUse(spec, subclass string) bool {
+	if !c.IsFamily(subclass) {
+		return true
+	}
+	perms := c.Permissions(spec)
+	return len(perms) == 0 || slices.Contains(perms, subclass)
+}
+
+// SupportPower is the support power of the path's deepest node that has one.
+func (c *Config) SupportPower(spec string) float64 {
+	path := c.Path(spec)
+	for i := len(path) - 1; i >= 0; i-- {
+		if k, ok := c.classes[path[i]]; ok && k.SupportPower > 0 {
+			return k.SupportPower
+		}
+	}
+	return 0
+}
+
+// SoloAdaptationModifiers: without an active party, Ratio of the path's
+// support power converts into attack (DD-252). None in a party or for
+// paths without support power.
+func (c *Config) SoloAdaptationModifiers(spec string, inParty bool) []Modifier {
+	sp := c.SupportPower(spec)
+	if inParty || sp <= 0 || c.SoloAdaptation.Ratio <= 0 {
+		return nil
+	}
+	return []Modifier{{Kind: "mult_add", Target: "attack", Amount: sp * c.SoloAdaptation.Ratio}}
+}
+
+// ResourceOf is the combat resource of a class path's base class (nil when
+// none is configured).
+func (c *Config) ResourceOf(spec string) *Resource {
+	k, ok := c.classes[spec]
+	if !ok {
+		return nil
+	}
+	if root, ok := c.classes[k.root]; ok && root.Resource != nil {
+		return root.Resource
+	}
+	return k.Resource
 }

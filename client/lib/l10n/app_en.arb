@@ -25,7 +25,16 @@
   "offline": "Can't reach the server. Check your connection.",
   "characters": "Characters",
   "slotsUsed": "{used}/{cap} slots",
-  "@slotsUsed": {"placeholders": {"used": {"type": "int"}, "cap": {"type": "int"}}},
+  "@slotsUsed": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
   "newCharacter": "New character",
   "noCharacters": "No characters yet. Create your first hero.",
   "create": "Create",
@@ -39,20 +48,45 @@
   "raceOrc": "Orc",
   "classWarrior": "Warrior",
   "classMage": "Mage",
-  "classHunter": "Hunter",
-  "classPriest": "Priest",
   "classRogue": "Rogue",
   "levelLine": "Lvl {level} · {cls} · {race}",
-  "@levelLine": {"placeholders": {"level": {"type": "int"}, "cls": {"type": "String"}, "race": {"type": "String"}}},
+  "@levelLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "cls": {
+        "type": "String"
+      },
+      "race": {
+        "type": "String"
+      }
+    }
+  },
   "levelShort": "Lvl {level}",
-  "@levelShort": {"placeholders": {"level": {"type": "int"}}},
+  "@levelShort": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "hp": "HP",
   "mp": "MP",
   "stamina": "ST",
   "energy": "EN",
   "xp": "XP",
   "xpValue": "{xp} / {next}",
-  "@xpValue": {"placeholders": {"xp": {"type": "int"}, "next": {"type": "int"}}},
+  "@xpValue": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
   "attributes": "Attributes",
   "combat": "Combat",
   "statStr": "STR",
@@ -66,7 +100,13 @@
   "crit": "Crit",
   "hit": "Hit",
   "percent": "{value}%",
-  "@percent": {"placeholders": {"value": {"type": "int"}}},
+  "@percent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "gold": "Gold",
   "switchCharacter": "Switch character",
   "statePendingDelete": "Deletion pending",
@@ -81,7 +121,13 @@
   "errNotPlayable": "This character can't be played right now.",
   "errSessionExpired": "Your session expired. Please log in again.",
   "errGeneric": "Something went wrong ({code}).",
-  "@errGeneric": {"placeholders": {"code": {"type": "String"}}},
+  "@errGeneric": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "navCharacter": "Character",
   "navActivity": "Gather",
   "actMining": "Mining",
@@ -93,30 +139,96 @@
   "durationLabel": "Duration",
   "gatherResource": "Resource",
   "gatherXp": "{xp} / {next} XP",
-  "@gatherXp": {"placeholders": {"xp": {"type": "int"}, "next": {"type": "int"}}},
+  "@gatherXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
   "gatherMax": "Max level",
   "gatherLocked": "Unlocks at level {level}",
-  "@gatherLocked": {"placeholders": {"level": {"type": "int"}}},
+  "@gatherLocked": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "gatherXpGained": "{name} +{xp} XP",
-  "@gatherXpGained": {"placeholders": {"name": {"type": "String"}, "xp": {"type": "int"}}},
+  "@gatherXpGained": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
   "gatherLevelUp": "{name} reached level {level}!",
-  "@gatherLevelUp": {"placeholders": {"name": {"type": "String"}, "level": {"type": "int"}}},
+  "@gatherLevelUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "errGatherLevel": "Your gathering level is too low for this resource.",
   "startActivity": "Start {name}",
-  "@startActivity": {"placeholders": {"name": {"type": "String"}}},
+  "@startActivity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "collect": "Collect",
   "abandon": "Abandon",
   "cancel": "Cancel",
   "soFar": "Gathered so far",
   "activityDone": "Complete — ready to collect",
   "remaining": "{time} left",
-  "@remaining": {"placeholders": {"time": {"type": "String"}}},
+  "@remaining": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "durHm": "{h}h {m}m",
-  "@durHm": {"placeholders": {"h": {"type": "int"}, "m": {"type": "String"}}},
+  "@durHm": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "String"
+      }
+    }
+  },
   "durM": "{m}m",
-  "@durM": {"placeholders": {"m": {"type": "int"}}},
+  "@durM": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
   "durS": "{s}s",
-  "@durS": {"placeholders": {"s": {"type": "int"}}},
+  "@durS": {
+    "placeholders": {
+      "s": {
+        "type": "int"
+      }
+    }
+  },
   "collectEarlyTitle": "Collect early?",
   "collectEarlyBody": "You get what has been gathered so far and the activity ends.",
   "abandonTitle": "Abandon activity?",
@@ -124,7 +236,13 @@
   "lootCollect": "Nice!",
   "lootNothing": "Nothing this time.",
   "xpGain": "+{xp} XP",
-  "@xpGain": {"placeholders": {"xp": {"type": "int"}}},
+  "@xpGain": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
   "rarityCommon": "Common",
   "rarityUncommon": "Uncommon",
   "rarityRare": "Rare",
@@ -143,7 +261,16 @@
   "equipment": "Equipment",
   "bag": "Bag",
   "weightKg": "{cur}/{cap} kg",
-  "@weightKg": {"placeholders": {"cur": {"type": "String"}, "cap": {"type": "String"}}},
+  "@weightKg": {
+    "placeholders": {
+      "cur": {
+        "type": "String"
+      },
+      "cap": {
+        "type": "String"
+      }
+    }
+  },
   "slotHelm": "Helm",
   "slotNecklace": "Neck",
   "slotChest": "Chest",
@@ -164,31 +291,79 @@
   "sortName": "Name",
   "sortValue": "Value",
   "selectedCount": "{count} selected",
-  "@selectedCount": {"placeholders": {"count": {"type": "int"}}},
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "selectAll": "Select all",
   "clearSelection": "Clear selection",
   "sellSelectedTitle": "Sell {count} items?",
-  "@sellSelectedTitle": {"placeholders": {"count": {"type": "int"}}},
+  "@sellSelectedTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "destroySelectedTitle": "Destroy {count} items?",
-  "@destroySelectedTitle": {"placeholders": {"count": {"type": "int"}}},
+  "@destroySelectedTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "deleteEntry": "Delete",
   "craftHowMany": "How many {name}?",
-  "@craftHowMany": {"placeholders": {"name": {"type": "String"}}},
+  "@craftHowMany": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "craftCount": "Craft ×{count}",
-  "@craftCount": {"placeholders": {"count": {"type": "int"}}},
+  "@craftCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "destroy": "Destroy",
   "sellTitle": "Sell {name}?",
-  "@sellTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@sellTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "sellBody": "You can buy it back from the vendor for 2 hours.",
   "destroyTitle": "Destroy {name}?",
-  "@destroyTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@destroyTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "destroyBody": "This cannot be undone.",
   "soldFor": "Sold for",
   "quantity": "Quantity",
   "requiresLevel": "Requires level",
   "weight": "Weight",
   "weightGrams": "{g} g",
-  "@weightGrams": {"placeholders": {"g": {"type": "int"}}},
+  "@weightGrams": {
+    "placeholders": {
+      "g": {
+        "type": "int"
+      }
+    }
+  },
   "sellValue": "Sells for",
   "bound": "Soulbound",
   "itemLocked": "This item is held by a trade, mail or listing.",
@@ -206,15 +381,57 @@
   "huntDone": "Hunt over — collect your spoils",
   "huntEarlyBody": "You keep the fights won so far and the hunt ends.",
   "mobStats": "HP {hp} · ATK {atk} · DEF {def}",
-  "@mobStats": {"placeholders": {"hp": {"type": "int"}, "atk": {"type": "int"}, "def": {"type": "int"}}},
+  "@mobStats": {
+    "placeholders": {
+      "hp": {
+        "type": "int"
+      },
+      "atk": {
+        "type": "int"
+      },
+      "def": {
+        "type": "int"
+      }
+    }
+  },
   "huntSummary": "{won} won · {lost} lost",
-  "@huntSummary": {"placeholders": {"won": {"type": "int"}, "lost": {"type": "int"}}},
+  "@huntSummary": {
+    "placeholders": {
+      "won": {
+        "type": "int"
+      },
+      "lost": {
+        "type": "int"
+      }
+    }
+  },
   "levelUp": "Level up! Now level {level}",
-  "@levelUp": {"placeholders": {"level": {"type": "int"}}},
+  "@levelUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "levelReq": "Lvl {level}+",
-  "@levelReq": {"placeholders": {"level": {"type": "int"}}},
+  "@levelReq": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "dungeonEncounters": "{count} fights · boss {boss}",
-  "@dungeonEncounters": {"placeholders": {"count": {"type": "int"}, "boss": {"type": "String"}}},
+  "@dungeonEncounters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "boss": {
+        "type": "String"
+      }
+    }
+  },
   "dungeonEnter": "Enter",
   "dungeonDone": "Run complete — claim rewards",
   "dungeonWaitHint": "Rewards unlock when the run ends.",
@@ -227,7 +444,13 @@
   "noRoutes": "No routes from here.",
   "travelTo": "Go",
   "travelling": "Travelling to {place}",
-  "@travelling": {"placeholders": {"place": {"type": "String"}}},
+  "@travelling": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
   "arrive": "Arrive",
   "arrived": "You have arrived",
   "cancelTravel": "Turn back",
@@ -249,21 +472,57 @@
   "profCooking": "Cooking",
   "learn": "Learn",
   "recipeCount": "{count} recipes",
-  "@recipeCount": {"placeholders": {"count": {"type": "int"}}},
+  "@recipeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "itemType": "Type",
   "stackSize": "Stack",
   "skillXpReward": "Skill XP",
   "learnHint": "Learn this profession to unlock its recipes.",
   "craft": "Craft",
   "crafted": "Crafted {name} ×{count}",
-  "@crafted": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
+  "@crafted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "skillUp": "{profession} is now level {level}",
-  "@skillUp": {"placeholders": {"profession": {"type": "String"}, "level": {"type": "int"}}},
+  "@skillUp": {
+    "placeholders": {
+      "profession": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "requiresSkill": "Needs skill {level}",
-  "@requiresSkill": {"placeholders": {"level": {"type": "int"}}},
+  "@requiresSkill": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "buy": "Buy",
   "bought": "Bought {name}",
-  "@bought": {"placeholders": {"name": {"type": "String"}}},
+  "@bought": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "buybacks": "Buy back",
   "buybackHint": "Items you sold can be bought back for 2 hours.",
   "errInsufficientGold": "Not enough gold.",
@@ -283,26 +542,83 @@
   "sortNewest": "Newest",
   "marketEmpty": "No listings match.",
   "listingLine": "{seller} · {price} each",
-  "@listingLine": {"placeholders": {"seller": {"type": "String"}, "price": {"type": "String"}}},
+  "@listingLine": {
+    "placeholders": {
+      "seller": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "loadMore": "Load more",
   "myListings": "My listings ({count})",
-  "@myListings": {"placeholders": {"count": {"type": "int"}}},
+  "@myListings": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "cancelListing": "Cancel listing",
   "cancelListingTitle": "Cancel {name}?",
-  "@cancelListingTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@cancelListingTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cancelListingBody": "The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.",
   "buyListingTitle": "Buy {name}?",
-  "@buyListingTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@buyListingTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "buyListingBody": "Pay {price} to {seller}.",
-  "@buyListingBody": {"placeholders": {"price": {"type": "String"}, "seller": {"type": "String"}}},
+  "@buyListingBody": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "seller": {
+        "type": "String"
+      }
+    }
+  },
   "listOnMarket": "List on market",
   "listed": "{name} listed on the market",
-  "@listed": {"placeholders": {"name": {"type": "String"}}},
+  "@listed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "quantityOf": "Quantity: {count} of {max}",
-  "@quantityOf": {"placeholders": {"count": {"type": "int"}, "max": {"type": "int"}}},
+  "@quantityOf": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "unitPrice": "Price per item",
   "suggestedPrice": "Market price: {price}",
-  "@suggestedPrice": {"placeholders": {"price": {"type": "String"}}},
+  "@suggestedPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "listingFee": "Listing fee (non-refundable)",
   "youReceive": "You receive when sold",
   "errPriceOutOfRange": "That price is outside the allowed range.",
@@ -319,16 +635,40 @@
   "chanParty": "Party",
   "chatEmpty": "No messages yet. Say hello!",
   "chatHint": "Message {channel}",
-  "@chatHint": {"placeholders": {"channel": {"type": "String"}}},
+  "@chatHint": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "send": "Send",
   "addFriend": "Add",
   "friendAdded": "You and {name} are now friends",
-  "@friendAdded": {"placeholders": {"name": {"type": "String"}}},
+  "@friendAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "friendRequested": "Friend request sent to {name}",
-  "@friendRequested": {"placeholders": {"name": {"type": "String"}}},
+  "@friendRequested": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "friendRequests": "Friend requests",
   "friendsCount": "Friends ({count})",
-  "@friendsCount": {"placeholders": {"count": {"type": "int"}}},
+  "@friendsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noFriends": "No friends yet — add someone by name.",
   "more": "More",
   "whisper": "Whisper",
@@ -337,10 +677,22 @@
   "unblock": "Unblock",
   "blockedList": "Blocked",
   "removeFriendTitle": "Remove {name}?",
-  "@removeFriendTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@removeFriendTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "removeFriendBody": "You can send a new friend request later.",
   "blockTitle": "Block {name}?",
-  "@blockTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@blockTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "blockBody": "They can't whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.",
   "accept": "Accept",
   "decline": "Decline",
@@ -348,14 +700,26 @@
   "inboxEmpty": "Your mailbox is empty.",
   "noSubject": "(no subject)",
   "mailFrom": "From {name}",
-  "@mailFrom": {"placeholders": {"name": {"type": "String"}}},
+  "@mailFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "attachments": "Attachments",
   "claim": "Take attachments",
   "mailClaimed": "Attachments moved to your bag and wallet",
   "deleteMailTitle": "Delete this mail?",
   "deleteMailBody": "Deleted mail can't be recovered.",
   "mailSent": "Mail sent (postage {postage})",
-  "@mailSent": {"placeholders": {"postage": {"type": "String"}}},
+  "@mailSent": {
+    "placeholders": {
+      "postage": {
+        "type": "String"
+      }
+    }
+  },
   "mailTo": "To (character name)",
   "mailSubject": "Subject",
   "mailBody": "Message",
@@ -374,9 +738,27 @@
   "errHasAttachments": "Take the attachments before deleting.",
   "useItem": "Use",
   "restoresHp": "Restores {amount} HP",
-  "@restoresHp": {"placeholders": {"amount": {"type": "int"}}},
+  "@restoresHp": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "usedItem": "Used {name} · HP {hp}/{max}",
-  "@usedItem": {"placeholders": {"name": {"type": "String"}, "hp": {"type": "int"}, "max": {"type": "int"}}},
+  "@usedItem": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "hp": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "errHpFull": "Your health is already full.",
   "errInCombat": "Finish your hunt or dungeon run first.",
   "errNotUsable": "This item can't be used.",
@@ -400,12 +782,27 @@
   "tabGuild": "Guild",
   "invite": "Invite",
   "invitedBy": "Invited by {name}",
-  "@invitedBy": {"placeholders": {"name": {"type": "String"}}},
+  "@invitedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "noParty": "You're not in a party. Create one and invite friends — fights go better together.",
   "createParty": "Create party",
   "pendingInvites": "Invitations",
   "partyMembers": "Party ({count}/{cap})",
-  "@partyMembers": {"placeholders": {"count": {"type": "int"}, "cap": {"type": "int"}}},
+  "@partyMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
   "makeLeader": "Make leader",
   "kick": "Remove",
   "leave": "Leave",
@@ -421,26 +818,71 @@
   "rankInitiate": "Initiate",
   "createGuild": "Found a guild",
   "createGuildBody": "Founding a guild costs {fee}.",
-  "@createGuildBody": {"placeholders": {"fee": {"type": "String"}}},
+  "@createGuildBody": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "createGuildFee": "Found guild ({fee})",
-  "@createGuildFee": {"placeholders": {"fee": {"type": "String"}}},
+  "@createGuildFee": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guildName": "Guild name",
   "guildTag": "Tag",
   "guildTagHint": "2–5 letters or digits",
   "guildMembers": "{count}/{cap} members",
-  "@guildMembers": {"placeholders": {"count": {"type": "int"}, "cap": {"type": "int"}}},
+  "@guildMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
   "disbandScheduled": "Guild disbands in {time}",
-  "@disbandScheduled": {"placeholders": {"time": {"type": "String"}}},
+  "@disbandScheduled": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "motd": "Message of the day",
   "editMotd": "Edit message of the day",
   "setRank": "Change rank",
   "setRankFor": "New rank for {name}",
-  "@setRankFor": {"placeholders": {"name": {"type": "String"}}},
+  "@setRankFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "transferTitle": "Make {name} guild leader?",
-  "@transferTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@transferTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "transferBody": "You become an officer. This can't be undone by you.",
   "kickTitle": "Remove {name} from the guild?",
-  "@kickTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@kickTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "leaveGuildTitle": "Leave the guild?",
   "leaveGuildBody": "You'll need a new invitation to rejoin.",
   "disbandGuildTitle": "Disband the guild?",
@@ -462,15 +904,48 @@
   "tabReputation": "Reputation",
   "tabTitles": "Titles",
   "achievementPoints": "{points} achievement points",
-  "@achievementPoints": {"placeholders": {"points": {"type": "int"}}},
+  "@achievementPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
   "pointsShort": "{points} pts",
-  "@pointsShort": {"placeholders": {"points": {"type": "int"}}},
+  "@pointsShort": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
   "rewardTitle": "Title: {title}",
-  "@rewardTitle": {"placeholders": {"title": {"type": "String"}}},
+  "@rewardTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "masteryTier": "Tier {tier}/{max}",
-  "@masteryTier": {"placeholders": {"tier": {"type": "int"}, "max": {"type": "int"}}},
+  "@masteryTier": {
+    "placeholders": {
+      "tier": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "repDailyLeft": "+{amount} today",
-  "@repDailyLeft": {"placeholders": {"amount": {"type": "int"}}},
+  "@repDailyLeft": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "noTitle": "No title",
   "noTitlesYet": "Titles unlock through achievements.",
   "errTitleNotOwned": "You haven't unlocked that title.",
@@ -481,7 +956,13 @@
   "muteAll": "Pause push notifications",
   "muteHint": "For 24 hours. The inbox keeps filling.",
   "mutedFor": "Paused for {time}",
-  "@mutedFor": {"placeholders": {"time": {"type": "String"}}},
+  "@mutedFor": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "modePushInbox": "Push + inbox",
   "modeInbox": "Inbox only",
   "modeSilent": "Silent",
@@ -497,42 +978,111 @@
   "nkAchievement": "Achievement unlocked",
   "nkSystem": "Announcement",
   "timeAgo": "{time} ago",
-  "@timeAgo": {"placeholders": {"time": {"type": "String"}}},
+  "@timeAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "segEvents": "Events",
   "eventsEmpty": "No world events scheduled right now.",
   "worldBoss": "World boss",
   "invasion": "Invasion",
   "startsIn": "Starts in {time}",
-  "@startsIn": {"placeholders": {"time": {"type": "String"}}},
+  "@startsIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "endsIn": "Ends in {time}",
-  "@endsIn": {"placeholders": {"time": {"type": "String"}}},
+  "@endsIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "regionOnly": "{region} only",
-  "@regionOnly": {"placeholders": {"region": {"type": "String"}}},
+  "@regionOnly": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
   "eventGoal": "Goal",
   "enlist": "Enlist",
   "enlistHint": "Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.",
   "enlistedPower": "Enlisted · power {power}",
-  "@enlistedPower": {"placeholders": {"power": {"type": "int"}}},
+  "@enlistedPower": {
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
   "myContribution": "Your score {score} · reward tier {tier}",
-  "@myContribution": {"placeholders": {"score": {"type": "int"}, "tier": {"type": "int"}}},
+  "@myContribution": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "tier": {
+        "type": "int"
+      }
+    }
+  },
   "eventSucceeded": "Victory",
   "eventFailed": "Failed",
   "tokenBalance": "{tokens} event tokens",
-  "@tokenBalance": {"placeholders": {"tokens": {"type": "int"}}},
+  "@tokenBalance": {
+    "placeholders": {
+      "tokens": {
+        "type": "int"
+      }
+    }
+  },
   "claimDaily": "Claim {tokens}",
-  "@claimDaily": {"placeholders": {"tokens": {"type": "int"}}},
+  "@claimDaily": {
+    "placeholders": {
+      "tokens": {
+        "type": "int"
+      }
+    }
+  },
   "claimedToday": "Claimed",
   "eventTokensGained": "+{tokens} event tokens",
-  "@eventTokensGained": {"placeholders": {"tokens": {"type": "int"}}},
+  "@eventTokensGained": {
+    "placeholders": {
+      "tokens": {
+        "type": "int"
+      }
+    }
+  },
   "errEventNotOpen": "Enlistment for this event is closed.",
   "errWrongRegion": "Travel to the event's region first.",
   "errAlreadyEnlisted": "You're already enlisted.",
   "errAlreadyClaimed": "Already claimed today.",
   "errEventNotActive": "This event isn't running.",
   "gatherYield": "{activity} yield",
-  "@gatherYield": {"placeholders": {"activity": {"type": "String"}}},
+  "@gatherYield": {
+    "placeholders": {
+      "activity": {
+        "type": "String"
+      }
+    }
+  },
   "perHour": "{value}/h",
-  "@perHour": {"placeholders": {"value": {"type": "String"}}},
+  "@perHour": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "quests": "Quests",
   "questsInProgress": "In progress",
   "questsNoneOpen": "No open quests. Pick one below.",
@@ -540,25 +1090,61 @@
   "questsSide": "Side quests",
   "questsDaily": "Daily",
   "resetsIn": "Resets in {time}",
-  "@resetsIn": {"placeholders": {"time": {"type": "String"}}},
+  "@resetsIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "turnIn": "Turn in",
   "questRewarded": "Quest complete: {rewards}",
-  "@questRewarded": {"placeholders": {"rewards": {"type": "String"}}},
+  "@questRewarded": {
+    "placeholders": {
+      "rewards": {
+        "type": "String"
+      }
+    }
+  },
   "abandonQuestTitle": "Abandon quest?",
   "abandonQuestBody": "Progress is lost. You can take the quest again later.",
   "abandonDailyBody": "Progress is lost and this daily can't be taken again today.",
   "objGather": "Gather ({activity})",
-  "@objGather": {"placeholders": {"activity": {"type": "String"}}},
+  "@objGather": {
+    "placeholders": {
+      "activity": {
+        "type": "String"
+      }
+    }
+  },
   "objKillAny": "Defeat enemies",
   "objKill": "Defeat {mob}",
-  "@objKill": {"placeholders": {"mob": {"type": "String"}}},
+  "@objKill": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
   "objBoss": "Defeat a boss",
   "objDungeonAny": "Clear a dungeon",
   "objDungeon": "Clear {dungeon}",
-  "@objDungeon": {"placeholders": {"dungeon": {"type": "String"}}},
+  "@objDungeon": {
+    "placeholders": {
+      "dungeon": {
+        "type": "String"
+      }
+    }
+  },
   "objCraftAny": "Craft items",
   "objCraft": "Craft {item}",
-  "@objCraft": {"placeholders": {"item": {"type": "String"}}},
+  "@objCraft": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
   "evQuestComplete": "Quest objectives complete — turn it in!",
   "errQuestLocked": "Finish the previous story quest first.",
   "errQuestTaken": "You already took this quest.",
@@ -570,13 +1156,37 @@
   "skillActive": "Active",
   "skillPassive": "Passive",
   "skillStrike": "{power}% damage",
-  "@skillStrike": {"placeholders": {"power": {"type": "int"}}},
+  "@skillStrike": {
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
   "skillHeal": "Heals {power}% HP when below half",
-  "@skillHeal": {"placeholders": {"power": {"type": "int"}}},
+  "@skillHeal": {
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
   "skillMp": "{mp} MP",
-  "@skillMp": {"placeholders": {"mp": {"type": "int"}}},
+  "@skillMp": {
+    "placeholders": {
+      "mp": {
+        "type": "int"
+      }
+    }
+  },
   "skillCooldown": "{turns, plural, =1{every turn} other{every {turns} turns}}",
-  "@skillCooldown": {"placeholders": {"turns": {"type": "int"}}},
+  "@skillCooldown": {
+    "placeholders": {
+      "turns": {
+        "type": "int"
+      }
+    }
+  },
   "termsOfService": "Terms of Service",
   "privacyPolicy": "Privacy Policy",
   "accountMenu": "Account",
@@ -588,7 +1198,13 @@
   "deleteAccountConfirm": "Delete account",
   "deleteScheduled": "Your account will be deleted on {date}. To cancel, just sign in before then.",
   "deletionCancelled": "Your account deletion request was cancelled.",
-  "@deleteScheduled": {"placeholders": {"date": {"type": "String"}}},
+  "@deleteScheduled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "support": "Support",
   "supportIntro": "Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.",
   "supportNew": "New request",
@@ -613,45 +1229,147 @@
   "notifTabRewards": "Rewards",
   "rewardsNone": "No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).",
   "rewardFromActivity": "Gathering: {name}",
-  "@rewardFromActivity": {"placeholders": {"name": {"type": "String"}}},
+  "@rewardFromActivity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "rewardFromHunt": "Hunt: {name}",
-  "@rewardFromHunt": {"placeholders": {"name": {"type": "String"}}},
+  "@rewardFromHunt": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "rewardFromDungeon": "Dungeon: {name}",
-  "@rewardFromDungeon": {"placeholders": {"name": {"type": "String"}}},
+  "@rewardFromDungeon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "rewardLevelUp": "Level {level}!",
-  "@rewardLevelUp": {"placeholders": {"level": {"type": "int"}}},
+  "@rewardLevelUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "levelMax": "MAX",
   "promotionAvailable": "PROMOTION AVAILABLE",
   "promotionChoose": "Choose",
   "promotionConfirm": "Become {name}?",
-  "@promotionConfirm": {"placeholders": {"name": {"type": "String"}}},
+  "@promotionConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "promotionBody": "This choice shapes your class for good.",
   "nextMilestone": "Next: Lv {level} · {what}",
-  "@nextMilestone": {"placeholders": {"level": {"type": "int"}, "what": {"type": "String"}}},
+  "@nextMilestone": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "msPromotion": "Class promotion",
   "msAwakening": "Awakening: {name}",
-  "@msAwakening": {"placeholders": {"name": {"type": "String"}}},
+  "@msAwakening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msUltimate": "Ultimate: {name}",
-  "@msUltimate": {"placeholders": {"name": {"type": "String"}}},
+  "@msUltimate": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msCapstone": "Talent capstone",
   "msMastery": "Class mastery",
   "msTitle": "Title: {name}",
-  "@msTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@msTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "estMinutes": "~{n} min",
-  "@estMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@estMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "estHours": "~{h} h",
-  "@estHours": {"placeholders": {"h": {"type": "String"}}},
+  "@estHours": {
+    "placeholders": {
+      "h": {
+        "type": "String"
+      }
+    }
+  },
   "overflowHeld": "{xp} XP is waiting for your choice",
-  "@overflowHeld": {"placeholders": {"xp": {"type": "int"}}},
+  "@overflowHeld": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
   "attributePointsBtn": "Attributes · {n} points",
-  "@attributePointsBtn": {"placeholders": {"n": {"type": "int"}}},
+  "@attributePointsBtn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talentPointsBtn": "Talents · {n} points",
-  "@talentPointsBtn": {"placeholders": {"n": {"type": "int"}}},
+  "@talentPointsBtn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talentsTitle": "Talents",
   "capstoneLocked": "Needs level {level} and {points} points in this tree",
-  "@capstoneLocked": {"placeholders": {"level": {"type": "int"}, "points": {"type": "int"}}},
+  "@capstoneLocked": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "points": {
+        "type": "int"
+      }
+    }
+  },
   "masteryUnlocked": "Class mastery: {title}",
-  "@masteryUnlocked": {"placeholders": {"title": {"type": "String"}}},
+  "@masteryUnlocked": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "errPromotionUnavailable": "That promotion is not available.",
   "errNotEnoughPoints": "Not enough points.",
   "errTalentMaxed": "That talent is already at max rank.",
@@ -660,7 +1378,33 @@
   "errAttributeRequirement": "Your attributes are too low for this item.",
   "errBusyCombat": "Not while in combat, AFK or a dungeon.",
   "skillGuard": "+{pct}% armor for {turns} turns",
-  "@skillGuard": {"placeholders": {"pct": {"type": "int"}, "turns": {"type": "int"}}},
+  "@skillGuard": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "turns": {
+        "type": "int"
+      }
+    }
+  },
   "skillEmpower": "+{pct}% attack for {turns} turns",
-  "@skillEmpower": {"placeholders": {"pct": {"type": "int"}, "turns": {"type": "int"}}}
+  "@skillEmpower": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "turns": {
+        "type": "int"
+      }
+    }
+  },
+  "classRanger": "Ranger",
+  "classCleric": "Cleric",
+  "classMonk": "Monk",
+  "classPaladin": "Paladin",
+  "classDruid": "Druid",
+  "classBard": "Bard",
+  "classShaman": "Shaman",
+  "errEquipmentPermission": "Your class cannot use this equipment type."
 }

@@ -52,6 +52,17 @@ type Config struct {
 	ResourceGain   int32    `json:"resource_gain,omitempty"`
 	DurationTurns  int      `json:"duration_turns,omitempty"`
 	Requires       []string `json:"requires,omitempty"` // equipment tags (e.g. shield)
+
+	// Shared data model (DD-252).
+	OnCooldown  bool            `json:"on_cooldown,omitempty"`   // auto-trigger: whenever ready
+	AllyHPBelow int32           `json:"ally_hp_below,omitempty"` // auto-trigger: an ally's HP% <= (solo: self)
+	Type        string          `json:"type,omitempty"`
+	DamageType  string          `json:"damage_type,omitempty"`
+	TargetType  string          `json:"target_type,omitempty"`
+	Range       string          `json:"range,omitempty"`
+	CastTime    int             `json:"cast_time,omitempty"`
+	Tags        []string        `json:"tags,omitempty"`
+	Passive     json.RawMessage `json:"passive,omitempty"`
 }
 
 // Catalog groups skills per class; actives in cast-priority order.
@@ -113,8 +124,11 @@ func (c *Catalog) Actives(path []string, level int) []combat.Skill {
 	var out []combat.Skill
 	for _, s := range c.owned(path) {
 		if s.Kind == "active" && int(s.UnlockLevel) <= level {
+			// Party healing is not simulated: alone, the character is the
+			// ally its ally-HP rule watches.
+			self := max(s.Config.SelfHPBelow, s.Config.AllyHPBelow)
 			out = append(out, combat.Skill{Code: s.Code, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost,
-				CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: s.Config.SelfHPBelow,
+				CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: self,
 				TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns})
 		}
 	}
