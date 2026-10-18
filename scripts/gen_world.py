@@ -229,7 +229,7 @@ ZONES += [
          mobs=[
              ('shadow_rider', 610, 'normal', L('Shadow Rider', 'Gölge Atlı', '暗影骑手', 'Jinete de Sombras')),
              ('void_wolf', 620, 'evasive', L('Void Wolf', 'Boşluk Kurdu', '虚空狼', 'Lobo del Vacío')),
-             ('star_gnawer', 630, 'crit', L('Star Gnawer', 'Yıldız Kemiren', '噬星者', 'Roedor de Estrellas')),
+             ('star_gnawer', 630, 'glass', L('Star Gnawer', 'Yıldız Kemiren', '噬星者', 'Roedor de Estrellas')),
              ('star_eater_omh', 632, 'overlord', L('Star Eater Omh', 'Yıldız Yiyen Omh', '吞星者奥姆', 'Devoraestrellas Omh')),
              ('dark_angel', 640, 'crit', L('Dark Angel', 'Kara Melek', '黑暗天使', 'Ángel Oscuro')),
              ('night_giant', 650, 'elite', L('Night Giant', 'Gece Devi', '暗夜巨人', 'Gigante de la Noche')),
@@ -315,7 +315,7 @@ ZONES += [
          mobs=[
              ('doom_rider', 910, 'crit', L('Doom Rider', 'Kıyamet Atlısı', '末日骑手', 'Jinete del Fin')),
              ('void_titan', 920, 'tank', L('Void Titan', 'Boşluk Titanı', '虚空泰坦', 'Titán del Vacío')),
-             ('soul_reaper', 930, 'crit', L('Soul Reaper', 'Ruh Biçen', '灵魂收割者', 'Segador de Almas')),
+             ('soul_reaper', 930, 'glass', L('Soul Reaper', 'Ruh Biçen', '灵魂收割者', 'Segador de Almas')),
              ('doom_commander_morvath', 932, 'overlord', L('Doom Commander Morvath', 'Kıyamet Komutanı Morvath', '末日指挥官莫瓦斯', 'Comandante del Fin Morvath')),
              ('ancient_golem', 940, 'normal', L('Ancient Golem', 'Kadim Golem', '远古魔像', 'Gólem Ancestral')),
              ('last_commander', 950, 'elite', L('Last Commander', 'Son Komutan', '最后的指挥官', 'Último Comandante')),

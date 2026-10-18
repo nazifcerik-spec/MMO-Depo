@@ -1244,12 +1244,12 @@ mobs:
   - code: star_gnawer
     display_name_key: mob.star_gnawer
     level: 630
-    hp_max: 16695
-    attack: 1594
-    defense: 505
-    crit_pct: 17
+    hp_max: 14310
+    attack: 2026
+    defense: 379
+    crit_pct: 11
     hit_pct: 92
-    evasion_pct: 10
+    evasion_pct: 5
     xp_reward: 301262
     gold_copper_min: 63631
     gold_copper_max: 159078
@@ -1712,12 +1712,12 @@ mobs:
   - code: soul_reaper
     display_name_key: mob.soul_reaper
     level: 930
-    hp_max: 24570
-    attack: 2338
-    defense: 745
-    crit_pct: 17
+    hp_max: 21060
+    attack: 2972
+    defense: 559
+    crit_pct: 11
     hit_pct: 92
-    evasion_pct: 10
+    evasion_pct: 5
     xp_reward: 561788
     gold_copper_min: 114125
     gold_copper_max: 285312

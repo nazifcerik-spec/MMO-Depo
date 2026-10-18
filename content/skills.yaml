@@ -1624,7 +1624,8 @@ skills:
     passive: { trigger: ON_HIT, scaling: steady_state }
     tags: [passive]
     modifiers:
-      - { kind: mult_add, target: attack, amount: 0.05 }
+      - { kind: mult_add, target: attack, amount: 0.08 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 3 }
 
   - code: crossbow_master_crushing_bolt
     display_name_key: skill.crossbow_master_crushing_bolt
@@ -1633,10 +1634,10 @@ skills:
     unlock_level: 350
     kind: active
     activation_mode: active
-    sort_order: 57
+    sort_order: 55
     effect: strike
-    power: 280
-    mp_cost: 41
+    power: 300
+    mp_cost: 45
     cooldown_turns: 3
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -1654,9 +1655,10 @@ skills:
     activation_mode: active
     sort_order: 86
     effect: empower
-    power: 20
-    mp_cost: 20
+    power: 25
+    mp_cost: 0
     cooldown_turns: 7
+    resource_gain: 20
     duration_turns: 3
     auto_trigger: { on_cooldown: true }
     type: BUFF
@@ -1675,7 +1677,8 @@ skills:
     tags: [passive]
     modifiers:
       - { kind: mult_add, target: attack, amount: 0.05 }
-      - { kind: flat, target: dmg_reduction_pct, amount: 4 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 5 }
+      - { kind: mult_add, target: hp_max, amount: 0.05 }
 
   - code: crossbow_master_siege_bolt
     display_name_key: skill.crossbow_master_siege_bolt
@@ -1706,8 +1709,9 @@ skills:
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
     tags: [passive]
     modifiers:
-      - { kind: flat, target: crit_dmg_pct, amount: 12 }
-      - { kind: mult_add, target: attack, amount: 0.03 }
+      - { kind: flat, target: crit_dmg_pct, amount: 15 }
+      - { kind: mult_add, target: attack, amount: 0.04 }
+      - { kind: flat, target: lifesteal_pct, amount: 3 }
 
   - code: crossbow_master_armor_break_sequence
     display_name_key: skill.crossbow_master_armor_break_sequence

@@ -2339,6 +2339,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-260 — Arbalet Ustası güçlendirmesi
+**Karar:** Arbalet Ustası: Ağır Arbalet Okları +%5 → +%8 saldırı ve +%3 hasar azaltma; Ezici Ok %280 → %300; Hızlı Doldurma +%20 → +%25 saldırı ve kullanımda +20 Odak; Güçlendirilmiş Mekanizma +%5 can eklendi (hasar azaltma 4 → 5); Balistik Uzmanlığı +%12 → +%15 kritik hasar, +%3 → +%4 saldırı, +%3 can çalma. DD-257/259'da onu korumak için `crit` yapılan Yıldız Kemiren (630) ve Ruh Biçen (930) yeniden `glass`.
+**Reason:** Uzmanlık raporunda en düşük AFK güvenliği (%43) ve DPS'ler içinde yavaş öldürme (5,3 tur); yüksek saldırılı moblarda iki seviyede av hedefini tutturamıyordu.
+**Alternatives:** Mobları yumuşak bırakmak (sorunu içerikte saklar).
+**Consequences:** Sv 1000 karşılaştırmasında 4,5 tur öldürme, 31 tur dayanma, %100 boss ve AFK güvenliği; Keskin Nişancı daha hızlı (2,9 tur) ama daha kırılgan kalır. Yıldız Kemiren ve Ruh Biçen'e karşı ölüm %0. `reports/class_balance_report.{json,md}` yenilendi.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

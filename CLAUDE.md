@@ -161,6 +161,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 75. **Sv 850–1000 dünyası — içerik 1000'e tamam (bitti)** — Sprint 75, DD-259. Boşluğun Kıyısı (3 bölge, 18 mob, 3 zindan, 4 dil), ekipman merdiveni 860–985 (90 eşya). Toplam 140 mob, 25 zindan, 54 bölge. Denge simülasyonu Sv 1–990; `-race` derlemesinde ağır simülasyonlar atlanır.
 
+76. **Arbalet Ustası güçlendirmesi (bitti)** — Sprint 76, DD-260. Dört pasif/aktif güçlendi (saldırı, hasar azaltma, can, can çalma, Odak kazancı); Yıldız Kemiren ve Ruh Biçen yeniden `glass`. Uzmanlık raporu yenilendi.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
