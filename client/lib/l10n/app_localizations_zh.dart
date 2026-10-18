@@ -135,7 +135,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String levelShort(int level) {
-    return 'Lvl $level';
+    return '$level级';
   }
 
   @override
@@ -1107,7 +1107,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sendLink => 'Send link';
 
   @override
-  String get close => 'Close';
+  String get close => '关闭';
 
   @override
   String get changePassword => 'Change password';
@@ -1912,4 +1912,83 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errEquipmentPermission => '你的职业无法使用此类装备。';
+
+  @override
+  String get classResource => '资源';
+
+  @override
+  String get classFocus => '属性侧重';
+
+  @override
+  String classSecondary(String names) {
+    return '次要：$names';
+  }
+
+  @override
+  String get resStartsEmpty => '开局为空';
+
+  @override
+  String get resStartsFull => '开局全满';
+
+  @override
+  String resStartsAt(int pct) {
+    return '开局$pct%';
+  }
+
+  @override
+  String resPerHit(int n) {
+    return '每次命中+$n';
+  }
+
+  @override
+  String resPerTurn(int n) {
+    return '每回合+$n';
+  }
+
+  @override
+  String baseAttributesHint(int total) {
+    return '基础属性 · 每2级1点，共$total点';
+  }
+
+  @override
+  String get classEquipment => '装备';
+
+  @override
+  String get firstSkills => '初始技能';
+
+  @override
+  String get classPath => '职业路线';
+
+  @override
+  String get classPathHint => '点击职业查看技能。';
+
+  @override
+  String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
+    return '$awakening级 觉醒 · $ultimate级 终极技 · $capstone级 终极天赋 · $mastery级 职业精通';
+  }
+
+  @override
+  String get skillTagActive => '主动';
+
+  @override
+  String get skillTagPassive => '被动';
+
+  @override
+  String get skillTagAwakening => '觉醒';
+
+  @override
+  String get skillTagUltimate => '终极';
+
+  @override
+  String skillCostCd(int cost, int cd) {
+    return '消耗$cost · 冷却$cd回合';
+  }
+
+  @override
+  String masteryAt(int level, String title) {
+    return '$level级精通：$title';
+  }
+
+  @override
+  String get classInfoFailed => '无法加载职业信息。';
 }

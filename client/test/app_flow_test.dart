@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:otter/shared/content_names.dart';
+import 'package:otter/features/character/class_catalog.dart';
 import 'package:otter/app/app.dart';
 import 'package:otter/features/activity/activity_view.dart';
 import 'package:otter/features/activity/activity_models.dart';
@@ -112,6 +114,119 @@ void main() {
     expect(find.text('Characters'), findsOneWidget);
     final reg = be.requests.firstWhere((r) => r.url.path == '/v1/auth/register');
     expect(reg.body, contains('"accept_terms":true'));
+  });
+
+  testWidgets('creation screen explains the class: stats, skills, pyramid path, node skills', (tester) async {
+    tester.view.physicalSize = const Size(360 * 3, 780 * 3); // phone width: the four-node pyramid row must fit
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    ClassCatalog.reset();
+    ContentNames.use({
+      'class.warrior': 'Warrior',
+      'class.warrior.role': 'Melee / Physical',
+      'class.warrior.intro': 'A heavily armored frontline fighter.',
+      'class.guardian': 'Guardian',
+      'class.executioner': 'Executioner',
+      'class.iron_fortress': 'Iron Fortress',
+      'class.warlord': 'Warlord',
+      'class.berserker': 'Berserker',
+      'class.weapon_master': 'Weapon Master',
+      'resource.rage': 'Rage',
+      'attribute.strength': 'Strength',
+      'attribute.vitality': 'Vitality',
+      'equipment.heavy_armor': 'Heavy armor',
+      'skill.warrior_strike': 'Strike',
+      'skill.warrior_strike.desc': 'Basic attack that builds Rage.',
+      'skill.iron_fortress_unbreakable': 'Unbreakable',
+      'skill.iron_fortress_unbreakable.desc': '+150% armor for 3 turns.',
+      'title.the_unbreakable': 'The Unbreakable',
+    });
+    addTearDown(() {
+      ContentNames.use(const {});
+      ClassCatalog.reset();
+    });
+    final be = FakeBackend()
+      ..classCatalog = {
+        'attribute_points_total': 525,
+        'milestones': {'awakening': 600, 'ultimate': 700, 'capstone': 850, 'mastery': 1000},
+        'classes': [
+          {
+            'code': 'warrior',
+            'tier': 0,
+            'resource': {'kind': 'rage', 'max': 100, 'start_pct': 0, 'per_hit': 12, 'per_turn': 0},
+            'base_stats': {'strength': 10, 'vitality': 10},
+            'primary_attribute': 'strength',
+            'secondary_attributes': ['vitality'],
+            'equipment': ['heavy_armor'],
+          },
+          for (final (code, parent, lvl) in [
+            ('guardian', 'warrior', 100),
+            ('executioner', 'warrior', 100),
+            ('iron_fortress', 'guardian', 300),
+            ('warlord', 'guardian', 300),
+            ('berserker', 'executioner', 300),
+            ('weapon_master', 'executioner', 300),
+          ])
+            {
+              'code': code,
+              'tier': lvl == 100 ? 1 : 2,
+              'parent': parent,
+              'required_level': lvl,
+              'equipment': ['heavy_armor'],
+              if (code == 'iron_fortress') 'mastery_title': 'the_unbreakable',
+            },
+        ],
+      }
+      ..warriorSkills = [
+        {
+          'code': 'warrior_strike',
+          'kind': 'active',
+          'unlock_level': 1,
+          'effect': 'strike',
+          'power': 110,
+          'mp_cost': 0,
+          'cooldown_turns': 1,
+        },
+        {
+          'code': 'iron_fortress_unbreakable',
+          'spec': 'iron_fortress',
+          'kind': 'active',
+          'unlock_level': 700,
+          'effect': 'guard',
+          'power': 150,
+          'mp_cost': 50,
+          'cooldown_turns': 20,
+          'config': {'category': 'ultimate', 'duration_turns': 3},
+        },
+      ];
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+    await tester.tap(find.text('New character'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('A heavily armored frontline fighter.'), findsOneWidget);
+    expect(find.text('Rage · 100'), findsOneWidget);
+    expect(find.text('Starts empty · +12 per hit'), findsOneWidget);
+    expect(find.text('Secondary: Vitality'), findsOneWidget);
+    expect(find.text('Base attributes · 1 point every 2 levels, 525 in total'), findsOneWidget);
+    expect(find.text('Heavy armor'), findsOneWidget);
+    expect(find.text('Strike'), findsOneWidget, reason: 'base skills only');
+    expect(find.text('Unbreakable'), findsNothing);
+    for (final n in ['Guardian', 'Executioner', 'Iron Fortress', 'Warlord', 'Berserker', 'Weapon Master']) {
+      expect(find.text(n), findsOneWidget, reason: 'pyramid node $n');
+    }
+
+    await tester.ensureVisible(find.text('Iron Fortress'));
+    await tester.tap(find.text('Iron Fortress'));
+    await tester.pumpAndSettle();
+    expect(find.text('Unbreakable'), findsOneWidget);
+    expect(find.text('ultimate'), findsOneWidget);
+    expect(find.text('Cost 50 · cooldown 20 turns'), findsOneWidget);
+    expect(find.text('Lv 1000 mastery: The Unbreakable'), findsOneWidget);
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    expect(find.text('Unbreakable'), findsNothing);
   });
 
   testWidgets('create a character, enter it, and read the sheet', (tester) async {

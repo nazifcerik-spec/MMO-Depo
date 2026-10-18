@@ -16,12 +16,14 @@ class ClassSkill {
     this.modifiers = const [],
     this.spec = '',
     this.durationTurns = 0,
+    this.category = '',
   });
 
   factory ClassSkill.fromJson(Map<String, dynamic> j) => ClassSkill(
     code: j['code'] as String,
     spec: j['spec'] as String? ?? '',
     durationTurns: ((j['config'] as Map<String, dynamic>?)?['duration_turns'] as num?)?.toInt() ?? 0,
+    category: (j['config'] as Map<String, dynamic>?)?['category'] as String? ?? '',
     active: j['kind'] == 'active',
     unlockLevel: (j['unlock_level'] as num?)?.toInt() ?? 1,
     effect: j['effect'] as String? ?? '',
@@ -41,6 +43,9 @@ class ClassSkill {
   /// Owning class node (DD-250): the base class or a promotion.
   final String spec;
   final int durationTurns;
+
+  /// skill | passive | awakening | ultimate (DD-250); empty on old servers.
+  final String category;
   final int power;
   final int mpCost;
   final int cooldownTurns;

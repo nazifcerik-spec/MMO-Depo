@@ -16,6 +16,7 @@ import 'package:otter/core/token_store.dart';
 import 'package:otter/features/activity/activity_repository.dart';
 import 'package:otter/features/adventure/adventure_repository.dart';
 import 'package:otter/features/character/character_repository.dart';
+import 'package:otter/features/character/class_catalog.dart';
 import 'package:otter/features/character/leveling.dart';
 import 'package:otter/features/character/models.dart';
 import 'package:otter/features/events/event_repository.dart';
@@ -79,6 +80,15 @@ void main() {
     expect(skills.where((s) => s.active && s.unlockLevel == 1), isNotEmpty);
     expect(skills.where((s) => !s.active).first.modifiers, isNotEmpty);
     expect(skills.map((s) => s.spec), containsAll(['warrior', 'guardian', 'iron_fortress']), reason: 'DD-250 tree');
+
+    // Creation screen catalog (DD-253): 10 + 20 + 40 nodes, real stats.
+    final cat = await ClassCatalog.load(a.api);
+    expect(cat.nodes, hasLength(70));
+    expect(cat.node('warrior')!.resourceKind, 'rage');
+    expect(cat.node('shaman')!.baseStats['wisdom'], 11);
+    expect(cat.children('ranger').map((n) => n.code), ['marksman', 'scout']);
+    expect(cat.attributePointsTotal, 525);
+    expect(skills.where((s) => s.category == 'ultimate'), hasLength(4), reason: 'one per specialization');
 
     // Leveling (DD-250): level 1 of 1000, Rage, first objective, no points yet.
     final lv = await LevelingRepository(a.api, a.id).summary();

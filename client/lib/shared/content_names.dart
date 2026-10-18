@@ -13,6 +13,9 @@ class ContentNames {
   /// Replaces the table (tests set it directly).
   static void use(Map<String, String> names) => _names = names;
 
+  /// Whether a table has been loaded this session.
+  static bool get loaded => _names.isNotEmpty;
+
   static String of(String kind, String code, [String? fallback]) => _names['$kind.$code'] ?? fallback ?? humanize(code);
 
   /// An item's name with its rolled affixes, in the language's word order.

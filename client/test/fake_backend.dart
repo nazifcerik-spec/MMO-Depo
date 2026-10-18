@@ -27,6 +27,11 @@ class FakeBackend {
   Map<String, dynamic>? activeActivity;
   int gatherLevel = 20;
 
+  // --- class catalog (DD-253) ---
+  /// null = endpoint missing: the creation screen shows a notice instead.
+  Map<String, dynamic>? classCatalog;
+  List<Map<String, dynamic>>? warriorSkills;
+
   // --- leveling (DD-250) ---
   /// null = endpoint missing (older server): the sheet falls back to its XP bar.
   Map<String, dynamic>? leveling;
@@ -695,6 +700,10 @@ class FakeBackend {
       case ('DELETE', '/v1/notification/preference/global-mute'):
         muteUntil = null;
         return json(200, {'global_mute_until': null});
+      case ('GET', '/v1/classes') when classCatalog != null:
+        return json(200, classCatalog!);
+      case ('GET', '/v1/classes/warrior/skills') when warriorSkills != null:
+        return json(200, {'skills': warriorSkills});
       case ('GET', '/v1/classes/rogue/skills'):
         return json(200, {
           'skills': [

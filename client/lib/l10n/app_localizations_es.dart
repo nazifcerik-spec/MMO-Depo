@@ -135,7 +135,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String levelShort(int level) {
-    return 'Lvl $level';
+    return 'Nv $level';
   }
 
   @override
@@ -1107,7 +1107,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sendLink => 'Send link';
 
   @override
-  String get close => 'Close';
+  String get close => 'Cerrar';
 
   @override
   String get changePassword => 'Change password';
@@ -1912,4 +1912,83 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errEquipmentPermission => 'Tu clase no puede usar este tipo de equipo.';
+
+  @override
+  String get classResource => 'Recurso';
+
+  @override
+  String get classFocus => 'Atributo principal';
+
+  @override
+  String classSecondary(String names) {
+    return 'Secundario: $names';
+  }
+
+  @override
+  String get resStartsEmpty => 'Empieza vacío';
+
+  @override
+  String get resStartsFull => 'Empieza lleno';
+
+  @override
+  String resStartsAt(int pct) {
+    return 'Empieza al $pct%';
+  }
+
+  @override
+  String resPerHit(int n) {
+    return '+$n por golpe';
+  }
+
+  @override
+  String resPerTurn(int n) {
+    return '+$n por turno';
+  }
+
+  @override
+  String baseAttributesHint(int total) {
+    return 'Atributos base · 1 punto cada 2 niveles, $total en total';
+  }
+
+  @override
+  String get classEquipment => 'Equipo';
+
+  @override
+  String get firstSkills => 'Primeras habilidades';
+
+  @override
+  String get classPath => 'Ruta de clase';
+
+  @override
+  String get classPathHint => 'Toca una clase para ver sus habilidades.';
+
+  @override
+  String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
+    return 'Nv $awakening Despertar · Nv $ultimate Definitiva · Nv $capstone talento cúspide · Nv $mastery maestría de clase';
+  }
+
+  @override
+  String get skillTagActive => 'activa';
+
+  @override
+  String get skillTagPassive => 'pasiva';
+
+  @override
+  String get skillTagAwakening => 'despertar';
+
+  @override
+  String get skillTagUltimate => 'definitiva';
+
+  @override
+  String skillCostCd(int cost, int cd) {
+    return 'Coste $cost · reutilización $cd turnos';
+  }
+
+  @override
+  String masteryAt(int level, String title) {
+    return 'Maestría Nv $level: $title';
+  }
+
+  @override
+  String get classInfoFailed => 'No se pudieron cargar los detalles de la clase.';
 }

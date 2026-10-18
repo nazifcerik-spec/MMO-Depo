@@ -1406,5 +1406,97 @@
   "classDruid": "Druid",
   "classBard": "Bard",
   "classShaman": "Shaman",
-  "errEquipmentPermission": "Your class cannot use this equipment type."
+  "errEquipmentPermission": "Your class cannot use this equipment type.",
+  "classResource": "Resource",
+  "classFocus": "Attribute focus",
+  "classSecondary": "Secondary: {names}",
+  "@classSecondary": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "resStartsEmpty": "Starts empty",
+  "resStartsFull": "Starts full",
+  "resStartsAt": "Starts at {pct}%",
+  "@resStartsAt": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "resPerHit": "+{n} per hit",
+  "@resPerHit": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "resPerTurn": "+{n} per turn",
+  "@resPerTurn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "baseAttributesHint": "Base attributes · 1 point every 2 levels, {total} in total",
+  "@baseAttributesHint": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "classEquipment": "Equipment",
+  "firstSkills": "First skills",
+  "classPath": "Class path",
+  "classPathHint": "Tap a class to see its skills.",
+  "classMilestones": "Lv {awakening} Awakening · Lv {ultimate} Ultimate · Lv {capstone} talent capstone · Lv {mastery} class mastery",
+  "@classMilestones": {
+    "placeholders": {
+      "awakening": {
+        "type": "int"
+      },
+      "ultimate": {
+        "type": "int"
+      },
+      "capstone": {
+        "type": "int"
+      },
+      "mastery": {
+        "type": "int"
+      }
+    }
+  },
+  "skillTagActive": "active",
+  "skillTagPassive": "passive",
+  "skillTagAwakening": "awakening",
+  "skillTagUltimate": "ultimate",
+  "skillCostCd": "Cost {cost} · cooldown {cd} turns",
+  "@skillCostCd": {
+    "placeholders": {
+      "cost": {
+        "type": "int"
+      },
+      "cd": {
+        "type": "int"
+      }
+    }
+  },
+  "masteryAt": "Lv {level} mastery: {title}",
+  "@masteryAt": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "classInfoFailed": "Class details couldn't load."
 }

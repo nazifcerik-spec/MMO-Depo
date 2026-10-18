@@ -1912,4 +1912,83 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errEquipmentPermission => 'Sınıfın bu ekipman türünü kullanamaz.';
+
+  @override
+  String get classResource => 'Kaynak';
+
+  @override
+  String get classFocus => 'Nitelik odağı';
+
+  @override
+  String classSecondary(String names) {
+    return 'Yan: $names';
+  }
+
+  @override
+  String get resStartsEmpty => 'Boş başlar';
+
+  @override
+  String get resStartsFull => 'Dolu başlar';
+
+  @override
+  String resStartsAt(int pct) {
+    return '%$pct dolu başlar';
+  }
+
+  @override
+  String resPerHit(int n) {
+    return 'isabet başı +$n';
+  }
+
+  @override
+  String resPerTurn(int n) {
+    return 'tur başı +$n';
+  }
+
+  @override
+  String baseAttributesHint(int total) {
+    return 'Taban nitelikler · her 2 seviyede 1 puan, toplam $total';
+  }
+
+  @override
+  String get classEquipment => 'Ekipman';
+
+  @override
+  String get firstSkills => 'İlk yetenekler';
+
+  @override
+  String get classPath => 'Sınıf yolu';
+
+  @override
+  String get classPathHint => 'Yeteneklerini görmek için bir sınıfa dokun.';
+
+  @override
+  String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
+    return 'Sv $awakening Uyanış · Sv $ultimate Nihai yetenek · Sv $capstone yetenek ağacı zirvesi · Sv $mastery sınıf ustalığı';
+  }
+
+  @override
+  String get skillTagActive => 'aktif';
+
+  @override
+  String get skillTagPassive => 'pasif';
+
+  @override
+  String get skillTagAwakening => 'uyanış';
+
+  @override
+  String get skillTagUltimate => 'nihai';
+
+  @override
+  String skillCostCd(int cost, int cd) {
+    return 'Maliyet $cost · bekleme $cd tur';
+  }
+
+  @override
+  String masteryAt(int level, String title) {
+    return 'Sv $level ustalığı: $title';
+  }
+
+  @override
+  String get classInfoFailed => 'Sınıf bilgileri yüklenemedi.';
 }

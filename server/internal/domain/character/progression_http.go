@@ -329,6 +329,50 @@ func ProgressionConfig(w http.ResponseWriter, _ *http.Request) {
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"config": cfg, "xp_table": cfg.Table()})
 }
 
+// ClassNodeView is one node of the class tree for the character creation
+// screen (DD-253): what a player needs to choose a class and see its paths.
+type ClassNodeView struct {
+	Code                string               `json:"code"`
+	Parent              string               `json:"parent,omitempty"`
+	RequiredLevel       int                  `json:"required_level,omitempty"`
+	Tier                int                  `json:"tier"`
+	RoleTags            []string             `json:"role_tags"`
+	Resource            *leveling.Resource   `json:"resource,omitempty"`
+	BaseStats           *leveling.Stats      `json:"base_stats,omitempty"`
+	PrimaryAttribute    string               `json:"primary_attribute,omitempty"`
+	SecondaryAttributes []string             `json:"secondary_attributes,omitempty"`
+	Equipment           []string             `json:"equipment"`
+	SupportPower        float64              `json:"support_power,omitempty"`
+	AFKProfile          *leveling.AFKProfile `json:"afk_profile,omitempty"`
+	StrongIn            []string             `json:"strong_in,omitempty"`
+	WeakIn              []string             `json:"weak_in,omitempty"`
+	MasteryTitle        string               `json:"mastery_title,omitempty"`
+}
+
+// ClassCatalog serves GET /v1/classes: the class tree with base stats,
+// resources, effective equipment permissions and specialization metadata.
+func ClassCatalog(w http.ResponseWriter, _ *http.Request) {
+	cfg := leveling.Current()
+	out := make([]ClassNodeView, 0, len(cfg.Classes))
+	for _, c := range cfg.Classes {
+		k, _ := cfg.Class(c.Code)
+		v := ClassNodeView{Code: k.Code, Parent: k.Parent, RequiredLevel: k.RequiredLevel, Tier: k.Tier(),
+			RoleTags: k.RoleTags, Resource: k.Resource, BaseStats: k.BaseStats, PrimaryAttribute: k.PrimaryAttribute,
+			SecondaryAttributes: k.SecondaryAttributes, Equipment: cfg.Permissions(k.Code), SupportPower: k.SupportPower,
+			AFKProfile: k.AFKProfile, StrongIn: k.StrongIn, WeakIn: k.WeakIn}
+		if k.Mastery != nil {
+			v.MasteryTitle = k.Mastery.Title
+		}
+		if v.Equipment == nil {
+			v.Equipment = []string{}
+		}
+		out = append(out, v)
+	}
+	w.Header().Set("Cache-Control", "public, max-age=300")
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"classes": out,
+		"attribute_points_total": cfg.AttributePointsEarned(cfg.LevelCap), "milestones": cfg.Milestones})
+}
+
 func writeProgErr(w http.ResponseWriter, r *http.Request, err error) {
 	switch {
 	case errors.Is(err, ErrInvalidPromotion):

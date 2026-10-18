@@ -193,3 +193,29 @@ func TestHTTPAFKHuntEveryClass(t *testing.T) {
 		require.Equal(t, false, res["stopped_on_death"], class)
 	}
 }
+
+// The creation screen's class catalog (DD-253): every node, base classes
+// with stats, resource and equipment.
+func TestHTTPClassCatalog(t *testing.T) {
+	p := newHTTPPlayer(t, "warrior")
+	res := p.ok("GET", "/v1/classes", nil)
+	require.Equal(t, 525.0, res["attribute_points_total"])
+	list := items(res, "classes")
+	require.Len(t, list, 70, "10 base classes + 20 promotions + 40 specializations")
+	tiers := map[float64]int{}
+	for _, c := range list {
+		tiers[c["tier"].(float64)]++
+		if c["code"] == "warrior" {
+			require.Equal(t, "rage", c["resource"].(map[string]any)["kind"])
+			require.Equal(t, 10.0, c["base_stats"].(map[string]any)["strength"])
+			require.Contains(t, c["equipment"], "heavy_armor")
+		}
+		if c["code"] == "berserker" {
+			require.Equal(t, "executioner", c["parent"])
+			require.Equal(t, 300.0, c["required_level"])
+			require.Equal(t, "bloodbound", c["mastery_title"])
+			require.NotContains(t, c["equipment"], "shield")
+		}
+	}
+	require.Equal(t, map[float64]int{0: 10, 1: 20, 2: 40}, tiers)
+}

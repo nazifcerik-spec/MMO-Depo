@@ -199,6 +199,17 @@ func progressionKeys(p *Pack) []string {
 			keys = append(keys, "skill."+s.Code, "skill."+s.Code+".desc")
 		}
 	}
+	for _, k := range c.Classes {
+		if k.Parent == "" {
+			keys = append(keys, "class."+k.Code+".intro") // creation screen (DD-253)
+		}
+	}
+	for _, f := range c.EquipmentFamilies {
+		keys = append(keys, "equipment."+f)
+	}
+	for _, a := range c.ArmorTypes {
+		keys = append(keys, "equipment."+a+"_armor")
+	}
 	for kind := range leveling.ResourceKinds {
 		keys = append(keys, "resource."+kind)
 	}

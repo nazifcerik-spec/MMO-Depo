@@ -2276,6 +2276,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-253 — Karakter oluşturmada sınıf bilgisi
+**Karar:** Karakter oluşturma ekranında seçilen sınıf için bilgi kartı: ikon, ad, roller, tanıtım metni (`class.<sınıf>.intro`, 10 sınıf × en/tr/zh-CN/es, içerik i18n'inde; ilerleme anahtarı olarak zorunlu), kaynak (tür, büyüklük, başlangıç payı, isabet/tur kazancı), nitelik odağı, taban nitelik çubukları (toplam nitelik puanı sunucudan), ekipman izinleri (`equipment.<aile>` adları), Sv 1–75 yetenekleri ve **piramit sınıf yolu** (tepede temel sınıf, ortada Sv 100 terfileri, tabanda Sv 300 uzmanlıkları, bağlantı çizgileri). Bir düğüme dokununca küçük pencere o düğümün yeteneklerini (seviye, tür etiketi, etki, maliyet/bekleme) ve uzmanlıkta Sv 1000 ustalık unvanını gösterir. Veri yeni `GET /v1/classes` ucundan (70 düğüm: taban statlar, kaynak, etkin ekipman izni, AFK profili, ustalık unvanı, `attribute_points_total`, kilometre taşları; 5 dk önbellek) ve mevcut `GET /v1/classes/{class}/skills`'ten; adlar `ContentNames` (oluşturma ekranı yüklenmemişse kendisi yükler). İstemci oturum boyunca önbellekler. Sınıf ikonları gelene kadar Material ikonları + sınıf rengi.
+**Reason:** Oyuncunun sınıfı seçerken nitelikleri, rolü ve terfi yollarını görmesi (kullanıcı isteği).
+**Alternatives:** Sınıf verisini istemciye gömmek (içerikle ayrışır); tam `progression/config`'i indirmek (gereksiz XP tablosu ve açılımlar).
+**Consequences:** Bilgi kartı tamamen içerikten gelir; yetenek/nitelik değişikliği istemci güncellemesi gerektirmez. Yükleme başarısızsa ekran bir uyarıyla oluşturmaya devam eder.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

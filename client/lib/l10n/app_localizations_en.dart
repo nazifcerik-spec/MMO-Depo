@@ -1912,4 +1912,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errEquipmentPermission => 'Your class cannot use this equipment type.';
+
+  @override
+  String get classResource => 'Resource';
+
+  @override
+  String get classFocus => 'Attribute focus';
+
+  @override
+  String classSecondary(String names) {
+    return 'Secondary: $names';
+  }
+
+  @override
+  String get resStartsEmpty => 'Starts empty';
+
+  @override
+  String get resStartsFull => 'Starts full';
+
+  @override
+  String resStartsAt(int pct) {
+    return 'Starts at $pct%';
+  }
+
+  @override
+  String resPerHit(int n) {
+    return '+$n per hit';
+  }
+
+  @override
+  String resPerTurn(int n) {
+    return '+$n per turn';
+  }
+
+  @override
+  String baseAttributesHint(int total) {
+    return 'Base attributes · 1 point every 2 levels, $total in total';
+  }
+
+  @override
+  String get classEquipment => 'Equipment';
+
+  @override
+  String get firstSkills => 'First skills';
+
+  @override
+  String get classPath => 'Class path';
+
+  @override
+  String get classPathHint => 'Tap a class to see its skills.';
+
+  @override
+  String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
+    return 'Lv $awakening Awakening · Lv $ultimate Ultimate · Lv $capstone talent capstone · Lv $mastery class mastery';
+  }
+
+  @override
+  String get skillTagActive => 'active';
+
+  @override
+  String get skillTagPassive => 'passive';
+
+  @override
+  String get skillTagAwakening => 'awakening';
+
+  @override
+  String get skillTagUltimate => 'ultimate';
+
+  @override
+  String skillCostCd(int cost, int cd) {
+    return 'Cost $cost · cooldown $cd turns';
+  }
+
+  @override
+  String masteryAt(int level, String title) {
+    return 'Lv $level mastery: $title';
+  }
+
+  @override
+  String get classInfoFailed => 'Class details couldn\'t load.';
 }

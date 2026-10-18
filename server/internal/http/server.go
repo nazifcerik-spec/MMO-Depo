@@ -480,6 +480,7 @@ func NewRouter(d Deps) http.Handler {
 			}
 			// --- Public progression definitions (DD-250) ---
 			r.Get("/progression/config", character.ProgressionConfig)
+			r.Get("/classes", character.ClassCatalog)
 
 			// --- Dungeon contract-scoped + public catalog ---
 			if d.DungeonHandler != nil {

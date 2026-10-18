@@ -3453,6 +3453,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your class cannot use this equipment type.'**
   String get errEquipmentPermission;
+
+  /// No description provided for @classResource.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource'**
+  String get classResource;
+
+  /// No description provided for @classFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Attribute focus'**
+  String get classFocus;
+
+  /// No description provided for @classSecondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary: {names}'**
+  String classSecondary(String names);
+
+  /// No description provided for @resStartsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts empty'**
+  String get resStartsEmpty;
+
+  /// No description provided for @resStartsFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts full'**
+  String get resStartsFull;
+
+  /// No description provided for @resStartsAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts at {pct}%'**
+  String resStartsAt(int pct);
+
+  /// No description provided for @resPerHit.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} per hit'**
+  String resPerHit(int n);
+
+  /// No description provided for @resPerTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} per turn'**
+  String resPerTurn(int n);
+
+  /// No description provided for @baseAttributesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Base attributes · 1 point every 2 levels, {total} in total'**
+  String baseAttributesHint(int total);
+
+  /// No description provided for @classEquipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get classEquipment;
+
+  /// No description provided for @firstSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'First skills'**
+  String get firstSkills;
+
+  /// No description provided for @classPath.
+  ///
+  /// In en, this message translates to:
+  /// **'Class path'**
+  String get classPath;
+
+  /// No description provided for @classPathHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a class to see its skills.'**
+  String get classPathHint;
+
+  /// No description provided for @classMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Lv {awakening} Awakening · Lv {ultimate} Ultimate · Lv {capstone} talent capstone · Lv {mastery} class mastery'**
+  String classMilestones(int awakening, int ultimate, int capstone, int mastery);
+
+  /// No description provided for @skillTagActive.
+  ///
+  /// In en, this message translates to:
+  /// **'active'**
+  String get skillTagActive;
+
+  /// No description provided for @skillTagPassive.
+  ///
+  /// In en, this message translates to:
+  /// **'passive'**
+  String get skillTagPassive;
+
+  /// No description provided for @skillTagAwakening.
+  ///
+  /// In en, this message translates to:
+  /// **'awakening'**
+  String get skillTagAwakening;
+
+  /// No description provided for @skillTagUltimate.
+  ///
+  /// In en, this message translates to:
+  /// **'ultimate'**
+  String get skillTagUltimate;
+
+  /// No description provided for @skillCostCd.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost {cost} · cooldown {cd} turns'**
+  String skillCostCd(int cost, int cd);
+
+  /// No description provided for @masteryAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Lv {level} mastery: {title}'**
+  String masteryAt(int level, String title);
+
+  /// No description provided for @classInfoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Class details couldn\'t load.'**
+  String get classInfoFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

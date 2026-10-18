@@ -147,6 +147,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 68. **Tüm sınıflar: 10 temel sınıf, 20 terfi, 40 uzmanlık (bitti)** — Sprint 68, DD-252. Migration 0037 (`hunter→ranger`, `priest→cleric`, yeni etkiler). Tek motor: genel türetilmiş formül terimleri, kaynak modeli (`start_pct/per_hit/per_turn`), barrier/dot/hot/weaken/stun, yetenek veri modeli (`type`, `auto_trigger` zorunlu), pasif tetik modeli, rol etiketleri, AFK profili, ekipman izinleri (`E_EQUIPMENT_PERMISSION`), Solo Adaptasyon (%35). İçerik üreteci `python scripts/gen_classes.py` (veri `scripts/class_data.py`; Savaşçı elle): 63 sınıf düğümü, 471 yetenek, 30 ağaç, 40 ustalık + başarım, 5 yeni silah hattı, en/tr/zh-CN/es. Testler: içerik ağacı/kilometre taşı/yerelleştirme/izin/Solo Adaptasyon (contentpack), 10 sınıf × 13 seviye + 40 uzmanlık fikstürü + her sınıfta kapı taşması + geçersiz terfiler + HTTP Solo Adaptasyon/AFK av (entegrasyon), uzmanlık denge simülasyonu + `reports/class_balance_report.{json,md}`. İstemci: 10 sınıf, sınıf kaynağı çubuğu.
 
+69. **Karakter oluşturmada sınıf bilgisi (bitti)** — Sprint 69, DD-253. `GET /v1/classes` (70 düğüm + toplam nitelik puanı + kilometre taşları). Oluşturma ekranında sınıf kartı: tanıtım (`class.<sınıf>.intro`, 4 dil), kaynak, nitelik odağı + taban çubuklar, ekipman (`equipment.<aile>`), Sv 1–75 yetenekleri, piramit sınıf yolu (dokununca düğüm yetenekleri penceresi + ustalık unvanı). `ClassCatalog` / `ClassInfoCard` / `ClassPathPyramid` (istemci), sınıf ikonları geçici Material ikonları.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
