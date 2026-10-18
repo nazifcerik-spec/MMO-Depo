@@ -155,6 +155,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 72. **Sv 300–600 dünyası (bitti)** — Sprint 72, DD-256. Ejdersırtı Adaları (6 bölge, 36 mob, 6 zindan, `overlord` boss arketipi, 4 dil), ekipman merdiveni 310–585 (180 eşya). Denge simülasyonu Sv 1–590, 300'den itibaren 40 uzmanlık. Test lonca etiketi `randTag()`.
 
+73. **Sv 600–700 dünyası (bitti)** — Sprint 73, DD-257. Yıldızsız Topraklar (2 bölge, 12 mob, 2 zindan, 4 dil), ekipman merdiveni 610–685 (60 eşya). Denge simülasyonu Sv 1–690.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

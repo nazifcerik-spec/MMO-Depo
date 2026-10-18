@@ -1,6 +1,6 @@
 """Extend the gear ladder past level 25 (DD-254, DD-255): a tier for every
 class weapon line and the five armor slots at 35, 50, 65, 80, 95 and then
-every 25 levels (110 ... 585), continuing the level 1-25 progression.
+every 25 levels (110 ... 685), continuing the level 1-25 progression.
 Writes a generated block into content/gear.yaml and item names in en, tr,
 zh-CN and es.
 
@@ -43,6 +43,10 @@ TIERS = [
     (535, 'wyrmlord', L('Wyrmlord', 'Ejder Lordu', '龙王', 'señor dragón')),
     (560, 'celestine', L('Celestine', 'Göksel', '天界', 'celestial')),
     (585, 'eternal', L('Eternal', 'Ebedi', '永恒', 'eternidad')),
+    (610, 'starless', L('Starless', 'Yıldızsız', '无星', 'sin estrellas')),
+    (635, 'nightsteel', L('Nightsteel', 'Gece Çeliği', '夜钢', 'acero nocturno')),
+    (660, 'chronoforged', L('Chronoforged', 'Zaman Dövme', '时铸', 'forja temporal')),
+    (685, 'ascendant', L('Ascendant', 'Yükselmiş', '升华', 'ascensión')),
 ]
 
 # Tiers 35-95 were tuned by hand (DD-254); later tiers follow the same lines.

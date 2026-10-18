@@ -77,6 +77,8 @@ CONTINENTS = [
          name=L('Kingdom of the Broken Crown', 'Kırık Taç Krallığı', '断冠王国', 'Reino de la Corona Rota')),
     dict(code='dragonspine_isles', level=300,
          name=L('Dragonspine Isles', 'Ejdersırtı Adaları', '龙脊群岛', 'Islas Espinadragón')),
+    dict(code='starless_lands', level=600,
+         name=L('Starless Lands', 'Yıldızsız Topraklar', '无星之地', 'Tierras sin Estrellas')),
 ]
 
 ZONES += [
@@ -214,6 +216,36 @@ ZONES += [
          dungeon=dict(code='dragon_throne', level=578, minutes=60, waves=['dragon_knight', 'ancient_wyvern', 'dragon_sorcerer'],
                       boss='dragon_king_azhorath', gold=450000, xp=900000,
                       name=L('Dragon Throne', 'Ejder Tahtı', '龙之王座', 'Trono del Dragón'))),
+]
+
+
+ZONES += [
+    dict(code='dark_plains', parent='starless_lands', level=600, travel=300, link='throne_peaks',
+         name=L('Dark Plains', 'Karanlık Ova', '黑暗平原', 'Llanuras Oscuras'),
+         mobs=[
+             ('shadow_rider', 610, 'normal', L('Shadow Rider', 'Gölge Atlı', '暗影骑手', 'Jinete de Sombras')),
+             ('void_wolf', 620, 'evasive', L('Void Wolf', 'Boşluk Kurdu', '虚空狼', 'Lobo del Vacío')),
+             ('star_gnawer', 630, 'crit', L('Star Gnawer', 'Yıldız Kemiren', '噬星者', 'Roedor de Estrellas')),
+             ('star_eater_omh', 632, 'overlord', L('Star Eater Omh', 'Yıldız Yiyen Omh', '吞星者奥姆', 'Devoraestrellas Omh')),
+             ('dark_angel', 640, 'crit', L('Dark Angel', 'Kara Melek', '黑暗天使', 'Ángel Oscuro')),
+             ('night_giant', 650, 'elite', L('Night Giant', 'Gece Devi', '暗夜巨人', 'Gigante de la Noche')),
+         ],
+         dungeon=dict(code='darkened_observatory', level=628, minutes=60, waves=['shadow_rider', 'void_wolf', 'star_gnawer'],
+                      boss='star_eater_omh', gold=550000, xp=1150000,
+                      name=L('Darkened Observatory', 'Söndürülmüş Gözlemevi', '熄灭的天文台', 'Observatorio Apagado'))),
+    dict(code='lost_city', parent='starless_lands', level=650, travel=360, link='dark_plains',
+         name=L('Lost City', 'Kayıp Şehir', '失落之城', 'Ciudad Perdida'),
+         mobs=[
+             ('ghost_noble', 660, 'normal', L('Ghost Noble', 'Hayalet Soylu', '幽灵贵族', 'Noble Fantasma')),
+             ('time_thief', 670, 'evasive', L('Time Thief', 'Zaman Hırsızı', '时间窃贼', 'Ladrón del Tiempo')),
+             ('cursed_sorcerer', 680, 'glass', L('Cursed Sorcerer', 'Lanetli Büyücü', '诅咒术士', 'Hechicero Maldito')),
+             ('time_lord_kaedrin', 682, 'overlord', L('Time Lord Kaedrin', 'Zaman Lordu Kaedrin', '时间领主凯德林', 'Señor del Tiempo Kaedrin')),
+             ('stone_gargoyle', 690, 'tank', L('Stone Gargoyle', 'Taş Gargoyl', '石像鬼', 'Gárgola de Piedra')),
+             ('city_guardian', 700, 'elite', L('City Guardian', 'Şehir Koruyucusu', '城市守护者', 'Guardián de la Ciudad')),
+         ],
+         dungeon=dict(code='clock_tower', level=678, minutes=60, waves=['ghost_noble', 'time_thief', 'cursed_sorcerer'],
+                      boss='time_lord_kaedrin', gold=650000, xp=1400000,
+                      name=L('Clock Tower', 'Saat Kulesi', '钟楼', 'Torre del Reloj'))),
 ]
 
 

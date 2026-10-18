@@ -1214,4 +1214,160 @@ mobs:
     xp_reward: 278639
     gold_copper_min: 59140
     gold_copper_max: 147850
+
+  - code: shadow_rider
+    display_name_key: mob.shadow_rider
+    level: 610
+    hp_max: 15400
+    attack: 1309
+    defense: 489
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 286107
+    gold_copper_min: 60625
+    gold_copper_max: 151562
+
+  - code: void_wolf
+    display_name_key: mob.void_wolf
+    level: 620
+    hp_max: 14868
+    attack: 1529
+    defense: 497
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 293648
+    gold_copper_min: 62122
+    gold_copper_max: 155305
+
+  - code: star_gnawer
+    display_name_key: mob.star_gnawer
+    level: 630
+    hp_max: 16695
+    attack: 1594
+    defense: 505
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 301262
+    gold_copper_min: 63631
+    gold_copper_max: 159078
+
+  - code: star_eater_omh
+    display_name_key: mob.star_eater_omh
+    level: 632
+    hp_max: 29508
+    attack: 1762
+    defense: 633
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 302794
+    gold_copper_min: 63934
+    gold_copper_max: 159835
+
+  - code: dark_angel
+    display_name_key: mob.dark_angel
+    level: 640
+    hp_max: 16958
+    attack: 1619
+    defense: 513
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 308950
+    gold_copper_min: 65152
+    gold_copper_max: 162880
+
+  - code: night_giant
+    display_name_key: mob.night_giant
+    level: 650
+    hp_max: 22960
+    attack: 1602
+    defense: 625
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 316710
+    gold_copper_min: 66685
+    gold_copper_max: 166712
+
+  - code: ghost_noble
+    display_name_key: mob.ghost_noble
+    level: 660
+    hp_max: 16650
+    attack: 1414
+    defense: 529
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 324542
+    gold_copper_min: 68230
+    gold_copper_max: 170575
+
+  - code: time_thief
+    display_name_key: mob.time_thief
+    level: 670
+    hp_max: 16055
+    attack: 1650
+    defense: 537
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 332445
+    gold_copper_min: 69786
+    gold_copper_max: 174465
+
+  - code: cursed_sorcerer
+    display_name_key: mob.cursed_sorcerer
+    level: 680
+    hp_max: 15435
+    attack: 2184
+    defense: 409
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 340419
+    gold_copper_min: 71354
+    gold_copper_max: 178385
+
+  - code: time_lord_kaedrin
+    display_name_key: mob.time_lord_kaedrin
+    level: 682
+    hp_max: 31820
+    attack: 1898
+    defense: 683
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 342023
+    gold_copper_min: 71670
+    gold_copper_max: 179175
+
+  - code: stone_gargoyle
+    display_name_key: mob.stone_gargoyle
+    level: 690
+    hp_max: 30450
+    attack: 1477
+    defense: 1051
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 348465
+    gold_copper_min: 72934
+    gold_copper_max: 182335
+
+  - code: city_guardian
+    display_name_key: mob.city_guardian
+    level: 700
+    hp_max: 24710
+    attack: 1723
+    defense: 673
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 356580
+    gold_copper_min: 74526
+    gold_copper_max: 186315
   # <<< generated: mobs

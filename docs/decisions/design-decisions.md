@@ -2312,6 +2312,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-257 — Sv 600–700 dünyası: Yıldızsız Topraklar
+**Karar:** Yeni kıta Yıldızsız Topraklar (Sv 600, Taht Zirveleri ↔ Karanlık Ova bağlantısı): Karanlık Ova 600, Kayıp Şehir 650; 12 mob (10 seviyede bir + 2 zindan boss'u, `overlord`), 2 zindan (Söndürülmüş Gözlemevi 628, Saat Kulesi 678; 60 dk), adlar en/tr/zh-CN/es. Ekipman merdiveni 610/635/660/685 (60 eşya, 4 dil). Denge simülasyonu Sv 1–690 (uyanış becerileri dahil). Yıldız Kemiren `crit` arketipi: `glass` hâliyle Arbalet Ustası Sv 630'da saatte %60 ölüyordu.
+**Reason:** Kullanıcı isteği (600–700 içeriği).
+**Alternatives:** Arbalet Ustası'nı güçlendirmek (diğer seviyelerde hedefler tutuyor; içerik tarafında tek mob yeterli).
+**Consequences:** 600–700 zindanları giriş seviyesinde en zayıf uzmanlıkta (Arbalet Ustası) %87–89, en güçlüde %100. Nihai yetenek (Sv 700) sonrası içerik yok.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

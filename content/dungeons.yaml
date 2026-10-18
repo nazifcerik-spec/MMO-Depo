@@ -215,4 +215,28 @@ dungeons:
     boss_mob_code: dragon_king_azhorath
     bonus_gold_copper: 450000
     bonus_xp: 900000
+
+  - code: darkened_observatory
+    display_name_key: dungeon.darkened_observatory
+    min_level: 628
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: shadow_rider, count: 3 }
+      - { mob_code: void_wolf, count: 3 }
+      - { mob_code: star_gnawer, count: 2 }
+    boss_mob_code: star_eater_omh
+    bonus_gold_copper: 550000
+    bonus_xp: 1150000
+
+  - code: clock_tower
+    display_name_key: dungeon.clock_tower
+    min_level: 678
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: ghost_noble, count: 3 }
+      - { mob_code: time_thief, count: 3 }
+      - { mob_code: cursed_sorcerer, count: 2 }
+    boss_mob_code: time_lord_kaedrin
+    bonus_gold_copper: 650000
+    bonus_xp: 1400000
   # <<< generated: dungeons

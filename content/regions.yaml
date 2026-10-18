@@ -84,6 +84,13 @@ regions:
     travel_seconds_from_parent: 0
     safe: true
 
+  - code: starless_lands
+    display_name_key: region.starless_lands
+    kind: continent
+    min_level: 600
+    travel_seconds_from_parent: 0
+    safe: true
+
   - code: misty_marshes
     display_name_key: region.misty_marshes
     kind: zone
@@ -291,6 +298,38 @@ regions:
     min_level: 578
     travel_seconds_from_parent: 300
     safe: false
+
+  - code: dark_plains
+    display_name_key: region.dark_plains
+    kind: zone
+    parent_code: starless_lands
+    min_level: 600
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: darkened_observatory
+    display_name_key: region.darkened_observatory
+    kind: dungeon
+    parent_code: dark_plains
+    min_level: 628
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: lost_city
+    display_name_key: region.lost_city
+    kind: zone
+    parent_code: starless_lands
+    min_level: 650
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: clock_tower
+    display_name_key: region.clock_tower
+    kind: dungeon
+    parent_code: lost_city
+    min_level: 678
+    travel_seconds_from_parent: 300
+    safe: false
   # <<< generated: regions
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
@@ -311,4 +350,6 @@ region_links:
   - { region_a_code: crystal_caves, region_b_code: mist_forest, travel_seconds: 300 }
   - { region_a_code: crystal_caves, region_b_code: volcanic_isle, travel_seconds: 300 }
   - { region_a_code: throne_peaks, region_b_code: volcanic_isle, travel_seconds: 300 }
+  - { region_a_code: dark_plains, region_b_code: throne_peaks, travel_seconds: 300 }
+  - { region_a_code: dark_plains, region_b_code: lost_city, travel_seconds: 300 }
   # <<< generated: links
