@@ -227,7 +227,8 @@ func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 var levels = []int{1, 3, 5, 8, 10, 12, 15, 18, 20, 24, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
 	110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
 	310, 330, 350, 370, 390, 410, 430, 450, 470, 490, 510, 530, 550, 570, 590,
-	610, 630, 650, 670, 690, 710, 730, 750, 770, 790, 810, 830}
+	610, 630, 650, 670, 690, 710, 730, 750, 770, 790, 810, 830,
+	850, 870, 890, 910, 930, 950, 970, 990}
 
 // toughGap is how far above the character a mob must be dangerous.
 func toughGap(int) int { return 5 }
@@ -311,6 +312,9 @@ func TestDungeonMatrix(t *testing.T) {
 // TestBalanceTargets pins the DD-229 targets so content or formula changes
 // that break the curve fail CI (tune with the matrices above).
 func TestBalanceTargets(t *testing.T) {
+	if raceDetector {
+		t.Skip("pure simulation: runs in the coverage job (no -race)")
+	}
 	w := load(t)
 	prevMin := 0.0
 	for _, lv := range levels {

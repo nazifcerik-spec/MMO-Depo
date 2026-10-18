@@ -2330,6 +2330,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-259 — Sv 850–1000 dünyası: Boşluğun Kıyısı (içerik 1000'e tamam)
+**Karar:** Yeni kıta Boşluğun Kıyısı (Sv 850, Göksel Tapınak ↔ Kül Denizi bağlantısı): Kül Denizi 850, Son Kale Surları 900, Ebediyet Kıyısı 950; 18 mob (10 seviyede bir + 3 `overlord` zindan boss'u; son mob Yıkım Avatarı Sv 1000), 3 zindan (Batık Taht 878, Son Kale 928, Ebedi Taht 978; 60 dk), adlar en/tr/zh-CN/es. Ekipman merdiveni 860–985 (6 kademe, 90 eşya, 4 dil). Ruh Biçen `crit` arketipi (`glass` hâliyle Arbalet Ustası Sv 930'da %33 ölüyordu). Denge simülasyonu Sv 1–990. `-race` derlemesinde ağır denge testleri atlanır (tek goroutine, deterministik; kapsam işinde yarış dedektörsüz koşar), yoksa CI'da paket zaman aşımını geçerdi.
+**Reason:** Kullanıcı isteği (850–1000 içeriği).
+**Alternatives:** Arbalet Ustası'nı güçlendirmek (iki seviyede aynı desen: yüksek saldırılı `glass` mob; ileride sınıf ayarı düşünülebilir).
+**Consequences:** Seviye 1–1000'in her 10 seviyesinde mob, her ~50 seviyesinde zindan, her 25 seviyede ekipman kademesi var (140 mob, 25 zindan, 54 bölge). 850–1000 zindanları giriş seviyesinde en zayıf uzmanlıkta %93. Baskınlar (grup içeriği) hâlâ ertelendi. Arbalet Ustası yüksek saldırılı moblarda en kırılgan uzmanlık.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -81,6 +81,8 @@ CONTINENTS = [
          name=L('Starless Lands', 'Yıldızsız Topraklar', '无星之地', 'Tierras sin Estrellas')),
     dict(code='sky_rift', level=700,
          name=L('Sky Rift', 'Gök Yarığı', '天空裂隙', 'Grieta Celeste')),
+    dict(code='void_shore', level=850,
+         name=L('Shore of the Void', 'Boşluğun Kıyısı', '虚空之岸', 'Orilla del Vacío')),
 ]
 
 ZONES += [
@@ -291,6 +293,49 @@ ZONES += [
          dungeon=dict(code='celestial_dome', level=828, minutes=60, waves=['fallen_angel', 'temple_guardian', 'celestial_dragon'],
                       boss='archangel_uriel', gold=1080000, xp=2600000,
                       name=L('Celestial Dome', 'Göksel Kubbe', '天界穹顶', 'Cúpula Celestial'))),
+]
+
+
+ZONES += [
+    dict(code='ash_sea', parent='void_shore', level=850, travel=300, link='celestial_temple',
+         name=L('Ash Sea', 'Kül Denizi', '灰烬之海', 'Mar de Ceniza'),
+         mobs=[
+             ('ash_leviathan', 860, 'tank', L('Ash Leviathan', 'Kül Leviathanı', '灰烬利维坦', 'Leviatán de Ceniza')),
+             ('null_hunter', 870, 'evasive', L('Null Hunter', 'Hiçlik Avcısı', '虚无猎手', 'Cazador de la Nada')),
+             ('undying_soldier', 880, 'normal', L('Undying Soldier', 'Ölümsüz Asker', '不死士兵', 'Soldado Inmortal')),
+             ('leviathan_king', 882, 'overlord', L('Leviathan King', 'Leviathan Kral', '利维坦之王', 'Rey Leviatán')),
+             ('ash_wyrm_lord', 890, 'crit', L('Ash Wyrm Lord', 'Kül Ejderi Lordu', '灰烬龙王', 'Señor Dragón de Ceniza')),
+             ('eternal_sentinel', 900, 'elite', L('Eternal Sentinel', 'Ebedi Bekçi', '永恒哨兵', 'Centinela Eterno')),
+         ],
+         dungeon=dict(code='sunken_throne', level=878, minutes=60, waves=['ash_leviathan', 'null_hunter', 'undying_soldier'],
+                      boss='leviathan_king', gold=1250000, xp=3100000,
+                      name=L('Sunken Throne', 'Batık Taht', '沉没王座', 'Trono Hundido'))),
+    dict(code='last_bastion', parent='void_shore', level=900, travel=360, link='ash_sea',
+         name=L('Last Bastion Walls', 'Son Kale Surları', '最后堡垒城墙', 'Murallas del Último Bastión'),
+         mobs=[
+             ('doom_rider', 910, 'crit', L('Doom Rider', 'Kıyamet Atlısı', '末日骑手', 'Jinete del Fin')),
+             ('void_titan', 920, 'tank', L('Void Titan', 'Boşluk Titanı', '虚空泰坦', 'Titán del Vacío')),
+             ('soul_reaper', 930, 'crit', L('Soul Reaper', 'Ruh Biçen', '灵魂收割者', 'Segador de Almas')),
+             ('doom_commander_morvath', 932, 'overlord', L('Doom Commander Morvath', 'Kıyamet Komutanı Morvath', '末日指挥官莫瓦斯', 'Comandante del Fin Morvath')),
+             ('ancient_golem', 940, 'normal', L('Ancient Golem', 'Kadim Golem', '远古魔像', 'Gólem Ancestral')),
+             ('last_commander', 950, 'elite', L('Last Commander', 'Son Komutan', '最后的指挥官', 'Último Comandante')),
+         ],
+         dungeon=dict(code='bastion_keep', level=928, minutes=60, waves=['doom_rider', 'void_titan', 'soul_reaper'],
+                      boss='doom_commander_morvath', gold=1450000, xp=3700000,
+                      name=L('Last Bastion', 'Son Kale', '最后堡垒', 'Último Bastión'))),
+    dict(code='edge_of_eternity', parent='void_shore', level=950, travel=420, link='last_bastion',
+         name=L('Edge of Eternity', 'Ebediyet Kıyısı', '永恒边缘', 'Borde de la Eternidad'),
+         mobs=[
+             ('void_dragon', 960, 'crit', L('Void Dragon', 'Hiçlik Ejderi', '虚无之龙', 'Dragón de la Nada')),
+             ('throne_sentinel', 970, 'tank', L('Throne Sentinel', 'Taht Gözcüsü', '王座哨兵', 'Centinela del Trono')),
+             ('eternal_mage', 980, 'glass', L('Eternal Mage', 'Ebedi Büyücü', '永恒法师', 'Mago Eterno')),
+             ('fallen_god_aethon', 982, 'overlord', L('Fallen God Aethon', 'Düşmüş Tanrı Aethon', '堕落之神埃松', 'Dios Caído Aethon')),
+             ('god_shadow', 990, 'evasive', L('Shadow of a God', 'Tanrı Gölgesi', '神之阴影', 'Sombra de un Dios')),
+             ('avatar_of_ruin', 1000, 'elite', L('Avatar of Ruin', 'Yıkım Avatarı', '毁灭化身', 'Avatar de la Ruina')),
+         ],
+         dungeon=dict(code='eternal_throne', level=978, minutes=60, waves=['void_dragon', 'throne_sentinel', 'eternal_mage'],
+                      boss='fallen_god_aethon', gold=1700000, xp=4400000,
+                      name=L('Eternal Throne', 'Ebedi Taht', '永恒王座', 'Trono Eterno'))),
 ]
 
 

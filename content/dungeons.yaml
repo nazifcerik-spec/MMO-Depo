@@ -275,4 +275,40 @@ dungeons:
     boss_mob_code: archangel_uriel
     bonus_gold_copper: 1080000
     bonus_xp: 2600000
+
+  - code: sunken_throne
+    display_name_key: dungeon.sunken_throne
+    min_level: 878
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: ash_leviathan, count: 3 }
+      - { mob_code: null_hunter, count: 3 }
+      - { mob_code: undying_soldier, count: 2 }
+    boss_mob_code: leviathan_king
+    bonus_gold_copper: 1250000
+    bonus_xp: 3100000
+
+  - code: bastion_keep
+    display_name_key: dungeon.bastion_keep
+    min_level: 928
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: doom_rider, count: 3 }
+      - { mob_code: void_titan, count: 3 }
+      - { mob_code: soul_reaper, count: 2 }
+    boss_mob_code: doom_commander_morvath
+    bonus_gold_copper: 1450000
+    bonus_xp: 3700000
+
+  - code: eternal_throne
+    display_name_key: dungeon.eternal_throne
+    min_level: 978
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: void_dragon, count: 3 }
+      - { mob_code: throne_sentinel, count: 3 }
+      - { mob_code: eternal_mage, count: 2 }
+    boss_mob_code: fallen_god_aethon
+    bonus_gold_copper: 1700000
+    bonus_xp: 4400000
   # <<< generated: dungeons

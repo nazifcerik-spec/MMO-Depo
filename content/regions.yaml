@@ -98,6 +98,13 @@ regions:
     travel_seconds_from_parent: 0
     safe: true
 
+  - code: void_shore
+    display_name_key: region.void_shore
+    kind: continent
+    min_level: 850
+    travel_seconds_from_parent: 0
+    safe: true
+
   - code: misty_marshes
     display_name_key: region.misty_marshes
     kind: zone
@@ -385,6 +392,54 @@ regions:
     min_level: 828
     travel_seconds_from_parent: 300
     safe: false
+
+  - code: ash_sea
+    display_name_key: region.ash_sea
+    kind: zone
+    parent_code: void_shore
+    min_level: 850
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: sunken_throne
+    display_name_key: region.sunken_throne
+    kind: dungeon
+    parent_code: ash_sea
+    min_level: 878
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: last_bastion
+    display_name_key: region.last_bastion
+    kind: zone
+    parent_code: void_shore
+    min_level: 900
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: bastion_keep
+    display_name_key: region.bastion_keep
+    kind: dungeon
+    parent_code: last_bastion
+    min_level: 928
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: edge_of_eternity
+    display_name_key: region.edge_of_eternity
+    kind: zone
+    parent_code: void_shore
+    min_level: 950
+    travel_seconds_from_parent: 420
+    safe: false
+
+  - code: eternal_throne
+    display_name_key: region.eternal_throne
+    kind: dungeon
+    parent_code: edge_of_eternity
+    min_level: 978
+    travel_seconds_from_parent: 300
+    safe: false
   # <<< generated: regions
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
@@ -410,4 +465,7 @@ region_links:
   - { region_a_code: floating_isles, region_b_code: lost_city, travel_seconds: 300 }
   - { region_a_code: floating_isles, region_b_code: rift_edge, travel_seconds: 300 }
   - { region_a_code: celestial_temple, region_b_code: rift_edge, travel_seconds: 300 }
+  - { region_a_code: ash_sea, region_b_code: celestial_temple, travel_seconds: 300 }
+  - { region_a_code: ash_sea, region_b_code: last_bastion, travel_seconds: 300 }
+  - { region_a_code: edge_of_eternity, region_b_code: last_bastion, travel_seconds: 300 }
   # <<< generated: links

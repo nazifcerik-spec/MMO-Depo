@@ -1604,4 +1604,238 @@ mobs:
     xp_reward: 486486
     gold_copper_min: 99721
     gold_copper_max: 249302
+
+  - code: ash_leviathan
+    display_name_key: mob.ash_leviathan
+    level: 860
+    hp_max: 37888
+    attack: 1834
+    defense: 1309
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 495676
+    gold_copper_min: 101486
+    gold_copper_max: 253715
+
+  - code: null_hunter
+    display_name_key: mob.null_hunter
+    level: 870
+    hp_max: 20805
+    attack: 2133
+    defense: 697
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 504930
+    gold_copper_min: 103261
+    gold_copper_max: 258152
+
+  - code: undying_soldier
+    display_name_key: mob.undying_soldier
+    level: 880
+    hp_max: 22150
+    attack: 1876
+    defense: 705
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 514248
+    gold_copper_min: 105047
+    gold_copper_max: 262618
+
+  - code: leviathan_king
+    display_name_key: mob.leviathan_king
+    level: 882
+    hp_max: 41070
+    attack: 2444
+    defense: 883
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 516119
+    gold_copper_min: 105405
+    gold_copper_max: 263512
+
+  - code: ash_wyrm_lord
+    display_name_key: mob.ash_wyrm_lord
+    level: 890
+    hp_max: 23520
+    attack: 2238
+    defense: 713
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 523629
+    gold_copper_min: 106842
+    gold_copper_max: 267105
+
+  - code: eternal_sentinel
+    display_name_key: mob.eternal_sentinel
+    level: 900
+    hp_max: 31710
+    attack: 2206
+    defense: 865
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 533075
+    gold_copper_min: 108648
+    gold_copper_max: 271620
+
+  - code: doom_rider
+    display_name_key: mob.doom_rider
+    level: 910
+    hp_max: 24045
+    attack: 2288
+    defense: 729
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 542583
+    gold_copper_min: 110464
+    gold_copper_max: 276160
+
+  - code: void_titan
+    display_name_key: mob.void_titan
+    level: 920
+    hp_max: 40512
+    attack: 1960
+    defense: 1400
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 552154
+    gold_copper_min: 112290
+    gold_copper_max: 280725
+
+  - code: soul_reaper
+    display_name_key: mob.soul_reaper
+    level: 930
+    hp_max: 24570
+    attack: 2338
+    defense: 745
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 561788
+    gold_copper_min: 114125
+    gold_copper_max: 285312
+
+  - code: doom_commander_morvath
+    display_name_key: mob.doom_commander_morvath
+    level: 932
+    hp_max: 43382
+    attack: 2581
+    defense: 933
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 563723
+    gold_copper_min: 114494
+    gold_copper_max: 286235
+
+  - code: ancient_golem
+    display_name_key: mob.ancient_golem
+    level: 940
+    hp_max: 23650
+    attack: 2002
+    defense: 753
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 571485
+    gold_copper_min: 115971
+    gold_copper_max: 289928
+
+  - code: last_commander
+    display_name_key: mob.last_commander
+    level: 950
+    hp_max: 33460
+    attack: 2326
+    defense: 913
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 581243
+    gold_copper_min: 117827
+    gold_copper_max: 294568
+
+  - code: void_dragon
+    display_name_key: mob.void_dragon
+    level: 960
+    hp_max: 25358
+    attack: 2412
+    defense: 769
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 591063
+    gold_copper_min: 119692
+    gold_copper_max: 299230
+
+  - code: throne_sentinel
+    display_name_key: mob.throne_sentinel
+    level: 970
+    hp_max: 42700
+    attack: 2065
+    defense: 1476
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 600945
+    gold_copper_min: 121567
+    gold_copper_max: 303918
+
+  - code: eternal_mage
+    display_name_key: mob.eternal_mage
+    level: 980
+    hp_max: 22185
+    attack: 3129
+    defense: 589
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 610888
+    gold_copper_min: 123452
+    gold_copper_max: 308630
+
+  - code: fallen_god_aethon
+    display_name_key: mob.fallen_god_aethon
+    level: 982
+    hp_max: 45695
+    attack: 2717
+    defense: 983
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 612884
+    gold_copper_min: 123830
+    gold_copper_max: 309575
+
+  - code: god_shadow
+    display_name_key: mob.god_shadow
+    level: 990
+    hp_max: 23655
+    attack: 2423
+    defense: 793
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 620892
+    gold_copper_min: 125346
+    gold_copper_max: 313365
+
+  - code: avatar_of_ruin
+    display_name_key: mob.avatar_of_ruin
+    level: 1000
+    hp_max: 35210
+    attack: 2447
+    defense: 961
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 630957
+    gold_copper_min: 127250
+    gold_copper_max: 318125
   # <<< generated: mobs

@@ -289,6 +289,9 @@ func buildSpecReport(t *testing.T) ([]specRow, map[string]any) {
 // no specialization tops every category. BALANCE_REPORT=1 also writes
 // reports/class_balance_report.{json,md}.
 func TestSpecializationBalance(t *testing.T) {
+	if raceDetector {
+		t.Skip("pure simulation: runs in the coverage job (no -race)")
+	}
 	rows, checks := buildSpecReport(t)
 	f := func(k string) float64 { return checks[k].(float64) }
 	require.Greater(t, f("dps_kill_speed"), f("tank_kill_speed"), "DPS kill faster than tanks")
