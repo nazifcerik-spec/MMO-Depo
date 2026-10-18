@@ -113,7 +113,7 @@ class CharacterSheet {
   return (gold: c ~/ 10000, silver: (c % 10000) ~/ 100, copper: c % 100);
 }
 
-const races = ['human', 'elf', 'dwarf', 'orc'];
+const races = ['human', 'elf', 'dwarf', 'orc', 'troll', 'undead', 'dark_elf', 'drakari', 'tauren', 'gnome'];
 
 /// The ten base classes (DD-252), in the server's canonical order.
 const classes = ['warrior', 'rogue', 'ranger', 'mage', 'monk', 'cleric', 'paladin', 'druid', 'bard', 'shaman'];

@@ -169,6 +169,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 79. **Karakter oluşturma ekranı (bitti)** — Sprint 79, DD-266. Tam sayfa `CreateCharacterScreen`: sınıf ikon şeridi, portre + ad + slogan + rol etiketleri + tanıtım, altında sınıf sözü, sınıf özellikleri (kaynak, nitelik çubukları, ekipman, zorluk), yetenek ikonları + dokununca baloncuk, sınıf yolu piramidi, ırk kartları, "X ile devam et" → ad penceresi. İçerik: `class.<sınıf>.{tagline,quote}` 10 sınıf × 4 dil (contentpack zorunlu). Görseller `client/assets/classes/<sınıf>.png`, `client/assets/races/<ırk>.png` (yoksa ikon).
 
+80. **Altı yeni ırk (bitti)** — Sprint 80, DD-267. Trol, Hortlak, Karanlık Elf, Drakari, Tauren, Gnom (yalnız görünüş); sunucu izin listesi + istemci adları/tanımları 4 dilde; oluşturma ekranında 4'lü kart ızgarası.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

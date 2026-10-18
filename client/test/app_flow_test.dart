@@ -278,11 +278,14 @@ void main() {
     final list = find
         .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
         .first;
-    await tester.scrollUntilVisible(find.text('Dwarf'), 200, scrollable: list);
+    await tester.scrollUntilVisible(find.text('Gnome'), 200, scrollable: list);
+    for (final r in ['Human', 'Elf', 'Dwarf', 'Orc', 'Troll', 'Undead', 'Dark Elf', 'Drakari', 'Tauren', 'Gnome']) {
+      expect(find.text(r), findsOneWidget, reason: 'race $r (DD-267)');
+    }
     expect(find.text('Your race sets your look; it does not change attributes.'), findsOneWidget);
-    await tester.ensureVisible(find.text('Dwarf'));
+    await tester.ensureVisible(find.text('Dark Elf'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Dwarf'));
+    await tester.tap(find.text('Dark Elf'));
     await tester.pump();
     await tester.tap(find.text('Continue as Ranger'));
     await tester.pumpAndSettle();
@@ -295,8 +298,8 @@ void main() {
     await tester.enterText(find.byType(TextFormField), 'Grim');
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
-    expect(be.characters.single['race_code'], 'dwarf');
-    expect(find.text('Lvl 1 · Ranger · Dwarf'), findsOneWidget);
+    expect(be.characters.single['race_code'], 'dark_elf');
+    expect(find.text('Lvl 1 · Ranger · Dark Elf'), findsOneWidget);
     expect(find.text('1/2 slots'), findsOneWidget);
 
     await tester.tap(find.text('Grim'));

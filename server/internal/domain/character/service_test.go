@@ -62,6 +62,18 @@ func TestCreate_NormalizesRaceClass(t *testing.T) {
 	require.Equal(t, "mage", c.ClassCode)
 }
 
+// All ten races can be chosen (DD-267).
+func TestCreate_AllRaces(t *testing.T) {
+	svc, _ := newTestService(t)
+	for i, race := range []string{"human", "elf", "dwarf", "orc", "troll", "undead", "dark_elf", "drakari", "tauren", "gnome"} {
+		c, err := svc.Create(context.Background(), character.CreateRequest{
+			AccountID: uuid.New(), Name: "Race" + string(rune('a'+i)) + "x", RaceCode: race, ClassCode: "warrior",
+		})
+		require.NoError(t, err, race)
+		require.Equal(t, race, c.RaceCode)
+	}
+}
+
 func TestCreate_SlotCap(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()

@@ -2279,4 +2279,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nameYourCharacter => 'Name your character';
+
+  @override
+  String get raceTroll => 'Troll';
+
+  @override
+  String get raceUndead => 'Undead';
+
+  @override
+  String get raceDarkElf => 'Dark Elf';
+
+  @override
+  String get raceDrakari => 'Drakari';
+
+  @override
+  String get raceTauren => 'Tauren';
+
+  @override
+  String get raceGnome => 'Gnome';
+
+  @override
+  String get raceTrollDesc => 'Hunters of the jungle isles';
+
+  @override
+  String get raceUndeadDesc => 'Risen from the grave';
+
+  @override
+  String get raceDarkElfDesc => 'Children of the deep dark';
+
+  @override
+  String get raceDrakariDesc => 'Kin of dragon blood';
+
+  @override
+  String get raceTaurenDesc => 'Guardians of the plains';
+
+  @override
+  String get raceGnomeDesc => 'Clever tinkerers';
 }

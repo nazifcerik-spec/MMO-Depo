@@ -2277,4 +2277,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nameYourCharacter => '为角色命名';
+
+  @override
+  String get raceTroll => '巨魔';
+
+  @override
+  String get raceUndead => '亡灵';
+
+  @override
+  String get raceDarkElf => '黑暗精灵';
+
+  @override
+  String get raceDrakari => '龙裔';
+
+  @override
+  String get raceTauren => '牛头人';
+
+  @override
+  String get raceGnome => '侏儒';
+
+  @override
+  String get raceTrollDesc => '丛林群岛的猎手';
+
+  @override
+  String get raceUndeadDesc => '从坟墓中复生';
+
+  @override
+  String get raceDarkElfDesc => '幽暗地域之子';
+
+  @override
+  String get raceDrakariDesc => '流淌龙血的一族';
+
+  @override
+  String get raceTaurenDesc => '平原的守护者';
+
+  @override
+  String get raceGnomeDesc => '聪明的工匠';
 }

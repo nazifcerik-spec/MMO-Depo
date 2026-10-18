@@ -2278,4 +2278,40 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nameYourCharacter => 'Karakterine ad ver';
+
+  @override
+  String get raceTroll => 'Trol';
+
+  @override
+  String get raceUndead => 'Hortlak';
+
+  @override
+  String get raceDarkElf => 'Karanlık Elf';
+
+  @override
+  String get raceDrakari => 'Drakari';
+
+  @override
+  String get raceTauren => 'Tauren';
+
+  @override
+  String get raceGnome => 'Gnom';
+
+  @override
+  String get raceTrollDesc => 'Orman adalarının avcıları';
+
+  @override
+  String get raceUndeadDesc => 'Mezardan kalkanlar';
+
+  @override
+  String get raceDarkElfDesc => 'Yeraltının çocukları';
+
+  @override
+  String get raceDrakariDesc => 'Ejder kanından gelenler';
+
+  @override
+  String get raceTaurenDesc => 'Ovaların koruyucuları';
+
+  @override
+  String get raceGnomeDesc => 'Zeki mucitler';
 }

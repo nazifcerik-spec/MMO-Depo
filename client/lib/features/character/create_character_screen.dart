@@ -695,27 +695,40 @@ class _Races extends StatelessWidget {
       'human' => l.raceHumanDesc,
       'elf' => l.raceElfDesc,
       'dwarf' => l.raceDwarfDesc,
-      _ => l.raceOrcDesc,
+      'orc' => l.raceOrcDesc,
+      'troll' => l.raceTrollDesc,
+      'undead' => l.raceUndeadDesc,
+      'dark_elf' => l.raceDarkElfDesc,
+      'drakari' => l.raceDrakariDesc,
+      'tauren' => l.raceTaurenDesc,
+      'gnome' => l.raceGnomeDesc,
+      _ => '',
     };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (var i = 0; i < races.length; i++) ...[
-              if (i > 0) const SizedBox(width: Space.xs),
-              Expanded(
-                child: _RaceCard(
-                  code: races[i],
-                  name: raceName(l, races[i]),
-                  desc: desc(races[i]),
-                  selected: races[i] == selected,
-                  onTap: () => onPick(races[i]),
-                ),
-              ),
-            ],
-          ],
+        // Four cards a row (ten races: 4 + 4 + 2).
+        LayoutBuilder(
+          builder: (context, box) {
+            final w = (box.maxWidth - 3 * Space.xs) / 4;
+            return Wrap(
+              spacing: Space.xs,
+              runSpacing: Space.xs,
+              children: [
+                for (final r in races)
+                  SizedBox(
+                    width: w,
+                    child: _RaceCard(
+                      code: r,
+                      name: raceName(l, r),
+                      desc: desc(r),
+                      selected: r == selected,
+                      onTap: () => onPick(r),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
         const SizedBox(height: Space.sm),
         Text(

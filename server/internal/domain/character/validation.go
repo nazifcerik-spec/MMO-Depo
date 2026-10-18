@@ -17,6 +17,13 @@ var (
 		"elf":   true,
 		"dwarf": true,
 		"orc":   true,
+		// DD-267: six more races (looks only, like the first four).
+		"troll":    true,
+		"undead":   true,
+		"dark_elf": true,
+		"drakari":  true,
+		"tauren":   true,
+		"gnome":    true,
 	}
 	// The ten base classes (DD-252); promotions are content (progression.yaml).
 	knownClasses = map[string]bool{

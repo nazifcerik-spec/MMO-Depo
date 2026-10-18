@@ -4047,6 +4047,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name your character'**
   String get nameYourCharacter;
+
+  /// No description provided for @raceTroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Troll'**
+  String get raceTroll;
+
+  /// No description provided for @raceUndead.
+  ///
+  /// In en, this message translates to:
+  /// **'Undead'**
+  String get raceUndead;
+
+  /// No description provided for @raceDarkElf.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Elf'**
+  String get raceDarkElf;
+
+  /// No description provided for @raceDrakari.
+  ///
+  /// In en, this message translates to:
+  /// **'Drakari'**
+  String get raceDrakari;
+
+  /// No description provided for @raceTauren.
+  ///
+  /// In en, this message translates to:
+  /// **'Tauren'**
+  String get raceTauren;
+
+  /// No description provided for @raceGnome.
+  ///
+  /// In en, this message translates to:
+  /// **'Gnome'**
+  String get raceGnome;
+
+  /// No description provided for @raceTrollDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunters of the jungle isles'**
+  String get raceTrollDesc;
+
+  /// No description provided for @raceUndeadDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Risen from the grave'**
+  String get raceUndeadDesc;
+
+  /// No description provided for @raceDarkElfDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Children of the deep dark'**
+  String get raceDarkElfDesc;
+
+  /// No description provided for @raceDrakariDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Kin of dragon blood'**
+  String get raceDrakariDesc;
+
+  /// No description provided for @raceTaurenDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Guardians of the plains'**
+  String get raceTaurenDesc;
+
+  /// No description provided for @raceGnomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Clever tinkerers'**
+  String get raceGnomeDesc;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

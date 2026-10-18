@@ -1785,5 +1785,17 @@
       }
     }
   },
-  "nameYourCharacter": "Name your character"
+  "nameYourCharacter": "Name your character",
+  "raceTroll": "Troll",
+  "raceUndead": "Undead",
+  "raceDarkElf": "Dark Elf",
+  "raceDrakari": "Drakari",
+  "raceTauren": "Tauren",
+  "raceGnome": "Gnome",
+  "raceTrollDesc": "Hunters of the jungle isles",
+  "raceUndeadDesc": "Risen from the grave",
+  "raceDarkElfDesc": "Children of the deep dark",
+  "raceDrakariDesc": "Kin of dragon blood",
+  "raceTaurenDesc": "Guardians of the plains",
+  "raceGnomeDesc": "Clever tinkerers"
 }

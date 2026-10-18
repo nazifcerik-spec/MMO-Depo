@@ -2402,6 +2402,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-267 — Altı yeni ırk
+**Karar:** Trol, Hortlak, Karanlık Elf, Drakari, Tauren ve Gnom eklendi (kodlar `troll`, `undead`, `dark_elf`, `drakari`, `tauren`, `gnome`; sunucu izin listesi `character.knownRaces`). İlk dördü gibi yalnız görünüş: nitelik etkisi yok. Adlar ve tek satırlık tanımlar istemcide 4 dilde; oluşturma ekranında satırda 4 kart (4 + 4 + 2). Portreler `client/assets/races/<kod>.png`.
+**Reason:** Kullanıcı isteği.
+**Alternatives:** Irklara nitelik bonusu (denge simülasyonlarını ve sınıf eğrisini değiştirir; ayrı karar).
+**Consequences:** Migration yok (`race_code` serbest metin, doğrulama serviste).
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

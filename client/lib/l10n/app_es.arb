@@ -140,5 +140,17 @@
   "raceDwarfDesc": "Herreros de las montañas",
   "raceOrcDesc": "Guerreros de la estepa",
   "continueAs": "Continuar como {name}",
-  "nameYourCharacter": "Ponle nombre a tu personaje"
+  "nameYourCharacter": "Ponle nombre a tu personaje",
+  "raceTroll": "Trol",
+  "raceUndead": "No muerto",
+  "raceDarkElf": "Elfo oscuro",
+  "raceDrakari": "Drakari",
+  "raceTauren": "Tauren",
+  "raceGnome": "Gnomo",
+  "raceTrollDesc": "Cazadores de las islas selváticas",
+  "raceUndeadDesc": "Alzados de la tumba",
+  "raceDarkElfDesc": "Hijos de la oscuridad profunda",
+  "raceDrakariDesc": "Linaje de sangre de dragón",
+  "raceTaurenDesc": "Guardianes de las llanuras",
+  "raceGnomeDesc": "Ingeniosos inventores"
 }

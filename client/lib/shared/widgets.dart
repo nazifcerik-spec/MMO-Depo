@@ -129,6 +129,12 @@ String raceName(AppLocalizations l, String code) => switch (code) {
   'elf' => l.raceElf,
   'dwarf' => l.raceDwarf,
   'orc' => l.raceOrc,
+  'troll' => l.raceTroll,
+  'undead' => l.raceUndead,
+  'dark_elf' => l.raceDarkElf,
+  'drakari' => l.raceDrakari,
+  'tauren' => l.raceTauren,
+  'gnome' => l.raceGnome,
   _ => code,
 };
 

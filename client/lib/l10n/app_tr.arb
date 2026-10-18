@@ -658,5 +658,17 @@
   "raceDwarfDesc": "Dağların demircileri",
   "raceOrcDesc": "Bozkırın savaşçıları",
   "continueAs": "{name} ile devam et",
-  "nameYourCharacter": "Karakterine ad ver"
+  "nameYourCharacter": "Karakterine ad ver",
+  "raceTroll": "Trol",
+  "raceUndead": "Hortlak",
+  "raceDarkElf": "Karanlık Elf",
+  "raceDrakari": "Drakari",
+  "raceTauren": "Tauren",
+  "raceGnome": "Gnom",
+  "raceTrollDesc": "Orman adalarının avcıları",
+  "raceUndeadDesc": "Mezardan kalkanlar",
+  "raceDarkElfDesc": "Yeraltının çocukları",
+  "raceDrakariDesc": "Ejder kanından gelenler",
+  "raceTaurenDesc": "Ovaların koruyucuları",
+  "raceGnomeDesc": "Zeki mucitler"
 }
