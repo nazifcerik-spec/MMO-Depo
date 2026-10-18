@@ -195,6 +195,9 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 	})
 	out := make([]map[string]any, 0, len(all))
 	for _, m := range all {
+		if m.RaidBoss { // not huntable (DD-261)
+			continue
+		}
 		out = append(out, map[string]any{
 			"code":             m.Code,
 			"display_name_key": m.DisplayNameKey,

@@ -26,6 +26,8 @@ ARCH = {
     'elite': (1.4, 1.15, 1.2, 9, 5),
     'chief': (1.2, 1.08, 1.1, 7, 5),  # dungeon bosses (the dungeon doubles HP, +20% attack)
     'overlord': (1.85, 1.3, 1.25, 10, 5),  # level 300+ dungeon bosses
+    'titan': (30.0, 3.2, 1.4, 10, 5),  # raid bosses to level 300: fought by a whole party (DD-261)
+    'elder_titan': (30.0, 4.8, 1.4, 10, 5),  # raid bosses from level 600 (the classes outgrow the curve)
 }
 
 ZONES = [
@@ -339,16 +341,42 @@ ZONES += [
 ]
 
 
+# Raids (DD-261): a party of 3-5 at each class milestone. Waves are the
+# zone's mobs (the raid triples their HP); the boss is a raid-sized titan.
+# Bonus rewards are three times a dungeon's at the same level.
+RAIDS = [
+    dict(code='north_keep_siege', level=100, waves=['keep_gargoyle', 'fallen_commander', 'bone_rider'],
+         boss=('varn_undying', 102, L('Varn the Undying', 'Ölümsüz Varn', '不死者瓦恩', 'Varn el Inmortal')),
+         name=L('Siege of the North Keep', 'Kuzey Kalesi Kuşatması', '北方要塞之围', 'Asedio de la Fortaleza del Norte')),
+    dict(code='crownless_palace', level=300, waves=['tomb_keeper', 'black_knight', 'crownless_king'],
+         boss=('crownless_tyrant', 302, L('The Crownless Tyrant', 'Taçsız Tiran', '无冕暴君', 'El Tirano sin Corona')),
+         name=L('Palace of the Crownless King', "Taçsız Kral'ın Sarayı", '无冕之王的宫殿', 'Palacio del Rey sin Corona')),
+    dict(code='dragon_king_lair', level=600, waves=['throne_guardian', 'dragon_sorcerer', 'elder_dragon'],
+         boss=('azhorath_ascended', 602, L('Azhorath the Ascended', 'Yükselmiş Azhorath', '升天者阿兹霍拉斯', 'Azhorath el Ascendido')),
+         name=L('Lair of the Dragon King', "Ejder Kral'ın İni", '龙王巢穴', 'Guarida del Rey Dragón')),
+    dict(code='time_lord_tower', level=700, waves=['stone_gargoyle', 'cursed_sorcerer', 'city_guardian'],
+         boss=('kaedrin_timeless', 702, L('Kaedrin the Timeless', 'Zamansız Kaedrin', '永恒者凯德林', 'Kaedrin el Atemporal')),
+         name=L('Tower of the Time Lord', "Zaman Lordu'nun Kulesi", '时间领主之塔', 'Torre del Señor del Tiempo')),
+    dict(code='archangels_fall', level=850, waves=['light_hunter', 'celestial_dragon', 'seraph'],
+         boss=('fallen_archangels', 852, L('The Fallen Archangels', 'Düşmüş Başmelekler', '堕落的大天使', 'Los Arcángeles Caídos')),
+         name=L('Fall of the Archangels', 'Başmeleklerin Düşüşü', '大天使的陨落', 'Caída de los Arcángeles')),
+    dict(code='fallen_god_throne', level=1000, waves=['throne_sentinel', 'god_shadow', 'avatar_of_ruin'],
+         boss=('aethon_unbound', 1000, L('Aethon Unbound', 'Zincirsiz Aethon', '无缚的埃松', 'Aethon Desatado')),
+         name=L('Throne of the Fallen God', "Düşmüş Tanrı'nın Tahtı", '堕落之神的王座', 'Trono del Dios Caído')),
+]
+
+
 def mob_yaml(code, level, arch):
     hm, am, dm, crit, eva = ARCH[arch]
     gold = round(503 * (level / 25) ** 1.5)
+    raid = ['    raid_boss: true'] if arch.endswith('titan') else []
     return '\n'.join([
         '  - code: ' + code, '    display_name_key: mob.' + code, '    level: %d' % level,
         '    hp_max: %d' % round((150 + 25 * level) * hm), '    attack: %d' % round((28 + 2.1 * level) * am),
         '    defense: %d' % round((1 + 0.8 * level) * dm), '    crit_pct: %d' % crit,
         '    hit_pct: %d' % min(92, 82 + level // 5), '    evasion_pct: %d' % eva,
         '    xp_reward: %d' % round(10 * level ** 1.6), '    gold_copper_min: %d' % gold,
-        '    gold_copper_max: %d' % round(gold * 2.5)])
+        '    gold_copper_max: %d' % round(gold * 2.5)] + raid)
 
 
 mobs, dungeons, regions, links = [], [], [], []
@@ -390,6 +418,25 @@ for z in ZONES:
                                '    boss_mob_code: ' + d['boss'], '    bonus_gold_copper: %d' % d['gold'],
                                '    bonus_xp: %d' % d['xp']]))
 
+raids = []
+for r in RAIDS:
+    code, level, n = r['boss']
+    put('mob.' + code, n)
+    mobs.append(mob_yaml(code, level, 'titan' if r['level'] <= 300 else 'elder_titan'))
+    put('dungeon.' + r['code'], r['name'])
+    gold = round(3 * 25000 * (r['level'] / 88) ** 1.75)
+    xp = round(3 * 30000 * (r['level'] / 88) ** 2.07)
+    raids.append('\n'.join(['  - code: ' + r['code'], '    display_name_key: dungeon.' + r['code'],
+                             '    min_level: %d' % r['level'],
+                             '    duration_seconds: 3600         # 60 minutes',
+                             '    group_min: 3', '    group_max: 5',
+                             '    waves:',
+                             '      - { mob_code: %s, count: 3 }' % r['waves'][0],
+                             '      - { mob_code: %s, count: 3 }' % r['waves'][1],
+                             '      - { mob_code: %s, count: 2 }' % r['waves'][2],
+                             '    boss_mob_code: ' + code, '    bonus_gold_copper: %d' % gold,
+                             '    bonus_xp: %d' % xp]))
+
 
 def read(path):
     with io.open(path, encoding='utf-8', newline='') as f:
@@ -416,6 +463,7 @@ def block(s, name, body, before=None):
 for fname, name, body, before in [
     ('mobs.yaml', 'mobs', '\n\n'.join(mobs), None),
     ('dungeons.yaml', 'dungeons', '\n\n'.join(dungeons), None),
+    ('dungeons.yaml', 'raids', '\n\n'.join(raids), None),
 ]:
     p = os.path.join(ROOT, fname)
     s, crlf = read(p)
@@ -427,4 +475,4 @@ s = block(s, 'links', '\n'.join(links))
 write(p, s, crlf)
 
 merge(names)
-print('mobs', len(mobs), 'dungeons', len(dungeons), 'regions', len(regions))
+print('mobs', len(mobs), 'dungeons', len(dungeons), 'raids', len(raids), 'regions', len(regions))

@@ -1506,5 +1506,65 @@
         "type": "int"
       }
     }
-  }
+  },
+  "dungeonsSolo": "Dungeons",
+  "raidsTab": "Raids",
+  "raidGroup": "Party of {min}–{max}",
+  "@raidGroup": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "raidBossGear": "Boss: {count} gear pieces guaranteed",
+  "@raidBossGear": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "raidOpen": "Open raid",
+  "raidNeedParty": "Raids are for a party. Form one under Social → Party.",
+  "raidLeaderOnly": "Your party leader opens raids.",
+  "raidLobby": "Raid lobby",
+  "raidJoin": "Join",
+  "raidLeave": "Leave",
+  "raidCancel": "Call off",
+  "raidCancelBody": "The lobby closes for everyone.",
+  "raidStart": "Start raid",
+  "raidStartBody": "Nobody can join or leave once it starts.",
+  "raidMembers": "Members ({count}/{max})",
+  "@raidMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "raidNeedMore": "At least {min} members to start",
+  "@raidNeedMore": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "raidWaitHint": "Rewards open when the raid ends; every member collects their own.",
+  "raidDone": "Raid over — collect your rewards",
+  "raidLocked": "Cleared this week",
+  "raidCollected": "collected",
+  "errRaidNeedsParty": "Join a party first.",
+  "errRaidExists": "Your party already has an open raid.",
+  "errAlreadyInRaid": "You are already in a raid.",
+  "errRaidNotOpen": "This raid is no longer open.",
+  "errRaidNotEnough": "Not enough members to start.",
+  "errRaidWeeklyLocked": "You already cleared this raid this week."
 }

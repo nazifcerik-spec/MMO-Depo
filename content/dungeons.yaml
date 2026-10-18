@@ -312,3 +312,89 @@ dungeons:
     bonus_gold_copper: 1700000
     bonus_xp: 4400000
   # <<< generated: dungeons
+
+  # >>> generated: raids (scripts/gen_world.py)
+  - code: north_keep_siege
+    display_name_key: dungeon.north_keep_siege
+    min_level: 100
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: keep_gargoyle, count: 3 }
+      - { mob_code: fallen_commander, count: 3 }
+      - { mob_code: bone_rider, count: 2 }
+    boss_mob_code: varn_undying
+    bonus_gold_copper: 93803
+    bonus_xp: 117264
+
+  - code: crownless_palace
+    display_name_key: dungeon.crownless_palace
+    min_level: 300
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: tomb_keeper, count: 3 }
+      - { mob_code: black_knight, count: 3 }
+      - { mob_code: crownless_king, count: 2 }
+    boss_mob_code: crownless_tyrant
+    bonus_gold_copper: 641474
+    bonus_xp: 1139736
+
+  - code: dragon_king_lair
+    display_name_key: dungeon.dragon_king_lair
+    min_level: 600
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: throne_guardian, count: 3 }
+      - { mob_code: dragon_sorcerer, count: 3 }
+      - { mob_code: elder_dragon, count: 2 }
+    boss_mob_code: azhorath_ascended
+    bonus_gold_copper: 2157651
+    bonus_xp: 4785601
+
+  - code: time_lord_tower
+    display_name_key: dungeon.time_lord_tower
+    min_level: 700
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: stone_gargoyle, count: 3 }
+      - { mob_code: cursed_sorcerer, count: 3 }
+      - { mob_code: city_guardian, count: 2 }
+    boss_mob_code: kaedrin_timeless
+    bonus_gold_copper: 2825779
+    bonus_xp: 6584402
+
+  - code: archangels_fall
+    display_name_key: dungeon.archangels_fall
+    min_level: 850
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: light_hunter, count: 3 }
+      - { mob_code: celestial_dragon, count: 3 }
+      - { mob_code: seraph, count: 2 }
+    boss_mob_code: fallen_archangels
+    bonus_gold_copper: 3969170
+    bonus_xp: 9841483
+
+  - code: fallen_god_throne
+    display_name_key: dungeon.fallen_god_throne
+    min_level: 1000
+    duration_seconds: 3600         # 60 minutes
+    group_min: 3
+    group_max: 5
+    waves:
+      - { mob_code: throne_sentinel, count: 3 }
+      - { mob_code: god_shadow, count: 3 }
+      - { mob_code: avatar_of_ruin, count: 2 }
+    boss_mob_code: aethon_unbound
+    bonus_gold_copper: 5274929
+    bonus_xp: 13777277
+  # <<< generated: raids

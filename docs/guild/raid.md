@@ -1,6 +1,8 @@
 # Raid (Guild Raid)
 
 > ⚠️ **Phase 02** — 10-25 kişi raid content.
+>
+> **Faz 01 v1 (DD-261):** 3–5 kişilik *parti* baskınları uygulandı — `group_max > 1` zindan şablonları, `internal/raid`, kişisel ganimet, zindanlarla ortak haftalık kilit. Bu belge 10–25 kişilik lonca baskını tasarımı olarak kalır.
 
 ## 1. Amaç
 Party'nin (2-5 kişi) ötesinde büyük ölçekli coop encounter. Guild-organized.

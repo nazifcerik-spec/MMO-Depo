@@ -1996,4 +1996,90 @@ class AppLocalizationsTr extends AppLocalizations {
   String xpShare(int pct) {
     return 'XP %$pct';
   }
+
+  @override
+  String get dungeonsSolo => 'Zindanlar';
+
+  @override
+  String get raidsTab => 'Baskınlar';
+
+  @override
+  String raidGroup(int min, int max) {
+    return '$min–$max kişilik grup';
+  }
+
+  @override
+  String raidBossGear(int count) {
+    return 'Boss: $count ekipman garanti';
+  }
+
+  @override
+  String get raidOpen => 'Baskın aç';
+
+  @override
+  String get raidNeedParty => 'Baskınlar grupla yapılır. Grubu Sosyal → Grup bölümünden kurabilirsin.';
+
+  @override
+  String get raidLeaderOnly => 'Baskını grup lideri açar.';
+
+  @override
+  String get raidLobby => 'Baskın lobisi';
+
+  @override
+  String get raidJoin => 'Katıl';
+
+  @override
+  String get raidLeave => 'Ayrıl';
+
+  @override
+  String get raidCancel => 'İptal et';
+
+  @override
+  String get raidCancelBody => 'Lobi herkes için kapanır.';
+
+  @override
+  String get raidStart => 'Baskını başlat';
+
+  @override
+  String get raidStartBody => 'Başladıktan sonra kimse katılamaz ya da ayrılamaz.';
+
+  @override
+  String raidMembers(int count, int max) {
+    return 'Katılanlar ($count/$max)';
+  }
+
+  @override
+  String raidNeedMore(int min) {
+    return 'Başlamak için en az $min kişi gerekli';
+  }
+
+  @override
+  String get raidWaitHint => 'Ödüller baskın bitince açılır; her üye kendi ödülünü alır.';
+
+  @override
+  String get raidDone => 'Baskın bitti — ödüllerini al';
+
+  @override
+  String get raidLocked => 'Bu hafta temizlendi';
+
+  @override
+  String get raidCollected => 'aldı';
+
+  @override
+  String get errRaidNeedsParty => 'Önce bir gruba katıl.';
+
+  @override
+  String get errRaidExists => 'Grubunun zaten açık bir baskını var.';
+
+  @override
+  String get errAlreadyInRaid => 'Zaten bir baskındasın.';
+
+  @override
+  String get errRaidNotOpen => 'Bu baskın artık açık değil.';
+
+  @override
+  String get errRaidNotEnough => 'Başlamak için yeterli üye yok.';
+
+  @override
+  String get errRaidWeeklyLocked => 'Bu baskını bu hafta zaten temizledin.';
 }

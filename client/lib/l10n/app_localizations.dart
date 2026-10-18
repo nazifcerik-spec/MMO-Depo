@@ -3585,6 +3585,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'XP {pct}%'**
   String xpShare(int pct);
+
+  /// No description provided for @dungeonsSolo.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeons'**
+  String get dungeonsSolo;
+
+  /// No description provided for @raidsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Raids'**
+  String get raidsTab;
+
+  /// No description provided for @raidGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Party of {min}–{max}'**
+  String raidGroup(int min, int max);
+
+  /// No description provided for @raidBossGear.
+  ///
+  /// In en, this message translates to:
+  /// **'Boss: {count} gear pieces guaranteed'**
+  String raidBossGear(int count);
+
+  /// No description provided for @raidOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open raid'**
+  String get raidOpen;
+
+  /// No description provided for @raidNeedParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Raids are for a party. Form one under Social → Party.'**
+  String get raidNeedParty;
+
+  /// No description provided for @raidLeaderOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Your party leader opens raids.'**
+  String get raidLeaderOnly;
+
+  /// No description provided for @raidLobby.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid lobby'**
+  String get raidLobby;
+
+  /// No description provided for @raidJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get raidJoin;
+
+  /// No description provided for @raidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get raidLeave;
+
+  /// No description provided for @raidCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Call off'**
+  String get raidCancel;
+
+  /// No description provided for @raidCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The lobby closes for everyone.'**
+  String get raidCancelBody;
+
+  /// No description provided for @raidStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start raid'**
+  String get raidStart;
+
+  /// No description provided for @raidStartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody can join or leave once it starts.'**
+  String get raidStartBody;
+
+  /// No description provided for @raidMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members ({count}/{max})'**
+  String raidMembers(int count, int max);
+
+  /// No description provided for @raidNeedMore.
+  ///
+  /// In en, this message translates to:
+  /// **'At least {min} members to start'**
+  String raidNeedMore(int min);
+
+  /// No description provided for @raidWaitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards open when the raid ends; every member collects their own.'**
+  String get raidWaitHint;
+
+  /// No description provided for @raidDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid over — collect your rewards'**
+  String get raidDone;
+
+  /// No description provided for @raidLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared this week'**
+  String get raidLocked;
+
+  /// No description provided for @raidCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'collected'**
+  String get raidCollected;
+
+  /// No description provided for @errRaidNeedsParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a party first.'**
+  String get errRaidNeedsParty;
+
+  /// No description provided for @errRaidExists.
+  ///
+  /// In en, this message translates to:
+  /// **'Your party already has an open raid.'**
+  String get errRaidExists;
+
+  /// No description provided for @errAlreadyInRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'You are already in a raid.'**
+  String get errAlreadyInRaid;
+
+  /// No description provided for @errRaidNotOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'This raid is no longer open.'**
+  String get errRaidNotOpen;
+
+  /// No description provided for @errRaidNotEnough.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough members to start.'**
+  String get errRaidNotEnough;
+
+  /// No description provided for @errRaidWeeklyLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'You already cleared this raid this week.'**
+  String get errRaidWeeklyLocked;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

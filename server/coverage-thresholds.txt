@@ -34,6 +34,7 @@ internal/support              80
 internal/clienterr            91
 internal/progression          81
 internal/quest                87
+internal/raid                 81
 internal/ratelimit            43
 internal/skill                95
 internal/social               78

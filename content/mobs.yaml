@@ -1838,4 +1838,88 @@ mobs:
     xp_reward: 630957
     gold_copper_min: 127250
     gold_copper_max: 318125
+
+  - code: varn_undying
+    display_name_key: mob.varn_undying
+    level: 102
+    hp_max: 81000
+    attack: 775
+    defense: 116
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 16359
+    gold_copper_min: 4145
+    gold_copper_max: 10362
+    raid_boss: true
+
+  - code: crownless_tyrant
+    display_name_key: mob.crownless_tyrant
+    level: 302
+    hp_max: 231000
+    attack: 2119
+    defense: 340
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 92899
+    gold_copper_min: 21119
+    gold_copper_max: 52798
+    raid_boss: true
+
+  - code: azhorath_ascended
+    display_name_key: mob.azhorath_ascended
+    level: 602
+    hp_max: 456000
+    attack: 6203
+    defense: 676
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 280127
+    gold_copper_min: 59436
+    gold_copper_max: 148590
+    raid_boss: true
+
+  - code: kaedrin_timeless
+    display_name_key: mob.kaedrin_timeless
+    level: 702
+    hp_max: 531000
+    attack: 7211
+    defense: 788
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 358211
+    gold_copper_min: 74845
+    gold_copper_max: 187112
+    raid_boss: true
+
+  - code: fallen_archangels
+    display_name_key: mob.fallen_archangels
+    level: 852
+    hp_max: 643500
+    attack: 8723
+    defense: 956
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 488319
+    gold_copper_min: 100073
+    gold_copper_max: 250182
+    raid_boss: true
+
+  - code: aethon_unbound
+    display_name_key: mob.aethon_unbound
+    level: 1000
+    hp_max: 754500
+    attack: 10214
+    defense: 1121
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 630957
+    gold_copper_min: 127250
+    gold_copper_max: 318125
+    raid_boss: true
   # <<< generated: mobs

@@ -25,6 +25,8 @@ type world struct {
 	items    []contentpack.Item
 	mobs     []combat.Mob
 	dungeons []dungeon.Template
+	raids    []dungeon.Template // group dungeons (DD-261)
+	raidMobs map[string]combat.Mob
 	skills   *classskill.Catalog
 }
 
@@ -36,6 +38,9 @@ func (w *world) mobIndex() mobIndex {
 	idx := mobIndex{}
 	for _, m := range w.mobs {
 		idx[m.Code] = m
+	}
+	for code, m := range w.raidMobs {
+		idx[code] = m
 	}
 	return idx
 }
@@ -49,13 +54,26 @@ func load(t *testing.T) *world {
 	for _, m := range p.Mobs {
 		w.mobs = append(w.mobs, combat.Mob{Code: m.Code, Level: m.Level, HPMax: m.HPMax, Attack: m.Attack,
 			Defense: m.Defense, CritPct: int32(m.CritPct), HitPct: int32(m.HitPct), EvasionPct: int32(m.EvasionPct),
-			XPReward: m.XPReward, GoldCopperMin: m.GoldCopperMin, GoldCopperMax: m.GoldCopperMax})
+			XPReward: m.XPReward, GoldCopperMin: m.GoldCopperMin, GoldCopperMax: m.GoldCopperMax, RaidBoss: m.RaidBoss})
+	}
+	w.raidMobs = map[string]combat.Mob{}
+	for i := 0; i < len(w.mobs); i++ { // raid bosses are not hunted (DD-261)
+		if w.mobs[i].RaidBoss {
+			w.raidMobs[w.mobs[i].Code] = w.mobs[i]
+			w.mobs = append(w.mobs[:i], w.mobs[i+1:]...)
+			i--
+		}
 	}
 	sort.Slice(w.mobs, func(i, j int) bool { return w.mobs[i].Level < w.mobs[j].Level })
 	for _, d := range p.Dungeons {
-		t := dungeon.Template{Code: d.Code, MinLevel: d.MinLevel, BossMobCode: d.BossMobCode, DurationSecs: d.DurationSeconds}
+		t := dungeon.Template{Code: d.Code, MinLevel: d.MinLevel, BossMobCode: d.BossMobCode, DurationSecs: d.DurationSeconds,
+			GroupMin: d.GroupMin, GroupMax: d.GroupMax, BonusXP: d.BonusXP, BonusGoldCopper: d.BonusGoldCopper}
 		for _, wv := range d.Waves {
 			t.Waves = append(t.Waves, dungeon.Wave{MobCode: wv.MobCode, Count: wv.Count})
+		}
+		if t.IsRaid() {
+			w.raids = append(w.raids, t)
+			continue
 		}
 		w.dungeons = append(w.dungeons, t)
 	}
@@ -144,6 +162,11 @@ func builds(level int) []string {
 // when configured); path actives for the auto-cast; the class resource.
 // build is a class or "class/promotion".
 func (w *world) player(build string, level int, gear []contentpack.Item) combat.Combatant {
+	return w.playerIn(build, level, gear, false)
+}
+
+// playerIn is player with the party state Solo Adaptation reads (DD-252).
+func (w *world) playerIn(build string, level int, gear []contentpack.Item, inParty bool) combat.Combatant {
 	cfg := leveling.Current()
 	path := strings.Split(build, "/")
 	class := path[0]
@@ -158,7 +181,7 @@ func (w *world) player(build string, level int, gear []contentpack.Item) combat.
 		}
 	}
 	mods = append(mods, w.skills.Passives(path, level)...)
-	mods = append(mods, skill.FromLeveling(cfg.SoloAdaptationModifiers(class, false))...) // hunting alone
+	mods = append(mods, skill.FromLeveling(cfg.SoloAdaptationModifiers(class, inParty))...)
 	var formula *skill.Formula
 	k, hasClass := cfg.Class(class)
 	if hasClass && k.Derived != nil {

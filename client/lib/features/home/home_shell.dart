@@ -163,6 +163,7 @@ class _HomeShellState extends State<HomeShell> {
       repo: AdventureRepository(widget.auth.api, widget.initial.id),
       dataVersion: _dataVersion,
       level: _level,
+      live: _live,
     ),
     4 => WorkshopView(repo: WorkshopRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
     2 => InventoryView(repo: InventoryRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),

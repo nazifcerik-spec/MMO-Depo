@@ -43,6 +43,7 @@ import (
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
+	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
@@ -288,6 +289,11 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
+	// Raids (DD-261): party runs of the group dungeon templates.
+	raidSvc := raid.NewService(pool, dungCatSvc, combatSvc, charSvc, charSvc, itemSvc, txnSvc, logger,
+		func(seed int64) combat.RNG { return activity.NewRNG(seed) }).
+		WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithBagRoom(invSvc).
+		WithRecorder(recorder).WithNotifier(notifSvc).WithPublisher(wsPub)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
 	worldEventHandler := worldevent.NewHandler(worldevent.NewService(pool, charSvc, txnSvc,
@@ -378,6 +384,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		CombatHandler:     combatHandler,
 		HuntHandler:       huntHandler,
 		DungeonHandler:    dungHandler,
+		RaidHandler:       raid.NewHandler(raidSvc),
 		WorldHandler:      worldHandler,
 		CraftingHandler:   craftHandler,
 		ProgressionDev:    &progressionDev{chars: charSvc, busy: busyChecker{pool}, gear: equipSvc},

@@ -1996,4 +1996,90 @@ class AppLocalizationsEn extends AppLocalizations {
   String xpShare(int pct) {
     return 'XP $pct%';
   }
+
+  @override
+  String get dungeonsSolo => 'Dungeons';
+
+  @override
+  String get raidsTab => 'Raids';
+
+  @override
+  String raidGroup(int min, int max) {
+    return 'Party of $min–$max';
+  }
+
+  @override
+  String raidBossGear(int count) {
+    return 'Boss: $count gear pieces guaranteed';
+  }
+
+  @override
+  String get raidOpen => 'Open raid';
+
+  @override
+  String get raidNeedParty => 'Raids are for a party. Form one under Social → Party.';
+
+  @override
+  String get raidLeaderOnly => 'Your party leader opens raids.';
+
+  @override
+  String get raidLobby => 'Raid lobby';
+
+  @override
+  String get raidJoin => 'Join';
+
+  @override
+  String get raidLeave => 'Leave';
+
+  @override
+  String get raidCancel => 'Call off';
+
+  @override
+  String get raidCancelBody => 'The lobby closes for everyone.';
+
+  @override
+  String get raidStart => 'Start raid';
+
+  @override
+  String get raidStartBody => 'Nobody can join or leave once it starts.';
+
+  @override
+  String raidMembers(int count, int max) {
+    return 'Members ($count/$max)';
+  }
+
+  @override
+  String raidNeedMore(int min) {
+    return 'At least $min members to start';
+  }
+
+  @override
+  String get raidWaitHint => 'Rewards open when the raid ends; every member collects their own.';
+
+  @override
+  String get raidDone => 'Raid over — collect your rewards';
+
+  @override
+  String get raidLocked => 'Cleared this week';
+
+  @override
+  String get raidCollected => 'collected';
+
+  @override
+  String get errRaidNeedsParty => 'Join a party first.';
+
+  @override
+  String get errRaidExists => 'Your party already has an open raid.';
+
+  @override
+  String get errAlreadyInRaid => 'You are already in a raid.';
+
+  @override
+  String get errRaidNotOpen => 'This raid is no longer open.';
+
+  @override
+  String get errRaidNotEnough => 'Not enough members to start.';
+
+  @override
+  String get errRaidWeeklyLocked => 'You already cleared this raid this week.';
 }

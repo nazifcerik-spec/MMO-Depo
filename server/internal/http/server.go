@@ -43,6 +43,7 @@ import (
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
+	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/support"
@@ -73,6 +74,7 @@ type Deps struct {
 	CombatHandler     *combat.Handler
 	HuntHandler       *hunt.Handler
 	DungeonHandler    *dungeon.Handler
+	RaidHandler       *raid.Handler
 	WorldHandler      *world.Handler
 	CraftingHandler   *crafting.Handler
 	ProgressionDev    ProgressionDev // dev-only XP grant + respec (DD-250)
@@ -337,6 +339,17 @@ func NewRouter(d Deps) http.Handler {
 						Post("/dungeon", d.DungeonHandler.Start)
 				}
 
+				// --- Raids (DD-261) — party runs ---
+				if h := d.RaidHandler; h != nil {
+					idem := appmw.Idempotency(d.IdempotencyStore, d.Logger)
+					r.Get("/raid", h.Current)
+					r.With(idem).Post("/raid", h.Create)
+					r.With(idem).Post("/raid/{raid_id}/join", h.Join)
+					r.With(idem).Post("/raid/{raid_id}/leave", h.Leave)
+					r.With(idem).Post("/raid/{raid_id}/start", h.Start)
+					r.With(idem).Post("/raid/{raid_id}/reveal", h.Reveal)
+				}
+
 				// --- World / Travel (Sprint 16) ---
 				if d.WorldHandler != nil {
 					r.Get("/location", d.WorldHandler.Location)
@@ -489,6 +502,10 @@ func NewRouter(d Deps) http.Handler {
 					Post("/dungeon/{contract_id}/reveal", d.DungeonHandler.Reveal)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/dungeon/{contract_id}/stop", d.DungeonHandler.Stop)
+			}
+
+			if d.RaidHandler != nil {
+				r.Get("/raids", d.RaidHandler.Catalog)
 			}
 
 			// --- World / Travel — public catalog + travel-scoped controls ---

@@ -1996,4 +1996,90 @@ class AppLocalizationsZh extends AppLocalizations {
   String xpShare(int pct) {
     return '经验 $pct%';
   }
+
+  @override
+  String get dungeonsSolo => '地下城';
+
+  @override
+  String get raidsTab => '团队副本';
+
+  @override
+  String raidGroup(int min, int max) {
+    return '$min–$max 人队伍';
+  }
+
+  @override
+  String raidBossGear(int count) {
+    return '首领：必掉 $count 件装备';
+  }
+
+  @override
+  String get raidOpen => '开启团队副本';
+
+  @override
+  String get raidNeedParty => '团队副本需要队伍。请在 社交 → 队伍 中组队。';
+
+  @override
+  String get raidLeaderOnly => '由队长开启团队副本。';
+
+  @override
+  String get raidLobby => '团队副本大厅';
+
+  @override
+  String get raidJoin => '加入';
+
+  @override
+  String get raidLeave => '离开';
+
+  @override
+  String get raidCancel => '取消';
+
+  @override
+  String get raidCancelBody => '大厅将对所有人关闭。';
+
+  @override
+  String get raidStart => '开始团队副本';
+
+  @override
+  String get raidStartBody => '开始后无人可以加入或离开。';
+
+  @override
+  String raidMembers(int count, int max) {
+    return '成员（$count/$max）';
+  }
+
+  @override
+  String raidNeedMore(int min) {
+    return '至少需要 $min 人才能开始';
+  }
+
+  @override
+  String get raidWaitHint => '团队副本结束后开放奖励，每位成员各自领取。';
+
+  @override
+  String get raidDone => '团队副本结束——领取奖励';
+
+  @override
+  String get raidLocked => '本周已通关';
+
+  @override
+  String get raidCollected => '已领取';
+
+  @override
+  String get errRaidNeedsParty => '请先加入队伍。';
+
+  @override
+  String get errRaidExists => '你的队伍已有开启的团队副本。';
+
+  @override
+  String get errAlreadyInRaid => '你已在团队副本中。';
+
+  @override
+  String get errRaidNotOpen => '该团队副本已不再开放。';
+
+  @override
+  String get errRaidNotEnough => '人数不足，无法开始。';
+
+  @override
+  String get errRaidWeeklyLocked => '你本周已通关该团队副本。';
 }

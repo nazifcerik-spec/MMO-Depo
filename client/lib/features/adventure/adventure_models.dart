@@ -216,3 +216,138 @@ class Location {
   final List<Neighbor> neighbors;
   final TravelInfo? travel;
 }
+
+/// Raid template (DD-261): a dungeon for a party of [groupMin]..[groupMax].
+class RaidInfo {
+  const RaidInfo({required this.dungeon, required this.groupMin, required this.groupMax, required this.bossGear});
+
+  factory RaidInfo.fromJson(Map<String, dynamic> j) => RaidInfo(
+    dungeon: DungeonInfo.fromJson(j),
+    groupMin: (j['group_min'] as num?)?.toInt() ?? 1,
+    groupMax: (j['group_max'] as num?)?.toInt() ?? 1,
+    bossGear: (j['boss_gear'] as num?)?.toInt() ?? 0,
+  );
+
+  final DungeonInfo dungeon;
+  final int groupMin;
+  final int groupMax;
+  final int bossGear;
+
+  String get code => dungeon.code;
+}
+
+class RaidMember {
+  const RaidMember({
+    required this.characterId,
+    required this.name,
+    required this.classCode,
+    required this.level,
+    required this.collected,
+  });
+
+  factory RaidMember.fromJson(Map<String, dynamic> j) => RaidMember(
+    characterId: j['character_id'] as String,
+    name: j['name'] as String? ?? '',
+    classCode: j['class_code'] as String? ?? '',
+    level: (j['level'] as num?)?.toInt() ?? 1,
+    collected: j['collected'] as bool? ?? false,
+  );
+
+  final String characterId;
+  final String name;
+  final String classCode;
+  final int level;
+  final bool collected;
+}
+
+/// A party's raid: `forming` (lobby), `running` (finished once [expiresAt]
+/// has passed) or `cancelled`.
+class RaidRun {
+  const RaidRun({
+    required this.id,
+    required this.code,
+    required this.leaderId,
+    required this.state,
+    required this.members,
+    required this.groupMin,
+    required this.groupMax,
+    this.startedAt,
+    this.expiresAt,
+  });
+
+  factory RaidRun.fromJson(Map<String, dynamic> j) {
+    DateTime? at(String k) => j[k] is String ? DateTime.parse(j[k] as String) : null;
+    return RaidRun(
+      id: j['id'] as String,
+      code: j['raid_code'] as String? ?? '',
+      leaderId: j['leader_character_id'] as String? ?? '',
+      state: j['state'] as String? ?? '',
+      members: [
+        for (final m in (j['members'] as List? ?? const []).cast<Map<String, dynamic>>()) RaidMember.fromJson(m),
+      ],
+      groupMin: (j['group_min'] as num?)?.toInt() ?? 1,
+      groupMax: (j['group_max'] as num?)?.toInt() ?? 1,
+      startedAt: at('started_at'),
+      expiresAt: at('expires_at'),
+    );
+  }
+
+  final String id;
+  final String code;
+  final String leaderId;
+  final String state;
+  final List<RaidMember> members;
+  final int groupMin;
+  final int groupMax;
+  final DateTime? startedAt;
+  final DateTime? expiresAt;
+
+  bool get forming => state == 'forming';
+  bool get running => state == 'running';
+}
+
+/// What the raid screen shows: the raid the character is in, or its party's
+/// open lobby, plus this week's cleared raids.
+class RaidCurrent {
+  const RaidCurrent({this.raid, this.lobby, required this.inParty, required this.isLeader, required this.lockouts});
+
+  factory RaidCurrent.fromJson(Map<String, dynamic> j) => RaidCurrent(
+    raid: j['raid'] is Map<String, dynamic> ? RaidRun.fromJson(j['raid'] as Map<String, dynamic>) : null,
+    lobby: j['lobby'] is Map<String, dynamic> ? RaidRun.fromJson(j['lobby'] as Map<String, dynamic>) : null,
+    inParty: j['in_party'] as bool? ?? false,
+    isLeader: j['is_leader'] as bool? ?? false,
+    lockouts: {...(j['lockouts'] as List? ?? const []).cast<String>()},
+  );
+
+  final RaidRun? raid;
+  final RaidRun? lobby;
+  final bool inParty;
+  final bool isLeader;
+  final Set<String> lockouts;
+}
+
+/// A member's raid collection as a [CombatResult]: the shared fight's outcome
+/// with the member's own reward.
+CombatResult raidResult(Map<String, dynamic> j) {
+  final r = j['result'] as Map<String, dynamic>? ?? const {};
+  final rw = j['reward'] as Map<String, dynamic>? ?? const {};
+  int n(Map<String, dynamic> m, String k) => (m[k] as num?)?.toInt() ?? 0;
+  final items = [for (final i in (j['items'] as List? ?? const [])) LootItem.fromJson(i as Map<String, dynamic>)];
+  final xp = j['xp'] as Map<String, dynamic>?;
+  return CombatResult(
+    loot: Loot(
+      goldCopper: n(rw, 'gold_copper'),
+      xp: n(rw, 'xp'),
+      items: items,
+      counts: items.isEmpty
+          ? {'common': n(rw, 'common_drops'), 'rare': n(rw, 'rare_drops'), 'legendary': n(rw, 'legendary_drops')}
+          : const {},
+    ),
+    victories: n(r, 'victories'),
+    defeats: r['wiped'] == true ? 1 : 0,
+    leveledUp: xp?['leveled_up'] as bool? ?? false,
+    newLevel: (xp?['level'] as num?)?.toInt(),
+    cleared: r['cleared'] as bool? ?? false,
+    bossKilled: r['boss_killed'] as bool? ?? false,
+  );
+}

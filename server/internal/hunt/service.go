@@ -169,7 +169,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 
 	mob, ok := s.mobs.Catalog().Get(req.MobCode)
-	if !ok {
+	if !ok || mob.RaidBoss { // raid bosses are fought by a party (DD-261)
 		return nil, ErrUnknownMob
 	}
 

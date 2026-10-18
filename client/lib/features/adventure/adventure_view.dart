@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/config.dart';
+import '../../core/live_events.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/loot_sheet.dart';
@@ -15,13 +18,18 @@ import 'adventure_models.dart';
 import 'adventure_repository.dart';
 import '../../shared/content_names.dart';
 
+part 'raid_panel.dart';
+
 /// Adventure tab: hunts, dungeons, travel and events behind one segmented control.
 /// Panels are built on first selection and kept alive.
 class AdventureView extends StatefulWidget {
-  const AdventureView({super.key, required this.repo, required this.dataVersion, required this.level});
+  const AdventureView({super.key, required this.repo, required this.dataVersion, required this.level, this.live});
 
   final AdventureRepository repo;
   final ValueNotifier<int> dataVersion;
+
+  /// Push events (raid lobby changes); null in tests.
+  final LiveEvents? live;
 
   /// Live character level; panels rebuild with it on a level-up.
   final ValueListenable<int> level;
@@ -41,7 +49,7 @@ class _AdventureViewState extends State<AdventureView> {
     final l = AppLocalizations.of(context);
     final panels = <Widget Function()>[
       () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level),
-      () => _DungeonPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level),
+      () => _DungeonsTab(repo: widget.repo, dataVersion: widget.dataVersion, level: level, live: widget.live),
       () => _TravelPanel(repo: widget.repo, level: level),
       () => EventsPanel(repo: EventRepository(widget.repo.api, widget.repo.characterId), level: level),
     ];
@@ -533,6 +541,63 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
         ],
       ];
     });
+  }
+}
+
+/// Solo dungeons and party raids (DD-261) under one segment.
+class _DungeonsTab extends StatefulWidget {
+  const _DungeonsTab({required this.repo, required this.dataVersion, required this.level, this.live});
+
+  final AdventureRepository repo;
+  final ValueNotifier<int> dataVersion;
+  final int level;
+  final LiveEvents? live;
+
+  @override
+  State<_DungeonsTab> createState() => _DungeonsTabState();
+}
+
+class _DungeonsTabState extends State<_DungeonsTab> {
+  bool _raids = false;
+  bool _raidsSeen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    Widget chip(String label, bool raids) => ChoiceChip(
+      label: Text(label),
+      selected: _raids == raids,
+      onSelected: (_) => setState(() {
+        _raids = raids;
+        _raidsSeen |= raids;
+      }),
+    );
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Space.screen),
+          child: Row(
+            children: [
+              chip(l.dungeonsSolo, false),
+              const SizedBox(width: Space.sm),
+              chip(l.raidsTab, true),
+            ],
+          ),
+        ),
+        Expanded(
+          child: IndexedStack(
+            index: _raids ? 1 : 0,
+            children: [
+              _DungeonPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.level),
+              if (_raidsSeen)
+                _RaidPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: widget.level, live: widget.live)
+              else
+                const SizedBox(),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 

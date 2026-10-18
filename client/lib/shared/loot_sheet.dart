@@ -93,11 +93,14 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
               ],
               const SizedBox(height: Space.lg),
               if (loot.goldCopper > 0 || loot.xp > 0)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Wrap(
+                  // big raid rewards wrap on a phone instead of overflowing
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: Space.xl,
+                  runSpacing: Space.xs,
                   children: [
                     if (loot.goldCopper > 0) GoldText(loot.goldCopper, size: 20),
-                    if (loot.goldCopper > 0 && loot.xp > 0) const SizedBox(width: Space.xl),
                     if (loot.xp > 0)
                       Text(
                         l.xpGain(loot.xp),

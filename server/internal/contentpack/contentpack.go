@@ -129,6 +129,7 @@ type Mob struct {
 	XPReward       int32  `yaml:"xp_reward"`
 	GoldCopperMin  int64  `yaml:"gold_copper_min"`
 	GoldCopperMax  int64  `yaml:"gold_copper_max"`
+	RaidBoss       bool   `yaml:"raid_boss"` // fought only in raids (DD-261)
 }
 
 type mobsFile struct {
@@ -145,6 +146,9 @@ type Dungeon struct {
 	BossMobCode     string        `yaml:"boss_mob_code"`
 	BonusGoldCopper int64         `yaml:"bonus_gold_copper"`
 	BonusXP         int32         `yaml:"bonus_xp"`
+	// Party size (DD-261): a raid has group_max above one. Zero = 1.
+	GroupMin int16 `yaml:"group_min"`
+	GroupMax int16 `yaml:"group_max"`
 }
 
 type DungeonWave struct {
@@ -515,13 +519,24 @@ func validateRefs(p *Pack, r refs) error {
 			}
 		}
 	}
+	raidBoss := map[string]bool{}
+	for _, m := range p.Mobs {
+		raidBoss[m.Code] = m.RaidBoss
+	}
 	for _, d := range p.Dungeons {
 		if !r.mobs[d.BossMobCode] {
 			return fmt.Errorf("dungeon %s: unknown boss %q", d.Code, d.BossMobCode)
 		}
+		// A raid boss is sized for a party (DD-261): only raids have one.
+		if raid := d.GroupMax > 1; raidBoss[d.BossMobCode] != raid {
+			return fmt.Errorf("dungeon %s: boss %q: raids (group_max > 1) and only raids have a raid_boss", d.Code, d.BossMobCode)
+		}
 		for _, w := range d.Waves {
 			if !r.mobs[w.MobCode] {
 				return fmt.Errorf("dungeon %s: unknown wave mob %q", d.Code, w.MobCode)
+			}
+			if raidBoss[w.MobCode] {
+				return fmt.Errorf("dungeon %s: raid boss %q in a wave", d.Code, w.MobCode)
 			}
 		}
 	}
@@ -900,6 +915,11 @@ func validateDungeons(dungeons []Dungeon) error {
 		if d.BonusGoldCopper < 0 || d.BonusXP < 0 {
 			return fmt.Errorf("dungeon %s: bonus rewards must be >= 0", d.Code)
 		}
+		lo, hi := max(d.GroupMin, 1), max(d.GroupMax, 1)
+		if lo > hi || hi > 5 {
+			return fmt.Errorf("dungeon %s: group size must be 1 <= group_min <= group_max <= 5", d.Code)
+		}
+		dungeons[i].GroupMin, dungeons[i].GroupMax = lo, hi
 	}
 	return nil
 }
@@ -1089,8 +1109,8 @@ func (l *Loader) upsertMobs(ctx context.Context, mobs []Mob) error {
 INSERT INTO content.mob_template (
   code, display_name_key, level,
   hp_max, attack, defense, crit_pct, hit_pct, evasion_pct,
-  xp_reward, gold_copper_min, gold_copper_max
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+  xp_reward, gold_copper_min, gold_copper_max, raid_boss
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key = EXCLUDED.display_name_key,
   level            = EXCLUDED.level,
@@ -1103,13 +1123,14 @@ ON CONFLICT (code) DO UPDATE SET
   xp_reward        = EXCLUDED.xp_reward,
   gold_copper_min  = EXCLUDED.gold_copper_min,
   gold_copper_max  = EXCLUDED.gold_copper_max,
+  raid_boss        = EXCLUDED.raid_boss,
   version          = content.mob_template.version + 1`
 
 	for _, m := range mobs {
 		_, err = tx.Exec(ctx, q,
 			m.Code, m.DisplayNameKey, m.Level,
 			m.HPMax, m.Attack, m.Defense, m.CritPct, m.HitPct, m.EvasionPct,
-			m.XPReward, m.GoldCopperMin, m.GoldCopperMax,
+			m.XPReward, m.GoldCopperMin, m.GoldCopperMax, m.RaidBoss,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert mob %s: %w", m.Code, err)
@@ -1128,8 +1149,8 @@ func (l *Loader) upsertDungeons(ctx context.Context, dungeons []Dungeon) error {
 	const q = `
 INSERT INTO content.dungeon_template (
   code, display_name_key, min_level, duration_seconds,
-  waves, boss_mob_code, bonus_gold_copper, bonus_xp
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+  waves, boss_mob_code, bonus_gold_copper, bonus_xp, group_min, group_max
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   min_level          = EXCLUDED.min_level,
@@ -1138,6 +1159,8 @@ ON CONFLICT (code) DO UPDATE SET
   boss_mob_code      = EXCLUDED.boss_mob_code,
   bonus_gold_copper  = EXCLUDED.bonus_gold_copper,
   bonus_xp           = EXCLUDED.bonus_xp,
+  group_min          = EXCLUDED.group_min,
+  group_max          = EXCLUDED.group_max,
   version            = content.dungeon_template.version + 1`
 
 	for _, d := range dungeons {
@@ -1147,7 +1170,7 @@ ON CONFLICT (code) DO UPDATE SET
 		}
 		_, err = tx.Exec(ctx, q,
 			d.Code, d.DisplayNameKey, d.MinLevel, d.DurationSeconds,
-			waves, d.BossMobCode, d.BonusGoldCopper, d.BonusXP,
+			waves, d.BossMobCode, d.BonusGoldCopper, d.BonusXP, d.GroupMin, d.GroupMax,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert dungeon %s: %w", d.Code, err)

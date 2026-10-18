@@ -602,6 +602,60 @@ void main() {
     expect(find.text('Rat Crown'), findsOneWidget);
   });
 
+  testWidgets('raid: leader opens a lobby, members join live, start with confirm, collect at the end', (tester) async {
+    final (be, ws, _) = await _inGame(tester);
+    await tester.tap(find.byIcon(Icons.explore_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dungeon'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Raids'));
+    await tester.pumpAndSettle();
+    expect(find.text('Party of 3–5 · 1h 00m'), findsOneWidget);
+    expect(find.text('Boss: 2 gear pieces guaranteed'), findsOneWidget);
+
+    await tester.tap(find.text('Open raid'));
+    await tester.pumpAndSettle();
+    expect(find.text('Members (1/5)'), findsOneWidget);
+    expect(find.text('At least 3 members to start'), findsOneWidget);
+    final start = find.widgetWithText(FilledButton, 'Start raid');
+    expect(tester.widget<FilledButton>(start).onPressed, isNull, reason: 'not enough members yet');
+
+    // Two party members join on their devices: the push reloads the lobby.
+    (be.raidRun!['members'] as List).addAll(<Map<String, dynamic>>[
+      be.raidMember('c2', 'Ada'),
+      be.raidMember('c3', 'Bo'),
+    ]);
+    ws.last.push('raid.changed', {'raid_id': 'raid-1', 'state': 'forming'});
+    await tester.pumpAndSettle();
+    expect(find.text('Members (3/5)'), findsOneWidget);
+    await tester.tap(start);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Start raid').last); // the confirm dialog
+    await tester.pumpAndSettle();
+    expect(be.raidRun!['state'], 'running');
+    expect(find.text('Rewards open when the raid ends; every member collects their own.'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Collect')).onPressed, isNull);
+
+    be.raidRun!['expires_at'] = DateTime.now().toUtc().toIso8601String();
+    await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Collect'));
+    await tester.pumpAndSettle();
+    expect(find.text('Cleared! · Boss defeated · 9 won · 0 lost'), findsOneWidget);
+    Navigator.of(tester.element(find.text('Cleared! · Boss defeated · 9 won · 0 lost'))).pop(); // close the loot sheet
+    await tester.pumpAndSettle();
+    expect(find.text('Cleared this week'), findsOneWidget);
+    expect(find.text('Open raid'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Open raid')).onPressed, isNull);
+
+    // Out of a party there is nothing to open.
+    be.raidInParty = false;
+    await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000);
+    await tester.pumpAndSettle();
+    expect(find.text('Raids are for a party. Form one under Social → Party.'), findsOneWidget);
+    expect(find.text('Open raid'), findsNothing);
+  });
+
   testWidgets('travel: routes with level gate, depart, turn back', (tester) async {
     final (be, _, _) = await _inGame(tester);
     await tester.tap(find.byIcon(Icons.explore_outlined));

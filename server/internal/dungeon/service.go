@@ -158,7 +158,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 
 	tmpl, ok := s.dungeons.Catalog().Get(req.DungeonCode)
-	if !ok {
+	if !ok || tmpl.IsRaid() { // raids are entered as a party (DD-261)
 		return nil, ErrUnknownDungeon
 	}
 
@@ -494,8 +494,16 @@ func (s *Service) History(ctx context.Context, characterID, accountID uuid.UUID,
 	return s.repo.History(ctx, characterID, limit)
 }
 
-// ListCatalog returns the loaded dungeon templates for the client picker.
-func (s *Service) ListCatalog() []Template { return s.dungeons.Catalog().All() }
+// ListCatalog returns the loaded solo dungeon templates for the client picker.
+func (s *Service) ListCatalog() []Template {
+	var out []Template
+	for _, t := range s.dungeons.Catalog().All() {
+		if !t.IsRaid() {
+			out = append(out, t)
+		}
+	}
+	return out
+}
 
 // --- Helpers ----------------------------------------------------------------
 

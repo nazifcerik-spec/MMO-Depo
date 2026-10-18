@@ -163,6 +163,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 76. **Arbalet Ustası güçlendirmesi (bitti)** — Sprint 76, DD-260. Dört pasif/aktif güçlendi (saldırı, hasar azaltma, can, can çalma, Odak kazancı); Yıldız Kemiren ve Ruh Biçen yeniden `glass`. Uzmanlık raporu yenilendi.
 
+77. **Baskınlar v1 (bitti)** — Sprint 77, DD-261. Migration 0038 (`raid.run` + `raid.member`, `dungeon_template.group_min/max`, `mob_template.raid_boss`). Baskın = `group_max > 1` zindan şablonu; 6 baskın (Sv 100/300/600/700/850/1000, 3–5 kişi, 60 dk) `python scripts/gen_world.py` ile (`titan`/`elder_titan` boss'lar, 4 dil). `combat.Group`: sıralı grup turu, destek yetenekleri en yaralı müttefike, mob tanka vurur, boss alan saldırısı (her 3. vuruş %60) + sersemletme bağışıklığı; tek kişilik grup = tek kişilik savaş. Yeni `internal/raid`: lider lobi açar → parti üyeleri katılır (anlık görüntü donar) → lider başlatır → süre dolunca her üye kendi ödülünü toplar (idempotent, kişisel ganimet, boss 2 garanti ekipman, haftalık kilit zindanlarla ortak). Baskın boss'ları avlanamaz, solo zindan listesinde baskın yok. Uçlar `GET /v1/raids`, `/v1/character/{id}/raid[/{raid_id}/{join|leave|start|reveal}]`, WS `raid.changed`. Denge: `TestRaidTargets` (5'li ort. ≥ %70 / en kötü ≥ %40, 3'lü ≤ %30). İstemci: Macera → Zindan → Baskınlar (lobi, üyeler, başlat onayı, ilerleme, toplama). Fix: ganimet ekranında altın + XP satırı büyük ödüllerde taşıyordu → `Wrap`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

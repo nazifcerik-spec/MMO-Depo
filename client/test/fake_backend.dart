@@ -46,10 +46,79 @@ class FakeBackend {
   Map<String, dynamic>? travel;
   String region = 'ironhold_city';
   Duration dungeonLength = const Duration(minutes: 20);
+
+  /// Raid (DD-261) of the player's party; null = none open.
+  Map<String, dynamic>? raidRun;
+  bool raidInParty = true;
+  final raidLockouts = <String>[];
   final equipped = <String, Map<String, dynamic>>{};
   int sheetGets = 0;
   int slotCap = 2;
   int goldCopper = 123456;
+
+  Map<String, dynamic> raidMember(String id, String name) => {
+    'character_id': id,
+    'name': name,
+    'class_code': 'warrior',
+    'level': 3,
+    'label': '',
+    'collected': false,
+  };
+
+  http.Response _raid(String method, String path) {
+    final r = raidRun;
+    final members = (r?['members'] as List? ?? const []).cast<Map<String, dynamic>>();
+    final mine = members.any((m) => m['character_id'] == 'char-1');
+    if (method == 'GET') {
+      return json(200, {
+        'raid': mine ? r : null,
+        'lobby': !mine && r?['state'] == 'forming' ? r : null,
+        'in_party': raidInParty,
+        'is_leader': raidInParty,
+        'lockouts': raidLockouts,
+      });
+    }
+    if (path.endsWith('/raid')) {
+      raidRun = {
+        'id': 'raid-1',
+        'raid_code': 'north_keep_siege',
+        'leader_character_id': 'char-1',
+        'state': 'forming',
+        'group_min': 3,
+        'group_max': 5,
+        'members': [raidMember('char-1', 'Grim')],
+      };
+      return json(201, {'raid': raidRun});
+    }
+    if (path.endsWith('/start')) {
+      if (members.length < 3) return error(409, 'E_RAID_NOT_ENOUGH');
+      final now = DateTime.now().toUtc();
+      r!
+        ..['state'] = 'running'
+        ..['started_at'] = now.toIso8601String()
+        ..['expires_at'] = now.add(const Duration(hours: 1)).toIso8601String();
+      return json(200, {'raid': r});
+    }
+    if (path.endsWith('/leave')) {
+      raidRun = null;
+      return json(200, {'left': true});
+    }
+    if (path.endsWith('/reveal')) {
+      if (DateTime.now().toUtc().isBefore(DateTime.parse(r!['expires_at'] as String))) {
+        return error(409, 'E_RAID_NOT_READY');
+      }
+      raidRun = null;
+      raidLockouts.add('north_keep_siege');
+      return json(200, {
+        'result': {'cleared': true, 'boss_killed': true, 'victories': 9, 'wiped': false},
+        'reward': {'xp': 5000, 'gold_copper': 12000, 'rare_drops': 2},
+        'items': [
+          {'instance_id': 'g1', 'template_code': 'varn_blade', 'rarity': 'epic'},
+        ],
+      });
+    }
+    return error(404, 'E_NOT_FOUND');
+  }
 
   http.Response json(int status, Object body) =>
       http.Response(jsonEncode(body), status, headers: {'content-type': 'application/json'});
@@ -299,6 +368,25 @@ class FakeBackend {
         ],
       });
     }
+    if (path == '/v1/raids') {
+      return json(200, {
+        'raids': [
+          {
+            'code': 'north_keep_siege',
+            'min_level': 3,
+            'duration_seconds': 3600,
+            'encounters': 9,
+            'boss_mob_code': 'varn_undying',
+            'bonus_gold_copper': 9000,
+            'bonus_xp': 1200,
+            'group_min': 3,
+            'group_max': 5,
+            'boss_gear': 2,
+          },
+        ],
+      });
+    }
+    if (RegExp(r'^/v1/character/[^/]+/raid').hasMatch(path)) return _raid(req.method, path);
     if (path == '/v1/dungeon/catalog') {
       return json(200, {
         'dungeons': [

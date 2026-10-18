@@ -100,7 +100,12 @@ type Template struct {
 	BossMobCode     string
 	BonusGoldCopper int64 // paid on top of accumulated wave gold when boss dies
 	BonusXP         int32 // paid on top of accumulated wave xp when boss dies
+	GroupMin        int16 // party size bounds (DD-261); 1/1 = a solo dungeon
+	GroupMax        int16
 }
+
+// IsRaid reports whether the template is a raid (a group run, DD-261).
+func (t *Template) IsRaid() bool { return t.GroupMax > 1 }
 
 // TotalEncounters — wave sum + 1 boss. Used for planned-encounter preview.
 func (t *Template) TotalEncounters() int {

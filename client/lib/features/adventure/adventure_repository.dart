@@ -62,6 +62,30 @@ class AdventureRepository {
 
   Future<void> stopDungeon(String id) => api.post('/v1/dungeon/$id/stop', const {});
 
+  // --- raids (DD-261) -------------------------------------------------------
+
+  List<RaidInfo>? _raids;
+
+  Future<List<RaidInfo>> raids() async => _raids ??= [
+    for (final r in ((await api.get('/v1/raids'))['raids'] as List? ?? const []).cast<Map<String, dynamic>>())
+      RaidInfo.fromJson(r),
+  ];
+
+  Future<RaidCurrent> raid() async => RaidCurrent.fromJson(await api.get('$_char/raid'));
+
+  /// Party leader only: opens a lobby the party's members can join.
+  Future<void> openRaid(String code) => api.post('$_char/raid', {'raid_code': code});
+
+  Future<void> joinRaid(String id) => api.post('$_char/raid/$id/join', const {});
+
+  /// The leader leaving calls the lobby off.
+  Future<void> leaveRaid(String id) => api.post('$_char/raid/$id/leave', const {});
+
+  Future<void> startRaid(String id) => api.post('$_char/raid/$id/start', const {});
+
+  /// Only once the raid has ended (E_RAID_NOT_READY); idempotent.
+  Future<CombatResult> revealRaid(String id) async => raidResult(await api.post('$_char/raid/$id/reveal', const {}));
+
   // --- travel ---------------------------------------------------------------
 
   Future<Location> location() async => Location.fromJson(await api.get('$_char/location'));

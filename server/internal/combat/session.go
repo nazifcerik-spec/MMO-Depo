@@ -111,6 +111,12 @@ type caster struct {
 	hot    tick
 	shield int // turn the barrier fades (0 = none)
 	stun   int // the target skips its swings while turn < stun
+
+	// Group fights (DD-261): heals, heal-over-time and barriers go to an ally
+	// (self in a duel); stun skills only strike a stun-immune target.
+	hotOn    *Combatant
+	shieldOn *Combatant
+	noStun   bool
 }
 
 // buff is a timed stat bonus: delta is reverted when its turn comes.
@@ -150,20 +156,22 @@ func (k *caster) expire(turn int, self, target *Combatant) {
 		k.weak = buff{}
 	}
 	if k.shield != 0 && turn >= k.shield {
-		self.Barrier, k.shield = 0, 0
+		k.shieldOn.Barrier, k.shield = 0, 0
 	}
 }
 
 // ticks applies damage- and heal-over-time at the start of a turn.
-func (k *caster) ticks(self, target *Combatant) (dmg, heal int32) {
+func (k *caster) ticks(target *Combatant) (dmg, heal int32) {
 	if k.dot.left > 0 {
 		dmg = min(k.dot.amount, target.HPCurrent)
 		target.HPCurrent -= dmg
 		k.dot.left--
 	}
 	if k.hot.left > 0 {
-		heal = min(k.hot.amount, self.HPMax-self.HPCurrent)
-		self.HPCurrent += heal
+		if on := k.hotOn; on.HPCurrent > 0 { // the fallen are not healed back up
+			heal = min(k.hot.amount, on.HPMax-on.HPCurrent)
+			on.HPCurrent += heal
+		}
 		k.hot.left--
 	}
 	return dmg, heal
@@ -193,27 +201,41 @@ func pctAtOrBelow(cur, max, pct int32) bool { return int64(cur)*100 <= int64(max
 // act runs the start-of-turn effects, then picks the first usable skill
 // (list order = priority) or attacks.
 func (k *caster) act(r RNG, turn int, self, target *Combatant) TurnRecord {
+	return k.actWith(r, turn, self, target, self)
+}
+
+// actWith is act with ally as the receiver of heals and barriers.
+func (k *caster) actWith(r RNG, turn int, self, target, ally *Combatant) TurnRecord {
 	k.expire(turn, self, target)
 	if k.pooled && self.ResourcePerTurn > 0 {
 		k.mp = min(k.mp+self.ResourcePerTurn, self.MPMax)
 	}
-	dmg, heal := k.ticks(self, target)
+	dmg, heal := k.ticks(target)
 	if target.HPCurrent <= 0 {
 		return TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Tick: dmg, TickHeal: heal}
 	}
-	rec := k.cast(r, turn, self, target)
+	rec := k.cast(r, turn, self, target, ally)
 	rec.Tick, rec.TickHeal = dmg, heal
 	return rec
 }
 
+// supportive effects land on the ally rather than the caster.
+func supportive(effect string) bool {
+	return effect == EffectHeal || effect == EffectHot || effect == EffectBarrier
+}
+
 // cast uses the first usable skill or attacks.
-func (k *caster) cast(r RNG, turn int, self, target *Combatant) TurnRecord {
+func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord {
 	for i := range self.Skills {
 		sk := &self.Skills[i]
 		if turn < k.ready[i] || sk.MPCost > k.mp {
 			continue
 		}
-		if sk.SelfHPBelow > 0 && !pctAtOrBelow(self.HPCurrent, self.HPMax, sk.SelfHPBelow) {
+		benef := self
+		if supportive(sk.Effect) {
+			benef = ally
+		}
+		if sk.SelfHPBelow > 0 && !pctAtOrBelow(benef.HPCurrent, benef.HPMax, sk.SelfHPBelow) {
 			continue
 		}
 		if sk.TargetHPBelow > 0 && !pctAtOrBelow(target.HPCurrent, target.HPMax, sk.TargetHPBelow) {
@@ -240,25 +262,25 @@ func (k *caster) cast(r RNG, turn int, self, target *Combatant) TurnRecord {
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
 				TargetHPAft: self.HPCurrent}
 		case EffectHeal:
-			if sk.SelfHPBelow == 0 && self.HPCurrent*2 > self.HPMax {
+			if sk.SelfHPBelow == 0 && benef.HPCurrent*2 > benef.HPMax {
 				continue // not worth it yet
 			}
-			heal := self.HPMax * sk.Power / 100
-			if heal > self.HPMax-self.HPCurrent {
-				heal = self.HPMax - self.HPCurrent
+			heal := benef.HPMax * sk.Power / 100
+			if heal > benef.HPMax-benef.HPCurrent {
+				heal = benef.HPMax - benef.HPCurrent
 			}
-			self.HPCurrent += heal
+			benef.HPCurrent += heal
 			k.spend(i, turn, *sk)
-			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
-				Heal: heal, TargetHPAft: self.HPCurrent}
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
+				Heal: heal, TargetHPAft: benef.HPCurrent}
 		case EffectStrike, EffectStun:
-			if sk.Effect == EffectStun && k.stunned(turn+1) {
+			if sk.Effect == EffectStun && !k.noStun && k.stunned(turn+1) {
 				continue // still stunned: no chaining
 			}
 			k.spend(i, turn, *sk)
 			rec := swing(r, turn, self, target, sk.Power)
 			rec.Skill = sk.Code
-			if sk.Effect == EffectStun && rec.Hit {
+			if sk.Effect == EffectStun && rec.Hit && !k.noStun {
 				k.stun = turn + max(1, sk.DurationTurns)
 			}
 			k.gain(self, rec, sk)
@@ -267,24 +289,24 @@ func (k *caster) cast(r RNG, turn int, self, target *Combatant) TurnRecord {
 			if k.shield != 0 {
 				continue
 			}
-			self.Barrier = max(1, self.HPMax*sk.Power/100)
-			k.shield = turn + max(1, sk.DurationTurns)
+			benef.Barrier = max(1, benef.HPMax*sk.Power/100)
+			k.shield, k.shieldOn = turn+max(1, sk.DurationTurns), benef
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
-			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
-				TargetHPAft: self.HPCurrent}
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
+				TargetHPAft: benef.HPCurrent}
 		case EffectHot:
-			if k.hot.left > 0 || (sk.SelfHPBelow == 0 && self.HPCurrent*10 > self.HPMax*7) {
+			if k.hot.left > 0 || (sk.SelfHPBelow == 0 && benef.HPCurrent*10 > benef.HPMax*7) {
 				continue // running already, or not hurt enough (default: <= 70% HP)
 			}
-			amount := max(1, self.HPMax*sk.Power/100)
-			heal := min(amount, self.HPMax-self.HPCurrent)
-			self.HPCurrent += heal
-			k.hot = tick{left: max(1, sk.DurationTurns) - 1, amount: amount}
+			amount := max(1, benef.HPMax*sk.Power/100)
+			heal := min(amount, benef.HPMax-benef.HPCurrent)
+			benef.HPCurrent += heal
+			k.hot, k.hotOn = tick{left: max(1, sk.DurationTurns) - 1, amount: amount}, benef
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
-			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
-				Heal: heal, TargetHPAft: self.HPCurrent}
+			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
+				Heal: heal, TargetHPAft: benef.HPCurrent}
 		case EffectDot:
 			if k.dot.left > 0 {
 				continue

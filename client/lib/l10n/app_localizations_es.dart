@@ -1996,4 +1996,90 @@ class AppLocalizationsEs extends AppLocalizations {
   String xpShare(int pct) {
     return 'PX $pct%';
   }
+
+  @override
+  String get dungeonsSolo => 'Mazmorras';
+
+  @override
+  String get raidsTab => 'Incursiones';
+
+  @override
+  String raidGroup(int min, int max) {
+    return 'Grupo de $min a $max';
+  }
+
+  @override
+  String raidBossGear(int count) {
+    return 'Jefe: $count piezas de equipo garantizadas';
+  }
+
+  @override
+  String get raidOpen => 'Abrir incursión';
+
+  @override
+  String get raidNeedParty => 'Las incursiones son para un grupo. Forma uno en Social → Grupo.';
+
+  @override
+  String get raidLeaderOnly => 'El líder del grupo abre las incursiones.';
+
+  @override
+  String get raidLobby => 'Sala de la incursión';
+
+  @override
+  String get raidJoin => 'Unirse';
+
+  @override
+  String get raidLeave => 'Salir';
+
+  @override
+  String get raidCancel => 'Cancelar';
+
+  @override
+  String get raidCancelBody => 'La sala se cierra para todos.';
+
+  @override
+  String get raidStart => 'Iniciar incursión';
+
+  @override
+  String get raidStartBody => 'Una vez iniciada nadie puede unirse ni salir.';
+
+  @override
+  String raidMembers(int count, int max) {
+    return 'Miembros ($count/$max)';
+  }
+
+  @override
+  String raidNeedMore(int min) {
+    return 'Se necesitan al menos $min miembros';
+  }
+
+  @override
+  String get raidWaitHint => 'Las recompensas se abren al terminar; cada miembro recoge las suyas.';
+
+  @override
+  String get raidDone => 'Incursión terminada: recoge tus recompensas';
+
+  @override
+  String get raidLocked => 'Completada esta semana';
+
+  @override
+  String get raidCollected => 'recogido';
+
+  @override
+  String get errRaidNeedsParty => 'Únete primero a un grupo.';
+
+  @override
+  String get errRaidExists => 'Tu grupo ya tiene una incursión abierta.';
+
+  @override
+  String get errAlreadyInRaid => 'Ya estás en una incursión.';
+
+  @override
+  String get errRaidNotOpen => 'Esta incursión ya no está abierta.';
+
+  @override
+  String get errRaidNotEnough => 'No hay suficientes miembros para empezar.';
+
+  @override
+  String get errRaidWeeklyLocked => 'Ya completaste esta incursión esta semana.';
 }
