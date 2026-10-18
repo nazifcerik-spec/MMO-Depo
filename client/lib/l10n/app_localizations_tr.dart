@@ -2216,4 +2216,66 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get eventDetails => 'Ayrıntılar';
+
+  @override
+  String get createCharacterTitle => 'Karakter oluştur';
+
+  @override
+  String get classTraits => 'Sınıf özellikleri';
+
+  @override
+  String classResourceLine(String name) {
+    return 'Kaynak: $name';
+  }
+
+  @override
+  String classFocusLine(String primary, String secondary) {
+    return 'Ana nitelik: $primary · ikinci: $secondary';
+  }
+
+  @override
+  String classFocusOnly(String primary) {
+    return 'Ana nitelik: $primary';
+  }
+
+  @override
+  String get classDifficulty => 'Zorluk';
+
+  @override
+  String get difficultyEasy => 'Kolay — affedici, AFK avda güvenli';
+
+  @override
+  String get difficultyMedium => 'Orta — dengeli; yetenek sırası önemli';
+
+  @override
+  String get difficultyHard => 'Zor — kırılgan; doğru ekipman ister';
+
+  @override
+  String get skillsTapHint => 'açıklama için dokun';
+
+  @override
+  String get chooseRace => 'Irkını seç';
+
+  @override
+  String get raceCosmeticHint => 'Irk görünüşünü belirler; nitelikleri değiştirmez.';
+
+  @override
+  String get raceHumanDesc => 'Kentlerin halkı';
+
+  @override
+  String get raceElfDesc => 'Kadim ormanların çocukları';
+
+  @override
+  String get raceDwarfDesc => 'Dağların demircileri';
+
+  @override
+  String get raceOrcDesc => 'Bozkırın savaşçıları';
+
+  @override
+  String continueAs(String name) {
+    return '$name ile devam et';
+  }
+
+  @override
+  String get nameYourCharacter => 'Karakterine ad ver';
 }

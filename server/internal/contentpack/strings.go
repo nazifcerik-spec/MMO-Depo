@@ -201,7 +201,8 @@ func progressionKeys(p *Pack) []string {
 	}
 	for _, k := range c.Classes {
 		if k.Parent == "" {
-			keys = append(keys, "class."+k.Code+".intro") // creation screen (DD-253)
+			// creation screen: introduction (DD-253), tagline and saying (DD-266)
+			keys = append(keys, "class."+k.Code+".intro", "class."+k.Code+".tagline", "class."+k.Code+".quote")
 		}
 	}
 	for _, f := range c.EquipmentFamilies {

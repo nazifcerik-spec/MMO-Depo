@@ -7,154 +7,8 @@ import 'character_repository.dart';
 import 'character_sheet_view.dart' show skillDescription;
 import 'class_catalog.dart';
 
-/// Everything a player weighs when choosing a class (DD-253): introduction,
-/// resource, attribute focus and base attributes, equipment, the first
-/// skills and the class path pyramid (tap a node for its skills).
-class ClassInfoCard extends StatelessWidget {
-  const ClassInfoCard({super.key, required this.catalog, required this.classCode, required this.skills});
-
-  final ClassCatalog catalog;
-  final String classCode;
-
-  /// The class's skills; null while loading.
-  final List<ClassSkill>? skills;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    final text = Theme.of(context).textTheme;
-    final node = catalog.node(classCode);
-    if (node == null) return const SizedBox.shrink();
-    final color = classColor(classCode);
-    final intro = ContentNames.of('class', '$classCode.intro', '');
-    final base = [
-      for (final s in skills ?? const <ClassSkill>[])
-        if (s.spec.isEmpty || s.spec == classCode) s,
-    ]..sort((a, b) => a.unlockLevel.compareTo(b.unlockLevel));
-
-    Widget label(String s) => Padding(
-      padding: const EdgeInsets.only(bottom: Space.sm),
-      child: Text(s, style: text.bodySmall?.copyWith(color: Palette.textSecondary)),
-    );
-
-    return Container(
-      key: ValueKey('class-info-$classCode'),
-      padding: const EdgeInsets.all(Space.md),
-      decoration: BoxDecoration(
-        color: Palette.bgElevated,
-        borderRadius: BorderRadius.circular(Radii.lg),
-        border: Border.all(color: color.withValues(alpha: 0.45)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(Radii.md),
-                ),
-                child: Icon(classIcon(classCode), color: color, size: 28),
-              ),
-              const SizedBox(width: Space.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(ContentNames.of('class', classCode), style: text.titleMedium?.copyWith(color: color)),
-                    Text(
-                      ContentNames.of('class', '$classCode.role', ''),
-                      style: text.bodySmall?.copyWith(color: Palette.textSecondary),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          if (intro.isNotEmpty) ...[
-            const SizedBox(height: Space.md),
-            Text(intro, style: text.bodyMedium?.copyWith(color: Palette.textSecondary, height: 1.4)),
-          ],
-          const SizedBox(height: Space.md),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _Tile(
-                  label: l.classResource,
-                  value: '${ContentNames.of('resource', node.resourceKind)} · ${node.resourceMax}',
-                  detail: _resourceText(l, node),
-                ),
-              ),
-              const SizedBox(width: Space.sm),
-              Expanded(
-                child: _Tile(
-                  label: l.classFocus,
-                  value: ContentNames.of('attribute', node.primaryAttribute),
-                  detail: node.secondaryAttributes.isEmpty
-                      ? ''
-                      : l.classSecondary(
-                          node.secondaryAttributes.map((a) => ContentNames.of('attribute', a)).join(', '),
-                        ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: Space.lg),
-          label(l.baseAttributesHint(catalog.attributePointsTotal)),
-          for (final e in node.baseStats.entries)
-            _StatLine(
-              name: ContentNames.of('attribute', e.key),
-              value: e.value,
-              max: catalog.maxBaseStat,
-              color: color,
-              primary: e.key == node.primaryAttribute,
-            ),
-          const SizedBox(height: Space.lg),
-          label(l.classEquipment),
-          Wrap(
-            spacing: Space.xs,
-            runSpacing: Space.xs,
-            children: [for (final e in node.equipment) _Chip(ContentNames.of('equipment', e))],
-          ),
-          const SizedBox(height: Space.lg),
-          label(l.firstSkills),
-          if (skills == null)
-            const Padding(
-              padding: EdgeInsets.all(Space.md),
-              child: Center(child: SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))),
-            )
-          else
-            for (final s in base) SkillLine(skill: s),
-          const SizedBox(height: Space.lg),
-          label(l.classPath),
-          ClassPathPyramid(
-            catalog: catalog,
-            root: classCode,
-            onTap: (n) => showClassNodeSkills(context, catalog, n, skills ?? const []),
-          ),
-          const SizedBox(height: Space.sm),
-          Text(l.classPathHint, style: text.bodySmall?.copyWith(color: Palette.textMuted)),
-          const SizedBox(height: Space.xs),
-          Text(
-            l.classMilestones(
-              catalog.milestones['awakening'] ?? 600,
-              catalog.milestones['ultimate'] ?? 700,
-              catalog.milestones['capstone'] ?? 850,
-              catalog.milestones['mastery'] ?? 1000,
-            ),
-            style: text.bodySmall?.copyWith(color: Palette.textSecondary),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-String _resourceText(AppLocalizations l, ClassNode n) => [
+/// How the class resource fills (creation screen).
+String resourceText(AppLocalizations l, ClassNode n) => [
   switch (n.resourceStartPct) {
     0 => l.resStartsEmpty,
     100 => l.resStartsFull,
@@ -164,33 +18,10 @@ String _resourceText(AppLocalizations l, ClassNode n) => [
   if (n.resourcePerTurn > 0) l.resPerTurn(n.resourcePerTurn),
 ].join(' · ');
 
-class _Tile extends StatelessWidget {
-  const _Tile({required this.label, required this.value, required this.detail});
-
-  final String label;
-  final String value;
-  final String detail;
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.all(Space.sm),
-      decoration: BoxDecoration(color: Palette.bgSurface, borderRadius: BorderRadius.circular(Radii.md)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: text.labelSmall?.copyWith(color: Palette.textMuted)),
-          Text(value, style: text.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-          if (detail.isNotEmpty) Text(detail, style: text.bodySmall?.copyWith(color: Palette.textSecondary)),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatLine extends StatelessWidget {
-  const _StatLine({
+/// One base attribute as a bar; [primary] ones are bold and full colour.
+class StatLine extends StatelessWidget {
+  const StatLine({
+    super.key,
     required this.name,
     required this.value,
     required this.max,
@@ -231,22 +62,6 @@ class _StatLine extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 3),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(999),
-      border: Border.all(color: Palette.borderSubtle),
-    ),
-    child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Palette.textSecondary)),
-  );
 }
 
 /// One skill: level, name, kind tag, effect text (and cost for actives).
@@ -312,6 +127,23 @@ class SkillLine extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Stand-in skill icon by effect until skill artwork ships.
+IconData skillIcon(ClassSkill s) {
+  if (s.category == 'ultimate') return Icons.whatshot;
+  if (!s.active) return Icons.auto_awesome_outlined;
+  return switch (s.effect) {
+    'heal' => Icons.healing,
+    'guard' => Icons.shield_outlined,
+    'empower' => Icons.trending_up,
+    'barrier' => Icons.security,
+    'dot' => Icons.water_drop_outlined,
+    'hot' => Icons.spa_outlined,
+    'weaken' => Icons.trending_down,
+    'stun' => Icons.flare,
+    _ => Icons.flash_on,
+  };
 }
 
 /// The class path as a pyramid: the base class on top, its two promotions

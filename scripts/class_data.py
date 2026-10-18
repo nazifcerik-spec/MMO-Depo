@@ -1061,6 +1061,34 @@ INTROS = {
                 'Un portavoz de los espíritus. Gasta Espíritu en tótems, curación ancestral, tormentas y maldiciones que moldean el combate.'),
 }
 
+# Creation screen tagline (under the class name) and class saying (under
+# the portrait), all ten classes (DD-266).
+TAGLINES = {
+    'warrior': L('Master of steel and fury', 'Çeliğin ve öfkenin ustası', '钢铁与怒火的主宰', 'Maestro del acero y la furia'),
+    'rogue': L('Unseen blade, sudden death', 'Görünmez bıçak, ani ölüm', '无形之刃，猝然之死', 'Hoja invisible, muerte súbita'),
+    'ranger': L('Patience, aim, release', 'Sabır, nişan, bırak', '耐心、瞄准、放箭', 'Paciencia, apunta, suelta'),
+    'mage': L('Power drawn from pure magic', 'Saf büyüden doğan güç', '源自纯粹魔法的力量', 'Poder nacido de la magia pura'),
+    'monk': L('Body, mind and Chi', 'Beden, zihin ve Chi', '身、心与气', 'Cuerpo, mente y Chi'),
+    'cleric': L('The light that heals and guards', 'İyileştiren ve koruyan ışık', '治愈与守护之光', 'La luz que cura y protege'),
+    'paladin': L('Sword of faith, shield of the weak', 'İnancın kılıcı, zayıfın kalkanı', '信仰之剑，弱者之盾', 'Espada de la fe, escudo del débil'),
+    'druid': L('Voice of the wild', 'Vahşi doğanın sesi', '荒野之声', 'La voz de lo salvaje'),
+    'bard': L('The rhythm that turns the battle', 'Savaşın gidişini değiştiren ritim', '扭转战局的韵律', 'El ritmo que cambia la batalla'),
+    'shaman': L('Totem, storm and ancestor', 'Totem, fırtına ve ata', '图腾、风暴与先祖', 'Tótem, tormenta y ancestro'),
+}
+
+QUOTES = {
+    'warrior': L('Shields break. Warriors don\'t.', 'Kalkan kırılır, savaşçı kırılmaz.', '盾会碎，战士不会。', 'Los escudos se rompen. Los guerreros, no.'),
+    'rogue': L('By the time you see me, it\'s over.', 'Beni gördüğünde iş çoktan bitmiştir.', '当你看见我时，一切已经结束。', 'Cuando me ves, ya ha terminado.'),
+    'ranger': L('The wild wastes no arrows.', 'Vahşi doğa boşa ok atmaz.', '荒野从不虚发一箭。', 'Lo salvaje no desperdicia flechas.'),
+    'mage': L('Knowledge is the sharpest spell.', 'Bilgi, en keskin büyüdür.', '知识是最锋利的法术。', 'El conocimiento es el hechizo más afilado.'),
+    'monk': L('Still water wears down the stone.', 'Durgun su taşı deler.', '静水穿石。', 'El agua quieta desgasta la piedra.'),
+    'cleric': L('No one falls while I stand.', 'Ben ayaktayken kimse düşmez.', '我站立之时，无人倒下。', 'Nadie cae mientras yo esté en pie.'),
+    'paladin': L('My oath is heavier than my armor.', 'Yeminim zırhımdan ağırdır.', '我的誓言比盔甲更重。', 'Mi juramento pesa más que mi armadura.'),
+    'druid': L('The forest remembers every wound.', 'Orman her yarayı hatırlar.', '森林记得每一道伤痕。', 'El bosque recuerda cada herida.'),
+    'bard': L('Every battle needs a song.', 'Her savaşın bir şarkıya ihtiyacı vardır.', '每场战斗都需要一首歌。', 'Toda batalla necesita una canción.'),
+    'shaman': L('My ancestors fight beside me.', 'Atalarım yanımda savaşır.', '先祖与我并肩作战。', 'Mis ancestros luchan a mi lado.'),
+}
+
 # Equipment permission names (families and "<type>_armor").
 EQUIPMENT = {
     'cloth_armor': L('Cloth armor', 'Kumaş zırh', '布甲', 'Armadura de tela'),

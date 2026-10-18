@@ -2393,6 +2393,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-266 — Karakter oluşturma ekranı şablonu
+**Karar:** Karakter oluşturma alt pencere yerine tam sayfa (`CreateCharacterScreen`), onaylanan sade koyu şablonla: üstte 10 sınıflık yuvarlak ikon şeridi; portre (`assets/classes/<sınıf>.png`, yoksa sınıf ikonu) yanında ad, slogan (`class.<sınıf>.tagline`), rol etiketleri ve tanıtım; ikisinin altında sınıf sözü (`class.<sınıf>.quote`); Sınıf özellikleri (kaynak + dolma şekli, ana/ikinci nitelik + taban nitelik çubukları, ekipman, zorluk); İlk yetenekler ikon olarak — dokununca oku yeteneğe dönük baloncuk (tür, seviye, maliyet, açıklama), tekrar dokununca kapanır; Sınıf yolu piramidi (düğüme dokun → yetenek penceresi, DD-253); Irkını seç (4 kart, `assets/races/<ırk>.png`, yoksa ikon); alttaki "X ile devam et" ad penceresini açar ve karakteri oluşturur. Slogan ve söz 10 sınıf × 4 dil (`scripts/class_data.py` `TAGLINES`/`QUOTES`, contentpack zorunlu anahtar). Zorluk istemci sabiti (`classDifficulty`: Savaşçı/Paladin/Rahip kolay, Haydut/Büyücü zor, diğerleri orta).
+**Reason:** Kullanıcının seçtiği taslak (v3).
+**Alternatives:** Siyah-altın ve açık turuncu poster stilleri (iyi tam boy görseller ister).
+**Consequences:** Irk kartlarında stat bonusu yazmaz: ırklar şu an yalnız görünüş ("Irk görünüşünü belirler; nitelikleri değiştirmez."). Görseller gelene kadar ikonlar. Eski `ClassInfoCard` silindi.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

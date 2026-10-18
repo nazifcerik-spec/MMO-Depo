@@ -167,6 +167,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 78. **Tek işlem kuralı + sınırsız zindan + süreli üretim + etkinlik açıklaması (bitti)** — Sprint 78, DD-262..265. Migration 0039 (`character.active_action` görünümü + `claim_action` tetikleyicisi her iş tablosunda, `crafting.job`, `content.recipe.craft_seconds`). Tek işlem: toplama/av/zindan/baskın/yolculuk/üretim birbirini engeller (advisory lock, eşzamanlı başlatmada tam biri kazanır), `internal/action` → 409 `E_CHARACTER_BUSY` (`field` = meşgul tür). Solo zindan haftalık kilidi yok; boss bonus altını da seviye farkıyla ölçekli; seviye kapısı zindan + baskın üyelerinde. Üretim işi: `POST /craft` (her şey önden alınır) → `GET /craft/active` → `POST /craft/{job_id}/collect` (bitenler + XP, kalanın altını ve malzemesi iade, idempotent); 49 tarife süre. Etkinlik kartına dokununca katılım adımları + kademe ödülleri + tahmini puan (`afk_cap_tier`, `power_now`). İstemci: meşgul uyarısı, iş kartı (canlı x/y), erken toplama onayı, adet seçicide toplam süre.
 
+79. **Karakter oluşturma ekranı (bitti)** — Sprint 79, DD-266. Tam sayfa `CreateCharacterScreen`: sınıf ikon şeridi, portre + ad + slogan + rol etiketleri + tanıtım, altında sınıf sözü, sınıf özellikleri (kaynak, nitelik çubukları, ekipman, zorluk), yetenek ikonları + dokununca baloncuk, sınıf yolu piramidi, ırk kartları, "X ile devam et" → ad penceresi. İçerik: `class.<sınıf>.{tagline,quote}` 10 sınıf × 4 dil (contentpack zorunlu). Görseller `client/assets/classes/<sınıf>.png`, `client/assets/races/<ırk>.png` (yoksa ikon).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

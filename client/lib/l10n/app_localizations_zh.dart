@@ -2215,4 +2215,66 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get eventDetails => '详情';
+
+  @override
+  String get createCharacterTitle => '创建角色';
+
+  @override
+  String get classTraits => '职业特性';
+
+  @override
+  String classResourceLine(String name) {
+    return '资源：$name';
+  }
+
+  @override
+  String classFocusLine(String primary, String secondary) {
+    return '主属性：$primary · 次属性：$secondary';
+  }
+
+  @override
+  String classFocusOnly(String primary) {
+    return '主属性：$primary';
+  }
+
+  @override
+  String get classDifficulty => '难度';
+
+  @override
+  String get difficultyEasy => '简单——容错高，挂机狩猎安全';
+
+  @override
+  String get difficultyMedium => '中等——均衡；技能顺序很重要';
+
+  @override
+  String get difficultyHard => '困难——脆弱；需要合适的装备';
+
+  @override
+  String get skillsTapHint => '点击查看说明';
+
+  @override
+  String get chooseRace => '选择种族';
+
+  @override
+  String get raceCosmeticHint => '种族决定外观，不影响属性。';
+
+  @override
+  String get raceHumanDesc => '城邦之民';
+
+  @override
+  String get raceElfDesc => '远古森林之子';
+
+  @override
+  String get raceDwarfDesc => '群山的铁匠';
+
+  @override
+  String get raceOrcDesc => '草原的战士';
+
+  @override
+  String continueAs(String name) {
+    return '以$name继续';
+  }
+
+  @override
+  String get nameYourCharacter => '为角色命名';
 }

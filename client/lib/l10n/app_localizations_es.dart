@@ -2216,4 +2216,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventDetails => 'Detalles';
+
+  @override
+  String get createCharacterTitle => 'Crear personaje';
+
+  @override
+  String get classTraits => 'Rasgos de la clase';
+
+  @override
+  String classResourceLine(String name) {
+    return 'Recurso: $name';
+  }
+
+  @override
+  String classFocusLine(String primary, String secondary) {
+    return 'Atributo principal: $primary · segundo: $secondary';
+  }
+
+  @override
+  String classFocusOnly(String primary) {
+    return 'Atributo principal: $primary';
+  }
+
+  @override
+  String get classDifficulty => 'Dificultad';
+
+  @override
+  String get difficultyEasy => 'Fácil — indulgente, segura en cacerías AFK';
+
+  @override
+  String get difficultyMedium => 'Media — equilibrada; importa el orden de habilidades';
+
+  @override
+  String get difficultyHard => 'Difícil — frágil; necesita el equipo adecuado';
+
+  @override
+  String get skillsTapHint => 'toca para ver detalles';
+
+  @override
+  String get chooseRace => 'Elige tu raza';
+
+  @override
+  String get raceCosmeticHint => 'Tu raza define tu aspecto; no cambia los atributos.';
+
+  @override
+  String get raceHumanDesc => 'Gente de las ciudades';
+
+  @override
+  String get raceElfDesc => 'Hijos de los bosques antiguos';
+
+  @override
+  String get raceDwarfDesc => 'Herreros de las montañas';
+
+  @override
+  String get raceOrcDesc => 'Guerreros de la estepa';
+
+  @override
+  String continueAs(String name) {
+    return 'Continuar como $name';
+  }
+
+  @override
+  String get nameYourCharacter => 'Ponle nombre a tu personaje';
 }

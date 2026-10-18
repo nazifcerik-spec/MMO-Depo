@@ -117,7 +117,7 @@ void main() {
     expect(reg.body, contains('"accept_terms":true'));
   });
 
-  testWidgets('creation screen explains the class: stats, skills, pyramid path, node skills', (tester) async {
+  testWidgets('creation screen explains the class: traits, skill bubble, pyramid path, node skills', (tester) async {
     tester.view.physicalSize = const Size(360 * 3, 780 * 3); // phone width: the four-node pyramid row must fit
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
@@ -126,6 +126,8 @@ void main() {
       'class.warrior': 'Warrior',
       'class.warrior.role': 'Melee / Physical',
       'class.warrior.intro': 'A heavily armored frontline fighter.',
+      'class.warrior.tagline': 'Master of steel and fury',
+      'class.warrior.quote': "Shields break. Warriors don't.",
       'class.guardian': 'Guardian',
       'class.executioner': 'Executioner',
       'class.iron_fortress': 'Iron Fortress',
@@ -206,19 +208,44 @@ void main() {
     await tester.tap(find.text('New character'));
     await tester.pumpAndSettle();
 
+    // Hero (DD-266): tagline under the name, role chips, the saying under all.
+    expect(find.text('Master of steel and fury'), findsOneWidget);
+    expect(find.text('Melee'), findsOneWidget);
+    expect(find.text('Physical'), findsOneWidget);
     expect(find.text('A heavily armored frontline fighter.'), findsOneWidget);
-    expect(find.text('Rage · 100'), findsOneWidget);
+    expect(find.text('"Shields break. Warriors don\'t."'), findsOneWidget);
+
+    final list = find
+        .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
+        .first;
+    await tester.scrollUntilVisible(find.text('Difficulty'), 200, scrollable: list);
+    expect(find.text('Resource: Rage'), findsOneWidget);
     expect(find.text('Starts empty · +12 per hit'), findsOneWidget);
-    expect(find.text('Secondary: Vitality'), findsOneWidget);
-    expect(find.text('Base attributes · 1 point every 2 levels, 525 in total'), findsOneWidget);
+    expect(find.text('Main attribute: Strength · second: Vitality'), findsOneWidget);
     expect(find.text('Heavy armor'), findsOneWidget);
-    expect(find.text('Strike'), findsOneWidget, reason: 'base skills only');
+    expect(find.text('Easy — forgiving, safe on AFK hunts'), findsOneWidget);
+
+    // Skills: base only; a tap opens the bubble, a second tap closes it.
+    await tester.scrollUntilVisible(find.text('Strike'), 200, scrollable: list);
+    await tester.ensureVisible(find.text('Strike'));
+    await tester.pumpAndSettle();
     expect(find.text('Unbreakable'), findsNothing);
+    final bubble = find.textContaining('Basic attack that builds Rage.', findRichText: true);
+    expect(bubble, findsNothing);
+    await tester.tap(find.text('Strike'));
+    await tester.pumpAndSettle();
+    expect(bubble, findsOneWidget);
+    expect(find.textContaining('active · Lvl 1', findRichText: true), findsOneWidget);
+    await tester.tap(find.text('Strike'));
+    await tester.pumpAndSettle();
+    expect(bubble, findsNothing);
+
+    await tester.scrollUntilVisible(find.text('Weapon Master'), 200, scrollable: list);
+    await tester.ensureVisible(find.text('Iron Fortress'));
+    await tester.pumpAndSettle();
     for (final n in ['Guardian', 'Executioner', 'Iron Fortress', 'Warlord', 'Berserker', 'Weapon Master']) {
       expect(find.text(n), findsOneWidget, reason: 'pyramid node $n');
     }
-
-    await tester.ensureVisible(find.text('Iron Fortress'));
     await tester.tap(find.text('Iron Fortress'));
     await tester.pumpAndSettle();
     expect(find.text('Unbreakable'), findsOneWidget);
@@ -239,16 +266,33 @@ void main() {
 
     await tester.tap(find.text('New character'));
     await tester.pumpAndSettle();
+    // Class strip, race cards, then the name (DD-266).
+    final strip = find
+        .descendant(of: find.byKey(const ValueKey('class-strip')), matching: find.byType(Scrollable))
+        .first;
+    await tester.scrollUntilVisible(find.text('Shaman'), 200, scrollable: strip);
+    expect(find.text('Shaman'), findsOneWidget, reason: 'all ten classes are offered');
+    await tester.scrollUntilVisible(find.text('Ranger'), -200, scrollable: strip);
+    await tester.tap(find.text('Ranger').first);
+    await tester.pumpAndSettle();
+    final list = find
+        .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
+        .first;
+    await tester.scrollUntilVisible(find.text('Dwarf'), 200, scrollable: list);
+    expect(find.text('Your race sets your look; it does not change attributes.'), findsOneWidget);
+    await tester.ensureVisible(find.text('Dwarf'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dwarf'));
+    await tester.pump();
+    await tester.tap(find.text('Continue as Ranger'));
+    await tester.pumpAndSettle();
+    expect(find.text('Name your character'), findsOneWidget);
     await tester.enterText(find.byType(TextFormField), '1bad');
     await tester.tap(find.text('Create'));
     await tester.pump();
     expect(find.text('3–16 characters, starts with a letter (A–Z, 0–9, _)'), findsWidgets);
 
     await tester.enterText(find.byType(TextFormField), 'Grim');
-    await tester.tap(find.text('Dwarf'));
-    await tester.ensureVisible(find.text('Shaman'));
-    expect(find.text('Shaman'), findsOneWidget, reason: 'all ten classes are offered');
-    await tester.tap(find.text('Ranger'));
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(be.characters.single['race_code'], 'dwarf');

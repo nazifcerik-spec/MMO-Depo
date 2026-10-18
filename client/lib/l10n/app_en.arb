@@ -1736,5 +1736,54 @@
       }
     }
   },
-  "eventDetails": "Details"
+  "eventDetails": "Details",
+  "createCharacterTitle": "Create character",
+  "classTraits": "Class traits",
+  "classResourceLine": "Resource: {name}",
+  "@classResourceLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "classFocusLine": "Main attribute: {primary} · second: {secondary}",
+  "@classFocusLine": {
+    "placeholders": {
+      "primary": {
+        "type": "String"
+      },
+      "secondary": {
+        "type": "String"
+      }
+    }
+  },
+  "classFocusOnly": "Main attribute: {primary}",
+  "@classFocusOnly": {
+    "placeholders": {
+      "primary": {
+        "type": "String"
+      }
+    }
+  },
+  "classDifficulty": "Difficulty",
+  "difficultyEasy": "Easy — forgiving, safe on AFK hunts",
+  "difficultyMedium": "Medium — balanced; skill order matters",
+  "difficultyHard": "Hard — fragile; needs the right gear",
+  "skillsTapHint": "tap for details",
+  "chooseRace": "Choose your race",
+  "raceCosmeticHint": "Your race sets your look; it does not change attributes.",
+  "raceHumanDesc": "People of the cities",
+  "raceElfDesc": "Children of the old woods",
+  "raceDwarfDesc": "Smiths of the mountains",
+  "raceOrcDesc": "Warriors of the steppe",
+  "continueAs": "Continue as {name}",
+  "@continueAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nameYourCharacter": "Name your character"
 }

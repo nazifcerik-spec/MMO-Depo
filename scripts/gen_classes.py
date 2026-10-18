@@ -17,7 +17,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from class_data import CLASSES, EQUIPMENT, INTROS, ROLE_NAMES, RESOURCE_NAMES, TALENTS, WEAPON_STATS  # noqa: E402
+from class_data import CLASSES, EQUIPMENT, INTROS, QUOTES, ROLE_NAMES, RESOURCE_NAMES, TAGLINES, TALENTS, WEAPON_STATS  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 CONTENT = os.path.join(ROOT, 'content')
@@ -343,6 +343,10 @@ for kind, names in RESOURCE_NAMES.items():
     put('resource.' + kind, names)
 for code, names in INTROS.items():
     put('class.' + code + '.intro', names)
+for code, names in TAGLINES.items():
+    put('class.' + code + '.tagline', names)
+for code, names in QUOTES.items():
+    put('class.' + code + '.quote', names)
 for code, names in EQUIPMENT.items():
     put('equipment.' + code, names)
 put('category.mastery', dict(en='Mastery', tr='Ustalık', zh='精通', es='Maestría'))  # mastery achievements

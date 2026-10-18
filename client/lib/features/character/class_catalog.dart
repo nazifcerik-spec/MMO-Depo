@@ -138,6 +138,14 @@ IconData classIcon(String root) => switch (root) {
   _ => Icons.person_outline,
 };
 
+/// How forgiving a base class is to play (1 easy, 2 medium, 3 hard), from
+/// the balance simulations' AFK safety (DD-266).
+int classDifficulty(String root) => switch (root) {
+  'warrior' || 'paladin' || 'cleric' => 1,
+  'rogue' || 'mage' => 3,
+  _ => 2,
+};
+
 /// One accent hue per base class, used on the creation screen.
 Color classColor(String root) => switch (root) {
   'warrior' => const Color(0xFFE0735A),

@@ -8,7 +8,7 @@ import '../auth/account_dialogs.dart';
 import '../auth/auth_controller.dart';
 import 'character_repository.dart';
 import '../home/home_shell.dart';
-import 'create_character_sheet.dart';
+import 'create_character_screen.dart';
 import 'models.dart';
 
 class CharacterSelectScreen extends StatefulWidget {
@@ -49,13 +49,8 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
   }
 
   Future<void> _create() async {
-    final created = await showModalBottomSheet<CharacterSummary>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      backgroundColor: Palette.bgSurface,
-      builder: (_) => CreateCharacterSheet(repo: widget.repo),
-    );
+    final created = await Navigator.of(context)
+        .push<CharacterSummary>(MaterialPageRoute(builder: (_) => CreateCharacterScreen(repo: widget.repo)));
     if (created != null) await _load();
   }
 

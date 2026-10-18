@@ -3939,6 +3939,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Details'**
   String get eventDetails;
+
+  /// No description provided for @createCharacterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create character'**
+  String get createCharacterTitle;
+
+  /// No description provided for @classTraits.
+  ///
+  /// In en, this message translates to:
+  /// **'Class traits'**
+  String get classTraits;
+
+  /// No description provided for @classResourceLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource: {name}'**
+  String classResourceLine(String name);
+
+  /// No description provided for @classFocusLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Main attribute: {primary} · second: {secondary}'**
+  String classFocusLine(String primary, String secondary);
+
+  /// No description provided for @classFocusOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Main attribute: {primary}'**
+  String classFocusOnly(String primary);
+
+  /// No description provided for @classDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Difficulty'**
+  String get classDifficulty;
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy — forgiving, safe on AFK hunts'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium — balanced; skill order matters'**
+  String get difficultyMedium;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard — fragile; needs the right gear'**
+  String get difficultyHard;
+
+  /// No description provided for @skillsTapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'tap for details'**
+  String get skillsTapHint;
+
+  /// No description provided for @chooseRace.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your race'**
+  String get chooseRace;
+
+  /// No description provided for @raceCosmeticHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your race sets your look; it does not change attributes.'**
+  String get raceCosmeticHint;
+
+  /// No description provided for @raceHumanDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'People of the cities'**
+  String get raceHumanDesc;
+
+  /// No description provided for @raceElfDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Children of the old woods'**
+  String get raceElfDesc;
+
+  /// No description provided for @raceDwarfDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Smiths of the mountains'**
+  String get raceDwarfDesc;
+
+  /// No description provided for @raceOrcDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Warriors of the steppe'**
+  String get raceOrcDesc;
+
+  /// No description provided for @continueAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as {name}'**
+  String continueAs(String name);
+
+  /// No description provided for @nameYourCharacter.
+  ///
+  /// In en, this message translates to:
+  /// **'Name your character'**
+  String get nameYourCharacter;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
