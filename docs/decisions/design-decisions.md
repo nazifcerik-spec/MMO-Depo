@@ -2321,6 +2321,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-258 — Sv 700–850 dünyası: Gök Yarığı
+**Karar:** Yeni kıta Gök Yarığı (Sv 700, Kayıp Şehir ↔ Uçan Adalar bağlantısı): Uçan Adalar 700, Yarık Kenarı 750, Göksel Tapınak 800; 18 mob (10 seviyede bir + 3 `overlord` zindan boss'u), 3 zindan (Fırtına Kalesi 728, Yarık Çekirdeği 778, Göksel Kubbe 828; 60 dk), adlar en/tr/zh-CN/es. Ekipman merdiveni 710–835 (6 kademe, 90 eşya, 4 dil). Denge simülasyonu Sv 1–830 (nihai yetenekler dahil); ek ayar gerekmedi.
+**Reason:** Kullanıcı isteği (700–850 içeriği).
+**Alternatives:** —
+**Consequences:** 700–850 zindanları giriş seviyesinde en zayıf uzmanlıkta %92–93, en güçlüde %100. Yetenek ağacı zirvesi (Sv 850) sonrası içerik yok.
+**Tarih:** 2026-10-18
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

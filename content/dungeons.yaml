@@ -239,4 +239,40 @@ dungeons:
     boss_mob_code: time_lord_kaedrin
     bonus_gold_copper: 650000
     bonus_xp: 1400000
+
+  - code: storm_fortress
+    display_name_key: dungeon.storm_fortress
+    min_level: 728
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: cloud_giant, count: 3 }
+      - { mob_code: storm_dragon, count: 3 }
+      - { mob_code: sky_knight, count: 2 }
+    boss_mob_code: storm_king_zephyros
+    bonus_gold_copper: 780000
+    bonus_xp: 1700000
+
+  - code: rift_core
+    display_name_key: dungeon.rift_core
+    min_level: 778
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: void_creature, count: 3 }
+      - { mob_code: rift_warden, count: 3 }
+      - { mob_code: chaos_elemental, count: 2 }
+    boss_mob_code: chaos_mother
+    bonus_gold_copper: 920000
+    bonus_xp: 2100000
+
+  - code: celestial_dome
+    display_name_key: dungeon.celestial_dome
+    min_level: 828
+    duration_seconds: 3600         # 60 minutes
+    waves:
+      - { mob_code: fallen_angel, count: 3 }
+      - { mob_code: temple_guardian, count: 3 }
+      - { mob_code: celestial_dragon, count: 2 }
+    boss_mob_code: archangel_uriel
+    bonus_gold_copper: 1080000
+    bonus_xp: 2600000
   # <<< generated: dungeons

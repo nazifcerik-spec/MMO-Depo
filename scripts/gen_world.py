@@ -79,6 +79,8 @@ CONTINENTS = [
          name=L('Dragonspine Isles', 'Ejdersırtı Adaları', '龙脊群岛', 'Islas Espinadragón')),
     dict(code='starless_lands', level=600,
          name=L('Starless Lands', 'Yıldızsız Topraklar', '无星之地', 'Tierras sin Estrellas')),
+    dict(code='sky_rift', level=700,
+         name=L('Sky Rift', 'Gök Yarığı', '天空裂隙', 'Grieta Celeste')),
 ]
 
 ZONES += [
@@ -246,6 +248,49 @@ ZONES += [
          dungeon=dict(code='clock_tower', level=678, minutes=60, waves=['ghost_noble', 'time_thief', 'cursed_sorcerer'],
                       boss='time_lord_kaedrin', gold=650000, xp=1400000,
                       name=L('Clock Tower', 'Saat Kulesi', '钟楼', 'Torre del Reloj'))),
+]
+
+
+ZONES += [
+    dict(code='floating_isles', parent='sky_rift', level=700, travel=300, link='lost_city',
+         name=L('Floating Isles', 'Uçan Adalar', '浮空群岛', 'Islas Flotantes'),
+         mobs=[
+             ('cloud_giant', 710, 'tank', L('Cloud Giant', 'Bulut Devi', '云巨人', 'Gigante de las Nubes')),
+             ('storm_dragon', 720, 'crit', L('Storm Dragon', 'Fırtına Ejderi', '风暴龙', 'Dragón de Tormenta')),
+             ('sky_knight', 730, 'normal', L('Sky Knight', 'Gök Şövalyesi', '天空骑士', 'Caballero del Cielo')),
+             ('storm_king_zephyros', 732, 'overlord', L('Storm King Zephyros', 'Fırtına Kralı Zephyros', '风暴之王泽菲罗斯', 'Rey de la Tormenta Zephyros')),
+             ('wind_elemental', 740, 'evasive', L('Wind Elemental', 'Rüzgâr Elementali', '风元素', 'Elemental de Viento')),
+             ('thunderbird', 750, 'elite', L('Thunderbird', 'Yıldırım Kuşu', '雷鸟', 'Ave del Trueno')),
+         ],
+         dungeon=dict(code='storm_fortress', level=728, minutes=60, waves=['cloud_giant', 'storm_dragon', 'sky_knight'],
+                      boss='storm_king_zephyros', gold=780000, xp=1700000,
+                      name=L('Storm Fortress', 'Fırtına Kalesi', '风暴要塞', 'Fortaleza de la Tormenta'))),
+    dict(code='rift_edge', parent='sky_rift', level=750, travel=360, link='floating_isles',
+         name=L('Rift Edge', 'Yarık Kenarı', '裂隙边缘', 'Borde de la Grieta'),
+         mobs=[
+             ('void_creature', 760, 'normal', L('Void Creature', 'Boşluk Yaratığı', '虚空生物', 'Criatura del Vacío')),
+             ('rift_warden', 770, 'tank', L('Rift Warden', 'Yarık Bekçisi', '裂隙守卫', 'Celador de la Grieta')),
+             ('chaos_elemental', 780, 'glass', L('Chaos Elemental', 'Kaos Elementali', '混沌元素', 'Elemental del Caos')),
+             ('chaos_mother', 782, 'overlord', L('Chaos Mother', 'Kaos Ana', '混沌之母', 'Madre del Caos')),
+             ('rift_dragon', 790, 'crit', L('Rift Dragon', 'Yarık Ejderi', '裂隙龙', 'Dragón de la Grieta')),
+             ('chaos_lord', 800, 'elite', L('Chaos Lord', 'Kaos Lordu', '混沌领主', 'Señor del Caos')),
+         ],
+         dungeon=dict(code='rift_core', level=778, minutes=60, waves=['void_creature', 'rift_warden', 'chaos_elemental'],
+                      boss='chaos_mother', gold=920000, xp=2100000,
+                      name=L('Rift Core', 'Yarık Çekirdeği', '裂隙核心', 'Núcleo de la Grieta'))),
+    dict(code='celestial_temple', parent='sky_rift', level=800, travel=420, link='rift_edge',
+         name=L('Celestial Temple', 'Göksel Tapınak', '天界神殿', 'Templo Celestial'),
+         mobs=[
+             ('fallen_angel', 810, 'normal', L('Fallen Angel', 'Düşmüş Melek', '堕天使', 'Ángel Caído')),
+             ('temple_guardian', 820, 'tank', L('Temple Guardian', 'Tapınak Muhafızı', '神殿守护者', 'Guardián del Templo')),
+             ('celestial_dragon', 830, 'crit', L('Celestial Dragon', 'Göksel Ejder', '天界龙', 'Dragón Celestial')),
+             ('archangel_uriel', 832, 'overlord', L('Archangel Uriel', 'Başmelek Uriel', '大天使乌列尔', 'Arcángel Uriel')),
+             ('light_hunter', 840, 'evasive', L('Light Hunter', 'Işık Avcısı', '光之猎手', 'Cazador de Luz')),
+             ('seraph', 850, 'elite', L('Seraph', 'Seraf', '炽天使', 'Serafín')),
+         ],
+         dungeon=dict(code='celestial_dome', level=828, minutes=60, waves=['fallen_angel', 'temple_guardian', 'celestial_dragon'],
+                      boss='archangel_uriel', gold=1080000, xp=2600000,
+                      name=L('Celestial Dome', 'Göksel Kubbe', '天界穹顶', 'Cúpula Celestial'))),
 ]
 
 

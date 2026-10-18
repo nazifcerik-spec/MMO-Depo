@@ -157,6 +157,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 73. **Sv 600–700 dünyası (bitti)** — Sprint 73, DD-257. Yıldızsız Topraklar (2 bölge, 12 mob, 2 zindan, 4 dil), ekipman merdiveni 610–685 (60 eşya). Denge simülasyonu Sv 1–690.
 
+74. **Sv 700–850 dünyası (bitti)** — Sprint 74, DD-258. Gök Yarığı (3 bölge, 18 mob, 3 zindan, 4 dil), ekipman merdiveni 710–835 (90 eşya). Denge simülasyonu Sv 1–830.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

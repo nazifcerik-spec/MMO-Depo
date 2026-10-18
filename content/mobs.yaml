@@ -1370,4 +1370,238 @@ mobs:
     xp_reward: 356580
     gold_copper_min: 74526
     gold_copper_max: 186315
+
+  - code: cloud_giant
+    display_name_key: mob.cloud_giant
+    level: 710
+    hp_max: 31325
+    attack: 1519
+    defense: 1081
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 364765
+    gold_copper_min: 76128
+    gold_copper_max: 190320
+
+  - code: storm_dragon
+    display_name_key: mob.storm_dragon
+    level: 720
+    hp_max: 19058
+    attack: 1817
+    defense: 577
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 373020
+    gold_copper_min: 77742
+    gold_copper_max: 194355
+
+  - code: sky_knight
+    display_name_key: mob.sky_knight
+    level: 730
+    hp_max: 18400
+    attack: 1561
+    defense: 585
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 381344
+    gold_copper_min: 79367
+    gold_copper_max: 198418
+
+  - code: storm_king_zephyros
+    display_name_key: mob.storm_king_zephyros
+    level: 732
+    hp_max: 34132
+    attack: 2035
+    defense: 733
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 383017
+    gold_copper_min: 79694
+    gold_copper_max: 199235
+
+  - code: wind_elemental
+    display_name_key: mob.wind_elemental
+    level: 740
+    hp_max: 17718
+    attack: 1819
+    defense: 593
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 389736
+    gold_copper_min: 81004
+    gold_copper_max: 202510
+
+  - code: thunderbird
+    display_name_key: mob.thunderbird
+    level: 750
+    hp_max: 26460
+    attack: 1843
+    defense: 721
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 398197
+    gold_copper_min: 82651
+    gold_copper_max: 206628
+
+  - code: void_creature
+    display_name_key: mob.void_creature
+    level: 760
+    hp_max: 19150
+    attack: 1624
+    defense: 609
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 406726
+    gold_copper_min: 84310
+    gold_copper_max: 210775
+
+  - code: rift_warden
+    display_name_key: mob.rift_warden
+    level: 770
+    hp_max: 33950
+    attack: 1645
+    defense: 1172
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 415322
+    gold_copper_min: 85979
+    gold_copper_max: 214948
+
+  - code: chaos_elemental
+    display_name_key: mob.chaos_elemental
+    level: 780
+    hp_max: 17685
+    attack: 2499
+    defense: 469
+    crit_pct: 11
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 423986
+    gold_copper_min: 87660
+    gold_copper_max: 219150
+
+  - code: chaos_mother
+    display_name_key: mob.chaos_mother
+    level: 782
+    hp_max: 36445
+    attack: 2171
+    defense: 783
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 425727
+    gold_copper_min: 87997
+    gold_copper_max: 219992
+
+  - code: rift_dragon
+    display_name_key: mob.rift_dragon
+    level: 790
+    hp_max: 20895
+    attack: 1991
+    defense: 633
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 432716
+    gold_copper_min: 89351
+    gold_copper_max: 223378
+
+  - code: chaos_lord
+    display_name_key: mob.chaos_lord
+    level: 800
+    hp_max: 28210
+    attack: 1964
+    defense: 769
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 441513
+    gold_copper_min: 91053
+    gold_copper_max: 227632
+
+  - code: fallen_angel
+    display_name_key: mob.fallen_angel
+    level: 810
+    hp_max: 20400
+    attack: 1729
+    defense: 649
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 450377
+    gold_copper_min: 92765
+    gold_copper_max: 231912
+
+  - code: temple_guardian
+    display_name_key: mob.temple_guardian
+    level: 820
+    hp_max: 36138
+    attack: 1750
+    defense: 1248
+    crit_pct: 5
+    hit_pct: 92
+    evasion_pct: 2
+    xp_reward: 459306
+    gold_copper_min: 94488
+    gold_copper_max: 236220
+
+  - code: celestial_dragon
+    display_name_key: mob.celestial_dragon
+    level: 830
+    hp_max: 21945
+    attack: 2090
+    defense: 665
+    crit_pct: 17
+    hit_pct: 92
+    evasion_pct: 10
+    xp_reward: 468301
+    gold_copper_min: 96222
+    gold_copper_max: 240555
+
+  - code: archangel_uriel
+    display_name_key: mob.archangel_uriel
+    level: 832
+    hp_max: 38758
+    attack: 2308
+    defense: 833
+    crit_pct: 10
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 470108
+    gold_copper_min: 96570
+    gold_copper_max: 241425
+
+  - code: light_hunter
+    display_name_key: mob.light_hunter
+    level: 840
+    hp_max: 20092
+    attack: 2061
+    defense: 673
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 20
+    xp_reward: 477361
+    gold_copper_min: 97966
+    gold_copper_max: 244915
+
+  - code: seraph
+    display_name_key: mob.seraph
+    level: 850
+    hp_max: 29960
+    attack: 2085
+    defense: 817
+    crit_pct: 9
+    hit_pct: 92
+    evasion_pct: 5
+    xp_reward: 486486
+    gold_copper_min: 99721
+    gold_copper_max: 249302
   # <<< generated: mobs

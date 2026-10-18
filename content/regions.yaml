@@ -91,6 +91,13 @@ regions:
     travel_seconds_from_parent: 0
     safe: true
 
+  - code: sky_rift
+    display_name_key: region.sky_rift
+    kind: continent
+    min_level: 700
+    travel_seconds_from_parent: 0
+    safe: true
+
   - code: misty_marshes
     display_name_key: region.misty_marshes
     kind: zone
@@ -330,6 +337,54 @@ regions:
     min_level: 678
     travel_seconds_from_parent: 300
     safe: false
+
+  - code: floating_isles
+    display_name_key: region.floating_isles
+    kind: zone
+    parent_code: sky_rift
+    min_level: 700
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: storm_fortress
+    display_name_key: region.storm_fortress
+    kind: dungeon
+    parent_code: floating_isles
+    min_level: 728
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: rift_edge
+    display_name_key: region.rift_edge
+    kind: zone
+    parent_code: sky_rift
+    min_level: 750
+    travel_seconds_from_parent: 360
+    safe: false
+
+  - code: rift_core
+    display_name_key: region.rift_core
+    kind: dungeon
+    parent_code: rift_edge
+    min_level: 778
+    travel_seconds_from_parent: 300
+    safe: false
+
+  - code: celestial_temple
+    display_name_key: region.celestial_temple
+    kind: zone
+    parent_code: sky_rift
+    min_level: 800
+    travel_seconds_from_parent: 420
+    safe: false
+
+  - code: celestial_dome
+    display_name_key: region.celestial_dome
+    kind: dungeon
+    parent_code: celestial_temple
+    min_level: 828
+    travel_seconds_from_parent: 300
+    safe: false
   # <<< generated: regions
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
@@ -352,4 +407,7 @@ region_links:
   - { region_a_code: throne_peaks, region_b_code: volcanic_isle, travel_seconds: 300 }
   - { region_a_code: dark_plains, region_b_code: throne_peaks, travel_seconds: 300 }
   - { region_a_code: dark_plains, region_b_code: lost_city, travel_seconds: 300 }
+  - { region_a_code: floating_isles, region_b_code: lost_city, travel_seconds: 300 }
+  - { region_a_code: floating_isles, region_b_code: rift_edge, travel_seconds: 300 }
+  - { region_a_code: celestial_temple, region_b_code: rift_edge, travel_seconds: 300 }
   # <<< generated: links
