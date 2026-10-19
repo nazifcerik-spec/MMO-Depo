@@ -50,17 +50,17 @@ func TestCraftingFailureCostsNothing(t *testing.T) {
 	_, err = w.p.Exec(w.ctx, `
 		UPDATE crafting.character_profession SET level = 5 WHERE character_id = $1 AND profession_code = 'blacksmithing'`, p.ID)
 	require.NoError(t, err)
-	w.give(p, "iron_ore", 5)
+	w.give(p, "aluminium_bar", 4) // metal gear is made of bars (DD-274)
 	_, err = svc.Start(w.ctx, p.ID, p.Account, "recipe_sword_iron", 1)
 	require.ErrorIs(t, err, inventory.ErrInsufficient)
-	require.Equal(t, 5, w.count(p, "iron_ore"), "inputs are consumed all-or-nothing")
+	require.Equal(t, 4, w.count(p, "aluminium_bar"), "inputs are consumed all-or-nothing")
 	require.Equal(t, int64(1_000), w.balance(p))
 
-	w.give(p, "oak_log", 1)
+	w.give(p, "young_sapling", 2)
 	job, err := svc.Start(w.ctx, p.ID, p.Account, "recipe_sword_iron", 1)
 	require.NoError(t, err)
-	require.Equal(t, 0, w.count(p, "iron_ore"), "inputs are taken at start")
-	require.Equal(t, 0, w.count(p, "oak_log"))
+	require.Equal(t, 0, w.count(p, "aluminium_bar"), "inputs are taken at start")
+	require.Equal(t, 0, w.count(p, "young_sapling"))
 	require.Less(t, w.balance(p), int64(1_000), "a real craft pays its gold cost")
 	require.Equal(t, 0, w.count(p, "sword_iron"), "not made yet")
 
@@ -123,5 +123,5 @@ func TestCookingMakesFood(t *testing.T) {
 	require.Equal(t, 2, w.count(p, "food_grilled_guppy"))
 	var effect []byte
 	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT use_effect FROM content.item_template WHERE code = 'food_grilled_guppy'`).Scan(&effect))
-	require.Contains(t, string(effect), "heal_hp")
+	require.Contains(t, string(effect), "heal_pct") // a share of max HP (DD-274)
 }

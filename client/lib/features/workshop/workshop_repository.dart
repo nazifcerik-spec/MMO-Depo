@@ -62,6 +62,7 @@ class ItemInfo {
     this.classRestriction,
     this.bonuses = const [],
     this.healHp = 0,
+    this.healPct = 0,
     this.buff,
     this.weightGrams = 0,
     this.maxStack = 1,
@@ -82,6 +83,10 @@ class ItemInfo {
         {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
+      healPct: switch (j['use_effect']) {
+        {'kind': 'heal_pct', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
       bonuses: [
         if (raw is List)
@@ -98,6 +103,7 @@ class ItemInfo {
   final String? classRestriction;
   final List<StatBonus> bonuses;
   final int healHp;
+  final int healPct; // DD-274
   final FoodBuff? buff; // DD-269
   final int weightGrams;
   final int maxStack;
@@ -213,7 +219,7 @@ class WorkshopRepository {
   final ApiClient api;
   final String characterId;
   List<String>? _professions;
-  List<Recipe>? _recipes;
+  final _recipes = <String, List<Recipe>>{};
 
   String get _char => '/v1/character/$characterId';
 
@@ -224,9 +230,14 @@ class WorkshopRepository {
       if (p['kind'] != 'gathering') p['code'] as String,
   ];
 
-  Future<List<Recipe>> recipes() async => _recipes ??= [
-    for (final r in ((await api.get('/v1/recipes'))['recipes'] as List? ?? const []).cast<Map<String, dynamic>>())
-      Recipe.fromJson(r),
+  /// One profession's recipes, fetched on first use: the gear professions
+  /// hold hundreds each (DD-274).
+  Future<List<Recipe>> recipes(String profession) async => _recipes[profession] ??= [
+    for (final r
+        in ((await api.get('/v1/recipes?profession=${Uri.encodeQueryComponent(profession)}'))['recipes'] as List? ??
+                const [])
+            .cast<Map<String, dynamic>>())
+      if (r['profession_code'] == profession) Recipe.fromJson(r),
   ];
 
   /// profession_code → progress, learned professions only.

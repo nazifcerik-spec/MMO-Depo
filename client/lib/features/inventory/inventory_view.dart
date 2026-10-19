@@ -552,6 +552,7 @@ class _ItemDetail extends StatelessWidget {
                   child: Text(
                     [
                       if (item.healHp > 0) l.restoresHp(item.healHp),
+                      if (item.healPct > 0) l.restoresHpPct(item.healPct),
                       if (item.buff case final b?) l.foodBuffLine(b.attackPct, b.defensePct, b.minutes),
                     ].join('\n'),
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),

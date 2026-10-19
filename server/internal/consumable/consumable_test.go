@@ -23,6 +23,14 @@ func TestApplyHeal(t *testing.T) {
 	require.ErrorIs(t, err, ErrNoEffect, "a potion at full HP must not be consumed")
 }
 
+// heal_pct scales with max HP, rounded up (DD-274); heal_hp stays flat.
+func TestHealAmount(t *testing.T) {
+	require.Equal(t, 60, HealAmount("heal_hp", 60, 5000))
+	require.Equal(t, 1000, HealAmount("heal_pct", 20, 5000))
+	require.Equal(t, 21, HealAmount("heal_pct", 20, 101), "rounded up")
+	require.Equal(t, 1, HealAmount("heal_pct", 1, 1))
+}
+
 func TestEffectiveHP(t *testing.T) {
 	now := time.Date(2026, 9, 23, 12, 0, 0, 0, time.UTC)
 	at := func(ago time.Duration) *time.Time { v := now.Add(-ago); return &v }

@@ -3,15 +3,30 @@
 # code            PK, snake_case
 # display_name_key i18n key
 # max_level       max meslek seviyesi (skill cap)
+#
+# Meslek seviyesi 1-100 = karakter seviyesi 1-1000 (DD-274): Sv L ekipmanın
+# tarifi ceil(L/10) beceri ister (scripts/gen_crafting.py).
 
 professions:
-  - code: blacksmithing
+  - code: blacksmithing # plate armor + metal weapons
     display_name_key: profession.blacksmithing
-    max_level: 60
+    max_level: 100
+
+  - code: leatherworking # leather armor (DD-274)
+    display_name_key: profession.leatherworking
+    max_level: 100
+
+  - code: tailoring # cloth armor + holy tomes (DD-274)
+    display_name_key: profession.tailoring
+    max_level: 100
+
+  - code: woodworking # staves, wands, bows, lutes, totems (DD-274)
+    display_name_key: profession.woodworking
+    max_level: 100
 
   - code: alchemy
     display_name_key: profession.alchemy
-    max_level: 60
+    max_level: 100
 
   - code: cooking
     display_name_key: profession.cooking

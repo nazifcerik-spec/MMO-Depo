@@ -2509,6 +2509,49 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-274 — Meslek ölçeği ve tüm merdiveni kapsayan üretim
+**Karar:**
+- Meslek seviyesi 1–100, karakter seviyesi 1–1000'e karşılık gelir (K1).
+- Sv L ekipmanın tarifi beceri ⌈L/10⌉ ister. Malzemeler o beceri + 1'e kadar toplanabilen en iyi kaynaklardır.
+- Rastgele düşen her ekipmanın tarifi var (1645 tarif, `scripts/gen_crafting.py`):
+  - Demircilik: plaka zırh ve metal silahlar. O kademenin külçesi bir alt külçeyle alaşım yapılır; ayrıca zırha deri kayış, silaha kütük sap.
+  - Deri İşçiliği (yeni): deri zırh. Deri/post + ot.
+  - Terzilik (yeni): kumaş zırh ve kutsal kitap. Ot lifi + deri astar.
+  - Ağaç İşçiliği (yeni): asa, değnek, yay, arbalet, lavta, totem, doğa odağı, tonfa. Kütük + külçe; yay ve arbalete tüy de girer.
+- Demircilik ve simya tavanı 100.
+- Ücret: eşya değerinin %10'u. XP: beceri eğrisinin %25'i × parça ağırlığı. Süre: (90 + 6 × beceri) × parça ağırlığı.
+- Yeni `heal_pct` etkisi azami canın yüzdesini yeniler (yukarı yuvarlanır).
+- İksirler:
+  - Küçük Can İksiri: Sv 1, %20
+  - Orta Boy: Sv 100, %30
+  - Büyük Boy: Sv 250, %40
+  - Ekstra Büyük: Sv 450, %55
+  - Çok Büyük: Sv 650, %70
+  - Yüce (yeni): Sv 850, %85
+- Yemekler balık seviyesi × 10'da açılır ve %15–40 can yeniler. Kalan 12 balığa ızgara yemeği eklendi (30 yemek).
+- Deri ganimetinin avcılık seviyesi ⌈canavar Sv / 10⌉ (önceden ×4, Sv 25'te tavana vuruyordu).
+- İstemci:
+  - Tarifler meslek başına çekilir (`?profession=`).
+  - Meslek sayfası açık tarifleri en yeniden eskiye, ardından bir sonraki kilitli adımı gösterir.
+  - İyileştirme satırı "Azami canın %X kadarını yeniler".
+
+**Reason:** Kullanıcı kararı (K1) ve içerik denetimi. Önceki durum:
+- Üretim Sv 10'da bitiyordu.
+- 24 külçenin ve 66 toplama kaynağının hiçbiri tarifte kullanılmıyordu.
+- Deri ganimeti Sv 25'te tavandaydı.
+- İksirler sabit can verdiği için üst seviyede anlamsızdı.
+
+**Alternatives:** Meslekleri 1–1000'e genişletmek (kaynak listesi ×10). Yalnız demircilik.
+**Consequences:**
+- Elle yazılmış simya ve demircilik tarifleri kaldırıldı; aynı kodlar (`recipe_<çıktı>`) üretilmiş tariflerle güncellendi. Örneğin `recipe_helm_leather` artık Deri İşçiliği'nde.
+- Ores Sv 12'de başladığı için ilk metal tarifleri madencilik 12 ister.
+- Kullanılmayan kaynak 66'dan 7'ye indi (4 taş kuyumculuğu bekliyor).
+- Testler: `TestShippedCraftingCoversGear`, `TestHealAmount`, `TestCombatHides_ByMobLevel`.
+
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

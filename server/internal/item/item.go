@@ -70,7 +70,7 @@ type Template struct {
 // UseEffect is what consuming one unit does (content use_effect, DD-218).
 // Templates without one cannot be used.
 type UseEffect struct {
-	Kind   string   `json:"kind"` // heal_hp
+	Kind   string   `json:"kind"` // heal_hp (flat) | heal_pct (share of max HP, DD-274)
 	Amount int      `json:"amount"`
 	Buff   *UseBuff `json:"buff,omitempty"` // food (DD-269)
 }

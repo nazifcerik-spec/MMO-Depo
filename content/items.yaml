@@ -372,67 +372,7 @@ items:
     bind_kind: boe
     affixable: false
 
-  # --- Consumables ---
-  - code: potion_hp_small
-    display_name_key: item.potion_hp_small
-    item_class: consumable
-    item_subclass: potion
-    min_level: 1
-    base_value_copper: 20
-    base_weight_g: 200
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 60 }
-
-  - code: potion_hp_medium
-    display_name_key: item.potion_hp_medium
-    item_class: consumable
-    item_subclass: potion
-    min_level: 5
-    base_value_copper: 60
-    base_weight_g: 250
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 150 }
-
-  - code: potion_hp_large
-    display_name_key: item.potion_hp_large
-    item_class: consumable
-    item_subclass: potion
-    min_level: 12
-    base_value_copper: 150
-    base_weight_g: 300
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 280 }
-
-  - code: potion_hp_xlarge
-    display_name_key: item.potion_hp_xlarge
-    item_class: consumable
-    item_subclass: potion
-    min_level: 20
-    base_value_copper: 320
-    base_weight_g: 350
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 450 }
-
-  - code: potion_hp_huge
-    display_name_key: item.potion_hp_huge
-    item_class: consumable
-    item_subclass: potion
-    min_level: 28
-    base_value_copper: 600
-    base_weight_g: 400
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 700 }
-
+  # --- Consumables --- (healing potions: scripts/gen_crafting.py)
   - code: potion_mp_small
     display_name_key: item.potion_mp_small
     item_class: consumable
@@ -455,209 +395,427 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 60, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 15, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_sardine_skewer
     display_name_key: item.food_sardine_skewer
     item_class: consumable
     item_subclass: food
-    min_level: 4
+    min_level: 40
     base_value_copper: 9
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 90, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 16, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_minnow_soup
     display_name_key: item.food_minnow_soup
     item_class: consumable
     item_subclass: food
-    min_level: 7
+    min_level: 70
     base_value_copper: 9
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 115, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 17, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_pike_fillet
     display_name_key: item.food_pike_fillet
     item_class: consumable
     item_subclass: food
-    min_level: 10
+    min_level: 100
     base_value_copper: 12
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 140, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 18, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_lavender_carp
     display_name_key: item.food_lavender_carp
     item_class: consumable
     item_subclass: food
-    min_level: 12
+    min_level: 120
     base_value_copper: 12
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 160, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 18, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
-  - code: food_herb_trout
-    display_name_key: item.food_herb_trout
+  - code: food_grilled_silver_herring
+    display_name_key: item.food_grilled_silver_herring
     item_class: consumable
     item_subclass: food
-    min_level: 16
+    min_level: 140
     base_value_copper: 15
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 190, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 18, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+
+  - code: food_herb_trout
+    display_name_key: item.food_herb_trout
+    item_class: consumable
+    item_subclass: food
+    min_level: 160
+    base_value_copper: 15
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 19, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_smoked_salmon
     display_name_key: item.food_smoked_salmon
     item_class: consumable
     item_subclass: food
-    min_level: 18
+    min_level: 180
     base_value_copper: 18
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 210, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 20, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_bass_stew
     display_name_key: item.food_bass_stew
     item_class: consumable
     item_subclass: food
-    min_level: 20
+    min_level: 200
     base_value_copper: 18
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 225, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 20, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
+
+  - code: food_grilled_lake_perch
+    display_name_key: item.food_grilled_lake_perch
+    item_class: consumable
+    item_subclass: food
+    min_level: 220
+    base_value_copper: 21
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 20, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+
+  - code: food_grilled_red_snapper
+    display_name_key: item.food_grilled_red_snapper
+    item_class: consumable
+    item_subclass: food
+    min_level: 240
+    base_value_copper: 24
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 21, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+
+  - code: food_grilled_river_catfish
+    display_name_key: item.food_grilled_river_catfish
+    item_class: consumable
+    item_subclass: food
+    min_level: 260
+    base_value_copper: 27
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 22, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
 
   - code: food_tuna_steak
     display_name_key: item.food_tuna_steak
     item_class: consumable
     item_subclass: food
-    min_level: 28
+    min_level: 280
     base_value_copper: 30
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 300, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 22, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+
+  - code: food_grilled_rainbow_trout
+    display_name_key: item.food_grilled_rainbow_trout
+    item_class: consumable
+    item_subclass: food
+    min_level: 300
+    base_value_copper: 33
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 22, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
 
   - code: food_royal_carp_feast
     display_name_key: item.food_royal_carp_feast
     item_class: consumable
     item_subclass: food
-    min_level: 33
+    min_level: 330
     base_value_copper: 42
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 340, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 23, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
+
+  - code: food_grilled_emerald_pike
+    display_name_key: item.food_grilled_emerald_pike
+    item_class: consumable
+    item_subclass: food
+    min_level: 360
+    base_value_copper: 48
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 24, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
+
+  - code: food_grilled_silver_barracuda
+    display_name_key: item.food_grilled_silver_barracuda
+    item_class: consumable
+    item_subclass: food
+    min_level: 390
+    base_value_copper: 57
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 25, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
 
   - code: food_sturgeon_pie
     display_name_key: item.food_sturgeon_pie
     item_class: consumable
     item_subclass: food
-    min_level: 42
+    min_level: 420
     base_value_copper: 69
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 420, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 26, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
 
   - code: food_swordfish_grill
     display_name_key: item.food_swordfish_grill
     item_class: consumable
     item_subclass: food
-    min_level: 45
+    min_level: 450
     base_value_copper: 84
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 445, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 26, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
+
+  - code: food_grilled_stormscale_eel
+    display_name_key: item.food_grilled_stormscale_eel
+    item_class: consumable
+    item_subclass: food
+    min_level: 500
+    base_value_copper: 111
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 28, buff: { attack_pct: 6, defense_pct: 6, minutes: 60 } }
 
   - code: food_frostfin_chowder
     display_name_key: item.food_frostfin_chowder
     item_class: consumable
     item_subclass: food
-    min_level: 55
+    min_level: 550
     base_value_copper: 147
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 535, buff: { attack_pct: 6, defense_pct: 6, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 29, buff: { attack_pct: 6, defense_pct: 6, minutes: 60 } }
+
+  - code: food_grilled_obsidian_tuna
+    display_name_key: item.food_grilled_obsidian_tuna
+    item_class: consumable
+    item_subclass: food
+    min_level: 600
+    base_value_copper: 198
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 30, buff: { attack_pct: 6, defense_pct: 6, minutes: 60 } }
 
   - code: food_marlin_platter
     display_name_key: item.food_marlin_platter
     item_class: consumable
     item_subclass: food
-    min_level: 65
+    min_level: 650
     base_value_copper: 264
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 620, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 31, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
+
+  - code: food_grilled_golden_carp
+    display_name_key: item.food_grilled_golden_carp
+    item_class: consumable
+    item_subclass: food
+    min_level: 700
+    base_value_copper: 354
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 32, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
 
   - code: food_dragonblood_serpentfish
     display_name_key: item.food_dragonblood_serpentfish
     item_class: consumable
     item_subclass: food
-    min_level: 75
+    min_level: 750
     base_value_copper: 474
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 710, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 34, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
+
+  - code: food_grilled_void_angler
+    display_name_key: item.food_grilled_void_angler
+    item_class: consumable
+    item_subclass: food
+    min_level: 800
+    base_value_copper: 636
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 35, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
 
   - code: food_moonfish_delicacy
     display_name_key: item.food_moonfish_delicacy
     item_class: consumable
     item_subclass: food
-    min_level: 85
+    min_level: 850
     base_value_copper: 849
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 795, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 36, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
 
   - code: food_phoenix_koi_feast
     display_name_key: item.food_phoenix_koi_feast
     item_class: consumable
     item_subclass: food
-    min_level: 90
+    min_level: 900
     base_value_copper: 1137
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 840, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 38, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
+
+  - code: food_grilled_abyssal_dragonfish
+    display_name_key: item.food_grilled_abyssal_dragonfish
+    item_class: consumable
+    item_subclass: food
+    min_level: 950
+    base_value_copper: 1521
+    base_weight_g: 200
+    stackable: true
+    max_stack: 50
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 39, buff: { attack_pct: 9, defense_pct: 9, minutes: 60 } }
 
   - code: food_leviathan_banquet
     display_name_key: item.food_leviathan_banquet
     item_class: consumable
     item_subclass: food
-    min_level: 100
+    min_level: 1000
     base_value_copper: 2037
     base_weight_g: 200
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 925, buff: { attack_pct: 9, defense_pct: 9, minutes: 60 } }
+    use_effect: { kind: heal_pct, amount: 40, buff: { attack_pct: 9, defense_pct: 9, minutes: 60 } }
   # <<< generated: cooking
+
+  # >>> generated: potions (scripts/gen_crafting.py)
+  - code: potion_hp_small
+    display_name_key: item.potion_hp_small
+    item_class: consumable
+    item_subclass: potion
+    min_level: 1
+    base_value_copper: 20
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 20 }
+
+  - code: potion_hp_medium
+    display_name_key: item.potion_hp_medium
+    item_class: consumable
+    item_subclass: potion
+    min_level: 100
+    base_value_copper: 60
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 30 }
+
+  - code: potion_hp_large
+    display_name_key: item.potion_hp_large
+    item_class: consumable
+    item_subclass: potion
+    min_level: 250
+    base_value_copper: 150
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 40 }
+
+  - code: potion_hp_xlarge
+    display_name_key: item.potion_hp_xlarge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 450
+    base_value_copper: 320
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 55 }
+
+  - code: potion_hp_huge
+    display_name_key: item.potion_hp_huge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 650
+    base_value_copper: 600
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 70 }
+
+  - code: potion_hp_supreme
+    display_name_key: item.potion_hp_supreme
+    item_class: consumable
+    item_subclass: potion
+    min_level: 850
+    base_value_copper: 1000
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: heal_pct, amount: 85 }
+  # <<< generated: potions

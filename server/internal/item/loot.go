@@ -49,12 +49,13 @@ func GatherDrops(cat *Catalog, target string, n int) []DropSpec {
 // come from after a fight.
 const combatHideSpan = 4
 
-// CombatHides is skinning after hunts and dungeons (DD-244): the mob's
-// level × 4 (capped at 100) is the hunting level the hides come from.
+// CombatHides is skinning after hunts and dungeons (DD-244): the hunting
+// level the hides come from is the mob's level / 10, rounded up (profession
+// levels 1-100 stand for character levels 1-1000, DD-274).
 // Common finds pick among the best few animals it unlocks; rare and
 // legendary finds are the best one. Deterministic per seed.
 func CombatHides(cat *Catalog, seed int64, mobLevel, common, rare, legendary int) []DropSpec {
-	reach := int16(min(100, max(1, mobLevel*4)))
+	reach := int16(min(100, max(1, (mobLevel+9)/10)))
 	var unlocked []Template
 	for _, t := range cat.Nodes(string(activity.KindHunting)) {
 		if t.GatherLevel <= reach {

@@ -2346,4 +2346,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errMobRegion => 'Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git.';
+
+  @override
+  String restoresHpPct(int pct) {
+    return 'Azami canın %$pct kadarını yeniler';
+  }
 }

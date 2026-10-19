@@ -194,11 +194,11 @@ void main() {
     final inv = InventoryRepository(a.api, a.id);
     final bag = await inv.bag();
     final potionItem = bag.items.firstWhere((i) => i.templateCode == 'potion_hp_small');
-    expect(potionItem.healHp, 60);
+    expect(potionItem.healPct, 20); // a share of max HP (DD-274)
     // Earlier hunts may have left the character wounded: a potion heals,
     // or is refused at full HP.
     try {
-      final (hp, max) = await inv.use(potionItem.instanceId);
+      final (hp, max, _) = await inv.use(potionItem.instanceId);
       expect(hp, lessThanOrEqualTo(max));
     } on ApiError catch (e) {
       expect(e.code, 'E_HP_FULL');
@@ -219,7 +219,7 @@ void main() {
     expect(await shop.professions(), contains('alchemy'));
     await shop.learn('alchemy');
     expect((await shop.skills())['alchemy']!.level, 1);
-    final recipe = (await shop.recipes()).firstWhere((r) => r.code == 'recipe_potion_hp_small');
+    final recipe = (await shop.recipes('alchemy')).firstWhere((r) => r.code == 'recipe_potion_hp_small');
     await expectLater(shop.craft(recipe.code), apiError('E_INSUFFICIENT_MATERIALS'));
   });
 

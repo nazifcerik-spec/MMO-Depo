@@ -1,4 +1,4 @@
-"""Cooking content (DD-268): dishes cooked from a fishing catch, a herb and a
+"""Cooking content (DD-268, DD-274): dishes cooked from a fishing catch, a herb and a
 log for the fire, one per fishing band (fish level 1..100). Every dish is a
 consumable that restores HP — about a third of a same-level mob's HP — and
 feeds the character for an hour: +2..9% attack and defense by level (DD-269).
@@ -97,21 +97,52 @@ def values():
 
 
 vals = values()
+
+
+def extra_dishes():
+    """A grilled dish for every fish the hand-named dishes leave out, so each
+    catch cooks into something (DD-274). Herb and log: the best gathered at or
+    below the fish's level."""
+    import yaml
+    nodes = yaml.safe_load(io.open(os.path.join(ROOT, 'gathering.yaml'), encoding='utf-8'))['items']
+    ladder = lambda sub: sorted((n['gather']['level'], n['code']) for n in nodes if n['item_subclass'] == sub)
+    pick = lambda lad, g: [c for lvl, c in lad if lvl <= g][-1]
+    i18n = {lang: yaml.safe_load(io.open(os.path.join(ROOT, 'i18n', f + '.yaml'), encoding='utf-8'))
+            for lang, f in (('en', 'en'), ('tr', 'tr'), ('zh', 'zh-CN'), ('es', 'es'))}
+    used = {d[1] for d in DISHES}
+    out = []
+    for n in nodes:
+        if n['item_subclass'] != 'fish' or n['code'] in used:
+            continue
+        lvl, fish = n['gather']['level'], n['code']
+        fn = {lang: i18n[lang].get('item.' + fish) for lang in i18n}
+        # A language without the fish's name falls back to English for the dish too.
+        name = {'en': 'Grilled ' + fn['en'], 'tr': 'Izgara ' + fn['tr'],
+                'zh': fn['zh'] and '烤' + fn['zh'], 'es': fn['es'] and fn['es'] + ' a la parrilla'}
+        out.append(('grilled_' + fish, fish, lvl, n['gather']['tier'], pick(ladder('herb'), lvl), pick(ladder('log'), lvl),
+                    name))
+    return out
+
+
 items, recipes, names = [], [], {k: {} for k in ('en', 'tr', 'zh', 'es')}
-for dish, fish, level, tier, herb, log, name in DISHES:
+for dish, fish, level, tier, herb, log, name in sorted(DISHES + extra_dishes(), key=lambda d: (d[2], d[0])):
     code = 'food_' + dish
     skill = max(1, round(level * 0.9))
-    heal = round5(0.35 * (150 + 25 * level))
+    # Fishing level L stands for character level 10L (DD-274); food heals a
+    # share of max HP so one table serves every level.
+    char_level = 1 if level == 1 else level * 10
+    heal_pct = round(15 + level / 4)
     buff = round(2 + level / 14)  # attack and defense percent (DD-269)
     value = max(1, round((2 * vals[fish] + vals[herb] + vals[log]) * 1.5 / 2))
     for lang in names:
-        names[lang]['item.' + code] = name[lang]
+        if name[lang]:
+            names[lang]['item.' + code] = name[lang]
     items.append('\n'.join([
         '  - code: ' + code, '    display_name_key: item.' + code, '    item_class: consumable',
-        '    item_subclass: food', '    min_level: %d' % level, '    base_value_copper: %d' % value,
+        '    item_subclass: food', '    min_level: %d' % char_level, '    base_value_copper: %d' % value,
         '    base_weight_g: 200', '    stackable: true', '    max_stack: 50', '    bind_kind: boe',
-        '    use_effect: { kind: heal_hp, amount: %d, buff: { attack_pct: %d, defense_pct: %d, minutes: %d } }'
-        % (heal, buff, buff, BUFF_MINUTES)]))
+        '    use_effect: { kind: heal_pct, amount: %d, buff: { attack_pct: %d, defense_pct: %d, minutes: %d } }'
+        % (heal_pct, buff, buff, BUFF_MINUTES)]))
     recipes.append('\n'.join([
         '  - code: recipe_cook_' + dish, '    display_name_key: recipe.cook_' + dish, '    profession_code: cooking',
         '    min_skill: %d' % skill, '    inputs:',

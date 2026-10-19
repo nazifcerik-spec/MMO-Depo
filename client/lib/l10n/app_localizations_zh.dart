@@ -2345,4 +2345,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errMobRegion => '这只怪物在其他区域。请先前往那里。';
+
+  @override
+  String restoresHpPct(int pct) {
+    return '恢复最大生命值的$pct%';
+  }
 }

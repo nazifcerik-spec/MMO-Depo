@@ -96,7 +96,9 @@ class _CraftPanel extends StatefulWidget {
 
 class _CraftPanelState extends State<_CraftPanel> with PanelState {
   List<String> _professions = const [];
-  List<Recipe> _recipes = const [];
+
+  /// Recipe count per learned profession.
+  Map<String, int> _recipeCount = const {};
   Map<String, Skill> _skills = const {};
   CraftJob? _job;
 
@@ -117,14 +119,15 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
   Future<void> fetch() async {
     final r = await Future.wait<Object>([
       widget.repo.professions(),
-      widget.repo.recipes(),
       widget.repo.skills(),
       widget.repo.activeCraft().then<Object>((j) => j ?? false),
     ]);
     _professions = r[0] as List<String>;
-    _recipes = r[1] as List<Recipe>;
-    _skills = r[2] as Map<String, Skill>;
-    _job = r[3] is CraftJob ? r[3] as CraftJob : null;
+    _skills = r[1] as Map<String, Skill>;
+    _job = r[2] is CraftJob ? r[2] as CraftJob : null;
+    final learned = _skills.keys.toList();
+    final lists = await Future.wait([for (final p in learned) widget.repo.recipes(p)]);
+    _recipeCount = {for (var i = 0; i < learned.length; i++) learned[i]: lists[i].length};
   }
 
   Future<void> _collect(CraftJob job) async {
@@ -168,7 +171,7 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
                         if (_skills[p] == null)
                           FilledButton.tonal(style: compactButton, onPressed: () => _learn(p), child: Text(l.learn))
                         else ...[
-                          Text(l.recipeCount(_recipes.where((r) => r.profession == p).length), style: text.bodySmall),
+                          Text(l.recipeCount(_recipeCount[p] ?? 0), style: text.bodySmall),
                           const Icon(Icons.chevron_right, color: Palette.textSecondary),
                         ],
                       ],

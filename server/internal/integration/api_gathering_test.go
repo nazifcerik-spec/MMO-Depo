@@ -48,7 +48,7 @@ func TestHTTPGatheringProfessions(t *testing.T) {
 
 	// Recipes describe what they make (workshop item details).
 	var helm map[string]any
-	for _, r := range items(p.ok("GET", "/v1/recipes?profession=blacksmithing", nil), "recipes") {
+	for _, r := range items(p.ok("GET", "/v1/recipes?profession=leatherworking", nil), "recipes") { // leather armor (DD-274)
 		if r["code"] == "recipe_helm_leather" {
 			helm = r["output"].(map[string]any)
 		}

@@ -98,6 +98,27 @@ class CraftJobCard extends StatelessWidget {
   }
 }
 
+/// The recipes worth showing at [skill] (DD-274): everything already
+/// learnable, newest first, then the next locked step. The gear professions
+/// hold hundreds of recipes; far-off tiers would only bury the useful ones.
+List<Recipe> visibleRecipes(List<Recipe> all, int skill) {
+  final open = [
+    for (final r in all)
+      if (r.minSkill <= skill) r,
+  ]..sort((a, b) => b.minSkill.compareTo(a.minSkill));
+  final locked = [
+    for (final r in all)
+      if (r.minSkill > skill) r.minSkill,
+  ];
+  if (locked.isEmpty) return open;
+  final next = locked.reduce((a, b) => a < b ? a : b);
+  return [
+    ...open,
+    for (final r in all)
+      if (r.minSkill == next) r,
+  ];
+}
+
 /// One profession's recipes. Tapping an item's name unfolds its properties;
 /// Craft asks how many when more than one can be made. Reloads on
 /// [dataVersion] (materials and gold change elsewhere).
@@ -135,17 +156,14 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
   @override
   Future<void> fetch() async {
     final r = await Future.wait<Object>([
-      widget.repo.recipes(),
+      widget.repo.recipes(widget.profession),
       widget.repo.skills(),
       widget.repo.materials(),
       widget.repo.gold(),
       widget.repo.activeCraft().then<Object>((j) => j ?? false),
     ]);
-    _recipes = [
-      for (final rec in r[0] as List<Recipe>)
-        if (rec.profession == widget.profession) rec,
-    ];
     _skill = (r[1] as Map<String, Skill>)[widget.profession];
+    _recipes = visibleRecipes(r[0] as List<Recipe>, _skill?.level ?? 0);
     _have = r[2] as Map<String, int>;
     _gold = r[3] as int;
     _job = r[4] is CraftJob ? r[4] as CraftJob : null;
@@ -367,6 +385,7 @@ class _Details extends StatelessWidget {
                   child: Text(t, style: good),
                 ),
             if (info.healHp > 0) Text(l.restoresHp(info.healHp), style: good),
+            if (info.healPct > 0) Text(l.restoresHpPct(info.healPct), style: good),
             if (info.buff case final b?) Text(l.foodBuffLine(b.attackPct, b.defensePct, b.minutes), style: good),
             if (info.minLevel > 1) row(l.requiresLevel, '${info.minLevel}'),
             if (info.classRestriction != null) row(l.characterClass, className(l, info.classRestriction!)),

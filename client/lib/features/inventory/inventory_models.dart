@@ -49,6 +49,7 @@ class BagItem {
     this.classRestriction,
     this.bonuses = const [],
     this.healHp = 0,
+    this.healPct = 0,
     this.buff,
   });
 
@@ -75,6 +76,10 @@ class BagItem {
       classRestriction: j['class_restriction'] as String?,
       healHp: switch (j['use_effect']) {
         {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
+      healPct: switch (j['use_effect']) {
+        {'kind': 'heal_pct', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
@@ -107,13 +112,16 @@ class BagItem {
   final String? classRestriction;
   final List<StatBonus> bonuses;
 
-  /// HP restored by using one unit (content use_effect heal_hp); 0 = not usable.
+  /// HP restored by using one unit (content use_effect heal_hp); 0 = none.
   final int healHp;
+
+  /// Share of max HP restored by one unit (use_effect heal_pct, DD-274); 0 = none.
+  final int healPct;
 
   /// Food buff (DD-269); null for anything else.
   final FoodBuff? buff;
 
-  bool get usable => healHp > 0 || buff != null;
+  bool get usable => healHp > 0 || healPct > 0 || buff != null;
 
   bool get equippable => equipSlot != null && equipSlot!.isNotEmpty;
 }

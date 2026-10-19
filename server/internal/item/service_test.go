@@ -77,23 +77,26 @@ func TestGatherDrops_AllUnitsOfTheTarget(t *testing.T) {
 
 func TestCombatHides_ByMobLevel(t *testing.T) {
 	cat := testCatalog()
-	// Level 6 mob reaches hunting 24: the best four unlocked are rat, hare, boar
-	// (22) — wolf (26) is out of reach. Rare finds are the best: boar.
+	// A level-230 mob reaches hunting 23 (level / 10, DD-274): the best four
+	// unlocked are rat, hare, boar (22) — wolf (26) is out of reach. Rare
+	// finds are the best: boar.
 	seen := map[string]bool{}
 	for seed := int64(0); seed < 50; seed++ {
-		for _, d := range item.CombatHides(cat, seed, 6, 4, 0, 0) {
+		for _, d := range item.CombatHides(cat, seed, 230, 4, 0, 0) {
 			seen[d.TemplateCode] = true
 		}
 	}
 	require.Equal(t, map[string]bool{"forest_rat_pelt": true, "hare_pelt": true, "boar_hide": true}, seen)
-	rare := item.CombatHides(cat, 1, 6, 0, 2, 1)
+	rare := item.CombatHides(cat, 1, 230, 0, 2, 1)
 	require.Len(t, rare, 3)
 	for _, d := range rare {
 		require.Equal(t, "boar_hide", d.TemplateCode)
 		require.Equal(t, item.RarityUncommon, d.Rarity)
 	}
-	// Level 25+ reaches 100 (cap): dragon scale for the best finds.
-	require.Equal(t, "dragon_scale", item.CombatHides(cat, 1, 40, 0, 1, 0)[0].TemplateCode)
+	require.Equal(t, "forest_rat_pelt", item.CombatHides(cat, 1, 6, 0, 1, 0)[0].TemplateCode, "level 6 reaches 1")
+	// Level 991+ reaches 100 (cap): dragon scale for the best finds.
+	require.Equal(t, "bear_hide", item.CombatHides(cat, 1, 400, 0, 1, 0)[0].TemplateCode)
+	require.Equal(t, "dragon_scale", item.CombatHides(cat, 1, 1000, 0, 1, 0)[0].TemplateCode)
 	require.Equal(t, item.CombatHides(cat, 9, 12, 5, 1, 0), item.CombatHides(cat, 9, 12, 5, 1, 0), "deterministic")
 	require.Empty(t, item.CombatHides(item.NewCatalog(nil), 1, 10, 3, 0, 0))
 }

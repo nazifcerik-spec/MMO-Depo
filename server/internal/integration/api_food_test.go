@@ -15,7 +15,7 @@ func TestHTTPFoodBuff(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
 	me := player{ID: uuid.MustParse(p.char)}
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 100, hp_current = NULL WHERE id = $1`, me.ID)
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 1000, hp_current = NULL WHERE id = $1`, me.ID) // the banquet is level 1000 (DD-274)
 	require.NoError(t, err)
 	stat := func(key string) float64 {
 		return p.ok("GET", p.path("/sheet"), nil)["derived"].(map[string]any)[key].(float64)

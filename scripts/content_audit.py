@@ -109,7 +109,7 @@ hunting = sorted((n for n in nodes if n['gather']['kind'] == 'hunting'), key=lam
 
 def hides(mob_level):
     """item.CombatHides: common span and best animal for a mob level."""
-    reach = min(100, max(1, mob_level * 4))
+    reach = min(100, max(1, (mob_level + 9) // 10))
     unlocked = [n for n in hunting if n['gather']['level'] <= reach]
     return unlocked[-HIDE_SPAN:], unlocked[-1] if unlocked else None
 
@@ -312,12 +312,14 @@ idle_bars = [b['code'] for b in bars if not used_by.get(b['code'])]
 if idle_bars:
     find('Yüksek', 'Üretim', '%d/%d külçe hiçbir tarifte kullanılmıyor (%s …). Demircilik tarifleri külçe değil ham cevher istiyor; ergitme (24 tarif, beceri 100’e kadar) çıkmaz sokak.'
          % (len(idle_bars), len(bars), ', '.join(idle_bars[:6])))
-potions = [i for i in items if i.get('item_subclass') == 'potion' and i.get('use_effect')]
-top_heal = max(i['use_effect']['amount'] for i in potions)
-top_food = max(i['use_effect']['amount'] for i in items if i.get('item_subclass') == 'food')
-hp1000 = 150 + 25 * 1000
-find('Orta', 'Tüketilebilir', 'En büyük iksir +%d, en büyük yemek +%d can; Sv 1000 canavar canı ~%d. İksir Sv 28, yemek Sv 100’de bitiyor — üst seviyede iyileştirme anlamsız.'
-     % (top_heal, top_food, hp1000))
+heals = [i for i in items if (i.get('use_effect') or {}).get('kind') in ('heal_hp', 'heal_pct')]
+flat = [i['code'] for i in heals if i['use_effect']['kind'] == 'heal_hp']
+if flat:
+    find('Orta', 'Tüketilebilir', '%d iyileştirme sabit can veriyor (%s …); Sv 1000 canavar canı ~%d. Sabit değer üst seviyede anlamsız — yüzdeye (`heal_pct`) çevir.'
+         % (len(flat), ', '.join(flat[:4]), 150 + 25 * 1000))
+top_heal_level = max([i['min_level'] for i in heals] or [0])
+if top_heal_level < 800:
+    find('Orta', 'Tüketilebilir', 'En yüksek iyileştirme Sv %d; sonrasında yeni iksir/yemek yok.' % top_heal_level)
 
 # 3. Crafting
 w('## 3. Üretim listesi\n')
@@ -339,19 +341,23 @@ for pc in sorted({r['profession_code'] for r in recipes}):
     if top < profs[pc]['max_level'] * 0.8:
         find('Yüksek', 'Üretim', '%s: son tarif beceri %d, meslek tavanı %d — son %d beceri seviyesinde açılacak tarif yok.'
              % (tr('profession', pc), top, profs[pc]['max_level'], profs[pc]['max_level'] - top))
-smith = [every[r['output_template_code']]['min_level'] for r in recipes if r['profession_code'] == 'blacksmithing']
-find('Yüksek', 'Üretim', 'En yüksek üretilebilir ekipman Sv %d; ekipman merdiveni Sv %d. Sv %d üstü ekipmanın tek kaynağı %%4 av / boss ganimeti.'
-     % (max(smith), gear_levels[-1], max(smith)))
-crafted_gear_classes = {every[r['output_template_code']].get('class_restriction') for r in recipes if r['profession_code'] == 'blacksmithing'} - {None}
+crafted = {r['output_template_code'] for r in recipes}
+uncrafted = [g['code'] for g in gear if not g.get('requirements') and g['code'] not in crafted]
+if uncrafted:
+    lv = min(every[c]['min_level'] for c in uncrafted)
+    find('Yüksek', 'Üretim', '%d ekipmanın tarifi yok (ilki Sv %d: %s …); tek kaynakları %%4 av / boss ganimeti.'
+         % (len(uncrafted), lv, ', '.join(uncrafted[:4])))
+crafted_gear_classes = {every[c].get('class_restriction') for c in crafted if c in every} - {None}
 all_classes = {g.get('class_restriction') for g in gear} - {None}
 if all_classes - crafted_gear_classes:
-    find('Orta', 'Üretim', 'Üretilebilir silahı olmayan sınıflar: %s (yalnız %s silahı demircilikte).'
-         % (', '.join(sorted(all_classes - crafted_gear_classes)), ', '.join(sorted(crafted_gear_classes))))
+    find('Orta', 'Üretim', 'Üretilebilir silahı olmayan sınıflar: %s.' % ', '.join(sorted(all_classes - crafted_gear_classes)))
 no_gather_prof = [p for p in profs.values() if p['code'] not in {r['profession_code'] for r in recipes} and p['max_level'] and p['code'] not in
                   ('mining', 'fishing', 'herbalism', 'woodcutting', 'hunting')]
 for p in no_gather_prof:
     find('Orta', 'Üretim', '%s mesleği var ama tarifi yok.' % tr('profession', p['code']))
-find('Orta', 'Üretim', 'Kuyumculuk / terzilik / deri işçiliği / oymacılık yok: deri, post, tüy, kütük ve taş için üretim yolu yok; takı slotları boş.')
+if not slot_count.get('necklace'):
+    find('Orta', 'Üretim', 'Kuyumculuk yok: takı slotları boş, taşların (%d) üretimde kullanımı yok.'
+         % sum(1 for n in nodes if n['item_subclass'] == 'stone'))
 
 # 4. Drops
 w('## 4. Ganimet (drop) kuralları\n')
@@ -360,12 +366,13 @@ w('- **Ekipman**: ganimet seviyesine eşit ya da altındaki **en yüksek tek kad
 w('  - Av: her zafer %%4 → %s.' % GEAR_ODDS)
 w('  - Zindan: dalga öldürmesi başına %%4 + boss’ta 1 garanti → boss tablosu %s.' % BOSS_ODDS)
 w('  - Baskın: dalga %4 + boss’ta 2 garanti, kişisel ganimet.')
-w('- **Deri/post** (`item.CombatHides`): avcılık seviyesi = canavar Sv × 4 (tavan 100). Sıradan buluntu açılan son 4 hayvandan, nadir/efsanevi en iyisinden.')
+w('- **Deri/post** (`item.CombatHides`): avcılık seviyesi = ⌈canavar Sv / 10⌉ (tavan 100, DD-274). Sıradan buluntu açılan son 4 hayvandan, nadir/efsanevi en iyisinden.')
 w('- **Toplama**: seçilen kaynağın kendisi, kademe rengiyle (`TierRarity`): T0–1 sıradan, T2–3 seçkin, T4 nadir, T5 destansı, T6 efsanevi, T7 mitik.')
 w('- **Altın / XP**: canavar tablosu; XP seviye farkı bantları (10 aşağı tam, 25 aşağı %50, ötesi %10).\n')
-cap_mob = next(m for m in sorted(non_raid, key=lambda m: m['level']) if m['level'] * 4 >= 100)
-find('Yüksek', 'Ganimet', 'Deri ganimeti Sv %d canavardan itibaren tavanda (avcılık 100): Sv %d–1000 arası tüm canavarlar aynı 4 hayvanın derisini düşürüyor, en iyisi %s.'
-     % (cap_mob['level'], cap_mob['level'], tr('item', hides(1000)[1]['code'])))
+cap_mob = next(m for m in sorted(non_raid, key=lambda m: m['level']) if hides(m['level'])[1] == hides(1000)[1])
+if cap_mob['level'] < 900:
+    find('Yüksek', 'Ganimet', 'Deri ganimeti Sv %d canavardan itibaren tavanda: Sv %d–1000 arası tüm canavarlar aynı hayvanların derisini düşürüyor, en iyisi %s.'
+         % (cap_mob['level'], cap_mob['level'], tr('item', hides(1000)[1]['code'])))
 find('Orta', 'Ganimet', 'Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok.')
 find('Orta', 'Ganimet', 'Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor.')
 

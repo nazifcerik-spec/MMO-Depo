@@ -81,6 +81,15 @@ type Buff struct {
 
 // ApplyHeal is the pure effect step: new HP after healing `amount` from
 // `current`, capped at max. ErrNoEffect when nothing would change.
+// HealAmount is the HP one unit restores: heal_hp is flat, heal_pct a share
+// of max HP rounded up (DD-274), so one potion table serves every level.
+func HealAmount(kind string, amount, maxHP int) int {
+	if kind == "heal_pct" {
+		return (maxHP*amount + 99) / 100
+	}
+	return amount
+}
+
 func ApplyHeal(current, maxHP, amount int) (int, error) {
 	if current >= maxHP {
 		return current, ErrNoEffect
@@ -148,8 +157,8 @@ func (s *Service) Use(ctx context.Context, characterID, accountID, itemID uuid.U
 
 		buff := tmpl.UseEffect.Buff
 		switch tmpl.UseEffect.Kind {
-		case "heal_hp":
-			hp, err := ApplyHeal(current, maxHP, tmpl.UseEffect.Amount)
+		case "heal_hp", "heal_pct":
+			hp, err := ApplyHeal(current, maxHP, HealAmount(tmpl.UseEffect.Kind, tmpl.UseEffect.Amount, maxHP))
 			switch {
 			case err == nil:
 				if _, err := tx.Exec(ctx, `

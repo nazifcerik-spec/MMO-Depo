@@ -4167,6 +4167,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This monster lives in another region. Travel there first.'**
   String get errMobRegion;
+
+  /// No description provided for @restoresHpPct.
+  ///
+  /// In en, this message translates to:
+  /// **'Restores {pct}% of max HP'**
+  String restoresHpPct(int pct);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -162,5 +162,6 @@
   "huntOtherRegions": "其他区域的怪物",
   "huntTravelHint": "要狩猎某只怪物，请前往它所在的区域或有道路相连的相邻区域。",
   "errWrongRegion": "这只怪物在其他区域。请先前往那里。",
-  "errMobRegion": "这只怪物在其他区域。请先前往那里。"
+  "errMobRegion": "这只怪物在其他区域。请先前往那里。",
+  "restoresHpPct": "恢复最大生命值的{pct}%"
 }

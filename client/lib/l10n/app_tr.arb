@@ -678,5 +678,6 @@
   "huntNoMobsHere": "Burada avlanacak canavar yok. Yolculuk sekmesinden bir av bölgesine git.",
   "huntOtherRegions": "Diğer bölgelerdeki canavarlar",
   "huntTravelHint": "Bir canavarı avlamak için onun bölgesine ya da o bölgeye yolu olan bir komşusuna git.",
-  "errMobRegion": "Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git."
+  "errMobRegion": "Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git.",
+  "restoresHpPct": "Azami canın %{pct} kadarını yeniler"
 }

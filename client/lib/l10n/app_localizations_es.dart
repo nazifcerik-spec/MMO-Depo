@@ -2346,4 +2346,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errMobRegion => 'Este monstruo vive en otra zona. Viaja allí primero.';
+
+  @override
+  String restoresHpPct(int pct) {
+    return 'Restaura el $pct% de la vida máxima';
+  }
 }

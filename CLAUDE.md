@@ -179,6 +179,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 84. **Bölgesel av (bitti)** — Sprint 84, DD-273. Migration 0041 `mob_template.region_code`. Canavar kendi bölgesinden ya da ona yolu olan bölgeden avlanır (`world.Catalog.HuntRegions`, `hunt.WithRegionGate`, `409 E_MOB_REGION`); `/location` `hunt_regions`, `/v1/mobs` `region_code`. Yeni yollar Demirkale↔Yeşilorman, Fısıltı Kıyısı↔Kor Tepe. İstemci: av listesi erişilebilir canavarlar + "Diğer bölgelerdeki canavarlar", varışta yenilenir. İçerik denetimi: `python scripts/content_audit.py` → `docs/content-audit.md`, yol haritası `docs/content-roadmap.md`.
 
+85. **Meslek ölçeği + tam üretim zinciri (bitti)** — Sprint 85, DD-274. Meslek 1–100 = karakter 1–1000: Sv L ekipman tarifi beceri ⌈L/10⌉. `python scripts/gen_crafting.py` (gen_gear_types'tan sonra): her rastgele düşen ekipmana tarif (demircilik: plaka + metal silah, külçe alaşımı; yeni Deri İşçiliği / Terzilik / Ağaç İşçiliği), 6 iksir `heal_pct` (Sv 1–850, %20–85). `heal_pct` etkisi (`consumable.HealAmount`). Yemekler balık Sv × 10, %15–40 can, 30 yemek (`gen_cooking.py`). Deri ganimeti ⌈canavar Sv/10⌉. İstemci tarifleri meslek başına çeker, açık tarifler + bir sonraki adım (`visibleRecipes`).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

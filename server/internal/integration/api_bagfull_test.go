@@ -25,8 +25,9 @@ func TestHTTPFullBagRefusesNewItems(t *testing.T) {
 
 	// Before the bag fills: inputs for a craft, a potion stack, a sold item to
 	// buy back, and an item listed / mailed by another player.
-	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "blacksmithing"})
-	w.give(me, "forest_rat_pelt", 2)
+	p.ok("POST", p.path("/professions/learn"), map[string]any{"profession_code": "leatherworking"})
+	w.give(me, "forest_rat_pelt", 3)
+	w.give(me, "common_grass", 1)
 	w.give(me, "potion_hp_small", 1)
 	sold := w.give(me, "sword_training", 1)
 	bb := p.ok("POST", "/v1/vendor/general_ironhold/sell", map[string]any{"item_instance_id": sold.ID, "character_id": p.char})
@@ -61,7 +62,7 @@ func TestHTTPFullBagRefusesNewItems(t *testing.T) {
 	full("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 600})
 	full("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"})
 	require.Equal(t, gold, w.balance(me), "nothing was charged")
-	require.Equal(t, 2.0, p.stackOf("forest_rat_pelt"), "nothing was consumed")
+	require.Equal(t, 3.0, p.stackOf("forest_rat_pelt"), "nothing was consumed")
 
 	// A stackable that fits on an existing stack is still fine.
 	p.ok("POST", "/v1/vendor/general_ironhold/buy", map[string]any{"template_code": "potion_hp_small", "character_id": p.char})
