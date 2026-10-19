@@ -1861,5 +1861,6 @@
   "statBlock": "% Block",
   "statCritDmg": "% Crit damage",
   "statLifesteal": "% Lifesteal",
-  "statDmgReduction": "% Damage reduction"
+  "statDmgReduction": "% Damage reduction",
+  "classJewelry": "Jewelry"
 }

@@ -36,3 +36,40 @@ func TestHTTPRarityAndAffixesAddPower(t *testing.T) {
 	require.Equal(t, sword.ID.String(), worn["instance_id"])
 	require.Len(t, worn["effective_bonuses"], 4, "attack, str, vit, sharp")
 }
+
+// Rings and charms are worn in pairs (DD-276): the first ring fills ring1,
+// the second ring2, a third swaps ring1. Jewelry has no class.
+func TestHTTPJewelryPairs(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "mage")
+	me := player{ID: uuid.MustParse(p.char)}
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 25 WHERE id = $1`, me.ID)
+	require.NoError(t, err)
+	slotOf := func(id uuid.UUID) string {
+		for slot, it := range p.ok("GET", p.path("/equipment"), nil)["slots"].(map[string]any) {
+			if it.(map[string]any)["instance_id"] == id.String() {
+				return slot
+			}
+		}
+		return ""
+	}
+	a, b, c := w.give(me, "ring_runed", 1), w.give(me, "ring_runed", 1), w.give(me, "ring_runed", 1)
+	for _, r := range []uuid.UUID{a.ID, b.ID, c.ID} {
+		p.ok("POST", p.path("/equip/"+r.String()), map[string]any{})
+	}
+	require.Equal(t, "", slotOf(a.ID), "the third ring swapped the first back to the bag")
+	require.Equal(t, "ring2", slotOf(b.ID))
+	require.Equal(t, "ring1", slotOf(c.ID))
+	charm := w.give(me, "charm_runed", 1)
+	p.ok("POST", p.path("/equip/"+charm.ID.String()), map[string]any{})
+	require.Equal(t, "trinket1", slotOf(charm.ID))
+	neck := w.give(me, "necklace_runed", 1)
+	p.ok("POST", p.path("/equip/"+neck.ID.String()), map[string]any{})
+	require.Equal(t, "necklace", slotOf(neck.ID))
+
+	// Guardian shields need the branch.
+	shield := w.give(me, "shield_royal", 1)
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET level = 110 WHERE id = $1`, me.ID)
+	require.NoError(t, err)
+	p.fail("POST", p.path("/equip/"+shield.ID.String()), map[string]any{}, 403, "")
+}

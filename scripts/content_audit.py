@@ -210,6 +210,9 @@ w('Kademe aralığı: Sv 1–25 arası 5, 25–95 arası 10–15, 95 sonrası 25
   'En geniş boşluk: %s.\n' % ', '.join('Sv %d→%d' % g for g in gaps[:3]))
 
 slot_count = collections.Counter(g['equip_slot'] for g in gear)
+for paired in ('ring', 'trinket'):  # one template fills either slot (DD-276)
+    for s in (paired + '1', paired + '2'):
+        slot_count[s] += slot_count[paired]
 w('### 1.1 Slot doluluğu\n')
 w('| Slot | Şablon | Not |')
 w('|---|---:|---|')
@@ -285,9 +288,10 @@ for sub, cnt in sorted(collections.Counter(n['item_subclass'] for n in nodes).it
     w('| %s | %d / %d |' % (sub, len(unused[sub]), cnt))
 w('')
 total_unused = sum(len(v) for v in unused.values())
-find('Yüksek', 'Ekonomi', '%d/%d toplama kaynağı hiçbir tarifte kullanılmıyor (deri/post/tüy/pul %d, taş %d, balık %d, ot %d, kütük %d). Avcılık mesleği ürününün tek değeri dükkân fiyatı.'
-     % (total_unused, len(nodes), len(unused['pelt']) + len(unused['hide']) + len(unused['feather']) + len(unused['scale']),
-        len(unused['stone']), len(unused['fish']), len(unused['herb']), len(unused['log'])))
+if total_unused:
+    find('Yüksek' if total_unused > 15 else 'Düşük', 'Ekonomi',
+         '%d/%d toplama kaynağı hiçbir tarifte kullanılmıyor (%s); tek değerleri dükkân fiyatı.'
+         % (total_unused, len(nodes), ', '.join(c for v in unused.values() for c in v)))
 
 w('### 2.2 Diğer eşyalar\n')
 w('| Kod | Ad | Sınıf | Sv | Değer | Etki | Kaynak | Kullanan tarif |')

@@ -71,6 +71,13 @@ func TestShippedGearPoolHonoursPermissions(t *testing.T) {
 				require.True(t, p.Progression.CanUse(class, tm.ItemSubclass), "%s got %s", class, code)
 			}
 			require.Equal(t, 5, families[want], "%s Sv %d: five %s pieces", class, lvl, want)
+			// Jewelry is for everyone from the level-25 tier (DD-276).
+			jewelry := 0
+			for _, sub := range []string{"necklace", "ring", "trinket"} {
+				jewelry += families[sub]
+				delete(families, sub)
+			}
+			require.Equal(t, map[bool]int{true: 3, false: 0}[lvl >= 25], jewelry, "%s Sv %d: jewelry", class, lvl)
 			require.Len(t, families, 3, "%s Sv %d: armor + two weapon families", class, lvl)
 		}
 	}

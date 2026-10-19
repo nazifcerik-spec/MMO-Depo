@@ -32,14 +32,16 @@ PROFESSIONS = {
     'leatherworking': L('Leatherworking', 'Deri İşçiliği', '制皮', 'Peletería'),
     'tailoring': L('Tailoring', 'Terzilik', '裁缝', 'Sastrería'),
     'woodworking': L('Woodworking', 'Ağaç İşçiliği', '木工', 'Carpintería'),
+    'jewelcrafting': L('Jewelcrafting', 'Kuyumculuk', '珠宝加工', 'Joyería'),
 }
 METAL = {'plate_armor', 'sword', 'axe', 'mace', 'two_handed_mace', 'dagger', 'short_sword', 'rapier',
-         'fist_weapon', 'sickle', 'ritual_axe'}
+         'fist_weapon', 'sickle', 'ritual_axe', 'shield'}
 WOOD = {'staff', 'wand', 'bow', 'crossbow', 'lute', 'totem_focus', 'nature_focus', 'tonfa'}
 FLETCHED = {'bow', 'crossbow'}
+JEWELRY = {'necklace', 'ring', 'trinket'}  # DD-276
 # Material count and XP/time weight per slot.
 PIECE = {'chest': (5, 1.6), 'legs': (4, 1.4), 'helm': (3, 1.0), 'boots': (3, 1.0), 'gloves': (2, 0.8),
-         'mainhand': (4, 1.6)}
+         'mainhand': (4, 1.6), 'offhand': (4, 1.4), 'necklace': (3, 1.2), 'ring': (2, 1.0), 'trinket': (2, 1.0)}
 
 # Healing potions (heal_pct): code, level, percent of max HP, value, names.
 POTIONS = [
@@ -135,7 +137,10 @@ def merged(inputs):
 
 
 gear_recipes = []
-gear = [g for g in load('gear.yaml')['items'] if not g.get('requirements') and g['item_subclass'] != 'shield']
+STONES = ladder('stone')
+# Branch-gated gear (guardian shields) is crafted too; attribute-gated
+# showpieces (the Titan Bulwark) are not.
+gear = [g for g in load('gear.yaml')['items'] if not set(g.get('requirements') or {}) - {'spec'}]
 for g in sorted(gear, key=lambda g: (g['min_level'], g['item_subclass'], g['code'])):
     sub, slot, lvl = g['item_subclass'], g['equip_slot'], g['min_level']
     skill = skill_for(lvl)
@@ -156,6 +161,9 @@ for g in sorted(gear, key=lambda g: (g['min_level'], g['item_subclass'], g['code
         prof, inputs = 'woodworking', [(log, q), (bar, 1)]
         if sub in FLETCHED:
             inputs.append((pick(FEATHERS, reach), 2))
+    elif sub in JEWELRY:
+        prof = 'jewelcrafting'
+        inputs = [(bar, q), (runner_up(bars, reach), 1), (pick(STONES, reach), 2)]
     else:
         raise SystemExit('no profession crafts %s (%s)' % (g['code'], sub))
     gear_recipes.append(recipe(g['code'], prof, skill, merged(inputs), max(1, round(g['base_value_copper'] * 0.1)),

@@ -39,6 +39,21 @@ var KnownEquipSlots = map[string]bool{
 	"trinket2": true,
 }
 
+// PairedSlots: a ring or trinket template fills whichever of its two
+// equipment slots is free (DD-276).
+var PairedSlots = map[string][2]string{
+	"ring":    {"ring1", "ring2"},
+	"trinket": {"trinket1", "trinket2"},
+}
+
+// ValidTemplateSlot reports whether content may give a template this
+// equip_slot: an equipment slot, or "ring"/"trinket" for the paired ones.
+func ValidTemplateSlot(slot string) bool {
+	_, paired := PairedSlots[slot]
+	return paired || (KnownEquipSlots[slot] && slot != "ring1" && slot != "ring2" &&
+		slot != "trinket1" && slot != "trinket2")
+}
+
 // CharacterFetcher is the read capability needed for class + level checks.
 type CharacterFetcher interface {
 	Get(ctx context.Context, id uuid.UUID) (*characterView, error)
@@ -192,6 +207,15 @@ func (s *EquipmentService) Equip(ctx context.Context, characterID, itemID uuid.U
 		return "", ErrNotEquippable
 	}
 	slot := *tmpl.EquipSlot
+	if pair, ok := PairedSlots[slot]; ok {
+		// The first free one of the pair; both taken: the first is swapped.
+		slot = pair[0]
+		if id, err := repo.FindEquippedInSlot(ctx, characterID, pair[0]); err == nil && id != uuid.Nil {
+			if id2, err := repo.FindEquippedInSlot(ctx, characterID, pair[1]); err != nil || id2 == uuid.Nil {
+				slot = pair[1]
+			}
+		}
+	}
 	if !KnownEquipSlots[slot] {
 		return "", ErrUnknownEquipSlot
 	}

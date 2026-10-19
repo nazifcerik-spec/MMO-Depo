@@ -2366,4 +2366,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get statDmgReduction => '% Hasar azaltma';
+
+  @override
+  String get classJewelry => 'Takı';
 }

@@ -3366,6 +3366,19 @@ recipes:
     profession_xp_reward: 28
     craft_seconds: 175
 
+  - code: recipe_necklace_runed
+    display_name_key: recipe.necklace_runed
+    profession_code: jewelcrafting
+    min_skill: 3
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 70
+    output_template_code: necklace_runed
+    output_stack: 1
+    profession_xp_reward: 21
+    craft_seconds: 130
+
   - code: recipe_boots_runed
     display_name_key: recipe.boots_runed
     profession_code: blacksmithing
@@ -3443,6 +3456,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 28
     craft_seconds: 175
+
+  - code: recipe_ring_runed
+    display_name_key: recipe.ring_runed
+    profession_code: jewelcrafting
+    min_skill: 3
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 60
+    output_template_code: ring_runed
+    output_stack: 1
+    profession_xp_reward: 18
+    craft_seconds: 110
 
   - code: recipe_ritualaxe_runed
     display_name_key: recipe.ritualaxe_runed
@@ -3547,6 +3573,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 28
     craft_seconds: 175
+
+  - code: recipe_charm_runed
+    display_name_key: recipe.charm_runed
+    profession_code: jewelcrafting
+    min_skill: 3
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 60
+    output_template_code: charm_runed
+    output_stack: 1
+    profession_xp_reward: 18
+    craft_seconds: 110
 
   - code: recipe_hammer_sacred
     display_name_key: recipe.hammer_sacred
@@ -3823,6 +3862,19 @@ recipes:
     profession_xp_reward: 30
     craft_seconds: 180
 
+  - code: recipe_necklace_mithril
+    display_name_key: recipe.necklace_mithril
+    profession_code: jewelcrafting
+    min_skill: 4
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 108
+    output_template_code: necklace_mithril
+    output_stack: 1
+    profession_xp_reward: 23
+    craft_seconds: 135
+
   - code: recipe_boots_mithril
     display_name_key: recipe.boots_mithril
     profession_code: blacksmithing
@@ -3900,6 +3952,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 30
     craft_seconds: 180
+
+  - code: recipe_ring_mithril
+    display_name_key: recipe.ring_mithril
+    profession_code: jewelcrafting
+    min_skill: 4
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 93
+    output_template_code: ring_mithril
+    output_stack: 1
+    profession_xp_reward: 19
+    craft_seconds: 115
 
   - code: recipe_ritualaxe_mithril
     display_name_key: recipe.ritualaxe_mithril
@@ -4004,6 +4069,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 30
     craft_seconds: 180
+
+  - code: recipe_charm_mithril
+    display_name_key: recipe.charm_mithril
+    profession_code: jewelcrafting
+    min_skill: 4
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 93
+    output_template_code: charm_mithril
+    output_stack: 1
+    profession_xp_reward: 19
+    craft_seconds: 115
 
   - code: recipe_hammer_mithril
     display_name_key: recipe.hammer_mithril
@@ -4280,6 +4358,19 @@ recipes:
     profession_xp_reward: 32
     craft_seconds: 190
 
+  - code: recipe_necklace_adamant
+    display_name_key: recipe.necklace_adamant
+    profession_code: jewelcrafting
+    min_skill: 5
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 172
+    output_template_code: necklace_adamant
+    output_stack: 1
+    profession_xp_reward: 24
+    craft_seconds: 145
+
   - code: recipe_boots_adamant
     display_name_key: recipe.boots_adamant
     profession_code: blacksmithing
@@ -4357,6 +4448,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 32
     craft_seconds: 190
+
+  - code: recipe_ring_adamant
+    display_name_key: recipe.ring_adamant
+    profession_code: jewelcrafting
+    min_skill: 5
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 148
+    output_template_code: ring_adamant
+    output_stack: 1
+    profession_xp_reward: 20
+    craft_seconds: 120
 
   - code: recipe_ritualaxe_adamant
     display_name_key: recipe.ritualaxe_adamant
@@ -4461,6 +4565,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 32
     craft_seconds: 190
+
+  - code: recipe_charm_adamant
+    display_name_key: recipe.charm_adamant
+    profession_code: jewelcrafting
+    min_skill: 5
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: stone_ore, quantity: 2 }
+    gold_cost_copper: 148
+    output_template_code: charm_adamant
+    output_stack: 1
+    profession_xp_reward: 20
+    craft_seconds: 120
 
   - code: recipe_hammer_adamant
     display_name_key: recipe.hammer_adamant
@@ -4737,6 +4854,19 @@ recipes:
     profession_xp_reward: 36
     craft_seconds: 210
 
+  - code: recipe_necklace_wyrmforged
+    display_name_key: recipe.necklace_wyrmforged
+    profession_code: jewelcrafting
+    min_skill: 7
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 242
+    output_template_code: necklace_wyrmforged
+    output_stack: 1
+    profession_xp_reward: 27
+    craft_seconds: 160
+
   - code: recipe_boots_wyrmforged
     display_name_key: recipe.boots_wyrmforged
     profession_code: blacksmithing
@@ -4814,6 +4944,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 36
     craft_seconds: 210
+
+  - code: recipe_ring_wyrmforged
+    display_name_key: recipe.ring_wyrmforged
+    profession_code: jewelcrafting
+    min_skill: 7
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 208
+    output_template_code: ring_wyrmforged
+    output_stack: 1
+    profession_xp_reward: 22
+    craft_seconds: 130
 
   - code: recipe_ritualaxe_wyrmforged
     display_name_key: recipe.ritualaxe_wyrmforged
@@ -4918,6 +5061,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 36
     craft_seconds: 210
+
+  - code: recipe_charm_wyrmforged
+    display_name_key: recipe.charm_wyrmforged
+    profession_code: jewelcrafting
+    min_skill: 7
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 208
+    output_template_code: charm_wyrmforged
+    output_stack: 1
+    profession_xp_reward: 22
+    craft_seconds: 130
 
   - code: recipe_hammer_wyrmforged
     display_name_key: recipe.hammer_wyrmforged
@@ -5194,6 +5350,19 @@ recipes:
     profession_xp_reward: 38
     craft_seconds: 220
 
+  - code: recipe_necklace_starforged
+    display_name_key: recipe.necklace_starforged
+    profession_code: jewelcrafting
+    min_skill: 8
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 318
+    output_template_code: necklace_starforged
+    output_stack: 1
+    profession_xp_reward: 29
+    craft_seconds: 165
+
   - code: recipe_boots_starforged
     display_name_key: recipe.boots_starforged
     profession_code: blacksmithing
@@ -5271,6 +5440,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 38
     craft_seconds: 220
+
+  - code: recipe_ring_starforged
+    display_name_key: recipe.ring_starforged
+    profession_code: jewelcrafting
+    min_skill: 8
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 272
+    output_template_code: ring_starforged
+    output_stack: 1
+    profession_xp_reward: 24
+    craft_seconds: 140
 
   - code: recipe_ritualaxe_starforged
     display_name_key: recipe.ritualaxe_starforged
@@ -5375,6 +5557,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 38
     craft_seconds: 220
+
+  - code: recipe_charm_starforged
+    display_name_key: recipe.charm_starforged
+    profession_code: jewelcrafting
+    min_skill: 8
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 272
+    output_template_code: charm_starforged
+    output_stack: 1
+    profession_xp_reward: 24
+    craft_seconds: 140
 
   - code: recipe_hammer_starforged
     display_name_key: recipe.hammer_starforged
@@ -5651,6 +5846,19 @@ recipes:
     profession_xp_reward: 43
     craft_seconds: 240
 
+  - code: recipe_necklace_titan
+    display_name_key: recipe.necklace_titan
+    profession_code: jewelcrafting
+    min_skill: 10
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 397
+    output_template_code: necklace_titan
+    output_stack: 1
+    profession_xp_reward: 32
+    craft_seconds: 180
+
   - code: recipe_boots_titan
     display_name_key: recipe.boots_titan
     profession_code: blacksmithing
@@ -5728,6 +5936,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 43
     craft_seconds: 240
+
+  - code: recipe_ring_titan
+    display_name_key: recipe.ring_titan
+    profession_code: jewelcrafting
+    min_skill: 10
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 340
+    output_template_code: ring_titan
+    output_stack: 1
+    profession_xp_reward: 27
+    craft_seconds: 150
 
   - code: recipe_ritualaxe_titan
     display_name_key: recipe.ritualaxe_titan
@@ -5832,6 +6053,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 43
     craft_seconds: 240
+
+  - code: recipe_charm_titan
+    display_name_key: recipe.charm_titan
+    profession_code: jewelcrafting
+    min_skill: 10
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 340
+    output_template_code: charm_titan
+    output_stack: 1
+    profession_xp_reward: 27
+    craft_seconds: 150
 
   - code: recipe_hammer_titan
     display_name_key: recipe.hammer_titan
@@ -6108,6 +6342,19 @@ recipes:
     profession_xp_reward: 46
     craft_seconds: 250
 
+  - code: recipe_necklace_royal
+    display_name_key: recipe.necklace_royal
+    profession_code: jewelcrafting
+    min_skill: 11
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 480
+    output_template_code: necklace_royal
+    output_stack: 1
+    profession_xp_reward: 34
+    craft_seconds: 185
+
   - code: recipe_boots_royal
     display_name_key: recipe.boots_royal
     profession_code: blacksmithing
@@ -6186,6 +6433,19 @@ recipes:
     profession_xp_reward: 46
     craft_seconds: 250
 
+  - code: recipe_ring_royal
+    display_name_key: recipe.ring_royal
+    profession_code: jewelcrafting
+    min_skill: 11
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 412
+    output_template_code: ring_royal
+    output_stack: 1
+    profession_xp_reward: 28
+    craft_seconds: 155
+
   - code: recipe_ritualaxe_royal
     display_name_key: recipe.ritualaxe_royal
     profession_code: blacksmithing
@@ -6198,6 +6458,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 46
     craft_seconds: 250
+
+  - code: recipe_shield_royal
+    display_name_key: recipe.shield_royal
+    profession_code: blacksmithing
+    min_skill: 11
+    inputs:
+      - { template_code: aluminium_bar, quantity: 4 }
+      - { template_code: hare_pelt, quantity: 1 }
+    gold_cost_copper: 755
+    output_template_code: shield_royal
+    output_stack: 1
+    profession_xp_reward: 40
+    craft_seconds: 220
 
   - code: recipe_shortsword_royal
     display_name_key: recipe.shortsword_royal
@@ -6289,6 +6562,19 @@ recipes:
     output_stack: 1
     profession_xp_reward: 46
     craft_seconds: 250
+
+  - code: recipe_charm_royal
+    display_name_key: recipe.charm_royal
+    profession_code: jewelcrafting
+    min_skill: 11
+    inputs:
+      - { template_code: aluminium_bar, quantity: 3 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 412
+    output_template_code: charm_royal
+    output_stack: 1
+    profession_xp_reward: 28
+    craft_seconds: 155
 
   - code: recipe_hammer_royal
     display_name_key: recipe.hammer_royal
@@ -6569,6 +6855,20 @@ recipes:
     profession_xp_reward: 54
     craft_seconds: 280
 
+  - code: recipe_necklace_sunforged
+    display_name_key: recipe.necklace_sunforged
+    profession_code: jewelcrafting
+    min_skill: 14
+    inputs:
+      - { template_code: lead_bar, quantity: 3 }
+      - { template_code: aluminium_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 627
+    output_template_code: necklace_sunforged
+    output_stack: 1
+    profession_xp_reward: 41
+    craft_seconds: 210
+
   - code: recipe_boots_sunforged
     display_name_key: recipe.boots_sunforged
     profession_code: blacksmithing
@@ -6653,6 +6953,20 @@ recipes:
     profession_xp_reward: 54
     craft_seconds: 280
 
+  - code: recipe_ring_sunforged
+    display_name_key: recipe.ring_sunforged
+    profession_code: jewelcrafting
+    min_skill: 14
+    inputs:
+      - { template_code: lead_bar, quantity: 2 }
+      - { template_code: aluminium_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 537
+    output_template_code: ring_sunforged
+    output_stack: 1
+    profession_xp_reward: 34
+    craft_seconds: 175
+
   - code: recipe_ritualaxe_sunforged
     display_name_key: recipe.ritualaxe_sunforged
     profession_code: blacksmithing
@@ -6666,6 +6980,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 54
     craft_seconds: 280
+
+  - code: recipe_shield_sunforged
+    display_name_key: recipe.shield_sunforged
+    profession_code: blacksmithing
+    min_skill: 14
+    inputs:
+      - { template_code: lead_bar, quantity: 3 }
+      - { template_code: aluminium_bar, quantity: 1 }
+      - { template_code: badger_pelt, quantity: 1 }
+    gold_cost_copper: 985
+    output_template_code: shield_sunforged
+    output_stack: 1
+    profession_xp_reward: 48
+    craft_seconds: 245
 
   - code: recipe_shortsword_sunforged
     display_name_key: recipe.shortsword_sunforged
@@ -6761,6 +7089,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 54
     craft_seconds: 280
+
+  - code: recipe_charm_sunforged
+    display_name_key: recipe.charm_sunforged
+    profession_code: jewelcrafting
+    min_skill: 14
+    inputs:
+      - { template_code: lead_bar, quantity: 2 }
+      - { template_code: aluminium_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 537
+    output_template_code: charm_sunforged
+    output_stack: 1
+    profession_xp_reward: 34
+    craft_seconds: 175
 
   - code: recipe_hammer_sunforged
     display_name_key: recipe.hammer_sunforged
@@ -7042,6 +7384,20 @@ recipes:
     profession_xp_reward: 61
     craft_seconds: 300
 
+  - code: recipe_necklace_obsidian
+    display_name_key: recipe.necklace_obsidian
+    profession_code: jewelcrafting
+    min_skill: 16
+    inputs:
+      - { template_code: iron_bar, quantity: 3 }
+      - { template_code: lead_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 782
+    output_template_code: necklace_obsidian
+    output_stack: 1
+    profession_xp_reward: 46
+    craft_seconds: 225
+
   - code: recipe_boots_obsidian
     display_name_key: recipe.boots_obsidian
     profession_code: blacksmithing
@@ -7126,6 +7482,20 @@ recipes:
     profession_xp_reward: 61
     craft_seconds: 300
 
+  - code: recipe_ring_obsidian
+    display_name_key: recipe.ring_obsidian
+    profession_code: jewelcrafting
+    min_skill: 16
+    inputs:
+      - { template_code: iron_bar, quantity: 2 }
+      - { template_code: lead_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 670
+    output_template_code: ring_obsidian
+    output_stack: 1
+    profession_xp_reward: 38
+    craft_seconds: 185
+
   - code: recipe_ritualaxe_obsidian
     display_name_key: recipe.ritualaxe_obsidian
     profession_code: blacksmithing
@@ -7139,6 +7509,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 61
     craft_seconds: 300
+
+  - code: recipe_shield_obsidian
+    display_name_key: recipe.shield_obsidian
+    profession_code: blacksmithing
+    min_skill: 16
+    inputs:
+      - { template_code: iron_bar, quantity: 3 }
+      - { template_code: lead_bar, quantity: 1 }
+      - { template_code: badger_pelt, quantity: 1 }
+    gold_cost_copper: 1229
+    output_template_code: shield_obsidian
+    output_stack: 1
+    profession_xp_reward: 53
+    craft_seconds: 260
 
   - code: recipe_shortsword_obsidian
     display_name_key: recipe.shortsword_obsidian
@@ -7234,6 +7618,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 61
     craft_seconds: 300
+
+  - code: recipe_charm_obsidian
+    display_name_key: recipe.charm_obsidian
+    profession_code: jewelcrafting
+    min_skill: 16
+    inputs:
+      - { template_code: iron_bar, quantity: 2 }
+      - { template_code: lead_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 670
+    output_template_code: charm_obsidian
+    output_stack: 1
+    profession_xp_reward: 38
+    craft_seconds: 185
 
   - code: recipe_hammer_obsidian
     display_name_key: recipe.hammer_obsidian
@@ -7515,6 +7913,20 @@ recipes:
     profession_xp_reward: 73
     craft_seconds: 325
 
+  - code: recipe_necklace_sandsteel
+    display_name_key: recipe.necklace_sandsteel
+    profession_code: jewelcrafting
+    min_skill: 19
+    inputs:
+      - { template_code: copper_bar, quantity: 3 }
+      - { template_code: tin_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 944
+    output_template_code: necklace_sandsteel
+    output_stack: 1
+    profession_xp_reward: 55
+    craft_seconds: 245
+
   - code: recipe_boots_sandsteel
     display_name_key: recipe.boots_sandsteel
     profession_code: blacksmithing
@@ -7599,6 +8011,20 @@ recipes:
     profession_xp_reward: 73
     craft_seconds: 325
 
+  - code: recipe_ring_sandsteel
+    display_name_key: recipe.ring_sandsteel
+    profession_code: jewelcrafting
+    min_skill: 19
+    inputs:
+      - { template_code: copper_bar, quantity: 2 }
+      - { template_code: tin_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 809
+    output_template_code: ring_sandsteel
+    output_stack: 1
+    profession_xp_reward: 46
+    craft_seconds: 205
+
   - code: recipe_ritualaxe_sandsteel
     display_name_key: recipe.ritualaxe_sandsteel
     profession_code: blacksmithing
@@ -7612,6 +8038,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 73
     craft_seconds: 325
+
+  - code: recipe_shield_sandsteel
+    display_name_key: recipe.shield_sandsteel
+    profession_code: blacksmithing
+    min_skill: 19
+    inputs:
+      - { template_code: copper_bar, quantity: 3 }
+      - { template_code: tin_bar, quantity: 1 }
+      - { template_code: red_fox_pelt, quantity: 1 }
+    gold_cost_copper: 1484
+    output_template_code: shield_sandsteel
+    output_stack: 1
+    profession_xp_reward: 64
+    craft_seconds: 285
 
   - code: recipe_shortsword_sandsteel
     display_name_key: recipe.shortsword_sandsteel
@@ -7707,6 +8147,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 73
     craft_seconds: 325
+
+  - code: recipe_charm_sandsteel
+    display_name_key: recipe.charm_sandsteel
+    profession_code: jewelcrafting
+    min_skill: 19
+    inputs:
+      - { template_code: copper_bar, quantity: 2 }
+      - { template_code: tin_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 809
+    output_template_code: charm_sandsteel
+    output_stack: 1
+    profession_xp_reward: 46
+    craft_seconds: 205
 
   - code: recipe_hammer_sandsteel
     display_name_key: recipe.hammer_sandsteel
@@ -7988,6 +8442,20 @@ recipes:
     profession_xp_reward: 82
     craft_seconds: 345
 
+  - code: recipe_necklace_runebound
+    display_name_key: recipe.necklace_runebound
+    profession_code: jewelcrafting
+    min_skill: 21
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 1113
+    output_template_code: necklace_runebound
+    output_stack: 1
+    profession_xp_reward: 61
+    craft_seconds: 260
+
   - code: recipe_boots_runebound
     display_name_key: recipe.boots_runebound
     profession_code: blacksmithing
@@ -8072,6 +8540,20 @@ recipes:
     profession_xp_reward: 82
     craft_seconds: 345
 
+  - code: recipe_ring_runebound
+    display_name_key: recipe.ring_runebound
+    profession_code: jewelcrafting
+    min_skill: 21
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 954
+    output_template_code: ring_runebound
+    output_stack: 1
+    profession_xp_reward: 51
+    craft_seconds: 215
+
   - code: recipe_ritualaxe_runebound
     display_name_key: recipe.ritualaxe_runebound
     profession_code: blacksmithing
@@ -8085,6 +8567,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 82
     craft_seconds: 345
+
+  - code: recipe_shield_runebound
+    display_name_key: recipe.shield_runebound
+    profession_code: blacksmithing
+    min_skill: 21
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: boar_hide, quantity: 1 }
+    gold_cost_copper: 1750
+    output_template_code: shield_runebound
+    output_stack: 1
+    profession_xp_reward: 71
+    craft_seconds: 300
 
   - code: recipe_shortsword_runebound
     display_name_key: recipe.shortsword_runebound
@@ -8180,6 +8676,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 82
     craft_seconds: 345
+
+  - code: recipe_charm_runebound
+    display_name_key: recipe.charm_runebound
+    profession_code: jewelcrafting
+    min_skill: 21
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: flint, quantity: 2 }
+    gold_cost_copper: 954
+    output_template_code: charm_runebound
+    output_stack: 1
+    profession_xp_reward: 51
+    craft_seconds: 215
 
   - code: recipe_hammer_runebound
     display_name_key: recipe.hammer_runebound
@@ -8461,6 +8971,20 @@ recipes:
     profession_xp_reward: 97
     craft_seconds: 375
 
+  - code: recipe_necklace_phoenix
+    display_name_key: recipe.necklace_phoenix
+    profession_code: jewelcrafting
+    min_skill: 24
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1289
+    output_template_code: necklace_phoenix
+    output_stack: 1
+    profession_xp_reward: 73
+    craft_seconds: 280
+
   - code: recipe_boots_phoenix
     display_name_key: recipe.boots_phoenix
     profession_code: blacksmithing
@@ -8545,6 +9069,20 @@ recipes:
     profession_xp_reward: 97
     craft_seconds: 375
 
+  - code: recipe_ring_phoenix
+    display_name_key: recipe.ring_phoenix
+    profession_code: jewelcrafting
+    min_skill: 24
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1105
+    output_template_code: ring_phoenix
+    output_stack: 1
+    profession_xp_reward: 61
+    craft_seconds: 235
+
   - code: recipe_ritualaxe_phoenix
     display_name_key: recipe.ritualaxe_phoenix
     profession_code: blacksmithing
@@ -8558,6 +9096,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 97
     craft_seconds: 375
+
+  - code: recipe_shield_phoenix
+    display_name_key: recipe.shield_phoenix
+    profession_code: blacksmithing
+    min_skill: 24
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: mountain_goat_hide, quantity: 1 }
+    gold_cost_copper: 2025
+    output_template_code: shield_phoenix
+    output_stack: 1
+    profession_xp_reward: 85
+    craft_seconds: 330
 
   - code: recipe_shortsword_phoenix
     display_name_key: recipe.shortsword_phoenix
@@ -8653,6 +9205,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 97
     craft_seconds: 375
+
+  - code: recipe_charm_phoenix
+    display_name_key: recipe.charm_phoenix
+    profession_code: jewelcrafting
+    min_skill: 24
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1105
+    output_template_code: charm_phoenix
+    output_stack: 1
+    profession_xp_reward: 61
+    craft_seconds: 235
 
   - code: recipe_hammer_phoenix
     display_name_key: recipe.hammer_phoenix
@@ -8934,6 +9500,20 @@ recipes:
     profession_xp_reward: 109
     craft_seconds: 395
 
+  - code: recipe_necklace_dreadforged
+    display_name_key: recipe.necklace_dreadforged
+    profession_code: jewelcrafting
+    min_skill: 26
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1470
+    output_template_code: necklace_dreadforged
+    output_stack: 1
+    profession_xp_reward: 82
+    craft_seconds: 295
+
   - code: recipe_boots_dreadforged
     display_name_key: recipe.boots_dreadforged
     profession_code: blacksmithing
@@ -9018,6 +9598,20 @@ recipes:
     profession_xp_reward: 109
     craft_seconds: 395
 
+  - code: recipe_ring_dreadforged
+    display_name_key: recipe.ring_dreadforged
+    profession_code: jewelcrafting
+    min_skill: 26
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1260
+    output_template_code: ring_dreadforged
+    output_stack: 1
+    profession_xp_reward: 68
+    craft_seconds: 245
+
   - code: recipe_ritualaxe_dreadforged
     display_name_key: recipe.ritualaxe_dreadforged
     profession_code: blacksmithing
@@ -9031,6 +9625,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 109
     craft_seconds: 395
+
+  - code: recipe_shield_dreadforged
+    display_name_key: recipe.shield_dreadforged
+    profession_code: blacksmithing
+    min_skill: 26
+    inputs:
+      - { template_code: bronze_bar, quantity: 3 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: wolf_pelt, quantity: 1 }
+    gold_cost_copper: 2310
+    output_template_code: shield_dreadforged
+    output_stack: 1
+    profession_xp_reward: 96
+    craft_seconds: 345
 
   - code: recipe_shortsword_dreadforged
     display_name_key: recipe.shortsword_dreadforged
@@ -9126,6 +9734,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 109
     craft_seconds: 395
+
+  - code: recipe_charm_dreadforged
+    display_name_key: recipe.charm_dreadforged
+    profession_code: jewelcrafting
+    min_skill: 26
+    inputs:
+      - { template_code: bronze_bar, quantity: 2 }
+      - { template_code: copper_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1260
+    output_template_code: charm_dreadforged
+    output_stack: 1
+    profession_xp_reward: 68
+    craft_seconds: 245
 
   - code: recipe_hammer_dreadforged
     display_name_key: recipe.hammer_dreadforged
@@ -9407,6 +10029,20 @@ recipes:
     profession_xp_reward: 130
     craft_seconds: 420
 
+  - code: recipe_necklace_sovereign
+    display_name_key: recipe.necklace_sovereign
+    profession_code: jewelcrafting
+    min_skill: 29
+    inputs:
+      - { template_code: nickel_bar, quantity: 3 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1656
+    output_template_code: necklace_sovereign
+    output_stack: 1
+    profession_xp_reward: 98
+    craft_seconds: 315
+
   - code: recipe_boots_sovereign
     display_name_key: recipe.boots_sovereign
     profession_code: blacksmithing
@@ -9491,6 +10127,20 @@ recipes:
     profession_xp_reward: 130
     craft_seconds: 420
 
+  - code: recipe_ring_sovereign
+    display_name_key: recipe.ring_sovereign
+    profession_code: jewelcrafting
+    min_skill: 29
+    inputs:
+      - { template_code: nickel_bar, quantity: 2 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1420
+    output_template_code: ring_sovereign
+    output_stack: 1
+    profession_xp_reward: 81
+    craft_seconds: 265
+
   - code: recipe_ritualaxe_sovereign
     display_name_key: recipe.ritualaxe_sovereign
     profession_code: blacksmithing
@@ -9504,6 +10154,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 130
     craft_seconds: 420
+
+  - code: recipe_shield_sovereign
+    display_name_key: recipe.shield_sovereign
+    profession_code: blacksmithing
+    min_skill: 29
+    inputs:
+      - { template_code: nickel_bar, quantity: 3 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: wild_buffalo_hide, quantity: 1 }
+    gold_cost_copper: 2602
+    output_template_code: shield_sovereign
+    output_stack: 1
+    profession_xp_reward: 114
+    craft_seconds: 370
 
   - code: recipe_shortsword_sovereign
     display_name_key: recipe.shortsword_sovereign
@@ -9599,6 +10263,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 130
     craft_seconds: 420
+
+  - code: recipe_charm_sovereign
+    display_name_key: recipe.charm_sovereign
+    profession_code: jewelcrafting
+    min_skill: 29
+    inputs:
+      - { template_code: nickel_bar, quantity: 2 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1420
+    output_template_code: charm_sovereign
+    output_stack: 1
+    profession_xp_reward: 81
+    craft_seconds: 265
 
   - code: recipe_hammer_sovereign
     display_name_key: recipe.hammer_sovereign
@@ -9880,6 +10558,20 @@ recipes:
     profession_xp_reward: 146
     craft_seconds: 440
 
+  - code: recipe_necklace_coral
+    display_name_key: recipe.necklace_coral
+    profession_code: jewelcrafting
+    min_skill: 31
+    inputs:
+      - { template_code: nickel_bar, quantity: 3 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1847
+    output_template_code: necklace_coral
+    output_stack: 1
+    profession_xp_reward: 110
+    craft_seconds: 330
+
   - code: recipe_boots_coral
     display_name_key: recipe.boots_coral
     profession_code: blacksmithing
@@ -9964,6 +10656,20 @@ recipes:
     profession_xp_reward: 146
     craft_seconds: 440
 
+  - code: recipe_ring_coral
+    display_name_key: recipe.ring_coral
+    profession_code: jewelcrafting
+    min_skill: 31
+    inputs:
+      - { template_code: nickel_bar, quantity: 2 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1583
+    output_template_code: ring_coral
+    output_stack: 1
+    profession_xp_reward: 91
+    craft_seconds: 275
+
   - code: recipe_ritualaxe_coral
     display_name_key: recipe.ritualaxe_coral
     profession_code: blacksmithing
@@ -9977,6 +10683,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 146
     craft_seconds: 440
+
+  - code: recipe_shield_coral
+    display_name_key: recipe.shield_coral
+    profession_code: blacksmithing
+    min_skill: 31
+    inputs:
+      - { template_code: nickel_bar, quantity: 3 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: wild_buffalo_hide, quantity: 1 }
+    gold_cost_copper: 2903
+    output_template_code: shield_coral
+    output_stack: 1
+    profession_xp_reward: 128
+    craft_seconds: 385
 
   - code: recipe_shortsword_coral
     display_name_key: recipe.shortsword_coral
@@ -10072,6 +10792,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 146
     craft_seconds: 440
+
+  - code: recipe_charm_coral
+    display_name_key: recipe.charm_coral
+    profession_code: jewelcrafting
+    min_skill: 31
+    inputs:
+      - { template_code: nickel_bar, quantity: 2 }
+      - { template_code: zinc_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1583
+    output_template_code: charm_coral
+    output_stack: 1
+    profession_xp_reward: 91
+    craft_seconds: 275
 
   - code: recipe_hammer_coral
     display_name_key: recipe.hammer_coral
@@ -10353,6 +11087,20 @@ recipes:
     profession_xp_reward: 174
     craft_seconds: 470
 
+  - code: recipe_necklace_drakebone
+    display_name_key: recipe.necklace_drakebone
+    profession_code: jewelcrafting
+    min_skill: 34
+    inputs:
+      - { template_code: chromium_bar, quantity: 3 }
+      - { template_code: nickel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2043
+    output_template_code: necklace_drakebone
+    output_stack: 1
+    profession_xp_reward: 130
+    craft_seconds: 355
+
   - code: recipe_boots_drakebone
     display_name_key: recipe.boots_drakebone
     profession_code: blacksmithing
@@ -10437,6 +11185,20 @@ recipes:
     profession_xp_reward: 174
     craft_seconds: 470
 
+  - code: recipe_ring_drakebone
+    display_name_key: recipe.ring_drakebone
+    profession_code: jewelcrafting
+    min_skill: 34
+    inputs:
+      - { template_code: chromium_bar, quantity: 2 }
+      - { template_code: nickel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1751
+    output_template_code: ring_drakebone
+    output_stack: 1
+    profession_xp_reward: 109
+    craft_seconds: 295
+
   - code: recipe_ritualaxe_drakebone
     display_name_key: recipe.ritualaxe_drakebone
     profession_code: blacksmithing
@@ -10450,6 +11212,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 174
     craft_seconds: 470
+
+  - code: recipe_shield_drakebone
+    display_name_key: recipe.shield_drakebone
+    profession_code: blacksmithing
+    min_skill: 34
+    inputs:
+      - { template_code: chromium_bar, quantity: 3 }
+      - { template_code: nickel_bar, quantity: 1 }
+      - { template_code: giant_elk_hide, quantity: 1 }
+    gold_cost_copper: 3211
+    output_template_code: shield_drakebone
+    output_stack: 1
+    profession_xp_reward: 152
+    craft_seconds: 410
 
   - code: recipe_shortsword_drakebone
     display_name_key: recipe.shortsword_drakebone
@@ -10545,6 +11321,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 174
     craft_seconds: 470
+
+  - code: recipe_charm_drakebone
+    display_name_key: recipe.charm_drakebone
+    profession_code: jewelcrafting
+    min_skill: 34
+    inputs:
+      - { template_code: chromium_bar, quantity: 2 }
+      - { template_code: nickel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1751
+    output_template_code: charm_drakebone
+    output_stack: 1
+    profession_xp_reward: 109
+    craft_seconds: 295
 
   - code: recipe_hammer_drakebone
     display_name_key: recipe.hammer_drakebone
@@ -10826,6 +11616,20 @@ recipes:
     profession_xp_reward: 196
     craft_seconds: 490
 
+  - code: recipe_necklace_mistwoven
+    display_name_key: recipe.necklace_mistwoven
+    profession_code: jewelcrafting
+    min_skill: 36
+    inputs:
+      - { template_code: cobalt_bar, quantity: 3 }
+      - { template_code: chromium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2244
+    output_template_code: necklace_mistwoven
+    output_stack: 1
+    profession_xp_reward: 147
+    craft_seconds: 365
+
   - code: recipe_boots_mistwoven
     display_name_key: recipe.boots_mistwoven
     profession_code: blacksmithing
@@ -10910,6 +11714,20 @@ recipes:
     profession_xp_reward: 196
     craft_seconds: 490
 
+  - code: recipe_ring_mistwoven
+    display_name_key: recipe.ring_mistwoven
+    profession_code: jewelcrafting
+    min_skill: 36
+    inputs:
+      - { template_code: cobalt_bar, quantity: 2 }
+      - { template_code: chromium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1923
+    output_template_code: ring_mistwoven
+    output_stack: 1
+    profession_xp_reward: 122
+    craft_seconds: 305
+
   - code: recipe_ritualaxe_mistwoven
     display_name_key: recipe.ritualaxe_mistwoven
     profession_code: blacksmithing
@@ -10923,6 +11741,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 196
     craft_seconds: 490
+
+  - code: recipe_shield_mistwoven
+    display_name_key: recipe.shield_mistwoven
+    profession_code: blacksmithing
+    min_skill: 36
+    inputs:
+      - { template_code: cobalt_bar, quantity: 3 }
+      - { template_code: chromium_bar, quantity: 1 }
+      - { template_code: dire_wolf_pelt, quantity: 1 }
+    gold_cost_copper: 3526
+    output_template_code: shield_mistwoven
+    output_stack: 1
+    profession_xp_reward: 171
+    craft_seconds: 430
 
   - code: recipe_shortsword_mistwoven
     display_name_key: recipe.shortsword_mistwoven
@@ -11018,6 +11850,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 196
     craft_seconds: 490
+
+  - code: recipe_charm_mistwoven
+    display_name_key: recipe.charm_mistwoven
+    profession_code: jewelcrafting
+    min_skill: 36
+    inputs:
+      - { template_code: cobalt_bar, quantity: 2 }
+      - { template_code: chromium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 1923
+    output_template_code: charm_mistwoven
+    output_stack: 1
+    profession_xp_reward: 122
+    craft_seconds: 305
 
   - code: recipe_hammer_mistwoven
     display_name_key: recipe.hammer_mistwoven
@@ -11299,6 +12145,20 @@ recipes:
     profession_xp_reward: 233
     craft_seconds: 520
 
+  - code: recipe_necklace_prismatic
+    display_name_key: recipe.necklace_prismatic
+    profession_code: jewelcrafting
+    min_skill: 39
+    inputs:
+      - { template_code: silver_bar, quantity: 3 }
+      - { template_code: cobalt_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2448
+    output_template_code: necklace_prismatic
+    output_stack: 1
+    profession_xp_reward: 175
+    craft_seconds: 390
+
   - code: recipe_boots_prismatic
     display_name_key: recipe.boots_prismatic
     profession_code: blacksmithing
@@ -11383,6 +12243,20 @@ recipes:
     profession_xp_reward: 233
     craft_seconds: 520
 
+  - code: recipe_ring_prismatic
+    display_name_key: recipe.ring_prismatic
+    profession_code: jewelcrafting
+    min_skill: 39
+    inputs:
+      - { template_code: silver_bar, quantity: 2 }
+      - { template_code: cobalt_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2099
+    output_template_code: ring_prismatic
+    output_stack: 1
+    profession_xp_reward: 146
+    craft_seconds: 325
+
   - code: recipe_ritualaxe_prismatic
     display_name_key: recipe.ritualaxe_prismatic
     profession_code: blacksmithing
@@ -11396,6 +12270,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 233
     craft_seconds: 520
+
+  - code: recipe_shield_prismatic
+    display_name_key: recipe.shield_prismatic
+    profession_code: blacksmithing
+    min_skill: 39
+    inputs:
+      - { template_code: silver_bar, quantity: 3 }
+      - { template_code: cobalt_bar, quantity: 1 }
+      - { template_code: mountain_lion_pelt, quantity: 1 }
+    gold_cost_copper: 3847
+    output_template_code: shield_prismatic
+    output_stack: 1
+    profession_xp_reward: 204
+    craft_seconds: 455
 
   - code: recipe_shortsword_prismatic
     display_name_key: recipe.shortsword_prismatic
@@ -11491,6 +12379,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 233
     craft_seconds: 520
+
+  - code: recipe_charm_prismatic
+    display_name_key: recipe.charm_prismatic
+    profession_code: jewelcrafting
+    min_skill: 39
+    inputs:
+      - { template_code: silver_bar, quantity: 2 }
+      - { template_code: cobalt_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2099
+    output_template_code: charm_prismatic
+    output_stack: 1
+    profession_xp_reward: 146
+    craft_seconds: 325
 
   - code: recipe_hammer_prismatic
     display_name_key: recipe.hammer_prismatic
@@ -11772,6 +12674,20 @@ recipes:
     profession_xp_reward: 262
     craft_seconds: 540
 
+  - code: recipe_necklace_magmaforged
+    display_name_key: recipe.necklace_magmaforged
+    profession_code: jewelcrafting
+    min_skill: 41
+    inputs:
+      - { template_code: gold_bar, quantity: 3 }
+      - { template_code: silver_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2657
+    output_template_code: necklace_magmaforged
+    output_stack: 1
+    profession_xp_reward: 196
+    craft_seconds: 405
+
   - code: recipe_boots_magmaforged
     display_name_key: recipe.boots_magmaforged
     profession_code: blacksmithing
@@ -11856,6 +12772,20 @@ recipes:
     profession_xp_reward: 262
     craft_seconds: 540
 
+  - code: recipe_ring_magmaforged
+    display_name_key: recipe.ring_magmaforged
+    profession_code: jewelcrafting
+    min_skill: 41
+    inputs:
+      - { template_code: gold_bar, quantity: 2 }
+      - { template_code: silver_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2277
+    output_template_code: ring_magmaforged
+    output_stack: 1
+    profession_xp_reward: 164
+    craft_seconds: 335
+
   - code: recipe_ritualaxe_magmaforged
     display_name_key: recipe.ritualaxe_magmaforged
     profession_code: blacksmithing
@@ -11869,6 +12799,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 262
     craft_seconds: 540
+
+  - code: recipe_shield_magmaforged
+    display_name_key: recipe.shield_magmaforged
+    profession_code: blacksmithing
+    min_skill: 41
+    inputs:
+      - { template_code: gold_bar, quantity: 3 }
+      - { template_code: silver_bar, quantity: 1 }
+      - { template_code: black_panther_pelt, quantity: 1 }
+    gold_cost_copper: 4175
+    output_template_code: shield_magmaforged
+    output_stack: 1
+    profession_xp_reward: 229
+    craft_seconds: 470
 
   - code: recipe_shortsword_magmaforged
     display_name_key: recipe.shortsword_magmaforged
@@ -11964,6 +12908,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 262
     craft_seconds: 540
+
+  - code: recipe_charm_magmaforged
+    display_name_key: recipe.charm_magmaforged
+    profession_code: jewelcrafting
+    min_skill: 41
+    inputs:
+      - { template_code: gold_bar, quantity: 2 }
+      - { template_code: silver_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2277
+    output_template_code: charm_magmaforged
+    output_stack: 1
+    profession_xp_reward: 164
+    craft_seconds: 335
 
   - code: recipe_hammer_magmaforged
     display_name_key: recipe.hammer_magmaforged
@@ -12245,6 +13203,20 @@ recipes:
     profession_xp_reward: 312
     craft_seconds: 565
 
+  - code: recipe_necklace_tempest
+    display_name_key: recipe.necklace_tempest
+    profession_code: jewelcrafting
+    min_skill: 44
+    inputs:
+      - { template_code: electrum_bar, quantity: 3 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2870
+    output_template_code: necklace_tempest
+    output_stack: 1
+    profession_xp_reward: 234
+    craft_seconds: 425
+
   - code: recipe_boots_tempest
     display_name_key: recipe.boots_tempest
     profession_code: blacksmithing
@@ -12329,6 +13301,20 @@ recipes:
     profession_xp_reward: 312
     craft_seconds: 565
 
+  - code: recipe_ring_tempest
+    display_name_key: recipe.ring_tempest
+    profession_code: jewelcrafting
+    min_skill: 44
+    inputs:
+      - { template_code: electrum_bar, quantity: 2 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2460
+    output_template_code: ring_tempest
+    output_stack: 1
+    profession_xp_reward: 195
+    craft_seconds: 355
+
   - code: recipe_ritualaxe_tempest
     display_name_key: recipe.ritualaxe_tempest
     profession_code: blacksmithing
@@ -12342,6 +13328,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 312
     craft_seconds: 565
+
+  - code: recipe_shield_tempest
+    display_name_key: recipe.shield_tempest
+    profession_code: blacksmithing
+    min_skill: 44
+    inputs:
+      - { template_code: electrum_bar, quantity: 3 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: black_panther_pelt, quantity: 1 }
+    gold_cost_copper: 4509
+    output_template_code: shield_tempest
+    output_stack: 1
+    profession_xp_reward: 273
+    craft_seconds: 495
 
   - code: recipe_shortsword_tempest
     display_name_key: recipe.shortsword_tempest
@@ -12437,6 +13437,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 312
     craft_seconds: 565
+
+  - code: recipe_charm_tempest
+    display_name_key: recipe.charm_tempest
+    profession_code: jewelcrafting
+    min_skill: 44
+    inputs:
+      - { template_code: electrum_bar, quantity: 2 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2460
+    output_template_code: charm_tempest
+    output_stack: 1
+    profession_xp_reward: 195
+    craft_seconds: 355
 
   - code: recipe_hammer_tempest
     display_name_key: recipe.hammer_tempest
@@ -12718,6 +13732,20 @@ recipes:
     profession_xp_reward: 350
     craft_seconds: 585
 
+  - code: recipe_necklace_voidtouched
+    display_name_key: recipe.necklace_voidtouched
+    profession_code: jewelcrafting
+    min_skill: 46
+    inputs:
+      - { template_code: electrum_bar, quantity: 3 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3086
+    output_template_code: necklace_voidtouched
+    output_stack: 1
+    profession_xp_reward: 262
+    craft_seconds: 440
+
   - code: recipe_boots_voidtouched
     display_name_key: recipe.boots_voidtouched
     profession_code: blacksmithing
@@ -12802,6 +13830,20 @@ recipes:
     profession_xp_reward: 350
     craft_seconds: 585
 
+  - code: recipe_ring_voidtouched
+    display_name_key: recipe.ring_voidtouched
+    profession_code: jewelcrafting
+    min_skill: 46
+    inputs:
+      - { template_code: electrum_bar, quantity: 2 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2645
+    output_template_code: ring_voidtouched
+    output_stack: 1
+    profession_xp_reward: 219
+    craft_seconds: 365
+
   - code: recipe_ritualaxe_voidtouched
     display_name_key: recipe.ritualaxe_voidtouched
     profession_code: blacksmithing
@@ -12815,6 +13857,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 350
     craft_seconds: 585
+
+  - code: recipe_shield_voidtouched
+    display_name_key: recipe.shield_voidtouched
+    profession_code: blacksmithing
+    min_skill: 46
+    inputs:
+      - { template_code: electrum_bar, quantity: 3 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: black_panther_pelt, quantity: 1 }
+    gold_cost_copper: 4849
+    output_template_code: shield_voidtouched
+    output_stack: 1
+    profession_xp_reward: 306
+    craft_seconds: 510
 
   - code: recipe_shortsword_voidtouched
     display_name_key: recipe.shortsword_voidtouched
@@ -12910,6 +13966,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 350
     craft_seconds: 585
+
+  - code: recipe_charm_voidtouched
+    display_name_key: recipe.charm_voidtouched
+    profession_code: jewelcrafting
+    min_skill: 46
+    inputs:
+      - { template_code: electrum_bar, quantity: 2 }
+      - { template_code: gold_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2645
+    output_template_code: charm_voidtouched
+    output_stack: 1
+    profession_xp_reward: 219
+    craft_seconds: 365
 
   - code: recipe_hammer_voidtouched
     display_name_key: recipe.hammer_voidtouched
@@ -13191,6 +14261,20 @@ recipes:
     profession_xp_reward: 417
     craft_seconds: 615
 
+  - code: recipe_necklace_seraphic
+    display_name_key: recipe.necklace_seraphic
+    profession_code: jewelcrafting
+    min_skill: 49
+    inputs:
+      - { template_code: tungsten_bar, quantity: 3 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3306
+    output_template_code: necklace_seraphic
+    output_stack: 1
+    profession_xp_reward: 313
+    craft_seconds: 460
+
   - code: recipe_boots_seraphic
     display_name_key: recipe.boots_seraphic
     profession_code: blacksmithing
@@ -13275,6 +14359,20 @@ recipes:
     profession_xp_reward: 417
     craft_seconds: 615
 
+  - code: recipe_ring_seraphic
+    display_name_key: recipe.ring_seraphic
+    profession_code: jewelcrafting
+    min_skill: 49
+    inputs:
+      - { template_code: tungsten_bar, quantity: 2 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2833
+    output_template_code: ring_seraphic
+    output_stack: 1
+    profession_xp_reward: 261
+    craft_seconds: 385
+
   - code: recipe_ritualaxe_seraphic
     display_name_key: recipe.ritualaxe_seraphic
     profession_code: blacksmithing
@@ -13288,6 +14386,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 417
     craft_seconds: 615
+
+  - code: recipe_shield_seraphic
+    display_name_key: recipe.shield_seraphic
+    profession_code: blacksmithing
+    min_skill: 49
+    inputs:
+      - { template_code: tungsten_bar, quantity: 3 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: ember_boar_hide, quantity: 1 }
+    gold_cost_copper: 5194
+    output_template_code: shield_seraphic
+    output_stack: 1
+    profession_xp_reward: 365
+    craft_seconds: 540
 
   - code: recipe_shortsword_seraphic
     display_name_key: recipe.shortsword_seraphic
@@ -13383,6 +14495,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 417
     craft_seconds: 615
+
+  - code: recipe_charm_seraphic
+    display_name_key: recipe.charm_seraphic
+    profession_code: jewelcrafting
+    min_skill: 49
+    inputs:
+      - { template_code: tungsten_bar, quantity: 2 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 2833
+    output_template_code: charm_seraphic
+    output_stack: 1
+    profession_xp_reward: 261
+    craft_seconds: 385
 
   - code: recipe_hammer_seraphic
     display_name_key: recipe.hammer_seraphic
@@ -13664,6 +14790,20 @@ recipes:
     profession_xp_reward: 469
     craft_seconds: 635
 
+  - code: recipe_necklace_eclipse
+    display_name_key: recipe.necklace_eclipse
+    profession_code: jewelcrafting
+    min_skill: 51
+    inputs:
+      - { template_code: tungsten_bar, quantity: 3 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3529
+    output_template_code: necklace_eclipse
+    output_stack: 1
+    profession_xp_reward: 352
+    craft_seconds: 475
+
   - code: recipe_boots_eclipse
     display_name_key: recipe.boots_eclipse
     profession_code: blacksmithing
@@ -13748,6 +14888,20 @@ recipes:
     profession_xp_reward: 469
     craft_seconds: 635
 
+  - code: recipe_ring_eclipse
+    display_name_key: recipe.ring_eclipse
+    profession_code: jewelcrafting
+    min_skill: 51
+    inputs:
+      - { template_code: tungsten_bar, quantity: 2 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3025
+    output_template_code: ring_eclipse
+    output_stack: 1
+    profession_xp_reward: 293
+    craft_seconds: 395
+
   - code: recipe_ritualaxe_eclipse
     display_name_key: recipe.ritualaxe_eclipse
     profession_code: blacksmithing
@@ -13761,6 +14915,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 469
     craft_seconds: 635
+
+  - code: recipe_shield_eclipse
+    display_name_key: recipe.shield_eclipse
+    profession_code: blacksmithing
+    min_skill: 51
+    inputs:
+      - { template_code: tungsten_bar, quantity: 3 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: ember_boar_hide, quantity: 1 }
+    gold_cost_copper: 5545
+    output_template_code: shield_eclipse
+    output_stack: 1
+    profession_xp_reward: 410
+    craft_seconds: 555
 
   - code: recipe_shortsword_eclipse
     display_name_key: recipe.shortsword_eclipse
@@ -13856,6 +15024,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 469
     craft_seconds: 635
+
+  - code: recipe_charm_eclipse
+    display_name_key: recipe.charm_eclipse
+    profession_code: jewelcrafting
+    min_skill: 51
+    inputs:
+      - { template_code: tungsten_bar, quantity: 2 }
+      - { template_code: electrum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3025
+    output_template_code: charm_eclipse
+    output_stack: 1
+    profession_xp_reward: 293
+    craft_seconds: 395
 
   - code: recipe_hammer_eclipse
     display_name_key: recipe.hammer_eclipse
@@ -14137,6 +15319,20 @@ recipes:
     profession_xp_reward: 558
     craft_seconds: 660
 
+  - code: recipe_necklace_wyrmlord
+    display_name_key: recipe.necklace_wyrmlord
+    profession_code: jewelcrafting
+    min_skill: 54
+    inputs:
+      - { template_code: titanium_bar, quantity: 3 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3755
+    output_template_code: necklace_wyrmlord
+    output_stack: 1
+    profession_xp_reward: 418
+    craft_seconds: 495
+
   - code: recipe_boots_wyrmlord
     display_name_key: recipe.boots_wyrmlord
     profession_code: blacksmithing
@@ -14221,6 +15417,20 @@ recipes:
     profession_xp_reward: 558
     craft_seconds: 660
 
+  - code: recipe_ring_wyrmlord
+    display_name_key: recipe.ring_wyrmlord
+    profession_code: jewelcrafting
+    min_skill: 54
+    inputs:
+      - { template_code: titanium_bar, quantity: 2 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3219
+    output_template_code: ring_wyrmlord
+    output_stack: 1
+    profession_xp_reward: 349
+    craft_seconds: 415
+
   - code: recipe_ritualaxe_wyrmlord
     display_name_key: recipe.ritualaxe_wyrmlord
     profession_code: blacksmithing
@@ -14234,6 +15444,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 558
     craft_seconds: 660
+
+  - code: recipe_shield_wyrmlord
+    display_name_key: recipe.shield_wyrmlord
+    profession_code: blacksmithing
+    min_skill: 54
+    inputs:
+      - { template_code: titanium_bar, quantity: 3 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: frost_wolf_pelt, quantity: 1 }
+    gold_cost_copper: 5901
+    output_template_code: shield_wyrmlord
+    output_stack: 1
+    profession_xp_reward: 488
+    craft_seconds: 580
 
   - code: recipe_shortsword_wyrmlord
     display_name_key: recipe.shortsword_wyrmlord
@@ -14329,6 +15553,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 558
     craft_seconds: 660
+
+  - code: recipe_charm_wyrmlord
+    display_name_key: recipe.charm_wyrmlord
+    profession_code: jewelcrafting
+    min_skill: 54
+    inputs:
+      - { template_code: titanium_bar, quantity: 2 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3219
+    output_template_code: charm_wyrmlord
+    output_stack: 1
+    profession_xp_reward: 349
+    craft_seconds: 415
 
   - code: recipe_hammer_wyrmlord
     display_name_key: recipe.hammer_wyrmlord
@@ -14610,6 +15848,20 @@ recipes:
     profession_xp_reward: 627
     craft_seconds: 680
 
+  - code: recipe_necklace_celestine
+    display_name_key: recipe.necklace_celestine
+    profession_code: jewelcrafting
+    min_skill: 56
+    inputs:
+      - { template_code: titanium_bar, quantity: 3 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3985
+    output_template_code: necklace_celestine
+    output_stack: 1
+    profession_xp_reward: 470
+    craft_seconds: 510
+
   - code: recipe_boots_celestine
     display_name_key: recipe.boots_celestine
     profession_code: blacksmithing
@@ -14694,6 +15946,20 @@ recipes:
     profession_xp_reward: 627
     craft_seconds: 680
 
+  - code: recipe_ring_celestine
+    display_name_key: recipe.ring_celestine
+    profession_code: jewelcrafting
+    min_skill: 56
+    inputs:
+      - { template_code: titanium_bar, quantity: 2 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3416
+    output_template_code: ring_celestine
+    output_stack: 1
+    profession_xp_reward: 392
+    craft_seconds: 425
+
   - code: recipe_ritualaxe_celestine
     display_name_key: recipe.ritualaxe_celestine
     profession_code: blacksmithing
@@ -14707,6 +15973,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 627
     craft_seconds: 680
+
+  - code: recipe_shield_celestine
+    display_name_key: recipe.shield_celestine
+    profession_code: blacksmithing
+    min_skill: 56
+    inputs:
+      - { template_code: titanium_bar, quantity: 3 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: frost_wolf_pelt, quantity: 1 }
+    gold_cost_copper: 6262
+    output_template_code: shield_celestine
+    output_stack: 1
+    profession_xp_reward: 549
+    craft_seconds: 595
 
   - code: recipe_shortsword_celestine
     display_name_key: recipe.shortsword_celestine
@@ -14802,6 +16082,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 627
     craft_seconds: 680
+
+  - code: recipe_charm_celestine
+    display_name_key: recipe.charm_celestine
+    profession_code: jewelcrafting
+    min_skill: 56
+    inputs:
+      - { template_code: titanium_bar, quantity: 2 }
+      - { template_code: tungsten_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3416
+    output_template_code: charm_celestine
+    output_stack: 1
+    profession_xp_reward: 392
+    craft_seconds: 425
 
   - code: recipe_hammer_celestine
     display_name_key: recipe.hammer_celestine
@@ -15083,6 +16377,20 @@ recipes:
     profession_xp_reward: 747
     craft_seconds: 710
 
+  - code: recipe_necklace_eternal
+    display_name_key: recipe.necklace_eternal
+    profession_code: jewelcrafting
+    min_skill: 59
+    inputs:
+      - { template_code: palladium_bar, quantity: 3 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4218
+    output_template_code: necklace_eternal
+    output_stack: 1
+    profession_xp_reward: 560
+    craft_seconds: 535
+
   - code: recipe_boots_eternal
     display_name_key: recipe.boots_eternal
     profession_code: blacksmithing
@@ -15167,6 +16475,20 @@ recipes:
     profession_xp_reward: 747
     craft_seconds: 710
 
+  - code: recipe_ring_eternal
+    display_name_key: recipe.ring_eternal
+    profession_code: jewelcrafting
+    min_skill: 59
+    inputs:
+      - { template_code: palladium_bar, quantity: 2 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3615
+    output_template_code: ring_eternal
+    output_stack: 1
+    profession_xp_reward: 467
+    craft_seconds: 445
+
   - code: recipe_ritualaxe_eternal
     display_name_key: recipe.ritualaxe_eternal
     profession_code: blacksmithing
@@ -15180,6 +16502,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 747
     craft_seconds: 710
+
+  - code: recipe_shield_eternal
+    display_name_key: recipe.shield_eternal
+    profession_code: blacksmithing
+    min_skill: 59
+    inputs:
+      - { template_code: palladium_bar, quantity: 3 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: dire_bear_hide, quantity: 1 }
+    gold_cost_copper: 6628
+    output_template_code: shield_eternal
+    output_stack: 1
+    profession_xp_reward: 653
+    craft_seconds: 620
 
   - code: recipe_shortsword_eternal
     display_name_key: recipe.shortsword_eternal
@@ -15275,6 +16611,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 747
     craft_seconds: 710
+
+  - code: recipe_charm_eternal
+    display_name_key: recipe.charm_eternal
+    profession_code: jewelcrafting
+    min_skill: 59
+    inputs:
+      - { template_code: palladium_bar, quantity: 2 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3615
+    output_template_code: charm_eternal
+    output_stack: 1
+    profession_xp_reward: 467
+    craft_seconds: 445
 
   - code: recipe_hammer_eternal
     display_name_key: recipe.hammer_eternal
@@ -15556,6 +16906,20 @@ recipes:
     profession_xp_reward: 839
     craft_seconds: 730
 
+  - code: recipe_necklace_starless
+    display_name_key: recipe.necklace_starless
+    profession_code: jewelcrafting
+    min_skill: 61
+    inputs:
+      - { template_code: palladium_bar, quantity: 3 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4454
+    output_template_code: necklace_starless
+    output_stack: 1
+    profession_xp_reward: 629
+    craft_seconds: 545
+
   - code: recipe_boots_starless
     display_name_key: recipe.boots_starless
     profession_code: blacksmithing
@@ -15640,6 +17004,20 @@ recipes:
     profession_xp_reward: 839
     craft_seconds: 730
 
+  - code: recipe_ring_starless
+    display_name_key: recipe.ring_starless
+    profession_code: jewelcrafting
+    min_skill: 61
+    inputs:
+      - { template_code: palladium_bar, quantity: 2 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3817
+    output_template_code: ring_starless
+    output_stack: 1
+    profession_xp_reward: 524
+    craft_seconds: 455
+
   - code: recipe_ritualaxe_starless
     display_name_key: recipe.ritualaxe_starless
     profession_code: blacksmithing
@@ -15653,6 +17031,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 839
     craft_seconds: 730
+
+  - code: recipe_shield_starless
+    display_name_key: recipe.shield_starless
+    profession_code: blacksmithing
+    min_skill: 61
+    inputs:
+      - { template_code: palladium_bar, quantity: 3 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: dire_bear_hide, quantity: 1 }
+    gold_cost_copper: 6998
+    output_template_code: shield_starless
+    output_stack: 1
+    profession_xp_reward: 734
+    craft_seconds: 640
 
   - code: recipe_shortsword_starless
     display_name_key: recipe.shortsword_starless
@@ -15748,6 +17140,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 839
     craft_seconds: 730
+
+  - code: recipe_charm_starless
+    display_name_key: recipe.charm_starless
+    profession_code: jewelcrafting
+    min_skill: 61
+    inputs:
+      - { template_code: palladium_bar, quantity: 2 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 3817
+    output_template_code: charm_starless
+    output_stack: 1
+    profession_xp_reward: 524
+    craft_seconds: 455
 
   - code: recipe_hammer_starless
     display_name_key: recipe.hammer_starless
@@ -16029,6 +17435,20 @@ recipes:
     profession_xp_reward: 1000
     craft_seconds: 760
 
+  - code: recipe_necklace_nightsteel
+    display_name_key: recipe.necklace_nightsteel
+    profession_code: jewelcrafting
+    min_skill: 64
+    inputs:
+      - { template_code: rhodium_bar, quantity: 3 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4692
+    output_template_code: necklace_nightsteel
+    output_stack: 1
+    profession_xp_reward: 750
+    craft_seconds: 570
+
   - code: recipe_boots_nightsteel
     display_name_key: recipe.boots_nightsteel
     profession_code: blacksmithing
@@ -16113,6 +17533,20 @@ recipes:
     profession_xp_reward: 1000
     craft_seconds: 760
 
+  - code: recipe_ring_nightsteel
+    display_name_key: recipe.ring_nightsteel
+    profession_code: jewelcrafting
+    min_skill: 64
+    inputs:
+      - { template_code: rhodium_bar, quantity: 2 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4022
+    output_template_code: ring_nightsteel
+    output_stack: 1
+    profession_xp_reward: 625
+    craft_seconds: 475
+
   - code: recipe_ritualaxe_nightsteel
     display_name_key: recipe.ritualaxe_nightsteel
     profession_code: blacksmithing
@@ -16126,6 +17560,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1000
     craft_seconds: 760
+
+  - code: recipe_shield_nightsteel
+    display_name_key: recipe.shield_nightsteel
+    profession_code: blacksmithing
+    min_skill: 64
+    inputs:
+      - { template_code: rhodium_bar, quantity: 3 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: spirit_stag_hide, quantity: 1 }
+    gold_cost_copper: 7374
+    output_template_code: shield_nightsteel
+    output_stack: 1
+    profession_xp_reward: 875
+    craft_seconds: 665
 
   - code: recipe_shortsword_nightsteel
     display_name_key: recipe.shortsword_nightsteel
@@ -16221,6 +17669,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1000
     craft_seconds: 760
+
+  - code: recipe_charm_nightsteel
+    display_name_key: recipe.charm_nightsteel
+    profession_code: jewelcrafting
+    min_skill: 64
+    inputs:
+      - { template_code: rhodium_bar, quantity: 2 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4022
+    output_template_code: charm_nightsteel
+    output_stack: 1
+    profession_xp_reward: 625
+    craft_seconds: 475
 
   - code: recipe_hammer_nightsteel
     display_name_key: recipe.hammer_nightsteel
@@ -16502,6 +17964,20 @@ recipes:
     profession_xp_reward: 1123
     craft_seconds: 780
 
+  - code: recipe_necklace_chronoforged
+    display_name_key: recipe.necklace_chronoforged
+    profession_code: jewelcrafting
+    min_skill: 66
+    inputs:
+      - { template_code: rhodium_bar, quantity: 3 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4934
+    output_template_code: necklace_chronoforged
+    output_stack: 1
+    profession_xp_reward: 842
+    craft_seconds: 585
+
   - code: recipe_boots_chronoforged
     display_name_key: recipe.boots_chronoforged
     profession_code: blacksmithing
@@ -16586,6 +18062,20 @@ recipes:
     profession_xp_reward: 1123
     craft_seconds: 780
 
+  - code: recipe_ring_chronoforged
+    display_name_key: recipe.ring_chronoforged
+    profession_code: jewelcrafting
+    min_skill: 66
+    inputs:
+      - { template_code: rhodium_bar, quantity: 2 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4229
+    output_template_code: ring_chronoforged
+    output_stack: 1
+    profession_xp_reward: 702
+    craft_seconds: 485
+
   - code: recipe_ritualaxe_chronoforged
     display_name_key: recipe.ritualaxe_chronoforged
     profession_code: blacksmithing
@@ -16599,6 +18089,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1123
     craft_seconds: 780
+
+  - code: recipe_shield_chronoforged
+    display_name_key: recipe.shield_chronoforged
+    profession_code: blacksmithing
+    min_skill: 66
+    inputs:
+      - { template_code: rhodium_bar, quantity: 3 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: spirit_stag_hide, quantity: 1 }
+    gold_cost_copper: 7753
+    output_template_code: shield_chronoforged
+    output_stack: 1
+    profession_xp_reward: 983
+    craft_seconds: 680
 
   - code: recipe_shortsword_chronoforged
     display_name_key: recipe.shortsword_chronoforged
@@ -16694,6 +18198,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1123
     craft_seconds: 780
+
+  - code: recipe_charm_chronoforged
+    display_name_key: recipe.charm_chronoforged
+    profession_code: jewelcrafting
+    min_skill: 66
+    inputs:
+      - { template_code: rhodium_bar, quantity: 2 }
+      - { template_code: palladium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4229
+    output_template_code: charm_chronoforged
+    output_stack: 1
+    profession_xp_reward: 702
+    craft_seconds: 485
 
   - code: recipe_hammer_chronoforged
     display_name_key: recipe.hammer_chronoforged
@@ -16975,6 +18493,20 @@ recipes:
     profession_xp_reward: 1338
     craft_seconds: 805
 
+  - code: recipe_necklace_ascendant
+    display_name_key: recipe.necklace_ascendant
+    profession_code: jewelcrafting
+    min_skill: 69
+    inputs:
+      - { template_code: platinum_bar, quantity: 3 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5178
+    output_template_code: necklace_ascendant
+    output_stack: 1
+    profession_xp_reward: 1003
+    craft_seconds: 605
+
   - code: recipe_boots_ascendant
     display_name_key: recipe.boots_ascendant
     profession_code: blacksmithing
@@ -17059,6 +18591,20 @@ recipes:
     profession_xp_reward: 1338
     craft_seconds: 805
 
+  - code: recipe_ring_ascendant
+    display_name_key: recipe.ring_ascendant
+    profession_code: jewelcrafting
+    min_skill: 69
+    inputs:
+      - { template_code: platinum_bar, quantity: 2 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4438
+    output_template_code: ring_ascendant
+    output_stack: 1
+    profession_xp_reward: 836
+    craft_seconds: 505
+
   - code: recipe_ritualaxe_ascendant
     display_name_key: recipe.ritualaxe_ascendant
     profession_code: blacksmithing
@@ -17072,6 +18618,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1338
     craft_seconds: 805
+
+  - code: recipe_shield_ascendant
+    display_name_key: recipe.shield_ascendant
+    profession_code: blacksmithing
+    min_skill: 69
+    inputs:
+      - { template_code: platinum_bar, quantity: 3 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: ancient_mammoth_hide, quantity: 1 }
+    gold_cost_copper: 8137
+    output_template_code: shield_ascendant
+    output_stack: 1
+    profession_xp_reward: 1170
+    craft_seconds: 705
 
   - code: recipe_shortsword_ascendant
     display_name_key: recipe.shortsword_ascendant
@@ -17167,6 +18727,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1338
     craft_seconds: 805
+
+  - code: recipe_charm_ascendant
+    display_name_key: recipe.charm_ascendant
+    profession_code: jewelcrafting
+    min_skill: 69
+    inputs:
+      - { template_code: platinum_bar, quantity: 2 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4438
+    output_template_code: charm_ascendant
+    output_stack: 1
+    profession_xp_reward: 836
+    craft_seconds: 505
 
   - code: recipe_hammer_ascendant
     display_name_key: recipe.hammer_ascendant
@@ -17448,6 +19022,20 @@ recipes:
     profession_xp_reward: 1503
     craft_seconds: 825
 
+  - code: recipe_necklace_stormborn
+    display_name_key: recipe.necklace_stormborn
+    profession_code: jewelcrafting
+    min_skill: 71
+    inputs:
+      - { template_code: platinum_bar, quantity: 3 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5425
+    output_template_code: necklace_stormborn
+    output_stack: 1
+    profession_xp_reward: 1127
+    craft_seconds: 620
+
   - code: recipe_boots_stormborn
     display_name_key: recipe.boots_stormborn
     profession_code: blacksmithing
@@ -17532,6 +19120,20 @@ recipes:
     profession_xp_reward: 1503
     craft_seconds: 825
 
+  - code: recipe_ring_stormborn
+    display_name_key: recipe.ring_stormborn
+    profession_code: jewelcrafting
+    min_skill: 71
+    inputs:
+      - { template_code: platinum_bar, quantity: 2 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4650
+    output_template_code: ring_stormborn
+    output_stack: 1
+    profession_xp_reward: 939
+    craft_seconds: 515
+
   - code: recipe_ritualaxe_stormborn
     display_name_key: recipe.ritualaxe_stormborn
     profession_code: blacksmithing
@@ -17545,6 +19147,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1503
     craft_seconds: 825
+
+  - code: recipe_shield_stormborn
+    display_name_key: recipe.shield_stormborn
+    profession_code: blacksmithing
+    min_skill: 71
+    inputs:
+      - { template_code: platinum_bar, quantity: 3 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: ancient_mammoth_hide, quantity: 1 }
+    gold_cost_copper: 8525
+    output_template_code: shield_stormborn
+    output_stack: 1
+    profession_xp_reward: 1315
+    craft_seconds: 720
 
   - code: recipe_shortsword_stormborn
     display_name_key: recipe.shortsword_stormborn
@@ -17640,6 +19256,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1503
     craft_seconds: 825
+
+  - code: recipe_charm_stormborn
+    display_name_key: recipe.charm_stormborn
+    profession_code: jewelcrafting
+    min_skill: 71
+    inputs:
+      - { template_code: platinum_bar, quantity: 2 }
+      - { template_code: rhodium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4650
+    output_template_code: charm_stormborn
+    output_stack: 1
+    profession_xp_reward: 939
+    craft_seconds: 515
 
   - code: recipe_hammer_stormborn
     display_name_key: recipe.hammer_stormborn
@@ -17921,6 +19551,20 @@ recipes:
     profession_xp_reward: 1790
     craft_seconds: 855
 
+  - code: recipe_necklace_riftforged
+    display_name_key: recipe.necklace_riftforged
+    profession_code: jewelcrafting
+    min_skill: 74
+    inputs:
+      - { template_code: osmium_bar, quantity: 3 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5675
+    output_template_code: necklace_riftforged
+    output_stack: 1
+    profession_xp_reward: 1342
+    craft_seconds: 640
+
   - code: recipe_boots_riftforged
     display_name_key: recipe.boots_riftforged
     profession_code: blacksmithing
@@ -18005,6 +19649,20 @@ recipes:
     profession_xp_reward: 1790
     craft_seconds: 855
 
+  - code: recipe_ring_riftforged
+    display_name_key: recipe.ring_riftforged
+    profession_code: jewelcrafting
+    min_skill: 74
+    inputs:
+      - { template_code: osmium_bar, quantity: 2 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4864
+    output_template_code: ring_riftforged
+    output_stack: 1
+    profession_xp_reward: 1119
+    craft_seconds: 535
+
   - code: recipe_ritualaxe_riftforged
     display_name_key: recipe.ritualaxe_riftforged
     profession_code: blacksmithing
@@ -18018,6 +19676,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1790
     craft_seconds: 855
+
+  - code: recipe_shield_riftforged
+    display_name_key: recipe.shield_riftforged
+    profession_code: blacksmithing
+    min_skill: 74
+    inputs:
+      - { template_code: osmium_bar, quantity: 3 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: shadow_chimera_hide, quantity: 1 }
+    gold_cost_copper: 8918
+    output_template_code: shield_riftforged
+    output_stack: 1
+    profession_xp_reward: 1566
+    craft_seconds: 750
 
   - code: recipe_shortsword_riftforged
     display_name_key: recipe.shortsword_riftforged
@@ -18113,6 +19785,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 1790
     craft_seconds: 855
+
+  - code: recipe_charm_riftforged
+    display_name_key: recipe.charm_riftforged
+    profession_code: jewelcrafting
+    min_skill: 74
+    inputs:
+      - { template_code: osmium_bar, quantity: 2 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 4864
+    output_template_code: charm_riftforged
+    output_stack: 1
+    profession_xp_reward: 1119
+    craft_seconds: 535
 
   - code: recipe_hammer_riftforged
     display_name_key: recipe.hammer_riftforged
@@ -18394,6 +20080,20 @@ recipes:
     profession_xp_reward: 2011
     craft_seconds: 875
 
+  - code: recipe_necklace_chaos
+    display_name_key: recipe.necklace_chaos
+    profession_code: jewelcrafting
+    min_skill: 76
+    inputs:
+      - { template_code: osmium_bar, quantity: 3 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5927
+    output_template_code: necklace_chaos
+    output_stack: 1
+    profession_xp_reward: 1508
+    craft_seconds: 655
+
   - code: recipe_boots_chaos
     display_name_key: recipe.boots_chaos
     profession_code: blacksmithing
@@ -18478,6 +20178,20 @@ recipes:
     profession_xp_reward: 2011
     craft_seconds: 875
 
+  - code: recipe_ring_chaos
+    display_name_key: recipe.ring_chaos
+    profession_code: jewelcrafting
+    min_skill: 76
+    inputs:
+      - { template_code: osmium_bar, quantity: 2 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5080
+    output_template_code: ring_chaos
+    output_stack: 1
+    profession_xp_reward: 1257
+    craft_seconds: 545
+
   - code: recipe_ritualaxe_chaos
     display_name_key: recipe.ritualaxe_chaos
     profession_code: blacksmithing
@@ -18491,6 +20205,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2011
     craft_seconds: 875
+
+  - code: recipe_shield_chaos
+    display_name_key: recipe.shield_chaos
+    profession_code: blacksmithing
+    min_skill: 76
+    inputs:
+      - { template_code: osmium_bar, quantity: 3 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: shadow_chimera_hide, quantity: 1 }
+    gold_cost_copper: 9314
+    output_template_code: shield_chaos
+    output_stack: 1
+    profession_xp_reward: 1760
+    craft_seconds: 765
 
   - code: recipe_shortsword_chaos
     display_name_key: recipe.shortsword_chaos
@@ -18586,6 +20314,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2011
     craft_seconds: 875
+
+  - code: recipe_charm_chaos
+    display_name_key: recipe.charm_chaos
+    profession_code: jewelcrafting
+    min_skill: 76
+    inputs:
+      - { template_code: osmium_bar, quantity: 2 }
+      - { template_code: platinum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5080
+    output_template_code: charm_chaos
+    output_stack: 1
+    profession_xp_reward: 1257
+    craft_seconds: 545
 
   - code: recipe_hammer_chaos
     display_name_key: recipe.hammer_chaos
@@ -18867,6 +20609,20 @@ recipes:
     profession_xp_reward: 2395
     craft_seconds: 900
 
+  - code: recipe_necklace_skyforged
+    display_name_key: recipe.necklace_skyforged
+    profession_code: jewelcrafting
+    min_skill: 79
+    inputs:
+      - { template_code: iridium_bar, quantity: 3 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6182
+    output_template_code: necklace_skyforged
+    output_stack: 1
+    profession_xp_reward: 1796
+    craft_seconds: 675
+
   - code: recipe_boots_skyforged
     display_name_key: recipe.boots_skyforged
     profession_code: blacksmithing
@@ -18951,6 +20707,20 @@ recipes:
     profession_xp_reward: 2395
     craft_seconds: 900
 
+  - code: recipe_ring_skyforged
+    display_name_key: recipe.ring_skyforged
+    profession_code: jewelcrafting
+    min_skill: 79
+    inputs:
+      - { template_code: iridium_bar, quantity: 2 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5299
+    output_template_code: ring_skyforged
+    output_stack: 1
+    profession_xp_reward: 1497
+    craft_seconds: 565
+
   - code: recipe_ritualaxe_skyforged
     display_name_key: recipe.ritualaxe_skyforged
     profession_code: blacksmithing
@@ -18964,6 +20734,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2395
     craft_seconds: 900
+
+  - code: recipe_shield_skyforged
+    display_name_key: recipe.shield_skyforged
+    profession_code: blacksmithing
+    min_skill: 79
+    inputs:
+      - { template_code: iridium_bar, quantity: 3 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: elder_wyvern_scale, quantity: 1 }
+    gold_cost_copper: 9714
+    output_template_code: shield_skyforged
+    output_stack: 1
+    profession_xp_reward: 2096
+    craft_seconds: 790
 
   - code: recipe_shortsword_skyforged
     display_name_key: recipe.shortsword_skyforged
@@ -19059,6 +20843,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2395
     craft_seconds: 900
+
+  - code: recipe_charm_skyforged
+    display_name_key: recipe.charm_skyforged
+    profession_code: jewelcrafting
+    min_skill: 79
+    inputs:
+      - { template_code: iridium_bar, quantity: 2 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5299
+    output_template_code: charm_skyforged
+    output_stack: 1
+    profession_xp_reward: 1497
+    craft_seconds: 565
 
   - code: recipe_hammer_skyforged
     display_name_key: recipe.hammer_skyforged
@@ -19340,6 +21138,20 @@ recipes:
     profession_xp_reward: 2692
     craft_seconds: 920
 
+  - code: recipe_necklace_archangel
+    display_name_key: recipe.necklace_archangel
+    profession_code: jewelcrafting
+    min_skill: 81
+    inputs:
+      - { template_code: iridium_bar, quantity: 3 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6439
+    output_template_code: necklace_archangel
+    output_stack: 1
+    profession_xp_reward: 2019
+    craft_seconds: 690
+
   - code: recipe_boots_archangel
     display_name_key: recipe.boots_archangel
     profession_code: blacksmithing
@@ -19424,6 +21236,20 @@ recipes:
     profession_xp_reward: 2692
     craft_seconds: 920
 
+  - code: recipe_ring_archangel
+    display_name_key: recipe.ring_archangel
+    profession_code: jewelcrafting
+    min_skill: 81
+    inputs:
+      - { template_code: iridium_bar, quantity: 2 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5519
+    output_template_code: ring_archangel
+    output_stack: 1
+    profession_xp_reward: 1682
+    craft_seconds: 575
+
   - code: recipe_ritualaxe_archangel
     display_name_key: recipe.ritualaxe_archangel
     profession_code: blacksmithing
@@ -19437,6 +21263,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2692
     craft_seconds: 920
+
+  - code: recipe_shield_archangel
+    display_name_key: recipe.shield_archangel
+    profession_code: blacksmithing
+    min_skill: 81
+    inputs:
+      - { template_code: iridium_bar, quantity: 3 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: elder_wyvern_scale, quantity: 1 }
+    gold_cost_copper: 10118
+    output_template_code: shield_archangel
+    output_stack: 1
+    profession_xp_reward: 2355
+    craft_seconds: 805
 
   - code: recipe_shortsword_archangel
     display_name_key: recipe.shortsword_archangel
@@ -19532,6 +21372,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 2692
     craft_seconds: 920
+
+  - code: recipe_charm_archangel
+    display_name_key: recipe.charm_archangel
+    profession_code: jewelcrafting
+    min_skill: 81
+    inputs:
+      - { template_code: iridium_bar, quantity: 2 }
+      - { template_code: osmium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5519
+    output_template_code: charm_archangel
+    output_stack: 1
+    profession_xp_reward: 1682
+    craft_seconds: 575
 
   - code: recipe_hammer_archangel
     display_name_key: recipe.hammer_archangel
@@ -19813,6 +21667,20 @@ recipes:
     profession_xp_reward: 3206
     craft_seconds: 950
 
+  - code: recipe_necklace_aurora
+    display_name_key: recipe.necklace_aurora
+    profession_code: jewelcrafting
+    min_skill: 84
+    inputs:
+      - { template_code: starsteel_bar, quantity: 3 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6698
+    output_template_code: necklace_aurora
+    output_stack: 1
+    profession_xp_reward: 2404
+    craft_seconds: 715
+
   - code: recipe_boots_aurora
     display_name_key: recipe.boots_aurora
     profession_code: blacksmithing
@@ -19897,6 +21765,20 @@ recipes:
     profession_xp_reward: 3206
     craft_seconds: 950
 
+  - code: recipe_ring_aurora
+    display_name_key: recipe.ring_aurora
+    profession_code: jewelcrafting
+    min_skill: 84
+    inputs:
+      - { template_code: starsteel_bar, quantity: 2 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5742
+    output_template_code: ring_aurora
+    output_stack: 1
+    profession_xp_reward: 2004
+    craft_seconds: 595
+
   - code: recipe_ritualaxe_aurora
     display_name_key: recipe.ritualaxe_aurora
     profession_code: blacksmithing
@@ -19910,6 +21792,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 3206
     craft_seconds: 950
+
+  - code: recipe_shield_aurora
+    display_name_key: recipe.shield_aurora
+    profession_code: blacksmithing
+    min_skill: 84
+    inputs:
+      - { template_code: starsteel_bar, quantity: 3 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: elder_wyvern_scale, quantity: 1 }
+    gold_cost_copper: 10526
+    output_template_code: shield_aurora
+    output_stack: 1
+    profession_xp_reward: 2805
+    craft_seconds: 830
 
   - code: recipe_shortsword_aurora
     display_name_key: recipe.shortsword_aurora
@@ -20005,6 +21901,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 3206
     craft_seconds: 950
+
+  - code: recipe_charm_aurora
+    display_name_key: recipe.charm_aurora
+    profession_code: jewelcrafting
+    min_skill: 84
+    inputs:
+      - { template_code: starsteel_bar, quantity: 2 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5742
+    output_template_code: charm_aurora
+    output_stack: 1
+    profession_xp_reward: 2004
+    craft_seconds: 595
 
   - code: recipe_hammer_aurora
     display_name_key: recipe.hammer_aurora
@@ -20286,6 +22196,20 @@ recipes:
     profession_xp_reward: 3602
     craft_seconds: 970
 
+  - code: recipe_necklace_ashen
+    display_name_key: recipe.necklace_ashen
+    profession_code: jewelcrafting
+    min_skill: 86
+    inputs:
+      - { template_code: starsteel_bar, quantity: 3 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6960
+    output_template_code: necklace_ashen
+    output_stack: 1
+    profession_xp_reward: 2701
+    craft_seconds: 725
+
   - code: recipe_boots_ashen
     display_name_key: recipe.boots_ashen
     profession_code: blacksmithing
@@ -20370,6 +22294,20 @@ recipes:
     profession_xp_reward: 3602
     craft_seconds: 970
 
+  - code: recipe_ring_ashen
+    display_name_key: recipe.ring_ashen
+    profession_code: jewelcrafting
+    min_skill: 86
+    inputs:
+      - { template_code: starsteel_bar, quantity: 2 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5966
+    output_template_code: ring_ashen
+    output_stack: 1
+    profession_xp_reward: 2251
+    craft_seconds: 605
+
   - code: recipe_ritualaxe_ashen
     display_name_key: recipe.ritualaxe_ashen
     profession_code: blacksmithing
@@ -20383,6 +22321,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 3602
     craft_seconds: 970
+
+  - code: recipe_shield_ashen
+    display_name_key: recipe.shield_ashen
+    profession_code: blacksmithing
+    min_skill: 86
+    inputs:
+      - { template_code: starsteel_bar, quantity: 3 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: elder_wyvern_scale, quantity: 1 }
+    gold_cost_copper: 10938
+    output_template_code: shield_ashen
+    output_stack: 1
+    profession_xp_reward: 3151
+    craft_seconds: 850
 
   - code: recipe_shortsword_ashen
     display_name_key: recipe.shortsword_ashen
@@ -20478,6 +22430,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 3602
     craft_seconds: 970
+
+  - code: recipe_charm_ashen
+    display_name_key: recipe.charm_ashen
+    profession_code: jewelcrafting
+    min_skill: 86
+    inputs:
+      - { template_code: starsteel_bar, quantity: 2 }
+      - { template_code: iridium_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 5966
+    output_template_code: charm_ashen
+    output_stack: 1
+    profession_xp_reward: 2251
+    craft_seconds: 605
 
   - code: recipe_hammer_ashen
     display_name_key: recipe.hammer_ashen
@@ -20759,6 +22725,20 @@ recipes:
     profession_xp_reward: 4290
     craft_seconds: 1000
 
+  - code: recipe_necklace_leviathan
+    display_name_key: recipe.necklace_leviathan
+    profession_code: jewelcrafting
+    min_skill: 89
+    inputs:
+      - { template_code: mythril_bar, quantity: 3 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 7224
+    output_template_code: necklace_leviathan
+    output_stack: 1
+    profession_xp_reward: 3217
+    craft_seconds: 750
+
   - code: recipe_boots_leviathan
     display_name_key: recipe.boots_leviathan
     profession_code: blacksmithing
@@ -20843,6 +22823,20 @@ recipes:
     profession_xp_reward: 4290
     craft_seconds: 1000
 
+  - code: recipe_ring_leviathan
+    display_name_key: recipe.ring_leviathan
+    profession_code: jewelcrafting
+    min_skill: 89
+    inputs:
+      - { template_code: mythril_bar, quantity: 2 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6192
+    output_template_code: ring_leviathan
+    output_stack: 1
+    profession_xp_reward: 2681
+    craft_seconds: 625
+
   - code: recipe_ritualaxe_leviathan
     display_name_key: recipe.ritualaxe_leviathan
     profession_code: blacksmithing
@@ -20856,6 +22850,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 4290
     craft_seconds: 1000
+
+  - code: recipe_shield_leviathan
+    display_name_key: recipe.shield_leviathan
+    profession_code: blacksmithing
+    min_skill: 89
+    inputs:
+      - { template_code: mythril_bar, quantity: 3 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: void_behemoth_hide, quantity: 1 }
+    gold_cost_copper: 11353
+    output_template_code: shield_leviathan
+    output_stack: 1
+    profession_xp_reward: 3753
+    craft_seconds: 875
 
   - code: recipe_shortsword_leviathan
     display_name_key: recipe.shortsword_leviathan
@@ -20951,6 +22959,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 4290
     craft_seconds: 1000
+
+  - code: recipe_charm_leviathan
+    display_name_key: recipe.charm_leviathan
+    profession_code: jewelcrafting
+    min_skill: 89
+    inputs:
+      - { template_code: mythril_bar, quantity: 2 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6192
+    output_template_code: charm_leviathan
+    output_stack: 1
+    profession_xp_reward: 2681
+    craft_seconds: 625
 
   - code: recipe_hammer_leviathan
     display_name_key: recipe.hammer_leviathan
@@ -21232,6 +23254,20 @@ recipes:
     profession_xp_reward: 4820
     craft_seconds: 1020
 
+  - code: recipe_necklace_doomforged
+    display_name_key: recipe.necklace_doomforged
+    profession_code: jewelcrafting
+    min_skill: 91
+    inputs:
+      - { template_code: mythril_bar, quantity: 3 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 7491
+    output_template_code: necklace_doomforged
+    output_stack: 1
+    profession_xp_reward: 3615
+    craft_seconds: 765
+
   - code: recipe_boots_doomforged
     display_name_key: recipe.boots_doomforged
     profession_code: blacksmithing
@@ -21316,6 +23352,20 @@ recipes:
     profession_xp_reward: 4820
     craft_seconds: 1020
 
+  - code: recipe_ring_doomforged
+    display_name_key: recipe.ring_doomforged
+    profession_code: jewelcrafting
+    min_skill: 91
+    inputs:
+      - { template_code: mythril_bar, quantity: 2 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6421
+    output_template_code: ring_doomforged
+    output_stack: 1
+    profession_xp_reward: 3012
+    craft_seconds: 635
+
   - code: recipe_ritualaxe_doomforged
     display_name_key: recipe.ritualaxe_doomforged
     profession_code: blacksmithing
@@ -21329,6 +23379,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 4820
     craft_seconds: 1020
+
+  - code: recipe_shield_doomforged
+    display_name_key: recipe.shield_doomforged
+    profession_code: blacksmithing
+    min_skill: 91
+    inputs:
+      - { template_code: mythril_bar, quantity: 3 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: void_behemoth_hide, quantity: 1 }
+    gold_cost_copper: 11771
+    output_template_code: shield_doomforged
+    output_stack: 1
+    profession_xp_reward: 4218
+    craft_seconds: 890
 
   - code: recipe_shortsword_doomforged
     display_name_key: recipe.shortsword_doomforged
@@ -21424,6 +23488,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 4820
     craft_seconds: 1020
+
+  - code: recipe_charm_doomforged
+    display_name_key: recipe.charm_doomforged
+    profession_code: jewelcrafting
+    min_skill: 91
+    inputs:
+      - { template_code: mythril_bar, quantity: 2 }
+      - { template_code: starsteel_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6421
+    output_template_code: charm_doomforged
+    output_stack: 1
+    profession_xp_reward: 3012
+    craft_seconds: 635
 
   - code: recipe_hammer_doomforged
     display_name_key: recipe.hammer_doomforged
@@ -21705,6 +23783,20 @@ recipes:
     profession_xp_reward: 5741
     craft_seconds: 1045
 
+  - code: recipe_necklace_voidforged
+    display_name_key: recipe.necklace_voidforged
+    profession_code: jewelcrafting
+    min_skill: 94
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 3 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 7760
+    output_template_code: necklace_voidforged
+    output_stack: 1
+    profession_xp_reward: 4306
+    craft_seconds: 785
+
   - code: recipe_boots_voidforged
     display_name_key: recipe.boots_voidforged
     profession_code: blacksmithing
@@ -21789,6 +23881,20 @@ recipes:
     profession_xp_reward: 5741
     craft_seconds: 1045
 
+  - code: recipe_ring_voidforged
+    display_name_key: recipe.ring_voidforged
+    profession_code: jewelcrafting
+    min_skill: 94
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 2 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6651
+    output_template_code: ring_voidforged
+    output_stack: 1
+    profession_xp_reward: 3588
+    craft_seconds: 655
+
   - code: recipe_ritualaxe_voidforged
     display_name_key: recipe.ritualaxe_voidforged
     profession_code: blacksmithing
@@ -21802,6 +23908,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 5741
     craft_seconds: 1045
+
+  - code: recipe_shield_voidforged
+    display_name_key: recipe.shield_voidforged
+    profession_code: blacksmithing
+    min_skill: 94
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 3 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: void_behemoth_hide, quantity: 1 }
+    gold_cost_copper: 12193
+    output_template_code: shield_voidforged
+    output_stack: 1
+    profession_xp_reward: 5023
+    craft_seconds: 915
 
   - code: recipe_shortsword_voidforged
     display_name_key: recipe.shortsword_voidforged
@@ -21897,6 +24017,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 5741
     craft_seconds: 1045
+
+  - code: recipe_charm_voidforged
+    display_name_key: recipe.charm_voidforged
+    profession_code: jewelcrafting
+    min_skill: 94
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 2 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6651
+    output_template_code: charm_voidforged
+    output_stack: 1
+    profession_xp_reward: 3588
+    craft_seconds: 655
 
   - code: recipe_hammer_voidforged
     display_name_key: recipe.hammer_voidforged
@@ -22178,6 +24312,20 @@ recipes:
     profession_xp_reward: 6450
     craft_seconds: 1065
 
+  - code: recipe_necklace_godslayer
+    display_name_key: recipe.necklace_godslayer
+    profession_code: jewelcrafting
+    min_skill: 96
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 3 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 8030
+    output_template_code: necklace_godslayer
+    output_stack: 1
+    profession_xp_reward: 4838
+    craft_seconds: 800
+
   - code: recipe_boots_godslayer
     display_name_key: recipe.boots_godslayer
     profession_code: blacksmithing
@@ -22262,6 +24410,20 @@ recipes:
     profession_xp_reward: 6450
     craft_seconds: 1065
 
+  - code: recipe_ring_godslayer
+    display_name_key: recipe.ring_godslayer
+    profession_code: jewelcrafting
+    min_skill: 96
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 2 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6883
+    output_template_code: ring_godslayer
+    output_stack: 1
+    profession_xp_reward: 4032
+    craft_seconds: 665
+
   - code: recipe_ritualaxe_godslayer
     display_name_key: recipe.ritualaxe_godslayer
     profession_code: blacksmithing
@@ -22275,6 +24437,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 6450
     craft_seconds: 1065
+
+  - code: recipe_shield_godslayer
+    display_name_key: recipe.shield_godslayer
+    profession_code: blacksmithing
+    min_skill: 96
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 3 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: void_behemoth_hide, quantity: 1 }
+    gold_cost_copper: 12619
+    output_template_code: shield_godslayer
+    output_stack: 1
+    profession_xp_reward: 5644
+    craft_seconds: 930
 
   - code: recipe_shortsword_godslayer
     display_name_key: recipe.shortsword_godslayer
@@ -22370,6 +24546,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 6450
     craft_seconds: 1065
+
+  - code: recipe_charm_godslayer
+    display_name_key: recipe.charm_godslayer
+    profession_code: jewelcrafting
+    min_skill: 96
+    inputs:
+      - { template_code: orichalcum_bar, quantity: 2 }
+      - { template_code: mythril_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 6883
+    output_template_code: charm_godslayer
+    output_stack: 1
+    profession_xp_reward: 4032
+    craft_seconds: 665
 
   - code: recipe_hammer_godslayer
     display_name_key: recipe.hammer_godslayer
@@ -22651,6 +24841,20 @@ recipes:
     profession_xp_reward: 7682
     craft_seconds: 1095
 
+  - code: recipe_necklace_primordial
+    display_name_key: recipe.necklace_primordial
+    profession_code: jewelcrafting
+    min_skill: 99
+    inputs:
+      - { template_code: adamantite_bar, quantity: 3 }
+      - { template_code: orichalcum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 8303
+    output_template_code: necklace_primordial
+    output_stack: 1
+    profession_xp_reward: 5762
+    craft_seconds: 820
+
   - code: recipe_boots_primordial
     display_name_key: recipe.boots_primordial
     profession_code: blacksmithing
@@ -22735,6 +24939,20 @@ recipes:
     profession_xp_reward: 7682
     craft_seconds: 1095
 
+  - code: recipe_ring_primordial
+    display_name_key: recipe.ring_primordial
+    profession_code: jewelcrafting
+    min_skill: 99
+    inputs:
+      - { template_code: adamantite_bar, quantity: 2 }
+      - { template_code: orichalcum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 7117
+    output_template_code: ring_primordial
+    output_stack: 1
+    profession_xp_reward: 4802
+    craft_seconds: 685
+
   - code: recipe_ritualaxe_primordial
     display_name_key: recipe.ritualaxe_primordial
     profession_code: blacksmithing
@@ -22748,6 +24966,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 7682
     craft_seconds: 1095
+
+  - code: recipe_shield_primordial
+    display_name_key: recipe.shield_primordial
+    profession_code: blacksmithing
+    min_skill: 99
+    inputs:
+      - { template_code: adamantite_bar, quantity: 3 }
+      - { template_code: orichalcum_bar, quantity: 1 }
+      - { template_code: dragon_scale, quantity: 1 }
+    gold_cost_copper: 13048
+    output_template_code: shield_primordial
+    output_stack: 1
+    profession_xp_reward: 6722
+    craft_seconds: 960
 
   - code: recipe_shortsword_primordial
     display_name_key: recipe.shortsword_primordial
@@ -22843,6 +25075,20 @@ recipes:
     output_stack: 1
     profession_xp_reward: 7682
     craft_seconds: 1095
+
+  - code: recipe_charm_primordial
+    display_name_key: recipe.charm_primordial
+    profession_code: jewelcrafting
+    min_skill: 99
+    inputs:
+      - { template_code: adamantite_bar, quantity: 2 }
+      - { template_code: orichalcum_bar, quantity: 1 }
+      - { template_code: obsidian, quantity: 2 }
+    gold_cost_copper: 7117
+    output_template_code: charm_primordial
+    output_stack: 1
+    profession_xp_reward: 4802
+    craft_seconds: 685
 
   - code: recipe_hammer_primordial
     display_name_key: recipe.hammer_primordial

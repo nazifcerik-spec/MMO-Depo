@@ -27,7 +27,7 @@ ARCH = {
     'chief': (1.2, 1.08, 1.1, 7, 5),  # dungeon bosses (the dungeon doubles HP, +20% attack)
     'overlord': (1.85, 1.3, 1.25, 10, 5),  # level 300+ dungeon bosses
     'titan': (30.0, 3.2, 1.4, 10, 5),  # raid bosses to level 300: fought by a whole party (DD-261)
-    'elder_titan': (30.0, 4.8, 1.4, 10, 5),  # raid bosses from level 600 (the classes outgrow the curve)
+    'elder_titan': (30.0, 5.3, 1.4, 10, 5),  # raid bosses from level 600 (the classes outgrow the curve)
 }
 
 ZONES = [

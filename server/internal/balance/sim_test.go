@@ -15,6 +15,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/hunt"
+	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
@@ -107,9 +108,12 @@ func (w *world) kit(build string, level int) []contentpack.Item {
 			best[it.EquipSlot] = it
 		}
 	}
-	out := make([]contentpack.Item, 0, len(best))
-	for _, it := range best {
+	out := make([]contentpack.Item, 0, len(best)+2)
+	for slot, it := range best {
 		out = append(out, it)
+		if _, paired := inventory.PairedSlots[slot]; paired {
+			out = append(out, it) // two rings, two trinkets (DD-276)
+		}
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].EquipSlot < out[j].EquipSlot })
 	return out

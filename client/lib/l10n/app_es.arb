@@ -168,5 +168,6 @@
   "statBlock": "% Bloqueo",
   "statCritDmg": "% Daño crítico",
   "statLifesteal": "% Robo de vida",
-  "statDmgReduction": "% Reducción de daño"
+  "statDmgReduction": "% Reducción de daño",
+  "classJewelry": "Joyería"
 }

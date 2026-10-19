@@ -183,6 +183,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 86. **Nadirlik + ek gücü (bitti)** — Sprint 86, DD-275. Nadirlik eşyanın düz bonuslarını çarpar (seçkin ×1,05 … mitik ×1,50, `item.StatMultiplier`), her ek eşya seviyesiyle büyüyen bir stat verir (`item.AffixBonuses`, 22 ek). `inventory.EffectiveModifiers` → sheet (`skill.EquippedBonus.Modifiers`) + çanta/ekipman yanıtında `effective_bonuses`; istemci bunu gösterir, yeni stat adları (kaçınma, blok, kritik hasar, can çalma, hasar azaltma).
 
+87. **Takılar + Koruyucu kalkanları + Kuyumculuk (bitti)** — Sprint 87, DD-276. `python scripts/gen_jewelry.py` (gen_gear_types'tan sonra, gen_crafting'den önce): Sv 25+ kolye/yüzük/tılsım (`jewelry` sınıfı, sınıfsız), Sv 110+ Koruyucu kalkanları (`requirements: {spec: guardian}`, yalnız üretim). Yüzük/tılsım çift slotun boşuna takılır (`inventory.PairedSlots`). Kuyumculuk mesleği. Baskın `elder_titan` saldırısı 5,3 (3 kişilik temizleme ≤ %30). Üreteç sırası: gen_gear_ladder → gen_gear_types → gen_jewelry → gen_crafting.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

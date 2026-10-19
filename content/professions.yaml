@@ -24,6 +24,10 @@ professions:
     display_name_key: profession.woodworking
     max_level: 100
 
+  - code: jewelcrafting # necklaces, rings, charms (DD-276)
+    display_name_key: profession.jewelcrafting
+    max_level: 100
+
   - code: alchemy
     display_name_key: profession.alchemy
     max_level: 100

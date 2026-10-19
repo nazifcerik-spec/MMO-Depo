@@ -698,12 +698,12 @@ func loadVendorsFile(path string) ([]Vendor, error) {
 
 var (
 	validItemClasses = map[string]bool{
-		"weapon": true, "armor": true, "consumable": true, "material": true, "misc": true,
+		"weapon": true, "armor": true, "jewelry": true, "consumable": true, "material": true, "misc": true,
 	}
 	validBindKinds = map[string]bool{"boe": true, "bop": true, "boa": true}
 	// Must match what the equip service accepts, or equippable content can
 	// never be equipped (E_UNKNOWN_SLOT).
-	validEquipSlots    = inventory.KnownEquipSlots
+	validEquipSlots    = inventory.ValidTemplateSlot
 	validModifierKinds = func(k string) bool { return skill.KnownKinds[skill.ModifierKind(k)] }
 	validStatTargets   = func(t string) bool { return skill.KnownTargets[skill.Target(t)] }
 )
@@ -724,7 +724,7 @@ func validateItems(items []Item) error {
 		if it.BindKind != "" && !validBindKinds[it.BindKind] {
 			return fmt.Errorf("item %s: unknown bind_kind %q", it.Code, it.BindKind)
 		}
-		if it.EquipSlot != "" && !validEquipSlots[it.EquipSlot] {
+		if it.EquipSlot != "" && !validEquipSlots(it.EquipSlot) {
 			return fmt.Errorf("item %s: unknown equip_slot %q", it.Code, it.EquipSlot)
 		}
 		if it.Stackable && it.MaxStack < 1 {

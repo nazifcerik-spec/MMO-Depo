@@ -2571,6 +2571,27 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-276 — Takılar, Koruyucu kalkanları, Kuyumculuk
+**Karar:**
+- Yeni eşya sınıfı `jewelry`. Sınıfsızdır; her sınıf takar. Sv 25 kademesinden itibaren her kademede üç takı var (`scripts/gen_jewelry.py`, 126 şablon):
+  - Kolye: can
+  - Yüzük: saldırı + isabet
+  - Tılsım: savunma + kaçınma
+- Yüzük ve tılsım şablonunun slotu `ring`/`trinket`. Çiftin boş olanına takılır; ikisi de doluysa ilki değişir (`inventory.PairedSlots`, `ValidTemplateSlot`).
+- Sv 25 altında takı yok: denge hedefi orada aşılmış canavarların tehlikeli kalmasını istiyor.
+- Koruyucu kolu için kalkan merdiveni: Sv 110+, 36 şablon, savunma + blok, `requirements: {spec: guardian}`. Kalkanlar düşmez, yalnız üretilir.
+- Yeni meslek Kuyumculuk (tavan 100): takılar için külçe + alt külçe + taş. Kalkanları Demircilik yapar.
+- Ganimet havuzu takıları da içerir. Denge kitleri yüzük ve tılsımı iki kez sayar.
+- Baskın boss'u `elder_titan` saldırı çarpanı 4,8 → 5,3. Takılarla 3 kişilik baskın temizleme Sv 1000'de %51'e çıkmıştı; hedef ≤%30. 5 kişilik grup hâlâ ≥%88 temizler.
+- İstemci: takı ikonu, pazar sınıf filtresinde Takı, `ring`/`trinket` slot adları.
+
+**Reason:** Yol haritası Faz C (içerik denetimi: 12 slottan 5'i boştu, taşların kullanımı yoktu). Yan el için K3 kararına uyuldu: yalnız kalkan izni olan Koruyucu kolu.
+**Alternatives:** Sınıfa göre takı (ana statlı). Bütün sınıflara yan el (K3 ile çelişir). Takıyı Sv 1'den başlatmak (erken oyun dengesi bozulur).
+**Consequences:** Ekipman 2024 şablon. Taş kullanımı 4'ten 1'e indi. Testler: `TestHTTPJewelryPairs`, `TestShippedGearPoolHonoursPermissions` (takı), `TestRaidTargets`.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

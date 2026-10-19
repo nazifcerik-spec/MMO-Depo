@@ -2011,7 +2011,7 @@ mobs:
     display_name_key: mob.azhorath_ascended
     level: 602
     hp_max: 456000
-    attack: 6203
+    attack: 6849
     defense: 676
     crit_pct: 10
     hit_pct: 92
@@ -2025,7 +2025,7 @@ mobs:
     display_name_key: mob.kaedrin_timeless
     level: 702
     hp_max: 531000
-    attack: 7211
+    attack: 7962
     defense: 788
     crit_pct: 10
     hit_pct: 92
@@ -2039,7 +2039,7 @@ mobs:
     display_name_key: mob.fallen_archangels
     level: 852
     hp_max: 643500
-    attack: 8723
+    attack: 9631
     defense: 956
     crit_pct: 10
     hit_pct: 92
@@ -2053,7 +2053,7 @@ mobs:
     display_name_key: mob.aethon_unbound
     level: 1000
     hp_max: 754500
-    attack: 10214
+    attack: 11278
     defense: 1121
     crit_pct: 10
     hit_pct: 92

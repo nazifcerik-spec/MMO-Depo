@@ -9,6 +9,7 @@ import 'item_images.dart';
 IconData itemIcon(String itemClass, [String subclass = '']) => switch ((itemClass, subclass)) {
   ('weapon', _) => Icons.hardware,
   ('armor', _) => Icons.shield_outlined,
+  ('jewelry', _) => Icons.diamond_outlined, // DD-276
   ('consumable', 'food') => Icons.restaurant_outlined, // cooking (DD-268)
   ('consumable', _) => Icons.local_drink_outlined,
   (_, 'ore') => Icons.landscape_outlined,
@@ -133,8 +134,8 @@ String slotName(AppLocalizations l, String slot) => switch (slot) {
   'boots' => l.slotBoots,
   'mainhand' => l.slotMainhand,
   'offhand' => l.slotOffhand,
-  'ring1' || 'ring2' => l.slotRing,
-  'trinket1' || 'trinket2' => l.slotTrinket,
+  'ring' || 'ring1' || 'ring2' => l.slotRing, // a ring fills either ring slot (DD-276)
+  'trinket' || 'trinket1' || 'trinket2' => l.slotTrinket,
   _ => slot,
 };
 

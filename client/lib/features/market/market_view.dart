@@ -11,11 +11,12 @@ import '../character/models.dart';
 import '../inventory/inventory_models.dart';
 import 'market_repository.dart';
 
-const _classes = ['weapon', 'armor', 'consumable', 'material'];
+const _classes = ['weapon', 'armor', 'jewelry', 'consumable', 'material'];
 
 String itemClassName(AppLocalizations l, String c) => switch (c) {
   'weapon' => l.classWeapon,
   'armor' => l.classArmor,
+  'jewelry' => l.classJewelry,
   'consumable' => l.classConsumable,
   'material' => l.classMaterial,
   _ => humanize(c),

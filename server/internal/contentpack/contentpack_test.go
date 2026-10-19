@@ -166,7 +166,7 @@ func TestShippedItemsValidate(t *testing.T) {
 	require.NoError(t, validateItems(items))
 	for _, it := range items {
 		if it.EquipSlot != "" {
-			require.True(t, inventory.KnownEquipSlots[it.EquipSlot], "%s: equip_slot %q", it.Code, it.EquipSlot)
+			require.True(t, inventory.ValidTemplateSlot(it.EquipSlot), "%s: equip_slot %q", it.Code, it.EquipSlot)
 		}
 	}
 }

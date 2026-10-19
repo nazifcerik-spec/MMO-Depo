@@ -2365,4 +2365,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get statDmgReduction => '% 伤害减免';
+
+  @override
+  String get classJewelry => '饰品';
 }

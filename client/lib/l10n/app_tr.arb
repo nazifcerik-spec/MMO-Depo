@@ -684,5 +684,6 @@
   "statBlock": "% Blok",
   "statCritDmg": "% Kritik hasar",
   "statLifesteal": "% Can çalma",
-  "statDmgReduction": "% Hasar azaltma"
+  "statDmgReduction": "% Hasar azaltma",
+  "classJewelry": "Takı"
 }

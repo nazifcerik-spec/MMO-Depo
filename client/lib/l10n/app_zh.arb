@@ -168,5 +168,6 @@
   "statBlock": "% 格挡",
   "statCritDmg": "% 暴击伤害",
   "statLifesteal": "% 生命偷取",
-  "statDmgReduction": "% 伤害减免"
+  "statDmgReduction": "% 伤害减免",
+  "classJewelry": "饰品"
 }

@@ -4203,6 +4203,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'% Damage reduction'**
   String get statDmgReduction;
+
+  /// No description provided for @classJewelry.
+  ///
+  /// In en, this message translates to:
+  /// **'Jewelry'**
+  String get classJewelry;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -25145,3 +25145,2387 @@ items:
       - { kind: flat, target: cha, amount: 310 }
       - { kind: flat, target: vit, amount: 177 }
   # <<< generated: gear types
+
+  # >>> generated: jewelry (scripts/gen_jewelry.py)
+  # --- tier 25 ---
+
+  - code: necklace_runed
+    display_name_key: item.necklace_runed
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 25
+    base_value_copper: 700
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 40 }
+
+  - code: ring_runed
+    display_name_key: item.ring_runed
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 25
+    base_value_copper: 600
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 5 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_runed
+    display_name_key: item.charm_runed
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 25
+    base_value_copper: 600
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 3 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 35 ---
+
+  - code: necklace_mithril
+    display_name_key: item.necklace_mithril
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 35
+    base_value_copper: 1084
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 52 }
+
+  - code: ring_mithril
+    display_name_key: item.ring_mithril
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 35
+    base_value_copper: 929
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 6 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_mithril
+    display_name_key: item.charm_mithril
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 35
+    base_value_copper: 929
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 4 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 50 ---
+
+  - code: necklace_adamant
+    display_name_key: item.necklace_adamant
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 50
+    base_value_copper: 1724
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 70 }
+
+  - code: ring_adamant
+    display_name_key: item.ring_adamant
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 50
+    base_value_copper: 1477
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 8 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_adamant
+    display_name_key: item.charm_adamant
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 50
+    base_value_copper: 1477
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 5 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 65 ---
+
+  - code: necklace_wyrmforged
+    display_name_key: item.necklace_wyrmforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 65
+    base_value_copper: 2424
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 88 }
+
+  - code: ring_wyrmforged
+    display_name_key: item.ring_wyrmforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 65
+    base_value_copper: 2078
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 10 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_wyrmforged
+    display_name_key: item.charm_wyrmforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 65
+    base_value_copper: 2078
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 6 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 80 ---
+
+  - code: necklace_starforged
+    display_name_key: item.necklace_starforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 80
+    base_value_copper: 3175
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 106 }
+
+  - code: ring_starforged
+    display_name_key: item.ring_starforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 80
+    base_value_copper: 2722
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 12 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_starforged
+    display_name_key: item.charm_starforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 80
+    base_value_copper: 2722
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 7 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 95 ---
+
+  - code: necklace_titan
+    display_name_key: item.necklace_titan
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 95
+    base_value_copper: 3970
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 124 }
+
+  - code: ring_titan
+    display_name_key: item.ring_titan
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 95
+    base_value_copper: 3403
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 13 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_titan
+    display_name_key: item.charm_titan
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 95
+    base_value_copper: 3403
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 9 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  # --- tier 110 ---
+
+  - code: necklace_royal
+    display_name_key: item.necklace_royal
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 110
+    base_value_copper: 4804
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 142 }
+
+  - code: ring_royal
+    display_name_key: item.ring_royal
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 110
+    base_value_copper: 4118
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 15 }
+      - { kind: flat, target: hit_pct, amount: 1 }
+
+  - code: charm_royal
+    display_name_key: item.charm_royal
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 110
+    base_value_copper: 4118
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 10 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_royal
+    display_name_key: item.shield_royal
+    item_class: armor
+    item_subclass: shield
+    min_level: 110
+    base_value_copper: 7549
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 24 }
+      - { kind: flat, target: block_pct, amount: 3 }
+
+  # --- tier 135 ---
+
+  - code: necklace_sunforged
+    display_name_key: item.necklace_sunforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 135
+    base_value_copper: 6269
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 172 }
+
+  - code: ring_sunforged
+    display_name_key: item.ring_sunforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 135
+    base_value_copper: 5374
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 18 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_sunforged
+    display_name_key: item.charm_sunforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 135
+    base_value_copper: 5374
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 12 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_sunforged
+    display_name_key: item.shield_sunforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 135
+    base_value_copper: 9852
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 29 }
+      - { kind: flat, target: block_pct, amount: 3 }
+
+  # --- tier 160 ---
+
+  - code: necklace_obsidian
+    display_name_key: item.necklace_obsidian
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 160
+    base_value_copper: 7819
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 202 }
+
+  - code: ring_obsidian
+    display_name_key: item.ring_obsidian
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 160
+    base_value_copper: 6702
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 21 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_obsidian
+    display_name_key: item.charm_obsidian
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 160
+    base_value_copper: 6702
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 14 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_obsidian
+    display_name_key: item.shield_obsidian
+    item_class: armor
+    item_subclass: shield
+    min_level: 160
+    base_value_copper: 12286
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 34 }
+      - { kind: flat, target: block_pct, amount: 4 }
+
+  # --- tier 185 ---
+
+  - code: necklace_sandsteel
+    display_name_key: item.necklace_sandsteel
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 185
+    base_value_copper: 9443
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 232 }
+
+  - code: ring_sandsteel
+    display_name_key: item.ring_sandsteel
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 185
+    base_value_copper: 8094
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 24 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_sandsteel
+    display_name_key: item.charm_sandsteel
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 185
+    base_value_copper: 8094
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 16 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_sandsteel
+    display_name_key: item.shield_sandsteel
+    item_class: armor
+    item_subclass: shield
+    min_level: 185
+    base_value_copper: 14839
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 39 }
+      - { kind: flat, target: block_pct, amount: 4 }
+
+  # --- tier 210 ---
+
+  - code: necklace_runebound
+    display_name_key: item.necklace_runebound
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 210
+    base_value_copper: 11134
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 262 }
+
+  - code: ring_runebound
+    display_name_key: item.ring_runebound
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 210
+    base_value_copper: 9544
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 27 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_runebound
+    display_name_key: item.charm_runebound
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 210
+    base_value_copper: 9544
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 18 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_runebound
+    display_name_key: item.shield_runebound
+    item_class: armor
+    item_subclass: shield
+    min_level: 210
+    base_value_copper: 17497
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 44 }
+      - { kind: flat, target: block_pct, amount: 4 }
+
+  # --- tier 235 ---
+
+  - code: necklace_phoenix
+    display_name_key: item.necklace_phoenix
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 235
+    base_value_copper: 12887
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 292 }
+
+  - code: ring_phoenix
+    display_name_key: item.ring_phoenix
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 235
+    base_value_copper: 11046
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 30 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_phoenix
+    display_name_key: item.charm_phoenix
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 235
+    base_value_copper: 11046
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 20 }
+      - { kind: flat, target: evasion_pct, amount: 1 }
+
+  - code: shield_phoenix
+    display_name_key: item.shield_phoenix
+    item_class: armor
+    item_subclass: shield
+    min_level: 235
+    base_value_copper: 20252
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 49 }
+      - { kind: flat, target: block_pct, amount: 4 }
+
+  # --- tier 260 ---
+
+  - code: necklace_dreadforged
+    display_name_key: item.necklace_dreadforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 260
+    base_value_copper: 14697
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 322 }
+
+  - code: ring_dreadforged
+    display_name_key: item.ring_dreadforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 260
+    base_value_copper: 12598
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 33 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_dreadforged
+    display_name_key: item.charm_dreadforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 260
+    base_value_copper: 12598
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 22 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_dreadforged
+    display_name_key: item.shield_dreadforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 260
+    base_value_copper: 23096
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 54 }
+      - { kind: flat, target: block_pct, amount: 5 }
+
+  # --- tier 285 ---
+
+  - code: necklace_sovereign
+    display_name_key: item.necklace_sovereign
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 285
+    base_value_copper: 16561
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 352 }
+
+  - code: ring_sovereign
+    display_name_key: item.ring_sovereign
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 285
+    base_value_copper: 14195
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 36 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_sovereign
+    display_name_key: item.charm_sovereign
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 285
+    base_value_copper: 14195
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 24 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_sovereign
+    display_name_key: item.shield_sovereign
+    item_class: armor
+    item_subclass: shield
+    min_level: 285
+    base_value_copper: 26024
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 59 }
+      - { kind: flat, target: block_pct, amount: 5 }
+
+  # --- tier 310 ---
+
+  - code: necklace_coral
+    display_name_key: item.necklace_coral
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 310
+    base_value_copper: 18473
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 382 }
+
+  - code: ring_coral
+    display_name_key: item.ring_coral
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 310
+    base_value_copper: 15834
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 39 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_coral
+    display_name_key: item.charm_coral
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 310
+    base_value_copper: 15834
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 26 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_coral
+    display_name_key: item.shield_coral
+    item_class: armor
+    item_subclass: shield
+    min_level: 310
+    base_value_copper: 29030
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 64 }
+      - { kind: flat, target: block_pct, amount: 5 }
+
+  # --- tier 335 ---
+
+  - code: necklace_drakebone
+    display_name_key: item.necklace_drakebone
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 335
+    base_value_copper: 20433
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 412 }
+
+  - code: ring_drakebone
+    display_name_key: item.ring_drakebone
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 335
+    base_value_copper: 17514
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 42 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_drakebone
+    display_name_key: item.charm_drakebone
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 335
+    base_value_copper: 17514
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 28 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_drakebone
+    display_name_key: item.shield_drakebone
+    item_class: armor
+    item_subclass: shield
+    min_level: 335
+    base_value_copper: 32109
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 69 }
+      - { kind: flat, target: block_pct, amount: 5 }
+
+  # --- tier 360 ---
+
+  - code: necklace_mistwoven
+    display_name_key: item.necklace_mistwoven
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 360
+    base_value_copper: 22437
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 442 }
+
+  - code: ring_mistwoven
+    display_name_key: item.ring_mistwoven
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 360
+    base_value_copper: 19232
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 45 }
+      - { kind: flat, target: hit_pct, amount: 2 }
+
+  - code: charm_mistwoven
+    display_name_key: item.charm_mistwoven
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 360
+    base_value_copper: 19232
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 30 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_mistwoven
+    display_name_key: item.shield_mistwoven
+    item_class: armor
+    item_subclass: shield
+    min_level: 360
+    base_value_copper: 35259
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 74 }
+      - { kind: flat, target: block_pct, amount: 6 }
+
+  # --- tier 385 ---
+
+  - code: necklace_prismatic
+    display_name_key: item.necklace_prismatic
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 385
+    base_value_copper: 24484
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 472 }
+
+  - code: ring_prismatic
+    display_name_key: item.ring_prismatic
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 385
+    base_value_copper: 20986
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 48 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_prismatic
+    display_name_key: item.charm_prismatic
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 385
+    base_value_copper: 20986
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 32 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_prismatic
+    display_name_key: item.shield_prismatic
+    item_class: armor
+    item_subclass: shield
+    min_level: 385
+    base_value_copper: 38474
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 79 }
+      - { kind: flat, target: block_pct, amount: 6 }
+
+  # --- tier 410 ---
+
+  - code: necklace_magmaforged
+    display_name_key: item.necklace_magmaforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 410
+    base_value_copper: 26570
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 502 }
+
+  - code: ring_magmaforged
+    display_name_key: item.ring_magmaforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 410
+    base_value_copper: 22774
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 51 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_magmaforged
+    display_name_key: item.charm_magmaforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 410
+    base_value_copper: 22774
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 34 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_magmaforged
+    display_name_key: item.shield_magmaforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 410
+    base_value_copper: 41753
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 84 }
+      - { kind: flat, target: block_pct, amount: 6 }
+
+  # --- tier 435 ---
+
+  - code: necklace_tempest
+    display_name_key: item.necklace_tempest
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 435
+    base_value_copper: 28695
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 532 }
+
+  - code: ring_tempest
+    display_name_key: item.ring_tempest
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 435
+    base_value_copper: 24596
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 54 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_tempest
+    display_name_key: item.charm_tempest
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 435
+    base_value_copper: 24596
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 36 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_tempest
+    display_name_key: item.shield_tempest
+    item_class: armor
+    item_subclass: shield
+    min_level: 435
+    base_value_copper: 45093
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 89 }
+      - { kind: flat, target: block_pct, amount: 6 }
+
+  # --- tier 460 ---
+
+  - code: necklace_voidtouched
+    display_name_key: item.necklace_voidtouched
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 460
+    base_value_copper: 30858
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 562 }
+
+  - code: ring_voidtouched
+    display_name_key: item.ring_voidtouched
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 460
+    base_value_copper: 26449
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 57 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_voidtouched
+    display_name_key: item.charm_voidtouched
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 460
+    base_value_copper: 26449
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 38 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_voidtouched
+    display_name_key: item.shield_voidtouched
+    item_class: armor
+    item_subclass: shield
+    min_level: 460
+    base_value_copper: 48490
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 94 }
+      - { kind: flat, target: block_pct, amount: 7 }
+
+  # --- tier 485 ---
+
+  - code: necklace_seraphic
+    display_name_key: item.necklace_seraphic
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 485
+    base_value_copper: 33055
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 592 }
+
+  - code: ring_seraphic
+    display_name_key: item.ring_seraphic
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 485
+    base_value_copper: 28333
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 60 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_seraphic
+    display_name_key: item.charm_seraphic
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 485
+    base_value_copper: 28333
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 40 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_seraphic
+    display_name_key: item.shield_seraphic
+    item_class: armor
+    item_subclass: shield
+    min_level: 485
+    base_value_copper: 51944
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 99 }
+      - { kind: flat, target: block_pct, amount: 7 }
+
+  # --- tier 510 ---
+
+  - code: necklace_eclipse
+    display_name_key: item.necklace_eclipse
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 510
+    base_value_copper: 35287
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 622 }
+
+  - code: ring_eclipse
+    display_name_key: item.ring_eclipse
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 510
+    base_value_copper: 30246
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 63 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_eclipse
+    display_name_key: item.charm_eclipse
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 510
+    base_value_copper: 30246
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 42 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_eclipse
+    display_name_key: item.shield_eclipse
+    item_class: armor
+    item_subclass: shield
+    min_level: 510
+    base_value_copper: 55451
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 104 }
+      - { kind: flat, target: block_pct, amount: 7 }
+
+  # --- tier 535 ---
+
+  - code: necklace_wyrmlord
+    display_name_key: item.necklace_wyrmlord
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 535
+    base_value_copper: 37552
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 652 }
+
+  - code: ring_wyrmlord
+    display_name_key: item.ring_wyrmlord
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 535
+    base_value_copper: 32188
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 66 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_wyrmlord
+    display_name_key: item.charm_wyrmlord
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 535
+    base_value_copper: 32188
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 44 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_wyrmlord
+    display_name_key: item.shield_wyrmlord
+    item_class: armor
+    item_subclass: shield
+    min_level: 535
+    base_value_copper: 59011
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 109 }
+      - { kind: flat, target: block_pct, amount: 7 }
+
+  # --- tier 560 ---
+
+  - code: necklace_celestine
+    display_name_key: item.necklace_celestine
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 560
+    base_value_copper: 39849
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 682 }
+
+  - code: ring_celestine
+    display_name_key: item.ring_celestine
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 560
+    base_value_copper: 34157
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 69 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_celestine
+    display_name_key: item.charm_celestine
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 560
+    base_value_copper: 34157
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 46 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_celestine
+    display_name_key: item.shield_celestine
+    item_class: armor
+    item_subclass: shield
+    min_level: 560
+    base_value_copper: 62620
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 114 }
+      - { kind: flat, target: block_pct, amount: 8 }
+
+  # --- tier 585 ---
+
+  - code: necklace_eternal
+    display_name_key: item.necklace_eternal
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 585
+    base_value_copper: 42177
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 712 }
+
+  - code: ring_eternal
+    display_name_key: item.ring_eternal
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 585
+    base_value_copper: 36152
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 72 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_eternal
+    display_name_key: item.charm_eternal
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 585
+    base_value_copper: 36152
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 48 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_eternal
+    display_name_key: item.shield_eternal
+    item_class: armor
+    item_subclass: shield
+    min_level: 585
+    base_value_copper: 66279
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 119 }
+      - { kind: flat, target: block_pct, amount: 8 }
+
+  # --- tier 610 ---
+
+  - code: necklace_starless
+    display_name_key: item.necklace_starless
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 610
+    base_value_copper: 44535
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 742 }
+
+  - code: ring_starless
+    display_name_key: item.ring_starless
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 610
+    base_value_copper: 38173
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 75 }
+      - { kind: flat, target: hit_pct, amount: 3 }
+
+  - code: charm_starless
+    display_name_key: item.charm_starless
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 610
+    base_value_copper: 38173
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 50 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_starless
+    display_name_key: item.shield_starless
+    item_class: armor
+    item_subclass: shield
+    min_level: 610
+    base_value_copper: 69984
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 124 }
+      - { kind: flat, target: block_pct, amount: 8 }
+
+  # --- tier 635 ---
+
+  - code: necklace_nightsteel
+    display_name_key: item.necklace_nightsteel
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 635
+    base_value_copper: 46923
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 772 }
+
+  - code: ring_nightsteel
+    display_name_key: item.ring_nightsteel
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 635
+    base_value_copper: 40219
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 78 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_nightsteel
+    display_name_key: item.charm_nightsteel
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 635
+    base_value_copper: 40219
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 52 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_nightsteel
+    display_name_key: item.shield_nightsteel
+    item_class: armor
+    item_subclass: shield
+    min_level: 635
+    base_value_copper: 73735
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 129 }
+      - { kind: flat, target: block_pct, amount: 8 }
+
+  # --- tier 660 ---
+
+  - code: necklace_chronoforged
+    display_name_key: item.necklace_chronoforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 660
+    base_value_copper: 49338
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 802 }
+
+  - code: ring_chronoforged
+    display_name_key: item.ring_chronoforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 660
+    base_value_copper: 42290
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 81 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_chronoforged
+    display_name_key: item.charm_chronoforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 660
+    base_value_copper: 42290
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 54 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_chronoforged
+    display_name_key: item.shield_chronoforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 660
+    base_value_copper: 77531
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 134 }
+      - { kind: flat, target: block_pct, amount: 9 }
+
+  # --- tier 685 ---
+
+  - code: necklace_ascendant
+    display_name_key: item.necklace_ascendant
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 685
+    base_value_copper: 51781
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 832 }
+
+  - code: ring_ascendant
+    display_name_key: item.ring_ascendant
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 685
+    base_value_copper: 44384
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 84 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_ascendant
+    display_name_key: item.charm_ascendant
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 685
+    base_value_copper: 44384
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 56 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_ascendant
+    display_name_key: item.shield_ascendant
+    item_class: armor
+    item_subclass: shield
+    min_level: 685
+    base_value_copper: 81371
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 139 }
+      - { kind: flat, target: block_pct, amount: 9 }
+
+  # --- tier 710 ---
+
+  - code: necklace_stormborn
+    display_name_key: item.necklace_stormborn
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 710
+    base_value_copper: 54252
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 862 }
+
+  - code: ring_stormborn
+    display_name_key: item.ring_stormborn
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 710
+    base_value_copper: 46501
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 87 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_stormborn
+    display_name_key: item.charm_stormborn
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 710
+    base_value_copper: 46501
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 58 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_stormborn
+    display_name_key: item.shield_stormborn
+    item_class: armor
+    item_subclass: shield
+    min_level: 710
+    base_value_copper: 85252
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 144 }
+      - { kind: flat, target: block_pct, amount: 9 }
+
+  # --- tier 735 ---
+
+  - code: necklace_riftforged
+    display_name_key: item.necklace_riftforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 735
+    base_value_copper: 56748
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 892 }
+
+  - code: ring_riftforged
+    display_name_key: item.ring_riftforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 735
+    base_value_copper: 48641
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 90 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_riftforged
+    display_name_key: item.charm_riftforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 735
+    base_value_copper: 48641
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 60 }
+      - { kind: flat, target: evasion_pct, amount: 2 }
+
+  - code: shield_riftforged
+    display_name_key: item.shield_riftforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 735
+    base_value_copper: 89175
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 149 }
+      - { kind: flat, target: block_pct, amount: 9 }
+
+  # --- tier 760 ---
+
+  - code: necklace_chaos
+    display_name_key: item.necklace_chaos
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 760
+    base_value_copper: 59270
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 922 }
+
+  - code: ring_chaos
+    display_name_key: item.ring_chaos
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 760
+    base_value_copper: 50803
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 93 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_chaos
+    display_name_key: item.charm_chaos
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 760
+    base_value_copper: 50803
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 62 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_chaos
+    display_name_key: item.shield_chaos
+    item_class: armor
+    item_subclass: shield
+    min_level: 760
+    base_value_copper: 93138
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 154 }
+      - { kind: flat, target: block_pct, amount: 10 }
+
+  # --- tier 785 ---
+
+  - code: necklace_skyforged
+    display_name_key: item.necklace_skyforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 785
+    base_value_copper: 61817
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 952 }
+
+  - code: ring_skyforged
+    display_name_key: item.ring_skyforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 785
+    base_value_copper: 52986
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 96 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_skyforged
+    display_name_key: item.charm_skyforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 785
+    base_value_copper: 52986
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 64 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_skyforged
+    display_name_key: item.shield_skyforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 785
+    base_value_copper: 97141
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 159 }
+      - { kind: flat, target: block_pct, amount: 10 }
+
+  # --- tier 810 ---
+
+  - code: necklace_archangel
+    display_name_key: item.necklace_archangel
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 810
+    base_value_copper: 64388
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 982 }
+
+  - code: ring_archangel
+    display_name_key: item.ring_archangel
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 810
+    base_value_copper: 55190
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 99 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_archangel
+    display_name_key: item.charm_archangel
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 810
+    base_value_copper: 55190
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 66 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_archangel
+    display_name_key: item.shield_archangel
+    item_class: armor
+    item_subclass: shield
+    min_level: 810
+    base_value_copper: 101182
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 164 }
+      - { kind: flat, target: block_pct, amount: 10 }
+
+  # --- tier 835 ---
+
+  - code: necklace_aurora
+    display_name_key: item.necklace_aurora
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 835
+    base_value_copper: 66984
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1012 }
+
+  - code: ring_aurora
+    display_name_key: item.ring_aurora
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 835
+    base_value_copper: 57415
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 102 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_aurora
+    display_name_key: item.charm_aurora
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 835
+    base_value_copper: 57415
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 68 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_aurora
+    display_name_key: item.shield_aurora
+    item_class: armor
+    item_subclass: shield
+    min_level: 835
+    base_value_copper: 105260
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 169 }
+      - { kind: flat, target: block_pct, amount: 10 }
+
+  # --- tier 860 ---
+
+  - code: necklace_ashen
+    display_name_key: item.necklace_ashen
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 860
+    base_value_copper: 69602
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1042 }
+
+  - code: ring_ashen
+    display_name_key: item.ring_ashen
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 860
+    base_value_copper: 59659
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 105 }
+      - { kind: flat, target: hit_pct, amount: 4 }
+
+  - code: charm_ashen
+    display_name_key: item.charm_ashen
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 860
+    base_value_copper: 59659
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 70 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_ashen
+    display_name_key: item.shield_ashen
+    item_class: armor
+    item_subclass: shield
+    min_level: 860
+    base_value_copper: 109375
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 174 }
+      - { kind: flat, target: block_pct, amount: 11 }
+
+  # --- tier 885 ---
+
+  - code: necklace_leviathan
+    display_name_key: item.necklace_leviathan
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 885
+    base_value_copper: 72244
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1072 }
+
+  - code: ring_leviathan
+    display_name_key: item.ring_leviathan
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 885
+    base_value_copper: 61923
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 108 }
+      - { kind: flat, target: hit_pct, amount: 5 }
+
+  - code: charm_leviathan
+    display_name_key: item.charm_leviathan
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 885
+    base_value_copper: 61923
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 72 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_leviathan
+    display_name_key: item.shield_leviathan
+    item_class: armor
+    item_subclass: shield
+    min_level: 885
+    base_value_copper: 113526
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 179 }
+      - { kind: flat, target: block_pct, amount: 11 }
+
+  # --- tier 910 ---
+
+  - code: necklace_doomforged
+    display_name_key: item.necklace_doomforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 910
+    base_value_copper: 74908
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1102 }
+
+  - code: ring_doomforged
+    display_name_key: item.ring_doomforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 910
+    base_value_copper: 64207
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 111 }
+      - { kind: flat, target: hit_pct, amount: 5 }
+
+  - code: charm_doomforged
+    display_name_key: item.charm_doomforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 910
+    base_value_copper: 64207
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 74 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_doomforged
+    display_name_key: item.shield_doomforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 910
+    base_value_copper: 117713
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 184 }
+      - { kind: flat, target: block_pct, amount: 11 }
+
+  # --- tier 935 ---
+
+  - code: necklace_voidforged
+    display_name_key: item.necklace_voidforged
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 935
+    base_value_copper: 77595
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1132 }
+
+  - code: ring_voidforged
+    display_name_key: item.ring_voidforged
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 935
+    base_value_copper: 66510
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 114 }
+      - { kind: flat, target: hit_pct, amount: 5 }
+
+  - code: charm_voidforged
+    display_name_key: item.charm_voidforged
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 935
+    base_value_copper: 66510
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 76 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_voidforged
+    display_name_key: item.shield_voidforged
+    item_class: armor
+    item_subclass: shield
+    min_level: 935
+    base_value_copper: 121934
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 189 }
+      - { kind: flat, target: block_pct, amount: 11 }
+
+  # --- tier 960 ---
+
+  - code: necklace_godslayer
+    display_name_key: item.necklace_godslayer
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 960
+    base_value_copper: 80302
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1162 }
+
+  - code: ring_godslayer
+    display_name_key: item.ring_godslayer
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 960
+    base_value_copper: 68831
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 117 }
+      - { kind: flat, target: hit_pct, amount: 5 }
+
+  - code: charm_godslayer
+    display_name_key: item.charm_godslayer
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 960
+    base_value_copper: 68831
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 78 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_godslayer
+    display_name_key: item.shield_godslayer
+    item_class: armor
+    item_subclass: shield
+    min_level: 960
+    base_value_copper: 126190
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 194 }
+      - { kind: flat, target: block_pct, amount: 12 }
+
+  # --- tier 985 ---
+
+  - code: necklace_primordial
+    display_name_key: item.necklace_primordial
+    item_class: jewelry
+    item_subclass: necklace
+    min_level: 985
+    base_value_copper: 83032
+    base_weight_g: 100
+    bind_kind: boe
+    affixable: false
+    equip_slot: necklace
+    stat_bonuses:
+      - { kind: flat, target: hp_max, amount: 1192 }
+
+  - code: ring_primordial
+    display_name_key: item.ring_primordial
+    item_class: jewelry
+    item_subclass: ring
+    min_level: 985
+    base_value_copper: 71170
+    base_weight_g: 30
+    bind_kind: boe
+    affixable: false
+    equip_slot: ring
+    stat_bonuses:
+      - { kind: flat, target: attack, amount: 120 }
+      - { kind: flat, target: hit_pct, amount: 5 }
+
+  - code: charm_primordial
+    display_name_key: item.charm_primordial
+    item_class: jewelry
+    item_subclass: trinket
+    min_level: 985
+    base_value_copper: 71170
+    base_weight_g: 80
+    bind_kind: boe
+    affixable: false
+    equip_slot: trinket
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 80 }
+      - { kind: flat, target: evasion_pct, amount: 3 }
+
+  - code: shield_primordial
+    display_name_key: item.shield_primordial
+    item_class: armor
+    item_subclass: shield
+    min_level: 985
+    base_value_copper: 130478
+    base_weight_g: 4500
+    bind_kind: boe
+    affixable: true
+    equip_slot: offhand
+    class_restriction: warrior
+    requirements: { spec: guardian }
+    stat_bonuses:
+      - { kind: flat, target: defense, amount: 199 }
+      - { kind: flat, target: block_pct, amount: 12 }
+  # <<< generated: jewelry
