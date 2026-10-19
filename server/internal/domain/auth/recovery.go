@@ -194,7 +194,7 @@ func (s *Service) notifyPasswordChanged(ctx context.Context, a *Account, at time
 	when := at.Format("2006-01-02 15:04 UTC")
 	err := s.repo.QueueEmail(ctx, OutboundEmail{
 		To:      a.Email,
-		Subject: "New World MMO — Şifren değişti / Your password was changed",
+		Subject: "MeNa World — Şifren değişti / Your password was changed",
 		Body: fmt.Sprintf("Merhaba %s,\n\nHesabının şifresi %s tarihinde değiştirildi ve diğer oturumlar kapatıldı. "+
 			"Bunu sen yapmadıysan uygulamadaki \"Şifremi unuttum\" ile hemen yeni şifre belirle ve destekle iletişime geç.\n\n---\n\n"+
 			"Hi %s,\n\nYour account password was changed on %s and other sessions were signed out. "+
@@ -215,7 +215,7 @@ func recoveryEmail(baseURL string, a *Account, kind TokenKind, token string) Out
 		link := base + "/reset-password?" + q
 		return OutboundEmail{
 			To:      a.Email,
-			Subject: "New World MMO — Şifre sıfırlama / Password reset",
+			Subject: "MeNa World — Şifre sıfırlama / Password reset",
 			Body: fmt.Sprintf("Merhaba %s,\n\nHesabın için şifre sıfırlama istendi. Yeni şifre belirlemek için:\n%s\n\n"+
 				"Bağlantı 1 saat geçerlidir. Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.\n\n---\n\n"+
 				"Hi %s,\n\nA password reset was requested for your account. Set a new password here:\n%s\n\n"+
@@ -226,7 +226,7 @@ func recoveryEmail(baseURL string, a *Account, kind TokenKind, token string) Out
 		link := base + "/verify-email?" + q
 		return OutboundEmail{
 			To:      a.Email,
-			Subject: "New World MMO — E-posta doğrulama / Verify your e-mail",
+			Subject: "MeNa World — E-posta doğrulama / Verify your e-mail",
 			Body: fmt.Sprintf("Merhaba %s,\n\nE-posta adresini doğrulamak için:\n%s\n\nBağlantı 24 saat geçerlidir.\n\n---\n\n"+
 				"Hi %s,\n\nConfirm your e-mail address here:\n%s\n\nThis link expires in 24 hours.\n",
 				a.Username, link, a.Username, link),

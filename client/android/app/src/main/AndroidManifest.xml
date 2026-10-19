@@ -2,7 +2,7 @@
     <!-- The app talks to the Otter API; release builds need this too. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="New World MMO"
+        android:label="MeNa World"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

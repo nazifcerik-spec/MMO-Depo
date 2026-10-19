@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'New World MMO';
+  String get appTitle => 'MeNa World';
 
   @override
   String get tagline => 'Sen yokken de süren maceralar.';
@@ -2314,4 +2314,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get raceGnomeDesc => 'Zeki mucitler';
+
+  @override
+  String foodBuffLine(int atk, int def, int minutes) {
+    return '$minutes dk boyunca +%$atk saldırı ve +%$def savunma';
+  }
+
+  @override
+  String fedToast(int atk, int def) {
+    return 'Tok: +%$atk saldırı, +%$def savunma';
+  }
+
+  @override
+  String fedActive(int atk, int def, String time) {
+    return 'Tok · +%$atk saldırı · +%$def savunma · $time kaldı';
+  }
 }

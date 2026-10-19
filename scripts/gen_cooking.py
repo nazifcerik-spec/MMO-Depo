@@ -1,7 +1,8 @@
 """Cooking content (DD-268): dishes cooked from a fishing catch, a herb and a
 log for the fire, one per fishing band (fish level 1..100). Every dish is a
-consumable that restores HP — about a third of a same-level mob's HP — and a
-recipe makes two. Names in en, tr, zh-CN and es.
+consumable that restores HP — about a third of a same-level mob's HP — and
+feeds the character for an hour: +2..9% attack and defense by level (DD-269).
+A recipe makes two. Names in en, tr, zh-CN and es.
 
 Run from the repository root: python scripts/gen_cooking.py
 """
@@ -55,6 +56,9 @@ DISHES = [
      L('Leviathan Royal Banquet', 'Leviathan Kraliyet Şöleni', '利维坦皇家盛宴', 'Banquete real de leviatán')),
 ]
 
+# Food buff length (DD-269): long enough to start a hunt or dungeon fed.
+BUFF_MINUTES = 60
+
 # By fish tier, as smelting pays by ore tier.
 XP = [40, 60, 90, 180, 260, 460, 760, 1100]
 GOLD = [2, 5, 10, 20, 40, 80, 150, 250]
@@ -98,6 +102,7 @@ for dish, fish, level, tier, herb, log, name in DISHES:
     code = 'food_' + dish
     skill = max(1, round(level * 0.9))
     heal = round5(0.35 * (150 + 25 * level))
+    buff = round(2 + level / 14)  # attack and defense percent (DD-269)
     value = max(1, round((2 * vals[fish] + vals[herb] + vals[log]) * 1.5 / 2))
     for lang in names:
         names[lang]['item.' + code] = name[lang]
@@ -105,7 +110,8 @@ for dish, fish, level, tier, herb, log, name in DISHES:
         '  - code: ' + code, '    display_name_key: item.' + code, '    item_class: consumable',
         '    item_subclass: food', '    min_level: %d' % level, '    base_value_copper: %d' % value,
         '    base_weight_g: 200', '    stackable: true', '    max_stack: 50', '    bind_kind: boe',
-        '    use_effect: { kind: heal_hp, amount: %d }' % heal]))
+        '    use_effect: { kind: heal_hp, amount: %d, buff: { attack_pct: %d, defense_pct: %d, minutes: %d } }'
+        % (heal, buff, buff, BUFF_MINUTES)]))
     recipes.append('\n'.join([
         '  - code: recipe_cook_' + dish, '    display_name_key: recipe.cook_' + dish, '    profession_code: cooking',
         '    min_skill: %d' % skill, '    inputs:',

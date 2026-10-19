@@ -300,6 +300,7 @@ func NewRouter(d Deps) http.Handler {
 				if h := d.ConsumableHandler; h != nil {
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/items/{item_id}/use", h.Use)
+					r.Get("/buff", h.Active) // food buff (DD-269)
 				}
 
 				// --- Buybacks (character-scoped) ---

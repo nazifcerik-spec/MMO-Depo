@@ -5,6 +5,10 @@
 // analytical regen, see character.EffectiveHP) and one unit is removed from the
 // stack. The HTTP route sits behind the Idempotency middleware, so a retried
 // request replays the first response instead of consuming a second unit.
+//
+// Food (DD-269) also sets the character's one food buff (attack/defense
+// percent until expires_at); eating again replaces it. Modifiers feeds the
+// live buff into the character sheet.
 package consumable
 
 import (
@@ -20,6 +24,7 @@ import (
 
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/skill"
 )
 
 var (
@@ -63,6 +68,15 @@ type Result struct {
 	HPCurrent      int    `json:"hp_current"`
 	HPMax          int    `json:"hp_max"`
 	StackRemaining int32  `json:"stack_remaining"` // 0 = the stack is gone
+	Buff           *Buff  `json:"buff,omitempty"`  // food buff now active (DD-269)
+}
+
+// Buff is a character's active food buff (DD-269).
+type Buff struct {
+	Source     string    `json:"source_template"`
+	AttackPct  int       `json:"attack_pct"`
+	DefensePct int       `json:"defense_pct"`
+	ExpiresAt  time.Time `json:"expires_at"`
 }
 
 // ApplyHeal is the pure effect step: new HP after healing `amount` from
@@ -132,21 +146,37 @@ func (s *Service) Use(ctx context.Context, characterID, accountID, itemID uuid.U
 		maxHP := sheet.Resources.HPMax
 		current := character.EffectiveHP(stored, storedAt, maxHP, sheet.Primary.Vitality, now)
 
+		buff := tmpl.UseEffect.Buff
 		switch tmpl.UseEffect.Kind {
 		case "heal_hp":
 			hp, err := ApplyHeal(current, maxHP, tmpl.UseEffect.Amount)
-			if err != nil {
-				return err
-			}
-			if _, err := tx.Exec(ctx, `
-				UPDATE character.character
-				   SET hp_current = $2, hp_updated_at = $3, updated_at = now(), version = version + 1
-				 WHERE id = $1`, characterID, hp, now); err != nil {
-				return err
+			switch {
+			case err == nil:
+				if _, err := tx.Exec(ctx, `
+					UPDATE character.character
+					   SET hp_current = $2, hp_updated_at = $3, updated_at = now(), version = version + 1
+					 WHERE id = $1`, characterID, hp, now); err != nil {
+					return err
+				}
+			case buff == nil:
+				return err // full HP and nothing else to gain
 			}
 			res.HPCurrent = hp
 		default:
 			return fmt.Errorf("%w %q", errBadTemplate, tmpl.UseEffect.Kind)
+		}
+		if buff != nil {
+			b := Buff{Source: code, AttackPct: buff.AttackPct, DefensePct: buff.DefensePct,
+				ExpiresAt: now.Add(time.Duration(buff.Minutes) * time.Minute)}
+			if _, err := tx.Exec(ctx, `
+				INSERT INTO character.buff (character_id, source_template, attack_pct, defense_pct, expires_at)
+				VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (character_id) DO UPDATE SET source_template = EXCLUDED.source_template,
+				  attack_pct = EXCLUDED.attack_pct, defense_pct = EXCLUDED.defense_pct, expires_at = EXCLUDED.expires_at`,
+				characterID, b.Source, b.AttackPct, b.DefensePct, b.ExpiresAt); err != nil {
+				return err
+			}
+			res.Buff = &b
 		}
 
 		if stack > 1 {
@@ -164,4 +194,42 @@ func (s *Service) Use(ctx context.Context, characterID, accountID, itemID uuid.U
 		return nil, err
 	}
 	return &res, nil
+}
+
+// Active is the character's food buff, or nil when none is running.
+func (s *Service) Active(ctx context.Context, characterID uuid.UUID) (*Buff, error) {
+	var b Buff
+	err := s.pool.QueryRow(ctx, `
+		SELECT source_template, attack_pct, defense_pct, expires_at
+		  FROM character.buff WHERE character_id = $1 AND expires_at > $2`, characterID, s.now().UTC()).
+		Scan(&b.Source, &b.AttackPct, &b.DefensePct, &b.ExpiresAt)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &b, nil
+}
+
+// Modifiers is the sheet modifier source: the live food buff as attack and
+// defense percent (DD-269).
+func (s *Service) Modifiers(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
+	b, err := s.Active(ctx, id)
+	if err != nil || b == nil {
+		return nil, err
+	}
+	return BuffModifiers(b), nil
+}
+
+// BuffModifiers turns a buff into modifier stack entries.
+func BuffModifiers(b *Buff) []skill.Modifier {
+	var mods []skill.Modifier
+	if b.AttackPct > 0 {
+		mods = append(mods, skill.Modifier{Kind: skill.KindMultAdd, Target: skill.TargetAttack, Amount: float64(b.AttackPct) / 100})
+	}
+	if b.DefensePct > 0 {
+		mods = append(mods, skill.Modifier{Kind: skill.KindMultAdd, Target: skill.TargetDefense, Amount: float64(b.DefensePct) / 100})
+	}
+	return mods
 }

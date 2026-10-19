@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'New World MMO'**
+  /// **'MeNa World'**
   String get appTitle;
 
   /// No description provided for @tagline.
@@ -4119,6 +4119,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clever tinkerers'**
   String get raceGnomeDesc;
+
+  /// No description provided for @foodBuffLine.
+  ///
+  /// In en, this message translates to:
+  /// **'+{atk}% attack and +{def}% defense for {minutes} min'**
+  String foodBuffLine(int atk, int def, int minutes);
+
+  /// No description provided for @fedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Fed: +{atk}% attack, +{def}% defense'**
+  String fedToast(int atk, int def);
+
+  /// No description provided for @fedActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Fed · +{atk}% attack · +{def}% defense · {time} left'**
+  String fedActive(int atk, int def, String time);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

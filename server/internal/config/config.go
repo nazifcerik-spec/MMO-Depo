@@ -98,7 +98,7 @@ type Config struct {
 	// a sender verified in Brevo; falls back to SMTP_FROM.
 	BrevoAPIKey  string `envconfig:"BREVO_API_KEY" default:""`
 	MailFrom     string `envconfig:"MAIL_FROM" default:""`
-	MailFromName string `envconfig:"MAIL_FROM_NAME" default:"New World MMO"`
+	MailFromName string `envconfig:"MAIL_FROM_NAME" default:"MeNa World"`
 
 	// --- Observability (Sprint 27, DD-214) ---
 	// /metrics listens on its own port so it is never exposed through the

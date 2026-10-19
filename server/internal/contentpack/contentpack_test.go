@@ -179,6 +179,9 @@ func TestValidateItems_UseEffect(t *testing.T) {
 		"non-consumable": {Code: "x", ItemClass: "weapon", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 5}},
 		"unknown kind":   {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "restore_mp", Amount: 5}},
 		"zero amount":    {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp"}},
+		"buff too big":   {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 5, Buff: &UseBuff{AttackPct: 51, Minutes: 60}}},
+		"empty buff":     {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 5, Buff: &UseBuff{Minutes: 60}}},
+		"buff no time":   {Code: "x", ItemClass: "consumable", UseEffect: &UseEffect{Kind: "heal_hp", Amount: 5, Buff: &UseBuff{AttackPct: 5}}},
 	} {
 		require.Error(t, validateItems([]Item{it}), name)
 	}

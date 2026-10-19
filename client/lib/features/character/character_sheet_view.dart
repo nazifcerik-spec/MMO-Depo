@@ -1,3 +1,5 @@
+import '../inventory/inventory_models.dart' show FoodBuff;
+
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
@@ -40,6 +42,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   int? _gold;
   List<ClassSkill>? _skills;
   LevelingSummary? _leveling;
+  FoodBuff? _buff;
   late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
 
   @override
@@ -89,6 +92,12 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
       if (mounted) setState(() => _leveling = lv);
     } on ApiError {
       // Optional card: the sheet stays usable without it.
+    }
+    try {
+      final b = await widget.repo.buff(_sheet.id);
+      if (mounted) setState(() => _buff = b);
+    } on ApiError {
+      // Optional line.
     }
   }
 
@@ -199,6 +208,23 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
                 bar(l.mp, 'mp', Palette.info),
               bar(l.stamina, 'stamina', Palette.success),
               bar(l.energy, 'energy', Palette.warning),
+              if (_buff case FoodBuff(expiresAt: final until?) when until.isAfter(DateTime.now()))
+                Row(
+                  children: [
+                    const Icon(Icons.restaurant_outlined, size: 16, color: Palette.success),
+                    const SizedBox(width: Space.xs),
+                    Expanded(
+                      child: Text(
+                        l.fedActive(
+                          _buff!.attackPct,
+                          _buff!.defensePct,
+                          shortDuration(l, until.difference(DateTime.now())),
+                        ),
+                        style: text.bodySmall?.copyWith(color: Palette.success),
+                      ),
+                    ),
+                  ],
+                ),
               const Divider(height: Space.xl, color: Palette.borderSubtle),
               if (_leveling case final lv?)
                 LevelingCard(summary: lv, onPromote: _promote, onAttributes: _attributes, onTalents: _talents)

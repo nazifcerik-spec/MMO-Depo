@@ -99,8 +99,15 @@ class _InventoryViewState extends State<InventoryView> {
     switch (action) {
       case _ItemAction.use:
         await _run(() async {
-          final (hp, max) = await widget.repo.use(item.instanceId);
-          if (mounted) toast(context, Text(l.usedItem(name, hp, max)));
+          final (hp, max, buff) = await widget.repo.use(item.instanceId);
+          if (!mounted) return;
+          toast(
+            context,
+            Text(
+              [l.usedItem(name, hp, max), if (buff != null) l.fedToast(buff.attackPct, buff.defensePct)].join(' · '),
+            ),
+          );
+          widget.dataVersion.value++; // the sheet shows the buff
         });
       case _ItemAction.equip:
         await _run(() => widget.repo.equip(item.instanceId));
@@ -543,7 +550,10 @@ class _ItemDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Space.md),
                   child: Text(
-                    l.restoresHp(item.healHp),
+                    [
+                      if (item.healHp > 0) l.restoresHp(item.healHp),
+                      if (item.buff case final b?) l.foodBuffLine(b.attackPct, b.defensePct, b.minutes),
+                    ].join('\n'),
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
                   ),
                 ),

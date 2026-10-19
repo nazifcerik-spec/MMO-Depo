@@ -286,6 +286,9 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Solo Adaptation (DD-252): support paths convert part of their support
 	// power into attack while not grouped.
 	sheetAdapter.WithModifierSource(soloAdaptation{pool}.Modifiers)
+	// Food buffs (DD-269): the live buff adds attack/defense percent.
+	consumableSvc := consumable.NewService(pool, itemSvc, charSvc, logger)
+	sheetAdapter.WithModifierSource(consumableSvc.Modifiers)
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
@@ -399,7 +402,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		QuestHandler:      quest.NewHandler(questSvc),
 		ClassSkills:       classSkills,
 		WorldEventHandler: worldEventHandler,
-		ConsumableHandler: consumable.NewHandler(consumable.NewService(pool, itemSvc, charSvc, logger)),
+		ConsumableHandler: consumable.NewHandler(consumableSvc),
 		AdminHandler:      adminHandler,
 		SupportHandler:    support.NewHandler(supportSvc),
 		ClientErrHandler:  clienterr.NewHandler(clientErrSvc),

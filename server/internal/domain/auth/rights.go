@@ -61,7 +61,7 @@ func deletionEmail(a *Account, purgeAt time.Time) OutboundEmail {
 	date := purgeAt.Format("2006-01-02")
 	return OutboundEmail{
 		To:      a.Email,
-		Subject: "New World MMO — Hesap silme / Account deletion",
+		Subject: "MeNa World — Hesap silme / Account deletion",
 		Body: fmt.Sprintf("Merhaba %s,\n\nHesabınız ve oyun verileriniz %s tarihinde kalıcı olarak silinecek. "+
 			"Vazgeçerseniz bu tarihten önce giriş yapmanız yeterli.\n\n"+
 			"Hi %s,\n\nYour account and game data will be permanently deleted on %s. "+

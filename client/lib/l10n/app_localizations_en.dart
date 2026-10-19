@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'New World MMO';
+  String get appTitle => 'MeNa World';
 
   @override
   String get tagline => 'Adventures that keep going while you\'re away.';
@@ -2315,4 +2315,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get raceGnomeDesc => 'Clever tinkerers';
+
+  @override
+  String foodBuffLine(int atk, int def, int minutes) {
+    return '+$atk% attack and +$def% defense for $minutes min';
+  }
+
+  @override
+  String fedToast(int atk, int def) {
+    return 'Fed: +$atk% attack, +$def% defense';
+  }
+
+  @override
+  String fedActive(int atk, int def, String time) {
+    return 'Fed · +$atk% attack · +$def% defense · $time left';
+  }
 }

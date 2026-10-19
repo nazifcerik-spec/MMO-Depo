@@ -768,14 +768,22 @@ class _RaceCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Container(
-                height: 48,
-                width: double.infinity,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: Palette.bgElevated, borderRadius: BorderRadius.circular(Radii.sm)),
-                child: path == null
-                    ? fallback
-                    : Image.asset(path, fit: BoxFit.cover, errorBuilder: (_, _, _) => fallback),
+              // Portraits are 3:4 (assets/races, DD-267); every card the same size.
+              AspectRatio(
+                aspectRatio: 3 / 4,
+                child: Container(
+                  width: double.infinity,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(color: Palette.bgElevated, borderRadius: BorderRadius.circular(Radii.sm)),
+                  child: path == null
+                      ? fallback
+                      : Image.asset(
+                          path,
+                          fit: BoxFit.cover,
+                          cacheWidth: (100 * MediaQuery.devicePixelRatioOf(context)).round(),
+                          errorBuilder: (_, _, _) => fallback,
+                        ),
+                ),
               ),
               const SizedBox(height: 4),
               _Lines(name, lines: 1, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),

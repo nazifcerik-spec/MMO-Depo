@@ -1,6 +1,6 @@
 {
   "@@locale": "tr",
-  "appTitle": "New World MMO",
+  "appTitle": "MeNa World",
   "tagline": "Sen yokken de süren maceralar.",
   "emailOrUsername": "E-posta veya kullanıcı adı",
   "email": "E-posta",
@@ -670,5 +670,8 @@
   "raceDarkElfDesc": "Yeraltının çocukları",
   "raceDrakariDesc": "Ejder kanından gelenler",
   "raceTaurenDesc": "Ovaların koruyucuları",
-  "raceGnomeDesc": "Zeki mucitler"
+  "raceGnomeDesc": "Zeki mucitler",
+  "foodBuffLine": "{minutes} dk boyunca +%{atk} saldırı ve +%{def} savunma",
+  "fedToast": "Tok: +%{atk} saldırı, +%{def} savunma",
+  "fedActive": "Tok · +%{atk} saldırı · +%{def} savunma · {time} kaldı"
 }

@@ -31,3 +31,4 @@ flutter:
     - assets/animals/ # hunting animals: <animal>.png (wolf_pelt → wolf.png)
     - assets/classes/ # class portraits: <class_code>.png (DD-266)
     - assets/races/ # race portraits: <race_code>.png (DD-266)
+    - assets/branding/ # MeNa World logo (DD-270)

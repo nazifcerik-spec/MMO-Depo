@@ -10,7 +10,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'New World MMO';
+  String get appTitle => 'MeNa World';
 
   @override
   String get tagline => 'Adventures that keep going while you\'re away.';
@@ -2313,4 +2313,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get raceGnomeDesc => '聪明的工匠';
+
+  @override
+  String foodBuffLine(int atk, int def, int minutes) {
+    return '$minutes 分钟内攻击 +$atk%、防御 +$def%';
+  }
+
+  @override
+  String fedToast(int atk, int def) {
+    return '饱食：攻击 +$atk%，防御 +$def%';
+  }
+
+  @override
+  String fedActive(int atk, int def, String time) {
+    return '饱食 · 攻击 +$atk% · 防御 +$def% · 剩余 $time';
+  }
 }

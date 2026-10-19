@@ -36,10 +36,11 @@ class InventoryRepository {
     return (j['received_copper'] as num?)?.toInt() ?? 0;
   }
 
-  /// Consumes one unit; returns (hp, max) after the effect.
-  Future<(int, int)> use(String itemId) async {
+  /// Consumes one unit; returns HP after the effect and the food buff it
+  /// started (DD-269).
+  Future<(int, int, FoodBuff?)> use(String itemId) async {
     final j = await api.post('$_base/items/$itemId/use', const {});
-    return ((j['hp_current'] as num).toInt(), (j['hp_max'] as num).toInt());
+    return ((j['hp_current'] as num).toInt(), (j['hp_max'] as num).toInt(), FoodBuff.fromActive(j['buff']));
   }
 
   Future<void> destroy(String itemId) => api.delete('$_base/inventory/$itemId');

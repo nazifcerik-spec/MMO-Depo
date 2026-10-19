@@ -51,7 +51,7 @@ func main() {
 		fail(err)
 	}
 	fmt.Printf("admin created: %s\nTOTP secret (store it now, shown once): %s\notpauth URL: %s\n",
-		id, secret, admin.OTPAuthURL("New World MMO Admin", *email, secret))
+		id, secret, admin.OTPAuthURL("MeNa World Admin", *email, secret))
 }
 
 func fail(err error) {

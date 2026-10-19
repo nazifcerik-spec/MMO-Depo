@@ -49,6 +49,7 @@ class BagItem {
     this.classRestriction,
     this.bonuses = const [],
     this.healHp = 0,
+    this.buff,
   });
 
   factory BagItem.fromJson(Map<String, dynamic> j) {
@@ -76,6 +77,7 @@ class BagItem {
         {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
+      buff: FoodBuff.fromUseEffect(j['use_effect']),
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -108,7 +110,10 @@ class BagItem {
   /// HP restored by using one unit (content use_effect heal_hp); 0 = not usable.
   final int healHp;
 
-  bool get usable => healHp > 0;
+  /// Food buff (DD-269); null for anything else.
+  final FoodBuff? buff;
+
+  bool get usable => healHp > 0 || buff != null;
 
   bool get equippable => equipSlot != null && equipSlot!.isNotEmpty;
 }
@@ -191,4 +196,35 @@ List<BagItem> sortBag(List<BagItem> items, BagSort sort, String Function(BagItem
     final c = cmp(a, b);
     return c != 0 ? c : a.slot - b.slot;
   });
+}
+
+/// A food buff (DD-269): attack and defense percent for [minutes], or, when
+/// read from the character, until [expiresAt].
+class FoodBuff {
+  const FoodBuff({required this.attackPct, required this.defensePct, this.minutes = 0, this.expiresAt});
+
+  /// From a use_effect: null unless it carries a buff.
+  static FoodBuff? fromUseEffect(Object? useEffect) => switch (useEffect) {
+    {'buff': final Map<String, dynamic> b} => FoodBuff(
+      attackPct: (b['attack_pct'] as num?)?.toInt() ?? 0,
+      defensePct: (b['defense_pct'] as num?)?.toInt() ?? 0,
+      minutes: (b['minutes'] as num?)?.toInt() ?? 0,
+    ),
+    _ => null,
+  };
+
+  /// The character's running buff (GET /buff, use result); null when none.
+  static FoodBuff? fromActive(Object? j) => switch (j) {
+    final Map<String, dynamic> b => FoodBuff(
+      attackPct: (b['attack_pct'] as num?)?.toInt() ?? 0,
+      defensePct: (b['defense_pct'] as num?)?.toInt() ?? 0,
+      expiresAt: DateTime.tryParse(b['expires_at'] as String? ?? ''),
+    ),
+    _ => null,
+  };
+
+  final int attackPct;
+  final int defensePct;
+  final int minutes;
+  final DateTime? expiresAt;
 }

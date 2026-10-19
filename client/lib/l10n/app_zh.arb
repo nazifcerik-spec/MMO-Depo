@@ -152,5 +152,9 @@
   "raceDarkElfDesc": "幽暗地域之子",
   "raceDrakariDesc": "流淌龙血的一族",
   "raceTaurenDesc": "平原的守护者",
-  "raceGnomeDesc": "聪明的工匠"
+  "raceGnomeDesc": "聪明的工匠",
+  "foodBuffLine": "{minutes} 分钟内攻击 +{atk}%、防御 +{def}%",
+  "fedToast": "饱食：攻击 +{atk}%，防御 +{def}%",
+  "fedActive": "饱食 · 攻击 +{atk}% · 防御 +{def}% · 剩余 {time}",
+  "appTitle": "MeNa World"
 }

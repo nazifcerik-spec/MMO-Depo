@@ -3,6 +3,7 @@
 package integration
 
 import (
+	"math/rand/v2"
 	"testing"
 	"time"
 
@@ -26,8 +27,10 @@ func TestWorldEventEnlistCloseAndPay(t *testing.T) {
 	w := newWorld(t)
 	svc := worldevent.NewService(w.p, w.chars, w.txn, func() string { return "ironhold_city" }, nil)
 	hero, low := w.player("warrior", 12), w.player("mage", 2)
-	// Unique start minutes keep the (template, starts_at) key free across runs.
-	base := time.Now().UTC().Truncate(time.Minute).Add(time.Duration(time.Now().UnixNano()%997) * time.Minute)
+	// Random start times (minute + microsecond) keep the (template, starts_at)
+	// key free across runs; minutes alone collided once test rows piled up.
+	base := time.Now().UTC().Truncate(time.Minute).Add(time.Duration(rand.Int64N(997))*time.Minute +
+		time.Duration(rand.Int64N(60_000_000))*time.Microsecond)
 
 	_, err := svc.Attend(w.ctx, hero.ID, hero.Account, uuid.New())
 	require.ErrorIs(t, err, worldevent.ErrNotFound)

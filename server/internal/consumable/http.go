@@ -37,6 +37,22 @@ func (h *Handler) Use(w http.ResponseWriter, r *http.Request) {
 	apierr.WriteJSON(w, http.StatusOK, res)
 }
 
+// Active is GET /v1/character/{id}/buff: the running food buff or null
+// (DD-269). Ownership of {id} is enforced by the router guard.
+func (h *Handler) Active(w http.ResponseWriter, r *http.Request) {
+	charID, err := uuid.Parse(chi.URLParam(r, "id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", "id")
+		return
+	}
+	b, err := h.svc.Active(r.Context(), charID)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"buff": b})
+}
+
 func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 	switch {
 	case errors.Is(err, ErrNotFound), errors.Is(err, character.ErrNotFound), errors.Is(err, character.ErrForbidden):

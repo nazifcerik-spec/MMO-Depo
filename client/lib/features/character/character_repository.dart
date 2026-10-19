@@ -1,3 +1,4 @@
+import '../inventory/inventory_models.dart' show FoodBuff;
 import '../../core/api_client.dart';
 import '../progression/progression_repository.dart';
 import 'models.dart';
@@ -71,6 +72,9 @@ class CharacterRepository {
   }
 
   Future<CharacterSheet> sheet(String id) async => CharacterSheet.fromJson(await api.get('/v1/character/$id/sheet'));
+
+  /// The running food buff (DD-269), or null.
+  Future<FoodBuff?> buff(String id) async => FoodBuff.fromActive((await api.get('/v1/character/$id/buff'))['buff']);
 
   static final _skills = <String, List<ClassSkill>>{};
 

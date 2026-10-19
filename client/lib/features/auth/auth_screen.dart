@@ -111,10 +111,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: Space.xxl),
-                    const _Logo(),
-                    const SizedBox(height: Space.lg),
-                    Text(l.appTitle, textAlign: TextAlign.center, style: text.headlineMedium),
-                    const SizedBox(height: Space.xs),
+                    Semantics(label: l.appTitle, image: true, child: const _Logo()),
+                    const SizedBox(height: Space.sm),
                     Text(l.tagline, textAlign: TextAlign.center, style: text.bodySmall),
                     const SizedBox(height: Space.xxl),
                     if (_registering) ...[
@@ -252,16 +250,11 @@ class _Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 84,
-        height: 84,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: const RadialGradient(colors: [Color(0x55E4A756), Color(0x000F1013)]),
-          border: Border.all(color: Palette.accent.withValues(alpha: 0.6), width: 1.5),
-          boxShadow: [BoxShadow(color: Palette.accent.withValues(alpha: 0.25), blurRadius: 24)],
-        ),
-        child: const Icon(Icons.water_drop_outlined, size: 40, color: Palette.accent),
+      child: Image.asset(
+        brandLogo,
+        height: 180,
+        cacheHeight: (180 * MediaQuery.devicePixelRatioOf(context)).round(),
+        filterQuality: FilterQuality.medium,
       ),
     );
   }

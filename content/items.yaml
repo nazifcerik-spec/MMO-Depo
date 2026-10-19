@@ -455,7 +455,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 60 }
+    use_effect: { kind: heal_hp, amount: 60, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_sardine_skewer
     display_name_key: item.food_sardine_skewer
@@ -467,7 +467,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 90 }
+    use_effect: { kind: heal_hp, amount: 90, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_minnow_soup
     display_name_key: item.food_minnow_soup
@@ -479,7 +479,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 115 }
+    use_effect: { kind: heal_hp, amount: 115, buff: { attack_pct: 2, defense_pct: 2, minutes: 60 } }
 
   - code: food_pike_fillet
     display_name_key: item.food_pike_fillet
@@ -491,7 +491,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 140 }
+    use_effect: { kind: heal_hp, amount: 140, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_lavender_carp
     display_name_key: item.food_lavender_carp
@@ -503,7 +503,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 160 }
+    use_effect: { kind: heal_hp, amount: 160, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_herb_trout
     display_name_key: item.food_herb_trout
@@ -515,7 +515,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 190 }
+    use_effect: { kind: heal_hp, amount: 190, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_smoked_salmon
     display_name_key: item.food_smoked_salmon
@@ -527,7 +527,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 210 }
+    use_effect: { kind: heal_hp, amount: 210, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_bass_stew
     display_name_key: item.food_bass_stew
@@ -539,7 +539,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 225 }
+    use_effect: { kind: heal_hp, amount: 225, buff: { attack_pct: 3, defense_pct: 3, minutes: 60 } }
 
   - code: food_tuna_steak
     display_name_key: item.food_tuna_steak
@@ -551,7 +551,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 300 }
+    use_effect: { kind: heal_hp, amount: 300, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
 
   - code: food_royal_carp_feast
     display_name_key: item.food_royal_carp_feast
@@ -563,7 +563,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 340 }
+    use_effect: { kind: heal_hp, amount: 340, buff: { attack_pct: 4, defense_pct: 4, minutes: 60 } }
 
   - code: food_sturgeon_pie
     display_name_key: item.food_sturgeon_pie
@@ -575,7 +575,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 420 }
+    use_effect: { kind: heal_hp, amount: 420, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
 
   - code: food_swordfish_grill
     display_name_key: item.food_swordfish_grill
@@ -587,7 +587,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 445 }
+    use_effect: { kind: heal_hp, amount: 445, buff: { attack_pct: 5, defense_pct: 5, minutes: 60 } }
 
   - code: food_frostfin_chowder
     display_name_key: item.food_frostfin_chowder
@@ -599,7 +599,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 535 }
+    use_effect: { kind: heal_hp, amount: 535, buff: { attack_pct: 6, defense_pct: 6, minutes: 60 } }
 
   - code: food_marlin_platter
     display_name_key: item.food_marlin_platter
@@ -611,7 +611,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 620 }
+    use_effect: { kind: heal_hp, amount: 620, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
 
   - code: food_dragonblood_serpentfish
     display_name_key: item.food_dragonblood_serpentfish
@@ -623,7 +623,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 710 }
+    use_effect: { kind: heal_hp, amount: 710, buff: { attack_pct: 7, defense_pct: 7, minutes: 60 } }
 
   - code: food_moonfish_delicacy
     display_name_key: item.food_moonfish_delicacy
@@ -635,7 +635,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 795 }
+    use_effect: { kind: heal_hp, amount: 795, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
 
   - code: food_phoenix_koi_feast
     display_name_key: item.food_phoenix_koi_feast
@@ -647,7 +647,7 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 840 }
+    use_effect: { kind: heal_hp, amount: 840, buff: { attack_pct: 8, defense_pct: 8, minutes: 60 } }
 
   - code: food_leviathan_banquet
     display_name_key: item.food_leviathan_banquet
@@ -659,5 +659,5 @@ items:
     stackable: true
     max_stack: 50
     bind_kind: boe
-    use_effect: { kind: heal_hp, amount: 925 }
+    use_effect: { kind: heal_hp, amount: 925, buff: { attack_pct: 9, defense_pct: 9, minutes: 60 } }
   # <<< generated: cooking

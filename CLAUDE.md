@@ -4,7 +4,7 @@ Bu dosya Claude Code oturumları için proje kılavuzudur.
 
 ## Proje
 
-**New World MMO** (kod adı **Otter**, DD-228) — Persistent Idle MMORPG. Flutter (client) + Go (server) + PostgreSQL + Redis.
+**MeNa World** (eski adı New World MMO, DD-270; kod adı **Otter**, DD-228) — Persistent Idle MMORPG. Flutter (client) + Go (server) + PostgreSQL + Redis.
 
 Tasarım Faz 00'da tamamlandı; şu an **Faz 01: Implementation** aktif.
 
@@ -172,6 +172,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 80. **Altı yeni ırk (bitti)** — Sprint 80, DD-267. Trol, Hortlak, Karanlık Elf, Drakari, Tauren, Gnom (yalnız görünüş); sunucu izin listesi + istemci adları/tanımları 4 dilde; oluşturma ekranında 4'lü kart ızgarası.
 
 81. **Aşçılık + görsel küçültme (bitti)** — Sprint 81, DD-268. `scripts/gen_cooking.py`: 18 yemek (2 balık + ot + odun → 2 yemek, can yeniler, balıkçılık Sv 1–100'e paralel), aşçılık tavanı 100. Hayvan görselleri 256×256 (orijinaller `client/art_originals/`, git dışı).
+
+82. **Yemek bonusu + MeNa World markası (bitti)** — Sprint 82, DD-269..270. Migration 0040 `character.buff`: yemek 60 dk +%2..9 saldırı/savunma (sheet modifier, tek bonus, canı doluyken de yenir), `GET /character/{id}/buff`. Ad "MeNa World" her yerde; logo giriş ekranı + üst bar, Android adaptif ikon + açılış ekranı (koyu zemin), iOS/web ikonları. Irk portreleri 300×400 (3:4 kart). Fix: dünya etkinliği testinde başlangıç zamanı çakışması (dakika → mikrosaniye rastgele).
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 

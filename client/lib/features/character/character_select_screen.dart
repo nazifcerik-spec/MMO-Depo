@@ -81,6 +81,14 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
     final list = _list;
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(Space.xs),
+          child: Semantics(
+            label: l.appTitle,
+            image: true,
+            child: Image.asset(brandLogo, cacheHeight: (48 * MediaQuery.devicePixelRatioOf(context)).round()),
+          ),
+        ),
         title: Text(l.characters),
         actions: [
           AccountMenuButton(auth: widget.auth),

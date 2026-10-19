@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "New World MMO",
+  "appTitle": "MeNa World",
   "tagline": "Adventures that keep going while you're away.",
   "emailOrUsername": "Email or username",
   "email": "Email",
@@ -1797,5 +1797,44 @@
   "raceDarkElfDesc": "Children of the deep dark",
   "raceDrakariDesc": "Kin of dragon blood",
   "raceTaurenDesc": "Guardians of the plains",
-  "raceGnomeDesc": "Clever tinkerers"
+  "raceGnomeDesc": "Clever tinkerers",
+  "foodBuffLine": "+{atk}% attack and +{def}% defense for {minutes} min",
+  "@foodBuffLine": {
+    "placeholders": {
+      "atk": {
+        "type": "int"
+      },
+      "def": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "fedToast": "Fed: +{atk}% attack, +{def}% defense",
+  "@fedToast": {
+    "placeholders": {
+      "atk": {
+        "type": "int"
+      },
+      "def": {
+        "type": "int"
+      }
+    }
+  },
+  "fedActive": "Fed · +{atk}% attack · +{def}% defense · {time} left",
+  "@fedActive": {
+    "placeholders": {
+      "atk": {
+        "type": "int"
+      },
+      "def": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

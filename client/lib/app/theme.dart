@@ -38,6 +38,9 @@ abstract final class Space {
   static const xxl = 32.0;
 }
 
+/// The MeNa World logo (assets/branding): login screen and the top bar.
+const brandLogo = 'assets/branding/logo.png';
+
 abstract final class Radii {
   static const sm = 6.0;
   static const md = 10.0;

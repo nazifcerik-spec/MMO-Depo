@@ -130,7 +130,7 @@ func (h *Handler) page(w http.ResponseWriter, r *http.Request, doc string) {
 
 var legalTmpl = template.Must(template.New("legal").Parse(`<!doctype html>
 <html lang="{{.Lang}}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{.Title}} — New World MMO</title><style>
+<title>{{.Title}} — MeNa World</title><style>
 body{margin:0;background:#0F1013;color:#E8EAEE;font:15px/1.6 system-ui,sans-serif}
 main{max-width:760px;margin:0 auto;padding:24px 16px 64px}h1{font-size:24px}h2{font-size:18px;margin-top:28px}
 a{color:#E4A756}.draft{background:#3A2A12;border:1px solid #E4A756;border-radius:8px;padding:10px 12px;margin:12px 0}

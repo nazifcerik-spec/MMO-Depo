@@ -152,5 +152,9 @@
   "raceDarkElfDesc": "Hijos de la oscuridad profunda",
   "raceDrakariDesc": "Linaje de sangre de dragón",
   "raceTaurenDesc": "Guardianes de las llanuras",
-  "raceGnomeDesc": "Ingeniosos inventores"
+  "raceGnomeDesc": "Ingeniosos inventores",
+  "foodBuffLine": "+{atk}% ataque y +{def}% defensa durante {minutes} min",
+  "fedToast": "Saciado: +{atk}% ataque, +{def}% defensa",
+  "fedActive": "Saciado · +{atk}% ataque · +{def}% defensa · quedan {time}",
+  "appTitle": "MeNa World"
 }

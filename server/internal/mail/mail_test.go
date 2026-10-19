@@ -46,11 +46,11 @@ func TestBrevoSender(t *testing.T) {
 		_, _ = w.Write([]byte(`{"message":"sender not verified"}`))
 	}))
 	defer srv.Close()
-	s := BrevoSender{APIKey: "k-1", From: "noreply@otter.gg", FromName: "New World MMO", Endpoint: srv.URL}
+	s := BrevoSender{APIKey: "k-1", From: "noreply@otter.gg", FromName: "MeNa World", Endpoint: srv.URL}
 
 	require.NoError(t, s.Send(context.Background(), "p@example.com", "Şifre sıfırlama", "link"))
 	require.Equal(t, "k-1", key)
-	require.Equal(t, map[string]any{"email": "noreply@otter.gg", "name": "New World MMO"}, got["sender"])
+	require.Equal(t, map[string]any{"email": "noreply@otter.gg", "name": "MeNa World"}, got["sender"])
 	require.Equal(t, []any{map[string]any{"email": "p@example.com"}}, got["to"])
 	require.Equal(t, "Şifre sıfırlama", got["subject"])
 	require.Equal(t, "link", got["textContent"])

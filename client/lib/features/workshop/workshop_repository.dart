@@ -62,6 +62,7 @@ class ItemInfo {
     this.classRestriction,
     this.bonuses = const [],
     this.healHp = 0,
+    this.buff,
     this.weightGrams = 0,
     this.maxStack = 1,
   });
@@ -81,6 +82,7 @@ class ItemInfo {
         {'kind': 'heal_hp', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
+      buff: FoodBuff.fromUseEffect(j['use_effect']),
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -96,6 +98,7 @@ class ItemInfo {
   final String? classRestriction;
   final List<StatBonus> bonuses;
   final int healHp;
+  final FoodBuff? buff; // DD-269
   final int weightGrams;
   final int maxStack;
 }

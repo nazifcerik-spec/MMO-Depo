@@ -2420,6 +2420,24 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-269 — Yemek bonusu (tokluk)
+**Karar:** Yemeğin `use_effect`'i can yenilemeye ek olarak `buff: {attack_pct, defense_pct, minutes}` taşır; 18 yemek 60 dakika boyunca seviyeye göre +%2..9 saldırı ve savunma verir (`gen_cooking.py`). Karakter başı tek yemek bonusu: migration 0040 `character.buff` (yeni yemek eskisinin yerini alır). Canlı bonus (`expires_at` gelecekte) `consumable.Service.Modifiers` ile sheet'in modifier yığınına `mult_add` olarak girer; av/zindan/baskın başlangıçta sheet'i dondurduğu için tok başlanan iş bonusu sonuna kadar taşır. Can doluyken bonuslu yemek yenebilir (iksir hâlâ `E_HP_FULL`). `GET /v1/character/{id}/buff`; kullanma yanıtında `buff`. İstemci: eşya detayında bonus satırı, yeme bildirimi, karakter sayfasında "Tok · +%x saldırı · +%y savunma · süre".
+**Reason:** Kullanıcı isteği.
+**Alternatives:** Bonusu sözleşme anlık görüntüsüne ayrıca yazmak (sheet zaten donuyor; gereksiz).
+**Consequences:** Contentpack bonusu doğrular (0..50 %, en az biri > 0, 1..1440 dk). `TestHTTPFoodBuff`.
+**Tarih:** 2026-10-19
+
+---
+
+## DD-270 — MeNa World adı ve logosu
+**Karar:** Oyunun adı her yerde "MeNa World" (uygulama etiketi, 4 dilde başlık, web, e-posta konuları ve gönderen adı varsayılanı, yasal sayfalar, admin TOTP, dev console). Logo `client/assets/branding/logo.png` (şeffaf, 720 px): giriş ekranında başlık yerine, karakterler ekranının üst barında küçük. Android: adaptif ikon (koyu `#0F1013` zemin + logo), eski tip dairesel ikon, açılış ekranı (koyu zemin + logo; Android 12+ sistem splash'ı aynı renk), uygulama penceresi zemini koyu (beyaz flaş yok). iOS ve web ikonları aynı logodan (iOS opak). Kod adı Otter ve `com.otter.otter` değişmedi.
+**Reason:** Kullanıcının logosu ve onayı (A: koyu zemin, üst barda logo, ad MeNa World).
+**Alternatives:** Lacivert ikon zemini; yazısız sade ikon (çizim gerekir).
+**Consequences:** 48 px ikonda logo yazısı okunması zor. Irk portreleri 300×400'e küçültüldü (27 MB → 2,6 MB; orijinaller `client/art_originals/races/`), ırk kartları 3:4 portre.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

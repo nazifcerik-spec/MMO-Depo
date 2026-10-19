@@ -77,8 +77,16 @@ var GatherKinds = map[string]bool{"mining": true, "fishing": true, "woodcutting"
 
 // UseEffect is what consuming one unit of a consumable does (DD-218).
 type UseEffect struct {
-	Kind   string `yaml:"kind"   json:"kind"`
-	Amount int    `yaml:"amount" json:"amount"`
+	Kind   string   `yaml:"kind"   json:"kind"`
+	Amount int      `yaml:"amount" json:"amount"`
+	Buff   *UseBuff `yaml:"buff"   json:"buff,omitempty"` // food buff (DD-269)
+}
+
+// UseBuff is a timed attack/defense percent bonus (DD-269).
+type UseBuff struct {
+	AttackPct  int `yaml:"attack_pct"  json:"attack_pct"`
+	DefensePct int `yaml:"defense_pct" json:"defense_pct"`
+	Minutes    int `yaml:"minutes"     json:"minutes"`
 }
 
 // validUseEffects: only effects with persisted state (HP, DD-218) exist yet.
@@ -717,6 +725,10 @@ func validateItems(items []Item) error {
 			}
 			if ue.Amount <= 0 || ue.Amount > 100_000 {
 				return fmt.Errorf("item %s: use_effect amount out of (0, 100000]", it.Code)
+			}
+			if b := ue.Buff; b != nil && (b.AttackPct < 0 || b.AttackPct > 50 || b.DefensePct < 0 || b.DefensePct > 50 ||
+				b.AttackPct+b.DefensePct == 0 || b.Minutes < 1 || b.Minutes > 1440) {
+				return fmt.Errorf("item %s: use_effect buff needs 0..50 attack/defense pct (not both 0) and 1..1440 minutes", it.Code)
 			}
 		}
 		if g := it.Gather; g != nil {

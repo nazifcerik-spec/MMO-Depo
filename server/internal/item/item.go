@@ -70,8 +70,16 @@ type Template struct {
 // UseEffect is what consuming one unit does (content use_effect, DD-218).
 // Templates without one cannot be used.
 type UseEffect struct {
-	Kind   string `json:"kind"` // heal_hp
-	Amount int    `json:"amount"`
+	Kind   string   `json:"kind"` // heal_hp
+	Amount int      `json:"amount"`
+	Buff   *UseBuff `json:"buff,omitempty"` // food (DD-269)
+}
+
+// UseBuff is a timed attack/defense bonus a dish adds (DD-269).
+type UseBuff struct {
+	AttackPct  int `json:"attack_pct"`
+	DefensePct int `json:"defense_pct"`
+	Minutes    int `json:"minutes"`
 }
 
 // IsEquippable returns true when the template has an equip_slot.
