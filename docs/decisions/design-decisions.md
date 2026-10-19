@@ -2552,6 +2552,25 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-275 — Nadirlik ve ekler güç verir
+**Karar:**
+- Nadirlik, eşyanın kendi düz (`flat`) bonuslarını çarpar ve sonuç yuvarlanır: seçkin ×1,05, nadir ×1,10, destansı ×1,20, efsanevi ×1,30, mitik ×1,50 (`item.StatMultiplier`). Yüzde türündeki bonuslar değişmez.
+- Her ek tek bir stat verir: `taban + seviye başı × eşya Sv`, yuvarlanır, en az 1 (`item/affix.go` `affixStats`).
+  - Silah önekleri: keskin/alevli saldırı, acımasız kritik hasar, çevik isabet, donmuş kritik, lanetli can çalma.
+  - Zırh önekleri: güçlendirilmiş savunma, yaldızlı can, gölgeli kaçınma, rünik mana, muskalı hasar azaltma.
+  - Kadim (ikisinde de): dayanıklılık.
+  - Son ekler: ayı güç, kurt çeviklik, bilgelik zekâ, öküz dayanıklılık, isabet, yıkım, hız, kaplumbağa, kalkan blok, dayanıklılık can.
+  - Yüzde statları yavaş büyür; Sv 1000'de en fazla birkaç puan, tavanlar korunur.
+- Hesap `inventory.EffectiveModifiers`'ta yapılır. Kuşanılı eşyalar sheet'e bu değerlerle girer (`skill.EquippedBonus.Modifiers`).
+- Çanta ve ekipman yanıtında `effective_bonuses` alanı var; istemci bonusları buradan gösterir.
+
+**Reason:** İçerik denetimi: ekler yalnız isimdi, nadirlik yalnız satış değerini etkiliyordu; ganimet döngüsü güç kazandırmıyordu.
+**Alternatives:** Ek kataloğunu içerik dosyasına taşımak (`affix.md`); 22 ek için Go tablosu daha basit. Nadirliğe göre ek sayısını artırmak.
+**Consequences:** Denge simülasyonu sıradan ekipmanla ölçer; düşen nadir eşya oyuncuyu hedeflerin biraz üstüne taşır. Var olan eşyalar ek kodlarını zaten taşıdığı için anında güç kazanır. Testler: `TestAffixBonuses`, `TestEffectiveModifiers`, `TestHTTPRarityAndAffixesAddPower`.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

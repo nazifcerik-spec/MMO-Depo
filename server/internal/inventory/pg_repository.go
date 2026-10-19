@@ -46,6 +46,9 @@ func (r *PgRepo) scanBagItem(row pgx.Row) (BagItem, error) {
 		&b.WeightGramsPer, &b.BaseValueCopper,
 		&b.StatBonusesRaw, &b.EquipSlotOnTmpl, &b.ClassRestriction, &b.MinLevel, &b.UseEffect,
 	)
+	if err == nil && b.EquipSlotOnTmpl != nil {
+		b.EffectiveBonuses = EffectiveModifiers(b)
+	}
 	return b, err
 }
 

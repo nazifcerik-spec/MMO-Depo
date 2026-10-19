@@ -34,6 +34,25 @@ func ValueMultiplier(r Rarity) float64 {
 	}
 }
 
+// StatMultiplier scales an item's own stat bonuses by rarity (DD-275): the
+// same sword hits harder as an epic than as a common drop.
+func StatMultiplier(r Rarity) float64 {
+	switch r {
+	case RarityUncommon:
+		return 1.05
+	case RarityRare:
+		return 1.10
+	case RarityEpic:
+		return 1.20
+	case RarityLegendary:
+		return 1.30
+	case RarityMythic:
+		return 1.50
+	default:
+		return 1.0
+	}
+}
+
 // AffixRule describes whether a rarity gets prefix/suffix at drop time.
 //
 //	common/uncommon → no affix

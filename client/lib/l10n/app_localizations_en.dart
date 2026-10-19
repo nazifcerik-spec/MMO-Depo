@@ -2352,4 +2352,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String restoresHpPct(int pct) {
     return 'Restores $pct% of max HP';
   }
+
+  @override
+  String get statEvasion => '% Evasion';
+
+  @override
+  String get statBlock => '% Block';
+
+  @override
+  String get statCritDmg => '% Crit damage';
+
+  @override
+  String get statLifesteal => '% Lifesteal';
+
+  @override
+  String get statDmgReduction => '% Damage reduction';
 }

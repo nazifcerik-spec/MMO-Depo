@@ -63,3 +63,24 @@ func TestRollAffix_Deterministic(t *testing.T) {
 	require.Equal(t, *p1, *p2)
 	require.Equal(t, *s1, *s2)
 }
+
+// Every affix that can roll adds a stat, growing with the item's level
+// (DD-275).
+func TestAffixBonuses(t *testing.T) {
+	for _, pools := range []map[string][]string{prefixPool, suffixPool} {
+		for class, codes := range pools {
+			for _, code := range codes {
+				c := code
+				got := AffixBonuses(&c, nil, 500)
+				require.Len(t, got, 1, "%s %s adds a stat", class, code)
+				require.Greater(t, got[0].Amount, AffixBonuses(&c, nil, 1)[0].Amount, "%s grows with level", code)
+			}
+		}
+	}
+	sharp, bear, nope := "sharp", "of_the_bear", "nope"
+	require.Equal(t, []StatBonus{{"attack", 12}, {"str", 9}}, AffixBonuses(&sharp, &bear, 100))
+	require.Equal(t, []StatBonus{{"attack", 2}}, AffixBonuses(&sharp, &nope, 0), "unknown codes add nothing")
+	require.Empty(t, AffixBonuses(nil, nil, 100))
+	require.Equal(t, 1.0, StatMultiplier(RarityCommon))
+	require.Greater(t, StatMultiplier(RarityMythic), StatMultiplier(RarityLegendary))
+}

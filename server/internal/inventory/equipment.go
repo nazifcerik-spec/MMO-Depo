@@ -251,8 +251,8 @@ func (s *EquipmentService) EquippedBonuses(ctx context.Context, characterID uuid
 	}
 	out := make([]skill.EquippedBonus, 0, len(list))
 	for _, b := range list {
-		if len(b.StatBonusesRaw) > 0 {
-			out = append(out, skill.EquippedBonus{StatBonusesRaw: b.StatBonusesRaw})
+		if mods := EffectiveModifiers(b); len(mods) > 0 {
+			out = append(out, skill.EquippedBonus{Modifiers: mods})
 		}
 	}
 	return out, nil

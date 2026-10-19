@@ -1856,5 +1856,10 @@
         "type": "int"
       }
     }
-  }
+  },
+  "statEvasion": "% Evasion",
+  "statBlock": "% Block",
+  "statCritDmg": "% Crit damage",
+  "statLifesteal": "% Lifesteal",
+  "statDmgReduction": "% Damage reduction"
 }

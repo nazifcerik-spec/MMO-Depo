@@ -163,5 +163,10 @@
   "huntTravelHint": "Para cazar un monstruo, viaja a su zona o a una zona unida a ella por camino.",
   "errWrongRegion": "Este monstruo vive en otra zona. Viaja allí primero.",
   "errMobRegion": "Este monstruo vive en otra zona. Viaja allí primero.",
-  "restoresHpPct": "Restaura el {pct}% de la vida máxima"
+  "restoresHpPct": "Restaura el {pct}% de la vida máxima",
+  "statEvasion": "% Evasión",
+  "statBlock": "% Bloqueo",
+  "statCritDmg": "% Daño crítico",
+  "statLifesteal": "% Robo de vida",
+  "statDmgReduction": "% Reducción de daño"
 }

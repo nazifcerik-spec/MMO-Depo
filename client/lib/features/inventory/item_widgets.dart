@@ -152,6 +152,12 @@ String statName(AppLocalizations l, String target) => switch (target) {
   'hp_max' => l.hp,
   'mp_max' => l.mp,
   'en_max' => l.energy,
+  // Affix stats (DD-275); the label carries the % sign.
+  'evasion_pct' => l.statEvasion,
+  'block_pct' => l.statBlock,
+  'crit_dmg_pct' => l.statCritDmg,
+  'lifesteal_pct' => l.statLifesteal,
+  'dmg_reduction_pct' => l.statDmgReduction,
   _ => target,
 };
 

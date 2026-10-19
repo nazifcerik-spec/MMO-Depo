@@ -2351,4 +2351,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String restoresHpPct(int pct) {
     return 'Azami canın %$pct kadarını yeniler';
   }
+
+  @override
+  String get statEvasion => '% Kaçınma';
+
+  @override
+  String get statBlock => '% Blok';
+
+  @override
+  String get statCritDmg => '% Kritik hasar';
+
+  @override
+  String get statLifesteal => '% Can çalma';
+
+  @override
+  String get statDmgReduction => '% Hasar azaltma';
 }

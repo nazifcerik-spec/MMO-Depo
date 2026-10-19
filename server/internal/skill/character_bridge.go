@@ -17,9 +17,12 @@ type EquippedFetcher interface {
 	EquippedBonuses(ctx context.Context, characterID uuid.UUID) ([]EquippedBonus, error)
 }
 
-// EquippedBonus is the projection of an equipped item's stat bonuses.
+// EquippedBonus is the projection of an equipped item's stat bonuses: the
+// final modifiers (rarity and affixes applied, DD-275) or a raw template
+// stat_bonuses payload.
 type EquippedBonus struct {
 	StatBonusesRaw []byte
+	Modifiers      []Modifier
 }
 
 // CharacterAdapter satisfies character.SheetComputer by using an EquippedFetcher
@@ -63,6 +66,7 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 	}
 	mods := []Modifier{}
 	for _, b := range bonuses {
+		mods = append(mods, b.Modifiers...)
 		list, err := DecodeModifiers(b.StatBonusesRaw)
 		if err != nil {
 			a.log.WarnContext(ctx, "skill: bad stat_bonuses row — skipped",

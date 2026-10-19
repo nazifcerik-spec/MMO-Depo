@@ -585,7 +585,11 @@ void main() {
     // Only mobs in reach are huntable; the rest are listed by region (DD-273).
     expect(find.textContaining('Hunting from here:'), findsOneWidget);
     expect(find.text('Sand Wyrm'), findsNothing);
-    await tester.scrollUntilVisible(find.text('Monsters in other regions'), 200, scrollable: find.byType(Scrollable).last);
+    await tester.scrollUntilVisible(
+      find.text('Monsters in other regions'),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
     await tester.tap(find.text('Monsters in other regions'));
     await tester.pumpAndSettle();
     expect(find.text('Salt Desert'), findsOneWidget);

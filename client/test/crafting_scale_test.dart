@@ -39,4 +39,22 @@ void main() {
     });
     expect(info.healPct, 20);
   });
+
+  test('bag items show their effective bonuses: rarity and affixes applied (DD-275)', () {
+    final item = BagItem.fromJson({
+      'instance_id': 'i-2',
+      'template_code': 'sword_iron',
+      'item_class': 'weapon',
+      'rarity': 'epic',
+      'equip_slot': 'mainhand',
+      'stat_bonuses': [
+        {'kind': 'flat', 'target': 'attack', 'amount': 16},
+      ],
+      'effective_bonuses': [
+        {'kind': 'flat', 'target': 'attack', 'amount': 19},
+        {'kind': 'flat', 'target': 'attack', 'amount': 3},
+      ],
+    });
+    expect(item.bonuses.map((b) => b.amount), [19, 3]);
+  });
 }

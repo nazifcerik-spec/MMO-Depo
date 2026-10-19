@@ -248,16 +248,19 @@ if not any(present.get(a + '_armor') for a in prog.get('armor_types', [])):
 
 # 1.3 rarity
 w('### 1.3 Nadirlik ve ek (affix)\n')
-w('| Nadirlik | Değer çarpanı | Ek kuralı | Ekipman ganimetinde |')
-w('|---|---:|---|---|')
-w('| sıradan | ×1 | yok | %60 |')
-w('| seçkin | ×1.5 | yok | %25 · boss %50 |')
-w('| nadir | ×3 | %50 tek ek | %11 · boss %35 |')
-w('| destansı | ×8 | ön ek + %50 son ek | %4 · boss %13 |')
-w('| efsanevi | ×25 | ön + son ek | boss %2 |')
-w('| mitik | ×100 | ön + son ek (+ benzersiz etki ayrılmış) | **hiç düşmez** (yalnız T7 malzeme) |')
+w('| Nadirlik | Değer çarpanı | Stat çarpanı (DD-275) | Ek kuralı | Ekipman ganimetinde |')
+w('|---|---:|---:|---|---|')
+w('| sıradan | ×1 | ×1 | yok | %60 |')
+w('| seçkin | ×1.5 | ×1.05 | yok | %25 · boss %50 |')
+w('| nadir | ×3 | ×1.10 | %50 tek ek | %11 · boss %35 |')
+w('| destansı | ×8 | ×1.20 | ön ek + %50 son ek | %4 · boss %13 |')
+w('| efsanevi | ×25 | ×1.30 | ön + son ek | boss %2 |')
+w('| mitik | ×100 | ×1.50 | ön + son ek (+ benzersiz etki ayrılmış) | **hiç düşmez** (yalnız T7 malzeme) |')
 w('')
-find('Yüksek', 'Nadirlik', 'Ekler (sharp, of_the_bear …) yalnız isim: `item/affix.go` “cosmetic only”; stat vermiyor. Nadirlik ekipmanın gücünü değiştirmiyor, yalnız satış değerini — destansı kılıç ile sıradan kılıç aynı vuruyor.')
+w('Her ek bir stat verir: taban + seviye başı × eşya Sv (`item/affix.go` `affixStats`).\n')
+with io.open(os.path.join(ROOT, 'server', 'internal', 'item', 'affix.go'), encoding='utf-8') as f:
+    if 'affixStats' not in f.read():
+        find('Yüksek', 'Nadirlik', 'Ekler (sharp, of_the_bear …) yalnız isim; stat vermiyor. Nadirlik ekipmanın gücünü değiştirmiyor, yalnız satış değerini.')
 find('Orta', 'Nadirlik', 'Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı.')
 
 # 2. Item list

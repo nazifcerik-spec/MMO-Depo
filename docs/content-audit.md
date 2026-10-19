@@ -121,14 +121,16 @@ Kademe aralığı: Sv 1–25 arası 5, 25–95 arası 10–15, 95 sonrası 25 se
 
 ### 1.3 Nadirlik ve ek (affix)
 
-| Nadirlik | Değer çarpanı | Ek kuralı | Ekipman ganimetinde |
-|---|---:|---|---|
-| sıradan | ×1 | yok | %60 |
-| seçkin | ×1.5 | yok | %25 · boss %50 |
-| nadir | ×3 | %50 tek ek | %11 · boss %35 |
-| destansı | ×8 | ön ek + %50 son ek | %4 · boss %13 |
-| efsanevi | ×25 | ön + son ek | boss %2 |
-| mitik | ×100 | ön + son ek (+ benzersiz etki ayrılmış) | **hiç düşmez** (yalnız T7 malzeme) |
+| Nadirlik | Değer çarpanı | Stat çarpanı (DD-275) | Ek kuralı | Ekipman ganimetinde |
+|---|---:|---:|---|---|
+| sıradan | ×1 | ×1 | yok | %60 |
+| seçkin | ×1.5 | ×1.05 | yok | %25 · boss %50 |
+| nadir | ×3 | ×1.10 | %50 tek ek | %11 · boss %35 |
+| destansı | ×8 | ×1.20 | ön ek + %50 son ek | %4 · boss %13 |
+| efsanevi | ×25 | ×1.30 | ön + son ek | boss %2 |
+| mitik | ×100 | ×1.50 | ön + son ek (+ benzersiz etki ayrılmış) | **hiç düşmez** (yalnız T7 malzeme) |
+
+Her ek bir stat verir: taban + seviye başı × eşya Sv (`item/affix.go` `affixStats`).
 
 ## 2. Eşya listesi
 
@@ -2329,14 +2331,13 @@ Arketip dağılımı: elite 25, tank 20, crit 18, glass 17, evasive 16, el yapı
 |---:|---|---|---|
 | 1 | Yüksek | Ekipman | 12 ekipman slotundan 5 tanesi boş: necklace, ring1, ring2, trinket1, trinket2. Karakter ekranında hep boş görünüyor, güç bütçesinin ~%30’u kullanılmıyor. |
 | 2 | Yüksek | Ekonomi | 7/150 toplama kaynağı hiçbir tarifte kullanılmıyor (deri/post/tüy/pul 2, taş 4, balık 0, ot 0, kütük 0). Avcılık mesleği ürününün tek değeri dükkân fiyatı. |
-| 3 | Yüksek | Nadirlik | Ekler (sharp, of_the_bear …) yalnız isim: `item/affix.go` “cosmetic only”; stat vermiyor. Nadirlik ekipmanın gücünü değiştirmiyor, yalnız satış değerini — destansı kılıç ile sıradan kılıç aynı vuruyor. |
-| 4 | Yüksek | Set | Set sistemi yok (tasarım var). Zindan/baskın ödülü ve uzun vadeli hedef için en büyük boşluk. |
-| 5 | Orta | Ekipman | Yan el (offhand) yalnız 1 şablon (Titan Siper Kalkanı, Sv 600, koruyucu uzmanlığı). Kalkan izni olan savaşçı/paladin/rahip 600’e kadar kalkan bulamıyor. |
-| 6 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
-| 7 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
-| 8 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
-| 9 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
-| 10 | Orta | Zindan | Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok. |
-| 11 | Orta | Üretim | Kuyumculuk yok: takı slotları boş, taşların (4) üretimde kullanımı yok. |
-| 12 | Düşük | Canavar | Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok). |
-| 13 | Düşük | Eşya | 6 eşya bilinçli olarak emekli (DD-241/244; eski yığınlar satılabilsin diye duruyor), kaynağı yok: potion_mp_small, linseed, mandrake, king_bloom, elm_log, yew_log. Temizlik isteğe bağlı. |
+| 3 | Yüksek | Set | Set sistemi yok (tasarım var). Zindan/baskın ödülü ve uzun vadeli hedef için en büyük boşluk. |
+| 4 | Orta | Ekipman | Yan el (offhand) yalnız 1 şablon (Titan Siper Kalkanı, Sv 600, koruyucu uzmanlığı). Kalkan izni olan savaşçı/paladin/rahip 600’e kadar kalkan bulamıyor. |
+| 5 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
+| 6 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
+| 7 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
+| 8 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
+| 9 | Orta | Zindan | Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok. |
+| 10 | Orta | Üretim | Kuyumculuk yok: takı slotları boş, taşların (4) üretimde kullanımı yok. |
+| 11 | Düşük | Canavar | Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok). |
+| 12 | Düşük | Eşya | 6 eşya bilinçli olarak emekli (DD-241/244; eski yığınlar satılabilsin diye duruyor), kaynağı yok: potion_mp_small, linseed, mandrake, king_bloom, elm_log, yew_log. Temizlik isteğe bağlı. |

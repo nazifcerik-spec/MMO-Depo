@@ -2351,4 +2351,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String restoresHpPct(int pct) {
     return 'Restaura el $pct% de la vida máxima';
   }
+
+  @override
+  String get statEvasion => '% Evasión';
+
+  @override
+  String get statBlock => '% Bloqueo';
+
+  @override
+  String get statCritDmg => '% Daño crítico';
+
+  @override
+  String get statLifesteal => '% Robo de vida';
+
+  @override
+  String get statDmgReduction => '% Reducción de daño';
 }

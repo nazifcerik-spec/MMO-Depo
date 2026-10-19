@@ -4173,6 +4173,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restores {pct}% of max HP'**
   String restoresHpPct(int pct);
+
+  /// No description provided for @statEvasion.
+  ///
+  /// In en, this message translates to:
+  /// **'% Evasion'**
+  String get statEvasion;
+
+  /// No description provided for @statBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'% Block'**
+  String get statBlock;
+
+  /// No description provided for @statCritDmg.
+  ///
+  /// In en, this message translates to:
+  /// **'% Crit damage'**
+  String get statCritDmg;
+
+  /// No description provided for @statLifesteal.
+  ///
+  /// In en, this message translates to:
+  /// **'% Lifesteal'**
+  String get statLifesteal;
+
+  /// No description provided for @statDmgReduction.
+  ///
+  /// In en, this message translates to:
+  /// **'% Damage reduction'**
+  String get statDmgReduction;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

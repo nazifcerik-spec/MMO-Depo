@@ -16,8 +16,12 @@ package inventory
 import (
 	"encoding/json"
 	"errors"
+	"math"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/skill"
 )
 
 // v1 caps. Phase 02 makes these config-driven per character (bag expansion,
@@ -60,6 +64,31 @@ type BagItem struct {
 	ClassRestriction *string         `json:"class_restriction,omitempty"` // template.class_restriction
 	MinLevel         int16           `json:"min_level"`                   // template.min_level
 	UseEffect        json.RawMessage `json:"use_effect,omitempty"`        // template.use_effect (DD-218); nil = not usable
+	// What the item adds when worn: stat_bonuses scaled by rarity plus its
+	// affixes (DD-275). Equippable items only.
+	EffectiveBonuses []skill.Modifier `json:"effective_bonuses,omitempty"`
+}
+
+// EffectiveModifiers is what an item adds to the sheet (DD-275): its
+// template's flat bonuses scaled by rarity, rounded, plus its affixes' stats.
+// Other modifier kinds pass through unchanged.
+func EffectiveModifiers(b BagItem) []skill.Modifier {
+	base, err := skill.DecodeModifiers(b.StatBonusesRaw)
+	if err != nil {
+		return nil
+	}
+	mult := item.StatMultiplier(item.Rarity(b.Rarity))
+	out := make([]skill.Modifier, 0, len(base)+2)
+	for _, m := range base {
+		if m.Kind == skill.KindFlat {
+			m.Amount = math.Round(m.Amount * mult)
+		}
+		out = append(out, m)
+	}
+	for _, a := range item.AffixBonuses(b.Prefix, b.Suffix, b.MinLevel) {
+		out = append(out, skill.Modifier{Kind: skill.KindFlat, Target: skill.Target(a.Target), Amount: a.Amount})
+	}
+	return out
 }
 
 // TotalWeight returns the item's total contribution to bag weight.

@@ -61,6 +61,9 @@ func (h *EquipmentHandler) View(w http.ResponseWriter, r *http.Request) {
 		if b.Suffix != nil {
 			row["suffix"] = *b.Suffix
 		}
+		if len(b.EffectiveBonuses) > 0 {
+			row["effective_bonuses"] = b.EffectiveBonuses // rarity + affixes (DD-275)
+		}
 		slots[slot] = row
 	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{

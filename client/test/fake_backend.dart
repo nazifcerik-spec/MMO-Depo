@@ -368,11 +368,35 @@ class FakeBackend {
     if (path == '/v1/mobs') {
       return json(200, {
         'mobs': [
-          {'code': 'giant_rat', 'level': 1, 'hp_max': 30, 'attack': 4, 'defense': 1, 'xp_reward': 8, 'region_code': 'whisperwood'},
-          {'code': 'grey_wolf', 'level': 3, 'hp_max': 60, 'attack': 9, 'defense': 3, 'xp_reward': 20, 'region_code': 'whisperwood'},
+          {
+            'code': 'giant_rat',
+            'level': 1,
+            'hp_max': 30,
+            'attack': 4,
+            'defense': 1,
+            'xp_reward': 8,
+            'region_code': 'whisperwood',
+          },
+          {
+            'code': 'grey_wolf',
+            'level': 3,
+            'hp_max': 60,
+            'attack': 9,
+            'defense': 3,
+            'xp_reward': 20,
+            'region_code': 'whisperwood',
+          },
           {'code': 'cave_troll', 'level': 20, 'hp_max': 900, 'attack': 70, 'defense': 40, 'xp_reward': 400},
           // Out of reach from the starting city (DD-273).
-          {'code': 'sand_wyrm', 'level': 2, 'hp_max': 50, 'attack': 6, 'defense': 2, 'xp_reward': 12, 'region_code': 'salt_desert'},
+          {
+            'code': 'sand_wyrm',
+            'level': 2,
+            'hp_max': 50,
+            'attack': 6,
+            'defense': 2,
+            'xp_reward': 12,
+            'region_code': 'salt_desert',
+          },
         ],
       });
     }

@@ -181,6 +181,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 85. **Meslek ölçeği + tam üretim zinciri (bitti)** — Sprint 85, DD-274. Meslek 1–100 = karakter 1–1000: Sv L ekipman tarifi beceri ⌈L/10⌉. `python scripts/gen_crafting.py` (gen_gear_types'tan sonra): her rastgele düşen ekipmana tarif (demircilik: plaka + metal silah, külçe alaşımı; yeni Deri İşçiliği / Terzilik / Ağaç İşçiliği), 6 iksir `heal_pct` (Sv 1–850, %20–85). `heal_pct` etkisi (`consumable.HealAmount`). Yemekler balık Sv × 10, %15–40 can, 30 yemek (`gen_cooking.py`). Deri ganimeti ⌈canavar Sv/10⌉. İstemci tarifleri meslek başına çeker, açık tarifler + bir sonraki adım (`visibleRecipes`).
 
+86. **Nadirlik + ek gücü (bitti)** — Sprint 86, DD-275. Nadirlik eşyanın düz bonuslarını çarpar (seçkin ×1,05 … mitik ×1,50, `item.StatMultiplier`), her ek eşya seviyesiyle büyüyen bir stat verir (`item.AffixBonuses`, 22 ek). `inventory.EffectiveModifiers` → sheet (`skill.EquippedBonus.Modifiers`) + çanta/ekipman yanıtında `effective_bonuses`; istemci bunu gösterir, yeni stat adları (kaçınma, blok, kritik hasar, can çalma, hasar azaltma).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

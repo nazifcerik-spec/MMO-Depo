@@ -2350,4 +2350,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String restoresHpPct(int pct) {
     return '恢复最大生命值的$pct%';
   }
+
+  @override
+  String get statEvasion => '% 闪避';
+
+  @override
+  String get statBlock => '% 格挡';
+
+  @override
+  String get statCritDmg => '% 暴击伤害';
+
+  @override
+  String get statLifesteal => '% 生命偷取';
+
+  @override
+  String get statDmgReduction => '% 伤害减免';
 }

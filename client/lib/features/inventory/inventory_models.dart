@@ -55,7 +55,9 @@ class BagItem {
 
   factory BagItem.fromJson(Map<String, dynamic> j) {
     int n(String k) => (j[k] as num?)?.toInt() ?? 0;
-    final raw = j['stat_bonuses'];
+    // What the item really adds — rarity and affixes applied (DD-275); the
+    // template's bonuses when the server sent none.
+    final raw = j['effective_bonuses'] ?? j['stat_bonuses'];
     return BagItem(
       instanceId: j['instance_id'] as String,
       templateCode: j['template_code'] as String,
