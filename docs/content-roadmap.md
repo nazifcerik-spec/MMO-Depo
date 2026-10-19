@@ -2,6 +2,25 @@
 
 Kaynak: [content-audit.md](content-audit.md) (`python scripts/content_audit.py`, 23 bulgu). Bu belge öneridir; her adım uygulanırken DD açılır.
 
+## Durum (2026-10-20)
+
+Denetim bulguları 23'ten 9'a indi.
+
+| Adım | Durum | DD |
+|---|---|---|
+| K1 meslek ölçeği, K2 kumaş/deri/plaka, K3 sınıf başı iki silah ailesi, K4 bölgesel av | bitti | 271–274 |
+| A — üretim zinciri: 1645 ekipman tarifi, 3 yeni meslek, yüzdeli iyileştirme, deri ganimeti ölçeği | bitti | 274 |
+| B — nadirlik ve ekler güç verir | bitti | 275 |
+| C — takılar, Koruyucu kalkanları, Kuyumculuk | bitti | 276 |
+| D — baskın setleri (18 set) | bitti | 277 |
+| E4 — görev zincirleri Sv 1000'e | bitti | 278 |
+| D3 — solo zindan setleri | açık | |
+| D4 — mitik parça ve benzersiz etki | açık (tasarım kararı gerekir) | |
+| E1 — canavara özgü malzemeler | açık (önce bir kullanım alanı gerekir) | |
+| E2 — komşu kademe şansı | açık (düşük öncelik) | |
+| E5 — bölge başına daha çok canavar | açık (düşük öncelik) | |
+| F — soket, büyü, üretim kalitesi | açık (Faz 02) | |
+
 ## Temel sorun
 
 Seviye 1–1000 dünyası (140 canavar, 31 zindan/baskın, 706 ekipman) tamam. Ama onu besleyen ekonomi Sv 10–100 civarında kalmış:
