@@ -188,7 +188,7 @@ void main() {
     final potion = stock.firstWhere((o) => o.templateCode == 'potion_hp_small');
     await shop.buy(potion);
     await shop.buy(potion); // one to drink, one to sell
-    final chest = stock.firstWhere((o) => o.templateCode == 'chest_leather'); // only level-1 gear in stock
+    final chest = stock.firstWhere((o) => o.templateCode == 'chest_novice'); // tier-1 plate for the warrior (DD-271)
     await shop.buy(chest);
 
     final inv = InventoryRepository(a.api, a.id);

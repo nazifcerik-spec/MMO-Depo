@@ -240,8 +240,9 @@ for a in prog.get('armor_types', []):
     w('| %s_armor | %d |' % (a, present.get(a + '_armor', 0)))
 w('')
 missing_fam = [f for f in families if not present.get(f)]
-find('Orta', 'Ekipman', '%d/%d silah ailesinin hiç eşyası yok (%s …). Sınıf izinleri (DD-252) her sınıfa 4–6 aile tanıyor, içerikte sınıf başı tek aile var.'
-     % (len(missing_fam), len(families), ', '.join(missing_fam[:8])))
+if missing_fam:
+    find('Orta', 'Ekipman', '%d/%d silah ailesinin hiç eşyası yok (%s …). Sınıf izinleri (DD-252) her sınıfa 4–6 aile tanıyor, içerikte sınıf başı tek aile var.'
+         % (len(missing_fam), len(families), ', '.join(missing_fam[:8])))
 if not any(present.get(a + '_armor') for a in prog.get('armor_types', [])):
     find('Orta', 'Ekipman', 'Zırh türleri (kumaş/hafif/orta/ağır) tanımlı ama hiçbir zırhın alt sınıfı bu türlerden değil; `CanUse` aile dışı alt sınıfa izin verdiği için büyücü ile savaşçı aynı zırhı giyiyor.')
 
@@ -370,8 +371,8 @@ find('Orta', 'Ganimet', 'Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kade
 
 # 5. Monsters
 w('## 5. Canavar listesi\n')
-w('Bölge, `scripts/gen_world.py` ZONES’undan; Sv 1–25 canavarları elle yazılmış (`mobs.yaml` başı), bölgesi yok. '
-  'Av ve zindan başlatmak bulunulan bölgeye bağlı değil (yolculuk yalnız konum değiştiriyor).\n')
+w('Bölge `mobs.yaml` `region_code`; canavar kendi bölgesinden ya da ona yolu olan bölgeden avlanır (DD-273). '
+  'Zindan ve baskınlar bölgeye bağlı değil; baskın boss’unun sütununda baskın adı var.\n')
 w('| Sv | Kod | Ad | Arketip | Bölge | Can | Sal | Sav | XP | Altın | Ekipman kademesi | Deri (en iyi) | Rol |')
 w('|---:|---|---|---|---|---:|---:|---:|---:|---|---:|---|---|')
 for m in sorted(mobs, key=lambda m: (m['level'], m['code'])):
@@ -384,7 +385,7 @@ for m in sorted(mobs, key=lambda m: (m['level'], m['code'])):
         roles.append('görev')
     best = hides(m['level'])[1]
     w('| %d | %s | %s | %s | %s | %d | %d | %d | %d | %s–%s | %d | %s | %s |' % (
-        m['level'], m['code'], tr('mob', m['code']), mob_arch.get(m['code'], '—'), (tr('dungeon', mob_zone[m['code']]) if m.get('raid_boss') else tr('region', mob_zone[m['code']])) if m['code'] in mob_zone else '—',
+        m['level'], m['code'], tr('mob', m['code']), mob_arch.get(m['code'], '—'), tr('region', m['region_code']) if m.get('region_code') else (tr('dungeon', mob_zone[m['code']]) if m['code'] in mob_zone else '—'),
         m['hp_max'], m['attack'], m['defense'], m['xp_reward'], money(m['gold_copper_min']), money(m['gold_copper_max']),
         gear_tier(m['level']), tr('item', best['code']) if best else '—', ', '.join(roles)))
 w('')
@@ -393,7 +394,9 @@ big = sorted(((b - a, a, b) for a, b in zip(lv, lv[1:])), reverse=True)[:3]
 w('En geniş canavar seviye boşlukları: %s.\n' % ', '.join('Sv %d→%d' % (a, b) for _, a, b in big))
 arch_count = collections.Counter(mob_arch.get(m['code'], 'el yapımı') for m in mobs)
 w('Arketip dağılımı: %s.\n' % ', '.join('%s %d' % kv for kv in arch_count.most_common()))
-find('Orta', 'Canavar', 'Av bölgeye bağlı değil: bölgeler yalnız yolculuk ekranında var; oyuncu herhangi bir yerden herhangi bir canavarı avlayabiliyor (DD-254/255 dünyaları anlamını yitiriyor).')
+unplaced = [m['code'] for m in non_raid if not m.get('region_code')]
+if unplaced:
+    find('Orta', 'Canavar', '%d canavarın bölgesi yok; bölge kapısı (DD-273) onları her yerden avlatır: %s.' % (len(unplaced), ', '.join(unplaced[:8])))
 find('Düşük', 'Canavar', 'Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok).')
 
 # 6. Dungeons

@@ -97,6 +97,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_TITLE_NOT_OWNED' => l.errTitleNotOwned,
     'E_EVENT_NOT_OPEN' => l.errEventNotOpen,
     'E_WRONG_REGION' => l.errWrongRegion,
+    'E_MOB_REGION' => l.errMobRegion,
     'E_ALREADY_ENLISTED' => l.errAlreadyEnlisted,
     'E_ALREADY_CLAIMED' => l.errAlreadyClaimed,
     'E_EVENT_NOT_ACTIVE' => l.errEventNotActive,

@@ -35,3 +35,25 @@ vendors:
       - { template_code: legs_leather }
       - { template_code: boots_leather }
       - { template_code: gloves_leather }
+      # >>> generated: tier-1 gear types (scripts/gen_gear_types.py)
+      - { template_code: hood_novice }
+      - { template_code: robe_novice }
+      - { template_code: trousers_novice }
+      - { template_code: sandals_novice }
+      - { template_code: wraps_novice }
+      - { template_code: helm_novice }
+      - { template_code: chest_novice }
+      - { template_code: legs_novice }
+      - { template_code: boots_novice }
+      - { template_code: gloves_novice }
+      - { template_code: axe_novice }
+      - { template_code: longsword_novice }
+      - { template_code: ritualaxe_novice }
+      - { template_code: shortsword_novice }
+      - { template_code: crossbow_novice }
+      - { template_code: tonfa_novice }
+      - { template_code: rapier_novice }
+      - { template_code: wand_novice }
+      - { template_code: tome_novice }
+      - { template_code: focus_novice }
+      # <<< generated: tier-1 gear types

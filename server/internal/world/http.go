@@ -77,6 +77,7 @@ func (h *Handler) Location(w http.ResponseWriter, r *http.Request) {
 	resp := map[string]any{
 		"region":        regionRow(view.Region),
 		"neighbors":     neighbors,
+		"hunt_regions":  view.HuntRegions,
 		"starting_code": view.StartingCode,
 	}
 	if view.Travel != nil {

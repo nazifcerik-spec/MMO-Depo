@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"slices"
 	"time"
 
 	"github.com/google/uuid"
@@ -69,7 +70,8 @@ type Service struct {
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	hp       HPWriter
 	skills   SkillSource
-	bag      BagRoom // nil = no room check (DD-246)
+	bag      BagRoom    // nil = no room check (DD-246)
+	regions  RegionGate // nil = every mob in reach (DD-273)
 }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
@@ -101,6 +103,16 @@ type BagRoom interface {
 }
 
 func (s *Service) WithSkills(src SkillSource) *Service { s.skills = src; return s }
+
+// RegionGate lists the regions a character can hunt in from where it stands
+// (DD-273); world.Service implements it.
+type RegionGate interface {
+	HuntRegions(ctx context.Context, characterID uuid.UUID) ([]string, error)
+}
+
+// WithRegionGate makes hunting regional: a mob is hunted only from its own
+// region or one linked to it. Without a gate every mob is in reach.
+func (s *Service) WithRegionGate(g RegionGate) *Service { s.regions = g; return s }
 
 // NewService wires the service. rngNew is the RNG factory (activity.NewRNG in
 // prod; a stub in tests).
@@ -171,6 +183,15 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	mob, ok := s.mobs.Catalog().Get(req.MobCode)
 	if !ok || mob.RaidBoss { // raid bosses are fought by a party (DD-261)
 		return nil, ErrUnknownMob
+	}
+	if s.regions != nil && mob.RegionCode != "" {
+		reach, err := s.regions.HuntRegions(ctx, req.CharacterID)
+		if err != nil {
+			return nil, err
+		}
+		if !slices.Contains(reach, mob.RegionCode) {
+			return nil, ErrWrongRegion
+		}
 	}
 
 	// Freeze the player's Combatant snapshot at Start — mid-hunt gear swaps

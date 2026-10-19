@@ -2329,4 +2329,21 @@ class AppLocalizationsTr extends AppLocalizations {
   String fedActive(int atk, int def, String time) {
     return 'Tok · +%$atk saldırı · +%$def savunma · $time kaldı';
   }
+
+  @override
+  String huntReach(String regions) {
+    return 'Buradan avlanılan bölgeler: $regions';
+  }
+
+  @override
+  String get huntNoMobsHere => 'Burada avlanacak canavar yok. Yolculuk sekmesinden bir av bölgesine git.';
+
+  @override
+  String get huntOtherRegions => 'Diğer bölgelerdeki canavarlar';
+
+  @override
+  String get huntTravelHint => 'Bir canavarı avlamak için onun bölgesine ya da o bölgeye yolu olan bir komşusuna git.';
+
+  @override
+  String get errMobRegion => 'Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git.';
 }

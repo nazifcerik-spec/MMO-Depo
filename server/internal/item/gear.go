@@ -4,16 +4,20 @@ import (
 	"sort"
 
 	"github.com/otter/server/internal/activity"
+	"github.com/otter/server/internal/leveling"
 )
 
 // GearPool lists, sorted, the equipment a class can use from the highest
 // gear tier a source level reaches (DD-229, DD-254): a level-12 mob drops the
-// level-10 tier, a level-45 mob the level-35 tier. Items with extra
+// level-10 tier, a level-45 mob the level-35 tier. Only the weapon families
+// and armor type the class may equip drop (DD-271). Items with extra
 // requirements (branch or attribute gated) are never random drops.
 func GearPool(cat *Catalog, class string, level int) []string {
+	perms := leveling.Current()
 	usable := func(t Template) bool {
 		return t.IsEquippable() && t.Requirements == nil && int(t.MinLevel) <= level &&
-			(t.ClassRestriction == nil || *t.ClassRestriction == "" || *t.ClassRestriction == class)
+			(t.ClassRestriction == nil || *t.ClassRestriction == "" || *t.ClassRestriction == class) &&
+			perms.CanUse(class, t.ItemSubclass)
 	}
 	top := 0
 	for _, t := range cat.All() {

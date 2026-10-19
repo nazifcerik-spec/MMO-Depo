@@ -156,5 +156,11 @@
   "foodBuffLine": "+{atk}% ataque y +{def}% defensa durante {minutes} min",
   "fedToast": "Saciado: +{atk}% ataque, +{def}% defensa",
   "fedActive": "Saciado · +{atk}% ataque · +{def}% defensa · quedan {time}",
-  "appTitle": "MeNa World"
+  "appTitle": "MeNa World",
+  "huntReach": "Zonas de caza desde aquí: {regions}",
+  "huntNoMobsHere": "Aquí no hay nada que cazar. Viaja primero a una zona de caza.",
+  "huntOtherRegions": "Monstruos de otras zonas",
+  "huntTravelHint": "Para cazar un monstruo, viaja a su zona o a una zona unida a ella por camino.",
+  "errWrongRegion": "Este monstruo vive en otra zona. Viaja allí primero.",
+  "errMobRegion": "Este monstruo vive en otra zona. Viaja allí primero."
 }

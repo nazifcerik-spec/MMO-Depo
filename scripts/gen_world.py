@@ -366,7 +366,7 @@ RAIDS = [
 ]
 
 
-def mob_yaml(code, level, arch):
+def mob_yaml(code, level, arch, region=None):
     hm, am, dm, crit, eva = ARCH[arch]
     gold = round(503 * (level / 25) ** 1.5)
     raid = ['    raid_boss: true'] if arch.endswith('titan') else []
@@ -376,7 +376,8 @@ def mob_yaml(code, level, arch):
         '    defense: %d' % round((1 + 0.8 * level) * dm), '    crit_pct: %d' % crit,
         '    hit_pct: %d' % min(92, 82 + level // 5), '    evasion_pct: %d' % eva,
         '    xp_reward: %d' % round(10 * level ** 1.6), '    gold_copper_min: %d' % gold,
-        '    gold_copper_max: %d' % round(gold * 2.5)] + raid)
+        '    gold_copper_max: %d' % round(gold * 2.5)] + raid +
+        (['    region_code: ' + region] if region else []))  # hunted there (DD-273)
 
 
 mobs, dungeons, regions, links = [], [], [], []
@@ -401,7 +402,7 @@ for z in ZONES:
     links.append('  - { region_a_code: %s, region_b_code: %s, travel_seconds: 300 }' % (a, b))
     for code, level, arch, n in z['mobs']:
         put('mob.' + code, n)
-        mobs.append(mob_yaml(code, level, arch))
+        mobs.append(mob_yaml(code, level, arch, z['code']))
     d = z['dungeon']
     put('dungeon.' + d['code'], d['name'])
     put('region.' + d['code'], d['name'])

@@ -1,8 +1,8 @@
 # Oyundaki Eşyalar
 
-Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
+Toplam **1849** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile içerik dosyalarından üretilir; elle düzenleme. Para: 1 altın (a) = 100 gümüş (g) = 10 000 bakır (b). Satış = değer × 0.25 (genel dükkân). Toplama meslekleri (DD-244): her kaynak bir meslek seviyesinde açılır; oyuncu kaynağı seçer, kademe (T0–T7) hızı, nadirliği ve meslek XP'sini belirler. Av/zindan, mob seviyesi × 4'e kadar açılan hayvanların derisini bırakır.
 
-## Silahlar (470)
+## Silahlar (940)
 
 | Ad | Kod | Tür | Yuva | Sınıf | Sv | Bonuslar | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|---|
@@ -53,6 +53,100 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Lavta | `lute_voidforged` | lute | Ana el | Hepsi | 935 | +2064 Saldırı, +295 Şans, +168 ÇEV | 16a 95g 99b | 1.6 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Lavta | `lute_godslayer` | lute | Ana el | Hepsi | 960 | +2119 Saldırı, +302 Şans, +173 ÇEV | 17a 55g 18b | 1.6 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Lavta | `lute_primordial` | lute | Ana el | Hepsi | 985 | +2174 Saldırı, +310 Şans, +177 ÇEV | 18a 14g 83b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Meç | `rapier_novice` | rapier | Ana el | Hepsi | 1 | +6 Saldırı, +1 Şans, +1 ÇEV | 42b | 1.2 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Meç | `rapier_journeyman` | rapier | Ana el | Hepsi | 5 | +16 Saldırı, +2 Şans, +1 ÇEV | 1g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Meç | `rapier_fine` | rapier | Ana el | Hepsi | 10 | +29 Saldırı, +4 Şans, +2 ÇEV | 4g 9b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Meç | `rapier_veteran` | rapier | Ana el | Hepsi | 15 | +42 Saldırı, +6 Şans, +3 ÇEV | 7g 27b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Meç | `rapier_champion` | rapier | Ana el | Hepsi | 20 | +54 Saldırı, +7 Şans, +4 ÇEV | 11g 3b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Meç | `rapier_runed` | rapier | Ana el | Hepsi | 25 | +66 Saldırı, +9 Şans, +5 ÇEV | 15g 30b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Meç | `rapier_mithril` | rapier | Ana el | Hepsi | 35 | +88 Saldırı, +12 Şans, +7 ÇEV | 23g 72b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Meç | `rapier_adamant` | rapier | Ana el | Hepsi | 50 | +120 Saldırı, +16 Şans, +9 ÇEV | 37g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Meç | `rapier_wyrmforged` | rapier | Ana el | Hepsi | 65 | +152 Saldırı, +21 Şans, +12 ÇEV | 52g 94b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Meç | `rapier_starforged` | rapier | Ana el | Hepsi | 80 | +184 Saldırı, +25 Şans, +14 ÇEV | 68g 85b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Titan Meç | `rapier_titan` | rapier | Ana el | Hepsi | 95 | +216 Saldırı, +30 Şans, +17 ÇEV | 86g 60b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Meç | `rapier_royal` | rapier | Ana el | Hepsi | 110 | +249 Saldırı, +35 Şans, +20 ÇEV | 1a 5g | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Meç | `rapier_sunforged` | rapier | Ana el | Hepsi | 135 | +304 Saldırı, +43 Şans, +24 ÇEV | 1a 37g 3b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Meç | `rapier_obsidian` | rapier | Ana el | Hepsi | 160 | +359 Saldırı, +50 Şans, +29 ÇEV | 1a 70g 89b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Meç | `rapier_sandsteel` | rapier | Ana el | Hepsi | 185 | +414 Saldırı, +58 Şans, +33 ÇEV | 2a 6g 39b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Meç | `rapier_runebound` | rapier | Ana el | Hepsi | 210 | +469 Saldırı, +66 Şans, +38 ÇEV | 2a 43g 36b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Anka Meç | `rapier_phoenix` | rapier | Ana el | Hepsi | 235 | +524 Saldırı, +74 Şans, +42 ÇEV | 2a 81g 68b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Meç | `rapier_dreadforged` | rapier | Ana el | Hepsi | 260 | +579 Saldırı, +82 Şans, +47 ÇEV | 3a 21g 24b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Meç | `rapier_sovereign` | rapier | Ana el | Hepsi | 285 | +634 Saldırı, +90 Şans, +51 ÇEV | 3a 61g 97b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Meç | `rapier_coral` | rapier | Ana el | Hepsi | 310 | +689 Saldırı, +98 Şans, +56 ÇEV | 4a 3g 78b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Meç | `rapier_drakebone` | rapier | Ana el | Hepsi | 335 | +744 Saldırı, +106 Şans, +60 ÇEV | 4a 46g 61b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Meç | `rapier_mistwoven` | rapier | Ana el | Hepsi | 360 | +799 Saldırı, +113 Şans, +65 ÇEV | 4a 90g 41b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Meç | `rapier_prismatic` | rapier | Ana el | Hepsi | 385 | +854 Saldırı, +121 Şans, +69 ÇEV | 5a 35g 14b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Meç | `rapier_magmaforged` | rapier | Ana el | Hepsi | 410 | +909 Saldırı, +129 Şans, +74 ÇEV | 5a 80g 75b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Bora Meç | `rapier_tempest` | rapier | Ana el | Hepsi | 435 | +964 Saldırı, +137 Şans, +78 ÇEV | 6a 27g 20b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Meç | `rapier_voidtouched` | rapier | Ana el | Hepsi | 460 | +1019 Saldırı, +145 Şans, +83 ÇEV | 6a 74g 46b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Melek Meç | `rapier_seraphic` | rapier | Ana el | Hepsi | 485 | +1074 Saldırı, +153 Şans, +87 ÇEV | 7a 22g 49b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Meç | `rapier_eclipse` | rapier | Ana el | Hepsi | 510 | +1129 Saldırı, +161 Şans, +92 ÇEV | 7a 71g 28b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Meç | `rapier_wyrmlord` | rapier | Ana el | Hepsi | 535 | +1184 Saldırı, +169 Şans, +96 ÇEV | 8a 20g 78b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Meç | `rapier_celestine` | rapier | Ana el | Hepsi | 560 | +1239 Saldırı, +176 Şans, +101 ÇEV | 8a 70g 99b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Meç | `rapier_eternal` | rapier | Ana el | Hepsi | 585 | +1294 Saldırı, +184 Şans, +105 ÇEV | 9a 21g 88b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Meç | `rapier_starless` | rapier | Ana el | Hepsi | 610 | +1349 Saldırı, +192 Şans, +110 ÇEV | 9a 73g 42b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Meç | `rapier_nightsteel` | rapier | Ana el | Hepsi | 635 | +1404 Saldırı, +200 Şans, +114 ÇEV | 10a 25g 59b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Meç | `rapier_chronoforged` | rapier | Ana el | Hepsi | 660 | +1459 Saldırı, +208 Şans, +119 ÇEV | 10a 78g 39b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Meç | `rapier_ascendant` | rapier | Ana el | Hepsi | 685 | +1514 Saldırı, +216 Şans, +123 ÇEV | 11a 31g 79b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Meç | `rapier_stormborn` | rapier | Ana el | Hepsi | 710 | +1569 Saldırı, +224 Şans, +128 ÇEV | 11a 85g 78b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Meç | `rapier_riftforged` | rapier | Ana el | Hepsi | 735 | +1624 Saldırı, +232 Şans, +132 ÇEV | 12a 40g 35b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Meç | `rapier_chaos` | rapier | Ana el | Hepsi | 760 | +1679 Saldırı, +239 Şans, +137 ÇEV | 12a 95g 47b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Meç | `rapier_skyforged` | rapier | Ana el | Hepsi | 785 | +1734 Saldırı, +247 Şans, +141 ÇEV | 13a 51g 14b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Meç | `rapier_archangel` | rapier | Ana el | Hepsi | 810 | +1789 Saldırı, +255 Şans, +146 ÇEV | 14a 7g 34b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Meç | `rapier_aurora` | rapier | Ana el | Hepsi | 835 | +1844 Saldırı, +263 Şans, +150 ÇEV | 14a 64g 7b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kül Meç | `rapier_ashen` | rapier | Ana el | Hepsi | 860 | +1899 Saldırı, +271 Şans, +155 ÇEV | 15a 21g 31b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Meç | `rapier_leviathan` | rapier | Ana el | Hepsi | 885 | +1954 Saldırı, +279 Şans, +159 ÇEV | 15a 79g 5b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Meç | `rapier_doomforged` | rapier | Ana el | Hepsi | 910 | +2009 Saldırı, +287 Şans, +164 ÇEV | 16a 37g 28b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Meç | `rapier_voidforged` | rapier | Ana el | Hepsi | 935 | +2064 Saldırı, +295 Şans, +168 ÇEV | 16a 95g 99b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Meç | `rapier_godslayer` | rapier | Ana el | Hepsi | 960 | +2119 Saldırı, +302 Şans, +173 ÇEV | 17a 55g 18b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Meç | `rapier_primordial` | rapier | Ana el | Hepsi | 985 | +2174 Saldırı, +310 Şans, +177 ÇEV | 18a 14g 83b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Kutsal Kitap | `tome_novice` | holy_tome | Ana el | Hepsi | 1 | +6 Saldırı, +1 ZEK, +1 DAY | 42b | 1 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Kutsal Kitap | `tome_journeyman` | holy_tome | Ana el | Hepsi | 5 | +16 Saldırı, +2 ZEK, +2 DAY | 1g 64b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Kutsal Kitap | `tome_fine` | holy_tome | Ana el | Hepsi | 10 | +29 Saldırı, +4 ZEK, +3 DAY | 4g 9b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Kutsal Kitap | `tome_veteran` | holy_tome | Ana el | Hepsi | 15 | +42 Saldırı, +6 ZEK, +4 DAY | 7g 27b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Kutsal Kitap | `tome_champion` | holy_tome | Ana el | Hepsi | 20 | +54 Saldırı, +7 ZEK, +5 DAY | 11g 3b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Kutsal Kitap | `tome_runed` | holy_tome | Ana el | Hepsi | 25 | +66 Saldırı, +9 ZEK, +6 DAY | 15g 30b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Kutsal Kitap | `tome_mithril` | holy_tome | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 DAY | 23g 72b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Kutsal Kitap | `tome_adamant` | holy_tome | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 DAY | 37g 64b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Kutsal Kitap | `tome_wyrmforged` | holy_tome | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 DAY | 52g 94b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Kutsal Kitap | `tome_starforged` | holy_tome | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 DAY | 68g 85b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Titan Kutsal Kitap | `tome_titan` | holy_tome | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 DAY | 86g 60b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Kutsal Kitap | `tome_royal` | holy_tome | Ana el | Hepsi | 110 | +249 Saldırı, +35 KAR, +20 DAY | 1a 5g | 1 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Kutsal Kitap | `tome_sunforged` | holy_tome | Ana el | Hepsi | 135 | +304 Saldırı, +43 KAR, +24 DAY | 1a 37g 3b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Kutsal Kitap | `tome_obsidian` | holy_tome | Ana el | Hepsi | 160 | +359 Saldırı, +50 KAR, +29 DAY | 1a 70g 89b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Kutsal Kitap | `tome_sandsteel` | holy_tome | Ana el | Hepsi | 185 | +414 Saldırı, +58 KAR, +33 DAY | 2a 6g 39b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Kutsal Kitap | `tome_runebound` | holy_tome | Ana el | Hepsi | 210 | +469 Saldırı, +66 KAR, +38 DAY | 2a 43g 36b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Anka Kutsal Kitap | `tome_phoenix` | holy_tome | Ana el | Hepsi | 235 | +524 Saldırı, +74 KAR, +42 DAY | 2a 81g 68b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Kutsal Kitap | `tome_dreadforged` | holy_tome | Ana el | Hepsi | 260 | +579 Saldırı, +82 KAR, +47 DAY | 3a 21g 24b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Kutsal Kitap | `tome_sovereign` | holy_tome | Ana el | Hepsi | 285 | +634 Saldırı, +90 KAR, +51 DAY | 3a 61g 97b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Kutsal Kitap | `tome_coral` | holy_tome | Ana el | Hepsi | 310 | +689 Saldırı, +98 KAR, +56 DAY | 4a 3g 78b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Kutsal Kitap | `tome_drakebone` | holy_tome | Ana el | Hepsi | 335 | +744 Saldırı, +106 KAR, +60 DAY | 4a 46g 61b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Kutsal Kitap | `tome_mistwoven` | holy_tome | Ana el | Hepsi | 360 | +799 Saldırı, +113 KAR, +65 DAY | 4a 90g 41b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Kutsal Kitap | `tome_prismatic` | holy_tome | Ana el | Hepsi | 385 | +854 Saldırı, +121 KAR, +69 DAY | 5a 35g 14b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Kutsal Kitap | `tome_magmaforged` | holy_tome | Ana el | Hepsi | 410 | +909 Saldırı, +129 KAR, +74 DAY | 5a 80g 75b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Bora Kutsal Kitap | `tome_tempest` | holy_tome | Ana el | Hepsi | 435 | +964 Saldırı, +137 KAR, +78 DAY | 6a 27g 20b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Kutsal Kitap | `tome_voidtouched` | holy_tome | Ana el | Hepsi | 460 | +1019 Saldırı, +145 KAR, +83 DAY | 6a 74g 46b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Melek Kutsal Kitap | `tome_seraphic` | holy_tome | Ana el | Hepsi | 485 | +1074 Saldırı, +153 KAR, +87 DAY | 7a 22g 49b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Kutsal Kitap | `tome_eclipse` | holy_tome | Ana el | Hepsi | 510 | +1129 Saldırı, +161 KAR, +92 DAY | 7a 71g 28b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Kutsal Kitap | `tome_wyrmlord` | holy_tome | Ana el | Hepsi | 535 | +1184 Saldırı, +169 KAR, +96 DAY | 8a 20g 78b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Kutsal Kitap | `tome_celestine` | holy_tome | Ana el | Hepsi | 560 | +1239 Saldırı, +176 KAR, +101 DAY | 8a 70g 99b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Kutsal Kitap | `tome_eternal` | holy_tome | Ana el | Hepsi | 585 | +1294 Saldırı, +184 KAR, +105 DAY | 9a 21g 88b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Kutsal Kitap | `tome_starless` | holy_tome | Ana el | Hepsi | 610 | +1349 Saldırı, +192 KAR, +110 DAY | 9a 73g 42b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Kutsal Kitap | `tome_nightsteel` | holy_tome | Ana el | Hepsi | 635 | +1404 Saldırı, +200 KAR, +114 DAY | 10a 25g 59b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Kutsal Kitap | `tome_chronoforged` | holy_tome | Ana el | Hepsi | 660 | +1459 Saldırı, +208 KAR, +119 DAY | 10a 78g 39b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Kutsal Kitap | `tome_ascendant` | holy_tome | Ana el | Hepsi | 685 | +1514 Saldırı, +216 KAR, +123 DAY | 11a 31g 79b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Kutsal Kitap | `tome_stormborn` | holy_tome | Ana el | Hepsi | 710 | +1569 Saldırı, +224 KAR, +128 DAY | 11a 85g 78b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Kutsal Kitap | `tome_riftforged` | holy_tome | Ana el | Hepsi | 735 | +1624 Saldırı, +232 KAR, +132 DAY | 12a 40g 35b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Kutsal Kitap | `tome_chaos` | holy_tome | Ana el | Hepsi | 760 | +1679 Saldırı, +239 KAR, +137 DAY | 12a 95g 47b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Kutsal Kitap | `tome_skyforged` | holy_tome | Ana el | Hepsi | 785 | +1734 Saldırı, +247 KAR, +141 DAY | 13a 51g 14b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Kutsal Kitap | `tome_archangel` | holy_tome | Ana el | Hepsi | 810 | +1789 Saldırı, +255 KAR, +146 DAY | 14a 7g 34b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Kutsal Kitap | `tome_aurora` | holy_tome | Ana el | Hepsi | 835 | +1844 Saldırı, +263 KAR, +150 DAY | 14a 64g 7b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kül Kutsal Kitap | `tome_ashen` | holy_tome | Ana el | Hepsi | 860 | +1899 Saldırı, +271 KAR, +155 DAY | 15a 21g 31b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Kutsal Kitap | `tome_leviathan` | holy_tome | Ana el | Hepsi | 885 | +1954 Saldırı, +279 KAR, +159 DAY | 15a 79g 5b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Kutsal Kitap | `tome_doomforged` | holy_tome | Ana el | Hepsi | 910 | +2009 Saldırı, +287 KAR, +164 DAY | 16a 37g 28b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Kutsal Kitap | `tome_voidforged` | holy_tome | Ana el | Hepsi | 935 | +2064 Saldırı, +295 KAR, +168 DAY | 16a 95g 99b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Kutsal Kitap | `tome_godslayer` | holy_tome | Ana el | Hepsi | 960 | +2119 Saldırı, +302 KAR, +173 DAY | 17a 55g 18b | 1 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Kutsal Kitap | `tome_primordial` | holy_tome | Ana el | Hepsi | 985 | +2174 Saldırı, +310 KAR, +177 DAY | 18a 14g 83b | 1 kg | Av zaferi %4 / zindan boss'u |
 | Tahta Topuz | `mace_wooden` | topuz | Ana el | Hepsi | 1 | +6 Saldırı, +1 ZEK, +1 DAY | 42b | 2.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Topuz | `mace_iron` | topuz | Ana el | Hepsi | 5 | +16 Saldırı, +2 ZEK, +2 DAY | 1g 64b | 2.8 kg | Üretim: Demircilik 5+ (5× Demir Cevheri, 2× Meşe Kütüğü, 25b); Av zaferi %4 / zindan boss'u |
 | Kutsanmış Topuz | `mace_blessed` | topuz | Ana el | Hepsi | 10 | +29 Saldırı, +4 ZEK, +3 DAY | 4g 9b | 2.8 kg | Av zaferi %4 / zindan boss'u |
@@ -100,6 +194,53 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Topuz | `mace_voidforged` | topuz | Ana el | Hepsi | 935 | +2064 Saldırı, +295 KAR, +168 DAY | 16a 95g 99b | 2.8 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Topuz | `mace_godslayer` | topuz | Ana el | Hepsi | 960 | +2119 Saldırı, +302 KAR, +173 DAY | 17a 55g 18b | 2.8 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Topuz | `mace_primordial` | topuz | Ana el | Hepsi | 985 | +2174 Saldırı, +310 KAR, +177 DAY | 18a 14g 83b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Doğa Odağı | `focus_novice` | nature_focus | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 DAY | 42b | 0.9 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Doğa Odağı | `focus_journeyman` | nature_focus | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 DAY | 1g 64b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Doğa Odağı | `focus_fine` | nature_focus | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 DAY | 4g 9b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Doğa Odağı | `focus_veteran` | nature_focus | Ana el | Hepsi | 15 | +42 Saldırı, +6 KAR, +3 DAY | 7g 27b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Doğa Odağı | `focus_champion` | nature_focus | Ana el | Hepsi | 20 | +54 Saldırı, +7 KAR, +4 DAY | 11g 3b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Doğa Odağı | `focus_runed` | nature_focus | Ana el | Hepsi | 25 | +66 Saldırı, +9 KAR, +5 DAY | 15g 30b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Doğa Odağı | `focus_mithril` | nature_focus | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 DAY | 23g 72b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Doğa Odağı | `focus_adamant` | nature_focus | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 DAY | 37g 64b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Doğa Odağı | `focus_wyrmforged` | nature_focus | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 DAY | 52g 94b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Doğa Odağı | `focus_starforged` | nature_focus | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 DAY | 68g 85b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Titan Doğa Odağı | `focus_titan` | nature_focus | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 DAY | 86g 60b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Doğa Odağı | `focus_royal` | nature_focus | Ana el | Hepsi | 110 | +249 Saldırı, +35 KAR, +20 DAY | 1a 5g | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Doğa Odağı | `focus_sunforged` | nature_focus | Ana el | Hepsi | 135 | +304 Saldırı, +43 KAR, +24 DAY | 1a 37g 3b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Doğa Odağı | `focus_obsidian` | nature_focus | Ana el | Hepsi | 160 | +359 Saldırı, +50 KAR, +29 DAY | 1a 70g 89b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Doğa Odağı | `focus_sandsteel` | nature_focus | Ana el | Hepsi | 185 | +414 Saldırı, +58 KAR, +33 DAY | 2a 6g 39b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Doğa Odağı | `focus_runebound` | nature_focus | Ana el | Hepsi | 210 | +469 Saldırı, +66 KAR, +38 DAY | 2a 43g 36b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Anka Doğa Odağı | `focus_phoenix` | nature_focus | Ana el | Hepsi | 235 | +524 Saldırı, +74 KAR, +42 DAY | 2a 81g 68b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Doğa Odağı | `focus_dreadforged` | nature_focus | Ana el | Hepsi | 260 | +579 Saldırı, +82 KAR, +47 DAY | 3a 21g 24b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Doğa Odağı | `focus_sovereign` | nature_focus | Ana el | Hepsi | 285 | +634 Saldırı, +90 KAR, +51 DAY | 3a 61g 97b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Doğa Odağı | `focus_coral` | nature_focus | Ana el | Hepsi | 310 | +689 Saldırı, +98 KAR, +56 DAY | 4a 3g 78b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Doğa Odağı | `focus_drakebone` | nature_focus | Ana el | Hepsi | 335 | +744 Saldırı, +106 KAR, +60 DAY | 4a 46g 61b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Doğa Odağı | `focus_mistwoven` | nature_focus | Ana el | Hepsi | 360 | +799 Saldırı, +113 KAR, +65 DAY | 4a 90g 41b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Doğa Odağı | `focus_prismatic` | nature_focus | Ana el | Hepsi | 385 | +854 Saldırı, +121 KAR, +69 DAY | 5a 35g 14b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Doğa Odağı | `focus_magmaforged` | nature_focus | Ana el | Hepsi | 410 | +909 Saldırı, +129 KAR, +74 DAY | 5a 80g 75b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Bora Doğa Odağı | `focus_tempest` | nature_focus | Ana el | Hepsi | 435 | +964 Saldırı, +137 KAR, +78 DAY | 6a 27g 20b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Doğa Odağı | `focus_voidtouched` | nature_focus | Ana el | Hepsi | 460 | +1019 Saldırı, +145 KAR, +83 DAY | 6a 74g 46b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Melek Doğa Odağı | `focus_seraphic` | nature_focus | Ana el | Hepsi | 485 | +1074 Saldırı, +153 KAR, +87 DAY | 7a 22g 49b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Doğa Odağı | `focus_eclipse` | nature_focus | Ana el | Hepsi | 510 | +1129 Saldırı, +161 KAR, +92 DAY | 7a 71g 28b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Doğa Odağı | `focus_wyrmlord` | nature_focus | Ana el | Hepsi | 535 | +1184 Saldırı, +169 KAR, +96 DAY | 8a 20g 78b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Doğa Odağı | `focus_celestine` | nature_focus | Ana el | Hepsi | 560 | +1239 Saldırı, +176 KAR, +101 DAY | 8a 70g 99b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Doğa Odağı | `focus_eternal` | nature_focus | Ana el | Hepsi | 585 | +1294 Saldırı, +184 KAR, +105 DAY | 9a 21g 88b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Doğa Odağı | `focus_starless` | nature_focus | Ana el | Hepsi | 610 | +1349 Saldırı, +192 KAR, +110 DAY | 9a 73g 42b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Doğa Odağı | `focus_nightsteel` | nature_focus | Ana el | Hepsi | 635 | +1404 Saldırı, +200 KAR, +114 DAY | 10a 25g 59b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Doğa Odağı | `focus_chronoforged` | nature_focus | Ana el | Hepsi | 660 | +1459 Saldırı, +208 KAR, +119 DAY | 10a 78g 39b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Doğa Odağı | `focus_ascendant` | nature_focus | Ana el | Hepsi | 685 | +1514 Saldırı, +216 KAR, +123 DAY | 11a 31g 79b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Doğa Odağı | `focus_stormborn` | nature_focus | Ana el | Hepsi | 710 | +1569 Saldırı, +224 KAR, +128 DAY | 11a 85g 78b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Doğa Odağı | `focus_riftforged` | nature_focus | Ana el | Hepsi | 735 | +1624 Saldırı, +232 KAR, +132 DAY | 12a 40g 35b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Doğa Odağı | `focus_chaos` | nature_focus | Ana el | Hepsi | 760 | +1679 Saldırı, +239 KAR, +137 DAY | 12a 95g 47b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Doğa Odağı | `focus_skyforged` | nature_focus | Ana el | Hepsi | 785 | +1734 Saldırı, +247 KAR, +141 DAY | 13a 51g 14b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Doğa Odağı | `focus_archangel` | nature_focus | Ana el | Hepsi | 810 | +1789 Saldırı, +255 KAR, +146 DAY | 14a 7g 34b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Doğa Odağı | `focus_aurora` | nature_focus | Ana el | Hepsi | 835 | +1844 Saldırı, +263 KAR, +150 DAY | 14a 64g 7b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kül Doğa Odağı | `focus_ashen` | nature_focus | Ana el | Hepsi | 860 | +1899 Saldırı, +271 KAR, +155 DAY | 15a 21g 31b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Doğa Odağı | `focus_leviathan` | nature_focus | Ana el | Hepsi | 885 | +1954 Saldırı, +279 KAR, +159 DAY | 15a 79g 5b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Doğa Odağı | `focus_doomforged` | nature_focus | Ana el | Hepsi | 910 | +2009 Saldırı, +287 KAR, +164 DAY | 16a 37g 28b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Doğa Odağı | `focus_voidforged` | nature_focus | Ana el | Hepsi | 935 | +2064 Saldırı, +295 KAR, +168 DAY | 16a 95g 99b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Doğa Odağı | `focus_godslayer` | nature_focus | Ana el | Hepsi | 960 | +2119 Saldırı, +302 KAR, +173 DAY | 17a 55g 18b | 0.9 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Doğa Odağı | `focus_primordial` | nature_focus | Ana el | Hepsi | 985 | +2174 Saldırı, +310 KAR, +177 DAY | 18a 14g 83b | 0.9 kg | Av zaferi %4 / zindan boss'u |
 | Bronz Orak | `sickle_bronze` | sickle | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 DAY | 42b | 1.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Orak | `sickle_iron` | sickle | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 DAY | 1g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Ay Orağı | `sickle_moon` | sickle | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 DAY | 4g 9b | 1.5 kg | Av zaferi %4 / zindan boss'u |
@@ -194,6 +335,53 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Asa | `staff_voidforged` | asa | Ana el | Büyücü | 935 | +2064 Saldırı, +295 ZEK, +3460 Mana | 16a 95g 99b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Asa | `staff_godslayer` | asa | Ana el | Büyücü | 960 | +2119 Saldırı, +302 ZEK, +3552 Mana | 17a 55g 18b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Asa | `staff_primordial` | asa | Ana el | Büyücü | 985 | +2174 Saldırı, +310 ZEK, +3644 Mana | 18a 14g 83b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Değnek | `wand_novice` | wand | Ana el | Büyücü | 1 | +6 Saldırı, +1 ZEK, +14 Mana | 42b | 0.6 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Değnek | `wand_journeyman` | wand | Ana el | Büyücü | 5 | +16 Saldırı, +2 ZEK, +30 Mana | 1g 64b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Değnek | `wand_fine` | wand | Ana el | Büyücü | 10 | +29 Saldırı, +4 ZEK, +50 Mana | 4g 9b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Değnek | `wand_veteran` | wand | Ana el | Büyücü | 15 | +42 Saldırı, +6 ZEK, +70 Mana | 7g 27b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Değnek | `wand_champion` | wand | Ana el | Büyücü | 20 | +54 Saldırı, +7 ZEK, +90 Mana | 11g 3b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Değnek | `wand_runed` | wand | Ana el | Büyücü | 25 | +66 Saldırı, +9 ZEK, +110 Mana | 15g 30b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Değnek | `wand_mithril` | wand | Ana el | Büyücü | 35 | +88 Saldırı, +12 ZEK, +150 Mana | 23g 72b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Değnek | `wand_adamant` | wand | Ana el | Büyücü | 50 | +120 Saldırı, +16 ZEK, +200 Mana | 37g 64b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Değnek | `wand_wyrmforged` | wand | Ana el | Büyücü | 65 | +152 Saldırı, +21 ZEK, +250 Mana | 52g 94b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Değnek | `wand_starforged` | wand | Ana el | Büyücü | 80 | +184 Saldırı, +25 ZEK, +300 Mana | 68g 85b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Değnek | `wand_titan` | wand | Ana el | Büyücü | 95 | +216 Saldırı, +30 ZEK, +350 Mana | 86g 60b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Değnek | `wand_royal` | wand | Ana el | Büyücü | 110 | +249 Saldırı, +35 ZEK, +407 Mana | 1a 5g | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Değnek | `wand_sunforged` | wand | Ana el | Büyücü | 135 | +304 Saldırı, +43 ZEK, +500 Mana | 1a 37g 3b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Değnek | `wand_obsidian` | wand | Ana el | Büyücü | 160 | +359 Saldırı, +50 ZEK, +592 Mana | 1a 70g 89b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Değnek | `wand_sandsteel` | wand | Ana el | Büyücü | 185 | +414 Saldırı, +58 ZEK, +684 Mana | 2a 6g 39b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Değnek | `wand_runebound` | wand | Ana el | Büyücü | 210 | +469 Saldırı, +66 ZEK, +777 Mana | 2a 43g 36b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Anka Değnek | `wand_phoenix` | wand | Ana el | Büyücü | 235 | +524 Saldırı, +74 ZEK, +870 Mana | 2a 81g 68b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Değnek | `wand_dreadforged` | wand | Ana el | Büyücü | 260 | +579 Saldırı, +82 ZEK, +962 Mana | 3a 21g 24b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Değnek | `wand_sovereign` | wand | Ana el | Büyücü | 285 | +634 Saldırı, +90 ZEK, +1054 Mana | 3a 61g 97b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Değnek | `wand_coral` | wand | Ana el | Büyücü | 310 | +689 Saldırı, +98 ZEK, +1147 Mana | 4a 3g 78b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Değnek | `wand_drakebone` | wand | Ana el | Büyücü | 335 | +744 Saldırı, +106 ZEK, +1240 Mana | 4a 46g 61b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Değnek | `wand_mistwoven` | wand | Ana el | Büyücü | 360 | +799 Saldırı, +113 ZEK, +1332 Mana | 4a 90g 41b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Değnek | `wand_prismatic` | wand | Ana el | Büyücü | 385 | +854 Saldırı, +121 ZEK, +1424 Mana | 5a 35g 14b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Değnek | `wand_magmaforged` | wand | Ana el | Büyücü | 410 | +909 Saldırı, +129 ZEK, +1517 Mana | 5a 80g 75b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Bora Değnek | `wand_tempest` | wand | Ana el | Büyücü | 435 | +964 Saldırı, +137 ZEK, +1610 Mana | 6a 27g 20b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Değnek | `wand_voidtouched` | wand | Ana el | Büyücü | 460 | +1019 Saldırı, +145 ZEK, +1702 Mana | 6a 74g 46b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Melek Değnek | `wand_seraphic` | wand | Ana el | Büyücü | 485 | +1074 Saldırı, +153 ZEK, +1794 Mana | 7a 22g 49b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Değnek | `wand_eclipse` | wand | Ana el | Büyücü | 510 | +1129 Saldırı, +161 ZEK, +1887 Mana | 7a 71g 28b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Değnek | `wand_wyrmlord` | wand | Ana el | Büyücü | 535 | +1184 Saldırı, +169 ZEK, +1980 Mana | 8a 20g 78b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Değnek | `wand_celestine` | wand | Ana el | Büyücü | 560 | +1239 Saldırı, +176 ZEK, +2072 Mana | 8a 70g 99b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Değnek | `wand_eternal` | wand | Ana el | Büyücü | 585 | +1294 Saldırı, +184 ZEK, +2164 Mana | 9a 21g 88b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Değnek | `wand_starless` | wand | Ana el | Büyücü | 610 | +1349 Saldırı, +192 ZEK, +2257 Mana | 9a 73g 42b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Değnek | `wand_nightsteel` | wand | Ana el | Büyücü | 635 | +1404 Saldırı, +200 ZEK, +2350 Mana | 10a 25g 59b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Değnek | `wand_chronoforged` | wand | Ana el | Büyücü | 660 | +1459 Saldırı, +208 ZEK, +2442 Mana | 10a 78g 39b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Değnek | `wand_ascendant` | wand | Ana el | Büyücü | 685 | +1514 Saldırı, +216 ZEK, +2534 Mana | 11a 31g 79b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Değnek | `wand_stormborn` | wand | Ana el | Büyücü | 710 | +1569 Saldırı, +224 ZEK, +2627 Mana | 11a 85g 78b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Değnek | `wand_riftforged` | wand | Ana el | Büyücü | 735 | +1624 Saldırı, +232 ZEK, +2720 Mana | 12a 40g 35b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Değnek | `wand_chaos` | wand | Ana el | Büyücü | 760 | +1679 Saldırı, +239 ZEK, +2812 Mana | 12a 95g 47b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Değnek | `wand_skyforged` | wand | Ana el | Büyücü | 785 | +1734 Saldırı, +247 ZEK, +2904 Mana | 13a 51g 14b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Değnek | `wand_archangel` | wand | Ana el | Büyücü | 810 | +1789 Saldırı, +255 ZEK, +2997 Mana | 14a 7g 34b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Değnek | `wand_aurora` | wand | Ana el | Büyücü | 835 | +1844 Saldırı, +263 ZEK, +3090 Mana | 14a 64g 7b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kül Değnek | `wand_ashen` | wand | Ana el | Büyücü | 860 | +1899 Saldırı, +271 ZEK, +3182 Mana | 15a 21g 31b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Değnek | `wand_leviathan` | wand | Ana el | Büyücü | 885 | +1954 Saldırı, +279 ZEK, +3274 Mana | 15a 79g 5b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Değnek | `wand_doomforged` | wand | Ana el | Büyücü | 910 | +2009 Saldırı, +287 ZEK, +3367 Mana | 16a 37g 28b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Değnek | `wand_voidforged` | wand | Ana el | Büyücü | 935 | +2064 Saldırı, +295 ZEK, +3460 Mana | 16a 95g 99b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Değnek | `wand_godslayer` | wand | Ana el | Büyücü | 960 | +2119 Saldırı, +302 ZEK, +3552 Mana | 17a 55g 18b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Değnek | `wand_primordial` | wand | Ana el | Büyücü | 985 | +2174 Saldırı, +310 ZEK, +3644 Mana | 18a 14g 83b | 0.6 kg | Av zaferi %4 / zindan boss'u |
 | Bez Sargılar | `fist_wraps` | fist_weapon | Ana el | Hepsi | 1 | +6 Saldırı, +1 ÇEV, +1 DAY | 42b | 1.2 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Muşta | `fist_iron` | fist_weapon | Ana el | Hepsi | 5 | +16 Saldırı, +2 ÇEV, +1 DAY | 1g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
 | Kaplan Pençeleri | `fist_tiger` | fist_weapon | Ana el | Hepsi | 10 | +29 Saldırı, +4 ÇEV, +2 DAY | 4g 9b | 1.2 kg | Av zaferi %4 / zindan boss'u |
@@ -241,6 +429,100 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Muşta | `fist_voidforged` | fist_weapon | Ana el | Hepsi | 935 | +2064 Saldırı, +295 ÇEV, +168 DAY | 16a 95g 99b | 1.2 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Muşta | `fist_godslayer` | fist_weapon | Ana el | Hepsi | 960 | +2119 Saldırı, +302 ÇEV, +173 DAY | 17a 55g 18b | 1.2 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Muşta | `fist_primordial` | fist_weapon | Ana el | Hepsi | 985 | +2174 Saldırı, +310 ÇEV, +177 DAY | 18a 14g 83b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Tonfa | `tonfa_novice` | tonfa | Ana el | Hepsi | 1 | +6 Saldırı, +1 ÇEV, +1 DAY | 42b | 1.3 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Tonfa | `tonfa_journeyman` | tonfa | Ana el | Hepsi | 5 | +16 Saldırı, +2 ÇEV, +1 DAY | 1g 64b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Tonfa | `tonfa_fine` | tonfa | Ana el | Hepsi | 10 | +29 Saldırı, +4 ÇEV, +2 DAY | 4g 9b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Tonfa | `tonfa_veteran` | tonfa | Ana el | Hepsi | 15 | +42 Saldırı, +6 ÇEV, +3 DAY | 7g 27b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Tonfa | `tonfa_champion` | tonfa | Ana el | Hepsi | 20 | +54 Saldırı, +7 ÇEV, +4 DAY | 11g 3b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Tonfa | `tonfa_runed` | tonfa | Ana el | Hepsi | 25 | +66 Saldırı, +9 ÇEV, +5 DAY | 15g 30b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Tonfa | `tonfa_mithril` | tonfa | Ana el | Hepsi | 35 | +88 Saldırı, +12 ÇEV, +7 DAY | 23g 72b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Tonfa | `tonfa_adamant` | tonfa | Ana el | Hepsi | 50 | +120 Saldırı, +16 ÇEV, +9 DAY | 37g 64b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Tonfa | `tonfa_wyrmforged` | tonfa | Ana el | Hepsi | 65 | +152 Saldırı, +21 ÇEV, +12 DAY | 52g 94b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Tonfa | `tonfa_starforged` | tonfa | Ana el | Hepsi | 80 | +184 Saldırı, +25 ÇEV, +14 DAY | 68g 85b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Titan Tonfa | `tonfa_titan` | tonfa | Ana el | Hepsi | 95 | +216 Saldırı, +30 ÇEV, +17 DAY | 86g 60b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Tonfa | `tonfa_royal` | tonfa | Ana el | Hepsi | 110 | +249 Saldırı, +35 ÇEV, +20 DAY | 1a 5g | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Tonfa | `tonfa_sunforged` | tonfa | Ana el | Hepsi | 135 | +304 Saldırı, +43 ÇEV, +24 DAY | 1a 37g 3b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Tonfa | `tonfa_obsidian` | tonfa | Ana el | Hepsi | 160 | +359 Saldırı, +50 ÇEV, +29 DAY | 1a 70g 89b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Tonfa | `tonfa_sandsteel` | tonfa | Ana el | Hepsi | 185 | +414 Saldırı, +58 ÇEV, +33 DAY | 2a 6g 39b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Tonfa | `tonfa_runebound` | tonfa | Ana el | Hepsi | 210 | +469 Saldırı, +66 ÇEV, +38 DAY | 2a 43g 36b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Anka Tonfa | `tonfa_phoenix` | tonfa | Ana el | Hepsi | 235 | +524 Saldırı, +74 ÇEV, +42 DAY | 2a 81g 68b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Tonfa | `tonfa_dreadforged` | tonfa | Ana el | Hepsi | 260 | +579 Saldırı, +82 ÇEV, +47 DAY | 3a 21g 24b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Tonfa | `tonfa_sovereign` | tonfa | Ana el | Hepsi | 285 | +634 Saldırı, +90 ÇEV, +51 DAY | 3a 61g 97b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Tonfa | `tonfa_coral` | tonfa | Ana el | Hepsi | 310 | +689 Saldırı, +98 ÇEV, +56 DAY | 4a 3g 78b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Tonfa | `tonfa_drakebone` | tonfa | Ana el | Hepsi | 335 | +744 Saldırı, +106 ÇEV, +60 DAY | 4a 46g 61b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Tonfa | `tonfa_mistwoven` | tonfa | Ana el | Hepsi | 360 | +799 Saldırı, +113 ÇEV, +65 DAY | 4a 90g 41b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Tonfa | `tonfa_prismatic` | tonfa | Ana el | Hepsi | 385 | +854 Saldırı, +121 ÇEV, +69 DAY | 5a 35g 14b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Tonfa | `tonfa_magmaforged` | tonfa | Ana el | Hepsi | 410 | +909 Saldırı, +129 ÇEV, +74 DAY | 5a 80g 75b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Bora Tonfa | `tonfa_tempest` | tonfa | Ana el | Hepsi | 435 | +964 Saldırı, +137 ÇEV, +78 DAY | 6a 27g 20b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Tonfa | `tonfa_voidtouched` | tonfa | Ana el | Hepsi | 460 | +1019 Saldırı, +145 ÇEV, +83 DAY | 6a 74g 46b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Melek Tonfa | `tonfa_seraphic` | tonfa | Ana el | Hepsi | 485 | +1074 Saldırı, +153 ÇEV, +87 DAY | 7a 22g 49b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Tonfa | `tonfa_eclipse` | tonfa | Ana el | Hepsi | 510 | +1129 Saldırı, +161 ÇEV, +92 DAY | 7a 71g 28b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Tonfa | `tonfa_wyrmlord` | tonfa | Ana el | Hepsi | 535 | +1184 Saldırı, +169 ÇEV, +96 DAY | 8a 20g 78b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Tonfa | `tonfa_celestine` | tonfa | Ana el | Hepsi | 560 | +1239 Saldırı, +176 ÇEV, +101 DAY | 8a 70g 99b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Tonfa | `tonfa_eternal` | tonfa | Ana el | Hepsi | 585 | +1294 Saldırı, +184 ÇEV, +105 DAY | 9a 21g 88b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Tonfa | `tonfa_starless` | tonfa | Ana el | Hepsi | 610 | +1349 Saldırı, +192 ÇEV, +110 DAY | 9a 73g 42b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Tonfa | `tonfa_nightsteel` | tonfa | Ana el | Hepsi | 635 | +1404 Saldırı, +200 ÇEV, +114 DAY | 10a 25g 59b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Tonfa | `tonfa_chronoforged` | tonfa | Ana el | Hepsi | 660 | +1459 Saldırı, +208 ÇEV, +119 DAY | 10a 78g 39b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Tonfa | `tonfa_ascendant` | tonfa | Ana el | Hepsi | 685 | +1514 Saldırı, +216 ÇEV, +123 DAY | 11a 31g 79b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Tonfa | `tonfa_stormborn` | tonfa | Ana el | Hepsi | 710 | +1569 Saldırı, +224 ÇEV, +128 DAY | 11a 85g 78b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Tonfa | `tonfa_riftforged` | tonfa | Ana el | Hepsi | 735 | +1624 Saldırı, +232 ÇEV, +132 DAY | 12a 40g 35b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Tonfa | `tonfa_chaos` | tonfa | Ana el | Hepsi | 760 | +1679 Saldırı, +239 ÇEV, +137 DAY | 12a 95g 47b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Tonfa | `tonfa_skyforged` | tonfa | Ana el | Hepsi | 785 | +1734 Saldırı, +247 ÇEV, +141 DAY | 13a 51g 14b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Tonfa | `tonfa_archangel` | tonfa | Ana el | Hepsi | 810 | +1789 Saldırı, +255 ÇEV, +146 DAY | 14a 7g 34b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Tonfa | `tonfa_aurora` | tonfa | Ana el | Hepsi | 835 | +1844 Saldırı, +263 ÇEV, +150 DAY | 14a 64g 7b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kül Tonfa | `tonfa_ashen` | tonfa | Ana el | Hepsi | 860 | +1899 Saldırı, +271 ÇEV, +155 DAY | 15a 21g 31b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Tonfa | `tonfa_leviathan` | tonfa | Ana el | Hepsi | 885 | +1954 Saldırı, +279 ÇEV, +159 DAY | 15a 79g 5b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Tonfa | `tonfa_doomforged` | tonfa | Ana el | Hepsi | 910 | +2009 Saldırı, +287 ÇEV, +164 DAY | 16a 37g 28b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Tonfa | `tonfa_voidforged` | tonfa | Ana el | Hepsi | 935 | +2064 Saldırı, +295 ÇEV, +168 DAY | 16a 95g 99b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Tonfa | `tonfa_godslayer` | tonfa | Ana el | Hepsi | 960 | +2119 Saldırı, +302 ÇEV, +173 DAY | 17a 55g 18b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Tonfa | `tonfa_primordial` | tonfa | Ana el | Hepsi | 985 | +2174 Saldırı, +310 ÇEV, +177 DAY | 18a 14g 83b | 1.3 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Uzun Kılıç | `longsword_novice` | kılıç | Ana el | Hepsi | 1 | +6 Saldırı, +1 DAY, +1 GÜÇ | 42b | 2.6 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Uzun Kılıç | `longsword_journeyman` | kılıç | Ana el | Hepsi | 5 | +16 Saldırı, +2 DAY, +1 GÜÇ | 1g 64b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Uzun Kılıç | `longsword_fine` | kılıç | Ana el | Hepsi | 10 | +29 Saldırı, +4 DAY, +2 GÜÇ | 4g 9b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Uzun Kılıç | `longsword_veteran` | kılıç | Ana el | Hepsi | 15 | +42 Saldırı, +6 DAY, +3 GÜÇ | 7g 27b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Uzun Kılıç | `longsword_champion` | kılıç | Ana el | Hepsi | 20 | +54 Saldırı, +7 DAY, +4 GÜÇ | 11g 3b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Uzun Kılıç | `longsword_runed` | kılıç | Ana el | Hepsi | 25 | +66 Saldırı, +9 DAY, +5 GÜÇ | 15g 30b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Uzun Kılıç | `longsword_mithril` | kılıç | Ana el | Hepsi | 35 | +88 Saldırı, +12 DAY, +7 GÜÇ | 23g 72b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Uzun Kılıç | `longsword_adamant` | kılıç | Ana el | Hepsi | 50 | +120 Saldırı, +16 DAY, +9 GÜÇ | 37g 64b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Uzun Kılıç | `longsword_wyrmforged` | kılıç | Ana el | Hepsi | 65 | +152 Saldırı, +21 DAY, +12 GÜÇ | 52g 94b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Uzun Kılıç | `longsword_starforged` | kılıç | Ana el | Hepsi | 80 | +184 Saldırı, +25 DAY, +14 GÜÇ | 68g 85b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Uzun Kılıç | `longsword_titan` | kılıç | Ana el | Hepsi | 95 | +216 Saldırı, +30 DAY, +17 GÜÇ | 86g 60b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Uzun Kılıç | `longsword_royal` | kılıç | Ana el | Hepsi | 110 | +249 Saldırı, +35 DAY, +20 GÜÇ | 1a 5g | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Uzun Kılıç | `longsword_sunforged` | kılıç | Ana el | Hepsi | 135 | +304 Saldırı, +43 DAY, +24 GÜÇ | 1a 37g 3b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Uzun Kılıç | `longsword_obsidian` | kılıç | Ana el | Hepsi | 160 | +359 Saldırı, +50 DAY, +29 GÜÇ | 1a 70g 89b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Uzun Kılıç | `longsword_sandsteel` | kılıç | Ana el | Hepsi | 185 | +414 Saldırı, +58 DAY, +33 GÜÇ | 2a 6g 39b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Uzun Kılıç | `longsword_runebound` | kılıç | Ana el | Hepsi | 210 | +469 Saldırı, +66 DAY, +38 GÜÇ | 2a 43g 36b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Anka Uzun Kılıç | `longsword_phoenix` | kılıç | Ana el | Hepsi | 235 | +524 Saldırı, +74 DAY, +42 GÜÇ | 2a 81g 68b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Uzun Kılıç | `longsword_dreadforged` | kılıç | Ana el | Hepsi | 260 | +579 Saldırı, +82 DAY, +47 GÜÇ | 3a 21g 24b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Uzun Kılıç | `longsword_sovereign` | kılıç | Ana el | Hepsi | 285 | +634 Saldırı, +90 DAY, +51 GÜÇ | 3a 61g 97b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Uzun Kılıç | `longsword_coral` | kılıç | Ana el | Hepsi | 310 | +689 Saldırı, +98 DAY, +56 GÜÇ | 4a 3g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Uzun Kılıç | `longsword_drakebone` | kılıç | Ana el | Hepsi | 335 | +744 Saldırı, +106 DAY, +60 GÜÇ | 4a 46g 61b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Uzun Kılıç | `longsword_mistwoven` | kılıç | Ana el | Hepsi | 360 | +799 Saldırı, +113 DAY, +65 GÜÇ | 4a 90g 41b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Uzun Kılıç | `longsword_prismatic` | kılıç | Ana el | Hepsi | 385 | +854 Saldırı, +121 DAY, +69 GÜÇ | 5a 35g 14b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Uzun Kılıç | `longsword_magmaforged` | kılıç | Ana el | Hepsi | 410 | +909 Saldırı, +129 DAY, +74 GÜÇ | 5a 80g 75b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Bora Uzun Kılıç | `longsword_tempest` | kılıç | Ana el | Hepsi | 435 | +964 Saldırı, +137 DAY, +78 GÜÇ | 6a 27g 20b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Uzun Kılıç | `longsword_voidtouched` | kılıç | Ana el | Hepsi | 460 | +1019 Saldırı, +145 DAY, +83 GÜÇ | 6a 74g 46b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Melek Uzun Kılıç | `longsword_seraphic` | kılıç | Ana el | Hepsi | 485 | +1074 Saldırı, +153 DAY, +87 GÜÇ | 7a 22g 49b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Uzun Kılıç | `longsword_eclipse` | kılıç | Ana el | Hepsi | 510 | +1129 Saldırı, +161 DAY, +92 GÜÇ | 7a 71g 28b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Uzun Kılıç | `longsword_wyrmlord` | kılıç | Ana el | Hepsi | 535 | +1184 Saldırı, +169 DAY, +96 GÜÇ | 8a 20g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Uzun Kılıç | `longsword_celestine` | kılıç | Ana el | Hepsi | 560 | +1239 Saldırı, +176 DAY, +101 GÜÇ | 8a 70g 99b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Uzun Kılıç | `longsword_eternal` | kılıç | Ana el | Hepsi | 585 | +1294 Saldırı, +184 DAY, +105 GÜÇ | 9a 21g 88b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Uzun Kılıç | `longsword_starless` | kılıç | Ana el | Hepsi | 610 | +1349 Saldırı, +192 DAY, +110 GÜÇ | 9a 73g 42b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Uzun Kılıç | `longsword_nightsteel` | kılıç | Ana el | Hepsi | 635 | +1404 Saldırı, +200 DAY, +114 GÜÇ | 10a 25g 59b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Uzun Kılıç | `longsword_chronoforged` | kılıç | Ana el | Hepsi | 660 | +1459 Saldırı, +208 DAY, +119 GÜÇ | 10a 78g 39b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Uzun Kılıç | `longsword_ascendant` | kılıç | Ana el | Hepsi | 685 | +1514 Saldırı, +216 DAY, +123 GÜÇ | 11a 31g 79b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Uzun Kılıç | `longsword_stormborn` | kılıç | Ana el | Hepsi | 710 | +1569 Saldırı, +224 DAY, +128 GÜÇ | 11a 85g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Uzun Kılıç | `longsword_riftforged` | kılıç | Ana el | Hepsi | 735 | +1624 Saldırı, +232 DAY, +132 GÜÇ | 12a 40g 35b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Uzun Kılıç | `longsword_chaos` | kılıç | Ana el | Hepsi | 760 | +1679 Saldırı, +239 DAY, +137 GÜÇ | 12a 95g 47b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Uzun Kılıç | `longsword_skyforged` | kılıç | Ana el | Hepsi | 785 | +1734 Saldırı, +247 DAY, +141 GÜÇ | 13a 51g 14b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Uzun Kılıç | `longsword_archangel` | kılıç | Ana el | Hepsi | 810 | +1789 Saldırı, +255 DAY, +146 GÜÇ | 14a 7g 34b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Uzun Kılıç | `longsword_aurora` | kılıç | Ana el | Hepsi | 835 | +1844 Saldırı, +263 DAY, +150 GÜÇ | 14a 64g 7b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kül Uzun Kılıç | `longsword_ashen` | kılıç | Ana el | Hepsi | 860 | +1899 Saldırı, +271 DAY, +155 GÜÇ | 15a 21g 31b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Uzun Kılıç | `longsword_leviathan` | kılıç | Ana el | Hepsi | 885 | +1954 Saldırı, +279 DAY, +159 GÜÇ | 15a 79g 5b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Uzun Kılıç | `longsword_doomforged` | kılıç | Ana el | Hepsi | 910 | +2009 Saldırı, +287 DAY, +164 GÜÇ | 16a 37g 28b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Uzun Kılıç | `longsword_voidforged` | kılıç | Ana el | Hepsi | 935 | +2064 Saldırı, +295 DAY, +168 GÜÇ | 16a 95g 99b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Uzun Kılıç | `longsword_godslayer` | kılıç | Ana el | Hepsi | 960 | +2119 Saldırı, +302 DAY, +173 GÜÇ | 17a 55g 18b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Uzun Kılıç | `longsword_primordial` | kılıç | Ana el | Hepsi | 985 | +2174 Saldırı, +310 DAY, +177 GÜÇ | 18a 14g 83b | 2.6 kg | Av zaferi %4 / zindan boss'u |
 | Meşe Tokmak | `hammer_oak` | two_handed_mace | Ana el | Hepsi | 1 | +6 Saldırı, +1 DAY, +1 GÜÇ | 42b | 3.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Savaş Çekici | `hammer_iron` | two_handed_mace | Ana el | Hepsi | 5 | +16 Saldırı, +2 DAY, +1 GÜÇ | 1g 64b | 3.5 kg | Av zaferi %4 / zindan boss'u |
 | Kutsanmış Çekiç | `hammer_blessed` | two_handed_mace | Ana el | Hepsi | 10 | +29 Saldırı, +4 DAY, +2 GÜÇ | 4g 9b | 3.5 kg | Av zaferi %4 / zindan boss'u |
@@ -335,6 +617,53 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Yay | `bow_voidforged` | yay | Ana el | Hepsi | 935 | +2064 Saldırı, +295 ÇEV, +26 İsabet % | 16a 95g 99b | 1.4 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Yay | `bow_godslayer` | yay | Ana el | Hepsi | 960 | +2119 Saldırı, +302 ÇEV, +26 İsabet % | 17a 55g 18b | 1.4 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Yay | `bow_primordial` | yay | Ana el | Hepsi | 985 | +2174 Saldırı, +310 ÇEV, +27 İsabet % | 18a 14g 83b | 1.4 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Arbalet | `crossbow_novice` | crossbow | Ana el | Hepsi | 1 | +6 Saldırı, +1 ÇEV, +2 İsabet % | 42b | 2.6 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Arbalet | `crossbow_journeyman` | crossbow | Ana el | Hepsi | 5 | +16 Saldırı, +2 ÇEV, +2 İsabet % | 1g 64b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Arbalet | `crossbow_fine` | crossbow | Ana el | Hepsi | 10 | +29 Saldırı, +4 ÇEV, +3 İsabet % | 4g 9b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Arbalet | `crossbow_veteran` | crossbow | Ana el | Hepsi | 15 | +42 Saldırı, +6 ÇEV, +3 İsabet % | 7g 27b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Arbalet | `crossbow_champion` | crossbow | Ana el | Hepsi | 20 | +54 Saldırı, +7 ÇEV, +4 İsabet % | 11g 3b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Arbalet | `crossbow_runed` | crossbow | Ana el | Hepsi | 25 | +66 Saldırı, +9 ÇEV, +4 İsabet % | 15g 30b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Arbalet | `crossbow_mithril` | crossbow | Ana el | Hepsi | 35 | +88 Saldırı, +12 ÇEV, +5 İsabet % | 23g 72b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Arbalet | `crossbow_adamant` | crossbow | Ana el | Hepsi | 50 | +120 Saldırı, +16 ÇEV, +5 İsabet % | 37g 64b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Arbalet | `crossbow_wyrmforged` | crossbow | Ana el | Hepsi | 65 | +152 Saldırı, +21 ÇEV, +6 İsabet % | 52g 94b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Arbalet | `crossbow_starforged` | crossbow | Ana el | Hepsi | 80 | +184 Saldırı, +25 ÇEV, +6 İsabet % | 68g 85b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Arbalet | `crossbow_titan` | crossbow | Ana el | Hepsi | 95 | +216 Saldırı, +30 ÇEV, +7 İsabet % | 86g 60b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Arbalet | `crossbow_royal` | crossbow | Ana el | Hepsi | 110 | +249 Saldırı, +35 ÇEV, +7 İsabet % | 1a 5g | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Arbalet | `crossbow_sunforged` | crossbow | Ana el | Hepsi | 135 | +304 Saldırı, +43 ÇEV, +8 İsabet % | 1a 37g 3b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Arbalet | `crossbow_obsidian` | crossbow | Ana el | Hepsi | 160 | +359 Saldırı, +50 ÇEV, +9 İsabet % | 1a 70g 89b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Arbalet | `crossbow_sandsteel` | crossbow | Ana el | Hepsi | 185 | +414 Saldırı, +58 ÇEV, +9 İsabet % | 2a 6g 39b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Arbalet | `crossbow_runebound` | crossbow | Ana el | Hepsi | 210 | +469 Saldırı, +66 ÇEV, +10 İsabet % | 2a 43g 36b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Anka Arbalet | `crossbow_phoenix` | crossbow | Ana el | Hepsi | 235 | +524 Saldırı, +74 ÇEV, +10 İsabet % | 2a 81g 68b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Arbalet | `crossbow_dreadforged` | crossbow | Ana el | Hepsi | 260 | +579 Saldırı, +82 ÇEV, +11 İsabet % | 3a 21g 24b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Arbalet | `crossbow_sovereign` | crossbow | Ana el | Hepsi | 285 | +634 Saldırı, +90 ÇEV, +11 İsabet % | 3a 61g 97b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Arbalet | `crossbow_coral` | crossbow | Ana el | Hepsi | 310 | +689 Saldırı, +98 ÇEV, +12 İsabet % | 4a 3g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Arbalet | `crossbow_drakebone` | crossbow | Ana el | Hepsi | 335 | +744 Saldırı, +106 ÇEV, +12 İsabet % | 4a 46g 61b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Arbalet | `crossbow_mistwoven` | crossbow | Ana el | Hepsi | 360 | +799 Saldırı, +113 ÇEV, +13 İsabet % | 4a 90g 41b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Arbalet | `crossbow_prismatic` | crossbow | Ana el | Hepsi | 385 | +854 Saldırı, +121 ÇEV, +14 İsabet % | 5a 35g 14b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Arbalet | `crossbow_magmaforged` | crossbow | Ana el | Hepsi | 410 | +909 Saldırı, +129 ÇEV, +14 İsabet % | 5a 80g 75b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Bora Arbalet | `crossbow_tempest` | crossbow | Ana el | Hepsi | 435 | +964 Saldırı, +137 ÇEV, +15 İsabet % | 6a 27g 20b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Arbalet | `crossbow_voidtouched` | crossbow | Ana el | Hepsi | 460 | +1019 Saldırı, +145 ÇEV, +15 İsabet % | 6a 74g 46b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Melek Arbalet | `crossbow_seraphic` | crossbow | Ana el | Hepsi | 485 | +1074 Saldırı, +153 ÇEV, +16 İsabet % | 7a 22g 49b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Arbalet | `crossbow_eclipse` | crossbow | Ana el | Hepsi | 510 | +1129 Saldırı, +161 ÇEV, +16 İsabet % | 7a 71g 28b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Arbalet | `crossbow_wyrmlord` | crossbow | Ana el | Hepsi | 535 | +1184 Saldırı, +169 ÇEV, +17 İsabet % | 8a 20g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Arbalet | `crossbow_celestine` | crossbow | Ana el | Hepsi | 560 | +1239 Saldırı, +176 ÇEV, +17 İsabet % | 8a 70g 99b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Arbalet | `crossbow_eternal` | crossbow | Ana el | Hepsi | 585 | +1294 Saldırı, +184 ÇEV, +18 İsabet % | 9a 21g 88b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Arbalet | `crossbow_starless` | crossbow | Ana el | Hepsi | 610 | +1349 Saldırı, +192 ÇEV, +19 İsabet % | 9a 73g 42b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Arbalet | `crossbow_nightsteel` | crossbow | Ana el | Hepsi | 635 | +1404 Saldırı, +200 ÇEV, +19 İsabet % | 10a 25g 59b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Arbalet | `crossbow_chronoforged` | crossbow | Ana el | Hepsi | 660 | +1459 Saldırı, +208 ÇEV, +20 İsabet % | 10a 78g 39b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Arbalet | `crossbow_ascendant` | crossbow | Ana el | Hepsi | 685 | +1514 Saldırı, +216 ÇEV, +20 İsabet % | 11a 31g 79b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Arbalet | `crossbow_stormborn` | crossbow | Ana el | Hepsi | 710 | +1569 Saldırı, +224 ÇEV, +21 İsabet % | 11a 85g 78b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Arbalet | `crossbow_riftforged` | crossbow | Ana el | Hepsi | 735 | +1624 Saldırı, +232 ÇEV, +21 İsabet % | 12a 40g 35b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Arbalet | `crossbow_chaos` | crossbow | Ana el | Hepsi | 760 | +1679 Saldırı, +239 ÇEV, +22 İsabet % | 12a 95g 47b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Arbalet | `crossbow_skyforged` | crossbow | Ana el | Hepsi | 785 | +1734 Saldırı, +247 ÇEV, +22 İsabet % | 13a 51g 14b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Arbalet | `crossbow_archangel` | crossbow | Ana el | Hepsi | 810 | +1789 Saldırı, +255 ÇEV, +23 İsabet % | 14a 7g 34b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Arbalet | `crossbow_aurora` | crossbow | Ana el | Hepsi | 835 | +1844 Saldırı, +263 ÇEV, +24 İsabet % | 14a 64g 7b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kül Arbalet | `crossbow_ashen` | crossbow | Ana el | Hepsi | 860 | +1899 Saldırı, +271 ÇEV, +24 İsabet % | 15a 21g 31b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Arbalet | `crossbow_leviathan` | crossbow | Ana el | Hepsi | 885 | +1954 Saldırı, +279 ÇEV, +25 İsabet % | 15a 79g 5b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Arbalet | `crossbow_doomforged` | crossbow | Ana el | Hepsi | 910 | +2009 Saldırı, +287 ÇEV, +25 İsabet % | 16a 37g 28b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Arbalet | `crossbow_voidforged` | crossbow | Ana el | Hepsi | 935 | +2064 Saldırı, +295 ÇEV, +26 İsabet % | 16a 95g 99b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Arbalet | `crossbow_godslayer` | crossbow | Ana el | Hepsi | 960 | +2119 Saldırı, +302 ÇEV, +26 İsabet % | 17a 55g 18b | 2.6 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Arbalet | `crossbow_primordial` | crossbow | Ana el | Hepsi | 985 | +2174 Saldırı, +310 ÇEV, +27 İsabet % | 18a 14g 83b | 2.6 kg | Av zaferi %4 / zindan boss'u |
 | Paslı Hançer | `dagger_rusty` | hançer | Ana el | Haydut | 1 | +6 Saldırı, +1 ÇEV, +1 Kritik % | 42b | 0.8 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Hançer | `dagger_iron` | hançer | Ana el | Haydut | 5 | +16 Saldırı, +2 ÇEV, +1 Kritik % | 1g 64b | 0.8 kg | Üretim: Demircilik 5+ (3× Demir Cevheri, 1× Meşe Kütüğü, 20b); Av zaferi %4 / zindan boss'u |
 | Tırtıklı Hançer | `dagger_serrated` | hançer | Ana el | Haydut | 10 | +29 Saldırı, +4 ÇEV, +2 Kritik % | 4g 9b | 0.8 kg | Av zaferi %4 / zindan boss'u |
@@ -382,6 +711,100 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Hançer | `dagger_voidforged` | hançer | Ana el | Haydut | 935 | +2064 Saldırı, +295 ÇEV, +20 Kritik % | 16a 95g 99b | 0.8 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Hançer | `dagger_godslayer` | hançer | Ana el | Haydut | 960 | +2119 Saldırı, +302 ÇEV, +20 Kritik % | 17a 55g 18b | 0.8 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Hançer | `dagger_primordial` | hançer | Ana el | Haydut | 985 | +2174 Saldırı, +310 ÇEV, +20 Kritik % | 18a 14g 83b | 0.8 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Kısa Kılıç | `shortsword_novice` | short_sword | Ana el | Haydut | 1 | +6 Saldırı, +1 ÇEV, +1 Kritik % | 42b | 1.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Kısa Kılıç | `shortsword_journeyman` | short_sword | Ana el | Haydut | 5 | +16 Saldırı, +2 ÇEV, +1 Kritik % | 1g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Kısa Kılıç | `shortsword_fine` | short_sword | Ana el | Haydut | 10 | +29 Saldırı, +4 ÇEV, +2 Kritik % | 4g 9b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Kısa Kılıç | `shortsword_veteran` | short_sword | Ana el | Haydut | 15 | +42 Saldırı, +6 ÇEV, +2 Kritik % | 7g 27b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Kısa Kılıç | `shortsword_champion` | short_sword | Ana el | Haydut | 20 | +54 Saldırı, +7 ÇEV, +3 Kritik % | 11g 3b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Kısa Kılıç | `shortsword_runed` | short_sword | Ana el | Haydut | 25 | +66 Saldırı, +9 ÇEV, +4 Kritik % | 15g 30b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Kısa Kılıç | `shortsword_mithril` | short_sword | Ana el | Haydut | 35 | +88 Saldırı, +12 ÇEV, +4 Kritik % | 23g 72b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Kısa Kılıç | `shortsword_adamant` | short_sword | Ana el | Haydut | 50 | +120 Saldırı, +16 ÇEV, +5 Kritik % | 37g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Kısa Kılıç | `shortsword_wyrmforged` | short_sword | Ana el | Haydut | 65 | +152 Saldırı, +21 ÇEV, +5 Kritik % | 52g 94b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Kısa Kılıç | `shortsword_starforged` | short_sword | Ana el | Haydut | 80 | +184 Saldırı, +25 ÇEV, +6 Kritik % | 68g 85b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Titan Kısa Kılıç | `shortsword_titan` | short_sword | Ana el | Haydut | 95 | +216 Saldırı, +30 ÇEV, +6 Kritik % | 86g 60b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Kısa Kılıç | `shortsword_royal` | short_sword | Ana el | Haydut | 110 | +249 Saldırı, +35 ÇEV, +6 Kritik % | 1a 5g | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Kısa Kılıç | `shortsword_sunforged` | short_sword | Ana el | Haydut | 135 | +304 Saldırı, +43 ÇEV, +6 Kritik % | 1a 37g 3b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Kısa Kılıç | `shortsword_obsidian` | short_sword | Ana el | Haydut | 160 | +359 Saldırı, +50 ÇEV, +7 Kritik % | 1a 70g 89b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Kısa Kılıç | `shortsword_sandsteel` | short_sword | Ana el | Haydut | 185 | +414 Saldırı, +58 ÇEV, +7 Kritik % | 2a 6g 39b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Kısa Kılıç | `shortsword_runebound` | short_sword | Ana el | Haydut | 210 | +469 Saldırı, +66 ÇEV, +8 Kritik % | 2a 43g 36b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Anka Kısa Kılıç | `shortsword_phoenix` | short_sword | Ana el | Haydut | 235 | +524 Saldırı, +74 ÇEV, +8 Kritik % | 2a 81g 68b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Kısa Kılıç | `shortsword_dreadforged` | short_sword | Ana el | Haydut | 260 | +579 Saldırı, +82 ÇEV, +8 Kritik % | 3a 21g 24b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Kısa Kılıç | `shortsword_sovereign` | short_sword | Ana el | Haydut | 285 | +634 Saldırı, +90 ÇEV, +9 Kritik % | 3a 61g 97b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Kısa Kılıç | `shortsword_coral` | short_sword | Ana el | Haydut | 310 | +689 Saldırı, +98 ÇEV, +9 Kritik % | 4a 3g 78b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Kısa Kılıç | `shortsword_drakebone` | short_sword | Ana el | Haydut | 335 | +744 Saldırı, +106 ÇEV, +10 Kritik % | 4a 46g 61b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Kısa Kılıç | `shortsword_mistwoven` | short_sword | Ana el | Haydut | 360 | +799 Saldırı, +113 ÇEV, +10 Kritik % | 4a 90g 41b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Kısa Kılıç | `shortsword_prismatic` | short_sword | Ana el | Haydut | 385 | +854 Saldırı, +121 ÇEV, +10 Kritik % | 5a 35g 14b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Kısa Kılıç | `shortsword_magmaforged` | short_sword | Ana el | Haydut | 410 | +909 Saldırı, +129 ÇEV, +11 Kritik % | 5a 80g 75b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Bora Kısa Kılıç | `shortsword_tempest` | short_sword | Ana el | Haydut | 435 | +964 Saldırı, +137 ÇEV, +11 Kritik % | 6a 27g 20b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Kısa Kılıç | `shortsword_voidtouched` | short_sword | Ana el | Haydut | 460 | +1019 Saldırı, +145 ÇEV, +12 Kritik % | 6a 74g 46b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Melek Kısa Kılıç | `shortsword_seraphic` | short_sword | Ana el | Haydut | 485 | +1074 Saldırı, +153 ÇEV, +12 Kritik % | 7a 22g 49b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Kısa Kılıç | `shortsword_eclipse` | short_sword | Ana el | Haydut | 510 | +1129 Saldırı, +161 ÇEV, +12 Kritik % | 7a 71g 28b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Kısa Kılıç | `shortsword_wyrmlord` | short_sword | Ana el | Haydut | 535 | +1184 Saldırı, +169 ÇEV, +13 Kritik % | 8a 20g 78b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Kısa Kılıç | `shortsword_celestine` | short_sword | Ana el | Haydut | 560 | +1239 Saldırı, +176 ÇEV, +13 Kritik % | 8a 70g 99b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Kısa Kılıç | `shortsword_eternal` | short_sword | Ana el | Haydut | 585 | +1294 Saldırı, +184 ÇEV, +14 Kritik % | 9a 21g 88b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Kısa Kılıç | `shortsword_starless` | short_sword | Ana el | Haydut | 610 | +1349 Saldırı, +192 ÇEV, +14 Kritik % | 9a 73g 42b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Kısa Kılıç | `shortsword_nightsteel` | short_sword | Ana el | Haydut | 635 | +1404 Saldırı, +200 ÇEV, +15 Kritik % | 10a 25g 59b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Kısa Kılıç | `shortsword_chronoforged` | short_sword | Ana el | Haydut | 660 | +1459 Saldırı, +208 ÇEV, +15 Kritik % | 10a 78g 39b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Kısa Kılıç | `shortsword_ascendant` | short_sword | Ana el | Haydut | 685 | +1514 Saldırı, +216 ÇEV, +15 Kritik % | 11a 31g 79b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Kısa Kılıç | `shortsword_stormborn` | short_sword | Ana el | Haydut | 710 | +1569 Saldırı, +224 ÇEV, +16 Kritik % | 11a 85g 78b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Kısa Kılıç | `shortsword_riftforged` | short_sword | Ana el | Haydut | 735 | +1624 Saldırı, +232 ÇEV, +16 Kritik % | 12a 40g 35b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Kısa Kılıç | `shortsword_chaos` | short_sword | Ana el | Haydut | 760 | +1679 Saldırı, +239 ÇEV, +17 Kritik % | 12a 95g 47b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Kısa Kılıç | `shortsword_skyforged` | short_sword | Ana el | Haydut | 785 | +1734 Saldırı, +247 ÇEV, +17 Kritik % | 13a 51g 14b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Kısa Kılıç | `shortsword_archangel` | short_sword | Ana el | Haydut | 810 | +1789 Saldırı, +255 ÇEV, +18 Kritik % | 14a 7g 34b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Kısa Kılıç | `shortsword_aurora` | short_sword | Ana el | Haydut | 835 | +1844 Saldırı, +263 ÇEV, +18 Kritik % | 14a 64g 7b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kül Kısa Kılıç | `shortsword_ashen` | short_sword | Ana el | Haydut | 860 | +1899 Saldırı, +271 ÇEV, +18 Kritik % | 15a 21g 31b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Kısa Kılıç | `shortsword_leviathan` | short_sword | Ana el | Haydut | 885 | +1954 Saldırı, +279 ÇEV, +19 Kritik % | 15a 79g 5b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Kısa Kılıç | `shortsword_doomforged` | short_sword | Ana el | Haydut | 910 | +2009 Saldırı, +287 ÇEV, +19 Kritik % | 16a 37g 28b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Kısa Kılıç | `shortsword_voidforged` | short_sword | Ana el | Haydut | 935 | +2064 Saldırı, +295 ÇEV, +20 Kritik % | 16a 95g 99b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Kısa Kılıç | `shortsword_godslayer` | short_sword | Ana el | Haydut | 960 | +2119 Saldırı, +302 ÇEV, +20 Kritik % | 17a 55g 18b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Kısa Kılıç | `shortsword_primordial` | short_sword | Ana el | Haydut | 985 | +2174 Saldırı, +310 ÇEV, +20 Kritik % | 18a 14g 83b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Ayin Baltası | `ritualaxe_novice` | ritual_axe | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 ZEK | 42b | 2.4 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Ayin Baltası | `ritualaxe_journeyman` | ritual_axe | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 ZEK | 1g 64b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Ayin Baltası | `ritualaxe_fine` | ritual_axe | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 ZEK | 4g 9b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Ayin Baltası | `ritualaxe_veteran` | ritual_axe | Ana el | Hepsi | 15 | +42 Saldırı, +6 KAR, +3 ZEK | 7g 27b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Ayin Baltası | `ritualaxe_champion` | ritual_axe | Ana el | Hepsi | 20 | +54 Saldırı, +7 KAR, +4 ZEK | 11g 3b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Ayin Baltası | `ritualaxe_runed` | ritual_axe | Ana el | Hepsi | 25 | +66 Saldırı, +9 KAR, +5 ZEK | 15g 30b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Ayin Baltası | `ritualaxe_mithril` | ritual_axe | Ana el | Hepsi | 35 | +88 Saldırı, +12 KAR, +7 ZEK | 23g 72b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Ayin Baltası | `ritualaxe_adamant` | ritual_axe | Ana el | Hepsi | 50 | +120 Saldırı, +16 KAR, +9 ZEK | 37g 64b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Ayin Baltası | `ritualaxe_wyrmforged` | ritual_axe | Ana el | Hepsi | 65 | +152 Saldırı, +21 KAR, +12 ZEK | 52g 94b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Ayin Baltası | `ritualaxe_starforged` | ritual_axe | Ana el | Hepsi | 80 | +184 Saldırı, +25 KAR, +14 ZEK | 68g 85b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Titan Ayin Baltası | `ritualaxe_titan` | ritual_axe | Ana el | Hepsi | 95 | +216 Saldırı, +30 KAR, +17 ZEK | 86g 60b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Ayin Baltası | `ritualaxe_royal` | ritual_axe | Ana el | Hepsi | 110 | +249 Saldırı, +35 KAR, +20 ZEK | 1a 5g | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Ayin Baltası | `ritualaxe_sunforged` | ritual_axe | Ana el | Hepsi | 135 | +304 Saldırı, +43 KAR, +24 ZEK | 1a 37g 3b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Ayin Baltası | `ritualaxe_obsidian` | ritual_axe | Ana el | Hepsi | 160 | +359 Saldırı, +50 KAR, +29 ZEK | 1a 70g 89b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Ayin Baltası | `ritualaxe_sandsteel` | ritual_axe | Ana el | Hepsi | 185 | +414 Saldırı, +58 KAR, +33 ZEK | 2a 6g 39b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Ayin Baltası | `ritualaxe_runebound` | ritual_axe | Ana el | Hepsi | 210 | +469 Saldırı, +66 KAR, +38 ZEK | 2a 43g 36b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Anka Ayin Baltası | `ritualaxe_phoenix` | ritual_axe | Ana el | Hepsi | 235 | +524 Saldırı, +74 KAR, +42 ZEK | 2a 81g 68b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Ayin Baltası | `ritualaxe_dreadforged` | ritual_axe | Ana el | Hepsi | 260 | +579 Saldırı, +82 KAR, +47 ZEK | 3a 21g 24b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Ayin Baltası | `ritualaxe_sovereign` | ritual_axe | Ana el | Hepsi | 285 | +634 Saldırı, +90 KAR, +51 ZEK | 3a 61g 97b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Ayin Baltası | `ritualaxe_coral` | ritual_axe | Ana el | Hepsi | 310 | +689 Saldırı, +98 KAR, +56 ZEK | 4a 3g 78b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Ayin Baltası | `ritualaxe_drakebone` | ritual_axe | Ana el | Hepsi | 335 | +744 Saldırı, +106 KAR, +60 ZEK | 4a 46g 61b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Ayin Baltası | `ritualaxe_mistwoven` | ritual_axe | Ana el | Hepsi | 360 | +799 Saldırı, +113 KAR, +65 ZEK | 4a 90g 41b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Ayin Baltası | `ritualaxe_prismatic` | ritual_axe | Ana el | Hepsi | 385 | +854 Saldırı, +121 KAR, +69 ZEK | 5a 35g 14b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Ayin Baltası | `ritualaxe_magmaforged` | ritual_axe | Ana el | Hepsi | 410 | +909 Saldırı, +129 KAR, +74 ZEK | 5a 80g 75b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Bora Ayin Baltası | `ritualaxe_tempest` | ritual_axe | Ana el | Hepsi | 435 | +964 Saldırı, +137 KAR, +78 ZEK | 6a 27g 20b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Ayin Baltası | `ritualaxe_voidtouched` | ritual_axe | Ana el | Hepsi | 460 | +1019 Saldırı, +145 KAR, +83 ZEK | 6a 74g 46b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Melek Ayin Baltası | `ritualaxe_seraphic` | ritual_axe | Ana el | Hepsi | 485 | +1074 Saldırı, +153 KAR, +87 ZEK | 7a 22g 49b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Ayin Baltası | `ritualaxe_eclipse` | ritual_axe | Ana el | Hepsi | 510 | +1129 Saldırı, +161 KAR, +92 ZEK | 7a 71g 28b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Ayin Baltası | `ritualaxe_wyrmlord` | ritual_axe | Ana el | Hepsi | 535 | +1184 Saldırı, +169 KAR, +96 ZEK | 8a 20g 78b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Ayin Baltası | `ritualaxe_celestine` | ritual_axe | Ana el | Hepsi | 560 | +1239 Saldırı, +176 KAR, +101 ZEK | 8a 70g 99b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Ayin Baltası | `ritualaxe_eternal` | ritual_axe | Ana el | Hepsi | 585 | +1294 Saldırı, +184 KAR, +105 ZEK | 9a 21g 88b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Ayin Baltası | `ritualaxe_starless` | ritual_axe | Ana el | Hepsi | 610 | +1349 Saldırı, +192 KAR, +110 ZEK | 9a 73g 42b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Ayin Baltası | `ritualaxe_nightsteel` | ritual_axe | Ana el | Hepsi | 635 | +1404 Saldırı, +200 KAR, +114 ZEK | 10a 25g 59b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Ayin Baltası | `ritualaxe_chronoforged` | ritual_axe | Ana el | Hepsi | 660 | +1459 Saldırı, +208 KAR, +119 ZEK | 10a 78g 39b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Ayin Baltası | `ritualaxe_ascendant` | ritual_axe | Ana el | Hepsi | 685 | +1514 Saldırı, +216 KAR, +123 ZEK | 11a 31g 79b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Ayin Baltası | `ritualaxe_stormborn` | ritual_axe | Ana el | Hepsi | 710 | +1569 Saldırı, +224 KAR, +128 ZEK | 11a 85g 78b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Ayin Baltası | `ritualaxe_riftforged` | ritual_axe | Ana el | Hepsi | 735 | +1624 Saldırı, +232 KAR, +132 ZEK | 12a 40g 35b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Ayin Baltası | `ritualaxe_chaos` | ritual_axe | Ana el | Hepsi | 760 | +1679 Saldırı, +239 KAR, +137 ZEK | 12a 95g 47b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Ayin Baltası | `ritualaxe_skyforged` | ritual_axe | Ana el | Hepsi | 785 | +1734 Saldırı, +247 KAR, +141 ZEK | 13a 51g 14b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Ayin Baltası | `ritualaxe_archangel` | ritual_axe | Ana el | Hepsi | 810 | +1789 Saldırı, +255 KAR, +146 ZEK | 14a 7g 34b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Ayin Baltası | `ritualaxe_aurora` | ritual_axe | Ana el | Hepsi | 835 | +1844 Saldırı, +263 KAR, +150 ZEK | 14a 64g 7b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kül Ayin Baltası | `ritualaxe_ashen` | ritual_axe | Ana el | Hepsi | 860 | +1899 Saldırı, +271 KAR, +155 ZEK | 15a 21g 31b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Ayin Baltası | `ritualaxe_leviathan` | ritual_axe | Ana el | Hepsi | 885 | +1954 Saldırı, +279 KAR, +159 ZEK | 15a 79g 5b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Ayin Baltası | `ritualaxe_doomforged` | ritual_axe | Ana el | Hepsi | 910 | +2009 Saldırı, +287 KAR, +164 ZEK | 16a 37g 28b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Ayin Baltası | `ritualaxe_voidforged` | ritual_axe | Ana el | Hepsi | 935 | +2064 Saldırı, +295 KAR, +168 ZEK | 16a 95g 99b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Ayin Baltası | `ritualaxe_godslayer` | ritual_axe | Ana el | Hepsi | 960 | +2119 Saldırı, +302 KAR, +173 ZEK | 17a 55g 18b | 2.4 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Ayin Baltası | `ritualaxe_primordial` | ritual_axe | Ana el | Hepsi | 985 | +2174 Saldırı, +310 KAR, +177 ZEK | 18a 14g 83b | 2.4 kg | Av zaferi %4 / zindan boss'u |
 | Oyma Totem | `totem_carved` | totem_focus | Ana el | Hepsi | 1 | +6 Saldırı, +1 KAR, +1 ZEK | 42b | 1.7 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Kemik Totem | `totem_bone` | totem_focus | Ana el | Hepsi | 5 | +16 Saldırı, +2 KAR, +1 ZEK | 1g 64b | 1.7 kg | Av zaferi %4 / zindan boss'u |
 | Ruh Totemi | `totem_spirit` | totem_focus | Ana el | Hepsi | 10 | +29 Saldırı, +4 KAR, +2 ZEK | 4g 9b | 1.7 kg | Av zaferi %4 / zindan boss'u |
@@ -429,6 +852,53 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Totem | `totem_voidforged` | totem_focus | Ana el | Hepsi | 935 | +2064 Saldırı, +295 KAR, +168 ZEK | 16a 95g 99b | 1.7 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Totem | `totem_godslayer` | totem_focus | Ana el | Hepsi | 960 | +2119 Saldırı, +302 KAR, +173 ZEK | 17a 55g 18b | 1.7 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Totem | `totem_primordial` | totem_focus | Ana el | Hepsi | 985 | +2174 Saldırı, +310 KAR, +177 ZEK | 18a 14g 83b | 1.7 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Balta | `axe_novice` | axe | Ana el | Savaşçı | 1 | +6 Saldırı, +1 GÜÇ, +1 DAY | 42b | 2.7 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
+| Kalfa Balta | `axe_journeyman` | axe | Ana el | Savaşçı | 5 | +16 Saldırı, +2 GÜÇ, +1 DAY | 1g 64b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Balta | `axe_fine` | axe | Ana el | Savaşçı | 10 | +29 Saldırı, +4 GÜÇ, +2 DAY | 4g 9b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Balta | `axe_veteran` | axe | Ana el | Savaşçı | 15 | +42 Saldırı, +6 GÜÇ, +3 DAY | 7g 27b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Balta | `axe_champion` | axe | Ana el | Savaşçı | 20 | +54 Saldırı, +7 GÜÇ, +4 DAY | 11g 3b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Balta | `axe_runed` | axe | Ana el | Savaşçı | 25 | +66 Saldırı, +9 GÜÇ, +5 DAY | 15g 30b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Balta | `axe_mithril` | axe | Ana el | Savaşçı | 35 | +88 Saldırı, +12 GÜÇ, +7 DAY | 23g 72b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Balta | `axe_adamant` | axe | Ana el | Savaşçı | 50 | +120 Saldırı, +16 GÜÇ, +9 DAY | 37g 64b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Balta | `axe_wyrmforged` | axe | Ana el | Savaşçı | 65 | +152 Saldırı, +21 GÜÇ, +12 DAY | 52g 94b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Balta | `axe_starforged` | axe | Ana el | Savaşçı | 80 | +184 Saldırı, +25 GÜÇ, +14 DAY | 68g 85b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Titan Balta | `axe_titan` | axe | Ana el | Savaşçı | 95 | +216 Saldırı, +30 GÜÇ, +17 DAY | 86g 60b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Balta | `axe_royal` | axe | Ana el | Savaşçı | 110 | +249 Saldırı, +35 GÜÇ, +20 DAY | 1a 5g | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Balta | `axe_sunforged` | axe | Ana el | Savaşçı | 135 | +304 Saldırı, +43 GÜÇ, +24 DAY | 1a 37g 3b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Balta | `axe_obsidian` | axe | Ana el | Savaşçı | 160 | +359 Saldırı, +50 GÜÇ, +29 DAY | 1a 70g 89b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Balta | `axe_sandsteel` | axe | Ana el | Savaşçı | 185 | +414 Saldırı, +58 GÜÇ, +33 DAY | 2a 6g 39b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Balta | `axe_runebound` | axe | Ana el | Savaşçı | 210 | +469 Saldırı, +66 GÜÇ, +38 DAY | 2a 43g 36b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Anka Balta | `axe_phoenix` | axe | Ana el | Savaşçı | 235 | +524 Saldırı, +74 GÜÇ, +42 DAY | 2a 81g 68b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Balta | `axe_dreadforged` | axe | Ana el | Savaşçı | 260 | +579 Saldırı, +82 GÜÇ, +47 DAY | 3a 21g 24b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Balta | `axe_sovereign` | axe | Ana el | Savaşçı | 285 | +634 Saldırı, +90 GÜÇ, +51 DAY | 3a 61g 97b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Balta | `axe_coral` | axe | Ana el | Savaşçı | 310 | +689 Saldırı, +98 GÜÇ, +56 DAY | 4a 3g 78b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Balta | `axe_drakebone` | axe | Ana el | Savaşçı | 335 | +744 Saldırı, +106 GÜÇ, +60 DAY | 4a 46g 61b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Balta | `axe_mistwoven` | axe | Ana el | Savaşçı | 360 | +799 Saldırı, +113 GÜÇ, +65 DAY | 4a 90g 41b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Balta | `axe_prismatic` | axe | Ana el | Savaşçı | 385 | +854 Saldırı, +121 GÜÇ, +69 DAY | 5a 35g 14b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Balta | `axe_magmaforged` | axe | Ana el | Savaşçı | 410 | +909 Saldırı, +129 GÜÇ, +74 DAY | 5a 80g 75b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Bora Balta | `axe_tempest` | axe | Ana el | Savaşçı | 435 | +964 Saldırı, +137 GÜÇ, +78 DAY | 6a 27g 20b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Balta | `axe_voidtouched` | axe | Ana el | Savaşçı | 460 | +1019 Saldırı, +145 GÜÇ, +83 DAY | 6a 74g 46b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Melek Balta | `axe_seraphic` | axe | Ana el | Savaşçı | 485 | +1074 Saldırı, +153 GÜÇ, +87 DAY | 7a 22g 49b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Balta | `axe_eclipse` | axe | Ana el | Savaşçı | 510 | +1129 Saldırı, +161 GÜÇ, +92 DAY | 7a 71g 28b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Balta | `axe_wyrmlord` | axe | Ana el | Savaşçı | 535 | +1184 Saldırı, +169 GÜÇ, +96 DAY | 8a 20g 78b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Balta | `axe_celestine` | axe | Ana el | Savaşçı | 560 | +1239 Saldırı, +176 GÜÇ, +101 DAY | 8a 70g 99b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Balta | `axe_eternal` | axe | Ana el | Savaşçı | 585 | +1294 Saldırı, +184 GÜÇ, +105 DAY | 9a 21g 88b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Balta | `axe_starless` | axe | Ana el | Savaşçı | 610 | +1349 Saldırı, +192 GÜÇ, +110 DAY | 9a 73g 42b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Balta | `axe_nightsteel` | axe | Ana el | Savaşçı | 635 | +1404 Saldırı, +200 GÜÇ, +114 DAY | 10a 25g 59b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Balta | `axe_chronoforged` | axe | Ana el | Savaşçı | 660 | +1459 Saldırı, +208 GÜÇ, +119 DAY | 10a 78g 39b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Balta | `axe_ascendant` | axe | Ana el | Savaşçı | 685 | +1514 Saldırı, +216 GÜÇ, +123 DAY | 11a 31g 79b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Balta | `axe_stormborn` | axe | Ana el | Savaşçı | 710 | +1569 Saldırı, +224 GÜÇ, +128 DAY | 11a 85g 78b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Balta | `axe_riftforged` | axe | Ana el | Savaşçı | 735 | +1624 Saldırı, +232 GÜÇ, +132 DAY | 12a 40g 35b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Balta | `axe_chaos` | axe | Ana el | Savaşçı | 760 | +1679 Saldırı, +239 GÜÇ, +137 DAY | 12a 95g 47b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Balta | `axe_skyforged` | axe | Ana el | Savaşçı | 785 | +1734 Saldırı, +247 GÜÇ, +141 DAY | 13a 51g 14b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Balta | `axe_archangel` | axe | Ana el | Savaşçı | 810 | +1789 Saldırı, +255 GÜÇ, +146 DAY | 14a 7g 34b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Balta | `axe_aurora` | axe | Ana el | Savaşçı | 835 | +1844 Saldırı, +263 GÜÇ, +150 DAY | 14a 64g 7b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kül Balta | `axe_ashen` | axe | Ana el | Savaşçı | 860 | +1899 Saldırı, +271 GÜÇ, +155 DAY | 15a 21g 31b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Balta | `axe_leviathan` | axe | Ana el | Savaşçı | 885 | +1954 Saldırı, +279 GÜÇ, +159 DAY | 15a 79g 5b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Balta | `axe_doomforged` | axe | Ana el | Savaşçı | 910 | +2009 Saldırı, +287 GÜÇ, +164 DAY | 16a 37g 28b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Balta | `axe_voidforged` | axe | Ana el | Savaşçı | 935 | +2064 Saldırı, +295 GÜÇ, +168 DAY | 16a 95g 99b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Balta | `axe_godslayer` | axe | Ana el | Savaşçı | 960 | +2119 Saldırı, +302 GÜÇ, +173 DAY | 17a 55g 18b | 2.7 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Balta | `axe_primordial` | axe | Ana el | Savaşçı | 985 | +2174 Saldırı, +310 GÜÇ, +177 DAY | 18a 14g 83b | 2.7 kg | Av zaferi %4 / zindan boss'u |
 | Talim Kılıcı | `sword_training` | kılıç | Ana el | Savaşçı | 1 | +6 Saldırı, +1 GÜÇ, +1 DAY | 42b | 2.5 kg | Dükkân (42b); Av zaferi %4 / zindan boss'u |
 | Demir Kılıç | `sword_iron` | kılıç | Ana el | Savaşçı | 5 | +16 Saldırı, +2 GÜÇ, +1 DAY | 1g 64b | 2.5 kg | Üretim: Demircilik 5+ (5× Demir Cevheri, 1× Meşe Kütüğü, 25b); Av zaferi %4 / zindan boss'u |
 | Su Verilmiş Kılıç | `sword_tempered` | kılıç | Ana el | Savaşçı | 10 | +29 Saldırı, +4 GÜÇ, +2 DAY | 4g 9b | 2.5 kg | Av zaferi %4 / zindan boss'u |
@@ -477,11 +947,105 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Tanrı Katili Kılıç | `sword_godslayer` | kılıç | Ana el | Savaşçı | 960 | +2119 Saldırı, +302 GÜÇ, +173 DAY | 17a 55g 18b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Kılıç | `sword_primordial` | kılıç | Ana el | Savaşçı | 985 | +2174 Saldırı, +310 GÜÇ, +177 DAY | 18a 14g 83b | 2.5 kg | Av zaferi %4 / zindan boss'u |
 
-## Zırhlar (236)
+## Zırhlar (706)
 
 | Ad | Kod | Tür | Yuva | Sınıf | Sv | Bonuslar | Değer | Ağırlık | Nereden |
 |---|---|---|---|---|---|---|---|---|---|
+| Acemi Sandalet | `sandals_novice` | zırh | Çizme | Hepsi | 1 | +1 Savunma, +1 ÇEV | 19b | 0.6 kg | Dükkân (19b); Av zaferi %4 / zindan boss'u |
+| Kalfa Sandalet | `sandals_journeyman` | zırh | Çizme | Hepsi | 5 | +2 Savunma, +1 ÇEV | 74b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Sandalet | `sandals_fine` | zırh | Çizme | Hepsi | 10 | +2 Savunma, +2 ÇEV | 1g 84b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Sandalet | `sandals_veteran` | zırh | Çizme | Hepsi | 15 | +3 Savunma, +2 ÇEV | 3g 27b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Sandalet | `sandals_champion` | zırh | Çizme | Hepsi | 20 | +4 Savunma, +3 ÇEV | 4g 96b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Sandalet | `sandals_runed` | zırh | Çizme | Hepsi | 25 | +5 Savunma, +4 ÇEV | 6g 88b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Sandalet | `sandals_mithril` | zırh | Çizme | Hepsi | 35 | +7 Savunma, +5 ÇEV | 10g 66b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Sandalet | `sandals_adamant` | zırh | Çizme | Hepsi | 50 | +9 Savunma, +7 ÇEV | 16g 92b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Sandalet | `sandals_wyrmforged` | zırh | Çizme | Hepsi | 65 | +11 Savunma, +9 ÇEV | 23g 80b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Sandalet | `sandals_starforged` | zırh | Çizme | Hepsi | 80 | +13 Savunma, +11 ÇEV | 30g 96b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Sandalet | `sandals_titan` | zırh | Çizme | Hepsi | 95 | +15 Savunma, +13 ÇEV | 38g 94b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Sandalet | `sandals_royal` | zırh | Çizme | Hepsi | 110 | +17 Savunma, +15 ÇEV | 47g 21b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Sandalet | `sandals_sunforged` | zırh | Çizme | Hepsi | 135 | +21 Savunma, +18 ÇEV | 61g 62b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Sandalet | `sandals_obsidian` | zırh | Çizme | Hepsi | 160 | +25 Savunma, +22 ÇEV | 76g 85b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Sandalet | `sandals_sandsteel` | zırh | Çizme | Hepsi | 185 | +29 Savunma, +25 ÇEV | 92g 81b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Sandalet | `sandals_runebound` | zırh | Çizme | Hepsi | 210 | +33 Savunma, +29 ÇEV | 1a 9g 43b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Anka Sandalet | `sandals_phoenix` | zırh | Çizme | Hepsi | 235 | +37 Savunma, +32 ÇEV | 1a 26g 66b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Sandalet | `sandals_dreadforged` | zırh | Çizme | Hepsi | 260 | +41 Savunma, +36 ÇEV | 1a 44g 45b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Sandalet | `sandals_sovereign` | zırh | Çizme | Hepsi | 285 | +45 Savunma, +39 ÇEV | 1a 62g 77b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Sandalet | `sandals_coral` | zırh | Çizme | Hepsi | 310 | +49 Savunma, +42 ÇEV | 1a 81g 57b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Sandalet | `sandals_drakebone` | zırh | Çizme | Hepsi | 335 | +53 Savunma, +46 ÇEV | 2a 83b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Sandalet | `sandals_mistwoven` | zırh | Çizme | Hepsi | 360 | +57 Savunma, +49 ÇEV | 2a 20g 53b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Sandalet | `sandals_prismatic` | zırh | Çizme | Hepsi | 385 | +61 Savunma, +53 ÇEV | 2a 40g 64b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Sandalet | `sandals_magmaforged` | zırh | Çizme | Hepsi | 410 | +65 Savunma, +56 ÇEV | 2a 61g 15b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Bora Sandalet | `sandals_tempest` | zırh | Çizme | Hepsi | 435 | +69 Savunma, +60 ÇEV | 2a 82g 3b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Sandalet | `sandals_voidtouched` | zırh | Çizme | Hepsi | 460 | +73 Savunma, +63 ÇEV | 3a 3g 29b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Melek Sandalet | `sandals_seraphic` | zırh | Çizme | Hepsi | 485 | +77 Savunma, +66 ÇEV | 3a 24g 89b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Sandalet | `sandals_eclipse` | zırh | Çizme | Hepsi | 510 | +81 Savunma, +70 ÇEV | 3a 46g 82b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Sandalet | `sandals_wyrmlord` | zırh | Çizme | Hepsi | 535 | +84 Savunma, +73 ÇEV | 3a 69g 8b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Sandalet | `sandals_celestine` | zırh | Çizme | Hepsi | 560 | +88 Savunma, +77 ÇEV | 3a 91g 66b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Sandalet | `sandals_eternal` | zırh | Çizme | Hepsi | 585 | +92 Savunma, +80 ÇEV | 4a 14g 54b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Sandalet | `sandals_starless` | zırh | Çizme | Hepsi | 610 | +96 Savunma, +83 ÇEV | 4a 37g 72b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Sandalet | `sandals_nightsteel` | zırh | Çizme | Hepsi | 635 | +100 Savunma, +87 ÇEV | 4a 61g 18b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Sandalet | `sandals_chronoforged` | zırh | Çizme | Hepsi | 660 | +104 Savunma, +90 ÇEV | 4a 84g 92b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Sandalet | `sandals_ascendant` | zırh | Çizme | Hepsi | 685 | +108 Savunma, +94 ÇEV | 5a 8g 94b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Sandalet | `sandals_stormborn` | zırh | Çizme | Hepsi | 710 | +112 Savunma, +97 ÇEV | 5a 33g 21b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Sandalet | `sandals_riftforged` | zırh | Çizme | Hepsi | 735 | +116 Savunma, +101 ÇEV | 5a 57g 75b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Sandalet | `sandals_chaos` | zırh | Çizme | Hepsi | 760 | +120 Savunma, +104 ÇEV | 5a 82g 54b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Sandalet | `sandals_skyforged` | zırh | Çizme | Hepsi | 785 | +124 Savunma, +107 ÇEV | 6a 7g 57b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Sandalet | `sandals_archangel` | zırh | Çizme | Hepsi | 810 | +128 Savunma, +111 ÇEV | 6a 32g 84b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Sandalet | `sandals_aurora` | zırh | Çizme | Hepsi | 835 | +132 Savunma, +114 ÇEV | 6a 58g 35b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kül Sandalet | `sandals_ashen` | zırh | Çizme | Hepsi | 860 | +136 Savunma, +118 ÇEV | 6a 84g 9b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Sandalet | `sandals_leviathan` | zırh | Çizme | Hepsi | 885 | +140 Savunma, +121 ÇEV | 7a 10g 6b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Sandalet | `sandals_doomforged` | zırh | Çizme | Hepsi | 910 | +144 Savunma, +125 ÇEV | 7a 36g 24b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Sandalet | `sandals_voidforged` | zırh | Çizme | Hepsi | 935 | +148 Savunma, +128 ÇEV | 7a 62g 64b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Sandalet | `sandals_godslayer` | zırh | Çizme | Hepsi | 960 | +152 Savunma, +131 ÇEV | 7a 89g 26b | 0.6 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Sandalet | `sandals_primordial` | zırh | Çizme | Hepsi | 985 | +156 Savunma, +135 ÇEV | 8a 16g 8b | 0.6 kg | Av zaferi %4 / zindan boss'u |
 | Deri Çizme | `boots_leather` | zırh | Çizme | Hepsi | 1 | +1 Savunma, +1 ÇEV | 19b | 1.5 kg | Dükkân (19b); Üretim: Demircilik 1+ (2× Orman Faresi Postu, 5b); Av zaferi %4 / zindan boss'u |
+| Kalfa Deri Çizme | `treads_journeyman` | zırh | Çizme | Hepsi | 5 | +2 Savunma, +1 ÇEV | 74b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Deri Çizme | `treads_fine` | zırh | Çizme | Hepsi | 10 | +2 Savunma, +2 ÇEV | 1g 84b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Deri Çizme | `treads_veteran` | zırh | Çizme | Hepsi | 15 | +3 Savunma, +2 ÇEV | 3g 27b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Deri Çizme | `treads_champion` | zırh | Çizme | Hepsi | 20 | +4 Savunma, +3 ÇEV | 4g 96b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Deri Çizme | `treads_runed` | zırh | Çizme | Hepsi | 25 | +5 Savunma, +4 ÇEV | 6g 88b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Deri Çizme | `treads_mithril` | zırh | Çizme | Hepsi | 35 | +7 Savunma, +5 ÇEV | 10g 66b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Deri Çizme | `treads_adamant` | zırh | Çizme | Hepsi | 50 | +9 Savunma, +7 ÇEV | 16g 92b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Deri Çizme | `treads_wyrmforged` | zırh | Çizme | Hepsi | 65 | +11 Savunma, +9 ÇEV | 23g 80b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Deri Çizme | `treads_starforged` | zırh | Çizme | Hepsi | 80 | +13 Savunma, +11 ÇEV | 30g 96b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Titan Deri Çizme | `treads_titan` | zırh | Çizme | Hepsi | 95 | +15 Savunma, +13 ÇEV | 38g 94b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Deri Çizme | `treads_royal` | zırh | Çizme | Hepsi | 110 | +17 Savunma, +15 ÇEV | 47g 21b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Deri Çizme | `treads_sunforged` | zırh | Çizme | Hepsi | 135 | +21 Savunma, +18 ÇEV | 61g 62b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Deri Çizme | `treads_obsidian` | zırh | Çizme | Hepsi | 160 | +25 Savunma, +22 ÇEV | 76g 85b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Deri Çizme | `treads_sandsteel` | zırh | Çizme | Hepsi | 185 | +29 Savunma, +25 ÇEV | 92g 81b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Deri Çizme | `treads_runebound` | zırh | Çizme | Hepsi | 210 | +33 Savunma, +29 ÇEV | 1a 9g 43b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Anka Deri Çizme | `treads_phoenix` | zırh | Çizme | Hepsi | 235 | +37 Savunma, +32 ÇEV | 1a 26g 66b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Deri Çizme | `treads_dreadforged` | zırh | Çizme | Hepsi | 260 | +41 Savunma, +36 ÇEV | 1a 44g 45b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Deri Çizme | `treads_sovereign` | zırh | Çizme | Hepsi | 285 | +45 Savunma, +39 ÇEV | 1a 62g 77b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Deri Çizme | `treads_coral` | zırh | Çizme | Hepsi | 310 | +49 Savunma, +42 ÇEV | 1a 81g 57b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Deri Çizme | `treads_drakebone` | zırh | Çizme | Hepsi | 335 | +53 Savunma, +46 ÇEV | 2a 83b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Deri Çizme | `treads_mistwoven` | zırh | Çizme | Hepsi | 360 | +57 Savunma, +49 ÇEV | 2a 20g 53b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Deri Çizme | `treads_prismatic` | zırh | Çizme | Hepsi | 385 | +61 Savunma, +53 ÇEV | 2a 40g 64b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Deri Çizme | `treads_magmaforged` | zırh | Çizme | Hepsi | 410 | +65 Savunma, +56 ÇEV | 2a 61g 15b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Bora Deri Çizme | `treads_tempest` | zırh | Çizme | Hepsi | 435 | +69 Savunma, +60 ÇEV | 2a 82g 3b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Deri Çizme | `treads_voidtouched` | zırh | Çizme | Hepsi | 460 | +73 Savunma, +63 ÇEV | 3a 3g 29b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Melek Deri Çizme | `treads_seraphic` | zırh | Çizme | Hepsi | 485 | +77 Savunma, +66 ÇEV | 3a 24g 89b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Deri Çizme | `treads_eclipse` | zırh | Çizme | Hepsi | 510 | +81 Savunma, +70 ÇEV | 3a 46g 82b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Deri Çizme | `treads_wyrmlord` | zırh | Çizme | Hepsi | 535 | +84 Savunma, +73 ÇEV | 3a 69g 8b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Deri Çizme | `treads_celestine` | zırh | Çizme | Hepsi | 560 | +88 Savunma, +77 ÇEV | 3a 91g 66b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Deri Çizme | `treads_eternal` | zırh | Çizme | Hepsi | 585 | +92 Savunma, +80 ÇEV | 4a 14g 54b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Deri Çizme | `treads_starless` | zırh | Çizme | Hepsi | 610 | +96 Savunma, +83 ÇEV | 4a 37g 72b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Deri Çizme | `treads_nightsteel` | zırh | Çizme | Hepsi | 635 | +100 Savunma, +87 ÇEV | 4a 61g 18b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Deri Çizme | `treads_chronoforged` | zırh | Çizme | Hepsi | 660 | +104 Savunma, +90 ÇEV | 4a 84g 92b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Deri Çizme | `treads_ascendant` | zırh | Çizme | Hepsi | 685 | +108 Savunma, +94 ÇEV | 5a 8g 94b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Deri Çizme | `treads_stormborn` | zırh | Çizme | Hepsi | 710 | +112 Savunma, +97 ÇEV | 5a 33g 21b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Deri Çizme | `treads_riftforged` | zırh | Çizme | Hepsi | 735 | +116 Savunma, +101 ÇEV | 5a 57g 75b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Deri Çizme | `treads_chaos` | zırh | Çizme | Hepsi | 760 | +120 Savunma, +104 ÇEV | 5a 82g 54b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Deri Çizme | `treads_skyforged` | zırh | Çizme | Hepsi | 785 | +124 Savunma, +107 ÇEV | 6a 7g 57b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Deri Çizme | `treads_archangel` | zırh | Çizme | Hepsi | 810 | +128 Savunma, +111 ÇEV | 6a 32g 84b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Deri Çizme | `treads_aurora` | zırh | Çizme | Hepsi | 835 | +132 Savunma, +114 ÇEV | 6a 58g 35b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kül Deri Çizme | `treads_ashen` | zırh | Çizme | Hepsi | 860 | +136 Savunma, +118 ÇEV | 6a 84g 9b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Deri Çizme | `treads_leviathan` | zırh | Çizme | Hepsi | 885 | +140 Savunma, +121 ÇEV | 7a 10g 6b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Deri Çizme | `treads_doomforged` | zırh | Çizme | Hepsi | 910 | +144 Savunma, +125 ÇEV | 7a 36g 24b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Deri Çizme | `treads_voidforged` | zırh | Çizme | Hepsi | 935 | +148 Savunma, +128 ÇEV | 7a 62g 64b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Deri Çizme | `treads_godslayer` | zırh | Çizme | Hepsi | 960 | +152 Savunma, +131 ÇEV | 7a 89g 26b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Deri Çizme | `treads_primordial` | zırh | Çizme | Hepsi | 985 | +156 Savunma, +135 ÇEV | 8a 16g 8b | 1.05 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Çizme | `boots_novice` | zırh | Çizme | Hepsi | 1 | +1 Savunma, +1 ÇEV | 19b | 1.5 kg | Dükkân (19b); Av zaferi %4 / zindan boss'u |
 | Demir Çizme | `boots_iron` | zırh | Çizme | Hepsi | 5 | +2 Savunma, +1 ÇEV | 74b | 1.5 kg | Üretim: Demircilik 3+ (3× Demir Cevheri, 15b); Av zaferi %4 / zindan boss'u |
 | Pul Çizme | `boots_scale` | zırh | Çizme | Hepsi | 10 | +2 Savunma, +2 ÇEV | 1g 84b | 1.5 kg | Üretim: Demircilik 10+ (3× Bakır Cevheri, 1× Yaban Kurdu Postu, 70b); Av zaferi %4 / zindan boss'u |
 | Çelik Çizme | `boots_steel` | zırh | Çizme | Hepsi | 15 | +3 Savunma, +2 ÇEV | 3g 27b | 1.5 kg | Av zaferi %4 / zindan boss'u |
@@ -528,7 +1092,101 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Çizme | `boots_voidforged` | zırh | Çizme | Hepsi | 935 | +148 Savunma, +128 ÇEV | 7a 62g 64b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Çizme | `boots_godslayer` | zırh | Çizme | Hepsi | 960 | +152 Savunma, +131 ÇEV | 7a 89g 26b | 1.5 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Çizme | `boots_primordial` | zırh | Çizme | Hepsi | 985 | +156 Savunma, +135 ÇEV | 8a 16g 8b | 1.5 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Cübbe | `robe_novice` | zırh | Göğüs | Hepsi | 1 | +2 Savunma, +14 Can | 34b | 1.6 kg | Dükkân (34b); Av zaferi %4 / zindan boss'u |
+| Kalfa Cübbe | `robe_journeyman` | zırh | Göğüs | Hepsi | 5 | +4 Savunma, +30 Can | 1g 31b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Cübbe | `robe_fine` | zırh | Göğüs | Hepsi | 10 | +6 Savunma, +50 Can | 3g 27b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Cübbe | `robe_veteran` | zırh | Göğüs | Hepsi | 15 | +7 Savunma, +70 Can | 5g 82b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Cübbe | `robe_champion` | zırh | Göğüs | Hepsi | 20 | +9 Savunma, +90 Can | 8g 82b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Cübbe | `robe_runed` | zırh | Göğüs | Hepsi | 25 | +11 Savunma, +110 Can | 12g 24b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Cübbe | `robe_mithril` | zırh | Göğüs | Hepsi | 35 | +14 Savunma, +150 Can | 18g 97b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Cübbe | `robe_adamant` | zırh | Göğüs | Hepsi | 50 | +19 Savunma, +210 Can | 30g 11b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Cübbe | `robe_wyrmforged` | zırh | Göğüs | Hepsi | 65 | +24 Savunma, +270 Can | 42g 35b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Cübbe | `robe_starforged` | zırh | Göğüs | Hepsi | 80 | +29 Savunma, +330 Can | 55g 8b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Titan Cübbe | `robe_titan` | zırh | Göğüs | Hepsi | 95 | +34 Savunma, +390 Can | 69g 28b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Cübbe | `robe_royal` | zırh | Göğüs | Hepsi | 110 | +39 Savunma, +452 Can | 84g | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Cübbe | `robe_sunforged` | zırh | Göğüs | Hepsi | 135 | +48 Savunma, +554 Can | 1a 9g 62b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Cübbe | `robe_obsidian` | zırh | Göğüs | Hepsi | 160 | +57 Savunma, +657 Can | 1a 36g 71b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Cübbe | `robe_sandsteel` | zırh | Göğüs | Hepsi | 185 | +66 Savunma, +759 Can | 1a 65g 11b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Cübbe | `robe_runebound` | zırh | Göğüs | Hepsi | 210 | +75 Savunma, +862 Can | 1a 94g 69b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Anka Cübbe | `robe_phoenix` | zırh | Göğüs | Hepsi | 235 | +84 Savunma, +965 Can | 2a 25g 34b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Cübbe | `robe_dreadforged` | zırh | Göğüs | Hepsi | 260 | +93 Savunma, +1067 Can | 2a 57g | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Cübbe | `robe_sovereign` | zırh | Göğüs | Hepsi | 285 | +102 Savunma, +1170 Can | 2a 89g 57b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Cübbe | `robe_coral` | zırh | Göğüs | Hepsi | 310 | +111 Savunma, +1273 Can | 3a 23g 2b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Cübbe | `robe_drakebone` | zırh | Göğüs | Hepsi | 335 | +120 Savunma, +1375 Can | 3a 57g 29b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Cübbe | `robe_mistwoven` | zırh | Göğüs | Hepsi | 360 | +129 Savunma, +1478 Can | 3a 92g 33b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Cübbe | `robe_prismatic` | zırh | Göğüs | Hepsi | 385 | +138 Savunma, +1581 Can | 4a 28g 11b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Cübbe | `robe_magmaforged` | zırh | Göğüs | Hepsi | 410 | +147 Savunma, +1683 Can | 4a 64g 60b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Bora Cübbe | `robe_tempest` | zırh | Göğüs | Hepsi | 435 | +156 Savunma, +1786 Can | 5a 1g 76b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Cübbe | `robe_voidtouched` | zırh | Göğüs | Hepsi | 460 | +165 Savunma, +1888 Can | 5a 39g 57b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Melek Cübbe | `robe_seraphic` | zırh | Göğüs | Hepsi | 485 | +174 Savunma, +1991 Can | 5a 77g 99b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Cübbe | `robe_eclipse` | zırh | Göğüs | Hepsi | 510 | +183 Savunma, +2094 Can | 6a 17g 2b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Cübbe | `robe_wyrmlord` | zırh | Göğüs | Hepsi | 535 | +191 Savunma, +2196 Can | 6a 56g 63b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Cübbe | `robe_celestine` | zırh | Göğüs | Hepsi | 560 | +200 Savunma, +2299 Can | 6a 96g 79b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Cübbe | `robe_eternal` | zırh | Göğüs | Hepsi | 585 | +209 Savunma, +2402 Can | 7a 37g 50b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Cübbe | `robe_starless` | zırh | Göğüs | Hepsi | 610 | +218 Savunma, +2504 Can | 7a 78g 73b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Cübbe | `robe_nightsteel` | zırh | Göğüs | Hepsi | 635 | +227 Savunma, +2607 Can | 8a 20g 47b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Cübbe | `robe_chronoforged` | zırh | Göğüs | Hepsi | 660 | +236 Savunma, +2709 Can | 8a 62g 71b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Cübbe | `robe_ascendant` | zırh | Göğüs | Hepsi | 685 | +245 Savunma, +2812 Can | 9a 5g 43b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Cübbe | `robe_stormborn` | zırh | Göğüs | Hepsi | 710 | +254 Savunma, +2915 Can | 9a 48g 63b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Cübbe | `robe_riftforged` | zırh | Göğüs | Hepsi | 735 | +263 Savunma, +3017 Can | 9a 92g 28b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Cübbe | `robe_chaos` | zırh | Göğüs | Hepsi | 760 | +272 Savunma, +3120 Can | 10a 36g 38b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Cübbe | `robe_skyforged` | zırh | Göğüs | Hepsi | 785 | +281 Savunma, +3223 Can | 10a 80g 91b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Cübbe | `robe_archangel` | zırh | Göğüs | Hepsi | 810 | +290 Savunma, +3325 Can | 11a 25g 87b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Cübbe | `robe_aurora` | zırh | Göğüs | Hepsi | 835 | +299 Savunma, +3428 Can | 11a 71g 26b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kül Cübbe | `robe_ashen` | zırh | Göğüs | Hepsi | 860 | +308 Savunma, +3531 Can | 12a 17g 5b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Cübbe | `robe_leviathan` | zırh | Göğüs | Hepsi | 885 | +317 Savunma, +3633 Can | 12a 63g 24b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Cübbe | `robe_doomforged` | zırh | Göğüs | Hepsi | 910 | +326 Savunma, +3736 Can | 13a 9g 82b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Cübbe | `robe_voidforged` | zırh | Göğüs | Hepsi | 935 | +335 Savunma, +3838 Can | 13a 56g 80b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Cübbe | `robe_godslayer` | zırh | Göğüs | Hepsi | 960 | +344 Savunma, +3941 Can | 14a 4g 15b | 1.6 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Cübbe | `robe_primordial` | zırh | Göğüs | Hepsi | 985 | +353 Savunma, +4044 Can | 14a 51g 87b | 1.6 kg | Av zaferi %4 / zindan boss'u |
 | Deri Göğüslük | `chest_leather` | zırh | Göğüs | Hepsi | 1 | +2 Savunma, +14 Can | 34b | 4 kg | Dükkân (34b); Üretim: Demircilik 1+ (4× Orman Faresi Postu, 8b); Av zaferi %4 / zindan boss'u |
+| Kalfa Deri Yelek | `jerkin_journeyman` | zırh | Göğüs | Hepsi | 5 | +4 Savunma, +30 Can | 1g 31b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Deri Yelek | `jerkin_fine` | zırh | Göğüs | Hepsi | 10 | +6 Savunma, +50 Can | 3g 27b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Deri Yelek | `jerkin_veteran` | zırh | Göğüs | Hepsi | 15 | +7 Savunma, +70 Can | 5g 82b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Deri Yelek | `jerkin_champion` | zırh | Göğüs | Hepsi | 20 | +9 Savunma, +90 Can | 8g 82b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Deri Yelek | `jerkin_runed` | zırh | Göğüs | Hepsi | 25 | +11 Savunma, +110 Can | 12g 24b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Deri Yelek | `jerkin_mithril` | zırh | Göğüs | Hepsi | 35 | +14 Savunma, +150 Can | 18g 97b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Deri Yelek | `jerkin_adamant` | zırh | Göğüs | Hepsi | 50 | +19 Savunma, +210 Can | 30g 11b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Deri Yelek | `jerkin_wyrmforged` | zırh | Göğüs | Hepsi | 65 | +24 Savunma, +270 Can | 42g 35b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Deri Yelek | `jerkin_starforged` | zırh | Göğüs | Hepsi | 80 | +29 Savunma, +330 Can | 55g 8b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Titan Deri Yelek | `jerkin_titan` | zırh | Göğüs | Hepsi | 95 | +34 Savunma, +390 Can | 69g 28b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Deri Yelek | `jerkin_royal` | zırh | Göğüs | Hepsi | 110 | +39 Savunma, +452 Can | 84g | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Deri Yelek | `jerkin_sunforged` | zırh | Göğüs | Hepsi | 135 | +48 Savunma, +554 Can | 1a 9g 62b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Deri Yelek | `jerkin_obsidian` | zırh | Göğüs | Hepsi | 160 | +57 Savunma, +657 Can | 1a 36g 71b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Deri Yelek | `jerkin_sandsteel` | zırh | Göğüs | Hepsi | 185 | +66 Savunma, +759 Can | 1a 65g 11b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Deri Yelek | `jerkin_runebound` | zırh | Göğüs | Hepsi | 210 | +75 Savunma, +862 Can | 1a 94g 69b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Anka Deri Yelek | `jerkin_phoenix` | zırh | Göğüs | Hepsi | 235 | +84 Savunma, +965 Can | 2a 25g 34b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Deri Yelek | `jerkin_dreadforged` | zırh | Göğüs | Hepsi | 260 | +93 Savunma, +1067 Can | 2a 57g | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Deri Yelek | `jerkin_sovereign` | zırh | Göğüs | Hepsi | 285 | +102 Savunma, +1170 Can | 2a 89g 57b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Deri Yelek | `jerkin_coral` | zırh | Göğüs | Hepsi | 310 | +111 Savunma, +1273 Can | 3a 23g 2b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Deri Yelek | `jerkin_drakebone` | zırh | Göğüs | Hepsi | 335 | +120 Savunma, +1375 Can | 3a 57g 29b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Deri Yelek | `jerkin_mistwoven` | zırh | Göğüs | Hepsi | 360 | +129 Savunma, +1478 Can | 3a 92g 33b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Deri Yelek | `jerkin_prismatic` | zırh | Göğüs | Hepsi | 385 | +138 Savunma, +1581 Can | 4a 28g 11b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Deri Yelek | `jerkin_magmaforged` | zırh | Göğüs | Hepsi | 410 | +147 Savunma, +1683 Can | 4a 64g 60b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Bora Deri Yelek | `jerkin_tempest` | zırh | Göğüs | Hepsi | 435 | +156 Savunma, +1786 Can | 5a 1g 76b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Deri Yelek | `jerkin_voidtouched` | zırh | Göğüs | Hepsi | 460 | +165 Savunma, +1888 Can | 5a 39g 57b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Melek Deri Yelek | `jerkin_seraphic` | zırh | Göğüs | Hepsi | 485 | +174 Savunma, +1991 Can | 5a 77g 99b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Deri Yelek | `jerkin_eclipse` | zırh | Göğüs | Hepsi | 510 | +183 Savunma, +2094 Can | 6a 17g 2b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Deri Yelek | `jerkin_wyrmlord` | zırh | Göğüs | Hepsi | 535 | +191 Savunma, +2196 Can | 6a 56g 63b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Deri Yelek | `jerkin_celestine` | zırh | Göğüs | Hepsi | 560 | +200 Savunma, +2299 Can | 6a 96g 79b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Deri Yelek | `jerkin_eternal` | zırh | Göğüs | Hepsi | 585 | +209 Savunma, +2402 Can | 7a 37g 50b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Deri Yelek | `jerkin_starless` | zırh | Göğüs | Hepsi | 610 | +218 Savunma, +2504 Can | 7a 78g 73b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Deri Yelek | `jerkin_nightsteel` | zırh | Göğüs | Hepsi | 635 | +227 Savunma, +2607 Can | 8a 20g 47b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Deri Yelek | `jerkin_chronoforged` | zırh | Göğüs | Hepsi | 660 | +236 Savunma, +2709 Can | 8a 62g 71b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Deri Yelek | `jerkin_ascendant` | zırh | Göğüs | Hepsi | 685 | +245 Savunma, +2812 Can | 9a 5g 43b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Deri Yelek | `jerkin_stormborn` | zırh | Göğüs | Hepsi | 710 | +254 Savunma, +2915 Can | 9a 48g 63b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Deri Yelek | `jerkin_riftforged` | zırh | Göğüs | Hepsi | 735 | +263 Savunma, +3017 Can | 9a 92g 28b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Deri Yelek | `jerkin_chaos` | zırh | Göğüs | Hepsi | 760 | +272 Savunma, +3120 Can | 10a 36g 38b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Deri Yelek | `jerkin_skyforged` | zırh | Göğüs | Hepsi | 785 | +281 Savunma, +3223 Can | 10a 80g 91b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Deri Yelek | `jerkin_archangel` | zırh | Göğüs | Hepsi | 810 | +290 Savunma, +3325 Can | 11a 25g 87b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Deri Yelek | `jerkin_aurora` | zırh | Göğüs | Hepsi | 835 | +299 Savunma, +3428 Can | 11a 71g 26b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kül Deri Yelek | `jerkin_ashen` | zırh | Göğüs | Hepsi | 860 | +308 Savunma, +3531 Can | 12a 17g 5b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Deri Yelek | `jerkin_leviathan` | zırh | Göğüs | Hepsi | 885 | +317 Savunma, +3633 Can | 12a 63g 24b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Deri Yelek | `jerkin_doomforged` | zırh | Göğüs | Hepsi | 910 | +326 Savunma, +3736 Can | 13a 9g 82b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Deri Yelek | `jerkin_voidforged` | zırh | Göğüs | Hepsi | 935 | +335 Savunma, +3838 Can | 13a 56g 80b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Deri Yelek | `jerkin_godslayer` | zırh | Göğüs | Hepsi | 960 | +344 Savunma, +3941 Can | 14a 4g 15b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Deri Yelek | `jerkin_primordial` | zırh | Göğüs | Hepsi | 985 | +353 Savunma, +4044 Can | 14a 51g 87b | 2.8 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Göğüslük | `chest_novice` | zırh | Göğüs | Hepsi | 1 | +2 Savunma, +14 Can | 34b | 4 kg | Dükkân (34b); Av zaferi %4 / zindan boss'u |
 | Demir Göğüslük | `chest_iron` | zırh | Göğüs | Hepsi | 5 | +4 Savunma, +30 Can | 1g 31b | 4 kg | Üretim: Demircilik 3+ (6× Demir Cevheri, 2× Yaban Tavşanı Postu, 30b); Av zaferi %4 / zindan boss'u |
 | Pul Göğüslük | `chest_scale` | zırh | Göğüs | Hepsi | 10 | +6 Savunma, +50 Can | 3g 27b | 4 kg | Üretim: Demircilik 10+ (6× Bakır Cevheri, 3× Kalay Cevheri, 2× Yaban Kurdu Postu, 1g 40b); Av zaferi %4 / zindan boss'u |
 | Çelik Göğüslük | `chest_steel` | zırh | Göğüs | Hepsi | 15 | +7 Savunma, +70 Can | 5g 82b | 4 kg | Av zaferi %4 / zindan boss'u |
@@ -575,7 +1233,101 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Göğüslük | `chest_voidforged` | zırh | Göğüs | Hepsi | 935 | +335 Savunma, +3838 Can | 13a 56g 80b | 4 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Göğüslük | `chest_godslayer` | zırh | Göğüs | Hepsi | 960 | +344 Savunma, +3941 Can | 14a 4g 15b | 4 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Göğüslük | `chest_primordial` | zırh | Göğüs | Hepsi | 985 | +353 Savunma, +4044 Can | 14a 51g 87b | 4 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Sargı | `wraps_novice` | zırh | Eldiven | Hepsi | 1 | +1 Savunma, +1 İsabet % | 17b | 0.28 kg | Dükkân (17b); Av zaferi %4 / zindan boss'u |
+| Kalfa Sargı | `wraps_journeyman` | zırh | Eldiven | Hepsi | 5 | +2 Savunma, +1 İsabet % | 66b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Sargı | `wraps_fine` | zırh | Eldiven | Hepsi | 10 | +2 Savunma, +2 İsabet % | 1g 64b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Sargı | `wraps_veteran` | zırh | Eldiven | Hepsi | 15 | +3 Savunma, +2 İsabet % | 2g 91b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Sargı | `wraps_champion` | zırh | Eldiven | Hepsi | 20 | +4 Savunma, +3 İsabet % | 4g 41b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Sargı | `wraps_runed` | zırh | Eldiven | Hepsi | 25 | +5 Savunma, +3 İsabet % | 6g 12b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Sargı | `wraps_mithril` | zırh | Eldiven | Hepsi | 35 | +7 Savunma, +4 İsabet % | 9g 49b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Sargı | `wraps_adamant` | zırh | Eldiven | Hepsi | 50 | +9 Savunma, +5 İsabet % | 15g 6b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Sargı | `wraps_wyrmforged` | zırh | Eldiven | Hepsi | 65 | +11 Savunma, +6 İsabet % | 21g 18b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Sargı | `wraps_starforged` | zırh | Eldiven | Hepsi | 80 | +13 Savunma, +7 İsabet % | 27g 54b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Titan Sargı | `wraps_titan` | zırh | Eldiven | Hepsi | 95 | +15 Savunma, +8 İsabet % | 34g 64b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Sargı | `wraps_royal` | zırh | Eldiven | Hepsi | 110 | +17 Savunma, +8 İsabet % | 42g | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Sargı | `wraps_sunforged` | zırh | Eldiven | Hepsi | 135 | +21 Savunma, +8 İsabet % | 54g 81b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Sargı | `wraps_obsidian` | zırh | Eldiven | Hepsi | 160 | +25 Savunma, +9 İsabet % | 68g 36b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Sargı | `wraps_sandsteel` | zırh | Eldiven | Hepsi | 185 | +29 Savunma, +10 İsabet % | 82g 56b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Sargı | `wraps_runebound` | zırh | Eldiven | Hepsi | 210 | +33 Savunma, +10 İsabet % | 97g 35b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Anka Sargı | `wraps_phoenix` | zırh | Eldiven | Hepsi | 235 | +37 Savunma, +11 İsabet % | 1a 12g 67b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Sargı | `wraps_dreadforged` | zırh | Eldiven | Hepsi | 260 | +41 Savunma, +12 İsabet % | 1a 28g 50b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Sargı | `wraps_sovereign` | zırh | Eldiven | Hepsi | 285 | +45 Savunma, +12 İsabet % | 1a 44g 79b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Sargı | `wraps_coral` | zırh | Eldiven | Hepsi | 310 | +49 Savunma, +13 İsabet % | 1a 61g 51b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Sargı | `wraps_drakebone` | zırh | Eldiven | Hepsi | 335 | +53 Savunma, +13 İsabet % | 1a 78g 64b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Sargı | `wraps_mistwoven` | zırh | Eldiven | Hepsi | 360 | +57 Savunma, +14 İsabet % | 1a 96g 17b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Sargı | `wraps_prismatic` | zırh | Eldiven | Hepsi | 385 | +61 Savunma, +15 İsabet % | 2a 14g 6b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Sargı | `wraps_magmaforged` | zırh | Eldiven | Hepsi | 410 | +65 Savunma, +15 İsabet % | 2a 32g 30b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Bora Sargı | `wraps_tempest` | zırh | Eldiven | Hepsi | 435 | +69 Savunma, +16 İsabet % | 2a 50g 88b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Sargı | `wraps_voidtouched` | zırh | Eldiven | Hepsi | 460 | +73 Savunma, +16 İsabet % | 2a 69g 78b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Melek Sargı | `wraps_seraphic` | zırh | Eldiven | Hepsi | 485 | +77 Savunma, +17 İsabet % | 2a 89g | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Sargı | `wraps_eclipse` | zırh | Eldiven | Hepsi | 510 | +81 Savunma, +18 İsabet % | 3a 8g 51b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Sargı | `wraps_wyrmlord` | zırh | Eldiven | Hepsi | 535 | +84 Savunma, +18 İsabet % | 3a 28g 31b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Sargı | `wraps_celestine` | zırh | Eldiven | Hepsi | 560 | +88 Savunma, +19 İsabet % | 3a 48g 40b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Sargı | `wraps_eternal` | zırh | Eldiven | Hepsi | 585 | +92 Savunma, +20 İsabet % | 3a 68g 75b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Sargı | `wraps_starless` | zırh | Eldiven | Hepsi | 610 | +96 Savunma, +20 İsabet % | 3a 89g 37b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Sargı | `wraps_nightsteel` | zırh | Eldiven | Hepsi | 635 | +100 Savunma, +21 İsabet % | 4a 10g 24b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Sargı | `wraps_chronoforged` | zırh | Eldiven | Hepsi | 660 | +104 Savunma, +22 İsabet % | 4a 31g 36b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Sargı | `wraps_ascendant` | zırh | Eldiven | Hepsi | 685 | +108 Savunma, +22 İsabet % | 4a 52g 72b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Sargı | `wraps_stormborn` | zırh | Eldiven | Hepsi | 710 | +112 Savunma, +23 İsabet % | 4a 74g 31b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Sargı | `wraps_riftforged` | zırh | Eldiven | Hepsi | 735 | +116 Savunma, +23 İsabet % | 4a 96g 14b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Sargı | `wraps_chaos` | zırh | Eldiven | Hepsi | 760 | +120 Savunma, +24 İsabet % | 5a 18g 19b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Sargı | `wraps_skyforged` | zırh | Eldiven | Hepsi | 785 | +124 Savunma, +25 İsabet % | 5a 40g 46b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Sargı | `wraps_archangel` | zırh | Eldiven | Hepsi | 810 | +128 Savunma, +25 İsabet % | 5a 62g 94b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Sargı | `wraps_aurora` | zırh | Eldiven | Hepsi | 835 | +132 Savunma, +26 İsabet % | 5a 85g 63b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kül Sargı | `wraps_ashen` | zırh | Eldiven | Hepsi | 860 | +136 Savunma, +26 İsabet % | 6a 8g 52b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Sargı | `wraps_leviathan` | zırh | Eldiven | Hepsi | 885 | +140 Savunma, +27 İsabet % | 6a 31g 62b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Sargı | `wraps_doomforged` | zırh | Eldiven | Hepsi | 910 | +144 Savunma, +28 İsabet % | 6a 54g 91b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Sargı | `wraps_voidforged` | zırh | Eldiven | Hepsi | 935 | +148 Savunma, +28 İsabet % | 6a 78g 40b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Sargı | `wraps_godslayer` | zırh | Eldiven | Hepsi | 960 | +152 Savunma, +29 İsabet % | 7a 2g 7b | 0.28 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Sargı | `wraps_primordial` | zırh | Eldiven | Hepsi | 985 | +156 Savunma, +30 İsabet % | 7a 25g 93b | 0.28 kg | Av zaferi %4 / zindan boss'u |
 | Deri Eldiven | `gloves_leather` | zırh | Eldiven | Hepsi | 1 | +1 Savunma, +1 İsabet % | 17b | 0.7 kg | Dükkân (17b); Üretim: Demircilik 1+ (1× Orman Faresi Postu, 4b); Av zaferi %4 / zindan boss'u |
+| Kalfa Deri Eldiven | `grips_journeyman` | zırh | Eldiven | Hepsi | 5 | +2 Savunma, +1 İsabet % | 66b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Deri Eldiven | `grips_fine` | zırh | Eldiven | Hepsi | 10 | +2 Savunma, +2 İsabet % | 1g 64b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Deri Eldiven | `grips_veteran` | zırh | Eldiven | Hepsi | 15 | +3 Savunma, +2 İsabet % | 2g 91b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Deri Eldiven | `grips_champion` | zırh | Eldiven | Hepsi | 20 | +4 Savunma, +3 İsabet % | 4g 41b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Deri Eldiven | `grips_runed` | zırh | Eldiven | Hepsi | 25 | +5 Savunma, +3 İsabet % | 6g 12b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Deri Eldiven | `grips_mithril` | zırh | Eldiven | Hepsi | 35 | +7 Savunma, +4 İsabet % | 9g 49b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Deri Eldiven | `grips_adamant` | zırh | Eldiven | Hepsi | 50 | +9 Savunma, +5 İsabet % | 15g 6b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Deri Eldiven | `grips_wyrmforged` | zırh | Eldiven | Hepsi | 65 | +11 Savunma, +6 İsabet % | 21g 18b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Deri Eldiven | `grips_starforged` | zırh | Eldiven | Hepsi | 80 | +13 Savunma, +7 İsabet % | 27g 54b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Titan Deri Eldiven | `grips_titan` | zırh | Eldiven | Hepsi | 95 | +15 Savunma, +8 İsabet % | 34g 64b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Deri Eldiven | `grips_royal` | zırh | Eldiven | Hepsi | 110 | +17 Savunma, +8 İsabet % | 42g | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Deri Eldiven | `grips_sunforged` | zırh | Eldiven | Hepsi | 135 | +21 Savunma, +8 İsabet % | 54g 81b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Deri Eldiven | `grips_obsidian` | zırh | Eldiven | Hepsi | 160 | +25 Savunma, +9 İsabet % | 68g 36b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Deri Eldiven | `grips_sandsteel` | zırh | Eldiven | Hepsi | 185 | +29 Savunma, +10 İsabet % | 82g 56b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Deri Eldiven | `grips_runebound` | zırh | Eldiven | Hepsi | 210 | +33 Savunma, +10 İsabet % | 97g 35b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Anka Deri Eldiven | `grips_phoenix` | zırh | Eldiven | Hepsi | 235 | +37 Savunma, +11 İsabet % | 1a 12g 67b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Deri Eldiven | `grips_dreadforged` | zırh | Eldiven | Hepsi | 260 | +41 Savunma, +12 İsabet % | 1a 28g 50b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Deri Eldiven | `grips_sovereign` | zırh | Eldiven | Hepsi | 285 | +45 Savunma, +12 İsabet % | 1a 44g 79b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Deri Eldiven | `grips_coral` | zırh | Eldiven | Hepsi | 310 | +49 Savunma, +13 İsabet % | 1a 61g 51b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Deri Eldiven | `grips_drakebone` | zırh | Eldiven | Hepsi | 335 | +53 Savunma, +13 İsabet % | 1a 78g 64b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Deri Eldiven | `grips_mistwoven` | zırh | Eldiven | Hepsi | 360 | +57 Savunma, +14 İsabet % | 1a 96g 17b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Deri Eldiven | `grips_prismatic` | zırh | Eldiven | Hepsi | 385 | +61 Savunma, +15 İsabet % | 2a 14g 6b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Deri Eldiven | `grips_magmaforged` | zırh | Eldiven | Hepsi | 410 | +65 Savunma, +15 İsabet % | 2a 32g 30b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Bora Deri Eldiven | `grips_tempest` | zırh | Eldiven | Hepsi | 435 | +69 Savunma, +16 İsabet % | 2a 50g 88b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Deri Eldiven | `grips_voidtouched` | zırh | Eldiven | Hepsi | 460 | +73 Savunma, +16 İsabet % | 2a 69g 78b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Melek Deri Eldiven | `grips_seraphic` | zırh | Eldiven | Hepsi | 485 | +77 Savunma, +17 İsabet % | 2a 89g | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Deri Eldiven | `grips_eclipse` | zırh | Eldiven | Hepsi | 510 | +81 Savunma, +18 İsabet % | 3a 8g 51b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Deri Eldiven | `grips_wyrmlord` | zırh | Eldiven | Hepsi | 535 | +84 Savunma, +18 İsabet % | 3a 28g 31b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Deri Eldiven | `grips_celestine` | zırh | Eldiven | Hepsi | 560 | +88 Savunma, +19 İsabet % | 3a 48g 40b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Deri Eldiven | `grips_eternal` | zırh | Eldiven | Hepsi | 585 | +92 Savunma, +20 İsabet % | 3a 68g 75b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Deri Eldiven | `grips_starless` | zırh | Eldiven | Hepsi | 610 | +96 Savunma, +20 İsabet % | 3a 89g 37b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Deri Eldiven | `grips_nightsteel` | zırh | Eldiven | Hepsi | 635 | +100 Savunma, +21 İsabet % | 4a 10g 24b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Deri Eldiven | `grips_chronoforged` | zırh | Eldiven | Hepsi | 660 | +104 Savunma, +22 İsabet % | 4a 31g 36b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Deri Eldiven | `grips_ascendant` | zırh | Eldiven | Hepsi | 685 | +108 Savunma, +22 İsabet % | 4a 52g 72b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Deri Eldiven | `grips_stormborn` | zırh | Eldiven | Hepsi | 710 | +112 Savunma, +23 İsabet % | 4a 74g 31b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Deri Eldiven | `grips_riftforged` | zırh | Eldiven | Hepsi | 735 | +116 Savunma, +23 İsabet % | 4a 96g 14b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Deri Eldiven | `grips_chaos` | zırh | Eldiven | Hepsi | 760 | +120 Savunma, +24 İsabet % | 5a 18g 19b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Deri Eldiven | `grips_skyforged` | zırh | Eldiven | Hepsi | 785 | +124 Savunma, +25 İsabet % | 5a 40g 46b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Deri Eldiven | `grips_archangel` | zırh | Eldiven | Hepsi | 810 | +128 Savunma, +25 İsabet % | 5a 62g 94b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Deri Eldiven | `grips_aurora` | zırh | Eldiven | Hepsi | 835 | +132 Savunma, +26 İsabet % | 5a 85g 63b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kül Deri Eldiven | `grips_ashen` | zırh | Eldiven | Hepsi | 860 | +136 Savunma, +26 İsabet % | 6a 8g 52b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Deri Eldiven | `grips_leviathan` | zırh | Eldiven | Hepsi | 885 | +140 Savunma, +27 İsabet % | 6a 31g 62b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Deri Eldiven | `grips_doomforged` | zırh | Eldiven | Hepsi | 910 | +144 Savunma, +28 İsabet % | 6a 54g 91b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Deri Eldiven | `grips_voidforged` | zırh | Eldiven | Hepsi | 935 | +148 Savunma, +28 İsabet % | 6a 78g 40b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Deri Eldiven | `grips_godslayer` | zırh | Eldiven | Hepsi | 960 | +152 Savunma, +29 İsabet % | 7a 2g 7b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Deri Eldiven | `grips_primordial` | zırh | Eldiven | Hepsi | 985 | +156 Savunma, +30 İsabet % | 7a 25g 93b | 0.49 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Eldiven | `gloves_novice` | zırh | Eldiven | Hepsi | 1 | +1 Savunma, +1 İsabet % | 17b | 0.7 kg | Dükkân (17b); Av zaferi %4 / zindan boss'u |
 | Demir Eldiven | `gloves_iron` | zırh | Eldiven | Hepsi | 5 | +2 Savunma, +1 İsabet % | 66b | 0.7 kg | Üretim: Demircilik 3+ (2× Demir Cevheri, 12b); Av zaferi %4 / zindan boss'u |
 | Pul Eldiven | `gloves_scale` | zırh | Eldiven | Hepsi | 10 | +2 Savunma, +2 İsabet % | 1g 64b | 0.7 kg | Üretim: Demircilik 10+ (2× Bakır Cevheri, 1× Yaban Kurdu Postu, 60b); Av zaferi %4 / zindan boss'u |
 | Çelik Eldiven | `gloves_steel` | zırh | Eldiven | Hepsi | 15 | +3 Savunma, +2 İsabet % | 2g 91b | 0.7 kg | Av zaferi %4 / zindan boss'u |
@@ -622,7 +1374,101 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Eldiven | `gloves_voidforged` | zırh | Eldiven | Hepsi | 935 | +148 Savunma, +28 İsabet % | 6a 78g 40b | 0.7 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Eldiven | `gloves_godslayer` | zırh | Eldiven | Hepsi | 960 | +152 Savunma, +29 İsabet % | 7a 2g 7b | 0.7 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Eldiven | `gloves_primordial` | zırh | Eldiven | Hepsi | 985 | +156 Savunma, +30 İsabet % | 7a 25g 93b | 0.7 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Kukuleta | `hood_novice` | zırh | Kask | Hepsi | 1 | +1 Savunma, +1 DAY | 21b | 0.72 kg | Dükkân (21b); Av zaferi %4 / zindan boss'u |
+| Kalfa Kukuleta | `hood_journeyman` | zırh | Kask | Hepsi | 5 | +2 Savunma, +1 DAY | 82b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Kukuleta | `hood_fine` | zırh | Kask | Hepsi | 10 | +3 Savunma, +2 DAY | 2g 4b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Kukuleta | `hood_veteran` | zırh | Kask | Hepsi | 15 | +4 Savunma, +2 DAY | 3g 64b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Kukuleta | `hood_champion` | zırh | Kask | Hepsi | 20 | +5 Savunma, +3 DAY | 5g 52b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Kukuleta | `hood_runed` | zırh | Kask | Hepsi | 25 | +6 Savunma, +4 DAY | 7g 65b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Kukuleta | `hood_mithril` | zırh | Kask | Hepsi | 35 | +8 Savunma, +5 DAY | 11g 86b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Kukuleta | `hood_adamant` | zırh | Kask | Hepsi | 50 | +10 Savunma, +7 DAY | 18g 82b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Kukuleta | `hood_wyrmforged` | zırh | Kask | Hepsi | 65 | +13 Savunma, +9 DAY | 26g 47b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Kukuleta | `hood_starforged` | zırh | Kask | Hepsi | 80 | +15 Savunma, +11 DAY | 34g 42b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Titan Kukuleta | `hood_titan` | zırh | Kask | Hepsi | 95 | +18 Savunma, +13 DAY | 43g 30b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Kukuleta | `hood_royal` | zırh | Kask | Hepsi | 110 | +21 Savunma, +15 DAY | 52g 50b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Kukuleta | `hood_sunforged` | zırh | Kask | Hepsi | 135 | +26 Savunma, +18 DAY | 68g 51b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Kukuleta | `hood_obsidian` | zırh | Kask | Hepsi | 160 | +30 Savunma, +22 DAY | 85g 45b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Kukuleta | `hood_sandsteel` | zırh | Kask | Hepsi | 185 | +35 Savunma, +25 DAY | 1a 3g 20b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Kukuleta | `hood_runebound` | zırh | Kask | Hepsi | 210 | +40 Savunma, +29 DAY | 1a 21g 68b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Anka Kukuleta | `hood_phoenix` | zırh | Kask | Hepsi | 235 | +45 Savunma, +32 DAY | 1a 40g 84b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Kukuleta | `hood_dreadforged` | zırh | Kask | Hepsi | 260 | +49 Savunma, +36 DAY | 1a 60g 62b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Kukuleta | `hood_sovereign` | zırh | Kask | Hepsi | 285 | +54 Savunma, +39 DAY | 1a 80g 98b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Kukuleta | `hood_coral` | zırh | Kask | Hepsi | 310 | +59 Savunma, +42 DAY | 2a 1g 89b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Kukuleta | `hood_drakebone` | zırh | Kask | Hepsi | 335 | +63 Savunma, +46 DAY | 2a 23g 30b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Kukuleta | `hood_mistwoven` | zırh | Kask | Hepsi | 360 | +68 Savunma, +49 DAY | 2a 45g 21b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Kukuleta | `hood_prismatic` | zırh | Kask | Hepsi | 385 | +73 Savunma, +53 DAY | 2a 67g 57b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Kukuleta | `hood_magmaforged` | zırh | Kask | Hepsi | 410 | +78 Savunma, +56 DAY | 2a 90g 37b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Bora Kukuleta | `hood_tempest` | zırh | Kask | Hepsi | 435 | +82 Savunma, +60 DAY | 3a 13g 60b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Kukuleta | `hood_voidtouched` | zırh | Kask | Hepsi | 460 | +87 Savunma, +63 DAY | 3a 37g 23b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Melek Kukuleta | `hood_seraphic` | zırh | Kask | Hepsi | 485 | +92 Savunma, +66 DAY | 3a 61g 25b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Kukuleta | `hood_eclipse` | zırh | Kask | Hepsi | 510 | +97 Savunma, +70 DAY | 3a 85g 64b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Kukuleta | `hood_wyrmlord` | zırh | Kask | Hepsi | 535 | +101 Savunma, +73 DAY | 4a 10g 39b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Kukuleta | `hood_celestine` | zırh | Kask | Hepsi | 560 | +106 Savunma, +77 DAY | 4a 35g 50b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Kukuleta | `hood_eternal` | zırh | Kask | Hepsi | 585 | +111 Savunma, +80 DAY | 4a 60g 94b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Kukuleta | `hood_starless` | zırh | Kask | Hepsi | 610 | +116 Savunma, +83 DAY | 4a 86g 71b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Kukuleta | `hood_nightsteel` | zırh | Kask | Hepsi | 635 | +120 Savunma, +87 DAY | 5a 12g 80b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Kukuleta | `hood_chronoforged` | zırh | Kask | Hepsi | 660 | +125 Savunma, +90 DAY | 5a 39g 20b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Kukuleta | `hood_ascendant` | zırh | Kask | Hepsi | 685 | +130 Savunma, +94 DAY | 5a 65g 90b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Kukuleta | `hood_stormborn` | zırh | Kask | Hepsi | 710 | +135 Savunma, +97 DAY | 5a 92g 89b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Kukuleta | `hood_riftforged` | zırh | Kask | Hepsi | 735 | +139 Savunma, +101 DAY | 6a 20g 17b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Kukuleta | `hood_chaos` | zırh | Kask | Hepsi | 760 | +144 Savunma, +104 DAY | 6a 47g 73b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Kukuleta | `hood_skyforged` | zırh | Kask | Hepsi | 785 | +149 Savunma, +107 DAY | 6a 75g 57b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Kukuleta | `hood_archangel` | zırh | Kask | Hepsi | 810 | +153 Savunma, +111 DAY | 7a 3g 67b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Kukuleta | `hood_aurora` | zırh | Kask | Hepsi | 835 | +158 Savunma, +114 DAY | 7a 32g 3b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kül Kukuleta | `hood_ashen` | zırh | Kask | Hepsi | 860 | +163 Savunma, +118 DAY | 7a 60g 65b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Kukuleta | `hood_leviathan` | zırh | Kask | Hepsi | 885 | +168 Savunma, +121 DAY | 7a 89g 52b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Kukuleta | `hood_doomforged` | zırh | Kask | Hepsi | 910 | +172 Savunma, +125 DAY | 8a 18g 64b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Kukuleta | `hood_voidforged` | zırh | Kask | Hepsi | 935 | +177 Savunma, +128 DAY | 8a 48g | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Kukuleta | `hood_godslayer` | zırh | Kask | Hepsi | 960 | +182 Savunma, +131 DAY | 8a 77g 59b | 0.72 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Kukuleta | `hood_primordial` | zırh | Kask | Hepsi | 985 | +187 Savunma, +135 DAY | 9a 7g 42b | 0.72 kg | Av zaferi %4 / zindan boss'u |
 | Deri Kask | `helm_leather` | zırh | Kask | Hepsi | 1 | +1 Savunma, +1 DAY | 21b | 1.8 kg | Dükkân (21b); Üretim: Demircilik 1+ (2× Orman Faresi Postu, 5b); Av zaferi %4 / zindan boss'u |
+| Kalfa Deri Başlık | `cowl_journeyman` | zırh | Kask | Hepsi | 5 | +2 Savunma, +1 DAY | 82b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Deri Başlık | `cowl_fine` | zırh | Kask | Hepsi | 10 | +3 Savunma, +2 DAY | 2g 4b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Deri Başlık | `cowl_veteran` | zırh | Kask | Hepsi | 15 | +4 Savunma, +2 DAY | 3g 64b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Deri Başlık | `cowl_champion` | zırh | Kask | Hepsi | 20 | +5 Savunma, +3 DAY | 5g 52b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Deri Başlık | `cowl_runed` | zırh | Kask | Hepsi | 25 | +6 Savunma, +4 DAY | 7g 65b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Deri Başlık | `cowl_mithril` | zırh | Kask | Hepsi | 35 | +8 Savunma, +5 DAY | 11g 86b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Deri Başlık | `cowl_adamant` | zırh | Kask | Hepsi | 50 | +10 Savunma, +7 DAY | 18g 82b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Deri Başlık | `cowl_wyrmforged` | zırh | Kask | Hepsi | 65 | +13 Savunma, +9 DAY | 26g 47b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Deri Başlık | `cowl_starforged` | zırh | Kask | Hepsi | 80 | +15 Savunma, +11 DAY | 34g 42b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Titan Deri Başlık | `cowl_titan` | zırh | Kask | Hepsi | 95 | +18 Savunma, +13 DAY | 43g 30b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Deri Başlık | `cowl_royal` | zırh | Kask | Hepsi | 110 | +21 Savunma, +15 DAY | 52g 50b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Deri Başlık | `cowl_sunforged` | zırh | Kask | Hepsi | 135 | +26 Savunma, +18 DAY | 68g 51b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Deri Başlık | `cowl_obsidian` | zırh | Kask | Hepsi | 160 | +30 Savunma, +22 DAY | 85g 45b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Deri Başlık | `cowl_sandsteel` | zırh | Kask | Hepsi | 185 | +35 Savunma, +25 DAY | 1a 3g 20b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Deri Başlık | `cowl_runebound` | zırh | Kask | Hepsi | 210 | +40 Savunma, +29 DAY | 1a 21g 68b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Anka Deri Başlık | `cowl_phoenix` | zırh | Kask | Hepsi | 235 | +45 Savunma, +32 DAY | 1a 40g 84b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Deri Başlık | `cowl_dreadforged` | zırh | Kask | Hepsi | 260 | +49 Savunma, +36 DAY | 1a 60g 62b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Deri Başlık | `cowl_sovereign` | zırh | Kask | Hepsi | 285 | +54 Savunma, +39 DAY | 1a 80g 98b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Deri Başlık | `cowl_coral` | zırh | Kask | Hepsi | 310 | +59 Savunma, +42 DAY | 2a 1g 89b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Deri Başlık | `cowl_drakebone` | zırh | Kask | Hepsi | 335 | +63 Savunma, +46 DAY | 2a 23g 30b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Deri Başlık | `cowl_mistwoven` | zırh | Kask | Hepsi | 360 | +68 Savunma, +49 DAY | 2a 45g 21b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Deri Başlık | `cowl_prismatic` | zırh | Kask | Hepsi | 385 | +73 Savunma, +53 DAY | 2a 67g 57b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Deri Başlık | `cowl_magmaforged` | zırh | Kask | Hepsi | 410 | +78 Savunma, +56 DAY | 2a 90g 37b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Bora Deri Başlık | `cowl_tempest` | zırh | Kask | Hepsi | 435 | +82 Savunma, +60 DAY | 3a 13g 60b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Deri Başlık | `cowl_voidtouched` | zırh | Kask | Hepsi | 460 | +87 Savunma, +63 DAY | 3a 37g 23b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Melek Deri Başlık | `cowl_seraphic` | zırh | Kask | Hepsi | 485 | +92 Savunma, +66 DAY | 3a 61g 25b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Deri Başlık | `cowl_eclipse` | zırh | Kask | Hepsi | 510 | +97 Savunma, +70 DAY | 3a 85g 64b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Deri Başlık | `cowl_wyrmlord` | zırh | Kask | Hepsi | 535 | +101 Savunma, +73 DAY | 4a 10g 39b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Deri Başlık | `cowl_celestine` | zırh | Kask | Hepsi | 560 | +106 Savunma, +77 DAY | 4a 35g 50b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Deri Başlık | `cowl_eternal` | zırh | Kask | Hepsi | 585 | +111 Savunma, +80 DAY | 4a 60g 94b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Deri Başlık | `cowl_starless` | zırh | Kask | Hepsi | 610 | +116 Savunma, +83 DAY | 4a 86g 71b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Deri Başlık | `cowl_nightsteel` | zırh | Kask | Hepsi | 635 | +120 Savunma, +87 DAY | 5a 12g 80b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Deri Başlık | `cowl_chronoforged` | zırh | Kask | Hepsi | 660 | +125 Savunma, +90 DAY | 5a 39g 20b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Deri Başlık | `cowl_ascendant` | zırh | Kask | Hepsi | 685 | +130 Savunma, +94 DAY | 5a 65g 90b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Deri Başlık | `cowl_stormborn` | zırh | Kask | Hepsi | 710 | +135 Savunma, +97 DAY | 5a 92g 89b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Deri Başlık | `cowl_riftforged` | zırh | Kask | Hepsi | 735 | +139 Savunma, +101 DAY | 6a 20g 17b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Deri Başlık | `cowl_chaos` | zırh | Kask | Hepsi | 760 | +144 Savunma, +104 DAY | 6a 47g 73b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Deri Başlık | `cowl_skyforged` | zırh | Kask | Hepsi | 785 | +149 Savunma, +107 DAY | 6a 75g 57b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Deri Başlık | `cowl_archangel` | zırh | Kask | Hepsi | 810 | +153 Savunma, +111 DAY | 7a 3g 67b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Deri Başlık | `cowl_aurora` | zırh | Kask | Hepsi | 835 | +158 Savunma, +114 DAY | 7a 32g 3b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kül Deri Başlık | `cowl_ashen` | zırh | Kask | Hepsi | 860 | +163 Savunma, +118 DAY | 7a 60g 65b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Deri Başlık | `cowl_leviathan` | zırh | Kask | Hepsi | 885 | +168 Savunma, +121 DAY | 7a 89g 52b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Deri Başlık | `cowl_doomforged` | zırh | Kask | Hepsi | 910 | +172 Savunma, +125 DAY | 8a 18g 64b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Deri Başlık | `cowl_voidforged` | zırh | Kask | Hepsi | 935 | +177 Savunma, +128 DAY | 8a 48g | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Deri Başlık | `cowl_godslayer` | zırh | Kask | Hepsi | 960 | +182 Savunma, +131 DAY | 8a 77g 59b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Deri Başlık | `cowl_primordial` | zırh | Kask | Hepsi | 985 | +187 Savunma, +135 DAY | 9a 7g 42b | 1.26 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Kask | `helm_novice` | zırh | Kask | Hepsi | 1 | +1 Savunma, +1 DAY | 21b | 1.8 kg | Dükkân (21b); Av zaferi %4 / zindan boss'u |
 | Demir Kask | `helm_iron` | zırh | Kask | Hepsi | 5 | +2 Savunma, +1 DAY | 82b | 1.8 kg | Üretim: Demircilik 3+ (4× Demir Cevheri, 20b); Av zaferi %4 / zindan boss'u |
 | Pul Kask | `helm_scale` | zırh | Kask | Hepsi | 10 | +3 Savunma, +2 DAY | 2g 4b | 1.8 kg | Üretim: Demircilik 10+ (4× Bakır Cevheri, 2× Kalay Cevheri, 80b); Av zaferi %4 / zindan boss'u |
 | Çelik Kask | `helm_steel` | zırh | Kask | Hepsi | 15 | +4 Savunma, +2 DAY | 3g 64b | 1.8 kg | Av zaferi %4 / zindan boss'u |
@@ -669,7 +1515,101 @@ Toplam **909** eşya şablonu. Bu dosya `python scripts/item_catalog.py` ile iç
 | Hiçlik Dövme Kask | `helm_voidforged` | zırh | Kask | Hepsi | 935 | +177 Savunma, +128 DAY | 8a 48g | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Tanrı Katili Kask | `helm_godslayer` | zırh | Kask | Hepsi | 960 | +182 Savunma, +131 DAY | 8a 77g 59b | 1.8 kg | Av zaferi %4 / zindan boss'u |
 | Kadim Çağ Kask | `helm_primordial` | zırh | Kask | Hepsi | 985 | +187 Savunma, +135 DAY | 9a 7g 42b | 1.8 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Şalvar | `trousers_novice` | zırh | Bacak | Hepsi | 1 | +1 Savunma, +1 DAY | 29b | 1.2 kg | Dükkân (29b); Av zaferi %4 / zindan boss'u |
+| Kalfa Şalvar | `trousers_journeyman` | zırh | Bacak | Hepsi | 5 | +2 Savunma, +1 DAY | 1g 15b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Şalvar | `trousers_fine` | zırh | Bacak | Hepsi | 10 | +4 Savunma, +2 DAY | 2g 86b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Şalvar | `trousers_veteran` | zırh | Bacak | Hepsi | 15 | +6 Savunma, +3 DAY | 5g 9b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Şalvar | `trousers_champion` | zırh | Bacak | Hepsi | 20 | +7 Savunma, +4 DAY | 7g 72b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Şalvar | `trousers_runed` | zırh | Bacak | Hepsi | 25 | +8 Savunma, +5 DAY | 10g 71b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Şalvar | `trousers_mithril` | zırh | Bacak | Hepsi | 35 | +11 Savunma, +7 DAY | 16g 60b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Şalvar | `trousers_adamant` | zırh | Bacak | Hepsi | 50 | +15 Savunma, +9 DAY | 26g 35b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Şalvar | `trousers_wyrmforged` | zırh | Bacak | Hepsi | 65 | +19 Savunma, +11 DAY | 37g 6b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Şalvar | `trousers_starforged` | zırh | Bacak | Hepsi | 80 | +23 Savunma, +13 DAY | 48g 20b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Titan Şalvar | `trousers_titan` | zırh | Bacak | Hepsi | 95 | +27 Savunma, +15 DAY | 60g 62b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Şalvar | `trousers_royal` | zırh | Bacak | Hepsi | 110 | +31 Savunma, +17 DAY | 73g 50b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Şalvar | `trousers_sunforged` | zırh | Bacak | Hepsi | 135 | +38 Savunma, +21 DAY | 95g 92b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Şalvar | `trousers_obsidian` | zırh | Bacak | Hepsi | 160 | +45 Savunma, +25 DAY | 1a 19g 63b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Şalvar | `trousers_sandsteel` | zırh | Bacak | Hepsi | 185 | +53 Savunma, +29 DAY | 1a 44g 47b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Şalvar | `trousers_runebound` | zırh | Bacak | Hepsi | 210 | +60 Savunma, +33 DAY | 1a 70g 35b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Anka Şalvar | `trousers_phoenix` | zırh | Bacak | Hepsi | 235 | +67 Savunma, +37 DAY | 1a 97g 18b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Şalvar | `trousers_dreadforged` | zırh | Bacak | Hepsi | 260 | +74 Savunma, +41 DAY | 2a 24g 87b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Şalvar | `trousers_sovereign` | zırh | Bacak | Hepsi | 285 | +81 Savunma, +45 DAY | 2a 53g 38b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Şalvar | `trousers_coral` | zırh | Bacak | Hepsi | 310 | +88 Savunma, +49 DAY | 2a 82g 64b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Şalvar | `trousers_drakebone` | zırh | Bacak | Hepsi | 335 | +95 Savunma, +53 DAY | 3a 12g 63b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Şalvar | `trousers_mistwoven` | zırh | Bacak | Hepsi | 360 | +102 Savunma, +57 DAY | 3a 43g 29b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Şalvar | `trousers_prismatic` | zırh | Bacak | Hepsi | 385 | +109 Savunma, +61 DAY | 3a 74g 60b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Şalvar | `trousers_magmaforged` | zırh | Bacak | Hepsi | 410 | +117 Savunma, +65 DAY | 4a 6g 52b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Bora Şalvar | `trousers_tempest` | zırh | Bacak | Hepsi | 435 | +124 Savunma, +69 DAY | 4a 39g 4b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Şalvar | `trousers_voidtouched` | zırh | Bacak | Hepsi | 460 | +131 Savunma, +73 DAY | 4a 72g 12b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Melek Şalvar | `trousers_seraphic` | zırh | Bacak | Hepsi | 485 | +138 Savunma, +77 DAY | 5a 5g 75b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Şalvar | `trousers_eclipse` | zırh | Bacak | Hepsi | 510 | +145 Savunma, +81 DAY | 5a 39g 89b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Şalvar | `trousers_wyrmlord` | zırh | Bacak | Hepsi | 535 | +152 Savunma, +84 DAY | 5a 74g 55b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Şalvar | `trousers_celestine` | zırh | Bacak | Hepsi | 560 | +159 Savunma, +88 DAY | 6a 9g 69b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Şalvar | `trousers_eternal` | zırh | Bacak | Hepsi | 585 | +166 Savunma, +92 DAY | 6a 45g 31b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Şalvar | `trousers_starless` | zırh | Bacak | Hepsi | 610 | +173 Savunma, +96 DAY | 6a 81g 39b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Şalvar | `trousers_nightsteel` | zırh | Bacak | Hepsi | 635 | +180 Savunma, +100 DAY | 7a 17g 92b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Şalvar | `trousers_chronoforged` | zırh | Bacak | Hepsi | 660 | +188 Savunma, +104 DAY | 7a 54g 87b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Şalvar | `trousers_ascendant` | zırh | Bacak | Hepsi | 685 | +195 Savunma, +108 DAY | 7a 92g 26b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Şalvar | `trousers_stormborn` | zırh | Bacak | Hepsi | 710 | +202 Savunma, +112 DAY | 8a 30g 5b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Şalvar | `trousers_riftforged` | zırh | Bacak | Hepsi | 735 | +209 Savunma, +116 DAY | 8a 68g 24b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Şalvar | `trousers_chaos` | zırh | Bacak | Hepsi | 760 | +216 Savunma, +120 DAY | 9a 6g 83b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Şalvar | `trousers_skyforged` | zırh | Bacak | Hepsi | 785 | +223 Savunma, +124 DAY | 9a 45g 80b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Şalvar | `trousers_archangel` | zırh | Bacak | Hepsi | 810 | +230 Savunma, +128 DAY | 9a 85g 14b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Şalvar | `trousers_aurora` | zırh | Bacak | Hepsi | 835 | +237 Savunma, +132 DAY | 10a 24g 85b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kül Şalvar | `trousers_ashen` | zırh | Bacak | Hepsi | 860 | +244 Savunma, +136 DAY | 10a 64g 92b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Şalvar | `trousers_leviathan` | zırh | Bacak | Hepsi | 885 | +252 Savunma, +140 DAY | 11a 5g 33b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Şalvar | `trousers_doomforged` | zırh | Bacak | Hepsi | 910 | +259 Savunma, +144 DAY | 11a 46g 10b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Şalvar | `trousers_voidforged` | zırh | Bacak | Hepsi | 935 | +266 Savunma, +148 DAY | 11a 87g 20b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Şalvar | `trousers_godslayer` | zırh | Bacak | Hepsi | 960 | +273 Savunma, +152 DAY | 12a 28g 63b | 1.2 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Şalvar | `trousers_primordial` | zırh | Bacak | Hepsi | 985 | +280 Savunma, +156 DAY | 12a 70g 38b | 1.2 kg | Av zaferi %4 / zindan boss'u |
 | Deri Bacaklık | `legs_leather` | zırh | Bacak | Hepsi | 1 | +1 Savunma, +1 DAY | 29b | 3 kg | Dükkân (29b); Üretim: Demircilik 1+ (3× Orman Faresi Postu, 6b); Av zaferi %4 / zindan boss'u |
+| Kalfa Deri Tozluk | `leggings_journeyman` | zırh | Bacak | Hepsi | 5 | +2 Savunma, +1 DAY | 1g 15b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kaliteli Deri Tozluk | `leggings_fine` | zırh | Bacak | Hepsi | 10 | +4 Savunma, +2 DAY | 2g 86b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kıdemli Deri Tozluk | `leggings_veteran` | zırh | Bacak | Hepsi | 15 | +6 Savunma, +3 DAY | 5g 9b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Şampiyon Deri Tozluk | `leggings_champion` | zırh | Bacak | Hepsi | 20 | +7 Savunma, +4 DAY | 7g 72b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Rünlü Deri Tozluk | `leggings_runed` | zırh | Bacak | Hepsi | 25 | +8 Savunma, +5 DAY | 10g 71b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Mithril Deri Tozluk | `leggings_mithril` | zırh | Bacak | Hepsi | 35 | +11 Savunma, +7 DAY | 16g 60b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Adamant Deri Tozluk | `leggings_adamant` | zırh | Bacak | Hepsi | 50 | +15 Savunma, +9 DAY | 26g 35b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Dövme Deri Tozluk | `leggings_wyrmforged` | zırh | Bacak | Hepsi | 65 | +19 Savunma, +11 DAY | 37g 6b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Yıldız Dövme Deri Tozluk | `leggings_starforged` | zırh | Bacak | Hepsi | 80 | +23 Savunma, +13 DAY | 48g 20b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Titan Deri Tozluk | `leggings_titan` | zırh | Bacak | Hepsi | 95 | +27 Savunma, +15 DAY | 60g 62b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kraliyet Deri Tozluk | `leggings_royal` | zırh | Bacak | Hepsi | 110 | +31 Savunma, +17 DAY | 73g 50b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Güneş Dövme Deri Tozluk | `leggings_sunforged` | zırh | Bacak | Hepsi | 135 | +38 Savunma, +21 DAY | 95g 92b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Obsidyen Deri Tozluk | `leggings_obsidian` | zırh | Bacak | Hepsi | 160 | +45 Savunma, +25 DAY | 1a 19g 63b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kum Çeliği Deri Tozluk | `leggings_sandsteel` | zırh | Bacak | Hepsi | 185 | +53 Savunma, +29 DAY | 1a 44g 47b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Rün Bağlı Deri Tozluk | `leggings_runebound` | zırh | Bacak | Hepsi | 210 | +60 Savunma, +33 DAY | 1a 70g 35b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Anka Deri Tozluk | `leggings_phoenix` | zırh | Bacak | Hepsi | 235 | +67 Savunma, +37 DAY | 1a 97g 18b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Dehşet Dövme Deri Tozluk | `leggings_dreadforged` | zırh | Bacak | Hepsi | 260 | +74 Savunma, +41 DAY | 2a 24g 87b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Hükümdar Deri Tozluk | `leggings_sovereign` | zırh | Bacak | Hepsi | 285 | +81 Savunma, +45 DAY | 2a 53g 38b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Mercan Deri Tozluk | `leggings_coral` | zırh | Bacak | Hepsi | 310 | +88 Savunma, +49 DAY | 2a 82g 64b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Ejderha Kemiği Deri Tozluk | `leggings_drakebone` | zırh | Bacak | Hepsi | 335 | +95 Savunma, +53 DAY | 3a 12g 63b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Sis Örgü Deri Tozluk | `leggings_mistwoven` | zırh | Bacak | Hepsi | 360 | +102 Savunma, +57 DAY | 3a 43g 29b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Prizmatik Deri Tozluk | `leggings_prismatic` | zırh | Bacak | Hepsi | 385 | +109 Savunma, +61 DAY | 3a 74g 60b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Magma Dövme Deri Tozluk | `leggings_magmaforged` | zırh | Bacak | Hepsi | 410 | +117 Savunma, +65 DAY | 4a 6g 52b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Bora Deri Tozluk | `leggings_tempest` | zırh | Bacak | Hepsi | 435 | +124 Savunma, +69 DAY | 4a 39g 4b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Deri Tozluk | `leggings_voidtouched` | zırh | Bacak | Hepsi | 460 | +131 Savunma, +73 DAY | 4a 72g 12b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Melek Deri Tozluk | `leggings_seraphic` | zırh | Bacak | Hepsi | 485 | +138 Savunma, +77 DAY | 5a 5g 75b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Tutulma Deri Tozluk | `leggings_eclipse` | zırh | Bacak | Hepsi | 510 | +145 Savunma, +81 DAY | 5a 39g 89b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Ejder Lordu Deri Tozluk | `leggings_wyrmlord` | zırh | Bacak | Hepsi | 535 | +152 Savunma, +84 DAY | 5a 74g 55b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Göksel Deri Tozluk | `leggings_celestine` | zırh | Bacak | Hepsi | 560 | +159 Savunma, +88 DAY | 6a 9g 69b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Ebedi Deri Tozluk | `leggings_eternal` | zırh | Bacak | Hepsi | 585 | +166 Savunma, +92 DAY | 6a 45g 31b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Yıldızsız Deri Tozluk | `leggings_starless` | zırh | Bacak | Hepsi | 610 | +173 Savunma, +96 DAY | 6a 81g 39b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Gece Çeliği Deri Tozluk | `leggings_nightsteel` | zırh | Bacak | Hepsi | 635 | +180 Savunma, +100 DAY | 7a 17g 92b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Zaman Dövme Deri Tozluk | `leggings_chronoforged` | zırh | Bacak | Hepsi | 660 | +188 Savunma, +104 DAY | 7a 54g 87b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Yükselmiş Deri Tozluk | `leggings_ascendant` | zırh | Bacak | Hepsi | 685 | +195 Savunma, +108 DAY | 7a 92g 26b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Fırtına Doğumlu Deri Tozluk | `leggings_stormborn` | zırh | Bacak | Hepsi | 710 | +202 Savunma, +112 DAY | 8a 30g 5b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Yarık Dövme Deri Tozluk | `leggings_riftforged` | zırh | Bacak | Hepsi | 735 | +209 Savunma, +116 DAY | 8a 68g 24b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kaos Deri Tozluk | `leggings_chaos` | zırh | Bacak | Hepsi | 760 | +216 Savunma, +120 DAY | 9a 6g 83b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Gök Dövme Deri Tozluk | `leggings_skyforged` | zırh | Bacak | Hepsi | 785 | +223 Savunma, +124 DAY | 9a 45g 80b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Başmelek Deri Tozluk | `leggings_archangel` | zırh | Bacak | Hepsi | 810 | +230 Savunma, +128 DAY | 9a 85g 14b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Şafak Deri Tozluk | `leggings_aurora` | zırh | Bacak | Hepsi | 835 | +237 Savunma, +132 DAY | 10a 24g 85b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kül Deri Tozluk | `leggings_ashen` | zırh | Bacak | Hepsi | 860 | +244 Savunma, +136 DAY | 10a 64g 92b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Leviathan Deri Tozluk | `leggings_leviathan` | zırh | Bacak | Hepsi | 885 | +252 Savunma, +140 DAY | 11a 5g 33b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kıyamet Dövme Deri Tozluk | `leggings_doomforged` | zırh | Bacak | Hepsi | 910 | +259 Savunma, +144 DAY | 11a 46g 10b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Hiçlik Dövme Deri Tozluk | `leggings_voidforged` | zırh | Bacak | Hepsi | 935 | +266 Savunma, +148 DAY | 11a 87g 20b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Tanrı Katili Deri Tozluk | `leggings_godslayer` | zırh | Bacak | Hepsi | 960 | +273 Savunma, +152 DAY | 12a 28g 63b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Kadim Çağ Deri Tozluk | `leggings_primordial` | zırh | Bacak | Hepsi | 985 | +280 Savunma, +156 DAY | 12a 70g 38b | 2.1 kg | Av zaferi %4 / zindan boss'u |
+| Acemi Bacaklık | `legs_novice` | zırh | Bacak | Hepsi | 1 | +1 Savunma, +1 DAY | 29b | 3 kg | Dükkân (29b); Av zaferi %4 / zindan boss'u |
 | Demir Bacaklık | `legs_iron` | zırh | Bacak | Hepsi | 5 | +2 Savunma, +1 DAY | 1g 15b | 3 kg | Üretim: Demircilik 3+ (5× Demir Cevheri, 25b); Av zaferi %4 / zindan boss'u |
 | Pul Bacaklık | `legs_scale` | zırh | Bacak | Hepsi | 10 | +4 Savunma, +2 DAY | 2g 86b | 3 kg | Üretim: Demircilik 10+ (5× Bakır Cevheri, 3× Kalay Cevheri, 1g 10b); Av zaferi %4 / zindan boss'u |
 | Çelik Bacaklık | `legs_steel` | zırh | Bacak | Hepsi | 15 | +6 Savunma, +3 DAY | 5g 9b | 3 kg | Av zaferi %4 / zindan boss'u |

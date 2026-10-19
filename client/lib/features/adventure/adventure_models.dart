@@ -36,6 +36,7 @@ class MobInfo {
     required this.xpReward,
     required this.goldMin,
     required this.goldMax,
+    this.regionCode = '',
   });
 
   factory MobInfo.fromJson(Map<String, dynamic> j) {
@@ -49,8 +50,12 @@ class MobInfo {
       xpReward: n('xp_reward'),
       goldMin: n('gold_copper_min'),
       goldMax: n('gold_copper_max'),
+      regionCode: j['region_code'] as String? ?? '',
     );
   }
+
+  /// Where the mob is hunted (DD-273); empty = anywhere.
+  final String regionCode;
 
   final String code;
   final int level;
@@ -201,7 +206,7 @@ class TravelInfo {
 }
 
 class Location {
-  const Location({required this.region, required this.neighbors, this.travel});
+  const Location({required this.region, required this.neighbors, this.travel, this.huntRegions = const []});
 
   factory Location.fromJson(Map<String, dynamic> j) => Location(
     region: RegionInfo.fromJson(j['region'] as Map<String, dynamic>),
@@ -210,9 +215,13 @@ class Location {
         Neighbor(RegionInfo.fromJson(n), Duration(seconds: (n['travel_seconds'] as num?)?.toInt() ?? 0)),
     ],
     travel: j['travel'] is Map<String, dynamic> ? TravelInfo.fromJson(j['travel'] as Map<String, dynamic>) : null,
+    huntRegions: [for (final r in (j['hunt_regions'] as List? ?? const [])) r as String],
   );
 
   final RegionInfo region;
+
+  /// Regions whose mobs can be hunted from here: this one and its road links (DD-273).
+  final List<String> huntRegions;
   final List<Neighbor> neighbors;
   final TravelInfo? travel;
 }

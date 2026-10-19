@@ -3,6 +3,7 @@ package contentpack
 import (
 	"fmt"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -221,15 +222,18 @@ func TestResourcesAndEquipmentPermissions(t *testing.T) {
 		require.NotNil(t, b.BaseStats, b.Code)
 		require.NotNil(t, b.Derived, b.Code)
 		require.NotEmpty(t, b.PrimaryAttribute, b.Code)
-		armor, weapon := false, false
+		// One armor type and two weapon families per class (DD-271, DD-272).
+		armor, weapon := 0, 0
 		for _, perm := range b.EquipmentPermissions {
-			if c.IsFamily(perm) {
-				weapon = true
+			require.True(t, c.IsFamily(perm), "%s: %s is governed", b.Code, perm)
+			if strings.HasSuffix(perm, "_armor") {
+				armor++
 			} else {
-				armor = true
+				weapon++
 			}
 		}
-		require.True(t, armor && weapon, "%s: armor type and weapon families", b.Code)
+		require.Equal(t, 1, armor, "%s: one armor type", b.Code)
+		require.Equal(t, 2, weapon, "%s: two weapon families", b.Code)
 	}
 	require.Len(t, kinds, 9, "rage energy focus mana chi conviction nature_energy rhythm spirit")
 	// Every class's own weapons are usable by its whole tree.
@@ -246,7 +250,28 @@ func TestResourcesAndEquipmentPermissions(t *testing.T) {
 		}
 	}
 	require.False(t, c.CanUse("mage", "sword"))
-	require.True(t, c.CanUse("mage", "helm"), "armor pieces are not governed")
+	require.True(t, c.CanUse("mage", "cloth_armor"))
+	require.False(t, c.CanUse("mage", "plate_armor"), "armor types are governed")
+	require.False(t, c.CanUse("berserker", "shield"), "shields stay with the guardian line")
+	require.True(t, c.CanUse("iron_fortress", "shield"))
+	require.True(t, c.CanUse("mage", "ring"), "jewelry is not governed")
+	// Every tier offers each armor type in every body slot.
+	slots := map[string]map[int16]int{}
+	for _, it := range p.Items {
+		if it.ItemClass == "armor" && it.Requirements == nil && strings.HasSuffix(it.ItemSubclass, "_armor") {
+			if slots[it.ItemSubclass] == nil {
+				slots[it.ItemSubclass] = map[int16]int{}
+			}
+			slots[it.ItemSubclass][it.MinLevel]++
+		}
+	}
+	require.Len(t, slots, 3)
+	for kind, tiers := range slots {
+		require.Len(t, tiers, len(slots["plate_armor"]), kind)
+		for lvl, n := range tiers {
+			require.Equal(t, 5, n, "%s tier %d", kind, lvl)
+		}
+	}
 }
 
 func TestSoloAdaptation(t *testing.T) {

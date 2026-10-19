@@ -240,6 +240,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag is full")
 	case errors.Is(err, ErrTooWounded):
 		apierr.Write(w, r, http.StatusConflict, "E_TOO_WOUNDED", "rest or heal before fighting")
+	case errors.Is(err, ErrWrongRegion):
+		apierr.Write(w, r, http.StatusConflict, "E_MOB_REGION", "travel to the mob's region first")
 	case errors.Is(err, ErrUnknownMob):
 		apierr.Write(w, r, http.StatusBadRequest, "E_UNKNOWN_MOB", "mob_code not in catalog")
 	case errors.Is(err, ErrValidation):

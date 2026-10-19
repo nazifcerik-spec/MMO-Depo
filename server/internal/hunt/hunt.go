@@ -94,6 +94,9 @@ var (
 	ErrTooWounded = errors.New("hunt: character has no hp left")
 	ErrBagFull    = errors.New("hunt: bag full")
 	ErrValidation = errors.New("hunt: validation")
+	// ErrWrongRegion: the mob lives outside the regions the character can
+	// hunt from where it stands (DD-273).
+	ErrWrongRegion = errors.New("hunt: mob is in another region")
 )
 
 // --- Tuning -----------------------------------------------------------------

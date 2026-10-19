@@ -42,15 +42,24 @@ class _AdventureViewState extends State<AdventureView> {
   int _seg = 0;
   final _visited = <int>{0};
 
+  /// Bumped when the character arrives somewhere: the hunt list follows (DD-273).
+  final _moved = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _moved.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<int>(valueListenable: widget.level, builder: _build);
 
   Widget _build(BuildContext context, int level, Widget? _) {
     final l = AppLocalizations.of(context);
     final panels = <Widget Function()>[
-      () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level),
+      () => _HuntPanel(repo: widget.repo, dataVersion: widget.dataVersion, level: level, moved: _moved),
       () => _DungeonsTab(repo: widget.repo, dataVersion: widget.dataVersion, level: level, live: widget.live),
-      () => _TravelPanel(repo: widget.repo, level: level),
+      () => _TravelPanel(repo: widget.repo, level: level, moved: _moved),
       () => EventsPanel(repo: EventRepository(widget.repo.api, widget.repo.characterId), level: level),
     ];
     return Column(
@@ -171,11 +180,12 @@ String _resultSubtitle(AppLocalizations l, CombatResult r) => [
 // --- Hunt ---------------------------------------------------------------------
 
 class _HuntPanel extends StatefulWidget {
-  const _HuntPanel({required this.repo, required this.dataVersion, required this.level});
+  const _HuntPanel({required this.repo, required this.dataVersion, required this.level, required this.moved});
 
   final AdventureRepository repo;
   final ValueNotifier<int> dataVersion;
   final int level;
+  final ValueListenable<int> moved;
 
   @override
   State<_HuntPanel> createState() => _HuntPanelState();
@@ -186,6 +196,9 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
   CombatContract? _active;
   String? _mob;
 
+  /// Regions in reach from where the character stands (DD-273).
+  List<String> _reach = const [];
+
   /// The player picked [_mob] themselves; otherwise it follows the level.
   bool _mobPicked = false;
   Duration _duration = huntDurations.first;
@@ -195,6 +208,18 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
   @override
   void initState() {
     super.initState();
+    widget.moved.addListener(_onMoved);
+    load();
+  }
+
+  @override
+  void dispose() {
+    widget.moved.removeListener(_onMoved);
+    super.dispose();
+  }
+
+  void _onMoved() {
+    _mobPicked = false;
     load();
   }
 
@@ -204,15 +229,21 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
     if (old.level != widget.level && !_mobPicked) _mob = _defaultMob();
   }
 
-  /// The toughest mob at or below the character's level.
-  String? _defaultMob() => _mobs.where((m) => m.level <= widget.level).lastOrNull?.code ?? _mobs.firstOrNull?.code;
+  bool _inReach(MobInfo m) => m.regionCode.isEmpty || _reach.contains(m.regionCode);
+
+  /// The toughest mob in reach at or below the character's level.
+  String? _defaultMob() {
+    final here = _mobs.where(_inReach);
+    return here.where((m) => m.level <= widget.level).lastOrNull?.code ?? here.firstOrNull?.code;
+  }
 
   @override
   Future<void> fetch() async {
-    final r = await Future.wait<Object?>([widget.repo.mobs(), widget.repo.activeHunt()]);
+    final r = await Future.wait<Object?>([widget.repo.mobs(), widget.repo.activeHunt(), widget.repo.location()]);
     _mobs = r[0]! as List<MobInfo>;
     _active = r[1] as CombatContract?;
-    if (!_mobPicked) _mob = _defaultMob();
+    _reach = (r[2]! as Location).huntRegions;
+    if (!_mobPicked || !_mobs.any((m) => m.code == _mob && _inReach(m))) _mob = _defaultMob();
   }
 
   Future<void> _start() => run(() async {
@@ -276,10 +307,19 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
         ];
       }
       final text = Theme.of(context).textTheme;
+      final here = _mobs.where(_inReach).toList();
+      final away = _mobs.where((m) => !_inReach(m)).toList();
+      final hunting = [for (final r in _reach) ContentNames.of('region', r)];
       return [
         Text(l.huntChoose, style: text.titleMedium),
+        const SizedBox(height: Space.xs),
+        Text(
+          here.isEmpty ? l.huntNoMobsHere : l.huntReach(hunting.join(', ')),
+          key: const Key('hunt-reach'),
+          style: text.bodySmall,
+        ),
         const SizedBox(height: Space.md),
-        for (final m in _mobs) ...[
+        for (final m in here) ...[
           _MobTile(
             mob: m,
             selected: m.code == _mob,
@@ -315,8 +355,41 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
           icon: const Icon(Icons.gps_fixed),
           label: Text(l.startHunt),
         ),
+        if (away.isNotEmpty) ...[const SizedBox(height: Space.lg), _AwayMobs(mobs: away)],
       ];
     });
+  }
+}
+
+/// Where the out-of-reach mobs live, so a player knows where to travel (DD-273).
+class _AwayMobs extends StatelessWidget {
+  const _AwayMobs({required this.mobs});
+
+  final List<MobInfo> mobs;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final byRegion = <String, List<MobInfo>>{};
+    for (final m in mobs) {
+      byRegion.putIfAbsent(m.regionCode, () => []).add(m);
+    }
+    const muted = TextStyle(fontSize: 12, color: Palette.textMuted);
+    return ExpansionTile(
+      key: const Key('hunt-away'),
+      tilePadding: EdgeInsets.zero,
+      childrenPadding: const EdgeInsets.only(bottom: Space.md),
+      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+      title: Text(l.huntOtherRegions, style: Theme.of(context).textTheme.titleSmall),
+      subtitle: Text(l.huntTravelHint, style: muted),
+      children: [
+        for (final e in byRegion.entries) ...[
+          const SizedBox(height: Space.sm),
+          Text(ContentNames.of('region', e.key), style: const TextStyle(fontWeight: FontWeight.w600)),
+          for (final m in e.value) Text('${l.levelShort(m.level)}  ${ContentNames.of('mob', m.code)}', style: muted),
+        ],
+      ],
+    );
   }
 }
 
@@ -604,10 +677,13 @@ class _DungeonsTabState extends State<_DungeonsTab> {
 // --- Travel -------------------------------------------------------------------
 
 class _TravelPanel extends StatefulWidget {
-  const _TravelPanel({required this.repo, required this.level});
+  const _TravelPanel({required this.repo, required this.level, required this.moved});
 
   final AdventureRepository repo;
   final int level;
+
+  /// Bumped when the character's region changes.
+  final ValueNotifier<int> moved;
 
   @override
   State<_TravelPanel> createState() => _TravelPanelState();
@@ -623,7 +699,11 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
   }
 
   @override
-  Future<void> fetch() async => _loc = await widget.repo.location();
+  Future<void> fetch() async {
+    final before = _loc?.region.code;
+    _loc = await widget.repo.location();
+    if (before != null && before != _loc!.region.code) widget.moved.value++;
+  }
 
   Future<void> _go(Neighbor n) => run(() async {
     await widget.repo.travel(n.region.code);

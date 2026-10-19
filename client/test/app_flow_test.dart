@@ -582,6 +582,15 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Choose your prey'), findsOneWidget);
     expect(find.text('Cave Troll'), findsOneWidget);
+    // Only mobs in reach are huntable; the rest are listed by region (DD-273).
+    expect(find.textContaining('Hunting from here:'), findsOneWidget);
+    expect(find.text('Sand Wyrm'), findsNothing);
+    await tester.scrollUntilVisible(find.text('Monsters in other regions'), 200, scrollable: find.byType(Scrollable).last);
+    await tester.tap(find.text('Monsters in other regions'));
+    await tester.pumpAndSettle();
+    expect(find.text('Salt Desert'), findsOneWidget);
+    expect(find.textContaining('Sand Wyrm'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Choose your prey'), -200, scrollable: find.byType(Scrollable).last);
 
     // Default = toughest mob at or below level 3.
     await tester.tap(find.text('Start hunt'));

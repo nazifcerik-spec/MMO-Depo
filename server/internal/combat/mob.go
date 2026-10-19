@@ -25,7 +25,8 @@ type Mob struct {
 	XPReward       int32
 	GoldCopperMin  int64
 	GoldCopperMax  int64
-	RaidBoss       bool // fought only in raids (DD-261)
+	RaidBoss       bool   // fought only in raids (DD-261)
+	RegionCode     string // where it is hunted (DD-273); empty for raid bosses
 }
 
 // AsCombatant builds a fresh Combatant with full HP for a live encounter.
@@ -108,7 +109,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	rows, err := pool.Query(ctx, `
 		SELECT code, display_name_key, level,
 		       hp_max, attack, defense, crit_pct, hit_pct, evasion_pct,
-		       xp_reward, gold_copper_min, gold_copper_max, raid_boss
+		       xp_reward, gold_copper_min, gold_copper_max, raid_boss, COALESCE(region_code, '')
 		FROM content.mob_template
 		ORDER BY level, code`)
 	if err != nil {
@@ -122,7 +123,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		if err := rows.Scan(
 			&m.Code, &m.DisplayNameKey, &m.Level,
 			&m.HPMax, &m.Attack, &m.Defense, &m.CritPct, &m.HitPct, &m.EvasionPct,
-			&m.XPReward, &m.GoldCopperMin, &m.GoldCopperMax, &m.RaidBoss,
+			&m.XPReward, &m.GoldCopperMin, &m.GoldCopperMax, &m.RaidBoss, &m.RegionCode,
 		); err != nil {
 			return nil, fmt.Errorf("mob scan: %w", err)
 		}

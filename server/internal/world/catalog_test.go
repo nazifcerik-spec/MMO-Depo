@@ -89,3 +89,13 @@ func TestCatalog_Neighbors_ReturnsNilForUnknown(t *testing.T) {
 	c := fakeCatalog(t)
 	require.Nil(t, c.Neighbors("ghost"))
 }
+
+// Hunting reaches the region itself and its road links, never a parent or
+// child (DD-273): a continent must not reach every zone on it.
+func TestCatalog_HuntRegions(t *testing.T) {
+	c := fakeCatalog(t)
+	require.ElementsMatch(t, []string{"wild_a", "wild_b"}, c.HuntRegions("wild_a"))
+	require.Equal(t, []string{"cont"}, c.HuntRegions("cont"))
+	require.Equal(t, []string{"city"}, c.HuntRegions("city"))
+	require.Nil(t, c.HuntRegions("nowhere"))
+}

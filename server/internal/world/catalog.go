@@ -131,6 +131,25 @@ func (c *Catalog) Neighbors(code string) []NeighborInfo {
 	return out
 }
 
+// HuntRegions are the regions whose mobs a character standing in `code` may
+// hunt (DD-273): the region itself and those linked to it by road. Parent
+// and child edges do not count — a continent would otherwise reach every
+// zone on it.
+func (c *Catalog) HuntRegions(code string) []string {
+	if _, ok := c.regions[code]; !ok {
+		return nil
+	}
+	out := []string{code}
+	for _, l := range c.linksBy[code] {
+		other := l.RegionA
+		if other == code {
+			other = l.RegionB
+		}
+		out = append(out, other)
+	}
+	return out
+}
+
 // --- CatalogService ---------------------------------------------------------
 
 // CatalogService wraps the catalog behind an atomic pointer so contentpack

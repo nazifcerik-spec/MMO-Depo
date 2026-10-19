@@ -26,6 +26,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrTooWounded":          ErrTooWounded,
 		"ErrBagFull":             ErrBagFull,
 		"ErrUnknownMob":          ErrUnknownMob,
+		"ErrWrongRegion":         ErrWrongRegion,
 		"ErrValidation":          ErrValidation,
 	} {
 		t.Run(name, func(t *testing.T) {

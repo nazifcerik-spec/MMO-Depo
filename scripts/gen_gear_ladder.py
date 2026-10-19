@@ -153,7 +153,8 @@ for lvl, mat, mat_names in TIERS:
     for slot, slot_names, weight, value25, defs, bt, bvals in ARMOR:
         code = '%s_%s' % (slot, mat)
         d, b = armor_stats(lvl, defs, bt, bvals)
-        items.append(item(code, 'armor', slot, lvl, value(value25, lvl), weight, slot, None, [('defense', d), (bt, b)]))
+        items.append(item(code, 'armor', 'plate_armor', lvl, value(value25, lvl), weight, slot, None,
+                          [('defense', d), (bt, b)]))
         for lang in names:
             names[lang]['item.' + code] = name(mat_names, slot_names, lang)
 

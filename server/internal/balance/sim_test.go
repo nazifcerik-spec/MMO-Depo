@@ -98,7 +98,8 @@ func (w *world) kit(build string, level int) []contentpack.Item {
 	class, _, _ := strings.Cut(build, "/")
 	best := map[string]contentpack.Item{}
 	for _, it := range w.items {
-		if it.EquipSlot == "" || int(it.MinLevel) > level || (it.ClassRestriction != "" && it.ClassRestriction != class) {
+		if it.EquipSlot == "" || int(it.MinLevel) > level || (it.ClassRestriction != "" && it.ClassRestriction != class) ||
+			!leveling.Current().CanUse(class, it.ItemSubclass) {
 			continue
 		}
 		if cur, ok := best[it.EquipSlot]; !ok || it.MinLevel > cur.MinLevel ||

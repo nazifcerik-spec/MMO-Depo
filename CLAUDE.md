@@ -175,6 +175,10 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 82. **Yemek bonusu + MeNa World markası (bitti)** — Sprint 82, DD-269..270. Migration 0040 `character.buff`: yemek 60 dk +%2..9 saldırı/savunma (sheet modifier, tek bonus, canı doluyken de yenir), `GET /character/{id}/buff`. Ad "MeNa World" her yerde; logo giriş ekranı + üst bar, Android adaptif ikon + açılış ekranı (koyu zemin), iOS/web ikonları. Irk portreleri 300×400 (3:4 kart). Fix: dünya etkinliği testinde başlangıç zamanı çakışması (dakika → mikrosaniye rastgele).
 
+83. **Zırh türleri + iki silah ailesi (bitti)** — Sprint 83, DD-271..272. Zırh `cloth/leather/plate` (alt sınıf `<tür>_armor`; kumaş: büyücü/rahip/druid, deri: düzenbaz/korucu/keşiş/ozan, plaka: savaşçı/paladin/şaman), sınıf başı 2 silah ailesi (yeni: balta, uzun kılıç, ayin baltası, kısa kılıç, arbalet, tonfa, meç, değnek, kutsal kitap, doğa odağı), kalkan yalnız Koruyucu kolu, boş aileler kaldırıldı. `python scripts/gen_gear_types.py` (gen_gear_ladder'dan sonra): her kademeye eksik zırh türleri + ikinci silah (karşılığın statları) → 1646 ekipman; Sv 1 parçaları dükkânda. `leveling.IsFamily` zırh türlerini yönetir, `item.GearPool` ve denge kitleri izne uyar, contentpack ekipman alt sınıfını doğrular.
+
+84. **Bölgesel av (bitti)** — Sprint 84, DD-273. Migration 0041 `mob_template.region_code`. Canavar kendi bölgesinden ya da ona yolu olan bölgeden avlanır (`world.Catalog.HuntRegions`, `hunt.WithRegionGate`, `409 E_MOB_REGION`); `/location` `hunt_regions`, `/v1/mobs` `region_code`. Yeni yollar Demirkale↔Yeşilorman, Fısıltı Kıyısı↔Kor Tepe. İstemci: av listesi erişilebilir canavarlar + "Diğer bölgelerdeki canavarlar", varışta yenilenir. İçerik denetimi: `python scripts/content_audit.py` → `docs/content-audit.md`, yol haritası `docs/content-roadmap.md`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

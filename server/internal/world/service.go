@@ -59,6 +59,7 @@ func NewService(repo TravelRepository, catalog CatalogLookup, chars CharacterBin
 type LocationView struct {
 	Region       Region         `json:"region"`
 	Neighbors    []NeighborInfo `json:"neighbors"`
+	HuntRegions  []string       `json:"hunt_regions"`
 	Travel       *Travel        `json:"travel,omitempty"` // active in-progress travel, if any
 	StartingCode string         `json:"starting_code,omitempty"`
 }
@@ -78,6 +79,16 @@ func (s *Service) CurrentRegionCode(ctx context.Context, characterID uuid.UUID) 
 		}
 	}
 	return code, nil
+}
+
+// HuntRegions lists the regions the character can hunt in from where it
+// stands (DD-273).
+func (s *Service) HuntRegions(ctx context.Context, characterID uuid.UUID) ([]string, error) {
+	code, err := s.CurrentRegionCode(ctx, characterID)
+	if err != nil {
+		return nil, err
+	}
+	return s.catalog.Catalog().HuntRegions(code), nil
 }
 
 // Location returns the character's current region + neighbors + active travel
@@ -101,6 +112,7 @@ func (s *Service) Location(ctx context.Context, characterID, accountID uuid.UUID
 	view := &LocationView{
 		Region:       region,
 		Neighbors:    cat.Neighbors(code),
+		HuntRegions:  cat.HuntRegions(code),
 		StartingCode: cat.StartingCode(),
 	}
 	active, err := s.repo.Active(ctx, characterID)

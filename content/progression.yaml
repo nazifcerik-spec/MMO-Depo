@@ -53,12 +53,9 @@ caps: { crit_pct: 60, evasion_pct: 40, block_pct: 60, dmg_reduction_pct: 75, hit
 # armor types (permission "<type>_armor"). Items whose subclass is not a
 # family (helm, ring, ...) are usable by everyone (DD-252).
 equipment_families:
-  [sword, axe, mace, greatsword, greataxe, spear, shield,
-   dagger, short_sword, dual_dagger, fist_weapon, throwing_knife,
-   bow, longbow, crossbow, short_spear,
-   staff, wand, orb, grimoire, tonfa, unarmed, holy_tome, two_handed_mace,
-   sickle, nature_focus, lute, harp, flute, rapier, ritual_axe, totem_focus]
-armor_types: [cloth, light, medium, heavy]
+  [sword, axe, mace, shield, dagger, short_sword, fist_weapon, tonfa, bow, crossbow,
+   staff, wand, holy_tome, two_handed_mace, sickle, nature_focus, lute, rapier, ritual_axe, totem_focus]
+armor_types: [cloth, leather, plate]
 
 # Combat XP from mobs below the character's level (DD-254): full within 10
 # levels, half up to 25 below, a tenth beyond. Mobs at or above the
@@ -92,28 +89,28 @@ classes:
       block:  { per: { strength: 0.03 } }
     primary_attribute: strength
     secondary_attributes: [vitality]
-    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear, shield]
+    equipment_permissions: [plate_armor, sword, axe]
 
   - code: guardian
     parent: warrior
     required_level: 100
     name_key: class.guardian
     role_tags: [tank, afk_safe]
-    equipment_permissions: [heavy_armor, sword, axe, mace, spear, shield]
+    equipment_permissions: [plate_armor, sword, axe, shield]
 
   - code: executioner
     parent: warrior
     required_level: 100
     name_key: class.executioner
     role_tags: [melee_dps, burst]
-    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear]
+    equipment_permissions: [plate_armor, sword, axe]
 
   - code: iron_fortress
     parent: guardian
     required_level: 300
     name_key: class.iron_fortress
     role_tags: [tank, barrier_support, afk_safe]
-    equipment_permissions: [heavy_armor, sword, mace, shield]
+    equipment_permissions: [plate_armor, sword, axe, shield]
     afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 5, boss_value: 5, aoe_value: 2, afk_safety: 5 }
     strong_in: [boss, afk, group]
     weak_in: [farming]
@@ -132,7 +129,7 @@ classes:
     required_level: 300
     name_key: class.warlord
     role_tags: [tank, bruiser, buff_support, group_support]
-    equipment_permissions: [heavy_armor, sword, axe, mace, spear, shield]
+    equipment_permissions: [plate_armor, sword, axe, shield]
     afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 3, group_value: 5, boss_value: 4, aoe_value: 3, afk_safety: 4 }
     support_power: 0.3
     strong_in: [group, dungeon]
@@ -151,7 +148,7 @@ classes:
     required_level: 300
     name_key: class.berserker
     role_tags: [melee_dps, burst]
-    equipment_permissions: [heavy_armor, sword, axe, greatsword, greataxe, mace]
+    equipment_permissions: [plate_armor, sword, axe]
     afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 2, group_value: 3, boss_value: 5, aoe_value: 4, afk_safety: 2 }
     strong_in: [boss, farming]
     weak_in: [afk]
@@ -169,7 +166,7 @@ classes:
     required_level: 300
     name_key: class.weapon_master
     role_tags: [melee_dps, sustained_dps]
-    equipment_permissions: [heavy_armor, sword, axe, mace, greatsword, greataxe, spear]
+    equipment_permissions: [plate_armor, sword, axe]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 4, group_value: 2, boss_value: 4, aoe_value: 3, afk_safety: 3 }
     strong_in: [solo, farming]
     weak_in: [group]
@@ -199,7 +196,7 @@ classes:
       block:  {  }
     primary_attribute: dexterity
     secondary_attributes: [luck]
-    equipment_permissions: [light_armor, dagger, short_sword, dual_dagger, fist_weapon, throwing_knife]
+    equipment_permissions: [leather_armor, dagger, short_sword]
 
   - code: assassin
     parent: rogue
@@ -298,7 +295,7 @@ classes:
       block:  {  }
     primary_attribute: dexterity
     secondary_attributes: [luck]
-    equipment_permissions: [light_armor, medium_armor, bow, longbow, crossbow, short_spear]
+    equipment_permissions: [leather_armor, bow, crossbow]
 
   - code: marksman
     parent: ranger
@@ -397,7 +394,7 @@ classes:
       block:  {  }
     primary_attribute: intelligence
     secondary_attributes: [wisdom]
-    equipment_permissions: [cloth_armor, staff, wand, orb, grimoire]
+    equipment_permissions: [cloth_armor, staff, wand]
 
   - code: arcanist
     parent: mage
@@ -496,7 +493,7 @@ classes:
       block:  {  }
     primary_attribute: dexterity
     secondary_attributes: [wisdom, strength]
-    equipment_permissions: [light_armor, medium_armor, fist_weapon, staff, tonfa, unarmed]
+    equipment_permissions: [leather_armor, fist_weapon, tonfa]
 
   - code: disciple
     parent: monk
@@ -597,7 +594,7 @@ classes:
       block:  {  }
     primary_attribute: wisdom
     secondary_attributes: [intelligence]
-    equipment_permissions: [cloth_armor, medium_armor, staff, mace, holy_tome, shield]
+    equipment_permissions: [cloth_armor, mace, holy_tome]
     support_power: 0.5
 
   - code: saint
@@ -702,7 +699,7 @@ classes:
       block:  { per: { strength: 0.03, vitality: 0.01 } }
     primary_attribute: vitality
     secondary_attributes: [strength, wisdom]
-    equipment_permissions: [heavy_armor, sword, mace, two_handed_mace, shield]
+    equipment_permissions: [plate_armor, two_handed_mace, sword]
     support_power: 0.15
 
   - code: protector
@@ -804,7 +801,7 @@ classes:
       block:  {  }
     primary_attribute: wisdom
     secondary_attributes: [vitality, intelligence]
-    equipment_permissions: [cloth_armor, medium_armor, staff, sickle, nature_focus]
+    equipment_permissions: [cloth_armor, sickle, nature_focus]
     support_power: 0.35
 
   - code: grove_keeper
@@ -909,7 +906,7 @@ classes:
       block:  {  }
     primary_attribute: luck
     secondary_attributes: [dexterity, wisdom]
-    equipment_permissions: [light_armor, lute, harp, flute, rapier]
+    equipment_permissions: [leather_armor, lute, rapier]
     support_power: 0.5
 
   - code: minstrel
@@ -1014,7 +1011,7 @@ classes:
       block:  {  }
     primary_attribute: wisdom
     secondary_attributes: [intelligence]
-    equipment_permissions: [medium_armor, staff, ritual_axe, mace, totem_focus]
+    equipment_permissions: [plate_armor, totem_focus, ritual_axe]
     support_power: 0.4
 
   - code: totemist

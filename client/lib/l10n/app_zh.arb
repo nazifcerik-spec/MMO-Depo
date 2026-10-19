@@ -156,5 +156,11 @@
   "foodBuffLine": "{minutes} 分钟内攻击 +{atk}%、防御 +{def}%",
   "fedToast": "饱食：攻击 +{atk}%，防御 +{def}%",
   "fedActive": "饱食 · 攻击 +{atk}% · 防御 +{def}% · 剩余 {time}",
-  "appTitle": "MeNa World"
+  "appTitle": "MeNa World",
+  "huntReach": "可在此狩猎的区域：{regions}",
+  "huntNoMobsHere": "这里没有可狩猎的怪物。请先前往狩猎区域。",
+  "huntOtherRegions": "其他区域的怪物",
+  "huntTravelHint": "要狩猎某只怪物，请前往它所在的区域或有道路相连的相邻区域。",
+  "errWrongRegion": "这只怪物在其他区域。请先前往那里。",
+  "errMobRegion": "这只怪物在其他区域。请先前往那里。"
 }

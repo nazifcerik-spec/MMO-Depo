@@ -2330,4 +2330,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String fedActive(int atk, int def, String time) {
     return 'Fed · +$atk% attack · +$def% defense · $time left';
   }
+
+  @override
+  String huntReach(String regions) {
+    return 'Hunting from here: $regions';
+  }
+
+  @override
+  String get huntNoMobsHere => 'There is nothing to hunt here. Travel to a hunting ground first.';
+
+  @override
+  String get huntOtherRegions => 'Monsters in other regions';
+
+  @override
+  String get huntTravelHint => 'Travel to a monster\'s region, or a region linked to it by road, to hunt it.';
+
+  @override
+  String get errMobRegion => 'This monster lives in another region. Travel there first.';
 }

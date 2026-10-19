@@ -2438,6 +2438,77 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-271 — Zırh türleri: kumaş, deri, plaka
+**Karar:**
+- Zırh türleri `cloth`, `leather` ve `plate` (`progression.yaml` `armor_types`). Önceki `light`, `medium` ve `heavy` kaldırıldı.
+- Zırhın alt sınıfı türüdür (`<tür>_armor`); slot `equip_slot`'ta kalır.
+- Mevcut merdiven plaka sayılır; Sv 1 deri seti deri sayılır. Her kademeye eksik iki tür eklendi (`scripts/gen_gear_types.py`). Statlar, değer ve kod tabanı plaka karşılığıyla aynı; ağırlık kumaşta ×0,4, deride ×0,7.
+- Her sınıf tek tür giyer:
+  - kumaş: büyücü, rahip, druid
+  - deri: düzenbaz, korucu, keşiş, ozan
+  - plaka: savaşçı, paladin, şaman
+- `leveling.IsFamily` artık zırh türlerini de yönetir. Önceden zırh hiç denetlenmiyordu.
+- `item.GearPool` yalnız sınıfın kullanabileceği türü düşürür; denge simülasyonunun kitleri de aynı izni uygular.
+- İçerik doğrulaması: silah ve zırhın alt sınıfı yönetilen bir aile ya da tür olmalı.
+- Dükkân Sv 1 kumaş ve plaka setini de satar.
+
+**Reason:** Kullanıcı kararı (K2, içerik denetimi). Statlar eşit tutuldu, böylece denge testleri değişmedi; türün işlevi şimdilik kimin giyeceğini belirlemek. Tür farkı setlerle gelebilir.
+**Alternatives:** Türe göre farklı savunma/can (denge simülasyonunu yeniden ayarlamak gerekir). Zırhı sınıfsız bırakmak (önceki öneri).
+**Consequences:** Zırh şablonu 235'ten 705'e çıktı. Önceden giyilmiş, artık izinli olmayan zırh çıkarılmaz; yalnız yeni kuşanma denetlenir. Testler: `TestResourcesAndEquipmentPermissions`, `TestShippedGearPoolHonoursPermissions`.
+**Tarih:** 2026-10-19
+
+---
+
+## DD-272 — Sınıf başı iki silah ailesi
+**Karar:**
+- Her sınıfa ikinci bir silah ailesi eklendi; izin listesi tam olarak bir zırh türü ve bu iki aileden oluşur:
+  - savaşçı: kılıç, balta
+  - paladin: çift el topuz, kılıç
+  - şaman: totem, ayin baltası
+  - düzenbaz: hançer, kısa kılıç
+  - korucu: yay, arbalet
+  - keşiş: muşta, tonfa
+  - ozan: lavta, meç
+  - büyücü: asa, değnek
+  - rahip: topuz, kutsal kitap
+  - druid: orak, doğa odağı
+- Kalkan yalnız Koruyucu kolunda (Koruyucu, Demir Kale, Savaş Lordu).
+- Kullanılmayan 12 aile (`greatsword`, `spear`, `orb` …) ailelerden ve izinlerden çıktı.
+- Yeni hatlar kademe başı sınıfın ilk silahının kopyası (saldırı ve statlar aynı), sınıfa kilitli; toplam 470 şablon. Sv 1 parçaları dükkânda.
+
+**Reason:** Kullanıcı kararı (K3, içerik denetimi: 21/32 aile boştu).
+**Alternatives:** Tüm aileleri doldurmak (≈1000 şablon daha); izinleri tek aileye indirmek.
+**Consequences:** Terfisiz savaşçı Titan Siper Kalkanı'nı artık izin hatasıyla (`E_EQUIPMENT_PERMISSION`) alamaz.
+**Tarih:** 2026-10-19
+
+---
+
+## DD-273 — Bölgesel av
+**Karar:**
+- Her av canavarının bir bölgesi var (`mob_template.region_code`, migration 0041). Baskın boss'larının bölgesi yok. Contentpack ikisini de zorunlu tutar ve bölgeyi doğrular.
+- Bir canavar, karakter onun bölgesinde ya da o bölgeye yol bağlantısı (`region_link`) olan bir bölgede dururken avlanabilir. Ebeveyn/çocuk kenarları sayılmaz; yoksa kıtada durmak bütün bölgelerine erişim verirdi.
+- Aksi halde `409 E_MOB_REGION`.
+- Sv 1–25 canavarları:
+  - Yeşilorman: Sv 1–6
+  - Fısıltı Kıyısı: Sv 8–15
+  - Kor Tepe: Sv 18–25
+- Üretilmiş canavarlar `gen_world.py` bölgesini alır.
+- Yeni yollar: Demirkale ↔ Yeşilorman (yeni oyuncu yolculuk etmeden avlanır), Fısıltı Kıyısı ↔ Kor Tepe.
+- API:
+  - `GET /location` → `hunt_regions`
+  - `GET /v1/mobs` → `region_code`
+- İstemci:
+  - Av listesi yalnız erişilebilir canavarları gösterir; "Buradan avlanılan bölgeler" satırı var.
+  - "Diğer bölgelerdeki canavarlar" bölge bölge listelenir.
+  - Varışta liste yenilenir.
+
+**Reason:** Kullanıcı kararı (K4): bölgeler ve yolculuk anlam kazansın.
+**Alternatives:** Yalnız bulunulan bölge (fazla sürtünme); kapı yok (önceki durum).
+**Consequences:** Zindan ve baskınlar bölgeye bağlı değil. Dünya etkinlikleri kendi bölge kuralını (`E_WRONG_REGION`) korur. Testler: `TestHTTPHuntRegionGate`, `TestStart_RegionGate`, `TestCatalog_HuntRegions`.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

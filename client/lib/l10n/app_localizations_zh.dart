@@ -1504,7 +1504,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errEventNotOpen => 'Enlistment for this event is closed.';
 
   @override
-  String get errWrongRegion => 'Travel to the event\'s region first.';
+  String get errWrongRegion => '这只怪物在其他区域。请先前往那里。';
 
   @override
   String get errAlreadyEnlisted => 'You\'re already enlisted.';
@@ -2328,4 +2328,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String fedActive(int atk, int def, String time) {
     return '饱食 · 攻击 +$atk% · 防御 +$def% · 剩余 $time';
   }
+
+  @override
+  String huntReach(String regions) {
+    return '可在此狩猎的区域：$regions';
+  }
+
+  @override
+  String get huntNoMobsHere => '这里没有可狩猎的怪物。请先前往狩猎区域。';
+
+  @override
+  String get huntOtherRegions => '其他区域的怪物';
+
+  @override
+  String get huntTravelHint => '要狩猎某只怪物，请前往它所在的区域或有道路相连的相邻区域。';
+
+  @override
+  String get errMobRegion => '这只怪物在其他区域。请先前往那里。';
 }

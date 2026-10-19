@@ -6,7 +6,7 @@
 
 | Alan | Adet | Aralık |
 |---|---:|---|
-| Ekipman şablonu | 706 | Sv 1–985, 47 kademe |
+| Ekipman şablonu | 1646 | Sv 1–985, 47 kademe |
 | Toplama kaynağı | 150 | meslek Sv 1–100, kademe T0–T7 |
 | Diğer eşya (külçe, iksir, yemek, eski malzeme) | 53 | |
 | Tarif | 67 | smelting 24, blacksmithing 20, cooking 18, alchemy 5 |
@@ -14,7 +14,7 @@
 | Zindan / baskın | 25 / 6 | Sv 6–1000 |
 | Görev | 18 | Sv 1–10 |
 | Set | 0 | tasarım var (`docs/item-engine/set.md`), uygulanmadı |
-| Dükkân | 1 | 18 eşya |
+| Dükkân | 1 | 38 eşya |
 
 ## 1. Ekipman kademeleri (tier)
 
@@ -22,53 +22,53 @@ Her kademe: 10 sınıf silahı (sınıfa kilitli) + 5 zırh parçası (sınıfs�
 
 | Sv | Kademe (göğüs adı) | Silah | Zırh | Saldırı (kılıç) | Savunma (göğüs) | Kaynak | Bu kademeyi düşüren canavar Sv |
 |---:|---|---:|---:|---:|---:|---|---|
-| 1 | Deri Göğüslük | 10 | 5 | 6 | 2 | DGÜ | 1–3 |
-| 5 | Demir Göğüslük | 10 | 5 | 16 | 4 | GÜ | 5–8 |
-| 10 | Pul Göğüslük | 10 | 5 | 29 | 6 | GÜ | 10–14 |
-| 15 | Çelik Göğüslük | 10 | 5 | 42 | 7 | G | 15–18 |
-| 20 | Şövalye Göğüslüğü | 10 | 5 | 54 | 9 | G | 20–24 |
-| 25 | Rünlü Göğüslük | 10 | 5 | 66 | 11 | G | 25–30 |
-| 35 | Mithril Göğüslük | 10 | 5 | 88 | 14 | G | 35–45 |
-| 50 | Adamant Göğüslük | 10 | 5 | 120 | 19 | G | 50–60 |
-| 65 | Ejder Dövme Göğüslük | 10 | 5 | 152 | 24 | G | 65–75 |
-| 80 | Yıldız Dövme Göğüslük | 10 | 5 | 184 | 29 | G | 80–92 |
-| 95 | Titan Göğüslük | 10 | 5 | 216 | 34 | G | 95–100 |
-| 110 | Kraliyet Göğüslük | 10 | 5 | 249 | 39 | G | 110–132 |
-| 135 | Güneş Dövme Göğüslük | 10 | 5 | 304 | 48 | G | 140–150 |
-| 160 | Obsidyen Göğüslük | 10 | 5 | 359 | 57 | G | 160–182 |
-| 185 | Kum Çeliği Göğüslük | 10 | 5 | 414 | 66 | G | 190–200 |
-| 210 | Rün Bağlı Göğüslük | 10 | 5 | 469 | 75 | G | 210–232 |
-| 235 | Anka Göğüslük | 10 | 5 | 524 | 84 | G | 240–250 |
-| 260 | Dehşet Dövme Göğüslük | 10 | 5 | 579 | 93 | G | 260–282 |
-| 285 | Hükümdar Göğüslük | 10 | 5 | 634 | 102 | G | 290–300 |
-| 310 | Mercan Göğüslük | 10 | 5 | 689 | 111 | G | 310–332 |
-| 335 | Ejderha Kemiği Göğüslük | 10 | 5 | 744 | 120 | G | 340–350 |
-| 360 | Sis Örgü Göğüslük | 10 | 5 | 799 | 129 | G | 360–382 |
-| 385 | Prizmatik Göğüslük | 10 | 5 | 854 | 138 | G | 390–400 |
-| 410 | Magma Dövme Göğüslük | 10 | 5 | 909 | 147 | G | 410–432 |
-| 435 | Bora Göğüslük | 10 | 5 | 964 | 156 | G | 440–450 |
-| 460 | Hiçlik Göğüslük | 10 | 5 | 1019 | 165 | G | 460–482 |
-| 485 | Melek Göğüslük | 10 | 5 | 1074 | 174 | G | 490–500 |
-| 510 | Tutulma Göğüslük | 10 | 5 | 1129 | 183 | G | 510–532 |
-| 535 | Ejder Lordu Göğüslük | 10 | 5 | 1184 | 191 | G | 540–550 |
-| 560 | Göksel Göğüslük | 10 | 5 | 1239 | 200 | G | 560–582 |
-| 585 | Ebedi Göğüslük | 10 | 5 | 1294 | 209 | G | 590–600 |
-| 610 | Yıldızsız Göğüslük | 10 | 5 | 1349 | 218 | G | 610–632 |
-| 635 | Gece Çeliği Göğüslük | 10 | 5 | 1404 | 227 | G | 640–650 |
-| 660 | Zaman Dövme Göğüslük | 10 | 5 | 1459 | 236 | G | 660–682 |
-| 685 | Yükselmiş Göğüslük | 10 | 5 | 1514 | 245 | G | 690–700 |
-| 710 | Fırtına Doğumlu Göğüslük | 10 | 5 | 1569 | 254 | G | 710–732 |
-| 735 | Yarık Dövme Göğüslük | 10 | 5 | 1624 | 263 | G | 740–750 |
-| 760 | Kaos Göğüslük | 10 | 5 | 1679 | 272 | G | 760–782 |
-| 785 | Gök Dövme Göğüslük | 10 | 5 | 1734 | 281 | G | 790–800 |
-| 810 | Başmelek Göğüslük | 10 | 5 | 1789 | 290 | G | 810–832 |
-| 835 | Şafak Göğüslük | 10 | 5 | 1844 | 299 | G | 840–850 |
-| 860 | Kül Göğüslük | 10 | 5 | 1899 | 308 | G | 860–882 |
-| 885 | Leviathan Göğüslük | 10 | 5 | 1954 | 317 | G | 890–900 |
-| 910 | Kıyamet Dövme Göğüslük | 10 | 5 | 2009 | 326 | G | 910–932 |
-| 935 | Hiçlik Dövme Göğüslük | 10 | 5 | 2064 | 335 | G | 940–950 |
-| 960 | Tanrı Katili Göğüslük | 10 | 5 | 2119 | 344 | G | 960–982 |
-| 985 | Kadim Çağ Göğüslük | 10 | 5 | 2174 | 353 | G | 990–1000 |
+| 1 | Deri Göğüslük | 20 | 15 | 6 | 2 | DGÜ | 1–3 |
+| 5 | Demir Göğüslük | 20 | 15 | 16 | 4 | GÜ | 5–8 |
+| 10 | Pul Göğüslük | 20 | 15 | 29 | 6 | GÜ | 10–14 |
+| 15 | Çelik Göğüslük | 20 | 15 | 42 | 7 | G | 15–18 |
+| 20 | Şövalye Göğüslüğü | 20 | 15 | 54 | 9 | G | 20–24 |
+| 25 | Rünlü Göğüslük | 20 | 15 | 66 | 11 | G | 25–30 |
+| 35 | Mithril Göğüslük | 20 | 15 | 88 | 14 | G | 35–45 |
+| 50 | Adamant Göğüslük | 20 | 15 | 120 | 19 | G | 50–60 |
+| 65 | Ejder Dövme Göğüslük | 20 | 15 | 152 | 24 | G | 65–75 |
+| 80 | Yıldız Dövme Göğüslük | 20 | 15 | 184 | 29 | G | 80–92 |
+| 95 | Titan Göğüslük | 20 | 15 | 216 | 34 | G | 95–100 |
+| 110 | Kraliyet Göğüslük | 20 | 15 | 249 | 39 | G | 110–132 |
+| 135 | Güneş Dövme Göğüslük | 20 | 15 | 304 | 48 | G | 140–150 |
+| 160 | Obsidyen Göğüslük | 20 | 15 | 359 | 57 | G | 160–182 |
+| 185 | Kum Çeliği Göğüslük | 20 | 15 | 414 | 66 | G | 190–200 |
+| 210 | Rün Bağlı Göğüslük | 20 | 15 | 469 | 75 | G | 210–232 |
+| 235 | Anka Göğüslük | 20 | 15 | 524 | 84 | G | 240–250 |
+| 260 | Dehşet Dövme Göğüslük | 20 | 15 | 579 | 93 | G | 260–282 |
+| 285 | Hükümdar Göğüslük | 20 | 15 | 634 | 102 | G | 290–300 |
+| 310 | Mercan Göğüslük | 20 | 15 | 689 | 111 | G | 310–332 |
+| 335 | Ejderha Kemiği Göğüslük | 20 | 15 | 744 | 120 | G | 340–350 |
+| 360 | Sis Örgü Göğüslük | 20 | 15 | 799 | 129 | G | 360–382 |
+| 385 | Prizmatik Göğüslük | 20 | 15 | 854 | 138 | G | 390–400 |
+| 410 | Magma Dövme Göğüslük | 20 | 15 | 909 | 147 | G | 410–432 |
+| 435 | Bora Göğüslük | 20 | 15 | 964 | 156 | G | 440–450 |
+| 460 | Hiçlik Göğüslük | 20 | 15 | 1019 | 165 | G | 460–482 |
+| 485 | Melek Göğüslük | 20 | 15 | 1074 | 174 | G | 490–500 |
+| 510 | Tutulma Göğüslük | 20 | 15 | 1129 | 183 | G | 510–532 |
+| 535 | Ejder Lordu Göğüslük | 20 | 15 | 1184 | 191 | G | 540–550 |
+| 560 | Göksel Göğüslük | 20 | 15 | 1239 | 200 | G | 560–582 |
+| 585 | Ebedi Göğüslük | 20 | 15 | 1294 | 209 | G | 590–600 |
+| 610 | Yıldızsız Göğüslük | 20 | 15 | 1349 | 218 | G | 610–632 |
+| 635 | Gece Çeliği Göğüslük | 20 | 15 | 1404 | 227 | G | 640–650 |
+| 660 | Zaman Dövme Göğüslük | 20 | 15 | 1459 | 236 | G | 660–682 |
+| 685 | Yükselmiş Göğüslük | 20 | 15 | 1514 | 245 | G | 690–700 |
+| 710 | Fırtına Doğumlu Göğüslük | 20 | 15 | 1569 | 254 | G | 710–732 |
+| 735 | Yarık Dövme Göğüslük | 20 | 15 | 1624 | 263 | G | 740–750 |
+| 760 | Kaos Göğüslük | 20 | 15 | 1679 | 272 | G | 760–782 |
+| 785 | Gök Dövme Göğüslük | 20 | 15 | 1734 | 281 | G | 790–800 |
+| 810 | Başmelek Göğüslük | 20 | 15 | 1789 | 290 | G | 810–832 |
+| 835 | Şafak Göğüslük | 20 | 15 | 1844 | 299 | G | 840–850 |
+| 860 | Kül Göğüslük | 20 | 15 | 1899 | 308 | G | 860–882 |
+| 885 | Leviathan Göğüslük | 20 | 15 | 1954 | 317 | G | 890–900 |
+| 910 | Kıyamet Dövme Göğüslük | 20 | 15 | 2009 | 326 | G | 910–932 |
+| 935 | Hiçlik Dövme Göğüslük | 20 | 15 | 2064 | 335 | G | 940–950 |
+| 960 | Tanrı Katili Göğüslük | 20 | 15 | 2119 | 344 | G | 960–982 |
+| 985 | Kadim Çağ Göğüslük | 20 | 15 | 2174 | 353 | G | 990–1000 |
 
 Gereksinimli (rastgele düşmeyen) eşyalar: Titan Siper Kalkanı (Sv 600).
 
@@ -78,13 +78,13 @@ Kademe aralığı: Sv 1–25 arası 5, 25–95 arası 10–15, 95 sonrası 25 se
 
 | Slot | Şablon | Not |
 |---|---:|---|
-| mainhand | 470 |  |
+| mainhand | 940 |  |
 | offhand | 1 | yalnız 1 şablon |
-| helm | 47 |  |
-| chest | 47 |  |
-| legs | 47 |  |
-| boots | 47 |  |
-| gloves | 47 |  |
+| helm | 141 |  |
+| chest | 141 |  |
+| legs | 141 |  |
+| boots | 141 |  |
+| gloves | 141 |  |
 | necklace | 0 | **boş** |
 | ring1 | 0 | **boş** |
 | ring2 | 0 | **boş** |
@@ -95,42 +95,29 @@ Kademe aralığı: Sv 1–25 arası 5, 25–95 arası 10–15, 95 sonrası 25 se
 
 | Aile | Şablon |
 |---|---:|
-| sword | 47 |
-| axe | 0 |
+| sword | 94 |
+| axe | 47 |
 | mace | 47 |
-| greatsword | 0 |
-| greataxe | 0 |
-| spear | 0 |
 | shield | 1 |
 | dagger | 47 |
-| short_sword | 0 |
-| dual_dagger | 0 |
+| short_sword | 47 |
 | fist_weapon | 47 |
-| throwing_knife | 0 |
+| tonfa | 47 |
 | bow | 47 |
-| longbow | 0 |
-| crossbow | 0 |
-| short_spear | 0 |
+| crossbow | 47 |
 | staff | 47 |
-| wand | 0 |
-| orb | 0 |
-| grimoire | 0 |
-| tonfa | 0 |
-| unarmed | 0 |
-| holy_tome | 0 |
+| wand | 47 |
+| holy_tome | 47 |
 | two_handed_mace | 47 |
 | sickle | 47 |
-| nature_focus | 0 |
+| nature_focus | 47 |
 | lute | 47 |
-| harp | 0 |
-| flute | 0 |
-| rapier | 0 |
-| ritual_axe | 0 |
+| rapier | 47 |
+| ritual_axe | 47 |
 | totem_focus | 47 |
-| cloth_armor | 0 |
-| light_armor | 0 |
-| medium_armor | 0 |
-| heavy_armor | 0 |
+| cloth_armor | 235 |
+| leather_armor | 235 |
+| plate_armor | 235 |
 
 ### 1.3 Nadirlik ve ek (affix)
 
@@ -475,24 +462,24 @@ Kullanılmayan toplama kaynakları (hiçbir tarifte girdi değil — yalnız sat
 
 ## 5. Canavar listesi
 
-Bölge, `scripts/gen_world.py` ZONES’undan; Sv 1–25 canavarları elle yazılmış (`mobs.yaml` başı), bölgesi yok. Av ve zindan başlatmak bulunulan bölgeye bağlı değil (yolculuk yalnız konum değiştiriyor).
+Bölge `mobs.yaml` `region_code`; canavar kendi bölgesinden ya da ona yolu olan bölgeden avlanır (DD-273). Zindan ve baskınlar bölgeye bağlı değil; baskın boss’unun sütununda baskın adı var.
 
 | Sv | Kod | Ad | Arketip | Bölge | Can | Sal | Sav | XP | Altın | Ekipman kademesi | Deri (en iyi) | Rol |
 |---:|---|---|---|---|---:|---:|---:|---:|---|---:|---|---|
-| 1 | young_boar | Genç Yaban Domuzu | — | — | 172 | 29 | 2 | 10 | 7c–18c | 1 | Küçük Tavşan Postu | görev |
-| 3 | grey_wolf | Boz Kurt | — | — | 212 | 35 | 4 | 64 | 24c–60c | 1 | Yaban Tavşanı Postu | dalga ×1, görev |
-| 5 | bandit_scout | Haydut Gözcü | — | — | 300 | 41 | 6 | 131 | 48c–1s 20c | 5 | Kızıl Tilki Postu | dalga ×1, görev |
-| 6 | cave_bat | Mağara Yarasası | — | — | 266 | 42 | 6 | 193 | 62c–1s 55c | 5 | Dağ Keçisi Postu | dalga ×1 |
-| 8 | goblin_raider | Goblin Yağmacı | — | — | 396 | 50 | 9 | 279 | 94c–2s 35c | 5 | Yaban Mandası Derisi | boss Kül Mahzeni, dalga ×1, görev |
-| 10 | marsh_lurker | Bataklık Pusucusu | — | — | 460 | 56 | 11 | 398 | 1s 29c–3s 22c | 10 | Dağ Aslanı Postu | dalga ×1 |
-| 12 | forest_troll | Orman Trolü | — | — | 760 | 53 | 21 | 640 | 1s 69c–4s 22c | 10 | Fırtına Kartalı Tüyü | dalga ×1, görev |
-| 14 | dire_wolf | Dev Kurt | — | — | 529 | 68 | 14 | 750 | 2s 13c–5s 32c | 10 | Ayaz Kurdu Postu | boss Orman Kovuğu, dalga ×1 |
-| 15 | cultist_acolyte | Tarikat Müridi | — | — | 465 | 85 | 10 | 800 | 2s 35c–5s 88c | 15 | Dev Ayı Postu | dalga ×1 |
-| 18 | rock_ogre | Kaya Devi | — | — | 1038 | 68 | 30 | 1224 | 3s 8c–7s 70c | 15 | Kadim Mamut Postu | dalga ×1 |
-| 20 | shadow_stalker | Gölge Avcısı | — | — | 624 | 82 | 17 | 1328 | 3s 61c–9s 2c | 20 | Yaşlı Wyvern Pulu | boss Gölgebataklık Harabeleri, dalga ×1 |
-| 22 | frost_giant | Buz Devi | — | — | 1224 | 78 | 37 | 1687 | 4s 16c–10s 40c | 20 | Yıldız Grifonu Tüyü | dalga ×1 |
-| 24 | elder_wyrm | Kadim Ejder | — | — | 1317 | 83 | 40 | 1939 | 4s 73c–11s 82c | 20 | Kadim Anka Tüyü | dalga ×1 |
-| 25 | ashen_lich | Kül Ölüsü | — | — | 705 | 121 | 16 | 1811 | 5s 3c–12s 58c | 25 | Göksel Ejder Pulu | boss Obsidyen Kule |
+| 1 | young_boar | Genç Yaban Domuzu | — | Yeşilorman | 172 | 29 | 2 | 10 | 7c–18c | 1 | Küçük Tavşan Postu | görev |
+| 3 | grey_wolf | Boz Kurt | — | Yeşilorman | 212 | 35 | 4 | 64 | 24c–60c | 1 | Yaban Tavşanı Postu | dalga ×1, görev |
+| 5 | bandit_scout | Haydut Gözcü | — | Yeşilorman | 300 | 41 | 6 | 131 | 48c–1s 20c | 5 | Kızıl Tilki Postu | dalga ×1, görev |
+| 6 | cave_bat | Mağara Yarasası | — | Yeşilorman | 266 | 42 | 6 | 193 | 62c–1s 55c | 5 | Dağ Keçisi Postu | dalga ×1 |
+| 8 | goblin_raider | Goblin Yağmacı | — | Fısıltı Vadisi | 396 | 50 | 9 | 279 | 94c–2s 35c | 5 | Yaban Mandası Derisi | boss Kül Mahzeni, dalga ×1, görev |
+| 10 | marsh_lurker | Bataklık Pusucusu | — | Fısıltı Vadisi | 460 | 56 | 11 | 398 | 1s 29c–3s 22c | 10 | Dağ Aslanı Postu | dalga ×1 |
+| 12 | forest_troll | Orman Trolü | — | Fısıltı Vadisi | 760 | 53 | 21 | 640 | 1s 69c–4s 22c | 10 | Fırtına Kartalı Tüyü | dalga ×1, görev |
+| 14 | dire_wolf | Dev Kurt | — | Fısıltı Vadisi | 529 | 68 | 14 | 750 | 2s 13c–5s 32c | 10 | Ayaz Kurdu Postu | boss Orman Kovuğu, dalga ×1 |
+| 15 | cultist_acolyte | Tarikat Müridi | — | Fısıltı Vadisi | 465 | 85 | 10 | 800 | 2s 35c–5s 88c | 15 | Dev Ayı Postu | dalga ×1 |
+| 18 | rock_ogre | Kaya Devi | — | Közdoruk | 1038 | 68 | 30 | 1224 | 3s 8c–7s 70c | 15 | Kadim Mamut Postu | dalga ×1 |
+| 20 | shadow_stalker | Gölge Avcısı | — | Közdoruk | 624 | 82 | 17 | 1328 | 3s 61c–9s 2c | 20 | Yaşlı Wyvern Pulu | boss Gölgebataklık Harabeleri, dalga ×1 |
+| 22 | frost_giant | Buz Devi | — | Közdoruk | 1224 | 78 | 37 | 1687 | 4s 16c–10s 40c | 20 | Yıldız Grifonu Tüyü | dalga ×1 |
+| 24 | elder_wyrm | Kadim Ejder | — | Közdoruk | 1317 | 83 | 40 | 1939 | 4s 73c–11s 82c | 20 | Kadim Anka Tüyü | dalga ×1 |
+| 25 | ashen_lich | Kül Ölüsü | — | Közdoruk | 705 | 121 | 16 | 1811 | 5s 3c–12s 58c | 25 | Göksel Ejder Pulu | boss Obsidyen Kule |
 | 30 | mist_leech | Sis Sülüğü | evasive | Sisli Bataklıklar | 855 | 105 | 25 | 2309 | 6s 61c–16s 52c | 25 | Göksel Ejder Pulu | dalga ×1 |
 | 35 | mud_golem | Çamur Golemi | tank | Sisli Bataklıklar | 1794 | 102 | 55 | 2955 | 8s 33c–20s 82c | 35 | Göksel Ejder Pulu | dalga ×1 |
 | 40 | bog_witch | Bataklık Cadısı | glass | Sisli Bataklıklar | 1035 | 168 | 25 | 3658 | 10s 18c–25s 45c | 35 | Göksel Ejder Pulu | dalga ×1 |
@@ -683,17 +670,14 @@ Arketip dağılımı: elite 25, tank 20, crit 18, glass 17, evasive 16, el yapı
 | 7 | Yüksek | Üretim | Simya: son tarif beceri 30, meslek tavanı 60 — son 30 beceri seviyesinde açılacak tarif yok. |
 | 8 | Yüksek | Üretim | Demircilik: son tarif beceri 10, meslek tavanı 60 — son 50 beceri seviyesinde açılacak tarif yok. |
 | 9 | Yüksek | Üretim | En yüksek üretilebilir ekipman Sv 10; ekipman merdiveni Sv 985. Sv 10 üstü ekipmanın tek kaynağı %4 av / boss ganimeti. |
-| 10 | Orta | Canavar | Av bölgeye bağlı değil: bölgeler yalnız yolculuk ekranında var; oyuncu herhangi bir yerden herhangi bir canavarı avlayabiliyor (DD-254/255 dünyaları anlamını yitiriyor). |
-| 11 | Orta | Ekipman | Yan el (offhand) yalnız 1 şablon (Titan Siper Kalkanı, Sv 600, koruyucu uzmanlığı). Kalkan izni olan savaşçı/paladin/rahip 600’e kadar kalkan bulamıyor. |
-| 12 | Orta | Ekipman | 21/32 silah ailesinin hiç eşyası yok (axe, greatsword, greataxe, spear, short_sword, dual_dagger, throwing_knife, longbow …). Sınıf izinleri (DD-252) her sınıfa 4–6 aile tanıyor, içerikte sınıf başı tek aile var. |
-| 13 | Orta | Ekipman | Zırh türleri (kumaş/hafif/orta/ağır) tanımlı ama hiçbir zırhın alt sınıfı bu türlerden değil; `CanUse` aile dışı alt sınıfa izin verdiği için büyücü ile savaşçı aynı zırhı giyiyor. |
-| 14 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
-| 15 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
-| 16 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
-| 17 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
-| 18 | Orta | Tüketilebilir | En büyük iksir +700, en büyük yemek +925 can; Sv 1000 canavar canı ~25150. İksir Sv 28, yemek Sv 100’de bitiyor — üst seviyede iyileştirme anlamsız. |
-| 19 | Orta | Zindan | Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok. |
-| 20 | Orta | Üretim | Üretilebilir silahı olmayan sınıflar: bard, druid, monk, paladin, shaman (yalnız cleric, mage, ranger, rogue, warrior silahı demircilikte). |
-| 21 | Orta | Üretim | Kuyumculuk / terzilik / deri işçiliği / oymacılık yok: deri, post, tüy, kütük ve taş için üretim yolu yok; takı slotları boş. |
-| 22 | Düşük | Canavar | Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok). |
-| 23 | Düşük | Eşya | 6 eşya bilinçli olarak emekli (DD-241/244; eski yığınlar satılabilsin diye duruyor), kaynağı yok: potion_mp_small, linseed, mandrake, king_bloom, elm_log, yew_log. Temizlik isteğe bağlı. |
+| 10 | Orta | Ekipman | Yan el (offhand) yalnız 1 şablon (Titan Siper Kalkanı, Sv 600, koruyucu uzmanlığı). Kalkan izni olan savaşçı/paladin/rahip 600’e kadar kalkan bulamıyor. |
+| 11 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
+| 12 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
+| 13 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
+| 14 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
+| 15 | Orta | Tüketilebilir | En büyük iksir +700, en büyük yemek +925 can; Sv 1000 canavar canı ~25150. İksir Sv 28, yemek Sv 100’de bitiyor — üst seviyede iyileştirme anlamsız. |
+| 16 | Orta | Zindan | Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok. |
+| 17 | Orta | Üretim | Üretilebilir silahı olmayan sınıflar: bard, druid, monk, paladin, shaman (yalnız cleric, mage, ranger, rogue, warrior silahı demircilikte). |
+| 18 | Orta | Üretim | Kuyumculuk / terzilik / deri işçiliği / oymacılık yok: deri, post, tüy, kütük ve taş için üretim yolu yok; takı slotları boş. |
+| 19 | Düşük | Canavar | Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok). |
+| 20 | Düşük | Eşya | 6 eşya bilinçli olarak emekli (DD-241/244; eski yığınlar satılabilsin diye duruyor), kaynağı yok: potion_mp_small, linseed, mandrake, king_bloom, elm_log, yew_log. Temizlik isteğe bağlı. |

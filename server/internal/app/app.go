@@ -289,7 +289,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Food buffs (DD-269): the live buff adds attack/defense percent.
 	consumableSvc := consumable.NewService(pool, itemSvc, charSvc, logger)
 	sheetAdapter.WithModifierSource(consumableSvc.Modifiers)
-	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
+	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc).
+		WithRegionGate(worldSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
 	// Raids (DD-261): party runs of the group dungeon templates.

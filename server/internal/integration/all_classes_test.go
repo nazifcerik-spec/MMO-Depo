@@ -208,7 +208,7 @@ func TestHTTPClassCatalog(t *testing.T) {
 		if c["code"] == "warrior" {
 			require.Equal(t, "rage", c["resource"].(map[string]any)["kind"])
 			require.Equal(t, 10.0, c["base_stats"].(map[string]any)["strength"])
-			require.Contains(t, c["equipment"], "heavy_armor")
+			require.Contains(t, c["equipment"], "plate_armor")
 		}
 		if c["code"] == "berserker" {
 			require.Equal(t, "executioner", c["parent"])

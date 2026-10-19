@@ -4137,6 +4137,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fed · +{atk}% attack · +{def}% defense · {time} left'**
   String fedActive(int atk, int def, String time);
+
+  /// No description provided for @huntReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunting from here: {regions}'**
+  String huntReach(String regions);
+
+  /// No description provided for @huntNoMobsHere.
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to hunt here. Travel to a hunting ground first.'**
+  String get huntNoMobsHere;
+
+  /// No description provided for @huntOtherRegions.
+  ///
+  /// In en, this message translates to:
+  /// **'Monsters in other regions'**
+  String get huntOtherRegions;
+
+  /// No description provided for @huntTravelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel to a monster\'s region, or a region linked to it by road, to hunt it.'**
+  String get huntTravelHint;
+
+  /// No description provided for @errMobRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'This monster lives in another region. Travel there first.'**
+  String get errMobRegion;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

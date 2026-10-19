@@ -137,7 +137,8 @@ type Mob struct {
 	XPReward       int32  `yaml:"xp_reward"`
 	GoldCopperMin  int64  `yaml:"gold_copper_min"`
 	GoldCopperMax  int64  `yaml:"gold_copper_max"`
-	RaidBoss       bool   `yaml:"raid_boss"` // fought only in raids (DD-261)
+	RaidBoss       bool   `yaml:"raid_boss"`   // fought only in raids (DD-261)
+	RegionCode     string `yaml:"region_code"` // hunted here and from linked regions (DD-273)
 }
 
 type mobsFile struct {
@@ -467,6 +468,11 @@ func Read(dir string) (*Pack, error) {
 		return nil, err
 	}
 	for _, it := range p.Items {
+		// Weapons and armor carry a governed family or armor type so class
+		// permissions apply to them (DD-271).
+		if p.Progression != nil && (it.ItemClass == "weapon" || it.ItemClass == "armor") && !p.Progression.IsFamily(it.ItemSubclass) {
+			return nil, fmt.Errorf("item %s: subclass %q is not an equipment family or armor type", it.Code, it.ItemSubclass)
+		}
 		rq := it.Requirements
 		if rq == nil {
 			continue
@@ -529,8 +535,16 @@ func validateRefs(p *Pack, r refs) error {
 		}
 	}
 	raidBoss := map[string]bool{}
+	regions := codeSet(p.Regions, func(r Region) string { return r.Code })
 	for _, m := range p.Mobs {
 		raidBoss[m.Code] = m.RaidBoss
+		// Every huntable mob lives in a region (DD-273); raid bosses in none.
+		if m.RaidBoss != (m.RegionCode == "") {
+			return fmt.Errorf("mob %s: region_code is required for hunted mobs and absent for raid bosses", m.Code)
+		}
+		if m.RegionCode != "" && !regions[m.RegionCode] {
+			return fmt.Errorf("mob %s: unknown region %q", m.Code, m.RegionCode)
+		}
 	}
 	for _, d := range p.Dungeons {
 		if !r.mobs[d.BossMobCode] {
@@ -1125,8 +1139,8 @@ func (l *Loader) upsertMobs(ctx context.Context, mobs []Mob) error {
 INSERT INTO content.mob_template (
   code, display_name_key, level,
   hp_max, attack, defense, crit_pct, hit_pct, evasion_pct,
-  xp_reward, gold_copper_min, gold_copper_max, raid_boss
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+  xp_reward, gold_copper_min, gold_copper_max, raid_boss, region_code
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,NULLIF($14,''))
 ON CONFLICT (code) DO UPDATE SET
   display_name_key = EXCLUDED.display_name_key,
   level            = EXCLUDED.level,
@@ -1140,13 +1154,14 @@ ON CONFLICT (code) DO UPDATE SET
   gold_copper_min  = EXCLUDED.gold_copper_min,
   gold_copper_max  = EXCLUDED.gold_copper_max,
   raid_boss        = EXCLUDED.raid_boss,
+  region_code      = EXCLUDED.region_code,
   version          = content.mob_template.version + 1`
 
 	for _, m := range mobs {
 		_, err = tx.Exec(ctx, q,
 			m.Code, m.DisplayNameKey, m.Level,
 			m.HPMax, m.Attack, m.Defense, m.CritPct, m.HitPct, m.EvasionPct,
-			m.XPReward, m.GoldCopperMin, m.GoldCopperMax, m.RaidBoss,
+			m.XPReward, m.GoldCopperMin, m.GoldCopperMax, m.RaidBoss, m.RegionCode,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert mob %s: %w", m.Code, err)

@@ -94,3 +94,32 @@ func TestStart_FreezesSkillsAndGuards(t *testing.T) {
 	_, err = svc.Start(context.Background(), req)
 	require.ErrorIs(t, err, ErrTooWounded)
 }
+
+type gate []string
+
+func (g gate) HuntRegions(context.Context, uuid.UUID) ([]string, error) { return g, nil }
+
+// A gated hunt only starts on mobs in reach of where the character stands
+// (DD-273); mobs without a region (old content) are never gated.
+func TestStart_RegionGate(t *testing.T) {
+	sheet := &character.Sheet{Class: "warrior", Level: 5,
+		Resources: character.Resources{HPCurrent: 90, HPMax: 100},
+		Derived:   character.DerivedStats{Attack: 20, Defense: 5, HitPct: 90}}
+	cat := combat.NewCatalog([]combat.Mob{
+		{Code: "boar", HPMax: 40, Attack: 5, HitPct: 80, RegionCode: "greenwood"},
+		{Code: "wyrm", HPMax: 40, Attack: 5, HitPct: 80, RegionCode: "emberpeak"},
+		{Code: "rat", HPMax: 40, Attack: 5, HitPct: 80},
+	})
+	svc := NewService(&memRepo{}, mobs{cat}, sheets{sheet: sheet}, nil, nil, nil, DefaultServiceConfig(), nil, newRNG).
+		WithRegionGate(gate{"ironhold_city", "greenwood"})
+	req := StartRequest{CharacterID: uuid.New(), AccountID: uuid.New(), DurationSeconds: 600}
+	for mob, want := range map[string]error{"boar": nil, "rat": nil, "wyrm": ErrWrongRegion} {
+		req.MobCode = mob
+		_, err := svc.Start(context.Background(), req)
+		if want == nil {
+			require.NoError(t, err, mob)
+		} else {
+			require.ErrorIs(t, err, want, mob)
+		}
+	}
+}

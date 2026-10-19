@@ -208,6 +208,7 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 			"xp_reward":        m.XPReward,
 			"gold_copper_min":  m.GoldCopperMin,
 			"gold_copper_max":  m.GoldCopperMax,
+			"region_code":      m.RegionCode,
 		})
 	}
 	w.Header().Set("Cache-Control", "public, max-age=300")

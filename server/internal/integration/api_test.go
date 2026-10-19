@@ -297,7 +297,7 @@ func TestHTTPGameplayLoop(t *testing.T) {
 	}
 	p.fail("POST", "/v1/vendor/general_ironhold/buy", map[string]any{"template_code": "chest_leather",
 		"expected_price_copper": 1, "character_id": p.char}, 400, "E_VALIDATION")
-	for _, code := range []string{"chest_leather", "potion_hp_small", "potion_hp_small"} {
+	for _, code := range []string{"chest_novice", "potion_hp_small", "potion_hp_small"} { // warriors wear plate (DD-271)
 		p.ok("POST", "/v1/vendor/general_ironhold/buy", map[string]any{"template_code": code,
 			"expected_price_copper": priceOf(code), "character_id": p.char})
 	}
@@ -311,7 +311,7 @@ func TestHTTPGameplayLoop(t *testing.T) {
 		t.Fatalf("no %s in bag: %v", code, bag)
 		return ""
 	}
-	chest := find("chest_leather")
+	chest := find("chest_novice")
 	p.ok("POST", p.path("/equip/"+chest), map[string]any{})
 	p.ok("GET", p.path("/equipment"), nil)
 	p.ok("POST", p.path("/unequip/chest"), map[string]any{})
@@ -328,7 +328,7 @@ func TestHTTPGameplayLoop(t *testing.T) {
 	require.NotEmpty(t, bbs)
 	var chestBB string
 	for _, bb := range bbs {
-		if bb["template_code"] == "chest_leather" {
+		if bb["template_code"] == "chest_novice" {
 			chestBB = bb["id"].(string)
 		}
 	}

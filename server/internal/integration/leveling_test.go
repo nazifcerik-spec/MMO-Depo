@@ -319,7 +319,7 @@ func TestRespecAndEquipmentRequirements(t *testing.T) {
 	require.NoError(t, err)
 	s4 := w.give(unpromoted, "titan_bulwark_shield", 1)
 	_, err = equip.Equip(w.ctx, unpromoted.ID, s4.ID)
-	require.ErrorIs(t, err, inventory.ErrSpecRequirement, "shields are allowed, but this one needs the Guardian branch")
+	require.ErrorIs(t, err, inventory.ErrEquipmentPermission, "shields belong to the Guardian line (DD-272)")
 
 	busy := fakeBusy(true)
 	_, _, err = w.chars.ChangeSpecialization(w.ctx, p.ID, "berserker", busy, equip)

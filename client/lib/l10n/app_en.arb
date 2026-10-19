@@ -1836,5 +1836,17 @@
         "type": "String"
       }
     }
-  }
+  },
+  "huntReach": "Hunting from here: {regions}",
+  "@huntReach": {
+    "placeholders": {
+      "regions": {
+        "type": "String"
+      }
+    }
+  },
+  "huntNoMobsHere": "There is nothing to hunt here. Travel to a hunting ground first.",
+  "huntOtherRegions": "Monsters in other regions",
+  "huntTravelHint": "Travel to a monster's region, or a region linked to it by road, to hunt it.",
+  "errMobRegion": "This monster lives in another region. Travel there first."
 }

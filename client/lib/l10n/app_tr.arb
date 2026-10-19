@@ -673,5 +673,10 @@
   "raceGnomeDesc": "Zeki mucitler",
   "foodBuffLine": "{minutes} dk boyunca +%{atk} saldırı ve +%{def} savunma",
   "fedToast": "Tok: +%{atk} saldırı, +%{def} savunma",
-  "fedActive": "Tok · +%{atk} saldırı · +%{def} savunma · {time} kaldı"
+  "fedActive": "Tok · +%{atk} saldırı · +%{def} savunma · {time} kaldı",
+  "huntReach": "Buradan avlanılan bölgeler: {regions}",
+  "huntNoMobsHere": "Burada avlanacak canavar yok. Yolculuk sekmesinden bir av bölgesine git.",
+  "huntOtherRegions": "Diğer bölgelerdeki canavarlar",
+  "huntTravelHint": "Bir canavarı avlamak için onun bölgesine ya da o bölgeye yolu olan bir komşusuna git.",
+  "errMobRegion": "Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git."
 }

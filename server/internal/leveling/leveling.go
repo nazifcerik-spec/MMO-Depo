@@ -13,6 +13,7 @@ import (
 	"math"
 	"slices"
 	"sort"
+	"strings"
 	"sync/atomic"
 )
 
@@ -906,13 +907,17 @@ func (c *Config) Permissions(spec string) []string {
 	return nil
 }
 
-// IsFamily reports whether an item subclass is a governed equipment family.
+// IsFamily reports whether class permissions govern an item subclass: an
+// equipment family or an armor type ("<type>_armor", DD-271).
 func (c *Config) IsFamily(subclass string) bool {
+	if t, ok := strings.CutSuffix(subclass, "_armor"); ok && slices.Contains(c.ArmorTypes, t) {
+		return true
+	}
 	return slices.Contains(c.EquipmentFamilies, subclass)
 }
 
-// CanUse reports whether a class path may equip an item subclass: families
-// outside the governed list (armor pieces, jewelry) are always allowed.
+// CanUse reports whether a class path may equip an item subclass: subclasses
+// outside the governed families and armor types (jewelry) are always allowed.
 func (c *Config) CanUse(spec, subclass string) bool {
 	if !c.IsFamily(subclass) {
 		return true

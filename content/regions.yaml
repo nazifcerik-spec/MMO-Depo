@@ -444,7 +444,11 @@ regions:
 
 # Non-parent shortcuts. (a, b) canonical order: a < b lexically.
 region_links:
+  # Roads between neighbouring hunting grounds (DD-273): a region's mobs are
+  # hunted from it and from the regions linked to it.
+  - { region_a_code: greenwood, region_b_code: ironhold_city, travel_seconds: 120 }
   - { region_a_code: greenwood, region_b_code: whispering_reach, travel_seconds: 300 }
+  - { region_a_code: emberpeak, region_b_code: whispering_reach, travel_seconds: 300 }
 
   # >>> generated: links (scripts/gen_world.py)
   - { region_a_code: emberpeak, region_b_code: misty_marshes, travel_seconds: 300 }

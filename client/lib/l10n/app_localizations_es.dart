@@ -1504,7 +1504,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errEventNotOpen => 'Enlistment for this event is closed.';
 
   @override
-  String get errWrongRegion => 'Travel to the event\'s region first.';
+  String get errWrongRegion => 'Este monstruo vive en otra zona. Viaja allí primero.';
 
   @override
   String get errAlreadyEnlisted => 'You\'re already enlisted.';
@@ -2329,4 +2329,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String fedActive(int atk, int def, String time) {
     return 'Saciado · +$atk% ataque · +$def% defensa · quedan $time';
   }
+
+  @override
+  String huntReach(String regions) {
+    return 'Zonas de caza desde aquí: $regions';
+  }
+
+  @override
+  String get huntNoMobsHere => 'Aquí no hay nada que cazar. Viaja primero a una zona de caza.';
+
+  @override
+  String get huntOtherRegions => 'Monstruos de otras zonas';
+
+  @override
+  String get huntTravelHint => 'Para cazar un monstruo, viaja a su zona o a una zona unida a ella por camino.';
+
+  @override
+  String get errMobRegion => 'Este monstruo vive en otra zona. Viaja allí primero.';
 }
