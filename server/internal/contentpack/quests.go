@@ -75,8 +75,8 @@ func validateQuests(quests []Quest, r refs) error {
 		if !questCategories[q.Category] {
 			return fmt.Errorf("quest %s: category %q not in main|side|daily", q.Code, q.Category)
 		}
-		if q.MinLevel < 1 || q.MinLevel > 60 {
-			return fmt.Errorf("quest %s: min_level must be 1..60", q.Code)
+		if q.MinLevel < 1 || q.MinLevel > 1000 { // the character cap (DD-278)
+			return fmt.Errorf("quest %s: min_level must be 1..1000", q.Code)
 		}
 		if q.RewardXP < 0 || q.RewardGoldCopper < 0 {
 			return fmt.Errorf("quest %s: rewards must be >= 0", q.Code)

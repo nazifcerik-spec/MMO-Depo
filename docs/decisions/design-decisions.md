@@ -2617,6 +2617,25 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-278 — Dünyaya yayılan görev zincirleri
+**Karar:**
+- Ana zincir (elle yazılmış kısmı Sv 10'da bitiyor) bölge bölge devam eder (`scripts/gen_quests.py`, 44 görev):
+  - 23 ana halka (`main_07` … `main_29`). Her halka bölgenin ilk canavarından 20 avlamayı ve bölgenin zindanını temizlemeyi ister.
+  - Her halka bir öncekini gerektirir; asgari seviye zindanın seviyesidir.
+- Her bölgenin seçkin canavarına bir yan görev var: "Ödül Avı", 10 öldürme, Sv − 5'te açılır.
+- Ödüller:
+  - XP, eğrinin o seviyedeki eşiğinin yarısı (ana) ya da %30'u (yan).
+  - Altın, ~25 canavar altını (ana) ya da yarısı (yan).
+- Adlar zindan ve canavar adlarından 4 dilde.
+- Migration 0042 görev `min_level` sınırını 60'tan 1000'e çıkarır. Doğrulama da aynı.
+
+**Reason:** Yol haritası Faz E (görevler Sv 10'da bitiyordu). Bölgesel av (DD-273) ile birlikte zincir oyuncuyu bölgeden bölgeye taşır.
+**Alternatives:** Bölge başı 3–5 elle yazılmış görev (54 bölge × 4 dil). Günlük havuzu seviyelere göre genişletmek (sonra).
+**Consequences:** 62 görev, Sv 1–995. Sv 10–25 arası halkalar elle yazılmış bölgelerde (Gölgebataklık, Obsidyen Kule).
+**Tarih:** 2026-10-20
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

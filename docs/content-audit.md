@@ -12,7 +12,7 @@
 | Tarif | 1867 | blacksmithing 788, woodworking 376, tailoring 282, leatherworking 235, jewelcrafting 126, cooking 30, smelting 24, alchemy 6 |
 | Canavar | 140 | Sv 1–1000 (+6 baskın boss’u) |
 | Zindan / baskın | 25 / 6 | Sv 6–1000 |
-| Görev | 18 | Sv 1–10 |
+| Görev | 62 | Sv 1–995 |
 | Set | 0 | tasarım var (`docs/item-engine/set.md`), uygulanmadı |
 | Dükkân | 1 | 38 eşya |
 
@@ -2309,144 +2309,144 @@ Bölge `mobs.yaml` `region_code`; canavar kendi bölgesinden ya da ona yolu olan
 | 10 | marsh_lurker | Bataklık Pusucusu | — | Fısıltı Vadisi | 460 | 56 | 11 | 398 | 1s 29c–3s 22c | 10 | Orman Faresi Postu | dalga ×1 |
 | 12 | forest_troll | Orman Trolü | — | Fısıltı Vadisi | 760 | 53 | 21 | 640 | 1s 69c–4s 22c | 10 | Orman Faresi Postu | dalga ×1, görev |
 | 14 | dire_wolf | Dev Kurt | — | Fısıltı Vadisi | 529 | 68 | 14 | 750 | 2s 13c–5s 32c | 10 | Orman Faresi Postu | boss Orman Kovuğu, dalga ×1 |
-| 15 | cultist_acolyte | Tarikat Müridi | — | Fısıltı Vadisi | 465 | 85 | 10 | 800 | 2s 35c–5s 88c | 15 | Orman Faresi Postu | dalga ×1 |
+| 15 | cultist_acolyte | Tarikat Müridi | — | Fısıltı Vadisi | 465 | 85 | 10 | 800 | 2s 35c–5s 88c | 15 | Orman Faresi Postu | dalga ×1, görev |
 | 18 | rock_ogre | Kaya Devi | — | Közdoruk | 1038 | 68 | 30 | 1224 | 3s 8c–7s 70c | 15 | Orman Faresi Postu | dalga ×1 |
 | 20 | shadow_stalker | Gölge Avcısı | — | Közdoruk | 624 | 82 | 17 | 1328 | 3s 61c–9s 2c | 20 | Orman Faresi Postu | boss Gölgebataklık Harabeleri, dalga ×1 |
-| 22 | frost_giant | Buz Devi | — | Közdoruk | 1224 | 78 | 37 | 1687 | 4s 16c–10s 40c | 20 | Orman Faresi Postu | dalga ×1 |
+| 22 | frost_giant | Buz Devi | — | Közdoruk | 1224 | 78 | 37 | 1687 | 4s 16c–10s 40c | 20 | Orman Faresi Postu | dalga ×1, görev |
 | 24 | elder_wyrm | Kadim Ejder | — | Közdoruk | 1317 | 83 | 40 | 1939 | 4s 73c–11s 82c | 20 | Orman Faresi Postu | dalga ×1 |
 | 25 | ashen_lich | Kül Ölüsü | — | Közdoruk | 705 | 121 | 16 | 1811 | 5s 3c–12s 58c | 25 | Orman Faresi Postu | boss Obsidyen Kule |
-| 30 | mist_leech | Sis Sülüğü | evasive | Sisli Bataklıklar | 855 | 105 | 25 | 2309 | 6s 61c–16s 52c | 25 | Orman Faresi Postu | dalga ×1 |
+| 30 | mist_leech | Sis Sülüğü | evasive | Sisli Bataklıklar | 855 | 105 | 25 | 2309 | 6s 61c–16s 52c | 25 | Orman Faresi Postu | dalga ×1, görev |
 | 35 | mud_golem | Çamur Golemi | tank | Sisli Bataklıklar | 1794 | 102 | 55 | 2955 | 8s 33c–20s 82c | 35 | Küçük Tavşan Postu | dalga ×1 |
 | 40 | bog_witch | Bataklık Cadısı | glass | Sisli Bataklıklar | 1035 | 168 | 25 | 3658 | 10s 18c–25s 45c | 35 | Küçük Tavşan Postu | dalga ×1 |
 | 42 | marsh_queen | Bataklık Kraliçesi | chief | Sisli Bataklıklar | 1440 | 125 | 38 | 3955 | 10s 95c–27s 38c | 35 | Küçük Tavşan Postu | boss Batık Tapınak |
 | 45 | venom_lizard | Zehirli Kertenkele | crit | Sisli Bataklıklar | 1339 | 145 | 37 | 4417 | 12s 15c–30s 38c | 35 | Küçük Tavşan Postu |  |
-| 50 | drowned_knight | Batık Şövalye | elite | Sisli Bataklıklar | 1960 | 153 | 49 | 5228 | 14s 23c–35s 58c | 50 | Küçük Tavşan Postu |  |
-| 55 | mountain_troll | Dağ Trolü | tank | Demir Dağlar | 2669 | 144 | 86 | 6089 | 16s 41c–41s 2c | 50 | Küçük Tavşan Postu | dalga ×1 |
+| 50 | drowned_knight | Batık Şövalye | elite | Sisli Bataklıklar | 1960 | 153 | 49 | 5228 | 14s 23c–35s 58c | 50 | Küçük Tavşan Postu | görev |
+| 55 | mountain_troll | Dağ Trolü | tank | Demir Dağlar | 2669 | 144 | 86 | 6089 | 16s 41c–41s 2c | 50 | Küçük Tavşan Postu | dalga ×1, görev |
 | 60 | dwarf_ghost | Cüce Hayaleti | evasive | Demir Dağlar | 1568 | 177 | 49 | 6999 | 18s 70c–46s 75c | 50 | Küçük Tavşan Postu | dalga ×1 |
 | 65 | rock_eagle | Kaya Kartalı | glass | Demir Dağlar | 1598 | 247 | 40 | 7955 | 21s 9c–52s 72c | 65 | Tarla Faresi Postu | dalga ×1 |
 | 67 | iron_king | Demir Kral | chief | Demir Dağlar | 2190 | 182 | 60 | 8351 | 22s 7c–55s 18c | 65 | Tarla Faresi Postu | boss Unutulmuş Maden |
 | 70 | iron_spider | Demir Örümcek | crit | Demir Dağlar | 1995 | 206 | 57 | 8957 | 23s 57c–58s 92c | 65 | Tarla Faresi Postu |  |
-| 75 | mine_warden | Maden Bekçisi | elite | Demir Dağlar | 2835 | 213 | 73 | 10002 | 26s 14c–65s 35c | 65 | Tarla Faresi Postu |  |
-| 80 | ghost_guard | Hayalet Muhafız | normal | Kuzey Kalesi Harabeleri | 2150 | 196 | 65 | 11090 | 28s 79c–71s 98c | 80 | Tarla Faresi Postu | dalga ×1 |
+| 75 | mine_warden | Maden Bekçisi | elite | Demir Dağlar | 2835 | 213 | 73 | 10002 | 26s 14c–65s 35c | 65 | Tarla Faresi Postu | görev |
+| 80 | ghost_guard | Hayalet Muhafız | normal | Kuzey Kalesi Harabeleri | 2150 | 196 | 65 | 11090 | 28s 79c–71s 98c | 80 | Tarla Faresi Postu | dalga ×1, görev |
 | 85 | cursed_archer | Lanetli Okçu | glass | Kuzey Kalesi Harabeleri | 2048 | 310 | 52 | 12220 | 31s 53c–78s 82c | 80 | Tarla Faresi Postu | dalga ×1 |
 | 90 | bone_rider | Kemik Atlı | crit | Kuzey Kalesi Harabeleri | 2520 | 256 | 73 | 13390 | 34s 36c–85s 90c | 80 | Tarla Faresi Postu | dalga ×2 |
 | 92 | fallen_lord_varn | Düşmüş Lord Varn | chief | Kuzey Kalesi Harabeleri | 2940 | 239 | 82 | 13869 | 35s 51c–88s 78c | 80 | Sincap Postu | boss Kuzey Kalesi |
 | 95 | keep_gargoyle | Kale Gargoyli | tank | Kuzey Kalesi Harabeleri | 4419 | 228 | 146 | 14600 | 37s 26c–93s 15c | 95 | Sincap Postu | dalga ×1 |
-| 100 | fallen_commander | Düşmüş Komutan | elite | Kuzey Kalesi Harabeleri | 3710 | 274 | 97 | 15849 | 40s 24c–1g 60c | 95 | Sincap Postu | dalga ×1 |
+| 100 | fallen_commander | Düşmüş Komutan | elite | Kuzey Kalesi Harabeleri | 3710 | 274 | 97 | 15849 | 40s 24c–1g 60c | 95 | Sincap Postu | dalga ×1, görev |
 | 102 | varn_undying | Ölümsüz Varn | titan | Kuzey Kalesi Kuşatması | 81000 | 775 | 116 | 16359 | 41s 45c–1g 3s 62c | 95 | Sincap Postu | baskın boss’u Kuzey Kalesi Kuşatması |
-| 110 | rebel_rider | Asi Süvari | normal | Taç Ovaları | 2900 | 259 | 89 | 18460 | 46s 42c–1g 16s 5c | 110 | Sincap Postu | dalga ×1 |
+| 110 | rebel_rider | Asi Süvari | normal | Taç Ovaları | 2900 | 259 | 89 | 18460 | 46s 42c–1g 16s 5c | 110 | Sincap Postu | dalga ×1, görev |
 | 120 | plains_lion | Ova Aslanı | crit | Taç Ovaları | 3308 | 330 | 97 | 21217 | 52s 90c–1g 32s 25c | 110 | Yaban Tavşanı Postu | dalga ×1 |
 | 130 | raider_mage | Yağmacı Büyücü | evasive | Taç Ovaları | 3230 | 346 | 105 | 24116 | 59s 64c–1g 49s 10c | 110 | Yaban Tavşanı Postu | dalga ×1 |
 | 132 | rebel_king_orrin | Asi Kral Orrin | elite | Taç Ovaları | 4830 | 351 | 128 | 24713 | 61s 3c–1g 52s 58c | 110 | Porsuk Postu | boss Asiler Kampı |
 | 140 | war_bear | Savaş Ayısı | tank | Taç Ovaları | 6388 | 322 | 215 | 27152 | 66s 66c–1g 66s 65c | 135 | Porsuk Postu |  |
-| 150 | black_lancer | Kara Mızrakçı | elite | Taç Ovaları | 5460 | 394 | 145 | 30321 | 73s 93c–1g 84s 82c | 135 | Porsuk Postu |  |
-| 160 | ash_wolf | Kül Kurdu | evasive | Yanık Orman | 3942 | 419 | 129 | 33620 | 81s 44c–2g 3s 60c | 160 | Yaban Hindisi Tüyü | dalga ×1 |
+| 150 | black_lancer | Kara Mızrakçı | elite | Taç Ovaları | 5460 | 394 | 145 | 30321 | 73s 93c–1g 84s 82c | 135 | Porsuk Postu | görev |
+| 160 | ash_wolf | Kül Kurdu | evasive | Yanık Orman | 3942 | 419 | 129 | 33620 | 81s 44c–2g 3s 60c | 160 | Yaban Hindisi Tüyü | dalga ×1, görev |
 | 170 | flame_spirit | Alev Ruhu | glass | Yanık Orman | 3960 | 578 | 103 | 37044 | 89s 19c–2g 22s 98c | 160 | Yaban Hindisi Tüyü | dalga ×1 |
 | 180 | cinder_treant | Kömür Treanti | tank | Yanık Orman | 8138 | 406 | 276 | 40592 | 97s 18c–2g 42s 95c | 160 | Orman Geyiği Derisi | dalga ×1 |
 | 182 | burnt_mother_tree | Yanık Ana Ağaç | elite | Yanık Orman | 6580 | 472 | 176 | 41316 | 98s 80c–2g 47s | 160 | Orman Geyiği Derisi | boss Ateş Kökü |
 | 190 | crimson_harpy | Kızıl Harpya | crit | Yanık Orman | 5145 | 504 | 153 | 44259 | 1g 5s 39c–2g 63s 48c | 185 | Orman Geyiği Derisi |  |
-| 200 | scorched_shaman | Yanık Şaman | elite | Yanık Orman | 7210 | 515 | 193 | 48045 | 1g 13s 82c–2g 84s 55c | 185 | Kızıl Tilki Postu |  |
-| 210 | sand_scorpion | Kum Akrebi | crit | Tuz Çölü | 5670 | 553 | 169 | 51946 | 1g 22s 46c–3g 6s 15c | 210 | Kızıl Tilki Postu | dalga ×1 |
+| 200 | scorched_shaman | Yanık Şaman | elite | Yanık Orman | 7210 | 515 | 193 | 48045 | 1g 13s 82c–2g 84s 55c | 185 | Kızıl Tilki Postu | görev |
+| 210 | sand_scorpion | Kum Akrebi | crit | Tuz Çölü | 5670 | 553 | 169 | 51946 | 1g 22s 46c–3g 6s 15c | 210 | Kızıl Tilki Postu | dalga ×1, görev |
 | 220 | desert_viper | Çöl Yılanı | evasive | Tuz Çölü | 5368 | 564 | 177 | 55960 | 1g 31s 31c–3g 28s 28c | 210 | Yaban Domuzu Postu | dalga ×1 |
 | 230 | salt_elemental | Tuz Elementali | tank | Tuz Çölü | 10325 | 511 | 352 | 60085 | 1g 40s 36c–3g 50s 90c | 210 | Yaban Domuzu Postu | dalga ×1 |
 | 232 | pharaoh_seth_ka | Firavun Seth-Ka | elite | Tuz Çölü | 8330 | 592 | 224 | 60923 | 1g 42s 20c–3g 55s 50c | 210 | Dağ Keçisi Postu | boss Gömülü Saray |
 | 240 | mummy_priest | Mumya Rahip | glass | Tuz Çölü | 5535 | 798 | 145 | 64319 | 1g 49s 61c–3g 74s 2c | 235 | Dağ Keçisi Postu |  |
-| 250 | sand_worm | Kum Solucanı | elite | Tuz Çölü | 8960 | 636 | 241 | 68660 | 1g 59s 6c–3g 97s 65c | 235 | Dağ Keçisi Postu |  |
-| 260 | royal_skeleton | Kraliyet İskeleti | normal | Taç Mezarlığı | 6650 | 574 | 209 | 73107 | 1g 68s 70c–4g 21s 75c | 260 | Yaban Kurdu Postu | dalga ×1 |
+| 250 | sand_worm | Kum Solucanı | elite | Tuz Çölü | 8960 | 636 | 241 | 68660 | 1g 59s 6c–3g 97s 65c | 235 | Dağ Keçisi Postu | görev |
+| 260 | royal_skeleton | Kraliyet İskeleti | normal | Taç Mezarlığı | 6650 | 574 | 209 | 73107 | 1g 68s 70c–4g 21s 75c | 260 | Yaban Kurdu Postu | dalga ×1, görev |
 | 270 | tomb_keeper | Mezar Bekçisi | tank | Taç Mezarlığı | 12075 | 595 | 412 | 77657 | 1g 78s 53c–4g 46s 32c | 260 | Yaban Kurdu Postu | dalga ×2 |
 | 280 | soul_drinker | Ruh Emici | glass | Taç Mezarlığı | 6435 | 924 | 169 | 82310 | 1g 88s 54c–4g 71s 35c | 260 | Orman Ayısı Postu | dalga ×1 |
 | 282 | crypt_lord_malachar | Mezar Lordu Malachar | elite | Taç Mezarlığı | 10080 | 713 | 272 | 83253 | 1g 90s 56c–4g 76s 40c | 260 | Orman Ayısı Postu | boss Kraliyet Kriptası |
 | 290 | black_knight | Kara Şövalye | crit | Taç Mezarlığı | 7770 | 752 | 233 | 87064 | 1g 98s 73c–4g 96s 82c | 285 | Orman Ayısı Postu | dalga ×1 |
-| 300 | crownless_king | Taçsız Kral | elite | Taç Mezarlığı | 10710 | 757 | 289 | 91917 | 2g 9s 9c–5g 22s 72c | 285 | Yaban Mandası Derisi | dalga ×1 |
+| 300 | crownless_king | Taçsız Kral | elite | Taç Mezarlığı | 10710 | 757 | 289 | 91917 | 2g 9s 9c–5g 22s 72c | 285 | Yaban Mandası Derisi | dalga ×1, görev |
 | 302 | crownless_tyrant | Taçsız Tiran | titan | Taçsız Kral'ın Sarayı | 231000 | 2119 | 340 | 92899 | 2g 11s 19c–5g 27s 98c | 285 | Yaban Mandası Derisi | baskın boss’u Taçsız Kral'ın Sarayı |
-| 310 | sea_raider | Deniz Haydudu | normal | Fırtına Kıyısı | 7900 | 679 | 249 | 96868 | 2g 19s 63c–5g 49s 8c | 310 | Yaban Mandası Derisi | dalga ×1 |
+| 310 | sea_raider | Deniz Haydudu | normal | Fırtına Kıyısı | 7900 | 679 | 249 | 96868 | 2g 19s 63c–5g 49s 8c | 310 | Yaban Mandası Derisi | dalga ×1, görev |
 | 320 | storm_bird | Fırtına Kuşu | evasive | Fırtına Kıyısı | 7742 | 805 | 257 | 101915 | 2g 30s 35c–5g 75s 88c | 310 | Yaban Mandası Derisi | dalga ×1 |
 | 330 | coral_golem | Mercan Golemi | tank | Fırtına Kıyısı | 14700 | 721 | 504 | 107059 | 2g 41s 23c–6g 3s 8c | 310 | Dev Geyik Postu | dalga ×1 |
 | 332 | admiral_drask | Amiral Drask | overlord | Fırtına Kıyısı | 15632 | 943 | 333 | 108099 | 2g 43s 42c–6g 8s 55c | 310 | Dev Geyik Postu | boss Batık Filo |
 | 340 | siren | Siren | glass | Fırtına Kıyısı | 7785 | 1113 | 205 | 112297 | 2g 52s 28c–6g 30s 70c | 335 | Dev Geyik Postu |  |
-| 350 | kraken_spawn | Kraken Yavrusu | elite | Fırtına Kıyısı | 12460 | 877 | 337 | 117628 | 2g 63s 49c–6g 58s 72c | 335 | Dev Geyik Postu |  |
-| 360 | young_dragon | Genç Ejder | crit | Ejder Yamaçları | 9608 | 925 | 289 | 123051 | 2g 74s 86c–6g 87s 15c | 360 | Dev Kurt Postu | dalga ×1 |
+| 350 | kraken_spawn | Kraken Yavrusu | elite | Fırtına Kıyısı | 12460 | 877 | 337 | 117628 | 2g 63s 49c–6g 58s 72c | 335 | Dev Geyik Postu | görev |
+| 360 | young_dragon | Genç Ejder | crit | Ejder Yamaçları | 9608 | 925 | 289 | 123051 | 2g 74s 86c–6g 87s 15c | 360 | Dev Kurt Postu | dalga ×1, görev |
 | 370 | dragon_cultist | Ejder Kültisti | glass | Ejder Yamaçları | 8460 | 1208 | 223 | 128565 | 2g 86s 39c–7g 15s 98c | 360 | Dev Kurt Postu | dalga ×1 |
 | 380 | lava_lizard | Lav Kertenkelesi | tank | Ejder Yamaçları | 16888 | 826 | 580 | 134169 | 2g 98s 8c–7g 45s 20c | 360 | Dev Kurt Postu | dalga ×1 |
 | 382 | mother_dragon_vyrna | Ana Ejder Vyrna | overlord | Ejder Yamaçları | 17945 | 1079 | 383 | 135301 | 3g 44c–7g 51s 10c | 360 | Dağ Aslanı Postu | boss Kuluçka Mağarası |
 | 390 | winged_wyvern | Kanatlı Wyvern | evasive | Ejder Yamaçları | 9405 | 974 | 313 | 139863 | 3g 9s 92c–7g 74s 80c | 385 | Dağ Aslanı Postu |  |
-| 400 | dragon_guard | Ejder Muhafızı | elite | Ejder Yamaçları | 14210 | 998 | 385 | 145645 | 3g 21s 92c–8g 4s 80c | 385 | Dağ Aslanı Postu |  |
-| 410 | fey_wolf | Peri Kurdu | evasive | Sis Ormanı | 9880 | 1022 | 329 | 151514 | 3g 34s 7c–8g 35s 18c | 410 | Dağ Aslanı Postu | dalga ×1 |
+| 400 | dragon_guard | Ejder Muhafızı | elite | Ejder Yamaçları | 14210 | 998 | 385 | 145645 | 3g 21s 92c–8g 4s 80c | 385 | Dağ Aslanı Postu | görev |
+| 410 | fey_wolf | Peri Kurdu | evasive | Sis Ormanı | 9880 | 1022 | 329 | 151514 | 3g 34s 7c–8g 35s 18c | 410 | Dağ Aslanı Postu | dalga ×1, görev |
 | 420 | mist_stalker | Sis Avcısı | crit | Sis Ormanı | 11182 | 1074 | 337 | 157470 | 3g 46s 36c–8g 65s 90c | 410 | Kara Panter Postu | dalga ×1 |
 | 430 | ancient_treant | Kadim Treant | tank | Sis Ormanı | 19075 | 931 | 656 | 163512 | 3g 58s 81c–8g 97s 2c | 410 | Kara Panter Postu | dalga ×1 |
 | 432 | spirit_queen_sylwen | Ruh Kraliçesi Sylwen | overlord | Sis Ormanı | 20258 | 1216 | 433 | 164730 | 3g 61s 31c–9g 3s 28c | 410 | Kara Panter Postu | boss Kayıp Koru |
 | 440 | shadow_elf | Gölge Elfi | glass | Sis Ormanı | 10035 | 1428 | 265 | 169638 | 3g 71s 40c–9g 28s 50c | 435 | Kara Panter Postu |  |
-| 450 | forest_spirit | Orman Ruhu | elite | Sis Ormanı | 15960 | 1119 | 433 | 175849 | 3g 84s 13c–9g 60s 32c | 435 | Fırtına Kartalı Tüyü |  |
-| 460 | crystal_spider | Kristal Örümcek | crit | Kristal Mağaralar | 12232 | 1173 | 369 | 182143 | 3g 97s–9g 92s 50c | 460 | Fırtına Kartalı Tüyü | dalga ×1 |
+| 450 | forest_spirit | Orman Ruhu | elite | Sis Ormanı | 15960 | 1119 | 433 | 175849 | 3g 84s 13c–9g 60s 32c | 435 | Fırtına Kartalı Tüyü | görev |
+| 460 | crystal_spider | Kristal Örümcek | crit | Kristal Mağaralar | 12232 | 1173 | 369 | 182143 | 3g 97s–9g 92s 50c | 460 | Fırtına Kartalı Tüyü | dalga ×1, görev |
 | 470 | stone_eater | Taş Yiyen | tank | Kristal Mağaralar | 20825 | 1015 | 716 | 188520 | 4g 10s 2c–10g 25s 5c | 460 | Fırtına Kartalı Tüyü | dalga ×1 |
 | 480 | light_elemental | Işık Elementali | glass | Kristal Mağaralar | 10935 | 1554 | 289 | 194978 | 4g 23s 17c–10g 57s 92c | 460 | Fırtına Kartalı Tüyü | dalga ×1 |
 | 482 | crystal_titan | Kristal Titan | overlord | Kristal Mağaralar | 22570 | 1352 | 483 | 196280 | 4g 25s 82c–10g 64s 55c | 460 | Fırtına Kartalı Tüyü | boss Kristal Kalp |
 | 490 | crystal_dragon | Kristal Ejder | evasive | Kristal Mağaralar | 11780 | 1216 | 393 | 201518 | 4g 36s 47c–10g 91s 18c | 485 | Fırtına Kartalı Tüyü |  |
-| 500 | cave_titan | Mağara Titanı | elite | Kristal Mağaralar | 17710 | 1240 | 481 | 208138 | 4g 49s 90c–11g 24s 75c | 485 | Kor Domuzu Postu |  |
-| 510 | magma_golem | Magma Golemi | tank | Volkanik Ada | 22575 | 1099 | 777 | 214839 | 4g 63s 46c–11g 58s 65c | 510 | Kor Domuzu Postu | dalga ×1 |
+| 500 | cave_titan | Mağara Titanı | elite | Kristal Mağaralar | 17710 | 1240 | 481 | 208138 | 4g 49s 90c–11g 24s 75c | 485 | Kor Domuzu Postu | görev |
+| 510 | magma_golem | Magma Golemi | tank | Volkanik Ada | 22575 | 1099 | 777 | 214839 | 4g 63s 46c–11g 58s 65c | 510 | Kor Domuzu Postu | dalga ×1, görev |
 | 520 | fire_giant | Ateş Devi | normal | Volkanik Ada | 13150 | 1120 | 417 | 221618 | 4g 77s 16c–11g 92s 90c | 510 | Kor Domuzu Postu | dalga ×1 |
 | 530 | ash_dragon | Kül Ejderi | crit | Volkanik Ada | 14070 | 1346 | 425 | 228476 | 4g 90s 99c–12g 27s 48c | 510 | Kor Domuzu Postu | dalga ×1 |
 | 532 | fire_lord_ignar | Ateş Lordu Ignar | overlord | Volkanik Ada | 24882 | 1489 | 533 | 229857 | 4g 93s 77c–12g 34s 42c | 510 | Kor Domuzu Postu | boss Volkan Kalbi |
 | 540 | volcano_shaman | Volkan Şamanı | glass | Volkanik Ada | 12285 | 1743 | 325 | 235413 | 5g 4s 95c–12g 62s 38c | 535 | Kor Domuzu Postu |  |
-| 550 | volcano_warden | Volkan Bekçisi | elite | Volkanik Ada | 19460 | 1360 | 529 | 242427 | 5g 19s 4c–12g 97s 60c | 535 | Ayaz Kurdu Postu |  |
-| 560 | dragon_knight | Ejder Şövalyesi | normal | Taht Zirveleri | 14150 | 1204 | 449 | 249517 | 5g 33s 26c–13g 33s 15c | 560 | Ayaz Kurdu Postu | dalga ×1 |
+| 550 | volcano_warden | Volkan Bekçisi | elite | Volkanik Ada | 19460 | 1360 | 529 | 242427 | 5g 19s 4c–12g 97s 60c | 535 | Ayaz Kurdu Postu | görev |
+| 560 | dragon_knight | Ejder Şövalyesi | normal | Taht Zirveleri | 14150 | 1204 | 449 | 249517 | 5g 33s 26c–13g 33s 15c | 560 | Ayaz Kurdu Postu | dalga ×1, görev |
 | 570 | ancient_wyvern | Kadim Wyvern | evasive | Taht Zirveleri | 13680 | 1409 | 457 | 256685 | 5g 47s 61c–13g 69s 2c | 560 | Ayaz Kurdu Postu | dalga ×1 |
 | 580 | dragon_sorcerer | Ejder Büyücüsü | glass | Taht Zirveleri | 13185 | 1869 | 349 | 263928 | 5g 62s 8c–14g 5s 20c | 560 | Ayaz Kurdu Postu | dalga ×2 |
 | 582 | dragon_king_azhorath | Ejder Kral Azhorath | overlord | Taht Zirveleri | 27195 | 1625 | 583 | 265385 | 5g 64s 99c–14g 12s 48c | 560 | Ayaz Kurdu Postu | boss Ejder Tahtı |
 | 590 | throne_guardian | Taht Muhafızı | tank | Taht Zirveleri | 26075 | 1267 | 899 | 271246 | 5g 76s 68c–14g 41s 70c | 585 | Ayaz Kurdu Postu | dalga ×1 |
-| 600 | elder_dragon | Yaşlı Ejder | elite | Taht Zirveleri | 21210 | 1481 | 577 | 278639 | 5g 91s 40c–14g 78s 50c | 585 | Dev Ayı Postu | dalga ×1 |
+| 600 | elder_dragon | Yaşlı Ejder | elite | Taht Zirveleri | 21210 | 1481 | 577 | 278639 | 5g 91s 40c–14g 78s 50c | 585 | Dev Ayı Postu | dalga ×1, görev |
 | 602 | azhorath_ascended | Yükselmiş Azhorath | elder_titan | Ejder Kral'ın İni | 456000 | 6849 | 676 | 280127 | 5g 94s 36c–14g 85s 90c | 585 | Dev Ayı Postu | baskın boss’u Ejder Kral'ın İni |
-| 610 | shadow_rider | Gölge Atlı | normal | Karanlık Ova | 15400 | 1309 | 489 | 286107 | 6g 6s 25c–15g 15s 62c | 610 | Dev Ayı Postu | dalga ×1 |
+| 610 | shadow_rider | Gölge Atlı | normal | Karanlık Ova | 15400 | 1309 | 489 | 286107 | 6g 6s 25c–15g 15s 62c | 610 | Dev Ayı Postu | dalga ×1, görev |
 | 620 | void_wolf | Boşluk Kurdu | evasive | Karanlık Ova | 14868 | 1529 | 497 | 293648 | 6g 21s 22c–15g 53s 5c | 610 | Dev Ayı Postu | dalga ×1 |
 | 630 | star_gnawer | Yıldız Kemiren | glass | Karanlık Ova | 14310 | 2026 | 379 | 301262 | 6g 36s 31c–15g 90s 78c | 610 | Dev Ayı Postu | dalga ×1 |
 | 632 | star_eater_omh | Yıldız Yiyen Omh | overlord | Karanlık Ova | 29508 | 1762 | 633 | 302794 | 6g 39s 34c–15g 98s 35c | 610 | Dev Ayı Postu | boss Söndürülmüş Gözlemevi |
 | 640 | dark_angel | Kara Melek | crit | Karanlık Ova | 16958 | 1619 | 513 | 308950 | 6g 51s 52c–16g 28s 80c | 635 | Dev Ayı Postu |  |
-| 650 | night_giant | Gece Devi | elite | Karanlık Ova | 22960 | 1602 | 625 | 316710 | 6g 66s 85c–16g 67s 12c | 635 | Ruh Geyiği Postu |  |
-| 660 | ghost_noble | Hayalet Soylu | normal | Kayıp Şehir | 16650 | 1414 | 529 | 324542 | 6g 82s 30c–17g 5s 75c | 660 | Ruh Geyiği Postu | dalga ×1 |
+| 650 | night_giant | Gece Devi | elite | Karanlık Ova | 22960 | 1602 | 625 | 316710 | 6g 66s 85c–16g 67s 12c | 635 | Ruh Geyiği Postu | görev |
+| 660 | ghost_noble | Hayalet Soylu | normal | Kayıp Şehir | 16650 | 1414 | 529 | 324542 | 6g 82s 30c–17g 5s 75c | 660 | Ruh Geyiği Postu | dalga ×1, görev |
 | 670 | time_thief | Zaman Hırsızı | evasive | Kayıp Şehir | 16055 | 1650 | 537 | 332445 | 6g 97s 86c–17g 44s 65c | 660 | Ruh Geyiği Postu | dalga ×1 |
 | 680 | cursed_sorcerer | Lanetli Büyücü | glass | Kayıp Şehir | 15435 | 2184 | 409 | 340419 | 7g 13s 54c–17g 83s 85c | 660 | Ruh Geyiği Postu | dalga ×2 |
 | 682 | time_lord_kaedrin | Zaman Lordu Kaedrin | overlord | Kayıp Şehir | 31820 | 1898 | 683 | 342023 | 7g 16s 70c–17g 91s 75c | 660 | Ruh Geyiği Postu | boss Saat Kulesi |
 | 690 | stone_gargoyle | Taş Gargoyl | tank | Kayıp Şehir | 30450 | 1477 | 1051 | 348465 | 7g 29s 34c–18g 23s 35c | 685 | Ruh Geyiği Postu | dalga ×1 |
-| 700 | city_guardian | Şehir Koruyucusu | elite | Kayıp Şehir | 24710 | 1723 | 673 | 356580 | 7g 45s 26c–18g 63s 15c | 685 | Kadim Mamut Postu | dalga ×1 |
+| 700 | city_guardian | Şehir Koruyucusu | elite | Kayıp Şehir | 24710 | 1723 | 673 | 356580 | 7g 45s 26c–18g 63s 15c | 685 | Kadim Mamut Postu | dalga ×1, görev |
 | 702 | kaedrin_timeless | Zamansız Kaedrin | elder_titan | Zaman Lordu'nun Kulesi | 531000 | 7962 | 788 | 358211 | 7g 48s 45c–18g 71s 12c | 685 | Kadim Mamut Postu | baskın boss’u Zaman Lordu'nun Kulesi |
-| 710 | cloud_giant | Bulut Devi | tank | Uçan Adalar | 31325 | 1519 | 1081 | 364765 | 7g 61s 28c–19g 3s 20c | 710 | Kadim Mamut Postu | dalga ×1 |
+| 710 | cloud_giant | Bulut Devi | tank | Uçan Adalar | 31325 | 1519 | 1081 | 364765 | 7g 61s 28c–19g 3s 20c | 710 | Kadim Mamut Postu | dalga ×1, görev |
 | 720 | storm_dragon | Fırtına Ejderi | crit | Uçan Adalar | 19058 | 1817 | 577 | 373020 | 7g 77s 42c–19g 43s 55c | 710 | Kadim Mamut Postu | dalga ×1 |
 | 730 | sky_knight | Gök Şövalyesi | normal | Uçan Adalar | 18400 | 1561 | 585 | 381344 | 7g 93s 67c–19g 84s 18c | 710 | Kadim Mamut Postu | dalga ×1 |
 | 732 | storm_king_zephyros | Fırtına Kralı Zephyros | overlord | Uçan Adalar | 34132 | 2035 | 733 | 383017 | 7g 96s 94c–19g 92s 35c | 710 | Kadim Mamut Postu | boss Fırtına Kalesi |
 | 740 | wind_elemental | Rüzgâr Elementali | evasive | Uçan Adalar | 17718 | 1819 | 593 | 389736 | 8g 10s 4c–20g 25s 10c | 735 | Kadim Mamut Postu |  |
-| 750 | thunderbird | Yıldırım Kuşu | elite | Uçan Adalar | 26460 | 1843 | 721 | 398197 | 8g 26s 51c–20g 66s 28c | 735 | Gölge Kimera Derisi |  |
-| 760 | void_creature | Boşluk Yaratığı | normal | Yarık Kenarı | 19150 | 1624 | 609 | 406726 | 8g 43s 10c–21g 7s 75c | 760 | Gölge Kimera Derisi | dalga ×1 |
+| 750 | thunderbird | Yıldırım Kuşu | elite | Uçan Adalar | 26460 | 1843 | 721 | 398197 | 8g 26s 51c–20g 66s 28c | 735 | Gölge Kimera Derisi | görev |
+| 760 | void_creature | Boşluk Yaratığı | normal | Yarık Kenarı | 19150 | 1624 | 609 | 406726 | 8g 43s 10c–21g 7s 75c | 760 | Gölge Kimera Derisi | dalga ×1, görev |
 | 770 | rift_warden | Yarık Bekçisi | tank | Yarık Kenarı | 33950 | 1645 | 1172 | 415322 | 8g 59s 79c–21g 49s 48c | 760 | Gölge Kimera Derisi | dalga ×1 |
 | 780 | chaos_elemental | Kaos Elementali | glass | Yarık Kenarı | 17685 | 2499 | 469 | 423986 | 8g 76s 60c–21g 91s 50c | 760 | Gölge Kimera Derisi | dalga ×1 |
 | 782 | chaos_mother | Kaos Ana | overlord | Yarık Kenarı | 36445 | 2171 | 783 | 425727 | 8g 79s 97c–21g 99s 92c | 760 | Gölge Kimera Derisi | boss Yarık Çekirdeği |
 | 790 | rift_dragon | Yarık Ejderi | crit | Yarık Kenarı | 20895 | 1991 | 633 | 432716 | 8g 93s 51c–22g 33s 78c | 785 | Gölge Kimera Derisi |  |
-| 800 | chaos_lord | Kaos Lordu | elite | Yarık Kenarı | 28210 | 1964 | 769 | 441513 | 9g 10s 53c–22g 76s 32c | 785 | Yaşlı Wyvern Pulu |  |
-| 810 | fallen_angel | Düşmüş Melek | normal | Göksel Tapınak | 20400 | 1729 | 649 | 450377 | 9g 27s 65c–23g 19s 12c | 810 | Yaşlı Wyvern Pulu | dalga ×1 |
+| 800 | chaos_lord | Kaos Lordu | elite | Yarık Kenarı | 28210 | 1964 | 769 | 441513 | 9g 10s 53c–22g 76s 32c | 785 | Yaşlı Wyvern Pulu | görev |
+| 810 | fallen_angel | Düşmüş Melek | normal | Göksel Tapınak | 20400 | 1729 | 649 | 450377 | 9g 27s 65c–23g 19s 12c | 810 | Yaşlı Wyvern Pulu | dalga ×1, görev |
 | 820 | temple_guardian | Tapınak Muhafızı | tank | Göksel Tapınak | 36138 | 1750 | 1248 | 459306 | 9g 44s 88c–23g 62s 20c | 810 | Yaşlı Wyvern Pulu | dalga ×1 |
 | 830 | celestial_dragon | Göksel Ejder | crit | Göksel Tapınak | 21945 | 2090 | 665 | 468301 | 9g 62s 22c–24g 5s 55c | 810 | Yaşlı Wyvern Pulu | dalga ×2 |
 | 832 | archangel_uriel | Başmelek Uriel | overlord | Göksel Tapınak | 38758 | 2308 | 833 | 470108 | 9g 65s 70c–24g 14s 25c | 810 | Yaşlı Wyvern Pulu | boss Göksel Kubbe |
 | 840 | light_hunter | Işık Avcısı | evasive | Göksel Tapınak | 20092 | 2061 | 673 | 477361 | 9g 79s 66c–24g 49s 15c | 835 | Yaşlı Wyvern Pulu | dalga ×1 |
-| 850 | seraph | Seraf | elite | Göksel Tapınak | 29960 | 2085 | 817 | 486486 | 9g 97s 21c–24g 93s 2c | 835 | Yıldız Grifonu Tüyü | dalga ×1 |
+| 850 | seraph | Seraf | elite | Göksel Tapınak | 29960 | 2085 | 817 | 486486 | 9g 97s 21c–24g 93s 2c | 835 | Yıldız Grifonu Tüyü | dalga ×1, görev |
 | 852 | fallen_archangels | Düşmüş Başmelekler | elder_titan | Başmeleklerin Düşüşü | 643500 | 9631 | 956 | 488319 | 10g 73c–25g 1s 82c | 835 | Yıldız Grifonu Tüyü | baskın boss’u Başmeleklerin Düşüşü |
-| 860 | ash_leviathan | Kül Leviathanı | tank | Kül Denizi | 37888 | 1834 | 1309 | 495676 | 10g 14s 86c–25g 37s 15c | 860 | Yıldız Grifonu Tüyü | dalga ×1 |
+| 860 | ash_leviathan | Kül Leviathanı | tank | Kül Denizi | 37888 | 1834 | 1309 | 495676 | 10g 14s 86c–25g 37s 15c | 860 | Yıldız Grifonu Tüyü | dalga ×1, görev |
 | 870 | null_hunter | Hiçlik Avcısı | evasive | Kül Denizi | 20805 | 2133 | 697 | 504930 | 10g 32s 61c–25g 81s 52c | 860 | Yıldız Grifonu Tüyü | dalga ×1 |
 | 880 | undying_soldier | Ölümsüz Asker | normal | Kül Denizi | 22150 | 1876 | 705 | 514248 | 10g 50s 47c–26g 26s 18c | 860 | Yıldız Grifonu Tüyü | dalga ×1 |
 | 882 | leviathan_king | Leviathan Kral | overlord | Kül Denizi | 41070 | 2444 | 883 | 516119 | 10g 54s 5c–26g 35s 12c | 860 | Yıldız Grifonu Tüyü | boss Batık Taht |
 | 890 | ash_wyrm_lord | Kül Ejderi Lordu | crit | Kül Denizi | 23520 | 2238 | 713 | 523629 | 10g 68s 42c–26g 71s 5c | 885 | Yıldız Grifonu Tüyü |  |
-| 900 | eternal_sentinel | Ebedi Bekçi | elite | Kül Denizi | 31710 | 2206 | 865 | 533075 | 10g 86s 48c–27g 16s 20c | 885 | Boşluk Behemotu Derisi |  |
-| 910 | doom_rider | Kıyamet Atlısı | crit | Son Kale Surları | 24045 | 2288 | 729 | 542583 | 11g 4s 64c–27g 61s 60c | 910 | Boşluk Behemotu Derisi | dalga ×1 |
+| 900 | eternal_sentinel | Ebedi Bekçi | elite | Kül Denizi | 31710 | 2206 | 865 | 533075 | 10g 86s 48c–27g 16s 20c | 885 | Boşluk Behemotu Derisi | görev |
+| 910 | doom_rider | Kıyamet Atlısı | crit | Son Kale Surları | 24045 | 2288 | 729 | 542583 | 11g 4s 64c–27g 61s 60c | 910 | Boşluk Behemotu Derisi | dalga ×1, görev |
 | 920 | void_titan | Boşluk Titanı | tank | Son Kale Surları | 40512 | 1960 | 1400 | 552154 | 11g 22s 90c–28g 7s 25c | 910 | Boşluk Behemotu Derisi | dalga ×1 |
 | 930 | soul_reaper | Ruh Biçen | glass | Son Kale Surları | 21060 | 2972 | 559 | 561788 | 11g 41s 25c–28g 53s 12c | 910 | Boşluk Behemotu Derisi | dalga ×1 |
 | 932 | doom_commander_morvath | Kıyamet Komutanı Morvath | overlord | Son Kale Surları | 43382 | 2581 | 933 | 563723 | 11g 44s 94c–28g 62s 35c | 910 | Boşluk Behemotu Derisi | boss Son Kale |
 | 940 | ancient_golem | Kadim Golem | normal | Son Kale Surları | 23650 | 2002 | 753 | 571485 | 11g 59s 71c–28g 99s 28c | 935 | Boşluk Behemotu Derisi |  |
-| 950 | last_commander | Son Komutan | elite | Son Kale Surları | 33460 | 2326 | 913 | 581243 | 11g 78s 27c–29g 45s 68c | 935 | Kadim Anka Tüyü |  |
-| 960 | void_dragon | Hiçlik Ejderi | crit | Ebediyet Kıyısı | 25358 | 2412 | 769 | 591063 | 11g 96s 92c–29g 92s 30c | 960 | Kadim Anka Tüyü | dalga ×1 |
+| 950 | last_commander | Son Komutan | elite | Son Kale Surları | 33460 | 2326 | 913 | 581243 | 11g 78s 27c–29g 45s 68c | 935 | Kadim Anka Tüyü | görev |
+| 960 | void_dragon | Hiçlik Ejderi | crit | Ebediyet Kıyısı | 25358 | 2412 | 769 | 591063 | 11g 96s 92c–29g 92s 30c | 960 | Kadim Anka Tüyü | dalga ×1, görev |
 | 970 | throne_sentinel | Taht Gözcüsü | tank | Ebediyet Kıyısı | 42700 | 2065 | 1476 | 600945 | 12g 15s 67c–30g 39s 18c | 960 | Kadim Anka Tüyü | dalga ×2 |
 | 980 | eternal_mage | Ebedi Büyücü | glass | Ebediyet Kıyısı | 22185 | 3129 | 589 | 610888 | 12g 34s 52c–30g 86s 30c | 960 | Kadim Anka Tüyü | dalga ×1 |
 | 982 | fallen_god_aethon | Düşmüş Tanrı Aethon | overlord | Ebediyet Kıyısı | 45695 | 2717 | 983 | 612884 | 12g 38s 30c–30g 95s 75c | 960 | Kadim Anka Tüyü | boss Ebedi Taht |
 | 990 | god_shadow | Tanrı Gölgesi | evasive | Ebediyet Kıyısı | 23655 | 2423 | 793 | 620892 | 12g 53s 46c–31g 33s 65c | 985 | Kadim Anka Tüyü | dalga ×1 |
 | 1000 | aethon_unbound | Zincirsiz Aethon | elder_titan | Düşmüş Tanrı'nın Tahtı | 754500 | 11278 | 1121 | 630957 | 12g 72s 50c–31g 81s 25c | 985 | Göksel Ejder Pulu | baskın boss’u Düşmüş Tanrı'nın Tahtı |
-| 1000 | avatar_of_ruin | Yıkım Avatarı | elite | Ebediyet Kıyısı | 35210 | 2447 | 961 | 630957 | 12g 72s 50c–31g 81s 25c | 985 | Göksel Ejder Pulu | dalga ×1 |
+| 1000 | avatar_of_ruin | Yıkım Avatarı | elite | Ebediyet Kıyısı | 35210 | 2447 | 961 | 630957 | 12g 72s 50c–31g 81s 25c | 985 | Göksel Ejder Pulu | dalga ×1, görev |
 
 En geniş canavar seviye boşlukları: Sv 990→1000, Sv 970→980, Sv 960→970.
 

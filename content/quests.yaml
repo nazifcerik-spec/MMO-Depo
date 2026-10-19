@@ -205,3 +205,491 @@ quests:
     reward_xp: 600
     reward_gold_copper: 1500
     sort_order: 270
+
+  # >>> generated: quests (scripts/gen_quests.py)
+  - code: main_07_shadowfen_ruins
+    display_name_key: quest.main_07_shadowfen_ruins
+    category: main
+    min_level: 17
+    requires_quest: main_06_hollow
+    objectives:
+      - { event: "mob_killed:cultist_acolyte", count: 20 }
+      - { event: "dungeon_cleared:shadowfen_ruins", count: 1 }
+    reward_xp: 1949
+    reward_gold_copper: 7051
+    sort_order: 70
+
+  - code: main_08_obsidian_spire
+    display_name_key: quest.main_08_obsidian_spire
+    category: main
+    min_level: 23
+    requires_quest: main_07_shadowfen_ruins
+    objectives:
+      - { event: "mob_killed:frost_giant", count: 20 }
+      - { event: "dungeon_cleared:obsidian_spire", count: 1 }
+    reward_xp: 1998
+    reward_gold_copper: 11097
+    sort_order: 80
+
+  - code: main_09_sunken_temple
+    display_name_key: quest.main_09_sunken_temple
+    category: main
+    min_level: 38
+    requires_quest: main_08_obsidian_spire
+    objectives:
+      - { event: "mob_killed:mist_leech", count: 20 }
+      - { event: "dungeon_cleared:sunken_temple", count: 1 }
+    reward_xp: 2164
+    reward_gold_copper: 23565
+    sort_order: 90
+
+  - code: main_10_forgotten_mine
+    display_name_key: quest.main_10_forgotten_mine
+    category: main
+    min_level: 63
+    requires_quest: main_09_sunken_temple
+    objectives:
+      - { event: "mob_killed:mountain_troll", count: 20 }
+      - { event: "dungeon_cleared:forgotten_mine", count: 1 }
+    reward_xp: 2554
+    reward_gold_copper: 50305
+    sort_order: 100
+
+  - code: main_11_northern_keep
+    display_name_key: quest.main_11_northern_keep
+    category: main
+    min_level: 88
+    requires_quest: main_10_forgotten_mine
+    objectives:
+      - { event: "mob_killed:ghost_guard", count: 20 }
+      - { event: "dungeon_cleared:northern_keep", count: 1 }
+    reward_xp: 3070
+    reward_gold_copper: 83047
+    sort_order: 110
+
+  - code: main_12_rebel_camp
+    display_name_key: quest.main_12_rebel_camp
+    category: main
+    min_level: 128
+    requires_quest: main_11_northern_keep
+    objectives:
+      - { event: "mob_killed:rebel_rider", count: 20 }
+      - { event: "dungeon_cleared:rebel_camp", count: 1 }
+    reward_xp: 4130
+    reward_gold_copper: 145684
+    sort_order: 120
+
+  - code: main_13_fire_root
+    display_name_key: quest.main_13_fire_root
+    category: main
+    min_level: 178
+    requires_quest: main_12_rebel_camp
+    objectives:
+      - { event: "mob_killed:ash_wolf", count: 20 }
+      - { event: "dungeon_cleared:fire_root", count: 1 }
+    reward_xp: 5816
+    reward_gold_copper: 238907
+    sort_order: 130
+
+  - code: main_14_buried_palace
+    display_name_key: quest.main_14_buried_palace
+    category: main
+    min_level: 228
+    requires_quest: main_13_fire_root
+    objectives:
+      - { event: "mob_killed:sand_scorpion", count: 20 }
+      - { event: "dungeon_cleared:buried_palace", count: 1 }
+    reward_xp: 7868
+    reward_gold_copper: 346338
+    sort_order: 140
+
+  - code: main_15_royal_crypt
+    display_name_key: quest.main_15_royal_crypt
+    category: main
+    min_level: 278
+    requires_quest: main_14_buried_palace
+    objectives:
+      - { event: "mob_killed:royal_skeleton", count: 20 }
+      - { event: "dungeon_cleared:royal_crypt", count: 1 }
+    reward_xp: 10260
+    reward_gold_copper: 466300
+    sort_order: 150
+
+  - code: main_16_sunken_fleet
+    display_name_key: quest.main_16_sunken_fleet
+    category: main
+    min_level: 328
+    requires_quest: main_15_royal_crypt
+    objectives:
+      - { event: "mob_killed:sea_raider", count: 20 }
+      - { event: "dungeon_cleared:sunken_fleet", count: 1 }
+    reward_xp: 12970
+    reward_gold_copper: 597597
+    sort_order: 160
+
+  - code: main_17_brood_cavern
+    display_name_key: quest.main_17_brood_cavern
+    category: main
+    min_level: 378
+    requires_quest: main_16_sunken_fleet
+    objectives:
+      - { event: "mob_killed:young_dragon", count: 20 }
+      - { event: "dungeon_cleared:brood_cavern", count: 1 }
+    reward_xp: 15983
+    reward_gold_copper: 739325
+    sort_order: 170
+
+  - code: main_18_lost_grove
+    display_name_key: quest.main_18_lost_grove
+    category: main
+    min_level: 428
+    requires_quest: main_17_brood_cavern
+    objectives:
+      - { event: "mob_killed:fey_wolf", count: 20 }
+      - { event: "dungeon_cleared:lost_grove", count: 1 }
+    reward_xp: 19286
+    reward_gold_copper: 890766
+    sort_order: 180
+
+  - code: main_19_crystal_heart
+    display_name_key: quest.main_19_crystal_heart
+    category: main
+    min_level: 478
+    requires_quest: main_18_lost_grove
+    objectives:
+      - { event: "mob_killed:crystal_spider", count: 20 }
+      - { event: "dungeon_cleared:crystal_heart", count: 1 }
+    reward_xp: 22868
+    reward_gold_copper: 1051332
+    sort_order: 190
+
+  - code: main_20_volcano_heart
+    display_name_key: quest.main_20_volcano_heart
+    category: main
+    min_level: 528
+    requires_quest: main_19_crystal_heart
+    objectives:
+      - { event: "mob_killed:magma_golem", count: 20 }
+      - { event: "dungeon_cleared:volcano_heart", count: 1 }
+    reward_xp: 26720
+    reward_gold_copper: 1220531
+    sort_order: 200
+
+  - code: main_21_dragon_throne
+    display_name_key: quest.main_21_dragon_throne
+    category: main
+    min_level: 578
+    requires_quest: main_20_volcano_heart
+    objectives:
+      - { event: "mob_killed:dragon_knight", count: 20 }
+      - { event: "dungeon_cleared:dragon_throne", count: 1 }
+    reward_xp: 30834
+    reward_gold_copper: 1397944
+    sort_order: 210
+
+  - code: main_22_darkened_observatory
+    display_name_key: quest.main_22_darkened_observatory
+    category: main
+    min_level: 628
+    requires_quest: main_21_dragon_throne
+    objectives:
+      - { event: "mob_killed:shadow_rider", count: 20 }
+      - { event: "dungeon_cleared:darkened_observatory", count: 1 }
+    reward_xp: 35202
+    reward_gold_copper: 1583206
+    sort_order: 220
+
+  - code: main_23_clock_tower
+    display_name_key: quest.main_23_clock_tower
+    category: main
+    min_level: 678
+    requires_quest: main_22_darkened_observatory
+    objectives:
+      - { event: "mob_killed:ghost_noble", count: 20 }
+      - { event: "dungeon_cleared:clock_tower", count: 1 }
+    reward_xp: 39818
+    reward_gold_copper: 1775998
+    sort_order: 230
+
+  - code: main_24_storm_fortress
+    display_name_key: quest.main_24_storm_fortress
+    category: main
+    min_level: 728
+    requires_quest: main_23_clock_tower
+    objectives:
+      - { event: "mob_killed:cloud_giant", count: 20 }
+      - { event: "dungeon_cleared:storm_fortress", count: 1 }
+    reward_xp: 44676
+    reward_gold_copper: 1976037
+    sort_order: 240
+
+  - code: main_25_rift_core
+    display_name_key: quest.main_25_rift_core
+    category: main
+    min_level: 778
+    requires_quest: main_24_storm_fortress
+    objectives:
+      - { event: "mob_killed:void_creature", count: 20 }
+      - { event: "dungeon_cleared:rift_core", count: 1 }
+    reward_xp: 49772
+    reward_gold_copper: 2183069
+    sort_order: 250
+
+  - code: main_26_celestial_dome
+    display_name_key: quest.main_26_celestial_dome
+    category: main
+    min_level: 828
+    requires_quest: main_25_rift_core
+    objectives:
+      - { event: "mob_killed:fallen_angel", count: 20 }
+      - { event: "dungeon_cleared:celestial_dome", count: 1 }
+    reward_xp: 55100
+    reward_gold_copper: 2396865
+    sort_order: 260
+
+  - code: main_27_sunken_throne
+    display_name_key: quest.main_27_sunken_throne
+    category: main
+    min_level: 878
+    requires_quest: main_26_celestial_dome
+    objectives:
+      - { event: "mob_killed:ash_leviathan", count: 20 }
+      - { event: "dungeon_cleared:sunken_throne", count: 1 }
+    reward_xp: 60656
+    reward_gold_copper: 2617217
+    sort_order: 270
+
+  - code: main_28_bastion_keep
+    display_name_key: quest.main_28_bastion_keep
+    category: main
+    min_level: 928
+    requires_quest: main_27_sunken_throne
+    objectives:
+      - { event: "mob_killed:doom_rider", count: 20 }
+      - { event: "dungeon_cleared:bastion_keep", count: 1 }
+    reward_xp: 66436
+    reward_gold_copper: 2843937
+    sort_order: 280
+
+  - code: main_29_eternal_throne
+    display_name_key: quest.main_29_eternal_throne
+    category: main
+    min_level: 978
+    requires_quest: main_28_bastion_keep
+    objectives:
+      - { event: "mob_killed:void_dragon", count: 20 }
+      - { event: "dungeon_cleared:eternal_throne", count: 1 }
+    reward_xp: 72436
+    reward_gold_copper: 3076850
+    sort_order: 290
+
+  - code: side_bounty_drowned_knight
+    display_name_key: quest.side_bounty_drowned_knight
+    category: side
+    min_level: 45
+    objectives:
+      - { event: "mob_killed:drowned_knight", count: 10 }
+    reward_xp: 1401
+    reward_gold_copper: 17783
+    sort_order: 300
+
+  - code: side_bounty_mine_warden
+    display_name_key: quest.side_bounty_mine_warden
+    category: side
+    min_level: 70
+    objectives:
+      - { event: "mob_killed:mine_warden", count: 10 }
+    reward_xp: 1672
+    reward_gold_copper: 32671
+    sort_order: 310
+
+  - code: side_bounty_fallen_commander
+    display_name_key: quest.side_bounty_fallen_commander
+    category: side
+    min_level: 95
+    objectives:
+      - { event: "mob_killed:fallen_commander", count: 10 }
+    reward_xp: 2016
+    reward_gold_copper: 50300
+    sort_order: 320
+
+  - code: side_bounty_black_lancer
+    display_name_key: quest.side_bounty_black_lancer
+    category: side
+    min_level: 145
+    objectives:
+      - { event: "mob_killed:black_lancer", count: 10 }
+    reward_xp: 2895
+    reward_gold_copper: 92407
+    sort_order: 330
+
+  - code: side_bounty_scorched_shaman
+    display_name_key: quest.side_bounty_scorched_shaman
+    category: side
+    min_level: 195
+    objectives:
+      - { event: "mob_killed:scorched_shaman", count: 10 }
+    reward_xp: 4006
+    reward_gold_copper: 142270
+    sort_order: 340
+
+  - code: side_bounty_sand_worm
+    display_name_key: quest.side_bounty_sand_worm
+    category: side
+    min_level: 245
+    objectives:
+      - { event: "mob_killed:sand_worm", count: 10 }
+    reward_xp: 5328
+    reward_gold_copper: 198828
+    sort_order: 350
+
+  - code: side_bounty_crownless_king
+    display_name_key: quest.side_bounty_crownless_king
+    category: side
+    min_level: 295
+    objectives:
+      - { event: "mob_killed:crownless_king", count: 10 }
+    reward_xp: 6848
+    reward_gold_copper: 261366
+    sort_order: 360
+
+  - code: side_bounty_kraken_spawn
+    display_name_key: quest.side_bounty_kraken_spawn
+    category: side
+    min_level: 345
+    objectives:
+      - { event: "mob_killed:kraken_spawn", count: 10 }
+    reward_xp: 8555
+    reward_gold_copper: 329359
+    sort_order: 370
+
+  - code: side_bounty_dragon_guard
+    display_name_key: quest.side_bounty_dragon_guard
+    category: side
+    min_level: 395
+    objectives:
+      - { event: "mob_killed:dragon_guard", count: 10 }
+    reward_xp: 10441
+    reward_gold_copper: 402400
+    sort_order: 380
+
+  - code: side_bounty_forest_spirit
+    display_name_key: quest.side_bounty_forest_spirit
+    category: side
+    min_level: 445
+    objectives:
+      - { event: "mob_killed:forest_spirit", count: 10 }
+    reward_xp: 12497
+    reward_gold_copper: 480161
+    sort_order: 390
+
+  - code: side_bounty_cave_titan
+    display_name_key: quest.side_bounty_cave_titan
+    category: side
+    min_level: 495
+    objectives:
+      - { event: "mob_killed:cave_titan", count: 10 }
+    reward_xp: 14718
+    reward_gold_copper: 562371
+    sort_order: 400
+
+  - code: side_bounty_volcano_warden
+    display_name_key: quest.side_bounty_volcano_warden
+    category: side
+    min_level: 545
+    objectives:
+      - { event: "mob_killed:volcano_warden", count: 10 }
+    reward_xp: 17099
+    reward_gold_copper: 648802
+    sort_order: 410
+
+  - code: side_bounty_elder_dragon
+    display_name_key: quest.side_bounty_elder_dragon
+    category: side
+    min_level: 595
+    objectives:
+      - { event: "mob_killed:elder_dragon", count: 10 }
+    reward_xp: 19635
+    reward_gold_copper: 739256
+    sort_order: 420
+
+  - code: side_bounty_night_giant
+    display_name_key: quest.side_bounty_night_giant
+    category: side
+    min_level: 645
+    objectives:
+      - { event: "mob_killed:night_giant", count: 10 }
+    reward_xp: 22322
+    reward_gold_copper: 833562
+    sort_order: 430
+
+  - code: side_bounty_city_guardian
+    display_name_key: quest.side_bounty_city_guardian
+    category: side
+    min_level: 695
+    objectives:
+      - { event: "mob_killed:city_guardian", count: 10 }
+    reward_xp: 25156
+    reward_gold_copper: 931569
+    sort_order: 440
+
+  - code: side_bounty_thunderbird
+    display_name_key: quest.side_bounty_thunderbird
+    category: side
+    min_level: 745
+    objectives:
+      - { event: "mob_killed:thunderbird", count: 10 }
+    reward_xp: 28134
+    reward_gold_copper: 1033141
+    sort_order: 450
+
+  - code: side_bounty_chaos_lord
+    display_name_key: quest.side_bounty_chaos_lord
+    category: side
+    min_level: 795
+    objectives:
+      - { event: "mob_killed:chaos_lord", count: 10 }
+    reward_xp: 31253
+    reward_gold_copper: 1138159
+    sort_order: 460
+
+  - code: side_bounty_seraph
+    display_name_key: quest.side_bounty_seraph
+    category: side
+    min_level: 845
+    objectives:
+      - { event: "mob_killed:seraph", count: 10 }
+    reward_xp: 34510
+    reward_gold_copper: 1246511
+    sort_order: 470
+
+  - code: side_bounty_eternal_sentinel
+    display_name_key: quest.side_bounty_eternal_sentinel
+    category: side
+    min_level: 895
+    objectives:
+      - { event: "mob_killed:eternal_sentinel", count: 10 }
+    reward_xp: 37903
+    reward_gold_copper: 1358100
+    sort_order: 480
+
+  - code: side_bounty_last_commander
+    display_name_key: quest.side_bounty_last_commander
+    category: side
+    min_level: 945
+    objectives:
+      - { event: "mob_killed:last_commander", count: 10 }
+    reward_xp: 41429
+    reward_gold_copper: 1472832
+    sort_order: 490
+
+  - code: side_bounty_avatar_of_ruin
+    display_name_key: quest.side_bounty_avatar_of_ruin
+    category: side
+    min_level: 995
+    objectives:
+      - { event: "mob_killed:avatar_of_ruin", count: 10 }
+    reward_xp: 45087
+    reward_gold_copper: 1590625
+    sort_order: 500
+  # <<< generated: quests

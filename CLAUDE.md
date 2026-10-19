@@ -187,6 +187,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 88. **Baskın setleri (bitti)** — Sprint 88, DD-277. Yeni `internal/itemset` (bellekte katalog, contentpack kurar). `content/sets.yaml` (`items` + `sets`) ← `python scripts/gen_sets.py` (gen_jewelry'den sonra): 6 baskın × kumaş/deri/plaka = 18 set, 108 parça (5 zırh + kolye, baskın Sv, alt kademe ×1,15); 2/4/6 parça: +%4 can, +%5 saldırı, türe özgü. Baskın boss'u sınıfın zırhına uygun set parçası düşürür (`GearDrop.SetSource`). Set parçaları ganimet havuzunda, üretimde ve denge kitlerinde yok. Bonuslar `inventory.EquippedBonuses`'ta. `GET /v1/item-sets`; istemci eşya detayında set bölümü (`SetSection`).
 
+89. **Görev zincirleri Sv 1000'e (bitti)** — Sprint 89, DD-278. Migration 0042 (görev `min_level` 1..1000). `python scripts/gen_quests.py` (gen_world'den sonra): bölge başı ana halka (ilk canavar ×20 + bölge zindanı, öncekini gerektirir) + seçkin canavara "Ödül Avı"; XP eğrinin %50 / %30'u. 62 görev.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
