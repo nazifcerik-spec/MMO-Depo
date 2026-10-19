@@ -156,6 +156,39 @@ class Bag {
 }
 
 /// One equipped item (the equipment endpoint returns a flattened row).
+/// A raid set (DD-277): its pieces and the bonuses at piece counts.
+class ItemSet {
+  const ItemSet({required this.code, required this.pieces, required this.bonuses});
+
+  factory ItemSet.fromJson(Map<String, dynamic> j) => ItemSet(
+    code: j['code'] as String,
+    pieces: [for (final p in (j['pieces'] as List? ?? const [])) p as String],
+    bonuses: [
+      for (final b in (j['bonuses'] as List? ?? const []).cast<Map<String, dynamic>>())
+        (
+          (b['pieces'] as num).toInt(),
+          [
+            for (final m in (b['modifiers'] as List? ?? const []).cast<Map<String, dynamic>>())
+              StatBonus(
+                m['kind'] as String? ?? '',
+                m['target'] as String? ?? '',
+                (m['amount'] as num?)?.toDouble() ?? 0,
+              ),
+          ],
+        ),
+    ],
+  );
+
+  final String code;
+  final List<String> pieces;
+
+  /// (piece count, what wearing that many adds).
+  final List<(int, List<StatBonus>)> bonuses;
+
+  /// How many distinct pieces of the set are among [worn] template codes.
+  int wornCount(Iterable<String> worn) => pieces.toSet().intersection(worn.toSet()).length;
+}
+
 class EquippedItem {
   const EquippedItem({
     required this.instanceId,

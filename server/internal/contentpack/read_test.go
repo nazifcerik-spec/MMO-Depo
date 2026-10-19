@@ -1,9 +1,13 @@
 package contentpack
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
+	"github.com/otter/server/internal/itemset"
 )
 
 // The shipped content directory parses, validates and cross-references.
@@ -53,5 +57,40 @@ func TestValidateRefs_Rejects(t *testing.T) {
 	_, err = Read("contentpack.go")
 	require.Error(t, err)
 	_, err = Read("missing-dir")
+	require.Error(t, err)
+}
+
+// Sets need a raid source, equippable pieces and known modifiers (DD-277).
+func TestValidateSets_Rejects(t *testing.T) {
+	base := func() *Pack {
+		return &Pack{
+			Items:    []Item{{Code: "helm", EquipSlot: "helm"}, {Code: "chest", EquipSlot: "chest"}, {Code: "ore"}},
+			Dungeons: []Dungeon{{Code: "raid", GroupMax: 5}, {Code: "solo", GroupMax: 1}},
+			ItemSets: []itemset.Set{{Code: "s", Source: "raid", Pieces: []string{"helm", "chest"},
+				Bonuses: []itemset.Bonus{{Pieces: 2, Modifiers: []itemset.Modifier{{Kind: "flat", Target: "attack", Amount: 1}}}}}},
+		}
+	}
+	require.NoError(t, validateSets(base()))
+	for name, mut := range map[string]func(*Pack){
+		"solo source":    func(p *Pack) { p.ItemSets[0].Source = "solo" },
+		"unknown source": func(p *Pack) { p.ItemSets[0].Source = "zz" },
+		"material piece": func(p *Pack) { p.ItemSets[0].Pieces[1] = "ore" },
+		"unknown piece":  func(p *Pack) { p.ItemSets[0].Pieces[1] = "zz" },
+		"unknown kind":   func(p *Pack) { p.ItemSets[0].Bonuses[0].Modifiers[0].Kind = "zz" },
+		"unknown target": func(p *Pack) { p.ItemSets[0].Bonuses[0].Modifiers[0].Target = "zz" },
+	} {
+		p := base()
+		mut(p)
+		require.Error(t, validateSets(p), name)
+	}
+	_, err := loadSetsFile("missing.yaml")
+	require.NoError(t, err, "no sets file is fine")
+	dir := t.TempDir()
+	bad := filepath.Join(dir, "sets.yaml")
+	require.NoError(t, os.WriteFile(bad, []byte("sets: [{code: a, pieces: [x]}]"), 0o600))
+	_, err = loadSetsFile(bad)
+	require.Error(t, err, "a one-piece set is invalid")
+	require.NoError(t, os.WriteFile(bad, []byte("sets: {"), 0o600))
+	_, err = loadSetsFile(bad)
 	require.Error(t, err)
 }

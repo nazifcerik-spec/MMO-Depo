@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
 import 'inventory_models.dart';
 import 'item_images.dart';
@@ -174,3 +175,33 @@ String? bonusText(AppLocalizations l, StatBonus b) {
 }
 
 String displayName(BagItem i) => itemName(i.templateCode, i.prefix, i.suffix);
+
+/// A raid set on a piece's details (DD-277): name, pieces worn, and each
+/// bonus with its piece count — the earned ones lit.
+class SetSection extends StatelessWidget {
+  const SetSection({super.key, required this.set, required this.worn});
+
+  final ItemSet set;
+  final Iterable<String> worn;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final count = set.wornCount(worn);
+    return Column(
+      key: const Key('item-set'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '${ContentNames.of('itemset', set.code)}  $count/${set.pieces.length}',
+          style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w700),
+        ),
+        for (final (pieces, mods) in set.bonuses)
+          Text(
+            '($pieces) ${[for (final m in mods) ?bonusText(l, m)].join(', ')}',
+            style: TextStyle(color: count >= pieces ? Palette.success : Palette.textMuted, fontSize: 13),
+          ),
+      ],
+    );
+  }
+}

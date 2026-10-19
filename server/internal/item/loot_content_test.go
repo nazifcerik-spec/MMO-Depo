@@ -5,8 +5,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
 )
 
@@ -41,7 +43,11 @@ func TestShippedGearPoolHonoursPermissions(t *testing.T) {
 	require.NoError(t, err)
 	prev := leveling.Current()
 	require.NoError(t, leveling.Install(p.Progression))
-	t.Cleanup(func() { _ = leveling.Install(prev) })
+	require.NoError(t, itemset.Install(p.ItemSets)) // set pieces are raid drops only (DD-277)
+	t.Cleanup(func() {
+		_ = leveling.Install(prev)
+		_ = itemset.Install(nil)
+	})
 	var tmpls []item.Template
 	for _, it := range p.Items {
 		if it.EquipSlot == "" {
@@ -80,5 +86,47 @@ func TestShippedGearPoolHonoursPermissions(t *testing.T) {
 			require.Equal(t, map[bool]int{true: 3, false: 0}[lvl >= 25], jewelry, "%s Sv %d: jewelry", class, lvl)
 			require.Len(t, families, 3, "%s Sv %d: armor + two weapon families", class, lvl)
 		}
+	}
+}
+
+// A raid boss drops one piece of the raid's set for the class's armor
+// (DD-277); set pieces never come from the ordinary gear pool.
+func TestShippedRaidSetPieces(t *testing.T) {
+	p, err := contentpack.Read("../../../content")
+	require.NoError(t, err)
+	prev := leveling.Current()
+	require.NoError(t, leveling.Install(p.Progression))
+	require.NoError(t, itemset.Install(p.ItemSets))
+	t.Cleanup(func() {
+		_ = leveling.Install(prev)
+		_ = itemset.Install(nil)
+	})
+	var tmpls []item.Template
+	for _, it := range p.Items {
+		if it.EquipSlot == "" {
+			continue
+		}
+		slot, class := it.EquipSlot, it.ClassRestriction
+		tm := item.Template{Code: it.Code, ItemClass: it.ItemClass, ItemSubclass: it.ItemSubclass,
+			MinLevel: int16(it.MinLevel), EquipSlot: &slot}
+		if class != "" {
+			tm.ClassRestriction = &class
+		}
+		tmpls = append(tmpls, tm)
+	}
+	cat := item.NewCatalog(tmpls)
+	for class, set := range map[string]string{"warrior": "north_keep_siege_plate", "mage": "north_keep_siege_cloth", "rogue": "north_keep_siege_leather"} {
+		drop := activity.GearDrop{Class: class, Level: 100, Guaranteed: 2, Boss: true, SetSource: "north_keep_siege"}
+		got := item.RollGear(cat, 7, drop)
+		require.Len(t, got, 3, "two gear pieces and a set piece")
+		s, ok := itemset.Current().Of(got[2].TemplateCode)
+		require.True(t, ok, "%s: %s is a set piece", class, got[2].TemplateCode)
+		require.Equal(t, set, s.Code)
+		for _, d := range got[:2] {
+			_, inSet := itemset.Current().Of(d.TemplateCode)
+			require.False(t, inSet, "ordinary gear is not a set piece")
+		}
+		drop.SetSource = ""
+		require.Len(t, item.RollGear(cat, 7, drop), 2)
 	}
 }

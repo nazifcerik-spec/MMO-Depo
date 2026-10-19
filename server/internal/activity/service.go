@@ -54,6 +54,9 @@ type GearDrop struct {
 	Pct        int
 	Guaranteed int
 	Boss       bool
+	// SetSource: a raid code whose boss also drops one piece of that raid's
+	// set for the class's armor (DD-277). Empty = no set piece.
+	SetSource string
 }
 
 // RewardItems stacks granted drops for the reward history entry (DD-242).

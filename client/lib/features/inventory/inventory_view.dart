@@ -74,6 +74,22 @@ class _InventoryViewState extends State<InventoryView> {
     }
   }
 
+  Map<String, ItemSet> _sets = const {};
+
+  /// The set a piece belongs to (DD-277), loaded once; set info is optional.
+  Future<ItemSet?> _setOf(String template) async {
+    if (_sets.isEmpty) {
+      try {
+        _sets = await widget.repo.setsByPiece();
+      } on ApiError {
+        return null;
+      }
+    }
+    return _sets[template];
+  }
+
+  Iterable<String> get _wornCodes => _equipped.values.map((e) => e.templateCode);
+
   Future<void> _ensureSellMult() async {
     if (_sellMult != null) return;
     try {
@@ -85,13 +101,14 @@ class _InventoryViewState extends State<InventoryView> {
 
   Future<void> _openBagItem(BagItem item) async {
     await _ensureSellMult();
+    final set = item.equippable ? await _setOf(item.templateCode) : null;
     if (!mounted) return;
     final action = await showModalBottomSheet<_ItemAction>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       backgroundColor: Palette.bgSurface,
-      builder: (_) => _ItemDetail(item: item, sellMult: _sellMult),
+      builder: (_) => _ItemDetail(item: item, sellMult: _sellMult, set: set, worn: _wornCodes),
     );
     if (action == null || !mounted) return;
     final l = AppLocalizations.of(context);
@@ -139,6 +156,8 @@ class _InventoryViewState extends State<InventoryView> {
   }
 
   Future<void> _openEquipped(String slot, EquippedItem item) async {
+    final set = await _setOf(item.templateCode);
+    if (!mounted) return;
     final l = AppLocalizations.of(context);
     final action = await showModalBottomSheet<_ItemAction>(
       context: context,
@@ -158,6 +177,7 @@ class _InventoryViewState extends State<InventoryView> {
                 code: item.templateCode,
                 subtitle: slotName(l, slot),
               ),
+              if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
               const SizedBox(height: Space.xl),
               FilledButton(onPressed: () => Navigator.pop(c, _ItemAction.unequip), child: Text(l.unequip)),
             ],
@@ -500,10 +520,14 @@ class _ItemHeader extends StatelessWidget {
 }
 
 class _ItemDetail extends StatelessWidget {
-  const _ItemDetail({required this.item, required this.sellMult});
+  const _ItemDetail({required this.item, required this.sellMult, this.set, this.worn = const []});
 
   final BagItem item;
   final double? sellMult;
+
+  /// The raid set the item belongs to (DD-277) and the worn template codes.
+  final ItemSet? set;
+  final Iterable<String> worn;
 
   @override
   Widget build(BuildContext context) {
@@ -559,6 +583,7 @@ class _ItemDetail extends StatelessWidget {
                   ),
                 ),
               if (bonuses.isNotEmpty) const SizedBox(height: Space.md),
+              if (set case final s?) ...[SetSection(set: s, worn: worn), const SizedBox(height: Space.md)],
               if (item.stack > 1) row(l.quantity, Text('${item.stack} / ${item.maxStack}')),
               if (item.minLevel > 1) row(l.requiresLevel, Text('${item.minLevel}')),
               if (item.classRestriction != null) row(l.characterClass, Text(className(l, item.classRestriction!))),

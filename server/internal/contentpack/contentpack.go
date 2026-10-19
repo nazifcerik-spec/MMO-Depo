@@ -27,6 +27,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
@@ -354,6 +355,9 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 			return res, fmt.Errorf("contentpack: progression: %w", err)
 		}
 	}
+	if err := itemset.Install(p.ItemSets); err != nil {
+		return res, fmt.Errorf("contentpack: item sets: %w", err)
+	}
 	for _, r := range l.reloaders {
 		if err := r.Reload(ctx); err != nil {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
@@ -390,6 +394,7 @@ type Pack struct {
 	Quests      []Quest
 	Skills      []ClassSkill
 	Progression *leveling.Config // nil = engine defaults (no progression.yaml)
+	ItemSets    []itemset.Set    // raid sets (DD-277)
 	Strings     *Strings
 }
 
@@ -425,6 +430,15 @@ func Read(dir string) (*Pack, error) {
 		return nil, err
 	}
 	p.Items = append(p.Items, nodes...)
+	// Item sets: their pieces and the sets themselves (DD-277).
+	setItems, err := loadItemsFile(f("sets.yaml"))
+	if err != nil {
+		return nil, err
+	}
+	p.Items = append(p.Items, setItems...)
+	if p.ItemSets, err = loadSetsFile(f("sets.yaml")); err != nil {
+		return nil, err
+	}
 	if err := validateItems(p.Items); err != nil {
 		return nil, fmt.Errorf("validate items + gear: %w", err)
 	}
@@ -498,6 +512,9 @@ func Read(dir string) (*Pack, error) {
 		return nil, fmt.Errorf("validate quests.yaml: %w", err)
 	}
 	if err := validateRefs(p, r); err != nil {
+		return nil, err
+	}
+	if err := validateSets(p); err != nil {
 		return nil, err
 	}
 	if p.Strings, err = loadStrings(f("i18n")); err != nil {
@@ -584,6 +601,59 @@ func loadItemsFile(path string) ([]Item, error) {
 		return nil, fmt.Errorf("validate %s: %w", path, err)
 	}
 	return f.Items, nil
+}
+
+// loadSetsFile reads the `sets` list of sets.yaml (DD-277); the file's
+// `items` are loaded with the other item files.
+func loadSetsFile(path string) ([]itemset.Set, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read %s: %w", path, err)
+	}
+	var f struct {
+		Sets []itemset.Set `yaml:"sets"`
+	}
+	if err := yaml.Unmarshal(raw, &f); err != nil {
+		return nil, fmt.Errorf("parse %s: %w", path, err)
+	}
+	if _, err := itemset.New(f.Sets); err != nil {
+		return nil, fmt.Errorf("validate %s: %w", path, err)
+	}
+	return f.Sets, nil
+}
+
+// validateSets checks what itemset.New cannot: pieces are equippable
+// content items, the source is a raid and every bonus is a known modifier.
+func validateSets(p *Pack) error {
+	items := map[string]Item{}
+	for _, it := range p.Items {
+		items[it.Code] = it
+	}
+	raids := map[string]bool{}
+	for _, d := range p.Dungeons {
+		raids[d.Code] = d.GroupMax > 1
+	}
+	for _, s := range p.ItemSets {
+		if !raids[s.Source] {
+			return fmt.Errorf("itemset %s: source %q is not a raid", s.Code, s.Source)
+		}
+		for _, piece := range s.Pieces {
+			if it, ok := items[piece]; !ok || it.EquipSlot == "" {
+				return fmt.Errorf("itemset %s: piece %q is not equippable content", s.Code, piece)
+			}
+		}
+		for _, b := range s.Bonuses {
+			for _, m := range b.Modifiers {
+				if !validModifierKinds(m.Kind) || !validStatTargets(m.Target) {
+					return fmt.Errorf("itemset %s: bonus modifier %s/%s", s.Code, m.Kind, m.Target)
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func loadProfessionsFile(path string) ([]Profession, error) {

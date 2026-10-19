@@ -73,3 +73,30 @@ func TestHTTPJewelryPairs(t *testing.T) {
 	require.NoError(t, err)
 	p.fail("POST", p.path("/equip/"+shield.ID.String()), map[string]any{}, 403, "")
 }
+
+// Worn set pieces add the set's bonuses (DD-277): two pieces of the Undying
+// Plate add 4% HP on top of what each adds alone; the catalog is public.
+func TestHTTPSetBonus(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "warrior")
+	me := player{ID: uuid.MustParse(p.char)}
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 100 WHERE id = $1`, me.ID)
+	require.NoError(t, err)
+	hp := func() float64 {
+		return p.ok("GET", p.path("/sheet"), nil)["resources"].(map[string]any)["hp_max"].(float64)
+	}
+	bare := hp()
+	helm, chest := w.give(me, "undying_helm", 1), w.give(me, "undying_chestplate", 1)
+	p.ok("POST", p.path("/equip/"+helm.ID.String()), map[string]any{})
+	withHelm := hp()
+	p.ok("POST", p.path("/unequip/helm"), map[string]any{})
+	p.ok("POST", p.path("/equip/"+chest.ID.String()), map[string]any{})
+	withChest := hp()
+	p.ok("POST", p.path("/equip/"+helm.ID.String()), map[string]any{})
+	both := hp()
+	alone := withHelm + withChest - bare // what the two add without the set
+	require.InDelta(t, alone*1.04, both, 3, "2 pieces: +4%% HP (alone %v, both %v)", alone, both)
+
+	sets := items(p.ok("GET", "/v1/item-sets", nil), "sets")
+	require.Len(t, sets, 18)
+}

@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
 )
@@ -273,11 +274,21 @@ func (s *EquipmentService) EquippedBonuses(ctx context.Context, characterID uuid
 	if err != nil {
 		return nil, err
 	}
-	out := make([]skill.EquippedBonus, 0, len(list))
+	out := make([]skill.EquippedBonus, 0, len(list)+1)
+	worn := make([]string, 0, len(list))
 	for _, b := range list {
+		worn = append(worn, b.TemplateCode)
 		if mods := EffectiveModifiers(b); len(mods) > 0 {
 			out = append(out, skill.EquippedBonus{Modifiers: mods})
 		}
+	}
+	// Set bonuses for the worn pieces (DD-277).
+	var set []skill.Modifier
+	for _, m := range itemset.Current().Modifiers(worn) {
+		set = append(set, skill.Modifier{Kind: skill.ModifierKind(m.Kind), Target: skill.Target(m.Target), Amount: m.Amount})
+	}
+	if len(set) > 0 {
+		out = append(out, skill.EquippedBonus{Modifiers: set})
 	}
 	return out, nil
 }

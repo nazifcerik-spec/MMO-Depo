@@ -3,7 +3,7 @@
 
     python scripts/item_catalog.py
 
-Reads content/{items,gear,gathering,vendors,recipes}.yaml and
+Reads content/{items,gear,gathering,sets,vendors,recipes}.yaml and
 content/i18n/tr.yaml, so the list never drifts from what the game actually
 ships. Needs PyYAML.
 """
@@ -22,7 +22,7 @@ def load(rel):
 
 
 items = (load("content/items.yaml")["items"] + load("content/gear.yaml")["items"]
-         + load("content/gathering.yaml")["items"])
+         + load("content/gathering.yaml")["items"] + load("content/sets.yaml")["items"])
 tr = load("content/i18n/tr.yaml")
 vendors = load("content/vendors.yaml")["vendors"]
 recipes = load("content/recipes.yaml")["recipes"]

@@ -54,6 +54,8 @@ with io.open(os.path.join(CONTENT, 'i18n', 'tr.yaml'), encoding='utf-8') as f:
 ZONES, RAIDS, ARCH = world_zones()
 
 every = {i['code']: i for i in items + gear + nodes}
+if os.path.exists(os.path.join(CONTENT, 'sets.yaml')):  # raid set pieces (DD-277)
+    every.update({i['code']: i for i in load('sets.yaml', 'items')})
 mob_by = {m['code']: m for m in mobs}
 
 
@@ -425,13 +427,27 @@ for d in sorted(dungeons, key=lambda d: (d['min_level'], d['code'])):
                                                                        d['duration_seconds'] // 60, waves, tr('mob', boss['code']), boss['level'],
                                                                        money(d['bonus_gold_copper']), d['bonus_xp'], gear_tier(boss['level'])))
 w('')
-find('Orta', 'Zindan', 'Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok.')
+find('Orta', 'Zindan', 'Solo zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe (baskınlar set parçası düşürür, DD-277).')
 
 # 7. Sets
 w('## 7. Setler\n')
-w('İçerikte set yok. Tasarım `docs/item-engine/set.md` (parça sayımı, kademeli bonus, imza tetikleyici, `content/item_sets/*.yaml`) hazır, motor ve içerik yok. '
-  'Aynı malzeme adını taşıyan 5 zırh parçası (ör. demir başlık/göğüs/bacak/çizme/eldiven) set adayı.\n')
-find('Yüksek', 'Set', 'Set sistemi yok (tasarım var). Zindan/baskın ödülü ve uzun vadeli hedef için en büyük boşluk.')
+sets_path = os.path.join(CONTENT, 'sets.yaml')
+item_sets = load('sets.yaml', 'sets') if os.path.exists(sets_path) else []
+if item_sets:
+    w('Baskın setleri (`scripts/gen_sets.py`, DD-277): baskın boss’u sınıfın zırh türündeki setten bir parça düşürür.\n')
+    w('| Set | Ad | Baskın | Sv | Parçalar | Bonuslar |')
+    w('|---|---|---|---:|---|---|')
+    for s in item_sets:
+        bon = '; '.join('%d: %s' % (b['pieces'], ', '.join('%s %s %s' % (m['kind'], m['target'], m['amount']) for m in b['modifiers']))
+                        for b in s['bonuses'])
+        w('| %s | %s | %s | %d | %s | %s |' % (s['code'], tr('itemset', s['code']), tr('dungeon', s['source']),
+                                              every[s['pieces'][0]]['min_level'] if s['pieces'][0] in every else 0,
+                                              ', '.join(tr('item', p) for p in s['pieces']), bon))
+    w('')
+else:
+    find('Yüksek', 'Set', 'Set sistemi yok (tasarım var). Zindan/baskın ödülü ve uzun vadeli hedef için en büyük boşluk.')
+if not any(s for s in item_sets if s['source'] in {d['code'] for d in solo}):
+    find('Orta', 'Set', 'Solo zindanların seti yok; setler yalnız baskınlarda.')
 find('Orta', 'Eşya motoru', 'Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`).')
 
 # 8. Findings

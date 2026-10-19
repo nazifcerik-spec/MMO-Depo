@@ -51,7 +51,20 @@ func load(t *testing.T) *world {
 	p, err := contentpack.Read("../../../content")
 	require.NoError(t, err)
 	require.NoError(t, leveling.Install(p.Progression))
-	w := &world{items: p.Items}
+	// Level gear is what drops and is crafted: raid set pieces are a reward
+	// on top, not the baseline the targets are tuned for (DD-277).
+	inSet := map[string]bool{}
+	for _, s := range p.ItemSets {
+		for _, piece := range s.Pieces {
+			inSet[piece] = true
+		}
+	}
+	w := &world{}
+	for _, it := range p.Items {
+		if !inSet[it.Code] {
+			w.items = append(w.items, it)
+		}
+	}
 	for _, m := range p.Mobs {
 		w.mobs = append(w.mobs, combat.Mob{Code: m.Code, Level: m.Level, HPMax: m.HPMax, Attack: m.Attack,
 			Defense: m.Defense, CritPct: int32(m.CritPct), HitPct: int32(m.HitPct), EvasionPct: int32(m.EvasionPct),

@@ -2592,6 +2592,31 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-277 — Baskın setleri
+**Karar:**
+- Yeni `internal/itemset` paketi bellekte bir katalog tutar; contentpack her yüklemede kurar (`itemset.Install`, progression gibi).
+- `content/sets.yaml` iki bölümden oluşur:
+  - `items`: set parçaları.
+  - `sets`: kod, baskın kaynağı, parçalar ve parça sayısındaki bonuslar.
+- Doğrulama: parça tek sette olur, eşikler artan sırada; kaynak baskındır; parçalar kuşanılabilir; modifier'lar bilinen türde.
+- İçerik (`scripts/gen_sets.py`): 6 baskın × kumaş/deri/plaka = 18 set, 108 parça.
+  - Her set 5 zırh ve 1 kolyeden oluşur.
+  - Parçalar baskın seviyesindedir ve altındaki kademenin statlarından %15 güçlüdür.
+  - Bonuslar: 2 parça +%4 can, 4 parça +%5 saldırı, 6 parça türe özgü (kumaş +10 kritik hasar, deri +3 kritik, plaka +3 hasar azaltma).
+  - Adlar baskın boss'unun sıfatıyla (Ölümsüz, Tiran, Ejder Kral, Zamansız, Düşmüş, Zincirsiz), 4 dilde.
+- Düşüş: baskın boss'u, üyenin zırh türüne uyan setten bir parça düşürür (`GearDrop.SetSource`, boss nadirlik tablosu).
+- Set parçaları ganimet havuzuna, üretime ve denge kitlerine girmez.
+- Sheet: giyilen farklı parçalar sayılır, eşiği geçen bonuslar ekipman bonuslarına eklenir (`inventory.EquippedBonuses`).
+- `GET /v1/item-sets` herkese açık ve önbelleklenebilir.
+- İstemci: eşya detayında set adı, giyili/toplam parça ve bonuslar; kazanılan bonuslar yeşil.
+
+**Reason:** Yol haritası Faz D: baskın ödülüne ve uzun vadeli hedefe set eklemek. Tasarım `docs/item-engine/set.md` sadeleştirildi: imza tetikleyici ve çapraz set etkileşimi yok.
+**Alternatives:** DB tablosu + `set_code` sütunu (sets.yaml bellekte yeterli). Zindan setleri (sonraki adım).
+**Consequences:** Ekipman 2132 şablon. Solo zindanların seti yok. Testler: `itemset` birim testleri, `TestShippedRaidSetPieces`, `TestHTTPSetBonus`, `TestValidateSets_Rejects`; kapsam kapısına `internal/itemset`.
+**Tarih:** 2026-10-19
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

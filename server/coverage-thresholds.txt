@@ -25,6 +25,7 @@ internal/hunt                 80
 internal/inventory            78
 internal/leveling             90
 internal/item                 87
+internal/itemset              94
 internal/mail                 50
 internal/market               80
 internal/notification         84

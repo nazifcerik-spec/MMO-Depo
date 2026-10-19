@@ -44,4 +44,13 @@ class InventoryRepository {
   }
 
   Future<void> destroy(String itemId) => api.delete('$_base/inventory/$itemId');
+
+  static Map<String, ItemSet>? _setsByPiece;
+
+  /// piece template code → its set (DD-277); fetched once, they only change
+  /// on a content reload.
+  Future<Map<String, ItemSet>> setsByPiece() async => _setsByPiece ??= {
+    for (final s in ((await api.get('/v1/item-sets'))['sets'] as List? ?? const []).cast<Map<String, dynamic>>())
+      for (final p in ItemSet.fromJson(s).pieces) p: ItemSet.fromJson(s),
+  };
 }

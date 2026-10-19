@@ -80,7 +80,7 @@ func TestMemberReward(t *testing.T) {
 	gold := res.Encounters[0].GoldCopper + res.Encounters[1].GoldCopper + res.Encounters[2].GoldCopper + 500
 	require.Equal(t, gold, rw.GoldCopper)
 	require.GreaterOrEqual(t, rw.Rare, 1, "the boss always drops a rare")
-	require.Equal(t, activity.GearDrop{Class: "warrior", Level: 10, Rolls: 2, Pct: GearDropPct, Guaranteed: BossGear, Boss: true}, rw.Gear)
+	require.Equal(t, activity.GearDrop{Class: "warrior", Level: 10, Rolls: 2, Pct: GearDropPct, Guaranteed: BossGear, Boss: true, SetSource: "r"}, rw.Gear) // + a set piece (DD-277)
 
 	other := MemberReward(res, 2, 10, "mage", 42, testRaid, testMobs, rng)
 	require.Equal(t, rw.GoldCopper, other.GoldCopper, "gold is not split")

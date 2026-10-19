@@ -2490,18 +2490,39 @@ Arketip dağılımı: elite 25, tank 20, crit 18, glass 17, evasive 16, el yapı
 
 ## 7. Setler
 
-İçerikte set yok. Tasarım `docs/item-engine/set.md` (parça sayımı, kademeli bonus, imza tetikleyici, `content/item_sets/*.yaml`) hazır, motor ve içerik yok. Aynı malzeme adını taşıyan 5 zırh parçası (ör. demir başlık/göğüs/bacak/çizme/eldiven) set adayı.
+Baskın setleri (`scripts/gen_sets.py`, DD-277): baskın boss’u sınıfın zırh türündeki setten bir parça düşürür.
+
+| Set | Ad | Baskın | Sv | Parçalar | Bonuslar |
+|---|---|---|---:|---|---|
+| north_keep_siege_cloth | Ölümsüz Kumaş Seti | Kuzey Kalesi Kuşatması | 100 | Ölümsüz Kukuleta, Ölümsüz Cübbe, Ölümsüz Şalvar, Ölümsüz Sandalet, Ölümsüz Sargı, Ölümsüz Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| north_keep_siege_leather | Ölümsüz Deri Seti | Kuzey Kalesi Kuşatması | 100 | Ölümsüz Deri Başlık, Ölümsüz Deri Yelek, Ölümsüz Deri Tozluk, Ölümsüz Deri Çizme, Ölümsüz Deri Eldiven, Ölümsüz Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| north_keep_siege_plate | Ölümsüz Plaka Seti | Kuzey Kalesi Kuşatması | 100 | Ölümsüz Kask, Ölümsüz Göğüslük, Ölümsüz Bacaklık, Ölümsüz Çizme, Ölümsüz Eldiven, Ölümsüz Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
+| crownless_palace_cloth | Tiran Kumaş Seti | Taçsız Kral'ın Sarayı | 300 | Tiran Kukuleta, Tiran Cübbe, Tiran Şalvar, Tiran Sandalet, Tiran Sargı, Tiran Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| crownless_palace_leather | Tiran Deri Seti | Taçsız Kral'ın Sarayı | 300 | Tiran Deri Başlık, Tiran Deri Yelek, Tiran Deri Tozluk, Tiran Deri Çizme, Tiran Deri Eldiven, Tiran Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| crownless_palace_plate | Tiran Plaka Seti | Taçsız Kral'ın Sarayı | 300 | Tiran Kask, Tiran Göğüslük, Tiran Bacaklık, Tiran Çizme, Tiran Eldiven, Tiran Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
+| dragon_king_lair_cloth | Ejder Kral Kumaş Seti | Ejder Kral'ın İni | 600 | Ejder Kral Kukuleta, Ejder Kral Cübbe, Ejder Kral Şalvar, Ejder Kral Sandalet, Ejder Kral Sargı, Ejder Kral Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| dragon_king_lair_leather | Ejder Kral Deri Seti | Ejder Kral'ın İni | 600 | Ejder Kral Deri Başlık, Ejder Kral Deri Yelek, Ejder Kral Deri Tozluk, Ejder Kral Deri Çizme, Ejder Kral Deri Eldiven, Ejder Kral Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| dragon_king_lair_plate | Ejder Kral Plaka Seti | Ejder Kral'ın İni | 600 | Ejder Kral Kask, Ejder Kral Göğüslük, Ejder Kral Bacaklık, Ejder Kral Çizme, Ejder Kral Eldiven, Ejder Kral Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
+| time_lord_tower_cloth | Zamansız Kumaş Seti | Zaman Lordu'nun Kulesi | 700 | Zamansız Kukuleta, Zamansız Cübbe, Zamansız Şalvar, Zamansız Sandalet, Zamansız Sargı, Zamansız Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| time_lord_tower_leather | Zamansız Deri Seti | Zaman Lordu'nun Kulesi | 700 | Zamansız Deri Başlık, Zamansız Deri Yelek, Zamansız Deri Tozluk, Zamansız Deri Çizme, Zamansız Deri Eldiven, Zamansız Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| time_lord_tower_plate | Zamansız Plaka Seti | Zaman Lordu'nun Kulesi | 700 | Zamansız Kask, Zamansız Göğüslük, Zamansız Bacaklık, Zamansız Çizme, Zamansız Eldiven, Zamansız Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
+| archangels_fall_cloth | Düşmüş Kumaş Seti | Başmeleklerin Düşüşü | 850 | Düşmüş Kukuleta, Düşmüş Cübbe, Düşmüş Şalvar, Düşmüş Sandalet, Düşmüş Sargı, Düşmüş Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| archangels_fall_leather | Düşmüş Deri Seti | Başmeleklerin Düşüşü | 850 | Düşmüş Deri Başlık, Düşmüş Deri Yelek, Düşmüş Deri Tozluk, Düşmüş Deri Çizme, Düşmüş Deri Eldiven, Düşmüş Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| archangels_fall_plate | Düşmüş Plaka Seti | Başmeleklerin Düşüşü | 850 | Düşmüş Kask, Düşmüş Göğüslük, Düşmüş Bacaklık, Düşmüş Çizme, Düşmüş Eldiven, Düşmüş Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
+| fallen_god_throne_cloth | Zincirsiz Kumaş Seti | Düşmüş Tanrı'nın Tahtı | 1000 | Zincirsiz Kukuleta, Zincirsiz Cübbe, Zincirsiz Şalvar, Zincirsiz Sandalet, Zincirsiz Sargı, Zincirsiz Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_dmg_pct 10 |
+| fallen_god_throne_leather | Zincirsiz Deri Seti | Düşmüş Tanrı'nın Tahtı | 1000 | Zincirsiz Deri Başlık, Zincirsiz Deri Yelek, Zincirsiz Deri Tozluk, Zincirsiz Deri Çizme, Zincirsiz Deri Eldiven, Zincirsiz Gerdanlık | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat crit_pct 3 |
+| fallen_god_throne_plate | Zincirsiz Plaka Seti | Düşmüş Tanrı'nın Tahtı | 1000 | Zincirsiz Kask, Zincirsiz Göğüslük, Zincirsiz Bacaklık, Zincirsiz Çizme, Zincirsiz Eldiven, Zincirsiz Zincir Kolye | 2: mult_add hp_max 0.04; 4: mult_add attack 0.05; 6: flat dmg_reduction_pct 3 |
 
 ## 8. Uyumsuzluklar ve eksikler
 
 | # | Önem | Alan | Bulgu |
 |---:|---|---|---|
-| 1 | Yüksek | Set | Set sistemi yok (tasarım var). Zindan/baskın ödülü ve uzun vadeli hedef için en büyük boşluk. |
-| 2 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
-| 3 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
-| 4 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
-| 5 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
-| 6 | Orta | Zindan | Zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe; zindan/baskın seti, mührü ya da benzersiz eşyası yok. |
+| 1 | Orta | Eşya motoru | Tasarımı olup uygulanmayan: soket + mücevher (`gems.md`, `sockets.md`), büyü (`enchantments.md`), üretim kalitesi / kritik üretim (`quality.md`, `critical-craft.md`), benzersiz etki (`unique-effect.md`). |
+| 2 | Orta | Ganimet | Canavara özgü ganimet tablosu yok: aynı seviyedeki ejderha ile haydut aynı şeyi düşürüyor (yalnız seviye belirliyor). Görev/zanaat için özel malzeme (ejder pulu, boss mührü) yok. |
+| 3 | Orta | Ganimet | Ganimet tek kademeden: Sv 34 canavar yalnız Sv 25 kademesi düşürür; bir alt kademe/üst kademe şansı yok. Kademe sınırını geçince düşen eşya bir anda değişiyor. |
+| 4 | Orta | Nadirlik | Mitik ekipman hiçbir kaynaktan gelmiyor (boss tablosu efsanevide bitiyor); `unique-effect.md` tasarımı uygulanmadı. |
+| 5 | Orta | Set | Solo zindanların seti yok; setler yalnız baskınlarda. |
+| 6 | Orta | Zindan | Solo zindana özgü ganimet yok: boss ekipmanı açık dünyadaki aynı kademe (baskınlar set parçası düşürür, DD-277). |
 | 7 | Düşük | Canavar | Her bölgede 6 canavar → Sv 100 sonrası her ~10 seviyede bir canavar; yan yana seçenek az (aynı seviyede ikinci canavar yok). |
 | 8 | Düşük | Ekonomi | 4/150 toplama kaynağı hiçbir tarifte kullanılmıyor (forest_deer_hide, forest_bear_hide, raw_stone, mercury_ore); tek değerleri dükkân fiyatı. |
 | 9 | Düşük | Eşya | 6 eşya bilinçli olarak emekli (DD-241/244; eski yığınlar satılabilsin diye duruyor), kaynağı yok: potion_mp_small, linseed, mandrake, king_bloom, elm_log, yew_log. Temizlik isteğe bağlı. |

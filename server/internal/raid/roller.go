@@ -186,6 +186,7 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 			Rolls: waveKills, Pct: GearDropPct}
 		if res.BossKilled {
 			rw.Gear.Guaranteed, rw.Gear.Boss = BossGear, true
+			rw.Gear.SetSource = tmpl.Code // and a piece of the raid's set (DD-277)
 		}
 	}
 	return rw

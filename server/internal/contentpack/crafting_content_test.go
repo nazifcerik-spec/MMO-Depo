@@ -29,9 +29,15 @@ func TestShippedCraftingCoversGear(t *testing.T) {
 		require.LessOrEqual(t, r.MinSkill, pr.MaxLevel, r.Code)
 		top[r.ProfessionCode] = max(top[r.ProfessionCode], r.MinSkill)
 	}
+	setPiece := map[string]bool{} // raid drops only (DD-277)
+	for _, s := range p.ItemSets {
+		for _, piece := range s.Pieces {
+			setPiece[piece] = true
+		}
+	}
 	for _, it := range p.Items {
 		switch {
-		case it.EquipSlot != "" && it.Requirements == nil && it.ItemSubclass != "shield":
+		case it.EquipSlot != "" && it.Requirements == nil && it.ItemSubclass != "shield" && !setPiece[it.Code]:
 			r, ok := recipeFor[it.Code]
 			require.True(t, ok, "%s has no recipe", it.Code)
 			require.Equal(t, int16(max(1, (int(it.MinLevel)+9)/10)), r.MinSkill, "%s: skill = ceil(level/10)", it.Code)

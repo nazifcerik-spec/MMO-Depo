@@ -155,6 +155,9 @@ func validateStrings(s *Strings, p *Pack) error {
 	for _, x := range p.Skills {
 		add("skill", x.Code)
 	}
+	for _, x := range p.ItemSets {
+		add("itemset", x.Code)
+	}
 	var missing []string
 	for _, k := range keys {
 		if _, ok := base[k]; !ok {

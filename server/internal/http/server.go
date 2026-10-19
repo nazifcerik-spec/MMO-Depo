@@ -36,6 +36,7 @@ import (
 	"github.com/otter/server/internal/idempotency"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
@@ -487,6 +488,9 @@ func NewRouter(d Deps) http.Handler {
 			if d.ContentLoader != nil {
 				r.Get("/content/strings", contentStringsHandler(d.ContentLoader))
 			}
+
+			// --- Public item set catalog (DD-277) ---
+			r.Get("/item-sets", itemset.CatalogHandler)
 
 			// --- Public mob catalog (client hunt picker) ---
 			if d.CombatHandler != nil {
