@@ -2368,4 +2368,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get classJewelry => '饰品';
+
+  @override
+  String get mapHint => '发光的区域可直接前往。拖动或缩放地图，点击区域查看详情。';
+
+  @override
+  String get mapNoRoad => '没有直达这里的道路。请经由你身边发光的区域前往。';
+
+  @override
+  String get youAreHere => '你在这里。';
+
+  @override
+  String travelTime(String time) {
+    return '旅行时间：$time';
+  }
 }

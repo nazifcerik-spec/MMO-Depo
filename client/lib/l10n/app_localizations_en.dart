@@ -2370,4 +2370,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get classJewelry => 'Jewelry';
+
+  @override
+  String get mapHint => 'Glowing regions are a road away. Drag and pinch the map; tap a region for details.';
+
+  @override
+  String get mapNoRoad => 'No direct road leads here. Travel through the glowing regions next to you.';
+
+  @override
+  String get youAreHere => 'You are here.';
+
+  @override
+  String travelTime(String time) {
+    return 'Travel time: $time';
+  }
 }

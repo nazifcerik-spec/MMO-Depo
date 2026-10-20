@@ -2369,4 +2369,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get classJewelry => 'Joyería';
+
+  @override
+  String get mapHint =>
+      'Las zonas que brillan están a un camino. Arrastra y amplía el mapa; toca una zona para ver detalles.';
+
+  @override
+  String get mapNoRoad => 'Ningún camino directo lleva aquí. Viaja por las zonas que brillan a tu lado.';
+
+  @override
+  String get youAreHere => 'Estás aquí.';
+
+  @override
+  String travelTime(String time) {
+    return 'Tiempo de viaje: $time';
+  }
 }

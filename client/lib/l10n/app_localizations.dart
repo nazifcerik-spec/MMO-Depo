@@ -4209,6 +4209,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Jewelry'**
   String get classJewelry;
+
+  /// No description provided for @mapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Glowing regions are a road away. Drag and pinch the map; tap a region for details.'**
+  String get mapHint;
+
+  /// No description provided for @mapNoRoad.
+  ///
+  /// In en, this message translates to:
+  /// **'No direct road leads here. Travel through the glowing regions next to you.'**
+  String get mapNoRoad;
+
+  /// No description provided for @youAreHere.
+  ///
+  /// In en, this message translates to:
+  /// **'You are here.'**
+  String get youAreHere;
+
+  /// No description provided for @travelTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel time: {time}'**
+  String travelTime(String time);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

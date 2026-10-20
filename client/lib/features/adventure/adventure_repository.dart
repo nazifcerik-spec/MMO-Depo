@@ -10,6 +10,7 @@ class AdventureRepository {
   final String characterId;
   List<MobInfo>? _mobs;
   List<DungeonInfo>? _dungeons;
+  WorldMap? _map;
 
   String get _char => '/v1/character/$characterId';
 
@@ -89,6 +90,9 @@ class AdventureRepository {
   // --- travel ---------------------------------------------------------------
 
   Future<Location> location() async => Location.fromJson(await api.get('$_char/location'));
+
+  /// Regions with map positions and roads (DD-279); cached.
+  Future<WorldMap> worldMap() async => _map ??= WorldMap.fromJson(await api.get('/v1/world/regions'));
 
   Future<void> travel(String toRegion) => api.post('$_char/travel', {'to_region_code': toRegion});
 

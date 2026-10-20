@@ -685,5 +685,9 @@
   "statCritDmg": "% Kritik hasar",
   "statLifesteal": "% Can çalma",
   "statDmgReduction": "% Hasar azaltma",
-  "classJewelry": "Takı"
+  "classJewelry": "Takı",
+  "mapHint": "Parlayan bölgelere doğrudan gidebilirsin. Haritayı kaydır, yakınlaştır; ayrıntı için bölgeye dokun.",
+  "mapNoRoad": "Buraya doğrudan yol yok. Yanındaki parlayan bölgeler üzerinden git.",
+  "youAreHere": "Buradasın.",
+  "travelTime": "Yolculuk süresi: {time}"
 }

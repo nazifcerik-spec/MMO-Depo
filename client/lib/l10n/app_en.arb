@@ -1862,5 +1862,16 @@
   "statCritDmg": "% Crit damage",
   "statLifesteal": "% Lifesteal",
   "statDmgReduction": "% Damage reduction",
-  "classJewelry": "Jewelry"
+  "classJewelry": "Jewelry",
+  "mapHint": "Glowing regions are a road away. Drag and pinch the map; tap a region for details.",
+  "mapNoRoad": "No direct road leads here. Travel through the glowing regions next to you.",
+  "youAreHere": "You are here.",
+  "travelTime": "Travel time: {time}",
+  "@travelTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

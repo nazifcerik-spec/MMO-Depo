@@ -99,3 +99,8 @@ func TestCatalog_HuntRegions(t *testing.T) {
 	require.Equal(t, []string{"city"}, c.HuntRegions("city"))
 	require.Nil(t, c.HuntRegions("nowhere"))
 }
+
+func TestCatalog_Links(t *testing.T) {
+	c := fakeCatalog(t)
+	require.Equal(t, []RegionLink{{RegionA: "wild_a", RegionB: "wild_b", TravelSeconds: 240}}, c.Links())
+}

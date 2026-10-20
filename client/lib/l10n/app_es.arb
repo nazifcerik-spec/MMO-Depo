@@ -169,5 +169,9 @@
   "statCritDmg": "% Daño crítico",
   "statLifesteal": "% Robo de vida",
   "statDmgReduction": "% Reducción de daño",
-  "classJewelry": "Joyería"
+  "classJewelry": "Joyería",
+  "mapHint": "Las zonas que brillan están a un camino. Arrastra y amplía el mapa; toca una zona para ver detalles.",
+  "mapNoRoad": "Ningún camino directo lleva aquí. Viaja por las zonas que brillan a tu lado.",
+  "youAreHere": "Estás aquí.",
+  "travelTime": "Tiempo de viaje: {time}"
 }

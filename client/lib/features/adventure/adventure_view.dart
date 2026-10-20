@@ -16,6 +16,7 @@ import '../events/event_repository.dart';
 import '../events/events_panel.dart';
 import 'adventure_models.dart';
 import 'adventure_repository.dart';
+import 'world_map.dart';
 import '../../shared/content_names.dart';
 
 part 'raid_panel.dart';
@@ -691,6 +692,7 @@ class _TravelPanel extends StatefulWidget {
 
 class _TravelPanelState extends State<_TravelPanel> with PanelState {
   Location? _loc;
+  WorldMap? _map;
 
   @override
   void initState() {
@@ -701,12 +703,14 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
   @override
   Future<void> fetch() async {
     final before = _loc?.region.code;
-    _loc = await widget.repo.location();
+    final r = await Future.wait<Object>([widget.repo.location(), widget.repo.worldMap()]);
+    _loc = r[0] as Location;
+    _map = r[1] as WorldMap;
     if (before != null && before != _loc!.region.code) widget.moved.value++;
   }
 
-  Future<void> _go(Neighbor n) => run(() async {
-    await widget.repo.travel(n.region.code);
+  Future<void> _go(String code) => run(() async {
+    await widget.repo.travel(code);
     await fetch();
   });
 
@@ -724,75 +728,143 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
     await fetch();
   });
 
+  /// A region tapped on the map: its details, and Go for a direct destination.
+  Future<void> _details(RegionInfo r) async {
+    final l = AppLocalizations.of(context);
+    final loc = _loc!;
+    final travel = {for (final n in loc.neighbors) n.region.code: n.travel}[r.code];
+    final locked = r.minLevel > widget.level;
+    final go = await showModalBottomSheet<bool>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: Palette.bgSurface,
+      builder: (c) {
+        final text = Theme.of(c).textTheme;
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text(ContentNames.of('region', r.code), style: text.titleLarge)),
+                    _KindChip(kind: r.kind, safe: r.safe),
+                  ],
+                ),
+                const SizedBox(height: Space.xs),
+                Text(l.levelReq(r.minLevel), style: TextStyle(color: locked ? Palette.danger : Palette.textSecondary)),
+                const SizedBox(height: Space.lg),
+                if (r.code == loc.region.code)
+                  Text(l.youAreHere, style: text.bodyMedium)
+                else if (travel != null) ...[
+                  Text(l.travelTime(shortDuration(l, travel)), style: text.bodyMedium),
+                  const SizedBox(height: Space.lg),
+                  FilledButton(
+                    key: const Key('map-go'),
+                    onPressed: locked || loc.travel != null ? null : () => Navigator.pop(c, true),
+                    child: Text(l.travelTo),
+                  ),
+                ] else
+                  Text(l.mapNoRoad, style: text.bodyMedium),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    if (go == true && mounted) await _go(r.code);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return frame(() {
-      final loc = _loc!;
-      final text = Theme.of(context).textTheme;
-      final t = loc.travel;
-      return [
-        Text(l.youAreIn, style: text.bodySmall),
-        const SizedBox(height: Space.xs),
-        Row(
-          children: [
-            const Icon(Icons.place, color: Palette.accent),
-            const SizedBox(width: Space.sm),
-            Expanded(child: Text(ContentNames.of('region', loc.region.code), style: text.titleLarge)),
-            _KindChip(kind: loc.region.kind, safe: loc.region.safe),
-          ],
-        ),
-        const SizedBox(height: Space.xl),
-        if (t != null) ...[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(Space.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(l.travelling(ContentNames.of('region', t.to)), style: text.titleMedium),
-                  const SizedBox(height: Space.md),
-                  ContractProgress(
-                    startedAt: t.startedAt,
-                    endsAt: t.arrivesAt,
-                    doneLabel: l.arrived,
-                    onComplete: () => setState(() {}),
-                  ),
-                ],
-              ),
+    if (!loaded) {
+      return error != null
+          ? MessageView(message: errorText(l, error!), onRetry: load)
+          : const Center(child: CircularProgressIndicator());
+    }
+    final loc = _loc!;
+    final text = Theme.of(context).textTheme;
+    final t = loc.travel;
+    return AbsorbPointer(
+      absorbing: busy,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Space.screen, Space.xs, Space.screen, Space.sm),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.place, color: Palette.accent),
+                    const SizedBox(width: Space.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(l.youAreIn, style: text.bodySmall),
+                          Text(ContentNames.of('region', loc.region.code), style: text.titleMedium),
+                        ],
+                      ),
+                    ),
+                    _KindChip(kind: loc.region.kind, safe: loc.region.safe),
+                  ],
+                ),
+                const SizedBox(height: Space.sm),
+                if (t != null)
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(Space.md),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(l.travelling(ContentNames.of('region', t.to)), style: text.titleSmall),
+                          const SizedBox(height: Space.sm),
+                          ContractProgress(
+                            startedAt: t.startedAt,
+                            endsAt: t.arrivesAt,
+                            doneLabel: l.arrived,
+                            onComplete: () => setState(() {}),
+                          ),
+                          const SizedBox(height: Space.sm),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: FilledButton(
+                                  onPressed: ContractProgress.isDone(t.arrivesAt) ? () => _arrive(t) : null,
+                                  child: Text(l.arrive),
+                                ),
+                              ),
+                              const SizedBox(width: Space.sm),
+                              TextButton(onPressed: () => _cancel(t), child: Text(l.cancelTravel)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Text(l.mapHint, style: text.bodySmall),
+              ],
             ),
           ),
-          const SizedBox(height: Space.lg),
-          FilledButton(
-            onPressed: ContractProgress.isDone(t.arrivesAt) ? () => _arrive(t) : null,
-            child: Text(l.arrive),
-          ),
-          const SizedBox(height: Space.sm),
-          TextButton(onPressed: () => _cancel(t), child: Text(l.cancelTravel)),
-        ] else ...[
-          Text(l.routes, style: text.titleMedium),
-          const SizedBox(height: Space.md),
-          if (loc.neighbors.isEmpty) Text(l.noRoutes, style: text.bodySmall),
-          for (final n in loc.neighbors) ...[
-            Card(
-              child: ListTile(
-                title: Text(ContentNames.of('region', n.region.code)),
-                subtitle: Text(
-                  [shortDuration(l, n.travel), if (n.region.minLevel > 1) l.levelReq(n.region.minLevel)].join(' · '),
-                ),
-                leading: _KindChip(kind: n.region.kind, safe: n.region.safe),
-                trailing: FilledButton.tonal(
-                  style: compactButton,
-                  onPressed: n.region.minLevel > widget.level ? null : () => _go(n),
-                  child: Text(l.travelTo),
-                ),
-              ),
+          Expanded(
+            child: WorldMapView(
+              map: _map!,
+              here: loc.region.code,
+              neighbors: {for (final n in loc.neighbors) n.region.code: n.travel},
+              level: widget.level,
+              travellingTo: t?.to,
+              onTap: _details,
             ),
-            const SizedBox(height: Space.sm),
-          ],
+          ),
         ],
-      ];
-    });
+      ),
+    );
   }
 }
 

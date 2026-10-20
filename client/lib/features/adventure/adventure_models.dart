@@ -167,19 +167,65 @@ class CombatResult {
 }
 
 class RegionInfo {
-  const RegionInfo({required this.code, required this.kind, required this.minLevel, required this.safe});
+  const RegionInfo({
+    required this.code,
+    required this.kind,
+    required this.minLevel,
+    required this.safe,
+    this.parent,
+    this.mapX = 0,
+    this.mapY = 0,
+  });
 
   factory RegionInfo.fromJson(Map<String, dynamic> j) => RegionInfo(
     code: j['code'] as String,
     kind: j['kind'] as String? ?? '',
     minLevel: (j['min_level'] as num?)?.toInt() ?? 0,
     safe: j['safe'] as bool? ?? false,
+    parent: j['parent_code'] as String?,
+    mapX: (j['map_x'] as num?)?.toDouble() ?? 0,
+    mapY: (j['map_y'] as num?)?.toDouble() ?? 0,
   );
 
   final String code;
   final String kind;
   final int minLevel;
   final bool safe;
+  final String? parent;
+
+  /// Position on the travel map, map units (DD-279).
+  final double mapX;
+  final double mapY;
+}
+
+/// Every region with its map position and the roads between them (DD-279).
+class WorldMap {
+  const WorldMap({required this.regions, required this.links});
+
+  factory WorldMap.fromJson(Map<String, dynamic> j) => WorldMap(
+    regions: {
+      for (final r in (j['regions'] as List? ?? const []).cast<Map<String, dynamic>>())
+        r['code'] as String: RegionInfo.fromJson(r),
+    },
+    links: [
+      for (final l in (j['links'] as List? ?? const []).cast<Map<String, dynamic>>())
+        (l['a'] as String, l['b'] as String),
+    ],
+  );
+
+  final Map<String, RegionInfo> regions;
+  final List<(String, String)> links;
+
+  /// The continent a region lies on (its top ancestor).
+  String continentOf(String code) {
+    var c = code;
+    for (var guard = 0; guard < 8; guard++) {
+      final p = regions[c]?.parent;
+      if (p == null) break;
+      c = p;
+    }
+    return c;
+  }
 }
 
 class Neighbor {

@@ -41,9 +41,15 @@ func (h *Handler) Catalog(w http.ResponseWriter, r *http.Request) {
 		row := regionRow(reg)
 		out = append(out, row)
 	}
+	// Roads between regions besides parent/child (DD-279): the map draws them.
+	links := make([]map[string]any, 0, len(cat.Links()))
+	for _, l := range cat.Links() {
+		links = append(links, map[string]any{"a": l.RegionA, "b": l.RegionB, "travel_seconds": l.TravelSeconds})
+	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{
 		"count":         len(out),
 		"regions":       out,
+		"links":         links,
 		"starting_code": cat.StartingCode(),
 	})
 }
@@ -207,6 +213,8 @@ func regionRow(r Region) map[string]any {
 		"travel_seconds_from_parent": r.TravelSecondsFromParent,
 		"safe":                       r.Safe,
 		"is_starting":                r.IsStarting,
+		"map_x":                      r.MapX,
+		"map_y":                      r.MapY,
 	}
 	if r.ParentCode != nil {
 		row["parent_code"] = *r.ParentCode

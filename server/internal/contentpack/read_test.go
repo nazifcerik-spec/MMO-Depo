@@ -94,3 +94,33 @@ func TestValidateSets_Rejects(t *testing.T) {
 	_, err = loadSetsFile(bad)
 	require.Error(t, err)
 }
+
+// Every region has a place on the travel map and every position a region
+// (DD-279).
+func TestApplyMap(t *testing.T) {
+	regions := func() []Region { return []Region{{Code: "a"}, {Code: "b"}} }
+	dir := t.TempDir()
+	path := filepath.Join(dir, "map.yaml")
+	write := func(s string) { require.NoError(t, os.WriteFile(path, []byte(s), 0o600)) }
+
+	rs := regions()
+	require.NoError(t, applyMap(filepath.Join(dir, "none.yaml"), rs), "no map file: regions stay at 0,0")
+	write("positions: {a: [10, 20], b: [30, 40]}")
+	rs = regions()
+	require.NoError(t, applyMap(path, rs))
+	require.Equal(t, [2]int16{30, 40}, [2]int16{rs[1].MapX, rs[1].MapY})
+	for name, body := range map[string]string{
+		"missing region": "positions: {a: [1, 1]}",
+		"unknown region": "positions: {a: [1, 1], b: [1, 1], c: [1, 1]}",
+		"out of bounds":  "positions: {a: [1, 1], b: [1, 4001]}",
+		"bad yaml":       "positions: {",
+	} {
+		write(body)
+		require.Error(t, applyMap(path, regions()), name)
+	}
+	p, err := Read("../../../content")
+	require.NoError(t, err)
+	for _, r := range p.Regions {
+		require.True(t, r.MapX > 0 && r.MapY > 0, "%s is on the map", r.Code)
+	}
+}

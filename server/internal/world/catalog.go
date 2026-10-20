@@ -13,6 +13,7 @@ import (
 // Catalog and CatalogService atomically swaps it.
 type Catalog struct {
 	regions  map[string]Region       // code → region
+	links    []RegionLink            // every link once (the map's roads)
 	linksBy  map[string][]RegionLink // code → all links touching this region
 	starting string                  // code of the starting region (empty if none)
 }
@@ -21,6 +22,7 @@ type Catalog struct {
 // endpoints so `LinksFor(code)` is O(1) regardless of canonical ordering.
 func NewCatalog(regions []Region, links []RegionLink) *Catalog {
 	c := &Catalog{
+		links:   links,
 		regions: make(map[string]Region, len(regions)),
 		linksBy: make(map[string][]RegionLink, len(regions)),
 	}
@@ -40,6 +42,9 @@ func NewCatalog(regions []Region, links []RegionLink) *Catalog {
 }
 
 func (c *Catalog) Get(code string) (Region, bool) { r, ok := c.regions[code]; return r, ok }
+
+// Links lists every explicit link once (canonical order).
+func (c *Catalog) Links() []RegionLink { return c.links }
 
 func (c *Catalog) All() []Region {
 	out := make([]Region, 0, len(c.regions))
@@ -190,7 +195,8 @@ func (s *CatalogService) ReloadCatalog(ctx context.Context, pool *pgxpool.Pool) 
 func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	regRows, err := pool.Query(ctx, `
 		SELECT code, display_name_key, kind, parent_code, min_level,
-		       travel_seconds_from_parent, safe, is_starting, version
+		       travel_seconds_from_parent, safe, is_starting, version,
+		       COALESCE(map_x, 0), COALESCE(map_y, 0)
 		  FROM world.region
 		 ORDER BY code`)
 	if err != nil {
@@ -204,6 +210,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		if err := regRows.Scan(
 			&r.Code, &r.DisplayNameKey, &kind, &r.ParentCode, &r.MinLevel,
 			&r.TravelSecondsFromParent, &r.Safe, &r.IsStarting, &r.Version,
+			&r.MapX, &r.MapY,
 		); err != nil {
 			return nil, fmt.Errorf("region scan: %w", err)
 		}

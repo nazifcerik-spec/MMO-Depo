@@ -487,6 +487,30 @@ class FakeBackend {
       activeHunt = null;
       return json(200, {'state': 'cancelled'});
     }
+    if (path == '/v1/world/regions') {
+      Map<String, Object> r(String code, String kind, int lvl, int x, int y, [String? parent]) => {
+        'code': code,
+        'kind': kind,
+        'min_level': lvl,
+        'safe': kind == 'city',
+        'map_x': x,
+        'map_y': y,
+        'parent_code': ?parent,
+      };
+      return json(200, {
+        'regions': [
+          r('heartland', 'continent', 1, 200, 60),
+          r(region, 'city', 1, 110, 150, 'heartland'),
+          r('whisperwood', 'wilderness', 1, 270, 150, 'heartland'),
+          r('dragon_peaks', 'zone', 40, 270, 255, 'heartland'),
+          r('void_coast', 'zone', 90, 110, 255, 'heartland'),
+        ],
+        'links': [
+          {'a': region, 'b': 'whisperwood', 'travel_seconds': 300},
+          {'a': 'whisperwood', 'b': 'dragon_peaks', 'travel_seconds': 1800},
+        ],
+      });
+    }
     if (path.endsWith('/location')) {
       return json(200, {
         'region': {'code': region, 'kind': 'city', 'safe': true, 'min_level': 1},

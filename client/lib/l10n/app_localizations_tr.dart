@@ -2369,4 +2369,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get classJewelry => 'Takı';
+
+  @override
+  String get mapHint =>
+      'Parlayan bölgelere doğrudan gidebilirsin. Haritayı kaydır, yakınlaştır; ayrıntı için bölgeye dokun.';
+
+  @override
+  String get mapNoRoad => 'Buraya doğrudan yol yok. Yanındaki parlayan bölgeler üzerinden git.';
+
+  @override
+  String get youAreHere => 'Buradasın.';
+
+  @override
+  String travelTime(String time) {
+    return 'Yolculuk süresi: $time';
+  }
 }

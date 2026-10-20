@@ -43,3 +43,19 @@ func TestHTTPHuntRegionGate(t *testing.T) {
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
 	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "mist_leech", "duration_seconds": 600}, 409, "E_MOB_REGION")
 }
+
+// The world catalog carries what the travel map draws (DD-279): every
+// region's position and the roads between them.
+func TestHTTPWorldMap(t *testing.T) {
+	p := newHTTPPlayer(t, "warrior")
+	res := p.ok("GET", "/v1/world/regions", nil)
+	regions := items(res, "regions")
+	require.Len(t, regions, 54)
+	for _, r := range regions {
+		require.Positive(t, r["map_x"], "%s has a map position", r["code"])
+		require.Positive(t, r["map_y"], "%s has a map position", r["code"])
+	}
+	links := items(res, "links")
+	require.Len(t, links, 24)
+	require.Contains(t, links, map[string]any{"a": "greenwood", "b": "ironhold_city", "travel_seconds": 120.0})
+}

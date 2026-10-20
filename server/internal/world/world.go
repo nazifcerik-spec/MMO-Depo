@@ -53,6 +53,7 @@ type Region struct {
 	Safe                    bool
 	IsStarting              bool
 	Version                 int32
+	MapX, MapY              int16 // position on the travel map (DD-279)
 }
 
 // RegionLink is one non-parent adjacency. Codes are stored canonically

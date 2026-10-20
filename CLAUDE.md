@@ -189,6 +189,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 89. **Görev zincirleri Sv 1000'e (bitti)** — Sprint 89, DD-278. Migration 0042 (görev `min_level` 1..1000). `python scripts/gen_quests.py` (gen_world'den sonra): bölge başı ana halka (ilk canavar ×20 + bölge zindanı, öncekini gerektirir) + seçkin canavara "Ödül Avı"; XP eğrinin %50 / %30'u. 62 görev.
 
+90. **Yolculuk haritası (bitti)** — Sprint 90, DD-279. Migration 0043 (`world.region.map_x/map_y`). `content/map.yaml` ← `python scripts/gen_map.py` (gen_world'den sonra; ana yol yılan dizilim, kıta başı bant, zindan bölgesinin yanında). `/v1/world/regions` konum + `links`. İstemci Yolculuk = `WorldMapView` (kaydır/yakınlaştır, bulunulan bölgede açılır, düğüm üstünde seviye, komşular parlak, dokun → ayrıntı + Git).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

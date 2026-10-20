@@ -720,17 +720,38 @@ void main() {
     expect(find.text('Open raid'), findsNothing);
   });
 
-  testWidgets('travel: routes with level gate, depart, turn back', (tester) async {
+  testWidgets('travel: pick the destination on the map, level gate, depart, turn back (DD-279)', (tester) async {
     final (be, _, _) = await _inGame(tester);
     await tester.tap(find.byIcon(Icons.explore_outlined));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Travel'));
     await tester.pumpAndSettle();
-    expect(find.text('Ironhold City'), findsOneWidget);
+    expect(find.text('Ironhold City'), findsWidgets);
+    // Every region on the map carries its level.
+    expect(find.text('Lvl 40'), findsOneWidget);
+    expect(find.text('Lvl 90'), findsOneWidget);
 
-    final go = find.widgetWithText(FilledButton, 'Go');
-    expect(tester.widget<FilledButton>(go.at(1)).onPressed, isNull, reason: 'Dragon Peaks needs level 40');
-    await tester.tap(go.first);
+    Future<void> openRegion(String code) async {
+      await tester.tap(find.byKey(Key('map-$code')));
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> closeSheet() async {
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+    }
+
+    await openRegion('dragon_peaks');
+    expect(tester.widget<FilledButton>(find.byKey(const Key('map-go'))).onPressed, isNull, reason: 'needs level 40');
+    await closeSheet();
+    await openRegion('void_coast');
+    expect(find.textContaining('No direct road'), findsOneWidget);
+    expect(find.byKey(const Key('map-go')), findsNothing);
+    await closeSheet();
+
+    await openRegion('whisperwood');
+    expect(find.text('Travel time: 5m'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('map-go')));
     await tester.pumpAndSettle();
     expect(be.travel!['to_region_code'], 'whisperwood');
     expect(find.text('Travelling to Whisperwood'), findsOneWidget);
@@ -739,7 +760,7 @@ void main() {
     await tester.tap(find.text('Turn back'));
     await tester.pumpAndSettle();
     expect(be.travel, isNull);
-    expect(find.text('Routes'), findsOneWidget);
+    expect(find.textContaining('Glowing regions'), findsOneWidget);
   });
 
   testWidgets('workshop: learn, material-aware craft, skill gate, skill-up toast', (tester) async {

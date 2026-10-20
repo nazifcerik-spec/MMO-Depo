@@ -180,6 +180,7 @@ type Region struct {
 	TravelSecondsFromParent int32  `yaml:"travel_seconds_from_parent"`
 	Safe                    bool   `yaml:"safe"`
 	IsStarting              bool   `yaml:"is_starting"`
+	MapX, MapY              int16  `yaml:"-"` // from map.yaml (DD-279)
 }
 
 // RegionLink mirrors world.region_link.
@@ -466,6 +467,9 @@ func Read(dir string) (*Pack, error) {
 	if p.Regions, p.RegionLinks, err = loadRegionsFile(f("regions.yaml")); err != nil {
 		return nil, err
 	}
+	if err := applyMap(f("map.yaml"), p.Regions); err != nil {
+		return nil, err
+	}
 	if p.Professions, err = loadProfessionsFile(f("professions.yaml")); err != nil {
 		return nil, err
 	}
@@ -690,6 +694,46 @@ func loadRecipesFile(path string) ([]Recipe, error) {
 		return nil, fmt.Errorf("validate %s: %w", path, err)
 	}
 	return f.Recipes, nil
+}
+
+// MapSize bounds region positions on the travel map (map units).
+const MapSize = 4000
+
+// applyMap places every region on the travel map from map.yaml (DD-279):
+// `positions: {code: [x, y]}`. Without the file regions stay at 0,0; with
+// it every region needs a position and every position a region.
+func applyMap(path string, regions []Region) error {
+	raw, err := os.ReadFile(path)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil
+	}
+	if err != nil {
+		return fmt.Errorf("read %s: %w", path, err)
+	}
+	var f struct {
+		Positions map[string][2]int16 `yaml:"positions"`
+	}
+	if err := yaml.Unmarshal(raw, &f); err != nil {
+		return fmt.Errorf("parse %s: %w", path, err)
+	}
+	seen := map[string]bool{}
+	for i := range regions {
+		pos, ok := f.Positions[regions[i].Code]
+		if !ok {
+			return fmt.Errorf("map.yaml: no position for region %s", regions[i].Code)
+		}
+		if pos[0] < 0 || pos[1] < 0 || pos[0] > MapSize || pos[1] > MapSize {
+			return fmt.Errorf("map.yaml: region %s outside 0..%d", regions[i].Code, MapSize)
+		}
+		regions[i].MapX, regions[i].MapY = pos[0], pos[1]
+		seen[regions[i].Code] = true
+	}
+	for code := range f.Positions {
+		if !seen[code] {
+			return fmt.Errorf("map.yaml: unknown region %s", code)
+		}
+	}
+	return nil
 }
 
 func loadRegionsFile(path string) ([]Region, []RegionLink, error) {
@@ -1385,8 +1429,8 @@ func (l *Loader) upsertRegions(ctx context.Context, regions []Region, links []Re
 	const q = `
 INSERT INTO world.region (
   code, display_name_key, kind, parent_code, min_level,
-  travel_seconds_from_parent, safe, is_starting
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+  travel_seconds_from_parent, safe, is_starting, map_x, map_y
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key           = EXCLUDED.display_name_key,
   kind                       = EXCLUDED.kind,
@@ -1395,12 +1439,14 @@ ON CONFLICT (code) DO UPDATE SET
   travel_seconds_from_parent = EXCLUDED.travel_seconds_from_parent,
   safe                       = EXCLUDED.safe,
   is_starting                = EXCLUDED.is_starting,
+  map_x                      = EXCLUDED.map_x,
+  map_y                      = EXCLUDED.map_y,
   version                    = world.region.version + 1`
 
 	for _, r := range orderedRegions {
 		_, err = tx.Exec(ctx, q,
 			r.Code, r.DisplayNameKey, r.Kind, nullableStr(r.ParentCode),
-			r.MinLevel, r.TravelSecondsFromParent, r.Safe, r.IsStarting,
+			r.MinLevel, r.TravelSecondsFromParent, r.Safe, r.IsStarting, r.MapX, r.MapY,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert region %s: %w", r.Code, err)

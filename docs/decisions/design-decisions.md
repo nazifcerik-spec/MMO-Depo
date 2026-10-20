@@ -2636,6 +2636,32 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-279 — Yolculuk haritası
+**Karar:**
+- Bölgelerin harita konumu `content/map.yaml` dosyasında (`positions: {kod: [x, y]}`, harita birimi). Dosyayı `scripts/gen_map.py` üretir:
+  - Başlangıç şehrinden son bölgeye uzanan ana yol (bölge bağlantıları) satır başına 3 bölgeyle yılan gibi dizilir.
+  - Her kıta bir bant; kıta düğümü bandın tepesinde.
+  - Zindan düğümü bölgesinin sağ altında.
+- Migration 0043 `world.region.map_x/map_y`. Contentpack her bölgeye konum, her konuma bölge şartı arar (0..4000).
+- `GET /v1/world/regions` bölgelerle birlikte `map_x/map_y` ve `links` (yollar) döner.
+- İstemci: Yolculuk sekmesi artık harita (`WorldMapView`):
+  - Kaydırılır ve yakınlaştırılır; bulunulan bölge ortada açılır.
+  - Kıtalar renkli bantlar, yollar çizgiler. Yolculuk sırasında rota kesikli çizgi.
+  - Her düğümün üstünde seviye var; karakterin seviyesi yetmiyorsa kırmızı.
+  - Bulunulan bölge turuncu halkalı. Doğrudan gidilebilen komşular yeşil halkalı; seviye yetmiyorsa kilitli.
+- Bölgeye dokununca ayrıntı açılır:
+  - Seviye gereksinimi.
+  - Komşuysa yolculuk süresi ve "Git".
+  - Değilse "Buraya doğrudan yol yok".
+- Eski komşu listesi kaldırıldı.
+
+**Reason:** Kullanıcı isteği: bölgeler harita üzerinde, gidilecek bölge haritadan seçilir, seviye üzerinde yazar.
+**Alternatives:** Hazır harita görseli + konumlar (çizim gerekir). İstemcinin konumları grafiğe göre kendisi hesaplaması (içerik kontrolü yok).
+**Consequences:** `gen_world.py` bölge eklerse `gen_map.py` yeniden çalıştırılmalı; contentpack eksik konumu reddeder. Testler: `TestApplyMap`, `TestCatalog_Links`, `TestHTTPWorldMap`, istemci harita yolculuk testi.
+**Tarih:** 2026-10-20
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
