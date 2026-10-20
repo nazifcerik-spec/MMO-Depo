@@ -221,13 +221,18 @@ func (s *Service) SetHP(ctx context.Context, characterID uuid.UUID, hp int32, at
 // RequestDelete moves the character to delete_grace. Cancellable within
 // s.cfg.DeleteGrace. Worker `character_delete_expire` (Faz 01 sprint 6+) is
 // the one that actually removes the row when the deadline passes.
-func (s *Service) RequestDelete(ctx context.Context, characterID, accountID uuid.UUID) (*Character, error) {
+// confirmName must be the character's name (case-insensitive) so a stray
+// call cannot schedule the wrong character.
+func (s *Service) RequestDelete(ctx context.Context, characterID, accountID uuid.UUID, confirmName string) (*Character, error) {
 	c, err := s.GetOwned(ctx, characterID, accountID)
 	if err != nil {
 		return nil, err
 	}
 	if c.State != StateActive {
 		return nil, ErrNotPlayable
+	}
+	if _, normalized, err := validateName(confirmName); err != nil || normalized != c.NameNormalized {
+		return nil, ErrNameMismatch
 	}
 	deadline := s.cfg.Now().UTC().Add(s.cfg.DeleteGrace)
 	if err := s.repo.SetDeleteGrace(ctx, c.ID, deadline); err != nil {

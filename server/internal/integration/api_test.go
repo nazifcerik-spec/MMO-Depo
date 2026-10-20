@@ -223,8 +223,9 @@ func TestHTTPAuthAndCharacters(t *testing.T) {
 	require.Len(t, items(list, "characters"), 1)
 	user.ok("GET", "/v1/character/"+id+"/sheet", nil)
 	user.ok("GET", "/v1/character/"+id+"/wallet", nil)
-	user.ok("POST", "/v1/character/"+id+"/rename", map[string]any{"name": "N" + randHex(5)})
-	user.ok("POST", "/v1/character/"+id+"/delete-request", map[string]any{})
+	renamed := "N" + randHex(5)
+	user.ok("POST", "/v1/character/"+id+"/rename", map[string]any{"name": renamed})
+	user.ok("POST", "/v1/character/"+id+"/delete-request", map[string]any{"confirm_name": renamed})
 	user.ok("POST", "/v1/character/"+id+"/delete-cancel", map[string]any{})
 	// Someone else's character is invisible.
 	user.fail("GET", "/v1/character/"+a.char+"/sheet", nil, 404, "")

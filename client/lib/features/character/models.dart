@@ -7,6 +7,7 @@ class CharacterSummary {
     required this.classCode,
     required this.level,
     required this.state,
+    this.deleteAt,
   });
 
   factory CharacterSummary.fromJson(Map<String, dynamic> j) => CharacterSummary(
@@ -16,6 +17,7 @@ class CharacterSummary {
     classCode: j['class_code'] as String,
     level: (j['level'] as num).toInt(),
     state: j['state'] as String,
+    deleteAt: DateTime.tryParse('${j['delete_grace_at'] ?? ''}')?.toLocal(),
   );
 
   final String id;
@@ -24,6 +26,9 @@ class CharacterSummary {
   final String classCode;
   final int level;
   final String state;
+
+  /// When a pending deletion becomes final (state delete_grace).
+  final DateTime? deleteAt;
 
   bool get playable => state == 'active';
 }

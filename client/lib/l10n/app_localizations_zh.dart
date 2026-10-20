@@ -2387,4 +2387,36 @@ class AppLocalizationsZh extends AppLocalizations {
   String xpPerKill(int xp) {
     return '$xp 经验';
   }
+
+  @override
+  String get deleteCharacter => '删除角色';
+
+  @override
+  String deleteCharacterBody(String name) {
+    return '$name 将在 48 小时后连同所有物品和金币被永久删除，在此之前可以取消。请输入角色名以确认。';
+  }
+
+  @override
+  String get characterNameConfirm => '角色名';
+
+  @override
+  String characterDeletesAt(String when) {
+    return '删除时间：$when';
+  }
+
+  @override
+  String get cancelCharacterDelete => '取消删除';
+
+  @override
+  String characterDeleteScheduled(String name) {
+    return '$name 将在 48 小时后被删除。';
+  }
+
+  @override
+  String characterDeleteCancelled(String name) {
+    return '$name 不会被删除。';
+  }
+
+  @override
+  String get errNameMismatch => '名称不匹配。';
 }

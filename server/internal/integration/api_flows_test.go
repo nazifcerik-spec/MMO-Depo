@@ -3,6 +3,7 @@
 package integration
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/google/uuid"
@@ -124,8 +125,10 @@ func TestHTTPSuccessFlows(t *testing.T) {
 
 	// Character name clash and delete-grace rules.
 	p.fail("POST", p.path("/rename"), map[string]any{"name": b.name}, 409, "")
-	p.ok("POST", p.path("/delete-request"), map[string]any{})
-	p.fail("POST", p.path("/delete-request"), map[string]any{}, 409, "")
+	p.fail("POST", p.path("/delete-request"), map[string]any{}, 400, "E_NAME_MISMATCH")
+	p.fail("POST", p.path("/delete-request"), map[string]any{"confirm_name": b.name}, 400, "E_NAME_MISMATCH")
+	p.ok("POST", p.path("/delete-request"), map[string]any{"confirm_name": strings.ToUpper(p.name)})
+	p.fail("POST", p.path("/delete-request"), map[string]any{"confirm_name": p.name}, 409, "")
 	p.ok("POST", p.path("/delete-cancel"), map[string]any{})
 	p.fail("GET", "/v1/character/"+b.char+"/wallet", nil, 404, "")
 	p.fail("POST", "/v1/dev/mint", map[string]any{"character_id": p.char, "amount": 1, "currency": "doubloons"}, 400, "")

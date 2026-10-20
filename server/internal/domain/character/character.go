@@ -99,6 +99,9 @@ var (
 	// or delete_grace character.
 	ErrNotPlayable = errors.New("character: not playable")
 
+	// ErrNameMismatch: a delete request must repeat the character's name.
+	ErrNameMismatch = errors.New("character: confirmation name does not match")
+
 	// ErrNotInDeleteGrace is returned when cancel-delete is called on a
 	// character that is not currently in delete_grace state.
 	ErrNotInDeleteGrace = errors.New("character: not in delete grace")

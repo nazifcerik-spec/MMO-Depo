@@ -15,6 +15,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
 		"ErrEmailNotVerified": ErrEmailNotVerified,
 		"ErrForbidden":        ErrForbidden,
+		"ErrNameMismatch":     ErrNameMismatch,
 		"ErrNameTaken":        ErrNameTaken,
 		"ErrNotFound":         ErrNotFound,
 		"ErrNotInDeleteGrace": ErrNotInDeleteGrace,

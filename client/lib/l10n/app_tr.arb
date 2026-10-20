@@ -690,5 +690,13 @@
   "mapNoRoad": "Buraya doğrudan yol yok. Yanındaki parlayan bölgeler üzerinden git.",
   "youAreHere": "Buradasın.",
   "travelTime": "Yolculuk süresi: {time}",
-  "xpPerKill": "{xp} XP"
+  "xpPerKill": "{xp} XP",
+  "deleteCharacter": "Karakteri sil",
+  "deleteCharacterBody": "{name} 48 saat sonra tüm eşyaları ve altınıyla birlikte kalıcı olarak silinecek. O zamana kadar iptal edebilirsin. Onaylamak için karakterin adını yaz.",
+  "characterNameConfirm": "Karakter adı",
+  "characterDeletesAt": "Silinme: {when}",
+  "cancelCharacterDelete": "Silmeyi iptal et",
+  "characterDeleteScheduled": "{name} 48 saat sonra silinecek.",
+  "characterDeleteCancelled": "{name} silinmeyecek.",
+  "errNameMismatch": "Ad eşleşmiyor."
 }

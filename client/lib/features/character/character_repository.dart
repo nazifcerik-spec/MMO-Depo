@@ -71,6 +71,12 @@ class CharacterRepository {
     return CharacterSheet.fromJson(body['sheet'] as Map<String, dynamic>);
   }
 
+  /// Schedules deletion (48 h grace); the server checks [confirmName].
+  Future<void> requestDelete(String id, String confirmName) =>
+      api.post('/v1/character/$id/delete-request', {'confirm_name': confirmName});
+
+  Future<void> cancelDelete(String id) => api.post('/v1/character/$id/delete-cancel', const {});
+
   Future<CharacterSheet> sheet(String id) async => CharacterSheet.fromJson(await api.get('/v1/character/$id/sheet'));
 
   /// The running food buff (DD-269), or null.

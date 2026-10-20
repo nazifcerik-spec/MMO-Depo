@@ -18,6 +18,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_RATE_LIMIT' => l.errRateLimited,
     'E_BUSY' => l.errServerBusy,
     'E_NAME_TAKEN' => l.errNameTaken,
+    'E_NAME_MISMATCH' => l.errNameMismatch,
     'E_SLOT_CAP' => l.errSlotCap,
     'E_NOT_PLAYABLE' => l.errNotPlayable,
     'E_SLOT_BUSY' => l.errSlotBusy,

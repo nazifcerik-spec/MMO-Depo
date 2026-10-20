@@ -195,6 +195,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 92. **Av yeniden: canavar XP'si + peş peşe savaş (bitti)** — Sprint 92, DD-281. `hunt.Roll` süre bütçesiyle: savaşlar peş peşe (tur 3 sn), can %50'nin ya da son savaş maliyetinin 3 katının altında kamp (saniyede %1); XP canavarın kendi değeri, sınırsız; altın/ganimet/ekipman zarı zafer süresiyle ölçekli (saatlik ekonomi aynı). `content/hunt_xp.yaml` ← `HUNT_XP_TUNE=1 go test ./internal/balance -run TestTuneHuntXP` (orta kalite ekipman = seviye kademesi nadir ×1,10; içerik/denge değişince yeniden çalıştır). Seviye farkı `hunt_level_xp` (göreli: %5 serbest, (1 − fark/seviye)⁴, taban %10). Testler `TestHuntPace`, `TestHuntNoGrayFarm`. İstemci canavar başı XP gösterir. Savaşçı raporu: `WARRIOR_REPORT=1 go test ./internal/balance -run TestWarriorHuntReport`.
 
+93. **Karakter silme (bitti)** — Sprint 93, DD-282. Karakter seçiminde kart başı sil butonu → ad yazılana kadar pasif onay penceresi; sunucu `delete-request` `confirm_name` ister (`E_NAME_MISMATCH` 400). 48 sa bekleme (DD-134): kartta silinme zamanı + "Silmeyi iptal et".
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

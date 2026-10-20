@@ -2390,4 +2390,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String xpPerKill(int xp) {
     return '$xp XP';
   }
+
+  @override
+  String get deleteCharacter => 'Delete character';
+
+  @override
+  String deleteCharacterBody(String name) {
+    return '$name will be permanently deleted in 48 hours, with all items and gold. You can cancel until then. Type the character\'s name to confirm.';
+  }
+
+  @override
+  String get characterNameConfirm => 'Character name';
+
+  @override
+  String characterDeletesAt(String when) {
+    return 'Deleted on $when';
+  }
+
+  @override
+  String get cancelCharacterDelete => 'Cancel deletion';
+
+  @override
+  String characterDeleteScheduled(String name) {
+    return '$name will be deleted in 48 hours.';
+  }
+
+  @override
+  String characterDeleteCancelled(String name) {
+    return '$name will not be deleted.';
+  }
+
+  @override
+  String get errNameMismatch => 'The name does not match.';
 }

@@ -75,6 +75,29 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
     }
   }
 
+  Future<void> _delete(CharacterSummary c) async {
+    final l = AppLocalizations.of(context);
+    final done = await showDialog<bool>(
+      context: context,
+      builder: (_) => _DeleteCharacterDialog(c: c, repo: widget.repo),
+    );
+    if (done != true || !mounted) return;
+    toast(context, Text(l.characterDeleteScheduled(c.name)));
+    await _load();
+  }
+
+  Future<void> _cancelDelete(CharacterSummary c) async {
+    final l = AppLocalizations.of(context);
+    try {
+      await widget.repo.cancelDelete(c.id);
+      if (!mounted) return;
+      toast(context, Text(l.characterDeleteCancelled(c.name)));
+      await _load();
+    } on ApiError catch (e) {
+      if (mounted) toast(context, Text(errorText(l, e)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -117,7 +140,13 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
                       child: MessageView(message: l.noCharacters, icon: Icons.shield_outlined),
                     ),
                   for (final c in list.characters) ...[
-                    _CharacterCard(c: c, busy: _entering == c.id, onTap: _entering == null ? () => _enter(c) : null),
+                    _CharacterCard(
+                      c: c,
+                      busy: _entering == c.id,
+                      onTap: _entering == null ? () => _enter(c) : null,
+                      onDelete: _entering == null ? () => _delete(c) : null,
+                      onCancelDelete: () => _cancelDelete(c),
+                    ),
                     const SizedBox(height: Space.md),
                   ],
                 ],
@@ -131,11 +160,13 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
 }
 
 class _CharacterCard extends StatelessWidget {
-  const _CharacterCard({required this.c, required this.busy, this.onTap});
+  const _CharacterCard({required this.c, required this.busy, this.onTap, this.onDelete, this.onCancelDelete});
 
   final CharacterSummary c;
   final bool busy;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
+  final VoidCallback? onCancelDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -180,17 +211,114 @@ class _CharacterCard extends StatelessWidget {
                         style: TextStyle(color: badge.$2, fontSize: 12, fontWeight: FontWeight.w600),
                       ),
                     ],
+                    if (c.state == 'delete_grace' && c.deleteAt != null)
+                      Text(l.characterDeletesAt(_when(context, c.deleteAt!)), style: text.bodySmall),
                   ],
                 ),
               ),
               if (busy)
                 const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
-              else if (c.playable)
+              else if (c.state == 'delete_grace')
+                TextButton(onPressed: onCancelDelete, child: Text(l.cancelCharacterDelete))
+              else if (c.playable) ...[
+                IconButton(
+                  tooltip: l.deleteCharacter,
+                  icon: const Icon(Icons.delete_outline, color: Palette.textMuted),
+                  onPressed: onDelete,
+                ),
                 const Icon(Icons.chevron_right, color: Palette.textMuted),
+              ],
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+String _when(BuildContext context, DateTime t) {
+  final m = MaterialLocalizations.of(context);
+  return '${m.formatMediumDate(t)} ${m.formatTimeOfDay(TimeOfDay.fromDateTime(t))}';
+}
+
+/// Deletion needs the character's name typed out; the delete button stays
+/// off until it matches (the server checks it too).
+class _DeleteCharacterDialog extends StatefulWidget {
+  const _DeleteCharacterDialog({required this.c, required this.repo});
+
+  final CharacterSummary c;
+  final CharacterRepository repo;
+
+  @override
+  State<_DeleteCharacterDialog> createState() => _DeleteCharacterDialogState();
+}
+
+class _DeleteCharacterDialogState extends State<_DeleteCharacterDialog> {
+  final _name = TextEditingController();
+  bool _busy = false;
+  String? _error;
+
+  bool get _matches => _name.text.trim().toLowerCase() == widget.c.name.toLowerCase();
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l = AppLocalizations.of(context);
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await widget.repo.requestDelete(widget.c.id, _name.text.trim());
+      if (mounted) Navigator.pop(context, true);
+    } on ApiError catch (e) {
+      if (mounted) setState(() => _error = errorText(l, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l.deleteCharacter),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.deleteCharacterBody(widget.c.name)),
+          const SizedBox(height: Space.md),
+          TextField(
+            key: const Key('delete-character-name'),
+            controller: _name,
+            autocorrect: false,
+            enableSuggestions: false,
+            decoration: InputDecoration(labelText: l.characterNameConfirm, hintText: widget.c.name),
+            onChanged: (_) => setState(() {}),
+            onSubmitted: (_) {
+              if (_matches && !_busy) _submit();
+            },
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: Space.sm),
+            Text(_error!, style: const TextStyle(color: Palette.danger)),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+        FilledButton(
+          key: const Key('delete-character-confirm'),
+          style: FilledButton.styleFrom(backgroundColor: Palette.danger),
+          onPressed: _matches && !_busy ? _submit : null,
+          child: Text(l.deleteCharacter),
+        ),
+      ],
     );
   }
 }

@@ -126,6 +126,10 @@ func (h *Handler) Enter(w http.ResponseWriter, r *http.Request) {
 
 // --- Delete-request / Delete-cancel -----------------------------------------
 
+type deleteReq struct {
+	ConfirmName string `json:"confirm_name"`
+}
+
 func (h *Handler) RequestDelete(w http.ResponseWriter, r *http.Request) {
 	acct := httpctx.AccountID(r.Context())
 	id, err := parseIDParam(r, "id")
@@ -133,7 +137,12 @@ func (h *Handler) RequestDelete(w http.ResponseWriter, r *http.Request) {
 		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
 		return
 	}
-	c, err := h.svc.RequestDelete(r.Context(), id, acct)
+	var req deleteReq
+	if err := decodeJSON(r, &req); err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
+		return
+	}
+	c, err := h.svc.RequestDelete(r.Context(), id, acct, req.ConfirmName)
 	if err != nil {
 		writeCharErr(w, r, err)
 		return
@@ -253,6 +262,8 @@ func writeCharErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusForbidden, "E_EMAIL_NOT_VERIFIED", "verify your e-mail first")
 	case errors.Is(err, ErrNotPlayable):
 		apierr.Write(w, r, http.StatusConflict, "E_NOT_PLAYABLE", "character is not in an active state")
+	case errors.Is(err, ErrNameMismatch):
+		apierr.WriteField(w, r, http.StatusBadRequest, "E_NAME_MISMATCH", "type the character's name to confirm", "confirm_name")
 	case errors.Is(err, ErrNotInDeleteGrace):
 		apierr.Write(w, r, http.StatusConflict, "E_NOT_IN_DELETE_GRACE", "character is not in delete_grace state")
 	default:

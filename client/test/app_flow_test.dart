@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -320,6 +322,52 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Log in'), findsOneWidget);
     expect(store.token, isNull);
+  });
+
+  testWidgets('delete a character only after typing its name, then cancel the deletion', (tester) async {
+    final be = FakeBackend()
+      ..characters.add({
+        'id': 'char-1',
+        'name': 'Grim',
+        'race_code': 'orc',
+        'class_code': 'warrior',
+        'level': 7,
+        'state': 'active',
+      });
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+
+    await tester.tap(find.byTooltip('Delete character'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Grim will be permanently deleted in 48 hours'), findsOneWidget);
+    FilledButton confirm() => tester.widget<FilledButton>(find.byKey(const Key('delete-character-confirm')));
+    expect(confirm().onPressed, isNull, reason: 'off until the name is typed');
+    await tester.enterText(find.byKey(const Key('delete-character-name')), 'Gri');
+    await tester.pump();
+    expect(confirm().onPressed, isNull);
+    await tester.enterText(find.byKey(const Key('delete-character-name')), ' grim ');
+    await tester.pump();
+    expect(confirm().onPressed, isNotNull, reason: 'case and spaces do not matter');
+    await tester.tap(find.byKey(const Key('delete-character-confirm')));
+    await tester.pumpAndSettle();
+    final sent = be.requests.lastWhere((r) => r.url.path.endsWith('/delete-request'));
+    expect(jsonDecode(sent.body), {'confirm_name': 'grim'});
+    expect(be.characters.single['state'], 'delete_grace');
+    expect(find.text('Grim will be deleted in 48 hours.'), findsOneWidget);
+    expect(find.text('Deletion pending'), findsOneWidget);
+    expect(find.textContaining('Deleted on '), findsOneWidget);
+    expect(find.byTooltip('Delete character'), findsNothing);
+
+    await tester.tap(find.text('Grim'));
+    await tester.pumpAndSettle();
+    expect(find.text('Characters'), findsOneWidget, reason: 'a character pending deletion cannot be entered');
+
+    await tester.tap(find.text('Cancel deletion'));
+    await tester.pumpAndSettle();
+    expect(be.characters.single['state'], 'active');
+    expect(find.text('Grim will not be deleted.'), findsOneWidget);
+    expect(find.byTooltip('Delete character'), findsOneWidget);
   });
 
   testWidgets('forced sign-out (refresh rejected) returns to login with a notice', (tester) async {

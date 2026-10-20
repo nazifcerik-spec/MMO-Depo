@@ -330,6 +330,22 @@ class FakeBackend {
         'gather': {'level': gatherLevel + 1, 'xp': 4, 'xp_to_next': 70, 'gained': 36, 'leveled_up': true},
       });
     }
+    final del = RegExp(r'^/v1/character/([^/]+)/delete-(request|cancel)$').firstMatch(path);
+    if (del != null) {
+      final c = characters.firstWhere((c) => c['id'] == del[1], orElse: () => const {});
+      if (c.isEmpty) return error(404, 'E_NOT_FOUND');
+      if (del[2] == 'cancel') {
+        c['state'] = 'active';
+        c.remove('delete_grace_at');
+        return json(200, c);
+      }
+      if ('${body['confirm_name']}'.toLowerCase() != '${c['name']}'.toLowerCase()) {
+        return error(400, 'E_NAME_MISMATCH');
+      }
+      c['state'] = 'delete_grace';
+      c['delete_grace_at'] = DateTime.now().toUtc().add(const Duration(hours: 48)).toIso8601String();
+      return json(200, c);
+    }
     final m = RegExp(r'^/v1/character/([^/]+)/(enter|sheet|wallet)$').firstMatch(path);
     if (m != null) {
       final c = characters.firstWhere((c) => c['id'] == m[1], orElse: () => const {});

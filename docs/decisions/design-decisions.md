@@ -2724,6 +2724,15 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-282 — Karakter silme isim teyidiyle
+**Karar:** Karakter seçim ekranında her karakterin kartında bir silme butonu var. Pencere karakterin adının yazılmasını ister ve ad eşleşene kadar sil butonu pasif kalır (büyük/küçük harf ve baştaki/sondaki boşluk önemsiz). Sunucu da aynı kontrolü yapar: `delete-request` gövdesinde `confirm_name` zorunlu, eşleşmezse 400 `E_NAME_MISMATCH`. Silme mevcut 48 saatlik bekleme akışını kullanır (DD-134). Bekleyen kartta silinme zamanı ve "Silmeyi iptal et" gösterilir; karaktere girilemez.
+**Reason:** Kullanıcı isteği. Yanlış karakteri tek dokunuşla silmeyi engellemek; teyidin sunucuda da olması API'nin doğrudan çağrılmasında da korur.
+**Alternatives:** Yalnız istemcide teyit (API doğrudan çağrılınca korumasız). Şifre ile teyit (karakter için ağır; hesap silmede var).
+**Consequences:** Gövdesiz silme isteği artık 400 alır (istemcide daha önce silme butonu yoktu). Dev konsolu adı sorar. Testler: `TestRequestDelete_NeedsName`, `TestHTTPSuccessFlows`, istemci akış testi.
+**Tarih:** 2026-10-20
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

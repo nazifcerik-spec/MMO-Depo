@@ -174,21 +174,34 @@ func TestRequestDelete_Success(t *testing.T) {
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
 
-	updated, err := svc.RequestDelete(context.Background(), c.ID, acct)
+	updated, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
 	require.NoError(t, err)
 	require.Equal(t, character.StateDeleteGrace, updated.State)
 	require.NotNil(t, updated.DeleteGraceAt)
 	require.True(t, updated.DeleteGraceAt.After(time.Now().Add(47*time.Hour)))
 }
 
+func TestRequestDelete_NeedsName(t *testing.T) {
+	svc, _ := newTestService(t)
+	acct := uuid.New()
+	c := mustCreate(t, svc, acct, "Grim")
+	for _, wrong := range []string{"", "Gri", "Grimm", "  "} {
+		_, err := svc.RequestDelete(context.Background(), c.ID, acct, wrong)
+		require.ErrorIs(t, err, character.ErrNameMismatch, wrong)
+	}
+	updated, err := svc.RequestDelete(context.Background(), c.ID, acct, " grim ")
+	require.NoError(t, err, "case and spacing do not matter")
+	require.Equal(t, character.StateDeleteGrace, updated.State)
+}
+
 func TestRequestDelete_AlreadyInGraceRejected(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct)
+	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
 	require.NoError(t, err)
 
-	_, err = svc.RequestDelete(context.Background(), c.ID, acct)
+	_, err = svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
 	require.ErrorIs(t, err, character.ErrNotPlayable)
 }
 
@@ -196,7 +209,7 @@ func TestCancelDelete_Success(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct)
+	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
 	require.NoError(t, err)
 
 	restored, err := svc.CancelDelete(context.Background(), c.ID, acct)
@@ -239,7 +252,7 @@ func TestRename_NotPlayableRejected(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct)
+	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
 	require.NoError(t, err)
 
 	_, err = svc.Rename(context.Background(), c.ID, acct, "NewName")

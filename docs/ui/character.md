@@ -50,7 +50,7 @@ Slot cap v1: 2 karakter/account (DD-OPEN-8 default 2).
 
 ## 5. Delete
 
-`POST /v1/character/{id}/delete-request` → 48h grace timer. Grace içinde `POST .../delete-cancel` iptal. Grace bitince worker hard-delete.
+`POST /v1/character/{id}/delete-request` (`{"confirm_name": "<karakter adı>"}`, büyük/küçük harf duyarsız; eşleşmezse 400 `E_NAME_MISMATCH`, DD-282) → 48h grace timer. Grace içinde `POST .../delete-cancel` iptal. Grace bitince worker hard-delete.
 
 UI: karakter kartında "silme geri sayımı" badge; iptal butonu.
 

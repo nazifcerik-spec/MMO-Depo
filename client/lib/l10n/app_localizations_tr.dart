@@ -2389,4 +2389,36 @@ class AppLocalizationsTr extends AppLocalizations {
   String xpPerKill(int xp) {
     return '$xp XP';
   }
+
+  @override
+  String get deleteCharacter => 'Karakteri sil';
+
+  @override
+  String deleteCharacterBody(String name) {
+    return '$name 48 saat sonra tüm eşyaları ve altınıyla birlikte kalıcı olarak silinecek. O zamana kadar iptal edebilirsin. Onaylamak için karakterin adını yaz.';
+  }
+
+  @override
+  String get characterNameConfirm => 'Karakter adı';
+
+  @override
+  String characterDeletesAt(String when) {
+    return 'Silinme: $when';
+  }
+
+  @override
+  String get cancelCharacterDelete => 'Silmeyi iptal et';
+
+  @override
+  String characterDeleteScheduled(String name) {
+    return '$name 48 saat sonra silinecek.';
+  }
+
+  @override
+  String characterDeleteCancelled(String name) {
+    return '$name silinmeyecek.';
+  }
+
+  @override
+  String get errNameMismatch => 'Ad eşleşmiyor.';
 }

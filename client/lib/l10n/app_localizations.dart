@@ -4239,6 +4239,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{xp} XP'**
   String xpPerKill(int xp);
+
+  /// No description provided for @deleteCharacter.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete character'**
+  String get deleteCharacter;
+
+  /// No description provided for @deleteCharacterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be permanently deleted in 48 hours, with all items and gold. You can cancel until then. Type the character\'s name to confirm.'**
+  String deleteCharacterBody(String name);
+
+  /// No description provided for @characterNameConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Character name'**
+  String get characterNameConfirm;
+
+  /// No description provided for @characterDeletesAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted on {when}'**
+  String characterDeletesAt(String when);
+
+  /// No description provided for @cancelCharacterDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel deletion'**
+  String get cancelCharacterDelete;
+
+  /// No description provided for @characterDeleteScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be deleted in 48 hours.'**
+  String characterDeleteScheduled(String name);
+
+  /// No description provided for @characterDeleteCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will not be deleted.'**
+  String characterDeleteCancelled(String name);
+
+  /// No description provided for @errNameMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The name does not match.'**
+  String get errNameMismatch;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

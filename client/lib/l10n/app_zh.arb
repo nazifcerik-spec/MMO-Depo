@@ -174,5 +174,13 @@
   "mapNoRoad": "没有直达这里的道路。请经由你身边发光的区域前往。",
   "youAreHere": "你在这里。",
   "travelTime": "旅行时间：{time}",
-  "xpPerKill": "{xp} 经验"
+  "xpPerKill": "{xp} 经验",
+  "deleteCharacter": "删除角色",
+  "deleteCharacterBody": "{name} 将在 48 小时后连同所有物品和金币被永久删除，在此之前可以取消。请输入角色名以确认。",
+  "characterNameConfirm": "角色名",
+  "characterDeletesAt": "删除时间：{when}",
+  "cancelCharacterDelete": "取消删除",
+  "characterDeleteScheduled": "{name} 将在 48 小时后被删除。",
+  "characterDeleteCancelled": "{name} 不会被删除。",
+  "errNameMismatch": "名称不匹配。"
 }
