@@ -2382,4 +2382,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String travelTime(String time) {
     return '旅行时间：$time';
   }
+
+  @override
+  String xpPerKill(int xp) {
+    return '$xp 经验';
+  }
 }

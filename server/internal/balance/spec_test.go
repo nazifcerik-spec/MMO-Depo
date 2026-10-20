@@ -182,7 +182,7 @@ func measure(p combat.Combatant, f field) specMetrics {
 		}
 		chain := p.Clone()
 		chain.RegenPerEncounter = p.HPMax / 20
-		if r := hunt.Roll(s*43, chain, f.mob, 30, 60, rng); !r.StoppedOnDeath {
+		if r := hunt.Roll(s*43, chain, f.mob, hourSecs, 60, rng); !r.StoppedOnDeath {
 			m.AFKSafety++
 		}
 	}

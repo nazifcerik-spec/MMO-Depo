@@ -26,14 +26,14 @@ func TestRoll_UsesSnapshotSkills(t *testing.T) {
 	require.Equal(t, p, frozen)
 
 	mob := combat.Mob{Code: "boar", HPMax: 200, Attack: 6, Defense: 1, HitPct: 80, XPReward: 12}
-	res := Roll(77, frozen, mob, 3, combat.DefaultMaxTurns, newRNG)
-	require.Equal(t, 3, res.Victories)
+	res := Roll(77, frozen, mob, 600, combat.DefaultMaxTurns, newRNG)
+	require.Positive(t, res.Victories)
 
 	plain := frozen.Clone()
 	plain.Skills = nil
-	base := Roll(77, plain, mob, 3, combat.DefaultMaxTurns, newRNG)
+	base := Roll(77, plain, mob, 600, combat.DefaultMaxTurns, newRNG)
 	shorter := 0
-	for i := range res.Encounters {
+	for i := range min(len(res.Encounters), len(base.Encounters)) {
 		if res.Encounters[i].Duration < base.Encounters[i].Duration {
 			shorter++
 		}

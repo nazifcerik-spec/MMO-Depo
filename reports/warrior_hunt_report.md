@@ -1,633 +1,633 @@
 # Savaşçı av istatistiği — Sv 1–50
 
-`WARRIOR_REPORT=1 go test ./internal/balance -run TestWarriorHuntReport`; üretim savaş kodu (`hunt.Roll`), 100 tohum, saatlik AFK av (120 sn'de bir karşılaşma, saatte en çok 30), karakter seviyesinin ekipmanı (her yuvada ulaşılan en yüksek kademe), seviyeye göre dağıtılmış nitelik puanları, sınıf pasifleri ve aktifleri. Canavar: Sv−10 … Sv+5 arası her av canavarı.
+`WARRIOR_REPORT=1 go test ./internal/balance -run TestWarriorHuntReport`; üretim av kodu (`hunt.Roll`, DD-281), 60 tohum, bir saatlik av: savaşlar peş peşe, tur 3 sn, can %50'nin altına düşünce kamp (saniyede azami canın %1'i). Karakter: seviyenin ekipmanı (her yuvada ulaşılan en yüksek kademe, sıradan), dağıtılmış nitelik puanları, sınıf pasifleri ve aktifleri. Canavar: Sv−10 … Sv+5 arası her av canavarı; XP canavarın kendi değeri, seviye farkına göre düşer.
 
-Sütunlar: **Tur/öldürme** = kazanılan savaşın ortalama turu (oyuncu her tur bir kez vurur); **Can kaybı** = kazanılan savaşta azami canın ortalama yüzdesi; **Ölüm** = bir saatlik avın ölümle bitme oranı; **Öldürme/sa**, **XP/sa**; **Dk/sv** = bu canavarla bir sonraki seviyeye dakika.
+Sütunlar: **XP** = canavarın öldürme başı XP'si (seviye farkı uygulanmış); **Tur** = kazanılan savaşın ortalama turu; **Sn/öldürme** = savaş + kamp dahil öldürme başı av süresi; **Kamp** = sürenin kampta geçen payı; **Ölüm** = bir saatlik avın ölümle bitme oranı; **Öldürme/sa**, **XP/sa**; **Dk/sv** = bu canavarla bir sonraki seviyeye dakika.
 
 ## Özet
 
-Güvenli = bir saatlik avın ölümle bitme oranı ≤ %10; ölümcül = ≥ %50. Güvenli her canavar aynı saatlik XP'yi verir; saldırı gücü savaşın süresini ve can kaybını belirler.
+En verimli güvenli canavar = ölümle biten saat ≤ %10 olanlar içinde saatte en çok XP veren. Ölümcül = ≥ %50.
 
-| Sv | Saldırı | En güçlü güvenli canavar | Tur/öldürme | Can kaybı | İlk ölümcül canavar |
-|---:|---:|---|---:|---:|---|
-| 1 | 52 | grey_wolf (Sv 3) | 5.2 | %21 | bandit_scout (Sv 5) |
-| 2 | 59 | grey_wolf (Sv 3) | 4.7 | %16 | cave_bat (Sv 6) |
-| 3 | 63 | bandit_scout (Sv 5) | 5.8 | %24 | cave_bat (Sv 6) |
-| 4 | 69 | cave_bat (Sv 6) | 5.7 | %23 | goblin_raider (Sv 8) |
-| 5 | 85 | cave_bat (Sv 6) | 4.6 | %14 | marsh_lurker (Sv 10) |
-| 6 | 89 | goblin_raider (Sv 8) | 5.8 | %23 | marsh_lurker (Sv 10) |
-| 7 | 93 | goblin_raider (Sv 8) | 5.3 | %18 | marsh_lurker (Sv 10) |
-| 8 | 99 | goblin_raider (Sv 8) | 4.4 | %12 | forest_troll (Sv 12) |
-| 9 | 103 | marsh_lurker (Sv 10) | 5.5 | %21 | forest_troll (Sv 12) |
-| 10 | 127 | forest_troll (Sv 12) | 7.2 | %20 | dire_wolf (Sv 14) |
-| 11 | 131 | forest_troll (Sv 12) | 6.4 | %15 | dire_wolf (Sv 14) |
-| 12 | 135 | dire_wolf (Sv 14) | 5.4 | %22 | cultist_acolyte (Sv 15) |
-| 13 | 139 | dire_wolf (Sv 14) | 4.7 | %17 | cultist_acolyte (Sv 15) |
-| 14 | 145 | dire_wolf (Sv 14) | 4.4 | %14 | rock_ogre (Sv 18) |
-| 15 | 167 | cultist_acolyte (Sv 15) | 3.1 | %11 | rock_ogre (Sv 18) |
-| 16 | 173 | rock_ogre (Sv 18) | 7.7 | %21 | shadow_stalker (Sv 20) |
-| 17 | 177 | rock_ogre (Sv 18) | 6.5 | %16 | shadow_stalker (Sv 20) |
-| 18 | 181 | rock_ogre (Sv 18) | 6.1 | %12 | frost_giant (Sv 22) |
-| 19 | 185 | shadow_stalker (Sv 20) | 5.5 | %18 | frost_giant (Sv 22) |
-| 20 | 206 | frost_giant (Sv 22) | 7.0 | %18 | elder_wyrm (Sv 24) |
-| 21 | 210 | frost_giant (Sv 22) | 6.4 | %14 | elder_wyrm (Sv 24) |
-| 22 | 216 | elder_wyrm (Sv 24) | 8.2 | %21 | ashen_lich (Sv 25) |
-| 23 | 220 | elder_wyrm (Sv 24) | 6.7 | %16 | ashen_lich (Sv 25) |
-| 24 | 224 | ashen_lich (Sv 25) | 4.0 | %18 | — |
-| 25 | 255 | ashen_lich (Sv 25) | 2.9 | %9 | mist_leech (Sv 30) |
-| 26 | 261 | ashen_lich (Sv 25) | 2.9 | %8 | — |
-| 27 | 265 | mist_leech (Sv 30) | 4.7 | %14 | — |
-| 28 | 271 | mist_leech (Sv 30) | 4.2 | %11 | — |
-| 29 | 275 | mist_leech (Sv 30) | 3.9 | %9 | — |
-| 30 | 279 | mist_leech (Sv 30) | 3.7 | %7 | mud_golem (Sv 35) |
-| 31 | 283 | mist_leech (Sv 30) | 3.6 | %6 | mud_golem (Sv 35) |
-| 32 | 289 | mud_golem (Sv 35) | 6.5 | %16 | — |
-| 33 | 293 | mud_golem (Sv 35) | 6.1 | %13 | — |
-| 34 | 300 | mud_golem (Sv 35) | 5.8 | %11 | — |
-| 35 | 335 | mud_golem (Sv 35) | 5.0 | %4 | bog_witch (Sv 40) |
-| 36 | 339 | mud_golem (Sv 35) | 5.0 | %4 | bog_witch (Sv 40) |
-| 37 | 343 | marsh_queen (Sv 42) | 5.5 | %17 | — |
-| 38 | 349 | marsh_queen (Sv 42) | 4.9 | %13 | — |
-| 39 | 353 | marsh_queen (Sv 42) | 4.5 | %11 | — |
-| 40 | 359 | marsh_queen (Sv 42) | 4.2 | %9 | venom_lizard (Sv 45) |
-| 41 | 363 | marsh_queen (Sv 42) | 4.0 | %7 | — |
-| 42 | 367 | venom_lizard (Sv 45) | 4.2 | %13 | — |
-| 43 | 371 | venom_lizard (Sv 45) | 3.8 | %11 | — |
-| 44 | 377 | venom_lizard (Sv 45) | 3.6 | %9 | — |
-| 45 | 381 | venom_lizard (Sv 45) | 3.4 | %7 | drowned_knight (Sv 50) |
-| 46 | 387 | venom_lizard (Sv 45) | 3.4 | %7 | drowned_knight (Sv 50) |
-| 47 | 391 | venom_lizard (Sv 45) | 3.4 | %7 | drowned_knight (Sv 50) |
-| 48 | 395 | drowned_knight (Sv 50) | 5.4 | %15 | — |
-| 49 | 399 | drowned_knight (Sv 50) | 4.8 | %12 | — |
-| 50 | 474 | mountain_troll (Sv 55) | 6.8 | %16 | — |
+| Sv | Saldırı | En verimli güvenli canavar | Sn/öldürme | XP/sa | Dk/sv | İlk ölümcül canavar |
+|---:|---:|---|---:|---:|---:|---|
+| 1 | 52 | young_boar (Sv 1) | 17 | 53094 | 4 | cave_bat (Sv 6) |
+| 2 | 59 | young_boar (Sv 1) | 13 | 72966 | 3 | cave_bat (Sv 6) |
+| 3 | 63 | grey_wolf (Sv 3) | 23 | 53923 | 4 | goblin_raider (Sv 8) |
+| 4 | 69 | grey_wolf (Sv 3) | 17 | 72076 | 3 | — |
+| 5 | 85 | bandit_scout (Sv 5) | 20 | 53945 | 4 | — |
+| 6 | 89 | cave_bat (Sv 6) | 18 | 63767 | 4 | — |
+| 7 | 93 | cave_bat (Sv 6) | 17 | 67292 | 3 | forest_troll (Sv 12) |
+| 8 | 99 | goblin_raider (Sv 8) | 23 | 57684 | 4 | — |
+| 9 | 103 | goblin_raider (Sv 8) | 22 | 61499 | 4 | dire_wolf (Sv 14) |
+| 10 | 127 | goblin_raider (Sv 8) | 15 | 56173 | 4 | cultist_acolyte (Sv 15) |
+| 11 | 131 | marsh_lurker (Sv 10) | 21 | 43185 | 5 | — |
+| 12 | 135 | forest_troll (Sv 12) | 27 | 47357 | 5 | — |
+| 13 | 139 | forest_troll (Sv 12) | 26 | 49237 | 5 | — |
+| 14 | 145 | dire_wolf (Sv 14) | 27 | 43675 | 5 | — |
+| 15 | 167 | dire_wolf (Sv 14) | 20 | 57408 | 4 | — |
+| 16 | 173 | dire_wolf (Sv 14) | 18 | 51054 | 5 | — |
+| 17 | 177 | dire_wolf (Sv 14) | 16 | 42891 | 5 | — |
+| 18 | 181 | rock_ogre (Sv 18) | 28 | 48123 | 5 | — |
+| 19 | 185 | rock_ogre (Sv 18) | 27 | 49398 | 5 | — |
+| 20 | 206 | rock_ogre (Sv 18) | 20 | 54386 | 4 | — |
+| 21 | 210 | shadow_stalker (Sv 20) | 18 | 52492 | 5 | — |
+| 22 | 216 | frost_giant (Sv 22) | 27 | 47576 | 5 | — |
+| 23 | 220 | frost_giant (Sv 22) | 26 | 49141 | 5 | — |
+| 24 | 224 | elder_wyrm (Sv 24) | 29 | 47280 | 5 | — |
+| 25 | 255 | elder_wyrm (Sv 24) | 18 | 74606 | 3 | — |
+| 26 | 261 | elder_wyrm (Sv 24) | 18 | 64778 | 4 | — |
+| 27 | 265 | elder_wyrm (Sv 24) | 18 | 56870 | 4 | — |
+| 28 | 271 | elder_wyrm (Sv 24) | 17 | 51305 | 5 | — |
+| 29 | 275 | elder_wyrm (Sv 24) | 16 | 46203 | 5 | — |
+| 30 | 279 | elder_wyrm (Sv 24) | 15 | 49784 | 5 | — |
+| 31 | 283 | elder_wyrm (Sv 24) | 15 | 45587 | 5 | — |
+| 32 | 289 | mist_leech (Sv 30) | 16 | 46487 | 5 | — |
+| 33 | 293 | mist_leech (Sv 30) | 16 | 42216 | 6 | — |
+| 34 | 300 | mist_leech (Sv 30) | 15 | 38761 | 7 | — |
+| 35 | 335 | mud_golem (Sv 35) | 18 | 48235 | 5 | — |
+| 36 | 339 | mud_golem (Sv 35) | 18 | 48876 | 5 | — |
+| 37 | 343 | mud_golem (Sv 35) | 18 | 49332 | 5 | — |
+| 38 | 349 | mud_golem (Sv 35) | 18 | 44715 | 6 | — |
+| 39 | 353 | mud_golem (Sv 35) | 17 | 40765 | 6 | — |
+| 40 | 359 | bog_witch (Sv 40) | 19 | 40410 | 7 | — |
+| 41 | 363 | bog_witch (Sv 40) | 19 | 41158 | 6 | — |
+| 42 | 367 | marsh_queen (Sv 42) | 16 | 45913 | 6 | — |
+| 43 | 371 | marsh_queen (Sv 42) | 15 | 47110 | 6 | — |
+| 44 | 377 | marsh_queen (Sv 42) | 15 | 48160 | 6 | — |
+| 45 | 381 | marsh_queen (Sv 42) | 15 | 44765 | 6 | — |
+| 46 | 387 | venom_lizard (Sv 45) | 18 | 44696 | 6 | — |
+| 47 | 391 | venom_lizard (Sv 45) | 18 | 45339 | 6 | — |
+| 48 | 395 | venom_lizard (Sv 45) | 18 | 42821 | 6 | — |
+| 49 | 399 | venom_lizard (Sv 45) | 17 | 39923 | 7 | — |
+| 50 | 474 | venom_lizard (Sv 45) | 13 | 55102 | 5 | — |
 
 ## Saldırı gücü taraması
 
 Aynı karakter, yalnız saldırı değeri çarpılarak; canavar seviyeye uygun en güçlü av canavarı.
 
-| Sv | Canavar | Çarpan | Saldırı | Tur/öldürme | Can kaybı | Ölüm | XP/sa | Dk/sv |
-|---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 10 | marsh_lurker | ×0.6 | 76 | 6.8 | %18 | %0 | 60000 | 4 |
-| 10 | marsh_lurker | ×0.8 | 102 | 5.2 | %13 | %0 | 60000 | 4 |
-| 10 | marsh_lurker | ×1.0 | 127 | 4.2 | %10 | %0 | 60000 | 4 |
-| 10 | marsh_lurker | ×1.2 | 152 | 3.3 | %7 | %0 | 60000 | 4 |
-| 10 | marsh_lurker | ×1.4 | 178 | 3.1 | %7 | %0 | 60000 | 4 |
-| 10 | marsh_lurker | ×1.6 | 203 | 3.0 | %6 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×0.6 | 153 | 4.1 | %14 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×0.8 | 204 | 3.2 | %10 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×1.0 | 255 | 2.9 | %9 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×1.2 | 306 | 2.9 | %8 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×1.4 | 357 | 2.1 | %5 | %0 | 60000 | 4 |
-| 25 | ashen_lich | ×1.6 | 408 | 2.0 | %5 | %0 | 60000 | 4 |
-| 50 | drowned_knight | ×0.6 | 284 | 6.2 | %10 | %0 | 60000 | 5 |
-| 50 | drowned_knight | ×0.8 | 379 | 4.9 | %8 | %0 | 60000 | 5 |
-| 50 | drowned_knight | ×1.0 | 474 | 4.0 | %6 | %0 | 60000 | 5 |
-| 50 | drowned_knight | ×1.2 | 569 | 3.2 | %4 | %0 | 60000 | 5 |
-| 50 | drowned_knight | ×1.4 | 664 | 3.0 | %4 | %0 | 60000 | 5 |
-| 50 | drowned_knight | ×1.6 | 758 | 2.9 | %4 | %0 | 60000 | 5 |
+| Sv | Canavar | Çarpan | Saldırı | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 10 | marsh_lurker | ×0.6 | 76 | 7.5 | 37 | %38 | %0 | 98 | 24402 | 9 |
+| 10 | marsh_lurker | ×0.8 | 102 | 5.8 | 27 | %36 | %0 | 132 | 32752 | 7 |
+| 10 | marsh_lurker | ×1.0 | 127 | 4.8 | 22 | %34 | %0 | 168 | 41782 | 5 |
+| 10 | marsh_lurker | ×1.2 | 152 | 3.8 | 17 | %32 | %0 | 216 | 53826 | 4 |
+| 10 | marsh_lurker | ×1.4 | 178 | 3.6 | 16 | %31 | %0 | 226 | 56299 | 4 |
+| 10 | marsh_lurker | ×1.6 | 203 | 3.5 | 15 | %31 | %0 | 234 | 58303 | 4 |
+| 25 | ashen_lich | ×0.6 | 153 | 4.7 | 26 | %46 | %0 | 138 | 27644 | 9 |
+| 25 | ashen_lich | ×0.8 | 204 | 3.9 | 21 | %44 | %0 | 170 | 34106 | 7 |
+| 25 | ashen_lich | ×1.0 | 255 | 3.5 | 18 | %43 | %0 | 196 | 39436 | 6 |
+| 25 | ashen_lich | ×1.2 | 306 | 3.4 | 18 | %43 | %0 | 200 | 40254 | 6 |
+| 25 | ashen_lich | ×1.4 | 357 | 2.4 | 12 | %39 | %0 | 306 | 61536 | 4 |
+| 25 | ashen_lich | ×1.6 | 408 | 2.4 | 12 | %38 | %0 | 311 | 62601 | 4 |
+| 50 | drowned_knight | ×0.6 | 284 | 7.4 | 28 | %21 | %0 | 128 | 26395 | 11 |
+| 50 | drowned_knight | ×0.8 | 379 | 5.7 | 21 | %17 | %0 | 174 | 35813 | 8 |
+| 50 | drowned_knight | ×1.0 | 474 | 4.8 | 17 | %13 | %0 | 217 | 44743 | 6 |
+| 50 | drowned_knight | ×1.2 | 569 | 4.3 | 15 | %12 | %0 | 245 | 50549 | 6 |
+| 50 | drowned_knight | ×1.4 | 664 | 3.7 | 13 | %13 | %0 | 283 | 58332 | 5 |
+| 50 | drowned_knight | ×1.6 | 758 | 3.6 | 13 | %13 | %0 | 287 | 59191 | 5 |
 
 ## Sv 1 — saldırı 52 · savunma 31 · can 414 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 4.0 | %8 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 5.2 | %21 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 7.5 | %39 | %100 | 8.8 | 17620 | 13 |
-| cave_bat | 6 | 266 | 42 | 6 | 8.7 | %51 | %100 | 2.4 | 4820 | 47 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 254 | 4.1 | 17 | %29 | %0 | 209 | 53094 | 4 |
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 5.3 | 32 | %51 | %0 | 111 | 3784 | 59 |
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 7.8 | 59 | %60 | %8 | 59 | 1772 | 127 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 9.2 | 78 | %62 | %90 | 17 | 544 | 414 |
 
 ## Sv 2 — saldırı 59 · savunma 33 · can 430 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 3.2 | %5 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 4.7 | %16 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 6.5 | %30 | %12 | 28.1 | 56100 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 7.6 | %40 | %100 | 5.9 | 11780 | 19 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 254 | 3.2 | 13 | %23 | %0 | 287 | 72966 | 3 |
+| grey_wolf | 3 | 212 | 35 | 4 | 341 | 4.7 | 26 | %46 | %0 | 137 | 46569 | 5 |
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 6.6 | 45 | %56 | %0 | 80 | 2403 | 94 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 8.1 | 62 | %60 | %52 | 42 | 1337 | 169 |
 
 ## Sv 3 — saldırı 63 · savunma 35 · can 446 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 3.2 | %5 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 4.4 | %13 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 5.8 | %24 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 6.9 | %33 | %85 | 14.9 | 29800 | 8 |
-| goblin_raider | 8 | 396 | 50 | 9 | 8.8 | %56 | %100 | 2.0 | 3960 | 57 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 50 | 3.2 | 12 | %19 | %0 | 301 | 15038 | 15 |
+| grey_wolf | 3 | 212 | 35 | 4 | 341 | 4.5 | 23 | %41 | %0 | 158 | 53923 | 4 |
+| bandit_scout | 5 | 300 | 41 | 6 | 60 | 5.8 | 37 | %53 | %0 | 96 | 5787 | 39 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 7.2 | 51 | %57 | %30 | 59 | 1878 | 120 |
+| goblin_raider | 8 | 396 | 50 | 9 | 37 | 9.3 | 83 | %64 | %90 | 17 | 615 | 367 |
 
 ## Sv 4 — saldırı 69 · savunma 37 · can 462 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 3.2 | %4 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 3.6 | %9 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 5.4 | %20 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 5.7 | %23 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 7.4 | %42 | %100 | 4.4 | 8720 | 26 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 3.2 | 11 | %16 | %0 | 314 | 7842 | 29 |
+| grey_wolf | 3 | 212 | 35 | 4 | 341 | 3.6 | 17 | %36 | %0 | 211 | 72076 | 3 |
+| bandit_scout | 5 | 300 | 41 | 6 | 304 | 5.5 | 32 | %49 | %0 | 111 | 33866 | 7 |
+| cave_bat | 6 | 266 | 42 | 6 | 102 | 5.8 | 37 | %53 | %3 | 97 | 9867 | 23 |
+| goblin_raider | 8 | 396 | 50 | 9 | 37 | 7.8 | 64 | %63 | %17 | 51 | 1898 | 119 |
 
 ## Sv 5 — saldırı 85 · savunma 45 · can 494 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.2 | %1 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 3.4 | %6 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 4.3 | %10 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 4.6 | %14 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 6.1 | %28 | %37 | 25.2 | 50320 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 7.7 | %47 | %100 | 2.9 | 5780 | 39 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.3 | 7 | %0 | %0 | 530 | 13252 | 17 |
+| grey_wolf | 3 | 212 | 35 | 4 | 140 | 3.4 | 14 | %25 | %0 | 265 | 37114 | 6 |
+| bandit_scout | 5 | 300 | 41 | 6 | 304 | 4.3 | 20 | %37 | %0 | 177 | 53945 | 4 |
+| cave_bat | 6 | 266 | 42 | 6 | 321 | 4.7 | 25 | %43 | %0 | 147 | 47048 | 5 |
+| goblin_raider | 8 | 396 | 50 | 9 | 48 | 6.2 | 43 | %57 | %3 | 83 | 3975 | 57 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 25 | 8.2 | 71 | %65 | %43 | 38 | 941 | 240 |
 
 ## Sv 6 — saldırı 89 · savunma 48 · can 528 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %1 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 3.4 | %5 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 4.2 | %9 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 3.9 | %9 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 5.8 | %23 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 6.9 | %37 | %100 | 6.0 | 12000 | 19 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.2 | 6 | %0 | %0 | 555 | 13872 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 67 | 3.4 | 13 | %19 | %0 | 286 | 19137 | 12 |
+| bandit_scout | 5 | 300 | 41 | 6 | 304 | 4.2 | 19 | %32 | %0 | 193 | 58682 | 4 |
+| cave_bat | 6 | 266 | 42 | 6 | 321 | 4.0 | 18 | %35 | %0 | 199 | 63767 | 4 |
+| goblin_raider | 8 | 396 | 50 | 9 | 177 | 5.8 | 36 | %52 | %0 | 99 | 17535 | 13 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 25 | 7.3 | 57 | %61 | %5 | 62 | 1550 | 146 |
 
 ## Sv 7 — saldırı 93 · savunma 49 · can 544 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %1 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 3.3 | %4 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 3.9 | %7 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 3.8 | %8 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 5.3 | %18 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 6.1 | %29 | %84 | 17.2 | 34340 | 7 |
-| forest_troll | 12 | 760 | 53 | 21 | 11.3 | %58 | %100 | 1.7 | 3400 | 67 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.2 | 6 | %0 | %0 | 555 | 13872 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 36 | 3.3 | 12 | %17 | %0 | 302 | 10858 | 21 |
+| bandit_scout | 5 | 300 | 41 | 6 | 164 | 3.9 | 17 | %29 | %0 | 215 | 35271 | 6 |
+| cave_bat | 6 | 266 | 42 | 6 | 321 | 3.9 | 17 | %33 | %0 | 210 | 67292 | 3 |
+| goblin_raider | 8 | 396 | 50 | 9 | 368 | 5.3 | 31 | %48 | %0 | 117 | 42890 | 5 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 65 | 6.3 | 45 | %58 | %3 | 79 | 5120 | 44 |
+| forest_troll | 12 | 760 | 53 | 21 | 36 | 11.7 | 90 | %60 | %68 | 23 | 845 | 269 |
 
 ## Sv 8 — saldırı 99 · savunma 51 · can 560 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %1 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 2.8 | %3 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 3.3 | %5 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 3.8 | %7 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 4.4 | %12 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 5.8 | %25 | %13 | 28.3 | 56580 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 9.8 | %46 | %100 | 3.0 | 6080 | 37 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.2 | 6 | %0 | %0 | 555 | 13872 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.9 | 10 | %11 | %0 | 373 | 12668 | 18 |
+| bandit_scout | 5 | 300 | 41 | 6 | 96 | 3.3 | 13 | %25 | %0 | 270 | 25882 | 9 |
+| cave_bat | 6 | 266 | 42 | 6 | 188 | 3.9 | 17 | %30 | %0 | 218 | 40943 | 6 |
+| goblin_raider | 8 | 396 | 50 | 9 | 368 | 4.4 | 23 | %43 | %0 | 157 | 57684 | 4 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 146 | 5.8 | 40 | %56 | %0 | 91 | 13315 | 17 |
+| forest_troll | 12 | 760 | 53 | 21 | 55 | 10.3 | 74 | %58 | %5 | 48 | 2652 | 86 |
 
 ## Sv 9 — saldırı 103 · savunma 53 · can 576 · kritik %5 · isabet %95
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %0 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 2.5 | %2 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 3.2 | %5 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 3.8 | %7 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 4.3 | %11 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 5.5 | %21 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 9.2 | %39 | %100 | 4.7 | 9320 | 24 |
-| dire_wolf | 14 | 529 | 68 | 14 | 7.5 | %52 | %100 | 1.9 | 3700 | 62 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.2 | 6 | %0 | %0 | 555 | 13872 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.5 | 8 | %6 | %0 | 446 | 15153 | 15 |
+| bandit_scout | 5 | 300 | 41 | 6 | 60 | 3.2 | 12 | %22 | %0 | 290 | 17371 | 13 |
+| cave_bat | 6 | 266 | 42 | 6 | 117 | 3.9 | 16 | %27 | %0 | 226 | 26403 | 9 |
+| goblin_raider | 8 | 396 | 50 | 9 | 368 | 4.3 | 22 | %40 | %0 | 167 | 61499 | 4 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 249 | 5.6 | 35 | %52 | %0 | 103 | 25701 | 9 |
+| forest_troll | 12 | 760 | 53 | 21 | 131 | 9.5 | 63 | %55 | %0 | 57 | 7491 | 30 |
+| dire_wolf | 14 | 529 | 68 | 14 | 32 | 7.9 | 79 | %67 | %97 | 11 | 361 | 633 |
 
 ## Sv 10 — saldırı 127 · savunma 63 · can 666 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %0 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 2.2 | %1 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 3.1 | %3 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.9 | %3 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.5 | %6 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 4.2 | %10 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 7.2 | %20 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 6.9 | %35 | %100 | 5.5 | 11020 | 21 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 5.9 | %40 | %100 | 3.8 | 7520 | 30 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.1 | 6 | %0 | %0 | 566 | 14160 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.2 | 7 | %0 | %0 | 536 | 18236 | 13 |
+| bandit_scout | 5 | 300 | 41 | 6 | 39 | 3.7 | 11 | %0 | %0 | 323 | 12593 | 18 |
+| cave_bat | 6 | 266 | 42 | 6 | 77 | 3.6 | 11 | %0 | %0 | 335 | 25812 | 9 |
+| goblin_raider | 8 | 396 | 50 | 9 | 241 | 4.1 | 15 | %21 | %0 | 233 | 56173 | 4 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 249 | 4.8 | 22 | %34 | %0 | 168 | 41782 | 5 |
+| forest_troll | 12 | 760 | 53 | 21 | 235 | 7.8 | 39 | %41 | %0 | 91 | 21499 | 11 |
+| dire_wolf | 14 | 529 | 68 | 14 | 78 | 6.9 | 54 | %61 | %23 | 57 | 4455 | 51 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 34 | 6.0 | 58 | %68 | %55 | 44 | 1513 | 151 |
 
 ## Sv 11 — saldırı 131 · savunma 65 · can 682 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| young_boar | 1 | 172 | 29 | 2 | 2.1 | %0 | %0 | 30.0 | 60000 | 4 |
-| grey_wolf | 3 | 212 | 35 | 4 | 2.2 | %0 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.7 | %2 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.2 | %5 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 4.2 | %9 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 6.4 | %15 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 6.1 | %27 | %98 | 13.6 | 27240 | 8 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 5.6 | %36 | %100 | 5.1 | 10140 | 23 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| young_boar | 1 | 172 | 29 | 2 | 25 | 2.1 | 6 | %0 | %0 | 566 | 14160 | 16 |
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.2 | 7 | %0 | %0 | 536 | 18236 | 13 |
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 3.4 | 10 | %0 | %0 | 353 | 10592 | 22 |
+| cave_bat | 6 | 266 | 42 | 6 | 53 | 3.1 | 9 | %0 | %0 | 389 | 20598 | 11 |
+| goblin_raider | 8 | 396 | 50 | 9 | 165 | 3.8 | 14 | %17 | %0 | 259 | 42757 | 5 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 249 | 4.8 | 21 | %31 | %0 | 173 | 43185 | 5 |
+| forest_troll | 12 | 760 | 53 | 21 | 358 | 7.1 | 33 | %34 | %0 | 111 | 39654 | 6 |
+| dire_wolf | 14 | 529 | 68 | 14 | 145 | 6.0 | 43 | %58 | %10 | 80 | 11556 | 20 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 73 | 5.7 | 52 | %67 | %32 | 58 | 4269 | 54 |
 
 ## Sv 12 — saldırı 135 · savunma 68 · can 716 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| grey_wolf | 3 | 212 | 35 | 4 | 2.2 | %0 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 2.9 | %2 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.6 | %1 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.2 | %4 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 4.2 | %8 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 6.1 | %12 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 5.4 | %22 | %7 | 29.4 | 58740 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 5.5 | %31 | %100 | 8.3 | 16520 | 14 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.2 | 7 | %0 | %0 | 536 | 18236 | 13 |
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 2.9 | 9 | %0 | %0 | 408 | 12248 | 19 |
+| cave_bat | 6 | 266 | 42 | 6 | 37 | 2.6 | 8 | %0 | %0 | 462 | 17112 | 13 |
+| goblin_raider | 8 | 396 | 50 | 9 | 116 | 3.8 | 13 | %12 | %0 | 280 | 32466 | 7 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 176 | 4.8 | 20 | %27 | %0 | 184 | 32451 | 7 |
+| forest_troll | 12 | 760 | 53 | 21 | 358 | 6.8 | 27 | %25 | %0 | 132 | 47357 | 5 |
+| dire_wolf | 14 | 529 | 68 | 14 | 228 | 5.5 | 35 | %53 | %3 | 101 | 23134 | 10 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 125 | 5.5 | 46 | %64 | %8 | 75 | 9379 | 25 |
 
 ## Sv 13 — saldırı 139 · savunma 70 · can 732 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| grey_wolf | 3 | 212 | 35 | 4 | 2.2 | %0 | %0 | 30.0 | 60000 | 4 |
-| bandit_scout | 5 | 300 | 41 | 6 | 2.7 | %1 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.5 | %1 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.1 | %4 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 4.1 | %8 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 6.1 | %11 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 4.7 | %17 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 5.3 | %27 | %97 | 15.3 | 30600 | 8 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 11.5 | %50 | %100 | 2.2 | 4360 | 53 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| grey_wolf | 3 | 212 | 35 | 4 | 34 | 2.2 | 7 | %0 | %0 | 536 | 18236 | 13 |
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 2.7 | 8 | %0 | %0 | 443 | 13294 | 17 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 2.5 | 8 | %0 | %0 | 473 | 15142 | 15 |
+| goblin_raider | 8 | 396 | 50 | 9 | 85 | 3.9 | 13 | %7 | %0 | 288 | 24453 | 9 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 128 | 4.7 | 18 | %24 | %0 | 195 | 24956 | 9 |
+| forest_troll | 12 | 760 | 53 | 21 | 358 | 6.8 | 26 | %22 | %0 | 138 | 49237 | 5 |
+| dire_wolf | 14 | 529 | 68 | 14 | 323 | 5.1 | 31 | %49 | %0 | 118 | 38162 | 6 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 189 | 5.0 | 39 | %62 | %3 | 92 | 17316 | 13 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 86 | 11.4 | 80 | %57 | %15 | 41 | 3543 | 65 |
 
 ## Sv 14 — saldırı 145 · savunma 72 · can 748 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bandit_scout | 5 | 300 | 41 | 6 | 2.3 | %1 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.5 | %1 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.1 | %3 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.7 | %6 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 5.9 | %10 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 4.4 | %14 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 4.4 | %20 | %12 | 29.0 | 58000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 11.1 | %44 | %100 | 3.0 | 5980 | 39 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 2.4 | 7 | %0 | %0 | 509 | 15273 | 15 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 2.5 | 8 | %0 | %0 | 473 | 15142 | 15 |
+| goblin_raider | 8 | 396 | 50 | 9 | 63 | 4.0 | 12 | %3 | %0 | 292 | 18384 | 13 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 95 | 4.3 | 16 | %21 | %0 | 220 | 20919 | 11 |
+| forest_troll | 12 | 760 | 53 | 21 | 266 | 6.7 | 25 | %20 | %0 | 145 | 38481 | 6 |
+| dire_wolf | 14 | 529 | 68 | 14 | 323 | 5.0 | 27 | %44 | %0 | 135 | 43675 | 5 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 260 | 4.4 | 32 | %58 | %0 | 113 | 29337 | 8 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 142 | 10.7 | 71 | %55 | %0 | 51 | 7221 | 32 |
 
 ## Sv 15 — saldırı 167 · savunma 82 · can 820 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bandit_scout | 5 | 300 | 41 | 6 | 2.1 | %0 | %0 | 30.0 | 60000 | 4 |
-| cave_bat | 6 | 266 | 42 | 6 | 2.5 | %0 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.1 | %3 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 5.1 | %5 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.9 | %9 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 3.1 | %11 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 9.3 | %27 | %100 | 14.2 | 28300 | 8 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 7.3 | %36 | %100 | 4.4 | 8840 | 26 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bandit_scout | 5 | 300 | 41 | 6 | 30 | 2.1 | 6 | %0 | %0 | 566 | 16992 | 14 |
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 2.5 | 8 | %0 | %0 | 473 | 15142 | 15 |
+| goblin_raider | 8 | 396 | 50 | 9 | 48 | 3.4 | 10 | %0 | %0 | 353 | 16929 | 14 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 72 | 4.1 | 12 | %0 | %0 | 293 | 21077 | 11 |
+| forest_troll | 12 | 760 | 53 | 21 | 202 | 6.0 | 18 | %0 | %0 | 200 | 40447 | 6 |
+| dire_wolf | 14 | 529 | 68 | 14 | 323 | 4.5 | 20 | %33 | %0 | 178 | 57408 | 4 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 260 | 3.6 | 21 | %48 | %0 | 173 | 44954 | 5 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 210 | 8.7 | 48 | %46 | %0 | 75 | 15740 | 15 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 76 | 7.5 | 56 | %59 | %43 | 48 | 3663 | 63 |
 
 ## Sv 16 — saldırı 173 · savunma 84 · can 836 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| cave_bat | 6 | 266 | 42 | 6 | 2.5 | %0 | %0 | 30.0 | 60000 | 4 |
-| goblin_raider | 8 | 396 | 50 | 9 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.1 | %3 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.5 | %8 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 3.1 | %10 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 7.7 | %21 | %2 | 30.0 | 59960 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 6.9 | %30 | %100 | 6.6 | 13140 | 18 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| cave_bat | 6 | 266 | 42 | 6 | 32 | 2.5 | 8 | %0 | %0 | 473 | 15142 | 15 |
+| goblin_raider | 8 | 396 | 50 | 9 | 37 | 3.1 | 9 | %0 | %0 | 388 | 14345 | 16 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 56 | 4.0 | 12 | %0 | %0 | 300 | 16805 | 14 |
+| forest_troll | 12 | 760 | 53 | 21 | 156 | 5.9 | 18 | %0 | %0 | 202 | 31587 | 7 |
+| dire_wolf | 14 | 529 | 68 | 14 | 250 | 4.1 | 18 | %30 | %0 | 204 | 51054 | 5 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 260 | 3.6 | 20 | %46 | %0 | 177 | 46133 | 5 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 288 | 7.9 | 40 | %41 | %0 | 89 | 25771 | 9 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 115 | 7.0 | 49 | %57 | %17 | 67 | 7651 | 30 |
 
 ## Sv 17 — saldırı 177 · savunma 86 · can 852 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| goblin_raider | 8 | 396 | 50 | 9 | 3.0 | %1 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.1 | %3 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.4 | %7 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 3.1 | %10 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 6.5 | %16 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 6.6 | %26 | %98 | 12.6 | 25260 | 9 |
-| frost_giant | 22 | 1224 | 78 | 37 | 10.9 | %45 | %100 | 2.6 | 5160 | 45 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| goblin_raider | 8 | 396 | 50 | 9 | 37 | 3.0 | 9 | %0 | %0 | 401 | 14828 | 16 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 44 | 3.9 | 12 | %0 | %0 | 304 | 13383 | 17 |
+| forest_troll | 12 | 760 | 53 | 21 | 122 | 5.8 | 17 | %0 | %0 | 208 | 25380 | 9 |
+| dire_wolf | 14 | 529 | 68 | 14 | 196 | 3.9 | 16 | %28 | %0 | 219 | 42891 | 5 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 204 | 3.6 | 20 | %45 | %0 | 182 | 37077 | 6 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 373 | 7.3 | 34 | %35 | %0 | 107 | 39824 | 6 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 160 | 6.5 | 43 | %54 | %7 | 81 | 12883 | 18 |
+| frost_giant | 22 | 1224 | 78 | 37 | 122 | 10.8 | 74 | %56 | %5 | 47 | 5728 | 41 |
 
 ## Sv 18 — saldırı 181 · savunma 89 · can 886 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| goblin_raider | 8 | 396 | 50 | 9 | 2.8 | %1 | %0 | 30.0 | 60000 | 4 |
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 4.8 | %3 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.3 | %6 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 3.1 | %9 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 6.1 | %12 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 6.2 | %21 | %25 | 27.4 | 54780 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 10.1 | %37 | %100 | 4.4 | 8780 | 27 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| goblin_raider | 8 | 396 | 50 | 9 | 37 | 2.8 | 8 | %0 | %0 | 424 | 15679 | 15 |
+| marsh_lurker | 10 | 460 | 56 | 11 | 35 | 3.8 | 11 | %0 | %0 | 313 | 10968 | 21 |
+| forest_troll | 12 | 760 | 53 | 21 | 97 | 5.2 | 16 | %0 | %0 | 229 | 22213 | 11 |
+| dire_wolf | 14 | 529 | 68 | 14 | 156 | 3.9 | 15 | %24 | %0 | 233 | 36405 | 6 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 162 | 3.7 | 19 | %43 | %0 | 189 | 30634 | 8 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 373 | 6.8 | 28 | %27 | %0 | 129 | 48123 | 5 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 210 | 6.2 | 37 | %50 | %3 | 95 | 19950 | 12 |
+| frost_giant | 22 | 1224 | 78 | 37 | 172 | 9.6 | 61 | %53 | %0 | 59 | 10185 | 23 |
 
 ## Sv 19 — saldırı 185 · savunma 90 · can 902 · kritik %5 · isabet %97
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| marsh_lurker | 10 | 460 | 56 | 11 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 4.5 | %3 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.3 | %6 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 3.1 | %9 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 6.1 | %11 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 5.5 | %18 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 9.5 | %30 | %100 | 7.2 | 14420 | 16 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 11.4 | %49 | %100 | 2.2 | 4340 | 54 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| marsh_lurker | 10 | 460 | 56 | 11 | 28 | 3.8 | 11 | %0 | %0 | 317 | 8886 | 27 |
+| forest_troll | 12 | 760 | 53 | 21 | 78 | 4.8 | 14 | %0 | %0 | 252 | 19656 | 12 |
+| dire_wolf | 14 | 529 | 68 | 14 | 125 | 3.9 | 15 | %23 | %0 | 239 | 29927 | 8 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 131 | 3.7 | 19 | %42 | %0 | 192 | 25115 | 9 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 373 | 6.8 | 27 | %25 | %0 | 132 | 49398 | 5 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 264 | 5.8 | 33 | %46 | %0 | 110 | 29084 | 8 |
+| frost_giant | 22 | 1224 | 78 | 37 | 229 | 8.8 | 52 | %50 | %0 | 69 | 15713 | 15 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 147 | 11.3 | 78 | %57 | %12 | 43 | 6321 | 37 |
 
 ## Sv 20 — saldırı 206 · savunma 102 · can 992 · kritik %6 · isabet %98
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| marsh_lurker | 10 | 460 | 56 | 11 | 2.9 | %1 | %0 | 30.0 | 60000 | 4 |
-| forest_troll | 12 | 760 | 53 | 21 | 4.0 | %0 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.2 | %4 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.9 | %6 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 5.4 | %7 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.8 | %8 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 7.0 | %18 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 9.6 | %30 | %100 | 7.4 | 14840 | 16 |
-| ashen_lich | 25 | 705 | 121 | 16 | 5.8 | %37 | %100 | 4.0 | 7960 | 30 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| marsh_lurker | 10 | 460 | 56 | 11 | 25 | 2.9 | 9 | %0 | %0 | 408 | 10208 | 23 |
+| forest_troll | 12 | 760 | 53 | 21 | 64 | 4.0 | 12 | %0 | %0 | 298 | 19047 | 12 |
+| dire_wolf | 14 | 529 | 68 | 14 | 102 | 4.2 | 13 | %1 | %0 | 283 | 28822 | 8 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 106 | 3.4 | 15 | %31 | %0 | 239 | 25373 | 9 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 304 | 6.3 | 20 | %6 | %0 | 179 | 54386 | 4 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 264 | 4.5 | 19 | %31 | %0 | 187 | 49443 | 5 |
+| frost_giant | 22 | 1224 | 78 | 37 | 291 | 7.7 | 37 | %38 | %0 | 97 | 28324 | 8 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 198 | 9.0 | 53 | %49 | %0 | 68 | 13408 | 18 |
+| ashen_lich | 25 | 705 | 121 | 16 | 82 | 5.9 | 54 | %67 | %47 | 50 | 4074 | 58 |
 
 ## Sv 21 — saldırı 210 · savunma 104 · can 1008 · kritik %6 · isabet %98
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| forest_troll | 12 | 760 | 53 | 21 | 4.0 | %0 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.8 | %6 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 5.2 | %6 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.7 | %7 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 6.4 | %14 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 9.2 | %25 | %100 | 14.1 | 28100 | 8 |
-| ashen_lich | 25 | 705 | 121 | 16 | 5.5 | %32 | %100 | 5.6 | 11240 | 21 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| forest_troll | 12 | 760 | 53 | 21 | 53 | 4.0 | 12 | %0 | %0 | 298 | 15774 | 15 |
+| dire_wolf | 14 | 529 | 68 | 14 | 84 | 4.2 | 13 | %0 | %0 | 286 | 24048 | 10 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 88 | 3.3 | 14 | %29 | %0 | 255 | 22472 | 11 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 250 | 6.1 | 19 | %2 | %0 | 192 | 48046 | 5 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 264 | 4.3 | 18 | %29 | %0 | 199 | 52492 | 5 |
+| frost_giant | 22 | 1224 | 78 | 37 | 357 | 7.1 | 31 | %31 | %0 | 116 | 41245 | 6 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 254 | 8.6 | 47 | %45 | %0 | 77 | 19533 | 12 |
+| ashen_lich | 25 | 705 | 121 | 16 | 108 | 5.6 | 48 | %65 | %17 | 69 | 7403 | 32 |
 
 ## Sv 22 — saldırı 216 · savunma 105 · can 1024 · kritik %6 · isabet %98
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| forest_troll | 12 | 760 | 53 | 21 | 4.0 | %0 | %0 | 30.0 | 60000 | 4 |
-| dire_wolf | 14 | 529 | 68 | 14 | 3.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.6 | %5 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 5.0 | %5 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.7 | %7 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 6.0 | %11 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 8.2 | %21 | %7 | 29.6 | 59300 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 5.2 | %28 | %100 | 8.7 | 17400 | 14 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| forest_troll | 12 | 760 | 53 | 21 | 44 | 4.0 | 12 | %0 | %0 | 298 | 13095 | 18 |
+| dire_wolf | 14 | 529 | 68 | 14 | 70 | 4.2 | 13 | %0 | %0 | 287 | 20122 | 12 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 73 | 3.1 | 13 | %28 | %0 | 280 | 20450 | 12 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 208 | 6.0 | 18 | %0 | %0 | 199 | 41361 | 6 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 219 | 4.2 | 17 | %27 | %0 | 206 | 45129 | 5 |
+| frost_giant | 22 | 1224 | 78 | 37 | 357 | 6.8 | 27 | %25 | %0 | 133 | 47576 | 5 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 315 | 8.1 | 41 | %41 | %0 | 88 | 27584 | 9 |
+| ashen_lich | 25 | 705 | 121 | 16 | 137 | 5.0 | 41 | %63 | %5 | 85 | 11634 | 21 |
 
 ## Sv 23 — saldırı 220 · savunma 107 · can 1040 · kritik %6 · isabet %98
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| dire_wolf | 14 | 529 | 68 | 14 | 3.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.5 | %4 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 5.0 | %5 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.7 | %7 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 6.0 | %10 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 6.7 | %16 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 4.8 | %23 | %92 | 16.1 | 32140 | 7 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| dire_wolf | 14 | 529 | 68 | 14 | 58 | 4.1 | 12 | %0 | %0 | 290 | 16833 | 14 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 61 | 2.9 | 12 | %26 | %0 | 307 | 18748 | 13 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 174 | 6.0 | 18 | %0 | %0 | 201 | 34942 | 7 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 183 | 4.3 | 17 | %25 | %0 | 211 | 38595 | 6 |
+| frost_giant | 22 | 1224 | 78 | 37 | 357 | 6.7 | 26 | %23 | %0 | 138 | 49141 | 5 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 379 | 7.5 | 35 | %35 | %0 | 103 | 39208 | 6 |
+| ashen_lich | 25 | 705 | 121 | 16 | 168 | 4.6 | 35 | %61 | %0 | 104 | 17422 | 14 |
 
 ## Sv 24 — saldırı 224 · savunma 110 · can 1074 · kritik %6 · isabet %98
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| dire_wolf | 14 | 529 | 68 | 14 | 3.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.7 | %6 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 6.0 | %9 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 6.3 | %12 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 4.0 | %18 | %7 | 29.4 | 58880 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| dire_wolf | 14 | 529 | 68 | 14 | 49 | 4.0 | 12 | %0 | %0 | 298 | 14596 | 17 |
+| cultist_acolyte | 15 | 465 | 85 | 10 | 51 | 2.7 | 11 | %23 | %0 | 339 | 17280 | 14 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 147 | 5.9 | 18 | %0 | %0 | 203 | 29846 | 8 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 155 | 4.3 | 16 | %22 | %0 | 220 | 34082 | 7 |
+| frost_giant | 22 | 1224 | 78 | 37 | 301 | 6.8 | 25 | %19 | %0 | 144 | 43289 | 6 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 379 | 7.0 | 29 | %27 | %0 | 125 | 47280 | 5 |
+| ashen_lich | 25 | 705 | 121 | 16 | 201 | 4.1 | 29 | %57 | %3 | 123 | 24686 | 10 |
 
 ## Sv 25 — saldırı 255 · savunma 128 · can 1204 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| cultist_acolyte | 15 | 465 | 85 | 10 | 2.0 | %2 | %0 | 30.0 | 60000 | 4 |
-| rock_ogre | 18 | 1038 | 68 | 30 | 4.0 | %1 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.5 | %3 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 5.0 | %5 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %9 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 6.1 | %22 | %85 | 18.6 | 37140 | 7 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| cultist_acolyte | 15 | 465 | 85 | 10 | 44 | 2.6 | 8 | %4 | %0 | 437 | 19243 | 13 |
+| rock_ogre | 18 | 1038 | 68 | 30 | 124 | 4.0 | 12 | %0 | %0 | 300 | 37258 | 6 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 131 | 4.4 | 13 | %0 | %0 | 271 | 35455 | 7 |
+| frost_giant | 22 | 1224 | 78 | 37 | 256 | 5.4 | 16 | %0 | %0 | 223 | 57122 | 4 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 379 | 6.0 | 18 | %1 | %0 | 197 | 74606 | 3 |
+| ashen_lich | 25 | 705 | 121 | 16 | 201 | 3.5 | 18 | %43 | %0 | 196 | 39436 | 6 |
+| mist_leech | 30 | 855 | 105 | 25 | 105 | 5.9 | 37 | %52 | %15 | 89 | 9329 | 26 |
 
 ## Sv 26 — saldırı 261 · savunma 129 · can 1220 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| rock_ogre | 18 | 1038 | 68 | 30 | 3.9 | %1 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.9 | %5 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %8 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 5.4 | %18 | %20 | 27.9 | 55820 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| rock_ogre | 18 | 1038 | 68 | 30 | 106 | 3.9 | 12 | %0 | %0 | 311 | 32936 | 7 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 112 | 4.4 | 13 | %0 | %0 | 272 | 30477 | 8 |
+| frost_giant | 22 | 1224 | 78 | 37 | 219 | 5.1 | 15 | %0 | %0 | 235 | 51502 | 5 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 324 | 6.0 | 18 | %1 | %0 | 200 | 64778 | 4 |
+| ashen_lich | 25 | 705 | 121 | 16 | 201 | 3.5 | 18 | %43 | %0 | 199 | 39989 | 6 |
+| mist_leech | 30 | 855 | 105 | 25 | 129 | 5.5 | 32 | %48 | %3 | 109 | 14055 | 17 |
 
 ## Sv 27 — saldırı 265 · savunma 131 · can 1236 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| rock_ogre | 18 | 1038 | 68 | 30 | 3.7 | %0 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.8 | %5 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %8 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 4.7 | %14 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| rock_ogre | 18 | 1038 | 68 | 30 | 91 | 3.7 | 11 | %0 | %0 | 322 | 29267 | 8 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 97 | 4.3 | 13 | %0 | %0 | 276 | 26746 | 9 |
+| frost_giant | 22 | 1224 | 78 | 37 | 188 | 4.9 | 15 | %0 | %0 | 245 | 46060 | 5 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 279 | 5.9 | 18 | %0 | %0 | 204 | 56870 | 4 |
+| ashen_lich | 25 | 705 | 121 | 16 | 173 | 3.5 | 18 | %42 | %0 | 203 | 35107 | 7 |
+| mist_leech | 30 | 855 | 105 | 25 | 154 | 5.2 | 28 | %44 | %0 | 128 | 19779 | 12 |
 
 ## Sv 28 — saldırı 271 · savunma 133 · can 1252 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| rock_ogre | 18 | 1038 | 68 | 30 | 3.5 | %0 | %0 | 30.0 | 60000 | 4 |
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.2 | %2 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.6 | %4 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %8 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 4.2 | %11 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| rock_ogre | 18 | 1038 | 68 | 30 | 79 | 3.5 | 11 | %0 | %0 | 339 | 26792 | 9 |
+| shadow_stalker | 20 | 624 | 82 | 17 | 84 | 4.2 | 13 | %0 | %0 | 283 | 23806 | 10 |
+| frost_giant | 22 | 1224 | 78 | 37 | 163 | 4.7 | 14 | %0 | %0 | 257 | 41883 | 6 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 241 | 5.6 | 17 | %0 | %0 | 213 | 51305 | 5 |
+| ashen_lich | 25 | 705 | 121 | 16 | 149 | 3.5 | 17 | %41 | %0 | 206 | 30751 | 8 |
+| mist_leech | 30 | 855 | 105 | 25 | 182 | 4.8 | 24 | %39 | %0 | 151 | 27512 | 9 |
 
 ## Sv 29 — saldırı 275 · savunma 135 · can 1268 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.2 | %2 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.5 | %4 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %8 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.9 | %9 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| shadow_stalker | 20 | 624 | 82 | 17 | 73 | 4.1 | 12 | %0 | %0 | 294 | 21444 | 12 |
+| frost_giant | 22 | 1224 | 78 | 37 | 141 | 4.4 | 13 | %0 | %0 | 269 | 37955 | 7 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 209 | 5.4 | 16 | %0 | %0 | 221 | 46203 | 5 |
+| ashen_lich | 25 | 705 | 121 | 16 | 130 | 3.5 | 17 | %40 | %0 | 210 | 27343 | 9 |
+| mist_leech | 30 | 855 | 105 | 25 | 210 | 4.5 | 21 | %34 | %0 | 174 | 36575 | 7 |
 
 ## Sv 30 — saldırı 279 · savunma 138 · can 1302 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| shadow_stalker | 20 | 624 | 82 | 17 | 3.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| frost_giant | 22 | 1224 | 78 | 37 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %7 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.7 | %7 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 8.3 | %24 | %100 | 11.2 | 22300 | 11 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| shadow_stalker | 20 | 624 | 82 | 17 | 76 | 3.8 | 11 | %0 | %0 | 318 | 24196 | 10 |
+| frost_giant | 22 | 1224 | 78 | 37 | 146 | 4.1 | 12 | %0 | %0 | 295 | 43009 | 6 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 214 | 5.1 | 15 | %0 | %0 | 233 | 49784 | 5 |
+| ashen_lich | 25 | 705 | 121 | 16 | 132 | 3.5 | 17 | %38 | %0 | 216 | 28514 | 9 |
+| mist_leech | 30 | 855 | 105 | 25 | 210 | 4.3 | 17 | %26 | %0 | 207 | 43526 | 6 |
+| mud_golem | 35 | 1794 | 102 | 55 | 159 | 7.9 | 44 | %47 | %0 | 81 | 12895 | 19 |
 
 ## Sv 31 — saldırı 283 · savunma 140 · can 1318 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| frost_giant | 22 | 1224 | 78 | 37 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.2 | %3 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %7 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.6 | %6 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 7.7 | %20 | %57 | 25.0 | 50000 | 5 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| frost_giant | 22 | 1224 | 78 | 37 | 128 | 4.1 | 12 | %0 | %0 | 295 | 37724 | 7 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 188 | 4.9 | 15 | %0 | %0 | 242 | 45587 | 5 |
+| ashen_lich | 25 | 705 | 121 | 16 | 116 | 3.5 | 16 | %37 | %0 | 220 | 25508 | 10 |
+| mist_leech | 30 | 855 | 105 | 25 | 210 | 4.2 | 17 | %25 | %0 | 216 | 45318 | 6 |
+| mud_golem | 35 | 1794 | 102 | 55 | 185 | 7.5 | 39 | %43 | %0 | 92 | 16934 | 15 |
 
 ## Sv 32 — saldırı 289 · savunma 141 · can 1334 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| frost_giant | 22 | 1224 | 78 | 37 | 4.0 | %1 | %0 | 30.0 | 60000 | 4 |
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %7 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.5 | %6 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 6.5 | %16 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| frost_giant | 22 | 1224 | 78 | 37 | 113 | 4.1 | 12 | %0 | %0 | 295 | 33367 | 8 |
+| elder_wyrm | 24 | 1317 | 83 | 40 | 165 | 4.8 | 14 | %0 | %0 | 251 | 41410 | 6 |
+| ashen_lich | 25 | 705 | 121 | 16 | 102 | 3.5 | 16 | %36 | %0 | 222 | 22647 | 11 |
+| mist_leech | 30 | 855 | 105 | 25 | 210 | 4.1 | 16 | %24 | %0 | 221 | 46487 | 5 |
+| mud_golem | 35 | 1794 | 102 | 55 | 213 | 7.1 | 35 | %38 | %0 | 103 | 22021 | 11 |
 
 ## Sv 33 — saldırı 293 · savunma 143 · can 1350 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %7 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.5 | %6 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 6.1 | %13 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| elder_wyrm | 24 | 1317 | 83 | 40 | 146 | 4.6 | 14 | %0 | %0 | 262 | 38196 | 7 |
+| ashen_lich | 25 | 705 | 121 | 16 | 90 | 3.5 | 16 | %35 | %0 | 225 | 20266 | 12 |
+| mist_leech | 30 | 855 | 105 | 25 | 186 | 4.1 | 16 | %22 | %0 | 227 | 42216 | 6 |
+| mud_golem | 35 | 1794 | 102 | 55 | 242 | 6.9 | 31 | %33 | %0 | 116 | 28128 | 9 |
 
 ## Sv 34 — saldırı 300 · savunma 145 · can 1366 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| elder_wyrm | 24 | 1317 | 83 | 40 | 4.1 | %2 | %0 | 30.0 | 60000 | 4 |
-| ashen_lich | 25 | 705 | 121 | 16 | 2.9 | %6 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.4 | %5 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 5.8 | %11 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| elder_wyrm | 24 | 1317 | 83 | 40 | 130 | 4.3 | 13 | %0 | %0 | 276 | 35858 | 7 |
+| ashen_lich | 25 | 705 | 121 | 16 | 80 | 3.5 | 16 | %34 | %0 | 230 | 18436 | 14 |
+| mist_leech | 30 | 855 | 105 | 25 | 165 | 4.1 | 15 | %20 | %0 | 235 | 38761 | 7 |
+| mud_golem | 35 | 1794 | 102 | 55 | 242 | 6.6 | 27 | %27 | %0 | 133 | 32194 | 8 |
 
 ## Sv 35 — saldırı 335 · savunma 167 · can 1524 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| ashen_lich | 25 | 705 | 121 | 16 | 2.4 | %3 | %0 | 30.0 | 60000 | 4 |
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 4.5 | %23 | %98 | 11.8 | 23500 | 11 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ashen_lich | 25 | 705 | 121 | 16 | 71 | 2.8 | 10 | %19 | %0 | 345 | 24487 | 10 |
+| mist_leech | 30 | 855 | 105 | 25 | 147 | 4.5 | 13 | %0 | %0 | 269 | 39506 | 6 |
+| mud_golem | 35 | 1794 | 102 | 55 | 242 | 6.0 | 18 | %0 | %0 | 199 | 48235 | 5 |
+| bog_witch | 40 | 1035 | 168 | 25 | 152 | 4.4 | 34 | %61 | %17 | 96 | 14660 | 17 |
 
 ## Sv 36 — saldırı 339 · savunma 170 · can 1558 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %3 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 4.2 | %19 | %67 | 21.6 | 43180 | 6 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mist_leech | 30 | 855 | 105 | 25 | 131 | 4.4 | 13 | %0 | %0 | 273 | 35826 | 7 |
+| mud_golem | 35 | 1794 | 102 | 55 | 242 | 5.9 | 18 | %0 | %0 | 202 | 48876 | 5 |
+| bog_witch | 40 | 1035 | 168 | 25 | 173 | 4.2 | 30 | %59 | %0 | 120 | 20720 | 12 |
 
 ## Sv 37 — saldırı 343 · savunma 172 · can 1574 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %2 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 5.0 | %4 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.8 | %16 | %15 | 28.9 | 57700 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 5.5 | %17 | %6 | 29.7 | 59360 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mist_leech | 30 | 855 | 105 | 25 | 117 | 4.3 | 13 | %0 | %0 | 277 | 32415 | 8 |
+| mud_golem | 35 | 1794 | 102 | 55 | 242 | 5.9 | 18 | %0 | %0 | 204 | 49332 | 5 |
+| bog_witch | 40 | 1035 | 168 | 25 | 195 | 3.9 | 26 | %56 | %0 | 136 | 26575 | 10 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 143 | 5.8 | 32 | %46 | %0 | 114 | 16242 | 16 |
 
 ## Sv 38 — saldırı 349 · savunma 173 · can 1590 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %2 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 4.9 | %3 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.3 | %13 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 4.9 | %13 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mist_leech | 30 | 855 | 105 | 25 | 106 | 4.3 | 13 | %0 | %0 | 279 | 29609 | 9 |
+| mud_golem | 35 | 1794 | 102 | 55 | 218 | 5.8 | 18 | %0 | %0 | 205 | 44715 | 6 |
+| bog_witch | 40 | 1035 | 168 | 25 | 218 | 3.8 | 24 | %53 | %0 | 151 | 32980 | 8 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 161 | 5.4 | 28 | %41 | %0 | 129 | 20817 | 12 |
 
 ## Sv 39 — saldırı 353 · savunma 175 · can 1606 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %2 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 4.9 | %3 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.1 | %11 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 4.5 | %11 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mist_leech | 30 | 855 | 105 | 25 | 95 | 4.2 | 13 | %0 | %0 | 283 | 26918 | 10 |
+| mud_golem | 35 | 1794 | 102 | 55 | 196 | 5.8 | 17 | %0 | %0 | 208 | 40765 | 6 |
+| bog_witch | 40 | 1035 | 168 | 25 | 218 | 3.6 | 22 | %50 | %0 | 167 | 36511 | 7 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 180 | 5.2 | 24 | %37 | %0 | 147 | 26511 | 10 |
 
 ## Sv 40 — saldırı 359 · savunma 177 · can 1622 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mist_leech | 30 | 855 | 105 | 25 | 3.3 | %2 | %0 | 30.0 | 60000 | 4 |
-| mud_golem | 35 | 1794 | 102 | 55 | 4.9 | %3 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.0 | %9 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 4.2 | %9 | %0 | 30.0 | 60000 | 4 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 5.4 | %21 | %96 | 14.4 | 28760 | 9 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mist_leech | 30 | 855 | 105 | 25 | 86 | 4.2 | 12 | %0 | %0 | 289 | 24815 | 11 |
+| mud_golem | 35 | 1794 | 102 | 55 | 177 | 5.6 | 17 | %0 | %0 | 214 | 37902 | 7 |
+| bog_witch | 40 | 1035 | 168 | 25 | 218 | 3.5 | 19 | %46 | %0 | 185 | 40410 | 7 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 200 | 4.9 | 21 | %31 | %0 | 171 | 34103 | 8 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 166 | 5.3 | 35 | %55 | %10 | 98 | 16260 | 16 |
 
 ## Sv 41 — saldırı 363 · savunma 179 · can 1638 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mud_golem | 35 | 1794 | 102 | 55 | 4.8 | %3 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.0 | %9 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 4.0 | %7 | %0 | 30.0 | 60000 | 4 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 5.0 | %17 | %46 | 25.6 | 51280 | 5 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mud_golem | 35 | 1794 | 102 | 55 | 161 | 5.4 | 16 | %0 | %0 | 222 | 35812 | 7 |
+| bog_witch | 40 | 1035 | 168 | 25 | 218 | 3.5 | 19 | %45 | %0 | 189 | 41158 | 6 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 200 | 4.7 | 18 | %23 | %0 | 197 | 39400 | 7 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 186 | 4.9 | 30 | %51 | %7 | 115 | 21325 | 12 |
 
 ## Sv 42 — saldırı 367 · savunma 182 · can 1672 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mud_golem | 35 | 1794 | 102 | 55 | 4.7 | %2 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.0 | %9 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.7 | %5 | %0 | 30.0 | 60000 | 4 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 4.2 | %13 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mud_golem | 35 | 1794 | 102 | 55 | 146 | 4.9 | 15 | %0 | %0 | 246 | 35858 | 7 |
+| bog_witch | 40 | 1035 | 168 | 25 | 218 | 3.5 | 19 | %44 | %0 | 193 | 42092 | 6 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 200 | 4.6 | 16 | %12 | %0 | 230 | 45913 | 6 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 206 | 4.7 | 27 | %47 | %0 | 135 | 27896 | 10 |
 
 ## Sv 43 — saldırı 371 · savunma 184 · can 1688 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mud_golem | 35 | 1794 | 102 | 55 | 4.6 | %2 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 3.0 | %8 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.6 | %5 | %0 | 30.0 | 60000 | 4 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.8 | %11 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mud_golem | 35 | 1794 | 102 | 55 | 133 | 4.6 | 14 | %0 | %0 | 261 | 34724 | 8 |
+| bog_witch | 40 | 1035 | 168 | 25 | 198 | 3.5 | 18 | %43 | %0 | 196 | 38788 | 7 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 200 | 4.6 | 15 | %9 | %0 | 236 | 47110 | 6 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 227 | 4.5 | 24 | %43 | %0 | 153 | 34792 | 8 |
 
 ## Sv 44 — saldırı 377 · savunma 185 · can 1704 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mud_golem | 35 | 1794 | 102 | 55 | 4.4 | %2 | %0 | 30.0 | 60000 | 4 |
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %8 | %0 | 30.0 | 60000 | 4 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.5 | %4 | %0 | 30.0 | 60000 | 4 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.6 | %9 | %0 | 30.0 | 60000 | 4 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mud_golem | 35 | 1794 | 102 | 55 | 121 | 4.4 | 13 | %0 | %0 | 272 | 32856 | 8 |
+| bog_witch | 40 | 1035 | 168 | 25 | 181 | 3.5 | 18 | %43 | %0 | 198 | 35835 | 8 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 200 | 4.6 | 15 | %8 | %0 | 241 | 48160 | 6 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 227 | 4.3 | 21 | %38 | %0 | 172 | 39036 | 7 |
 
 ## Sv 45 — saldırı 381 · savunma 187 · can 1720 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| mud_golem | 35 | 1794 | 102 | 55 | 4.3 | %1 | %0 | 30.0 | 60000 | 5 |
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %8 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.4 | %4 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.4 | %7 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 7.0 | %27 | %100 | 6.4 | 12780 | 21 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| mud_golem | 35 | 1794 | 102 | 55 | 111 | 4.3 | 13 | %0 | %0 | 278 | 30882 | 9 |
+| bog_witch | 40 | 1035 | 168 | 25 | 165 | 3.5 | 18 | %42 | %0 | 201 | 33107 | 8 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 183 | 4.7 | 15 | %5 | %0 | 245 | 44765 | 6 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 227 | 4.2 | 19 | %32 | %0 | 194 | 44049 | 6 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 156 | 6.8 | 46 | %55 | %7 | 77 | 12056 | 22 |
 
 ## Sv 46 — saldırı 387 · savunma 189 · can 1736 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %8 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.3 | %4 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.4 | %7 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 6.7 | %23 | %100 | 10.7 | 21320 | 13 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bog_witch | 40 | 1035 | 168 | 25 | 152 | 3.5 | 18 | %41 | %0 | 203 | 30881 | 9 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 167 | 4.7 | 15 | %2 | %0 | 248 | 41341 | 7 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 227 | 4.2 | 18 | %31 | %0 | 197 | 44696 | 6 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 172 | 6.4 | 40 | %52 | %0 | 90 | 15443 | 18 |
 
 ## Sv 47 — saldırı 391 · savunma 191 · can 1752 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %8 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.2 | %3 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.4 | %7 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 6.4 | %19 | %84 | 19.9 | 39840 | 7 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bog_witch | 40 | 1035 | 168 | 25 | 139 | 3.5 | 18 | %41 | %0 | 206 | 28653 | 10 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 154 | 4.8 | 14 | %0 | %0 | 248 | 38241 | 7 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 227 | 4.2 | 18 | %30 | %0 | 200 | 45339 | 6 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 189 | 6.1 | 35 | %48 | %0 | 102 | 19240 | 14 |
 
 ## Sv 48 — saldırı 395 · savunma 194 · can 1786 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %7 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.2 | %3 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.4 | %7 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 5.4 | %15 | %0 | 30.0 | 60000 | 5 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bog_witch | 40 | 1035 | 168 | 25 | 128 | 3.5 | 17 | %39 | %0 | 211 | 27042 | 10 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 141 | 4.8 | 14 | %0 | %0 | 251 | 35389 | 8 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 209 | 4.2 | 18 | %28 | %0 | 205 | 42821 | 6 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 206 | 5.8 | 31 | %43 | %0 | 118 | 24205 | 11 |
 
 ## Sv 49 — saldırı 399 · savunma 196 · can 1802 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bog_witch | 40 | 1035 | 168 | 25 | 2.9 | %7 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.2 | %3 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.4 | %6 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 4.8 | %12 | %0 | 30.0 | 60000 | 5 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bog_witch | 40 | 1035 | 168 | 25 | 118 | 3.5 | 17 | %38 | %0 | 213 | 25185 | 11 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 130 | 4.7 | 14 | %0 | %0 | 252 | 32814 | 8 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 192 | 4.2 | 17 | %27 | %0 | 208 | 39923 | 7 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 206 | 5.5 | 27 | %38 | %0 | 136 | 27937 | 10 |
 
 ## Sv 50 — saldırı 474 · savunma 222 · can 2004 · kritik %6 · isabet %100
 
-| Canavar | Sv | Can | Sal | Sav | Tur/öldürme | Can kaybı | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bog_witch | 40 | 1035 | 168 | 25 | 2.6 | %4 | %0 | 30.0 | 60000 | 5 |
-| marsh_queen | 42 | 1440 | 125 | 38 | 3.0 | %1 | %0 | 30.0 | 60000 | 5 |
-| venom_lizard | 45 | 1339 | 145 | 37 | 3.1 | %3 | %0 | 30.0 | 60000 | 5 |
-| drowned_knight | 50 | 1960 | 153 | 49 | 4.0 | %6 | %0 | 30.0 | 60000 | 5 |
-| mountain_troll | 55 | 2669 | 144 | 86 | 6.8 | %16 | %6 | 29.5 | 58980 | 5 |
+| Canavar | Sv | Can | Sal | Sav | XP | Tur | Sn/öldürme | Kamp | Ölüm | Öldürme/sa | XP/sa | Dk/sv |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| bog_witch | 40 | 1035 | 168 | 25 | 119 | 3.2 | 13 | %25 | %0 | 285 | 33935 | 8 |
+| marsh_queen | 42 | 1440 | 125 | 38 | 131 | 3.1 | 9 | %0 | %0 | 393 | 51450 | 5 |
+| venom_lizard | 45 | 1339 | 145 | 37 | 193 | 4.0 | 13 | %5 | %0 | 286 | 55102 | 5 |
+| drowned_knight | 50 | 1960 | 153 | 49 | 206 | 4.8 | 17 | %13 | %0 | 217 | 44743 | 6 |
+| mountain_troll | 55 | 2669 | 144 | 86 | 214 | 7.1 | 35 | %39 | %0 | 104 | 22156 | 13 |
 

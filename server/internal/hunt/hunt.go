@@ -43,7 +43,7 @@ type Contract struct {
 	ID             uuid.UUID       `json:"id"`
 	CharacterID    uuid.UUID       `json:"character_id"`
 	MobCode        string          `json:"mob_code"`
-	EncounterSecs  int32           `json:"encounter_seconds"` // fixed cadence; DefaultEncounterSeconds unless overridden
+	EncounterSecs  int32           `json:"-"` // legacy fixed cadence (pre-DD-281); fights now run back to back
 	DurationSecs   int32           `json:"duration_seconds"`
 	StartedAt      time.Time       `json:"started_at"`
 	ExpiresAt      time.Time       `json:"expires_at"`
@@ -72,17 +72,6 @@ func (c *Contract) ElapsedSeconds(now time.Time) int32 {
 	return dt
 }
 
-// EncountersPlanned is how many encounters will have resolved by `elapsedSec`.
-// Integer division — half-finished encounters do not grant partial rewards
-// (they carry over into the next reveal on the same active contract if the
-// player waits longer, or are forfeited on Stop).
-func (c *Contract) EncountersPlanned(elapsedSec int32) int {
-	if c.EncounterSecs <= 0 {
-		return 0
-	}
-	return int(elapsedSec / c.EncounterSecs)
-}
-
 // --- Errors -----------------------------------------------------------------
 
 var (
@@ -101,14 +90,12 @@ var (
 
 // --- Tuning -----------------------------------------------------------------
 
-// DefaultEncounterSeconds is the fallback pacing when the client sends 0.
-// One encounter per 120s → 30 encounters/hour keeps the reveal log readable
-// (max 240 encounters at 8h; the render trims further).
-const DefaultEncounterSeconds = 120
+// LegacyEncounterSeconds fills the old cadence column (CHECK >= 30); since
+// DD-281 fights run back to back and nothing reads it.
+const LegacyEncounterSeconds = 120
 
-// MinEncounterSeconds prevents pathologically fast cadences that would let a
-// client bypass rate limits by requesting sub-second encounters.
-const MinEncounterSeconds = 30
+// MinHuntSeconds: shorter hunts cannot finish a fight worth paying.
+const MinHuntSeconds = 60
 
 // MaxHuntSeconds caps a single hunt at 6 hours: AFK runs are 1 / 3 / 6 h
 // (DD-249), matching the activity cap; also bounds the reveal log.

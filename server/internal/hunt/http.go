@@ -53,9 +53,8 @@ func (h *Handler) publish(accountID uuid.UUID, kind string, payload any) {
 
 // startBody is the POST /v1/character/{id}/hunt body.
 type startBody struct {
-	MobCode          string `json:"mob_code"`
-	DurationSeconds  int32  `json:"duration_seconds"`
-	EncounterSeconds int32  `json:"encounter_seconds,omitempty"`
+	MobCode         string `json:"mob_code"`
+	DurationSeconds int32  `json:"duration_seconds"`
 }
 
 // Start creates a new hunt contract.
@@ -80,7 +79,6 @@ func (h *Handler) Start(w http.ResponseWriter, r *http.Request) {
 		AccountID:       acct,
 		MobCode:         body.MobCode,
 		DurationSeconds: body.DurationSeconds,
-		EncounterSecs:   body.EncounterSeconds,
 	})
 	if err != nil {
 		writeErr(w, r, err)
@@ -202,14 +200,13 @@ func (h *Handler) History(w http.ResponseWriter, r *http.Request) {
 // summarize is the wire shape for a Contract — hides player_snapshot bytes.
 func summarize(c *Contract) map[string]any {
 	m := map[string]any{
-		"id":                c.ID.String(),
-		"character_id":      c.CharacterID.String(),
-		"mob_code":          c.MobCode,
-		"encounter_seconds": c.EncounterSecs,
-		"duration_seconds":  c.DurationSecs,
-		"started_at":        c.StartedAt,
-		"expires_at":        c.ExpiresAt,
-		"state":             string(c.State),
+		"id":               c.ID.String(),
+		"character_id":     c.CharacterID.String(),
+		"mob_code":         c.MobCode,
+		"duration_seconds": c.DurationSecs,
+		"started_at":       c.StartedAt,
+		"expires_at":       c.ExpiresAt,
+		"state":            string(c.State),
 	}
 	if c.RevealedAt != nil {
 		m["revealed_at"] = *c.RevealedAt

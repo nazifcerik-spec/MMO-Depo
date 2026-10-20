@@ -309,9 +309,12 @@ type Config struct {
 	// MobLevelXP scales combat XP by how far a mob is below the character
 	// (ascending MaxBelow, the last band open-ended). Empty = always full.
 	MobLevelXP []MobXPBand `yaml:"mob_level_xp" json:"mob_level_xp"`
-	Classes    []Class     `yaml:"classes" json:"classes"`
-	Trees      []Tree      `yaml:"talent_trees" json:"talent_trees"`
-	Unlocks    []Unlock    `yaml:"-" json:"unlocks"`
+	// HuntLevelXP scales a hunted mob's own XP by the level gap in either
+	// direction (DD-281). Zero value = always full.
+	HuntLevelXP HuntXPFalloff `yaml:"hunt_level_xp" json:"hunt_level_xp"`
+	Classes     []Class       `yaml:"classes" json:"classes"`
+	Trees       []Tree        `yaml:"talent_trees" json:"talent_trees"`
+	Unlocks     []Unlock      `yaml:"-" json:"unlocks"`
 
 	table    []int64
 	classes  map[string]*Class
@@ -326,6 +329,35 @@ type Config struct {
 type MobXPBand struct {
 	MaxBelow int     `yaml:"max_below" json:"max_below"`
 	Factor   float64 `yaml:"factor" json:"factor"`
+}
+
+// HuntXPFalloff scales a hunted mob's XP by the level gap either way,
+// measured against the character's level (DD-281): a gap of FreePct of the
+// level (at least one level) pays in full; past it the XP is
+// (1 - extra gap / level)^Power, never under Floor. Relative, because a
+// character's power grows with its level: five levels matter at level 10,
+// not at 500.
+type HuntXPFalloff struct {
+	FreePct float64 `yaml:"free_pct" json:"free_pct"`
+	Power   float64 `yaml:"power"    json:"power"`
+	Floor   float64 `yaml:"floor"    json:"floor"`
+}
+
+// Factor is the share of a mob's XP a character of playerLevel earns.
+func (f HuntXPFalloff) Factor(playerLevel, mobLevel int) float64 {
+	if f.Power <= 0 || playerLevel <= 0 || mobLevel <= 0 {
+		return 1
+	}
+	gap := playerLevel - mobLevel
+	if gap < 0 {
+		gap = -gap
+	}
+	free := max(1, int(math.Round(f.FreePct*float64(playerLevel))))
+	if gap <= free {
+		return 1
+	}
+	rel := math.Min(1, float64(gap-free)/float64(playerLevel))
+	return math.Max(f.Floor, math.Pow(1-rel, f.Power))
 }
 
 // SoloAdaptation is the solo conversion rule of support classes.
@@ -444,6 +476,9 @@ func (c *Config) Prepare() error {
 		if err := validateClass(k, families); err != nil {
 			return err
 		}
+	}
+	if h := c.HuntLevelXP; h.FreePct < 0 || h.FreePct > 1 || h.Power < 0 || h.Floor < 0 || h.Floor > 1 {
+		return errors.New("leveling: hunt_level_xp needs free_pct and floor in 0..1 and power >= 0")
 	}
 	for i, b := range c.MobLevelXP {
 		last := i == len(c.MobLevelXP)-1

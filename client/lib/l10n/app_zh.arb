@@ -173,5 +173,6 @@
   "mapHint": "你可以直接前往等级允许的任何区域，时间按最短道路计算。拖动或缩放地图，点击区域。",
   "mapNoRoad": "没有直达这里的道路。请经由你身边发光的区域前往。",
   "youAreHere": "你在这里。",
-  "travelTime": "旅行时间：{time}"
+  "travelTime": "旅行时间：{time}",
+  "xpPerKill": "{xp} 经验"
 }

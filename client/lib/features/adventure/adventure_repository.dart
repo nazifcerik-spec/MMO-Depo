@@ -21,15 +21,13 @@ class AdventureRepository {
 
   // --- hunt -----------------------------------------------------------------
 
-  /// XP fall-off for low-level mobs, filled by [mobs].
-  List<MobXPBand> xpBands = const [];
+  /// Hunting XP fall-off by level gap (DD-281), filled by [mobs].
+  HuntXPFalloff huntXP = const HuntXPFalloff();
 
   Future<List<MobInfo>> mobs() async {
     if (_mobs case final cached?) return cached;
     final j = await api.get('/v1/mobs');
-    xpBands = [
-      for (final b in (j['xp_bands'] as List? ?? const []).cast<Map<String, dynamic>>()) MobXPBand.fromJson(b),
-    ];
+    huntXP = HuntXPFalloff.fromJson(j['hunt_level_xp'] as Map<String, dynamic>?);
     return _mobs = [for (final m in (j['mobs'] as List? ?? const []).cast<Map<String, dynamic>>()) MobInfo.fromJson(m)];
   }
 

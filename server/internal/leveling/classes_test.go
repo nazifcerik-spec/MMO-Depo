@@ -98,3 +98,31 @@ func TestMobXPFactor(t *testing.T) {
 	require.NoError(t, empty.Prepare())
 	require.Equal(t, 1.0, empty.MobXPFactor(500, 1), "no bands: always full")
 }
+
+// Hunting XP falls off with the level gap either way (DD-281).
+func TestHuntXPFalloff(t *testing.T) {
+	f := leveling.HuntXPFalloff{FreePct: 0.05, Power: 4, Floor: 0.1}
+	for _, tc := range []struct {
+		player, mob int
+		want        float64
+	}{
+		{40, 40, 1}, {40, 42, 1}, {40, 38, 1}, // 5% of 40: two levels free
+		{40, 46, 0.6561}, {40, 34, 0.6561}, // 4 past free: (1 - 0.1)^4
+		{10, 9, 1}, {10, 5, 0.1296}, {10, 3, 0.1}, // one level free at 10; the floor
+		{500, 475, 1}, {500, 460, 0.88529281}, // 25 free at 500; 15 past: (1 - 0.03)^4
+		{500, 1, 0.1}, {0, 5, 1}, // the floor; unknown level: full
+	} {
+		require.InDelta(t, tc.want, f.Factor(tc.player, tc.mob), 1e-9, "player %d mob %d", tc.player, tc.mob)
+	}
+	require.Equal(t, 1.0, leveling.HuntXPFalloff{}.Factor(500, 1), "no falloff configured: full")
+
+	for name, bad := range map[string]leveling.HuntXPFalloff{
+		"negative free":  {FreePct: -1},
+		"negative power": {Power: -1},
+		"floor > 1":      {Power: 2, Floor: 1.5},
+	} {
+		c := validConfig()
+		c.HuntLevelXP = bad
+		require.Error(t, c.Prepare(), name)
+	}
+}

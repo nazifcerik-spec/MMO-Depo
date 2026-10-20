@@ -136,12 +136,8 @@ void main() {
     final adv = AdventureRepository(a.api, a.id);
     final mobs = await adv.mobs();
     expect(mobs.first.code, 'young_boar');
-    // Shortest cadence so one encounter happens within the test.
-    final started = await a.api.post('/v1/character/${a.id}/hunt', {
-      'mob_code': 'young_boar',
-      'duration_seconds': 600,
-      'encounter_seconds': 30,
-    });
+    // Fights run back to back (DD-281): a few seconds hold several kills.
+    final started = await a.api.post('/v1/character/${a.id}/hunt', {'mob_code': 'young_boar', 'duration_seconds': 600});
     expect(started['contract'], isNotNull);
     final hunt = await adv.activeHunt();
     expect(hunt!.target, 'young_boar');

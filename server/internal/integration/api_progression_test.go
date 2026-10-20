@@ -3,6 +3,7 @@
 package integration
 
 import (
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -79,12 +80,10 @@ func TestHTTPProgression(t *testing.T) {
 // keyed by the contract, none added by a replay.
 func TestHTTPHuntXPIsCanonical(t *testing.T) {
 	w := newWorld(t)
-	p := newHTTPPlayer(t, "warrior")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 6 WHERE id = $1`, p.char)
-	require.NoError(t, err)
+	p := newHTTPPlayer(t, "warrior") // level 1, as the boar
 	h := p.ok("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600})
 	hid := h["contract"].(map[string]any)["id"].(string)
-	_, err = w.p.Exec(w.ctx, `
+	_, err := w.p.Exec(w.ctx, `
 		UPDATE hunt.contract SET started_at = now() - interval '61 minutes', expires_at = now() - interval '1 minute'
 		 WHERE id = $1`, hid)
 	require.NoError(t, err)
@@ -98,17 +97,29 @@ func TestHTTPHuntXPIsCanonical(t *testing.T) {
 	require.Equal(t, 1, n)
 	require.Equal(t, res["hunt"].(map[string]any)["total_xp"], float64(amount))
 	victories := res["hunt"].(map[string]any)["victories"].(float64)
-	require.Equal(t, victories*2000, float64(amount), "AFK rate: 1000 XP per minute of 2-minute encounters")
+	require.Greater(t, victories, 30.0, "fights run back to back (DD-281)")
+	require.Equal(t, victories*mobXP(p, "young_boar"), float64(amount), "level 1 vs 1: the mob's full XP a kill")
 }
 
-// DD-254: a mob far below the character pays a tenth of the AFK rate.
+// mobXP is a hunted mob's own XP per kill from the public catalog.
+func mobXP(p *hc, code string) float64 {
+	for _, m := range items(p.ok("GET", "/v1/mobs", nil), "mobs") {
+		if m["code"] == code {
+			return m["xp_reward"].(float64)
+		}
+	}
+	p.t.Fatalf("no mob %s", code)
+	return 0
+}
+
+// DD-281: a mob far from the character's level pays a tenth of its XP.
 func TestHTTPGrayMobPaysLess(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
 	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 40 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 	mobs := p.ok("GET", "/v1/mobs", nil)
-	require.Len(t, mobs["xp_bands"], 3)
+	require.Equal(t, map[string]any{"free_pct": 0.05, "power": 4.0, "floor": 0.1}, mobs["hunt_level_xp"])
 	h := p.ok("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600})
 	hid := h["contract"].(map[string]any)["id"].(string)
 	_, err = w.p.Exec(w.ctx, `
@@ -117,5 +128,5 @@ func TestHTTPGrayMobPaysLess(t *testing.T) {
 	require.NoError(t, err)
 	res := p.ok("POST", "/v1/hunt/"+hid+"/reveal", map[string]any{})["hunt"].(map[string]any)
 	require.Positive(t, res["victories"])
-	require.Equal(t, res["victories"].(float64)*200, res["total_xp"], "level 40 vs level 1: 10% of 2000 per victory")
+	require.Equal(t, res["victories"].(float64)*math.Round(mobXP(p, "young_boar")*0.1), res["total_xp"], "level 40 vs level 1: 10% of the mob's XP")
 }

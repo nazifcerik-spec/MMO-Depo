@@ -461,6 +461,9 @@ func Read(dir string) (*Pack, error) {
 	if p.Mobs, err = loadMobsFile(f("mobs.yaml")); err != nil {
 		return nil, err
 	}
+	if err := applyHuntXP(f("hunt_xp.yaml"), p.Mobs); err != nil {
+		return nil, err
+	}
 	if p.Dungeons, err = loadDungeonsFile(f("dungeons.yaml")); err != nil {
 		return nil, err
 	}
@@ -694,6 +697,45 @@ func loadRecipesFile(path string) ([]Recipe, error) {
 		return nil, fmt.Errorf("validate %s: %w", path, err)
 	}
 	return f.Recipes, nil
+}
+
+// applyHuntXP sets every hunted mob's own XP from hunt_xp.yaml (DD-281):
+// `xp: {code: amount}`, tuned so an at-level hunter in mid-quality gear
+// levels at the curve's pace (balance TestTuneHuntXP writes the file).
+// Without the file mobs keep mobs.yaml's xp_reward; with it every hunted
+// mob needs a value and every value a hunted mob.
+func applyHuntXP(path string, mobs []Mob) error {
+	raw, err := os.ReadFile(path)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil
+	}
+	if err != nil {
+		return fmt.Errorf("read %s: %w", path, err)
+	}
+	var f struct {
+		XP map[string]int32 `yaml:"xp"`
+	}
+	if err := yaml.Unmarshal(raw, &f); err != nil {
+		return fmt.Errorf("parse %s: %w", path, err)
+	}
+	seen := map[string]bool{}
+	for i := range mobs {
+		if mobs[i].RaidBoss {
+			continue
+		}
+		xp, ok := f.XP[mobs[i].Code]
+		if !ok || xp <= 0 {
+			return fmt.Errorf("hunt_xp.yaml: no positive XP for mob %s", mobs[i].Code)
+		}
+		mobs[i].XPReward = xp
+		seen[mobs[i].Code] = true
+	}
+	for code := range f.XP {
+		if !seen[code] {
+			return fmt.Errorf("hunt_xp.yaml: %s is not a hunted mob", code)
+		}
+	}
+	return nil
 }
 
 // MapSize bounds region positions on the travel map (map units).

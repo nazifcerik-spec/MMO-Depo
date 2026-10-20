@@ -65,6 +65,11 @@ mob_level_xp:
   - { max_below: 25, factor: 0.5 }
   - { max_below: 0,  factor: 0.1 }
 
+# Hunting XP (DD-281): a mob's own XP, in full within 5% of the character's
+# level either way (at least one level); past it × (1 - extra gap / level)^4,
+# never under 10%. Farming far weaker mobs must not beat hunting at level.
+hunt_level_xp: { free_pct: 0.05, power: 4, floor: 0.10 }
+
 # Support specializations without a party convert this share of their
 # support_power into attack (Solo Adaptation, DD-252).
 solo_adaptation: { ratio: 0.35 }

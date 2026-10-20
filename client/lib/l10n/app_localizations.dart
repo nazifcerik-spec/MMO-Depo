@@ -4233,6 +4233,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Travel time: {time}'**
   String travelTime(String time);
+
+  /// No description provided for @xpPerKill.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP'**
+  String xpPerKill(int xp);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

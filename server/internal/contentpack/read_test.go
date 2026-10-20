@@ -124,3 +124,28 @@ func TestApplyMap(t *testing.T) {
 		require.True(t, r.MapX > 0 && r.MapY > 0, "%s is on the map", r.Code)
 	}
 }
+
+// Every hunted mob has its own XP in hunt_xp.yaml, raid bosses none (DD-281).
+func TestApplyHuntXP(t *testing.T) {
+	mobs := func() []Mob { return []Mob{{Code: "boar", XPReward: 1}, {Code: "titan", RaidBoss: true}} }
+	dir := t.TempDir()
+	path := filepath.Join(dir, "hunt_xp.yaml")
+	write := func(s string) { require.NoError(t, os.WriteFile(path, []byte(s), 0o600)) }
+
+	ms := mobs()
+	require.NoError(t, applyHuntXP(filepath.Join(dir, "none.yaml"), ms), "no file: mobs.yaml XP stays")
+	require.Equal(t, int32(1), ms[0].XPReward)
+	write("xp: {boar: 250}")
+	require.NoError(t, applyHuntXP(path, ms))
+	require.Equal(t, int32(250), ms[0].XPReward)
+	for name, body := range map[string]string{
+		"missing mob": "xp: {}",
+		"zero xp":     "xp: {boar: 0}",
+		"raid boss":   "xp: {boar: 5, titan: 5}",
+		"unknown":     "xp: {boar: 5, ghost: 5}",
+		"bad yaml":    "xp: {",
+	} {
+		write(body)
+		require.Error(t, applyHuntXP(path, mobs()), name)
+	}
+}

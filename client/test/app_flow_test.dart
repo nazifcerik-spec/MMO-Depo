@@ -1761,13 +1761,19 @@ void main() {
     expect(find.text('Şu an planlı dünya etkinliği yok.'), findsOneWidget); // layout overflow would fail the test
   });
 
-  test('mobXPPercent follows the server bands (DD-254)', () {
-    const bands = [MobXPBand(10, 1), MobXPBand(25, 0.5), MobXPBand(0, 0.1)];
-    expect(mobXPPercent(bands, 40, 45), 100, reason: 'above the character');
-    expect(mobXPPercent(bands, 40, 30), 100);
-    expect(mobXPPercent(bands, 40, 29), 50);
-    expect(mobXPPercent(bands, 40, 1), 10);
-    expect(mobXPPercent(const [], 40, 1), 100, reason: 'older server: no bands');
+  test('hunting XP falls off with the level gap either way (DD-281)', () {
+    const f = HuntXPFalloff(freePct: 0.05, power: 4, floor: 0.1);
+    expect(f.xp(200, 40, 42), 200, reason: '5% of 40: two levels free');
+    expect(f.xp(200, 40, 38), 200);
+    expect(f.xp(200, 40, 46), 131, reason: 'four past free: (1 - 0.1)^4');
+    expect(f.xp(200, 40, 34), 131);
+    expect(f.xp(200, 10, 3), 20, reason: 'level 10 farming level 3: the 10% floor');
+    expect(f.xp(200, 400, 1), 20, reason: 'the floor');
+    expect(const HuntXPFalloff().xp(200, 400, 1), 200, reason: 'older server: no falloff');
+    expect(
+      HuntXPFalloff.fromJson({'free_pct': 0.05, 'power': 4, 'floor': 0.1}).factor(500, 460),
+      closeTo(0.88529281, 1e-9),
+    );
   });
 
   test('splitCopper', () {

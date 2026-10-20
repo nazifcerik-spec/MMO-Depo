@@ -45,6 +45,10 @@ type Combatant struct {
 	// encounters (DD-229); Session ignores it. Zero in old snapshots.
 	RegenPerEncounter int32 `json:",omitempty"`
 
+	// RegenPerSec is the HP a hunter recovers per second while it fights
+	// back to back (DD-281); Session ignores it. Zero in old snapshots.
+	RegenPerSec float64 `json:",omitempty"`
+
 	// Level drives the level-gap rule (DD-229). Zero = unknown (old
 	// snapshots): no gap applies, so their replays stay identical.
 	Level int16 `json:",omitempty"`

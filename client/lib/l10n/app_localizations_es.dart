@@ -2384,4 +2384,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String travelTime(String time) {
     return 'Tiempo de viaje: $time';
   }
+
+  @override
+  String xpPerKill(int xp) {
+    return '$xp XP';
+  }
 }

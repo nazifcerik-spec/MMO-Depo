@@ -147,15 +147,12 @@ type StartRequest struct {
 	AccountID       uuid.UUID
 	MobCode         string
 	DurationSeconds int32
-	EncounterSecs   int32
 }
 
-// StartResult wraps the created contract + a full-duration peek so the client
-// can preview expected encounter count.
+// StartResult wraps the created contract.
 type StartResult struct {
-	Contract          *Contract `json:"contract"`
-	PlannedEncounters int       `json:"planned_encounters_full"`
-	MobDisplayKey     string    `json:"mob_display_name_key"`
+	Contract      *Contract `json:"contract"`
+	MobDisplayKey string    `json:"mob_display_name_key"`
 }
 
 func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, error) {
@@ -165,14 +162,8 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	if req.MobCode == "" {
 		return nil, ErrValidation
 	}
-	if req.DurationSeconds <= 0 || req.DurationSeconds > MaxHuntSeconds {
+	if req.DurationSeconds < MinHuntSeconds || req.DurationSeconds > MaxHuntSeconds {
 		return nil, ErrValidation
-	}
-	if req.EncounterSecs <= 0 {
-		req.EncounterSecs = DefaultEncounterSeconds
-	}
-	if req.EncounterSecs < MinEncounterSeconds || req.DurationSeconds < req.EncounterSecs {
-		return nil, ErrValidation // a hunt shorter than one encounter can't yield anything
 	}
 
 	// Ownership check via SheetFetcher.Owns — leak-safe.
@@ -213,9 +204,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		}
 	}
 	snapshot := combat.FromSheet(sheet)
-	// Resting between encounters: the out-of-combat regen (DD-218) over the
-	// encounter interval (DD-229).
-	snapshot.RegenPerEncounter = int32(float64(req.EncounterSecs/2) * character.HPRegenPer2s(sheet.Primary.Vitality))
+	// Fights run back to back (DD-281): the out-of-combat regen (DD-218)
+	// keeps ticking while the hunter fights.
+	snapshot.RegenPerSec = character.HPRegenPer2s(sheet.Primary.Vitality) / 2
 	if s.skills != nil {
 		snapshot.Skills = s.skills(sheet)
 	}
@@ -229,7 +220,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		ID:             uuid.New(),
 		CharacterID:    req.CharacterID,
 		MobCode:        req.MobCode,
-		EncounterSecs:  req.EncounterSecs,
+		EncounterSecs:  LegacyEncounterSeconds,
 		DurationSecs:   req.DurationSeconds,
 		StartedAt:      now,
 		ExpiresAt:      now.Add(time.Duration(req.DurationSeconds) * time.Second),
@@ -243,11 +234,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	if err := s.repo.Create(ctx, c); err != nil {
 		return nil, err
 	}
-	return &StartResult{
-		Contract:          c,
-		PlannedEncounters: c.EncountersPlanned(c.DurationSecs),
-		MobDisplayKey:     mob.DisplayNameKey,
-	}, nil
+	return &StartResult{Contract: c, MobDisplayKey: mob.DisplayNameKey}, nil
 }
 
 // --- Reveal -----------------------------------------------------------------
@@ -291,7 +278,6 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 	now := s.cfg.Now().UTC()
 	elapsed := c.ElapsedSeconds(now)
-	planned := c.EncountersPlanned(elapsed)
 
 	var snapshot combat.Combatant
 	if err := json.Unmarshal(c.PlayerSnapshot, &snapshot); err != nil {
@@ -302,16 +288,15 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		return nil, ErrUnknownMob
 	}
 
-	// Character XP per victory comes from the AFK combat rate (DD-250):
-	// minutes of fighting × afk_combat_xp_per_minute, scaled down for mobs
-	// far below the character (DD-254; the snapshot's level, so a level-up
-	// mid-hunt does not change the reward).
-	mob.XPReward = leveling.Current().ScaleMobXP(AFKXPPerVictory(c.EncounterSecs), int(snapshot.Level), int(mob.Level))
-	hr := Roll(c.Seed, snapshot, mob, planned, combat.DefaultMaxTurns, s.rngNew)
+	// Each kill pays the mob's own XP, less for a level gap either way
+	// (DD-281; the snapshot's level, so a level-up mid-hunt does not change
+	// the reward). Fights run back to back for the time elapsed.
+	mob.XPReward = HuntXP(mob.XPReward, int(snapshot.Level), int(mob.Level))
+	hr := Roll(c.Seed, snapshot, mob, elapsed, combat.DefaultMaxTurns, s.rngNew)
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------
-	// Each victory has a GearDropPct chance of gear from the mob's tier,
-	// usable by the character's class (DD-229).
+	// Each LootSeconds of winning has a GearDropPct chance of gear from the
+	// mob's tier, usable by the character's class (DD-229, DD-281).
 	var gear activity.GearDrop
 	if hr.Victories > 0 {
 		sheet, err := s.chars.Sheet(ctx, c.CharacterID, accountID)
@@ -319,7 +304,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 			return nil, err
 		}
 		gear = activity.GearDrop{Class: sheet.Class, Level: activity.DropLevel(int(mob.Level), int(snapshot.Level)),
-			Rolls: hr.Victories, Pct: GearDropPct}
+			Rolls: hr.LootRolls, Pct: GearDropPct}
 	}
 	var granted []activity.GrantedItem
 	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops+gear.Rolls) > 0 {
@@ -364,7 +349,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	// deterministic (same roll on retry), so repeating it is harmless, and a
 	// crash in between never leaves a revealed hunt with stale HP.
 	if s.hp != nil {
-		fightEnd := c.StartedAt.Add(time.Duration(hr.Completed) * time.Duration(c.EncounterSecs) * time.Second)
+		fightEnd := c.StartedAt.Add(time.Duration(hr.ElapsedSecs) * time.Second)
 		if fightEnd.After(now) {
 			fightEnd = now
 		}
@@ -491,8 +476,8 @@ func newLevel(x *character.XPGrantResult) int {
 	return int(x.Character.Level)
 }
 
-// AFKXPPerVictory is one victory's character XP at the AFK combat rate for
-// an encounter of encounterSecs.
-func AFKXPPerVictory(encounterSecs int32) int32 {
-	return int32(math.Round(leveling.Current().AFKCombatXPPerMinute * float64(encounterSecs) / 60))
+// HuntXP is what one kill of a mob pays a character: the mob's own XP
+// scaled by the level gap either way (DD-281).
+func HuntXP(mobXP int32, playerLevel, mobLevel int) int32 {
+	return int32(math.Round(float64(mobXP) * leveling.Current().HuntLevelXP.Factor(playerLevel, mobLevel)))
 }

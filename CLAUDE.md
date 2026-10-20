@@ -193,6 +193,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 91. **Her bölgeye doğrudan yolculuk (bitti)** — Sprint 91, DD-280. `world.Catalog.Routes` (Dijkstra, üst/alt + bağlantı): her ulaşılabilir bölge tek yolculuk, süre en kısa güzergâh, seviye şartı yalnız varışta. `/location` `routes` (`{seconds, path}`) + `travel.path`. İstemci: her bölgede süre + Git, seviyesi yetmeyen soluk/kilitli, rota güzergâh boyunca. Not: yerel entegrasyon takımında dev `worker` konteyneri e-posta kuyruğunu boşaltıp `TestAccountRecoverySQL`'i düşürebilir — takım öncesi `docker compose stop worker`.
 
+92. **Av yeniden: canavar XP'si + peş peşe savaş (bitti)** — Sprint 92, DD-281. `hunt.Roll` süre bütçesiyle: savaşlar peş peşe (tur 3 sn), can %50'nin ya da son savaş maliyetinin 3 katının altında kamp (saniyede %1); XP canavarın kendi değeri, sınırsız; altın/ganimet/ekipman zarı zafer süresiyle ölçekli (saatlik ekonomi aynı). `content/hunt_xp.yaml` ← `HUNT_XP_TUNE=1 go test ./internal/balance -run TestTuneHuntXP` (orta kalite ekipman = seviye kademesi nadir ×1,10; içerik/denge değişince yeniden çalıştır). Seviye farkı `hunt_level_xp` (göreli: %5 serbest, (1 − fark/seviye)⁴, taban %10). Testler `TestHuntPace`, `TestHuntNoGrayFarm`. İstemci canavar başı XP gösterir. Savaşçı raporu: `WARRIOR_REPORT=1 go test ./internal/balance -run TestWarriorHuntReport`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

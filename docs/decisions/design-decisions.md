@@ -2684,6 +2684,46 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-281 — Av: canavarın kendi XP'si, peş peşe savaş, güce bağlı hız
+**Karar:**
+- **Peş peşe savaş:** Karşılaşmalar arasında sabit 120 sn yok; savaşlar peş peşe. Bir tur 3 sn, savaşın süresi tur × 3 sn; güçlü karakter daha hızlı öldürür. Av süresi (1/3/6 sa) boyunca sığdığı kadar savaş yapılır; bitmeyen savaş sayılmaz.
+- **Kamp dinlenmesi:** Bir zaferden sonra can azaminin %50'sinin ya da o savaşın maliyetinin 3 katının altındaysa karakter kamp kurar ve saniyede azami canın %1'iyle dolar. Kamp süresi avdan düşer. Savaşırken de normal can yenilenmesi işler (`Combatant.RegenPerSec`).
+- **XP:** Her öldürme canavarın kendi XP'sini verir. Saatlik sınır yok, avlanan kadar XP.
+- **Canavar XP'si:** `content/hunt_xp.yaml` dosyasından gelir. Dosyayı denge simülasyonu üretir (`HUNT_XP_TUNE=1 … TestTuneHuntXP`):
+  - Ölçü, canavarın seviyesindeki ortalama sınıf yolunun orta kalite ekipmanla (seviyenin kademesi, nadir ×1,10) öldürme süresi; savaş ve kamp dahil.
+  - XP = taban 1000 XP/dk × bu süre. Böylece seviye eğrisinin dakikaları korunur.
+  - Değerler 160–370 XP; öldürme süresi Sv 1'de yaklaşık 15 sn, Sv 1000'de yaklaşık 10 sn.
+- **Seviye farkı (iki yönlü, göreli):**
+  - Seviyenin %5'i kadar fark (en az 1) tam XP öder.
+  - Ötesinde XP × (1 − fazla fark / seviye)⁴, taban %10 (`hunt_level_xp`).
+  - Göreli, çünkü güç seviyeyle büyür: 5 seviye Sv 10'da çok, Sv 500'de az.
+  - Üs 4, çok zayıf canavarı kasmayı kendi seviyendeki canavardan kârsız yapmak için seçildi (`TestHuntNoGrayFarm`).
+- **Altın ve ganimet:** Kazanılan savaşların av süresine göre ölçeklenir (zafer başı süre / 120 sn). Saatlik ekonomi eskisiyle aynı kalır, hızlı öldürmek ekonomiyi katlamaz. Ekipman zarı da 120 sn'lik süre başınadır (`LootRolls`).
+- Kayıt en fazla ilk 50 karşılaşmayı tutar; toplamlar hepsini kapsar.
+- `encounter_seconds` artık kullanılmıyor (sütun eski değerle dolar).
+- `/v1/mobs` → `hunt_level_xp`. İstemci her canavarda öldürme başı XP'yi seviye farkıyla gösterir.
+
+**Reason:** Kullanıcı isteği:
+- Her canavarın kendi XP'si olsun.
+- Seviye farkı iki yönlü düşürsün.
+- Savaş gücü öldürme süresini belirlesin.
+- Karşılaşmalar arası bekleme ve saatlik XP sınırı olmasın.
+- Süre ve XP orta kalite ekipmana göre ayarlansın.
+
+**Alternatives:** Mutlak seviye farkıyla düşüş (Sv 10'da Sv 3 canavarı kasmak 4 kat verimliydi). Kampsız peş peşe savaş (karakter birkaç dövüşte ölüyordu). Canavar XP'sini seviye formülüyle vermek (canavar tipine göre öldürme süresi farkını görmez).
+**Consequences:**
+- Saatlik XP artık güce bağlı: savaşçı Sv 10'da ×0,6 saldırıyla 24 bin, ×1,6 ile 58 bin XP/sa.
+- Hızlı yapılar daha hızlı ilerler (sınırlar ×0,3–×4).
+- Zindan ve baskın XP'si değişmedi (dakika başı AFK oranı).
+- Görevlerin öldürme hedefleri çok daha hızlı dolar.
+- Denge testleri: `TestHuntPace` (orta ekipmanla ortalama yapı taban ±%35), `TestHuntNoGrayFarm`, `TestBalanceTargets` (aşılmış canavar ya ölümcül ya daha az verimli; sıradan ekipmanla seviye süresi ≤ eğri ×3).
+- Av simülasyonları 20 tohumla çalışır.
+- Rapor: `reports/warrior_hunt_report.md`.
+
+**Tarih:** 2026-10-20
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -1873,5 +1873,13 @@
         "type": "String"
       }
     }
+  },
+  "xpPerKill": "{xp} XP",
+  "@xpPerKill": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
   }
 }

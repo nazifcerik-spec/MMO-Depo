@@ -214,6 +214,7 @@ func (w *world) playerIn(build string, level int, gear []contentpack.Item, inPar
 		Skills:            w.skills.Actives(path, level),
 		Level:             int16(level),
 		RegenPerEncounter: int32(float64(encSeconds/2) * character.HPRegenPer2s(s.Primary.VIT)),
+		RegenPerSec:       character.HPRegenPer2s(s.Primary.VIT) / 2,
 		BlockPct:          int32(d.BlockPct), CritDmgPct: int32(d.CritDmgPct), ExecutePct: int32(d.ExecutePct),
 		MissingHPDmgPct: int32(d.MissingHPDmgPct), LifestealPct: int32(d.LifestealPct), DmgReductionPct: int32(d.DmgReductionPct)}
 	combat.ApplyResource(&p, class)
@@ -239,26 +240,34 @@ type outcome struct {
 }
 
 const (
-	seeds      = 150
+	seeds = 150
+	// encSeconds is the dungeon/raid rest base: player() fills
+	// RegenPerEncounter for it and the dungeon sims rescale it.
 	encSeconds = 120
-	encPerHour = 30 // DefaultEncounterSeconds = 120
 	maxTurns   = 50
+	hourSecs   = 3600
+	// huntSeeds: an hour of back-to-back hunting holds a few hundred fights
+	// (DD-281), so far fewer hours than dungeon runs give the same sample.
+	huntSeeds = 20
 )
 
+// simulate is an hour of hunting the way the reveal pays it (DD-281):
+// fights back to back, each kill the mob's own XP with the level-gap
+// falloff.
 func simulate(p combat.Combatant, m combat.Mob, level int) outcome {
 	var o outcome
-	m.XPReward = leveling.Current().ScaleMobXP(hunt.AFKXPPerVictory(encSeconds), level, int(m.Level)) // as the reveal pays (DD-250, DD-254)
-	for s := int64(1); s <= seeds; s++ {
-		r := hunt.Roll(s*7919, p, m, encPerHour, maxTurns, func(seed int64) combat.RNG { return activity.NewRNG(seed) })
+	m.XPReward = hunt.HuntXP(m.XPReward, level, int(m.Level))
+	for s := int64(1); s <= huntSeeds; s++ {
+		r := hunt.Roll(s*7919, p, m, hourSecs, maxTurns, func(seed int64) combat.RNG { return activity.NewRNG(seed) })
 		if r.StoppedOnDeath {
 			o.deathRate++
 		}
 		o.winsPerHour += float64(r.Victories)
 		o.xpPerHour += float64(r.TotalXP)
 	}
-	o.deathRate /= seeds
-	o.winsPerHour /= seeds
-	o.xpPerHour /= seeds
+	o.deathRate /= huntSeeds
+	o.winsPerHour /= huntSeeds
+	o.xpPerHour /= huntSeeds
 	if o.xpPerHour > 0 {
 		o.minPerLevel = float64(character.XPToNext(level)) / o.xpPerHour * 60
 	}
@@ -363,18 +372,22 @@ func TestBalanceTargets(t *testing.T) {
 		for _, c := range builds(lv) {
 			kit := simulate(w.player(c, lv, w.kit(c, lv)), m, lv)
 			require.LessOrEqual(t, kit.deathRate, 0.10, "%s L%d: an hour at %s with level gear must be safe", c, lv, m.Code)
-			// At-level AFK hunting earns close to the curve's baseline rate
-			// (DD-250: the curve is timed at baseline_xp_per_minute).
+			// Common level gear levels within three times the curve's time;
+			// the mid-quality pace itself is TestHuntPace's (DD-281).
 			baseline := float64(character.XPToNext(lv)) / leveling.Current().Curve.BaselineXPPerMinute
 			require.Greater(t, kit.minPerLevel, 0.0)
-			require.LessOrEqual(t, kit.minPerLevel, baseline*1.25, "%s L%d: minutes per level vs baseline", c, lv)
+			require.LessOrEqual(t, kit.minPerLevel, baseline*3, "%s L%d: minutes per level vs baseline", c, lv)
 			// Out-levelled mobs must be dangerous in the starting content.
 			// Past it, sustain skills let tanks and healers outlast stronger
 			// mobs, so out-levelling is made unprofitable instead: XP pays per
 			// minute and loot is capped at the character's level (DD-255).
 			if tm := w.toughFor(lv, toughGap(lv)); lv < 25 && tm != nil {
+				// Camping (DD-281) can make them survivable; then they must pay
+				// less an hour than the level's own mob.
 				up := simulate(w.player(c, lv, w.kit(c, lv)), *tm, lv)
-				require.GreaterOrEqual(t, up.deathRate, 0.25, "%s L%d vs %s: out-levelled mobs must be dangerous", c, lv, tm.Code)
+				require.True(t, up.deathRate >= 0.25 || up.xpPerHour < kit.xpPerHour,
+					"%s L%d vs %s: out-levelled mobs must be dangerous or slower (death %.2f, XP/h %.0f vs %.0f)",
+					c, lv, tm.Code, up.deathRate, up.xpPerHour, kit.xpPerHour)
 			}
 			prevMin = max(prevMin, kit.minPerLevel)
 		}

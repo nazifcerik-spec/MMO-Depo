@@ -1,29 +1,39 @@
+import 'dart:math' as math;
+
 import '../activity/activity_models.dart';
 
 /// AFK hunt lengths (DD-249), same as gathering: 1, 3 or 6 hours (server cap
 /// 6h). Dungeons have a fixed duration per template.
 const huntDurations = activityDurations;
 
-/// Combat XP share for a mob [maxBelow] levels under the character
-/// (DD-254); maxBelow 0 closes the list.
-class MobXPBand {
-  const MobXPBand(this.maxBelow, this.factor);
+/// How a hunted mob's own XP falls off with the level gap either way,
+/// against the character's level (DD-281): a gap of [freePct] of the level
+/// (at least one) pays in full, past it × (1 - extra gap / level)^[power],
+/// never under [floor]. Mirrors leveling.HuntXPFalloff; display only.
+class HuntXPFalloff {
+  const HuntXPFalloff({this.freePct = 0, this.power = 0, this.floor = 0});
 
-  factory MobXPBand.fromJson(Map<String, dynamic> j) =>
-      MobXPBand((j['max_below'] as num?)?.toInt() ?? 0, (j['factor'] as num?)?.toDouble() ?? 1);
+  factory HuntXPFalloff.fromJson(Map<String, dynamic>? j) => HuntXPFalloff(
+    freePct: (j?['free_pct'] as num?)?.toDouble() ?? 0,
+    power: (j?['power'] as num?)?.toDouble() ?? 0,
+    floor: (j?['floor'] as num?)?.toDouble() ?? 0,
+  );
 
-  final int maxBelow;
-  final double factor;
-}
+  final double freePct;
+  final double power;
+  final double floor;
 
-/// Percent of full combat XP a mob pays (display only; the server decides).
-int mobXPPercent(List<MobXPBand> bands, int playerLevel, int mobLevel) {
-  final gap = playerLevel - mobLevel;
-  if (gap <= 0) return 100;
-  for (final b in bands) {
-    if (b.maxBelow == 0 || gap <= b.maxBelow) return (b.factor * 100).round();
+  double factor(int playerLevel, int mobLevel) {
+    if (power <= 0 || playerLevel <= 0 || mobLevel <= 0) return 1;
+    final gap = (playerLevel - mobLevel).abs();
+    final free = math.max(1, (freePct * playerLevel).round());
+    if (gap <= free) return 1;
+    final rel = math.min(1.0, (gap - free) / playerLevel);
+    return math.max(floor, math.pow(1 - rel, power).toDouble());
   }
-  return 100;
+
+  /// One kill's XP for a character of [playerLevel].
+  int xp(int mobXP, int playerLevel, int mobLevel) => (mobXP * factor(playerLevel, mobLevel)).round();
 }
 
 class MobInfo {
