@@ -82,7 +82,7 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
       builder: (_) => _DeleteCharacterDialog(c: c, repo: widget.repo),
     );
     if (done != true || !mounted) return;
-    toast(context, Text(l.characterDeleteScheduled(c.name)));
+    toast(context, Text(l.characterDeleted(c.name)));
     await _load();
   }
 
@@ -273,7 +273,7 @@ class _DeleteCharacterDialogState extends State<_DeleteCharacterDialog> {
       _error = null;
     });
     try {
-      await widget.repo.requestDelete(widget.c.id, _name.text.trim());
+      await widget.repo.delete(widget.c.id, _name.text.trim());
       if (mounted) Navigator.pop(context, true);
     } on ApiError catch (e) {
       if (mounted) setState(() => _error = errorText(l, e));

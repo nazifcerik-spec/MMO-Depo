@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/otter/server/internal/domain/auth"
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/mail"
@@ -301,8 +302,8 @@ SELECT count(*) FROM g`}
 // --- character_delete_expire ----------------------------------------------
 
 // CharacterDeleteExpire hard-deletes characters whose delete grace has
-// passed (DD-134). Their items are deleted first; every other character-owned
-// table cascades. Ledger rows stay (no FK) for audit.
+// passed: those of a purged account (DD-231) and any left pending from before
+// direct deletion (DD-283). See character.PurgeTx.
 type CharacterDeleteExpire struct{ Pool *pgxpool.Pool }
 
 func (CharacterDeleteExpire) Name() string            { return "character_delete_expire" }
@@ -322,34 +323,7 @@ func (j CharacterDeleteExpire) Run(ctx context.Context) (int64, error) {
 		if err != nil || len(ids) == 0 {
 			return err
 		}
-		// Guilds led by a doomed character pass to the most senior, earliest
-		// remaining member; guilds with no one else left are removed.
-		if _, err := tx.Exec(ctx, `
-			UPDATE social.guild g SET leader_character_id = s.character_id, version = g.version + 1
-			  FROM (SELECT DISTINCT ON (m.guild_id) m.guild_id, m.character_id
-			          FROM social.guild_member m
-			          JOIN social.guild g2 ON g2.id = m.guild_id
-			         WHERE g2.leader_character_id = ANY($1) AND NOT (m.character_id = ANY($1))
-			         ORDER BY m.guild_id, m.rank_index, m.joined_at) s
-			 WHERE g.id = s.guild_id`, ids); err != nil {
-			return err
-		}
-		if _, err := tx.Exec(ctx, `
-			UPDATE social.guild_member m SET rank_index = 0
-			  FROM social.guild g
-			 WHERE g.id = m.guild_id AND g.leader_character_id = m.character_id AND m.rank_index <> 0`); err != nil {
-			return err
-		}
-		if _, err := tx.Exec(ctx,
-			`DELETE FROM social.guild WHERE leader_character_id = ANY($1)`, ids); err != nil {
-			return err
-		}
-		if _, err := tx.Exec(ctx,
-			`DELETE FROM inventory.item_instance WHERE owner_character_id = ANY($1)`, ids); err != nil {
-			return err
-		}
-		tag, err := tx.Exec(ctx, `DELETE FROM character.character WHERE id = ANY($1)`, ids)
-		n = tag.RowsAffected()
+		n, err = character.PurgeTx(ctx, tx, ids)
 		return err
 	})
 	return n, err

@@ -5,6 +5,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/otter/server/internal/activity"
@@ -101,7 +102,8 @@ func TestRaidTargets(t *testing.T) {
 			three += w.raidClearRate(g, lv, r)
 		}
 		full, three = full/10, three/10
+		t.Logf("%s Sv %d: five %.2f, three %.2f", r.Code, lv, full, three)
 		require.GreaterOrEqual(t, full, 0.70, "%s: five at min level clear most runs", r.Code)
-		require.LessOrEqual(t, three, 0.30, "%s: three at min level rarely clear", r.Code)
+		assert.LessOrEqual(t, three, 0.30, "%s: three at min level rarely clear", r.Code)
 	}
 }

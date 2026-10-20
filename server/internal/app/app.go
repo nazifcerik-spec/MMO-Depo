@@ -101,9 +101,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// --- Character ---
 	charRepo := character.NewPgRepo(pool)
 	charSvc := character.NewService(charRepo, character.ServiceConfig{
-		SlotCap:     cfg.CharacterSlotCap,
-		DeleteGrace: cfg.CharacterDeleteGrace,
-		Now:         time.Now,
+		SlotCap: cfg.CharacterSlotCap,
+		Now:     time.Now,
 	}, logger)
 	if cfg.AuthRequireVerifiedEmail {
 		charSvc.WithEmailVerification(authSvc.EmailVerified)

@@ -654,10 +654,11 @@ func (c *Config) Advance(st State, amount int64) (State, []int) {
 	return st, gained
 }
 
-// AttributePointsEarned is the total attribute points granted through level.
+// AttributePointsEarned is the total attribute points granted through level:
+// Amount for every Every levels gained past level 1, plus milestones.
 func (c *Config) AttributePointsEarned(level int) int {
 	r := c.AttributePoints
-	n := (level / r.Every) * r.Amount
+	n := (max(level-1, 0) / r.Every) * r.Amount
 	for l, amount := range r.Milestones {
 		if l <= level {
 			n += amount

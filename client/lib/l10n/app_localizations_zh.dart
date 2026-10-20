@@ -2393,7 +2393,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name 将在 48 小时后连同所有物品和金币被永久删除，在此之前可以取消。请输入角色名以确认。';
+    return '$name 将连同所有物品和金币立即删除，且无法恢复。请输入角色名以确认。';
   }
 
   @override
@@ -2408,8 +2408,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cancelCharacterDelete => '取消删除';
 
   @override
-  String characterDeleteScheduled(String name) {
-    return '$name 将在 48 小时后被删除。';
+  String characterDeleted(String name) {
+    return '$name 已删除。';
   }
 
   @override

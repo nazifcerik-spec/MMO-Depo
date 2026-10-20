@@ -197,6 +197,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 93. **Karakter silme (bitti)** — Sprint 93, DD-282. Karakter seçiminde kart başı sil butonu → ad yazılana kadar pasif onay penceresi; sunucu `delete-request` `confirm_name` ister (`E_NAME_MISMATCH` 400). 48 sa bekleme (DD-134): kartta silinme zamanı + "Silmeyi iptal et".
 
+94. **Anında karakter silme + seviye başına 3 nitelik puanı (bitti)** — Sprint 94, DD-283..284. `POST /character/{id}/delete` (`confirm_name`) karakteri eşyalarıyla hemen siler (`character.PurgeTx`, worker da kullanır); 48 sa bekleme ve `CHARACTER_DELETE_GRACE` kalktı, `delete_grace` yalnız hesap silmede. Nitelik puanı seviye atlayışı başına 3 (Sv 1000'de 3022); `hunt_xp.yaml` yeniden ayarlandı, baskın boss saldırısı yükseltildi (titan 4,6 / elder_titan 7,0), raporlar yenilendi.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -17,9 +17,8 @@ func newTestService(t *testing.T) (*character.Service, *character.MemoryRepo) {
 	t.Helper()
 	repo := character.NewMemoryRepo()
 	svc := character.NewService(repo, character.ServiceConfig{
-		SlotCap:     2,
-		DeleteGrace: 48 * time.Hour,
-		Now:         time.Now,
+		SlotCap: 2,
+		Now:     time.Now,
 	}, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	return svc, repo
 }
@@ -169,48 +168,52 @@ func TestEnter_ForbiddenForOtherAccount(t *testing.T) {
 	require.ErrorIs(t, err, character.ErrForbidden)
 }
 
-func TestRequestDelete_Success(t *testing.T) {
+// pendingDelete puts a character in delete_grace, as an account deletion does.
+func pendingDelete(t *testing.T, repo *character.MemoryRepo, id uuid.UUID) {
+	t.Helper()
+	require.NoError(t, repo.SetDeleteGrace(context.Background(), id, time.Now().Add(time.Hour)))
+}
+
+func TestDelete_RemovesAtOnce(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
 
-	updated, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
+	require.NoError(t, svc.Delete(context.Background(), c.ID, acct, "Grim"))
+	_, err := svc.GetOwned(context.Background(), c.ID, acct)
+	require.ErrorIs(t, err, character.ErrNotFound)
+	list, err := svc.ListForAccount(context.Background(), acct)
 	require.NoError(t, err)
-	require.Equal(t, character.StateDeleteGrace, updated.State)
-	require.NotNil(t, updated.DeleteGraceAt)
-	require.True(t, updated.DeleteGraceAt.After(time.Now().Add(47*time.Hour)))
+	require.Empty(t, list)
+	_ = mustCreate(t, svc, acct, "Grim") // the name is free again
 }
 
-func TestRequestDelete_NeedsName(t *testing.T) {
+func TestDelete_NeedsName(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
 	for _, wrong := range []string{"", "Gri", "Grimm", "  "} {
-		_, err := svc.RequestDelete(context.Background(), c.ID, acct, wrong)
-		require.ErrorIs(t, err, character.ErrNameMismatch, wrong)
+		require.ErrorIs(t, svc.Delete(context.Background(), c.ID, acct, wrong), character.ErrNameMismatch, wrong)
 	}
-	updated, err := svc.RequestDelete(context.Background(), c.ID, acct, " grim ")
-	require.NoError(t, err, "case and spacing do not matter")
-	require.Equal(t, character.StateDeleteGrace, updated.State)
+	require.NoError(t, svc.Delete(context.Background(), c.ID, acct, " grim "), "case and spacing do not matter")
 }
 
-func TestRequestDelete_AlreadyInGraceRejected(t *testing.T) {
-	svc, _ := newTestService(t)
+func TestDelete_OthersAndPending(t *testing.T) {
+	svc, repo := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
-	require.NoError(t, err)
+	require.ErrorIs(t, svc.Delete(context.Background(), c.ID, uuid.New(), "Grim"), character.ErrForbidden)
 
-	_, err = svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
-	require.ErrorIs(t, err, character.ErrNotPlayable)
+	pendingDelete(t, repo, c.ID)
+	require.NoError(t, svc.Delete(context.Background(), c.ID, acct, "Grim"), "a pending deletion can be done now")
+	require.ErrorIs(t, svc.Delete(context.Background(), c.ID, acct, "Grim"), character.ErrNotFound)
 }
 
 func TestCancelDelete_Success(t *testing.T) {
-	svc, _ := newTestService(t)
+	svc, repo := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
-	require.NoError(t, err)
+	pendingDelete(t, repo, c.ID)
 
 	restored, err := svc.CancelDelete(context.Background(), c.ID, acct)
 	require.NoError(t, err)
@@ -249,13 +252,12 @@ func TestRename_NameTaken(t *testing.T) {
 }
 
 func TestRename_NotPlayableRejected(t *testing.T) {
-	svc, _ := newTestService(t)
+	svc, repo := newTestService(t)
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
-	_, err := svc.RequestDelete(context.Background(), c.ID, acct, "Grim")
-	require.NoError(t, err)
+	pendingDelete(t, repo, c.ID)
 
-	_, err = svc.Rename(context.Background(), c.ID, acct, "NewName")
+	_, err := svc.Rename(context.Background(), c.ID, acct, "NewName")
 	require.ErrorIs(t, err, character.ErrNotPlayable)
 }
 

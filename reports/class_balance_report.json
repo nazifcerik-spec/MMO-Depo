@@ -6,24 +6,24 @@
     1000
   ],
   "role_means": {
-    "dps_afk_safety": 0.913,
+    "dps_afk_safety": 0.957,
     "dps_aoe": 0.478,
-    "dps_boss": 0.472,
+    "dps_boss": 0.551,
     "dps_group_value": 0.204,
-    "dps_kill_speed": 0.427,
-    "dps_survival": 0.132,
-    "support_afk_safety": 0.991,
+    "dps_kill_speed": 0.454,
+    "dps_survival": 0.235,
+    "support_afk_safety": 0.97,
     "support_aoe": 0.167,
-    "support_boss": 0.407,
+    "support_boss": 0.456,
     "support_group_value": 0.899,
-    "support_kill_speed": 0.161,
-    "support_survival": 0.322,
-    "tank_afk_safety": 0.988,
+    "support_kill_speed": 0.18,
+    "support_survival": 0.406,
+    "tank_afk_safety": 1,
     "tank_aoe": 0.048,
-    "tank_boss": 0.284,
+    "tank_boss": 0.296,
     "tank_group_value": 0.772,
-    "tank_kill_speed": 0.062,
-    "tank_survival": 0.525
+    "tank_kill_speed": 0.064,
+    "tank_survival": 0.648
   },
   "seeds": 60,
   "specializations": [
@@ -57,29 +57,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 8,
+          "kill_turns": 8.183333333333334,
           "win_rate": 1,
-          "survival": 38.36666666666667,
+          "survival": 74.95,
           "boss_win_rate": 1,
-          "boss_turns": 58.36666666666667,
+          "boss_turns": 52.083333333333336,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 7.766666666666667,
+          "kill_turns": 7.883333333333334,
           "win_rate": 1,
-          "survival": 33.983333333333334,
-          "boss_win_rate": 0.9666666666666667,
-          "boss_turns": 62.224137931034484,
+          "survival": 63.583333333333336,
+          "boss_win_rate": 1,
+          "boss_turns": 54.36666666666667,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.259,
+        "boss": 0.276,
         "group_value": 0.789,
-        "kill_speed": 0.06,
-        "survival": 0.106
+        "kill_speed": 0.053,
+        "survival": 0.233
       }
     },
     {
@@ -112,29 +112,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 8.083333333333334,
+          "kill_turns": 8.166666666666666,
           "win_rate": 1,
-          "survival": 26.766666666666666,
-          "boss_win_rate": 0.8833333333333333,
-          "boss_turns": 45.20754716981132,
-          "afk_safety": 0.9666666666666667
+          "survival": 41.93333333333333,
+          "boss_win_rate": 1,
+          "boss_turns": 45.36666666666667,
+          "afk_safety": 1
         },
         "700": {
-          "kill_turns": 8.416666666666666,
+          "kill_turns": 8.483333333333333,
           "win_rate": 1,
-          "survival": 24.566666666666666,
-          "boss_win_rate": 0.6666666666666666,
-          "boss_turns": 46.35,
-          "afk_safety": 0.8333333333333334
+          "survival": 39.166666666666664,
+          "boss_win_rate": 1,
+          "boss_turns": 46.483333333333334,
+          "afk_safety": 1
         }
       },
       "scores": {
-        "afk_safety": 0.913,
+        "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.295,
+        "boss": 0.317,
         "group_value": 0.868,
-        "kill_speed": 0.057,
-        "survival": 0.066
+        "kill_speed": 0.053,
+        "survival": 0.12
       }
     },
     {
@@ -165,29 +165,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 6.05,
+          "kill_turns": 6.1,
           "win_rate": 1,
-          "survival": 138.11666666666667,
+          "survival": 299.28333333333336,
           "boss_win_rate": 1,
-          "boss_turns": 26.983333333333334,
+          "boss_turns": 27.283333333333335,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 6.383333333333334,
+          "kill_turns": 6.433333333333334,
           "win_rate": 1,
-          "survival": 34.56666666666667,
+          "survival": 95.48333333333333,
           "boss_win_rate": 1,
-          "boss_turns": 31.55,
+          "boss_turns": 31.016666666666666,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.56,
+        "boss": 0.528,
         "group_value": 0.263,
-        "kill_speed": 0.14,
-        "survival": 0.447
+        "kill_speed": 0.133,
+        "survival": 0.998
       }
     },
     {
@@ -218,29 +218,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 5.133333333333334,
+          "kill_turns": 5.066666666666666,
           "win_rate": 1,
-          "survival": 15.866666666666667,
-          "boss_win_rate": 0.75,
-          "boss_turns": 23.333333333333332,
-          "afk_safety": 0.8666666666666667
+          "survival": 25.466666666666665,
+          "boss_win_rate": 1,
+          "boss_turns": 24.066666666666666,
+          "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.683333333333334,
+          "kill_turns": 5.55,
           "win_rate": 1,
-          "survival": 12.816666666666666,
-          "boss_win_rate": 0.016666666666666666,
-          "boss_turns": 21,
-          "afk_safety": 0
+          "survival": 17.9,
+          "boss_win_rate": 0.31666666666666665,
+          "boss_turns": 26.63157894736842,
+          "afk_safety": 1
         }
       },
       "scores": {
-        "afk_safety": 0.652,
+        "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.486,
+        "boss": 0.598,
         "group_value": 0,
-        "kill_speed": 0.2,
-        "survival": 0.029
+        "kill_speed": 0.198,
+        "survival": 0.064
       }
     },
     {
@@ -272,29 +272,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 1.7333333333333334,
+          "kill_turns": 1.7166666666666666,
           "win_rate": 1,
-          "survival": 16.7,
-          "boss_win_rate": 0.8666666666666667,
-          "boss_turns": 13.903846153846153,
+          "survival": 18.316666666666666,
+          "boss_win_rate": 0.9,
+          "boss_turns": 14.055555555555555,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 2.1333333333333333,
+          "kill_turns": 1.7166666666666666,
           "win_rate": 1,
-          "survival": 15.583333333333334,
-          "boss_win_rate": 0.5166666666666667,
-          "boss_turns": 15.03225806451613,
+          "survival": 17.816666666666666,
+          "boss_win_rate": 0.8,
+          "boss_turns": 14.770833333333334,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.943,
+        "boss": 0.922,
         "group_value": 0,
-        "kill_speed": 0.966,
-        "survival": 0.032
+        "kill_speed": 0.943,
+        "survival": 0.039
       }
     },
     {
@@ -325,29 +325,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.816666666666667,
+          "kill_turns": 2.75,
           "win_rate": 1,
-          "survival": 18.75,
+          "survival": 26.033333333333335,
           "boss_win_rate": 1,
-          "boss_turns": 15.516666666666667,
+          "boss_turns": 14.483333333333333,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.05,
+          "kill_turns": 3,
           "win_rate": 1,
-          "survival": 15.9,
-          "boss_win_rate": 0.9,
-          "boss_turns": 18.61111111111111,
-          "afk_safety": 0.9666666666666667
+          "survival": 24.8,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 15.372881355932204,
+          "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.975,
+        "boss": 0.994,
         "group_value": 0.263,
-        "kill_speed": 0.521,
-        "survival": 0.039
+        "kill_speed": 0.519,
+        "survival": 0.066
       }
     },
     {
@@ -378,29 +378,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 1.6833333333333333,
+          "kill_turns": 1.6333333333333333,
           "win_rate": 1,
-          "survival": 13.6,
+          "survival": 15.533333333333333,
           "boss_win_rate": 0.8833333333333333,
-          "boss_turns": 13.358490566037736,
+          "boss_turns": 13.09433962264151,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 2.066666666666667,
+          "kill_turns": 1.6666666666666667,
           "win_rate": 1,
-          "survival": 12.766666666666667,
-          "boss_win_rate": 0.45,
-          "boss_turns": 14.74074074074074,
+          "survival": 15.366666666666667,
+          "boss_win_rate": 0.7666666666666667,
+          "boss_turns": 14.434782608695652,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 1,
-        "boss": 1,
+        "boss": 0.971,
         "group_value": 0,
         "kill_speed": 1,
-        "survival": 0.021
+        "survival": 0.03
       }
     },
     {
@@ -432,29 +432,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.533333333333333,
+          "kill_turns": 2.1666666666666665,
           "win_rate": 1,
-          "survival": 27.3,
+          "survival": 24.233333333333334,
           "boss_win_rate": 0.9833333333333333,
-          "boss_turns": 17.694915254237287,
+          "boss_turns": 16.610169491525422,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.3,
+          "kill_turns": 2.183333333333333,
           "win_rate": 1,
-          "survival": 26.866666666666667,
-          "boss_win_rate": 0.95,
-          "boss_turns": 22.17543859649123,
+          "survival": 23.533333333333335,
+          "boss_win_rate": 0.9666666666666667,
+          "boss_turns": 17.96551724137931,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.84,
+        "boss": 0.852,
         "group_value": 0,
-        "kill_speed": 0.6,
-        "survival": 0.068
+        "kill_speed": 0.709,
+        "survival": 0.06
       }
     },
     {
@@ -484,29 +484,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.933333333333333,
+          "kill_turns": 2.05,
           "win_rate": 1,
-          "survival": 20.033333333333335,
-          "boss_win_rate": 0.9666666666666667,
-          "boss_turns": 18.43103448275862,
+          "survival": 33.516666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 14.4,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.15,
+          "kill_turns": 2.4166666666666665,
           "win_rate": 1,
-          "survival": 12.3,
-          "boss_win_rate": 0.18333333333333332,
-          "boss_turns": 17.727272727272727,
-          "afk_safety": 0.016666666666666666
+          "survival": 15.716666666666667,
+          "boss_win_rate": 0.5666666666666667,
+          "boss_turns": 16.91176470588235,
+          "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.793,
+        "boss": 1,
         "group_value": 0,
-        "kill_speed": 0.493,
-        "survival": 0.043
+        "kill_speed": 0.759,
+        "survival": 0.091
       }
     },
     {
@@ -537,29 +537,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.516666666666667,
+          "kill_turns": 4.083333333333333,
           "win_rate": 1,
-          "survival": 31.416666666666668,
+          "survival": 80.68333333333334,
           "boss_win_rate": 1,
-          "boss_turns": 20.833333333333332,
+          "boss_turns": 16.35,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 4.816666666666666,
+          "kill_turns": 4.45,
           "win_rate": 1,
-          "survival": 16.583333333333332,
-          "boss_win_rate": 0.6833333333333333,
-          "boss_turns": 24.634146341463413,
-          "afk_safety": 0.03333333333333333
+          "survival": 24.916666666666668,
+          "boss_win_rate": 0.9666666666666667,
+          "boss_turns": 20.43103448275862,
+          "afk_safety": 0.85
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.726,
+        "boss": 0.881,
         "group_value": 0.263,
-        "kill_speed": 0.253,
-        "survival": 0.082
+        "kill_speed": 0.29,
+        "survival": 0.252
       }
     },
     {
@@ -591,29 +591,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.85,
+          "kill_turns": 3.8,
           "win_rate": 1,
-          "survival": 51.36666666666667,
+          "survival": 94.85,
           "boss_win_rate": 1,
-          "boss_turns": 29.083333333333332,
+          "boss_turns": 21.9,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.2,
+          "kill_turns": 4.3,
           "win_rate": 1,
-          "survival": 26.35,
-          "boss_win_rate": 0.5333333333333333,
-          "boss_turns": 39.40625,
-          "afk_safety": 0.21666666666666667
+          "survival": 28.216666666666665,
+          "boss_win_rate": 0.9,
+          "boss_turns": 33.05555555555556,
+          "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.52,
+        "boss": 0.658,
         "group_value": 0,
-        "kill_speed": 0.222,
-        "survival": 0.15
+        "kill_speed": 0.325,
+        "survival": 0.3
       }
     },
     {
@@ -645,29 +645,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 3.05,
+          "kill_turns": 3,
           "win_rate": 1,
-          "survival": 74.83333333333333,
+          "survival": 163.3,
           "boss_win_rate": 1,
-          "boss_turns": 22.9,
+          "boss_turns": 19.033333333333335,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.066666666666667,
+          "kill_turns": 3.033333333333333,
           "win_rate": 1,
-          "survival": 29.85,
-          "boss_win_rate": 0.9,
-          "boss_turns": 29.925925925925927,
+          "survival": 30.283333333333335,
+          "boss_win_rate": 0.95,
+          "boss_turns": 25.68421052631579,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 1,
-        "boss": 0.66,
+        "boss": 0.757,
         "group_value": 0.263,
-        "kill_speed": 0.466,
-        "survival": 0.231
+        "kill_speed": 0.461,
+        "survival": 0.534
       }
     },
     {
@@ -697,28 +697,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 1.9666666666666666,
+          "kill_turns": 1.8333333333333333,
           "win_rate": 1,
-          "survival": 9.383333333333333,
-          "boss_win_rate": 0.13333333333333333,
-          "boss_turns": 10.75,
-          "afk_safety": 0.9666666666666667
+          "survival": 8.666666666666666,
+          "boss_win_rate": 0.1,
+          "boss_turns": 10.833333333333334,
+          "afk_safety": 1
         },
         "700": {
           "kill_turns": 2,
           "win_rate": 1,
-          "survival": 10.15,
+          "survival": 9.15,
           "boss_win_rate": 0.016666666666666666,
           "boss_turns": 13,
-          "afk_safety": 0.9333333333333333
+          "afk_safety": 0.8
         }
       },
       "scores": {
-        "afk_safety": 0.913,
+        "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.188,
+        "boss": 0.133,
         "group_value": 0.263,
-        "kill_speed": 0.828,
+        "kill_speed": 0.871,
         "survival": 0.007
       }
     },
@@ -751,17 +751,17 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.95,
+          "kill_turns": 2.8833333333333333,
           "win_rate": 1,
-          "survival": 11.633333333333333,
-          "boss_win_rate": 0.06666666666666667,
-          "boss_turns": 15,
+          "survival": 10.583333333333334,
+          "boss_win_rate": 0.05,
+          "boss_turns": 14,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.1166666666666667,
+          "kill_turns": 3.05,
           "win_rate": 1,
-          "survival": 12.083333333333334,
+          "survival": 10.766666666666667,
           "boss_win_rate": 0,
           "boss_turns": 0,
           "afk_safety": 1
@@ -770,10 +770,10 @@
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.067,
+        "boss": 0.051,
         "group_value": 0.526,
-        "kill_speed": 0.489,
-        "survival": 0.015
+        "kill_speed": 0.487,
+        "survival": 0.013
       }
     },
     {
@@ -805,28 +805,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.1333333333333333,
+          "kill_turns": 2.0833333333333335,
           "win_rate": 1,
-          "survival": 7.366666666666666,
-          "boss_win_rate": 0.016666666666666666,
-          "boss_turns": 10,
-          "afk_safety": 0.6166666666666667
-        },
-        "700": {
-          "kill_turns": 2.3,
-          "win_rate": 1,
-          "survival": 8.066666666666666,
+          "survival": 6.733333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.4
+          "afk_safety": 0.8333333333333334
+        },
+        "700": {
+          "kill_turns": 2.2333333333333334,
+          "win_rate": 1,
+          "survival": 7.283333333333333,
+          "boss_win_rate": 0,
+          "boss_turns": 0,
+          "afk_safety": 0.9333333333333333
         }
       },
       "scores": {
         "afk_safety": 0,
         "aoe": 1,
-        "boss": 0.025,
+        "boss": 0,
         "group_value": 0,
-        "kill_speed": 0.749,
+        "kill_speed": 0.744,
         "survival": 0
       }
     },
@@ -859,17 +859,17 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 3.4166666666666665,
+          "kill_turns": 3.3833333333333333,
           "win_rate": 1,
-          "survival": 11.533333333333333,
+          "survival": 10.633333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.783333333333333,
+          "kill_turns": 3.75,
           "win_rate": 1,
-          "survival": 12.15,
+          "survival": 10.85,
           "boss_win_rate": 0,
           "boss_turns": 0,
           "afk_safety": 1
@@ -880,8 +880,8 @@
         "aoe": 0.667,
         "boss": 0,
         "group_value": 0.263,
-        "kill_speed": 0.396,
-        "survival": 0.014
+        "kill_speed": 0.388,
+        "survival": 0.013
       }
     },
     {
@@ -912,28 +912,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 6.85,
+          "kill_turns": 6.233333333333333,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 35.65,
+          "boss_turns": 30.35,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 6.633333333333334,
+          "kill_turns": 6.183333333333334,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 39.483333333333334,
+          "boss_turns": 31.083333333333332,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.424,
+        "boss": 0.474,
         "group_value": 0.526,
-        "kill_speed": 0.102,
+        "kill_speed": 0.127,
         "survival": 1
       }
     },
@@ -966,28 +966,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.916666666666667,
+          "kill_turns": 4.1,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 25.016666666666666,
+          "boss_turns": 20.816666666666666,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.383333333333334,
+          "kill_turns": 4.583333333333333,
           "win_rate": 1,
-          "survival": 290.65,
+          "survival": 298.73333333333335,
           "boss_win_rate": 1,
-          "boss_turns": 30.65,
+          "boss_turns": 24.166666666666668,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.605,
+        "boss": 0.692,
         "group_value": 0.579,
-        "kill_speed": 0.217,
+        "kill_speed": 0.288,
         "survival": 1
       }
     },
@@ -1018,29 +1018,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.366666666666666,
+          "kill_turns": 3.9833333333333334,
           "win_rate": 1,
-          "survival": 63.3,
+          "survival": 178.1,
           "boss_win_rate": 1,
-          "boss_turns": 19.716666666666665,
+          "boss_turns": 16.7,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 4.433333333333334,
+          "kill_turns": 4.166666666666667,
           "win_rate": 1,
-          "survival": 18,
-          "boss_win_rate": 0.7833333333333333,
-          "boss_turns": 22.72340425531915,
+          "survival": 22.566666666666666,
+          "boss_win_rate": 0.95,
+          "boss_turns": 19.42105263157895,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.767,
+        "boss": 0.862,
         "group_value": 0,
-        "kill_speed": 0.268,
-        "survival": 0.191
+        "kill_speed": 0.302,
+        "survival": 0.584
       }
     },
     {
@@ -1070,29 +1070,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.116666666666666,
+          "kill_turns": 3.4833333333333334,
           "win_rate": 1,
-          "survival": 140.15,
+          "survival": 282.28333333333336,
           "boss_win_rate": 1,
-          "boss_turns": 18.483333333333334,
+          "boss_turns": 14.7,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 4.583333333333333,
+          "kill_turns": 3.8833333333333333,
           "win_rate": 1,
-          "survival": 23.083333333333332,
-          "boss_win_rate": 0.9666666666666667,
-          "boss_turns": 21.879310344827587,
+          "survival": 29.216666666666665,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 17.406779661016948,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.818,
+        "boss": 0.98,
         "group_value": 0,
-        "kill_speed": 0.296,
-        "survival": 0.454
+        "kill_speed": 0.371,
+        "survival": 0.94
       }
     },
     {
@@ -1125,29 +1125,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 8,
+          "kill_turns": 7.983333333333333,
           "win_rate": 1,
-          "survival": 26.316666666666666,
-          "boss_win_rate": 0.7833333333333333,
-          "boss_turns": 43.680851063829785,
+          "survival": 27.25,
+          "boss_win_rate": 0.9166666666666666,
+          "boss_turns": 42.872727272727275,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 7.85,
+          "kill_turns": 7.733333333333333,
           "win_rate": 1,
-          "survival": 19.616666666666667,
-          "boss_win_rate": 0.11666666666666667,
-          "boss_turns": 39.42857142857143,
+          "survival": 18.883333333333333,
+          "boss_win_rate": 0.21666666666666667,
+          "boss_turns": 38.61538461538461,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.271,
+        "boss": 0.308,
         "group_value": 0.974,
-        "kill_speed": 0.06,
-        "survival": 0.065
+        "kill_speed": 0.059,
+        "survival": 0.07
       }
     },
     {
@@ -1179,17 +1179,17 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 10.5,
+          "kill_turns": 10.216666666666667,
           "win_rate": 1,
-          "survival": 23.183333333333334,
-          "boss_win_rate": 0.06666666666666667,
-          "boss_turns": 46.25,
+          "survival": 22.85,
+          "boss_win_rate": 0.13333333333333333,
+          "boss_turns": 45.125,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 10.116666666666667,
+          "kill_turns": 10.05,
           "win_rate": 1,
-          "survival": 18.533333333333335,
+          "survival": 17.383333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
           "afk_safety": 1
@@ -1198,10 +1198,10 @@
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.022,
+        "boss": 0.043,
         "group_value": 0.947,
-        "kill_speed": 0,
-        "survival": 0.054
+        "kill_speed": 0.006,
+        "survival": 0.055
       }
     },
     {
@@ -1231,29 +1231,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 3.9,
+          "kill_turns": 3.8666666666666667,
           "win_rate": 1,
-          "survival": 12.866666666666667,
-          "boss_win_rate": 0.06666666666666667,
-          "boss_turns": 26.5,
-          "afk_safety": 0.9666666666666667
+          "survival": 12.983333333333333,
+          "boss_win_rate": 0.13333333333333333,
+          "boss_turns": 26.75,
+          "afk_safety": 0.95
         },
         "700": {
-          "kill_turns": 3.95,
+          "kill_turns": 3.9166666666666665,
           "win_rate": 1,
-          "survival": 9.45,
+          "survival": 8.566666666666666,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0
+          "afk_safety": 0.9166666666666666
         }
       },
       "scores": {
-        "afk_safety": 0.913,
+        "afk_safety": 0.7,
         "aoe": 0.333,
-        "boss": 0.038,
+        "boss": 0.072,
         "group_value": 0.974,
-        "kill_speed": 0.323,
-        "survival": 0.019
+        "kill_speed": 0.316,
+        "survival": 0.021
       }
     },
     {
@@ -1285,29 +1285,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 3.3,
+          "kill_turns": 3.15,
           "win_rate": 1,
-          "survival": 11.416666666666666,
+          "survival": 10.633333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.9833333333333333
+          "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.433333333333333,
+          "kill_turns": 3.25,
           "win_rate": 1,
-          "survival": 9.866666666666667,
+          "survival": 8.85,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.26666666666666666
+          "afk_safety": 0.5833333333333334
         }
       },
       "scores": {
-        "afk_safety": 0.957,
+        "afk_safety": 1,
         "aoe": 0.333,
         "boss": 0,
         "group_value": 0.342,
-        "kill_speed": 0.417,
-        "survival": 0.014
+        "kill_speed": 0.43,
+        "survival": 0.013
       }
     },
     {
@@ -1340,28 +1340,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 10.166666666666666,
+          "kill_turns": 10.533333333333333,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 78.13333333333334,
+          "boss_turns": 71.21666666666667,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 10.816666666666666,
+          "kill_turns": 11.133333333333333,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 82.06666666666666,
+          "boss_turns": 76.03333333333333,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.194,
+        "boss": 0.202,
         "group_value": 0.882,
-        "kill_speed": 0.006,
+        "kill_speed": 0,
         "survival": 1
       }
     },
@@ -1394,28 +1394,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 10.083333333333334,
+          "kill_turns": 10.05,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 66.05,
+          "boss_turns": 63.333333333333336,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 10.166666666666666,
+          "kill_turns": 10.4,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 71.11666666666666,
+          "boss_turns": 65.58333333333333,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.229,
+        "boss": 0.227,
         "group_value": 0.908,
-        "kill_speed": 0.008,
+        "kill_speed": 0.009,
         "survival": 1
       }
     },
@@ -1448,29 +1448,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.85,
+          "kill_turns": 5.1,
           "win_rate": 1,
-          "survival": 18.45,
-          "boss_win_rate": 0.18333333333333332,
-          "boss_turns": 31.818181818181817,
+          "survival": 32.916666666666664,
+          "boss_win_rate": 1,
+          "boss_turns": 34.416666666666664,
           "afk_safety": 1
         },
         "700": {
           "kill_turns": 5.3,
           "win_rate": 1,
-          "survival": 18.933333333333334,
-          "boss_win_rate": 0.15,
-          "boss_turns": 34.77777777777778,
+          "survival": 33.166666666666664,
+          "boss_win_rate": 1,
+          "boss_turns": 37.583333333333336,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.087,
+        "boss": 0.418,
         "group_value": 0.618,
-        "kill_speed": 0.222,
-        "survival": 0.038
+        "kill_speed": 0.196,
+        "survival": 0.089
       }
     },
     {
@@ -1501,29 +1501,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 5.183333333333334,
+          "kill_turns": 5.233333333333333,
           "win_rate": 1,
-          "survival": 19.25,
-          "boss_win_rate": 0.23333333333333334,
-          "boss_turns": 32,
+          "survival": 32.9,
+          "boss_win_rate": 1,
+          "boss_turns": 34.31666666666667,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.816666666666666,
+          "kill_turns": 5.783333333333333,
           "win_rate": 1,
-          "survival": 20.066666666666666,
-          "boss_win_rate": 0.15,
-          "boss_turns": 35.77777777777778,
+          "survival": 32.5,
+          "boss_win_rate": 1,
+          "boss_turns": 37.86666666666667,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.11,
+        "boss": 0.42,
         "group_value": 0.316,
-        "kill_speed": 0.196,
-        "survival": 0.041
+        "kill_speed": 0.186,
+        "survival": 0.089
       }
     },
     {
@@ -1554,28 +1554,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 7.85,
+          "kill_turns": 7.766666666666667,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 48.93333333333333,
+          "boss_turns": 47.333333333333336,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 7.4,
+          "kill_turns": 7.316666666666666,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 47.8,
+          "boss_turns": 45.55,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.309,
+        "boss": 0.304,
         "group_value": 0.974,
-        "kill_speed": 0.064,
+        "kill_speed": 0.065,
         "survival": 1
       }
     },
@@ -1608,29 +1608,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 2.9833333333333334,
+          "kill_turns": 3,
           "win_rate": 1,
-          "survival": 27.666666666666668,
+          "survival": 49.483333333333334,
           "boss_win_rate": 1,
-          "boss_turns": 31.766666666666666,
+          "boss_turns": 30.716666666666665,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 3.0833333333333335,
+          "kill_turns": 3.066666666666667,
           "win_rate": 1,
-          "survival": 22.95,
+          "survival": 41.55,
           "boss_win_rate": 1,
-          "boss_turns": 33,
+          "boss_turns": 31.933333333333334,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.476,
+        "boss": 0.469,
         "group_value": 0.342,
-        "kill_speed": 0.481,
-        "survival": 0.069
+        "kill_speed": 0.461,
+        "survival": 0.146
       }
     },
     {
@@ -1661,29 +1661,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 7.766666666666667,
+          "kill_turns": 7.666666666666667,
           "win_rate": 1,
-          "survival": 78.9,
+          "survival": 295.5,
           "boss_win_rate": 1,
-          "boss_turns": 54.05,
+          "boss_turns": 50.85,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 7.1,
+          "kill_turns": 7.116666666666666,
           "win_rate": 1,
-          "survival": 38.85,
+          "survival": 98.85,
           "boss_win_rate": 1,
-          "boss_turns": 55.38333333333333,
+          "boss_turns": 51.46666666666667,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.28,
+        "boss": 0.283,
         "group_value": 0.539,
-        "kill_speed": 0.067,
-        "survival": 0.244
+        "kill_speed": 0.069,
+        "survival": 0.985
       }
     },
     {
@@ -1713,29 +1713,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.783333333333333,
+          "kill_turns": 4.733333333333333,
           "win_rate": 1,
-          "survival": 15.183333333333334,
-          "boss_win_rate": 0.35,
-          "boss_turns": 28.047619047619047,
+          "survival": 21.266666666666666,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 29.23728813559322,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 4.85,
+          "kill_turns": 4.916666666666667,
           "win_rate": 1,
-          "survival": 14.05,
-          "boss_win_rate": 0.05,
-          "boss_turns": 28.666666666666668,
-          "afk_safety": 0.8333333333333334
+          "survival": 19.9,
+          "boss_win_rate": 0.8666666666666667,
+          "boss_turns": 30.807692307692307,
+          "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.667,
-        "boss": 0.189,
+        "boss": 0.484,
         "group_value": 0.039,
-        "kill_speed": 0.228,
-        "survival": 0.027
+        "kill_speed": 0.225,
+        "survival": 0.05
       }
     },
     {
@@ -1765,29 +1765,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.816666666666666,
+          "kill_turns": 4.433333333333334,
           "win_rate": 1,
-          "survival": 36.233333333333334,
+          "survival": 167.9,
           "boss_win_rate": 1,
-          "boss_turns": 22.833333333333332,
+          "boss_turns": 18.266666666666666,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.133333333333334,
+          "kill_turns": 4.533333333333333,
           "win_rate": 1,
-          "survival": 30.75,
+          "survival": 96.48333333333333,
           "boss_win_rate": 1,
-          "boss_turns": 26.233333333333334,
+          "boss_turns": 20.316666666666666,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.662,
+        "boss": 0.788,
         "group_value": 1,
-        "kill_speed": 0.225,
-        "survival": 0.099
+        "kill_speed": 0.253,
+        "survival": 0.55
       }
     },
     {
@@ -1819,28 +1819,28 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 5.883333333333334,
+          "kill_turns": 4.716666666666667,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 29.666666666666668,
+          "boss_turns": 24.816666666666666,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 6.1,
+          "kill_turns": 4.8,
           "win_rate": 1,
           "survival": 300,
           "boss_win_rate": 1,
-          "boss_turns": 33.56666666666667,
+          "boss_turns": 26.9,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.51,
+        "boss": 0.58,
         "group_value": 0.974,
-        "kill_speed": 0.15,
+        "kill_speed": 0.226,
         "survival": 1
       }
     },
@@ -1873,29 +1873,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 4.583333333333333,
+          "kill_turns": 4.2,
           "win_rate": 1,
-          "survival": 25.5,
+          "survival": 108.8,
           "boss_win_rate": 1,
-          "boss_turns": 18.75,
+          "boss_turns": 15.8,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 4.883333333333334,
+          "kill_turns": 4.483333333333333,
           "win_rate": 1,
-          "survival": 22.416666666666668,
+          "survival": 58.1,
           "boss_win_rate": 1,
-          "boss_turns": 21.45,
+          "boss_turns": 16.983333333333334,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.807,
+        "boss": 0.911,
         "group_value": 0.921,
-        "kill_speed": 0.246,
-        "survival": 0.062
+        "kill_speed": 0.277,
+        "survival": 0.348
       }
     },
     {
@@ -1927,29 +1927,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 5.433333333333334,
+          "kill_turns": 4.466666666666667,
           "win_rate": 1,
-          "survival": 20.333333333333332,
-          "boss_win_rate": 0.9833333333333333,
-          "boss_turns": 20.728813559322035,
+          "survival": 45.516666666666666,
+          "boss_win_rate": 1,
+          "boss_turns": 17.266666666666666,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.9,
+          "kill_turns": 4.766666666666667,
           "win_rate": 1,
-          "survival": 18.633333333333333,
-          "boss_win_rate": 0.9666666666666667,
-          "boss_turns": 22.586206896551722,
+          "survival": 30.966666666666665,
+          "boss_win_rate": 1,
+          "boss_turns": 18.433333333333334,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.717,
+        "boss": 0.834,
         "group_value": 0.632,
-        "kill_speed": 0.178,
-        "survival": 0.044
+        "kill_speed": 0.249,
+        "survival": 0.132
       }
     },
     {
@@ -1981,29 +1981,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 6.116666666666666,
+          "kill_turns": 6.066666666666666,
           "win_rate": 1,
-          "survival": 83.71666666666667,
+          "survival": 65.16666666666667,
           "boss_win_rate": 1,
-          "boss_turns": 49.5,
+          "boss_turns": 48.766666666666666,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 6.083333333333333,
+          "kill_turns": 6.066666666666666,
           "win_rate": 1,
-          "survival": 36.61666666666667,
-          "boss_win_rate": 1,
-          "boss_turns": 52.35,
+          "survival": 29.583333333333332,
+          "boss_win_rate": 0.9,
+          "boss_turns": 51.407407407407405,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.306,
+        "boss": 0.295,
         "group_value": 0.895,
-        "kill_speed": 0.137,
-        "survival": 0.261
+        "kill_speed": 0.135,
+        "survival": 0.199
       }
     },
     {
@@ -2034,29 +2034,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 5.616666666666666,
+          "kill_turns": 5.65,
           "win_rate": 1,
-          "survival": 15.966666666666667,
-          "boss_win_rate": 0.03333333333333333,
-          "boss_turns": 34,
-          "afk_safety": 0.8
+          "survival": 13.533333333333333,
+          "boss_win_rate": 0.016666666666666666,
+          "boss_turns": 33,
+          "afk_safety": 1
         },
         "700": {
-          "kill_turns": 5.916666666666667,
+          "kill_turns": 5.833333333333333,
           "win_rate": 1,
-          "survival": 14.6,
+          "survival": 12.033333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.11666666666666667
+          "afk_safety": 0.9166666666666666
         }
       },
       "scores": {
-        "afk_safety": 0.478,
+        "afk_safety": 1,
         "aoe": 1,
-        "boss": 0.015,
+        "boss": 0.007,
         "group_value": 0.342,
-        "kill_speed": 0.166,
-        "survival": 0.029
+        "kill_speed": 0.159,
+        "survival": 0.023
       }
     },
     {
@@ -2087,29 +2087,29 @@
       ],
       "sim": {
         "1000": {
-          "kill_turns": 8.5,
+          "kill_turns": 8.65,
           "win_rate": 1,
-          "survival": 231.6,
+          "survival": 237.41666666666666,
           "boss_win_rate": 1,
-          "boss_turns": 49.56666666666667,
+          "boss_turns": 48.483333333333334,
           "afk_safety": 1
         },
         "700": {
-          "kill_turns": 8.583333333333334,
+          "kill_turns": 8.65,
           "win_rate": 1,
-          "survival": 55.38333333333333,
+          "survival": 49.78333333333333,
           "boss_win_rate": 1,
-          "boss_turns": 52.4,
+          "boss_turns": 51.2,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0,
-        "boss": 0.305,
+        "boss": 0.297,
         "group_value": 0.974,
-        "kill_speed": 0.045,
-        "survival": 0.766
+        "kill_speed": 0.04,
+        "survival": 0.787
       }
     },
     {
@@ -2142,27 +2142,27 @@
         "1000": {
           "kill_turns": 3.9166666666666665,
           "win_rate": 1,
-          "survival": 39.55,
+          "survival": 35.11666666666667,
           "boss_win_rate": 1,
-          "boss_turns": 35.38333333333333,
+          "boss_turns": 33.833333333333336,
           "afk_safety": 1
         },
         "700": {
           "kill_turns": 3.9166666666666665,
           "win_rate": 1,
-          "survival": 21.466666666666665,
-          "boss_win_rate": 1,
-          "boss_turns": 40.55,
+          "survival": 17.066666666666666,
+          "boss_win_rate": 0.9833333333333333,
+          "boss_turns": 39.71186440677966,
           "afk_safety": 1
         }
       },
       "scores": {
         "afk_safety": 1,
         "aoe": 0.333,
-        "boss": 0.427,
+        "boss": 0.426,
         "group_value": 0.618,
-        "kill_speed": 0.321,
-        "survival": 0.11
+        "kill_speed": 0.31,
+        "survival": 0.097
       }
     }
   ]

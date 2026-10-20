@@ -17,10 +17,11 @@ xp_curve:
 xp_multiplier: 1.0            # global XP modifier (events can raise it later)
 afk_combat_xp_per_minute: 1000 # AFK hunts/dungeons pay this per minute of fighting
 
+# 3 points per level gained (DD-284) + milestones: 999 × 3 + 25 = 3022.
 attribute_points:
-  every: 2
-  amount: 1
-  milestones: { 100: 5, 300: 5, 600: 5, 850: 5, 1000: 5 }   # 500 + 25 = 525
+  every: 1
+  amount: 3
+  milestones: { 100: 5, 300: 5, 600: 5, 850: 5, 1000: 5 }
 
 talent_points: { from: 100, every: 20, until: 980, amount: 1 } # 45 total
 talent_tree_points: 25

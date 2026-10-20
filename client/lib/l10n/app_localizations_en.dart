@@ -2396,7 +2396,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name will be permanently deleted in 48 hours, with all items and gold. You can cancel until then. Type the character\'s name to confirm.';
+    return '$name will be deleted right away, with all items and gold. This cannot be undone. Type the character\'s name to confirm.';
   }
 
   @override
@@ -2411,8 +2411,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancelCharacterDelete => 'Cancel deletion';
 
   @override
-  String characterDeleteScheduled(String name) {
-    return '$name will be deleted in 48 hours.';
+  String characterDeleted(String name) {
+    return '$name was deleted.';
   }
 
   @override

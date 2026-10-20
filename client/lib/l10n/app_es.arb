@@ -176,11 +176,11 @@
   "travelTime": "Tiempo de viaje: {time}",
   "xpPerKill": "{xp} XP",
   "deleteCharacter": "Eliminar personaje",
-  "deleteCharacterBody": "{name} se eliminará para siempre en 48 horas, con todos sus objetos y oro. Puedes cancelarlo hasta entonces. Escribe el nombre del personaje para confirmar.",
+  "deleteCharacterBody": "{name} se eliminará ahora mismo, con todos sus objetos y oro. No se puede deshacer. Escribe el nombre del personaje para confirmar.",
   "characterNameConfirm": "Nombre del personaje",
   "characterDeletesAt": "Se elimina el {when}",
   "cancelCharacterDelete": "Cancelar eliminación",
-  "characterDeleteScheduled": "{name} se eliminará en 48 horas.",
+  "characterDeleted": "{name} fue eliminado.",
   "characterDeleteCancelled": "{name} ya no se eliminará.",
   "errNameMismatch": "El nombre no coincide."
 }

@@ -199,7 +199,7 @@ func TestHTTPAFKHuntEveryClass(t *testing.T) {
 func TestHTTPClassCatalog(t *testing.T) {
 	p := newHTTPPlayer(t, "warrior")
 	res := p.ok("GET", "/v1/classes", nil)
-	require.Equal(t, 525.0, res["attribute_points_total"])
+	require.Equal(t, 3022.0, res["attribute_points_total"])
 	list := items(res, "classes")
 	require.Len(t, list, 70, "10 base classes + 20 promotions + 40 specializations")
 	tiers := map[float64]int{}

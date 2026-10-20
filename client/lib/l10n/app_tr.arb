@@ -692,11 +692,11 @@
   "travelTime": "Yolculuk süresi: {time}",
   "xpPerKill": "{xp} XP",
   "deleteCharacter": "Karakteri sil",
-  "deleteCharacterBody": "{name} 48 saat sonra tüm eşyaları ve altınıyla birlikte kalıcı olarak silinecek. O zamana kadar iptal edebilirsin. Onaylamak için karakterin adını yaz.",
+  "deleteCharacterBody": "{name} tüm eşyaları ve altınıyla birlikte hemen silinecek. Bu geri alınamaz. Onaylamak için karakterin adını yaz.",
   "characterNameConfirm": "Karakter adı",
   "characterDeletesAt": "Silinme: {when}",
   "cancelCharacterDelete": "Silmeyi iptal et",
-  "characterDeleteScheduled": "{name} 48 saat sonra silinecek.",
+  "characterDeleted": "{name} silindi.",
   "characterDeleteCancelled": "{name} silinmeyecek.",
   "errNameMismatch": "Ad eşleşmiyor."
 }

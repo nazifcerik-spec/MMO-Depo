@@ -124,13 +124,13 @@ func (h *Handler) Enter(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// --- Delete-request / Delete-cancel -----------------------------------------
+// --- Delete / Delete-cancel -------------------------------------------------
 
 type deleteReq struct {
 	ConfirmName string `json:"confirm_name"`
 }
 
-func (h *Handler) RequestDelete(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	acct := httpctx.AccountID(r.Context())
 	id, err := parseIDParam(r, "id")
 	if err != nil {
@@ -142,12 +142,11 @@ func (h *Handler) RequestDelete(w http.ResponseWriter, r *http.Request) {
 		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
 		return
 	}
-	c, err := h.svc.RequestDelete(r.Context(), id, acct, req.ConfirmName)
-	if err != nil {
+	if err := h.svc.Delete(r.Context(), id, acct, req.ConfirmName); err != nil {
 		writeCharErr(w, r, err)
 		return
 	}
-	apierr.WriteJSON(w, http.StatusOK, characterResponse(c))
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"id": id.String(), "deleted": true})
 }
 
 func (h *Handler) CancelDelete(w http.ResponseWriter, r *http.Request) {

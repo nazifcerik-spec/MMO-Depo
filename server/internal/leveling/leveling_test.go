@@ -121,11 +121,11 @@ func codes(list []*leveling.Class) []string {
 
 func TestPointSchedules(t *testing.T) {
 	c := shipped(t)
-	require.Equal(t, 525, c.AttributePointsEarned(1000))
+	require.Equal(t, 3022, c.AttributePointsEarned(1000), "999 level-ups × 3 + 25 from milestones")
 	require.Equal(t, 0, c.AttributePointsEarned(1))
-	require.Equal(t, 1, c.AttributePointsEarned(2))
-	require.Equal(t, 49, c.AttributePointsEarned(99))
-	require.Equal(t, 55, c.AttributePointsEarned(100), "50 + the level-100 milestone")
+	require.Equal(t, 3, c.AttributePointsEarned(2), "3 points per level gained (DD-284)")
+	require.Equal(t, 294, c.AttributePointsEarned(99))
+	require.Equal(t, 302, c.AttributePointsEarned(100), "297 + the level-100 milestone")
 	require.Equal(t, 0, c.TalentPointsEarned(99))
 	require.Equal(t, 1, c.TalentPointsEarned(100))
 	require.Equal(t, 1, c.TalentPointsEarned(119))
@@ -145,7 +145,7 @@ func TestPointSchedules(t *testing.T) {
 			}
 		}
 	}
-	require.Equal(t, 525, attr)
+	require.Equal(t, 3022, attr)
 	require.Equal(t, 45, talent)
 
 	types := func(level int) []string {

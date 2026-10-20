@@ -50,9 +50,9 @@ Slot cap v1: 2 karakter/account (DD-OPEN-8 default 2).
 
 ## 5. Delete
 
-`POST /v1/character/{id}/delete-request` (`{"confirm_name": "<karakter adı>"}`, büyük/küçük harf duyarsız; eşleşmezse 400 `E_NAME_MISMATCH`, DD-282) → 48h grace timer. Grace içinde `POST .../delete-cancel` iptal. Grace bitince worker hard-delete.
+`POST /v1/character/{id}/delete` (`{"confirm_name": "<karakter adı>"}`, büyük/küçük harf duyarsız; eşleşmezse 400 `E_NAME_MISMATCH`, DD-282) → karakter eşyalarıyla birlikte hemen silinir (DD-283, bekleme yok). `delete_grace` yalnız hesap silmede (DD-231) kalır; `POST .../delete-cancel` onu geri alır.
 
-UI: karakter kartında "silme geri sayımı" badge; iptal butonu.
+UI: karakter kartında sil butonu → ad yazılana kadar pasif onay penceresi; bekleyen (hesap silme) kartında silinme zamanı + iptal butonu.
 
 ## 6. State
 
@@ -64,7 +64,7 @@ UI: karakter kartında "silme geri sayımı" badge; iptal butonu.
 
 - `GET /v1/character` — list.
 - `POST /v1/character` — create.
-- `POST /v1/character/{id}/delete-request`
+- `POST /v1/character/{id}/delete`
 - `POST /v1/character/{id}/delete-cancel`
 - `POST /v1/character/{id}/enter` — oyuna giriş (session bind character).
 

@@ -102,6 +102,20 @@ func (r *MemoryRepo) TouchLastPlayed(_ context.Context, id uuid.UUID, ts time.Ti
 	return nil
 }
 
+func (r *MemoryRepo) Purge(_ context.Context, id uuid.UUID) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	c, ok := r.rows[id]
+	if !ok {
+		return ErrNotFound
+	}
+	delete(r.names, c.NameNormalized)
+	delete(r.rows, id)
+	return nil
+}
+
+// SetDeleteGrace puts a character in delete_grace, as an account deletion
+// does (tests only).
 func (r *MemoryRepo) SetDeleteGrace(_ context.Context, id uuid.UUID, expiresAt time.Time) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()

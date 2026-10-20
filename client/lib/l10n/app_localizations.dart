@@ -4249,7 +4249,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteCharacterBody.
   ///
   /// In en, this message translates to:
-  /// **'{name} will be permanently deleted in 48 hours, with all items and gold. You can cancel until then. Type the character\'s name to confirm.'**
+  /// **'{name} will be deleted right away, with all items and gold. This cannot be undone. Type the character\'s name to confirm.'**
   String deleteCharacterBody(String name);
 
   /// No description provided for @characterNameConfirm.
@@ -4270,11 +4270,11 @@ abstract class AppLocalizations {
   /// **'Cancel deletion'**
   String get cancelCharacterDelete;
 
-  /// No description provided for @characterDeleteScheduled.
+  /// No description provided for @characterDeleted.
   ///
   /// In en, this message translates to:
-  /// **'{name} will be deleted in 48 hours.'**
-  String characterDeleteScheduled(String name);
+  /// **'{name} was deleted.'**
+  String characterDeleted(String name);
 
   /// No description provided for @characterDeleteCancelled.
   ///

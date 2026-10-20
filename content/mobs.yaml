@@ -1983,7 +1983,7 @@ mobs:
     display_name_key: mob.varn_undying
     level: 102
     hp_max: 81000
-    attack: 775
+    attack: 1114
     defense: 116
     crit_pct: 10
     hit_pct: 92
@@ -1997,7 +1997,7 @@ mobs:
     display_name_key: mob.crownless_tyrant
     level: 302
     hp_max: 231000
-    attack: 2119
+    attack: 3046
     defense: 340
     crit_pct: 10
     hit_pct: 92
@@ -2011,7 +2011,7 @@ mobs:
     display_name_key: mob.azhorath_ascended
     level: 602
     hp_max: 456000
-    attack: 6849
+    attack: 9045
     defense: 676
     crit_pct: 10
     hit_pct: 92
@@ -2025,7 +2025,7 @@ mobs:
     display_name_key: mob.kaedrin_timeless
     level: 702
     hp_max: 531000
-    attack: 7962
+    attack: 10515
     defense: 788
     crit_pct: 10
     hit_pct: 92
@@ -2039,7 +2039,7 @@ mobs:
     display_name_key: mob.fallen_archangels
     level: 852
     hp_max: 643500
-    attack: 9631
+    attack: 12720
     defense: 956
     crit_pct: 10
     hit_pct: 92
@@ -2053,7 +2053,7 @@ mobs:
     display_name_key: mob.aethon_unbound
     level: 1000
     hp_max: 754500
-    attack: 11278
+    attack: 14896
     defense: 1121
     crit_pct: 10
     hit_pct: 92

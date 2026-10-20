@@ -273,7 +273,7 @@ func NewRouter(d Deps) http.Handler {
 				r.Get("/wallet", econHandler.Wallet)
 				r.Post("/enter", charHandler.Enter)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
-					Post("/delete-request", charHandler.RequestDelete)
+					Post("/delete", charHandler.Delete)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/delete-cancel", charHandler.CancelDelete)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).

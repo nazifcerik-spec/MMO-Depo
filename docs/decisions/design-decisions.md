@@ -2733,6 +2733,30 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-283 — Karakter silme anında
+**Karar:** `POST /v1/character/{id}/delete` (`confirm_name` zorunlu, DD-282) karakteri hemen siler: kilitli satırda `character.PurgeTx`. Lideri olduğu lonca en kıdemli üyeye geçer, tek kişiyse silinir. Önce eşyalar silinir, karakterin diğer tabloları cascade ile gider. Defter kayıtları denetim için kalır. 48 saatlik bekleme (DD-134) ve `CHARACTER_DELETE_GRACE` kaldırıldı; `delete-request` yerine `delete`. `delete_grace` durumu yalnız hesap silmede (DD-231) kullanılır. `character_delete_expire` aynı `PurgeTx`'i çağırır, `delete-cancel` o karakterleri geri alır. Bekleyen karakter de hemen silinebilir; dondurulmuş karakter silinemez.
+**Reason:** Kullanıcı isteği: bekleme olmadan doğrudan silme. Ad teyidi yanlışlıkla silmeye karşı tek koruma olarak yeterli görüldü.
+**Alternatives:** Daha kısa bekleme (ör. 1 saat); geri dönüşüm kutusu.
+**Consequences:** Silme geri alınamaz. Ad boşa çıkar ve hemen yeniden kullanılabilir. Testler: `TestDelete_*`, `TestHTTPSuccessFlows` (eşyalar da silinir), istemci akış testi.
+**Tarih:** 2026-10-21
+
+---
+
+## DD-284 — Seviye başına 3 nitelik puanı
+**Karar:** Her seviye atlayışı 3 nitelik puanı verir (`attribute_points: every 1, amount 3`). `AttributePointsEarned` artık seviye 1'den sonraki atlayışları sayar. Kilometre taşları (+5 × 5) aynı. Sv 100'de 302, Sv 1000'de 3022 puan (önceden 55 / 525). Mevcut karakterler kazanılmış puanı seviyelerinden alır, harcanmamış puan olarak görür. Azalan getiri (`attribute_scaling`) değişmedi.
+**Reason:** Kullanıcı isteği.
+**Alternatives:** Puan başı etkiyi 1/6'ya düşürüp gücü sabit tutmak (puan artışı anlamsızlaşırdı).
+**Consequences:**
+- Karakterler güçlendi: denge simülasyonunda öldürme süresi yaklaşık %30–40 kısaldı.
+- `content/hunt_xp.yaml` yeniden ayarlandı (`TestTuneHuntXP`). Canavar XP'leri düştü, seviye atlama hızı eğride kaldı.
+- Baskın boss'ları güçlendi (`gen_world.py`: titan saldırısı 3,2 → 4,6, elder_titan 5,3 → 7,0). 5 kişi yine temizler, 3 kişi ≤ %25.
+- Avlar, zindanlar ve uzmanlıklar hedef içinde kaldı.
+- Raporlar yenilendi (`reports/warrior_hunt_report.md`, `reports/class_balance_report.md`).
+
+**Tarih:** 2026-10-21
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

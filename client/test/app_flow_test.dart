@@ -152,7 +152,7 @@ void main() {
     });
     final be = FakeBackend()
       ..classCatalog = {
-        'attribute_points_total': 525,
+        'attribute_points_total': 3022,
         'milestones': {'awakening': 600, 'ultimate': 700, 'capstone': 850, 'mastery': 1000},
         'classes': [
           {
@@ -324,23 +324,28 @@ void main() {
     expect(store.token, isNull);
   });
 
-  testWidgets('delete a character only after typing its name, then cancel the deletion', (tester) async {
+  testWidgets('delete a character at once after typing its name; a pending one can be restored', (tester) async {
     final be = FakeBackend()
-      ..characters.add({
-        'id': 'char-1',
-        'name': 'Grim',
-        'race_code': 'orc',
-        'class_code': 'warrior',
-        'level': 7,
-        'state': 'active',
-      });
+      ..characters.addAll([
+        {'id': 'char-1', 'name': 'Grim', 'race_code': 'orc', 'class_code': 'warrior', 'level': 7, 'state': 'active'},
+        {
+          'id': 'char-2',
+          'name': 'Vex',
+          'race_code': 'elf',
+          'class_code': 'mage',
+          'level': 3,
+          'state': 'delete_grace', // left by an account deletion (DD-231)
+          'delete_grace_at': DateTime.now().toUtc().add(const Duration(days: 20)).toIso8601String(),
+        },
+      ]);
     final store = MemoryTokenStore();
     await be.api(store).login('grim', 'correct-horse');
     await _boot(tester, be, store: store);
 
+    expect(find.byTooltip('Delete character'), findsOneWidget, reason: 'only the active character');
     await tester.tap(find.byTooltip('Delete character'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Grim will be permanently deleted in 48 hours'), findsOneWidget);
+    expect(find.textContaining('Grim will be deleted right away'), findsOneWidget);
     FilledButton confirm() => tester.widget<FilledButton>(find.byKey(const Key('delete-character-confirm')));
     expect(confirm().onPressed, isNull, reason: 'off until the name is typed');
     await tester.enterText(find.byKey(const Key('delete-character-name')), 'Gri');
@@ -351,22 +356,23 @@ void main() {
     expect(confirm().onPressed, isNotNull, reason: 'case and spaces do not matter');
     await tester.tap(find.byKey(const Key('delete-character-confirm')));
     await tester.pumpAndSettle();
-    final sent = be.requests.lastWhere((r) => r.url.path.endsWith('/delete-request'));
+    final sent = be.requests.lastWhere((r) => r.url.path.endsWith('/delete'));
+    expect(sent.url.path, '/v1/character/char-1/delete');
     expect(jsonDecode(sent.body), {'confirm_name': 'grim'});
-    expect(be.characters.single['state'], 'delete_grace');
-    expect(find.text('Grim will be deleted in 48 hours.'), findsOneWidget);
+    expect(be.characters.map((c) => c['id']), ['char-2']);
+    expect(find.text('Grim was deleted.'), findsOneWidget);
+    expect(find.text('Grim'), findsNothing, reason: 'gone from the list at once');
+
     expect(find.text('Deletion pending'), findsOneWidget);
     expect(find.textContaining('Deleted on '), findsOneWidget);
-    expect(find.byTooltip('Delete character'), findsNothing);
-
-    await tester.tap(find.text('Grim'));
+    await tester.tap(find.text('Vex'));
     await tester.pumpAndSettle();
     expect(find.text('Characters'), findsOneWidget, reason: 'a character pending deletion cannot be entered');
 
     await tester.tap(find.text('Cancel deletion'));
     await tester.pumpAndSettle();
     expect(be.characters.single['state'], 'active');
-    expect(find.text('Grim will not be deleted.'), findsOneWidget);
+    expect(find.text('Vex will not be deleted.'), findsOneWidget);
     expect(find.byTooltip('Delete character'), findsOneWidget);
   });
 

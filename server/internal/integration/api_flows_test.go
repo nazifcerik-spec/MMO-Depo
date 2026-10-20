@@ -123,13 +123,25 @@ func TestHTTPSuccessFlows(t *testing.T) {
 	b.fail("POST", b.path("/market/buy/"+l["id"].(string)), map[string]any{}, 409, "")
 	b.fail("POST", b.path("/market/cancel/"+l["id"].(string)), map[string]any{}, 403, "")
 
-	// Character name clash and delete-grace rules.
+	// Character name clash, then deletion: the name must be typed, and it
+	// is gone at once with its items (DD-283).
 	p.fail("POST", p.path("/rename"), map[string]any{"name": b.name}, 409, "")
-	p.fail("POST", p.path("/delete-request"), map[string]any{}, 400, "E_NAME_MISMATCH")
-	p.fail("POST", p.path("/delete-request"), map[string]any{"confirm_name": b.name}, 400, "E_NAME_MISMATCH")
-	p.ok("POST", p.path("/delete-request"), map[string]any{"confirm_name": strings.ToUpper(p.name)})
-	p.fail("POST", p.path("/delete-request"), map[string]any{"confirm_name": p.name}, 409, "")
-	p.ok("POST", p.path("/delete-cancel"), map[string]any{})
 	p.fail("GET", "/v1/character/"+b.char+"/wallet", nil, 404, "")
 	p.fail("POST", "/v1/dev/mint", map[string]any{"character_id": p.char, "amount": 1, "currency": "doubloons"}, 400, "")
+	p.fail("POST", p.path("/delete-cancel"), map[string]any{}, 409, "E_NOT_IN_DELETE_GRACE")
+	p.fail("POST", p.path("/delete"), map[string]any{}, 400, "E_NAME_MISMATCH")
+	p.fail("POST", p.path("/delete"), map[string]any{"confirm_name": b.name}, 400, "E_NAME_MISMATCH")
+	b.fail("POST", p.path("/delete"), map[string]any{"confirm_name": p.name}, 404, "")
+	var owned []uuid.UUID
+	require.NoError(t, w.p.QueryRow(w.ctx,
+		`SELECT array_agg(id) FROM inventory.item_instance WHERE owner_character_id = $1`, id).Scan(&owned))
+	require.NotEmpty(t, owned)
+	p.ok("POST", p.path("/delete"), map[string]any{"confirm_name": strings.ToUpper(p.name)})
+	p.fail("GET", p.path("/sheet"), nil, 404, "")
+	p.fail("POST", p.path("/delete"), map[string]any{"confirm_name": p.name}, 404, "")
+	require.Empty(t, items(p.ok("GET", "/v1/character", nil), "characters"))
+	var left int
+	require.NoError(t, w.p.QueryRow(w.ctx,
+		`SELECT count(*) FROM inventory.item_instance WHERE id = ANY($1)`, owned).Scan(&left))
+	require.Zero(t, left, "the character's items go with it")
 }

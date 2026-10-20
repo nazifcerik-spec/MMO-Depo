@@ -136,27 +136,50 @@ func (r *PgRepo) TouchLastPlayed(ctx context.Context, id uuid.UUID, ts time.Time
 	return err
 }
 
-func (r *PgRepo) SetDeleteGrace(ctx context.Context, id uuid.UUID, expiresAt time.Time) error {
-	const q = `UPDATE character.character
-	              SET state = 'delete_grace', delete_grace_at = $2,
-	                  updated_at = now(), version = version + 1
-	            WHERE id = $1 AND state = 'active'`
-	tag, err := r.pool.Exec(ctx, q, id, expiresAt)
-	if err != nil {
-		return err
-	}
-	if tag.RowsAffected() == 0 {
-		// Either not found or not in active state.
-		exists, err := r.Get(ctx, id)
+func (r *PgRepo) Purge(ctx context.Context, id uuid.UUID) error {
+	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		var locked uuid.UUID
+		err := tx.QueryRow(ctx, `SELECT id FROM character.character WHERE id = $1 FOR UPDATE`, id).Scan(&locked)
+		if errors.Is(err, pgx.ErrNoRows) {
+			return ErrNotFound
+		}
 		if err != nil {
 			return err
 		}
-		if exists.State != StateActive {
-			return ErrNotPlayable
-		}
-		return ErrNotFound
+		_, err = PurgeTx(ctx, tx, []uuid.UUID{id})
+		return err
+	})
+}
+
+// PurgeTx hard-deletes characters inside tx (rows must be locked by the
+// caller). Guilds they lead pass to the most senior, earliest remaining
+// member; guilds with no one else left are removed. Items go first; every
+// other character-owned table cascades. Ledger rows stay (no FK) for audit.
+func PurgeTx(ctx context.Context, tx pgx.Tx, ids []uuid.UUID) (int64, error) {
+	if _, err := tx.Exec(ctx, `
+		UPDATE social.guild g SET leader_character_id = s.character_id, version = g.version + 1
+		  FROM (SELECT DISTINCT ON (m.guild_id) m.guild_id, m.character_id
+		          FROM social.guild_member m
+		          JOIN social.guild g2 ON g2.id = m.guild_id
+		         WHERE g2.leader_character_id = ANY($1) AND NOT (m.character_id = ANY($1))
+		         ORDER BY m.guild_id, m.rank_index, m.joined_at) s
+		 WHERE g.id = s.guild_id`, ids); err != nil {
+		return 0, err
 	}
-	return nil
+	if _, err := tx.Exec(ctx, `
+		UPDATE social.guild_member m SET rank_index = 0
+		  FROM social.guild g
+		 WHERE g.id = m.guild_id AND g.leader_character_id = m.character_id AND m.rank_index <> 0`); err != nil {
+		return 0, err
+	}
+	if _, err := tx.Exec(ctx, `DELETE FROM social.guild WHERE leader_character_id = ANY($1)`, ids); err != nil {
+		return 0, err
+	}
+	if _, err := tx.Exec(ctx, `DELETE FROM inventory.item_instance WHERE owner_character_id = ANY($1)`, ids); err != nil {
+		return 0, err
+	}
+	tag, err := tx.Exec(ctx, `DELETE FROM character.character WHERE id = ANY($1)`, ids)
+	return tag.RowsAffected(), err
 }
 
 // AddXP is transactional: locks the row, computes rollover into the new

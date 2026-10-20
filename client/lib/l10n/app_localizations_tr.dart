@@ -2395,7 +2395,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name 48 saat sonra tüm eşyaları ve altınıyla birlikte kalıcı olarak silinecek. O zamana kadar iptal edebilirsin. Onaylamak için karakterin adını yaz.';
+    return '$name tüm eşyaları ve altınıyla birlikte hemen silinecek. Bu geri alınamaz. Onaylamak için karakterin adını yaz.';
   }
 
   @override
@@ -2410,8 +2410,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get cancelCharacterDelete => 'Silmeyi iptal et';
 
   @override
-  String characterDeleteScheduled(String name) {
-    return '$name 48 saat sonra silinecek.';
+  String characterDeleted(String name) {
+    return '$name silindi.';
   }
 
   @override

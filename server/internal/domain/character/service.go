@@ -10,17 +10,15 @@ import (
 
 // ServiceConfig tunes the character service.
 type ServiceConfig struct {
-	SlotCap     int           // DD-OPEN-8, v1 default 2
-	DeleteGrace time.Duration // DD-134 pattern, default 48h
-	Now         func() time.Time
+	SlotCap int // DD-OPEN-8, v1 default 2
+	Now     func() time.Time
 }
 
 // DefaultServiceConfig returns Faz 00 baseline.
 func DefaultServiceConfig() ServiceConfig {
 	return ServiceConfig{
-		SlotCap:     5, // DD-251
-		DeleteGrace: 48 * time.Hour,
-		Now:         time.Now,
+		SlotCap: 5, // DD-251
+		Now:     time.Now,
 	}
 }
 
@@ -46,9 +44,6 @@ func NewService(repo Repository, cfg ServiceConfig, logger *slog.Logger) *Servic
 	}
 	if cfg.SlotCap <= 0 {
 		cfg.SlotCap = 5
-	}
-	if cfg.DeleteGrace <= 0 {
-		cfg.DeleteGrace = 48 * time.Hour
 	}
 	if logger == nil {
 		logger = slog.Default()
@@ -216,34 +211,27 @@ func (s *Service) SetHP(ctx context.Context, characterID uuid.UUID, hp int32, at
 	return s.repo.SetHP(ctx, characterID, hp, at)
 }
 
-// --- Delete grace flow ------------------------------------------------------
+// --- Delete -----------------------------------------------------------------
 
-// RequestDelete moves the character to delete_grace. Cancellable within
-// s.cfg.DeleteGrace. Worker `character_delete_expire` (Faz 01 sprint 6+) is
-// the one that actually removes the row when the deadline passes.
-// confirmName must be the character's name (case-insensitive) so a stray
-// call cannot schedule the wrong character.
-func (s *Service) RequestDelete(ctx context.Context, characterID, accountID uuid.UUID, confirmName string) (*Character, error) {
+// Delete removes the character at once, with its items (DD-283). confirmName
+// must be the character's name (case-insensitive) so a stray call cannot
+// delete the wrong one. Frozen characters stay for ops.
+func (s *Service) Delete(ctx context.Context, characterID, accountID uuid.UUID, confirmName string) error {
 	c, err := s.GetOwned(ctx, characterID, accountID)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	if c.State != StateActive {
-		return nil, ErrNotPlayable
+	if c.State != StateActive && c.State != StateDeleteGrace {
+		return ErrNotPlayable
 	}
 	if _, normalized, err := validateName(confirmName); err != nil || normalized != c.NameNormalized {
-		return nil, ErrNameMismatch
+		return ErrNameMismatch
 	}
-	deadline := s.cfg.Now().UTC().Add(s.cfg.DeleteGrace)
-	if err := s.repo.SetDeleteGrace(ctx, c.ID, deadline); err != nil {
-		return nil, err
-	}
-	c.State = StateDeleteGrace
-	c.DeleteGraceAt = &deadline
-	return c, nil
+	return s.repo.Purge(ctx, c.ID)
 }
 
-// CancelDelete restores a delete_grace character back to active.
+// CancelDelete restores a delete_grace character (one left pending by an
+// account deletion or from before direct deletion) back to active.
 func (s *Service) CancelDelete(ctx context.Context, characterID, accountID uuid.UUID) (*Character, error) {
 	c, err := s.GetOwned(ctx, characterID, accountID)
 	if err != nil {

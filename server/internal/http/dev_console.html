@@ -779,9 +779,9 @@ function selectChar(id) {
 async function requestDelete(id) {
   const name = prompt('Type the character name to confirm deletion');
   if (!name) return;
-  const { res, body } = await api('POST', `/v1/character/${id}/delete-request`, { body: { confirm_name: name } });
+  const { res, body } = await api('POST', `/v1/character/${id}/delete`, { body: { confirm_name: name } });
   if (res.ok) {
-    setStatus('char-status', 'Delete requested — 48h grace to cancel', 'ok');
+    setStatus('char-status', 'Character deleted', 'ok');
     await refreshChars();
   } else setStatus('char-status', body?.error?.code || 'failed', 'err');
 }

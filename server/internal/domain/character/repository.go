@@ -23,9 +23,9 @@ type Repository interface {
 	// TouchLastPlayed sets last_played_at = ts. No-op on non-active characters.
 	TouchLastPlayed(ctx context.Context, id uuid.UUID, ts time.Time) error
 
-	// SetDeleteGrace transitions state='delete_grace' with the given expire
-	// time. Guard: only active characters may enter this state.
-	SetDeleteGrace(ctx context.Context, id uuid.UUID, expiresAt time.Time) error
+	// Purge hard-deletes the character with its items (DD-283). Everything
+	// else it owns cascades; ledger rows stay for audit.
+	Purge(ctx context.Context, id uuid.UUID) error
 
 	// CancelDeleteGrace transitions state='delete_grace' → 'active'.
 	CancelDeleteGrace(ctx context.Context, id uuid.UUID) error

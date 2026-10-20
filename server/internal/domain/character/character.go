@@ -1,5 +1,6 @@
 // Package character implements the character lifecycle: create (with slot cap),
-// list, enter (bind to session), delete-request/cancel (48h grace), rename.
+// list, enter (bind to session), delete (immediate, name-confirmed, DD-283) / cancel a pending
+// account-purge deletion, rename.
 //
 // Stats + sheet computation is a placeholder here (base values per class); the
 // full modifier stack lands with the skill-engine sprint and item-engine.

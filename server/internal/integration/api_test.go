@@ -225,8 +225,8 @@ func TestHTTPAuthAndCharacters(t *testing.T) {
 	user.ok("GET", "/v1/character/"+id+"/wallet", nil)
 	renamed := "N" + randHex(5)
 	user.ok("POST", "/v1/character/"+id+"/rename", map[string]any{"name": renamed})
-	user.ok("POST", "/v1/character/"+id+"/delete-request", map[string]any{"confirm_name": renamed})
-	user.ok("POST", "/v1/character/"+id+"/delete-cancel", map[string]any{})
+	user.ok("POST", "/v1/character/"+id+"/delete", map[string]any{"confirm_name": renamed})
+	require.Empty(t, items(user.ok("GET", "/v1/character", nil), "characters"))
 	// Someone else's character is invisible.
 	user.fail("GET", "/v1/character/"+a.char+"/sheet", nil, 404, "")
 	user.fail("GET", "/v1/character/not-a-uuid/sheet", nil, 400, "")
