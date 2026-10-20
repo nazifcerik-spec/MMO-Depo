@@ -57,39 +57,6 @@ func (c *Catalog) All() []Region {
 // StartingCode returns the code marked is_starting=true, or empty when none.
 func (c *Catalog) StartingCode() string { return c.starting }
 
-// TravelDuration returns the direct-edge duration between two region codes,
-// or (0, false) when no direct edge exists.
-//
-// A direct edge is: parent↔child in the tree, OR a matching entry in
-// world.region_link. Multi-hop routing is intentionally NOT supported in
-// MVP — the caller sees ErrNoRoute and must break the trip into segments.
-func (c *Catalog) TravelDuration(fromCode, toCode string) (int32, bool) {
-	if fromCode == toCode {
-		return 0, false
-	}
-	from, okF := c.regions[fromCode]
-	to, okT := c.regions[toCode]
-	if !okF || !okT {
-		return 0, false
-	}
-	// Parent↔child: symmetric — weight is the CHILD's travel_seconds_from_parent
-	// (parent has no such weight because it may have many children).
-	if to.ParentCode != nil && *to.ParentCode == fromCode {
-		return to.TravelSecondsFromParent, true
-	}
-	if from.ParentCode != nil && *from.ParentCode == toCode {
-		return from.TravelSecondsFromParent, true
-	}
-	// Explicit link (either direction).
-	for _, l := range c.linksBy[fromCode] {
-		if (l.RegionA == fromCode && l.RegionB == toCode) ||
-			(l.RegionB == fromCode && l.RegionA == toCode) {
-			return l.TravelSeconds, true
-		}
-	}
-	return 0, false
-}
-
 // Neighbors returns every region directly reachable from `code` — children,
 // parent, and explicit links. Used by GET /location to render "where can I
 // go from here".
@@ -134,6 +101,55 @@ func (c *Catalog) Neighbors(code string) []NeighborInfo {
 		}
 	}
 	return out
+}
+
+// Routes is the shortest travel time from `from` to every region it can
+// reach, with the path there (DD-280): Dijkstra over the travel edges
+// (parent↔child and links). The origin itself is left out.
+func (c *Catalog) Routes(from string) map[string]Route {
+	if _, ok := c.regions[from]; !ok {
+		return nil
+	}
+	best := map[string]int32{from: 0}
+	prev := map[string]string{}
+	done := map[string]bool{}
+	for {
+		cur, curT := "", int32(-1)
+		for code, t := range best { // small graph: a linear scan beats a heap
+			if !done[code] && (curT < 0 || t < curT || (t == curT && code < cur)) {
+				cur, curT = code, t
+			}
+		}
+		if curT < 0 {
+			break
+		}
+		done[cur] = true
+		for _, n := range c.Neighbors(cur) {
+			t := curT + n.TravelSeconds
+			if old, seen := best[n.Region.Code]; !seen || t < old {
+				best[n.Region.Code], prev[n.Region.Code] = t, cur
+			}
+		}
+	}
+	out := make(map[string]Route, len(best)-1)
+	for code, t := range best {
+		if code == from {
+			continue
+		}
+		path := []string{code}
+		for p := prev[code]; p != ""; p = prev[p] {
+			path = append([]string{p}, path...)
+		}
+		out[code] = Route{Seconds: t, Path: path}
+	}
+	return out
+}
+
+// Route is one destination's shortest journey: total seconds and the
+// regions passed, origin first.
+type Route struct {
+	Seconds int32    `json:"seconds"`
+	Path    []string `json:"path"`
 }
 
 // HuntRegions are the regions whose mobs a character standing in `code` may

@@ -170,7 +170,7 @@
   "statLifesteal": "% Robo de vida",
   "statDmgReduction": "% Reducción de daño",
   "classJewelry": "Joyería",
-  "mapHint": "Las zonas que brillan están a un camino. Arrastra y amplía el mapa; toca una zona para ver detalles.",
+  "mapHint": "Puedes viajar directamente a cualquier zona que tu nivel permita; el tiempo sigue el camino más corto. Arrastra y amplía el mapa; toca una zona.",
   "mapNoRoad": "Ningún camino directo lleva aquí. Viaja por las zonas que brillan a tu lado.",
   "youAreHere": "Estás aquí.",
   "travelTime": "Tiempo de viaje: {time}"

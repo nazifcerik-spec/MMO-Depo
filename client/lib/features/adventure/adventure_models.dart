@@ -236,23 +236,39 @@ class Neighbor {
 }
 
 class TravelInfo {
-  const TravelInfo({required this.id, required this.to, required this.startedAt, required this.arrivesAt});
+  const TravelInfo({
+    required this.id,
+    required this.to,
+    required this.startedAt,
+    required this.arrivesAt,
+    this.path = const [],
+  });
 
   factory TravelInfo.fromJson(Map<String, dynamic> j) => TravelInfo(
     id: j['id'] as String,
     to: j['to_region_code'] as String,
     startedAt: DateTime.parse(j['started_at'] as String),
     arrivesAt: DateTime.parse(j['arrives_at'] as String),
+    path: [for (final p in (j['path'] as List? ?? const [])) p as String],
   );
 
   final String id;
   final String to;
   final DateTime startedAt;
   final DateTime arrivesAt;
+
+  /// The regions the journey passes, origin first (DD-280).
+  final List<String> path;
 }
 
 class Location {
-  const Location({required this.region, required this.neighbors, this.travel, this.huntRegions = const []});
+  const Location({
+    required this.region,
+    required this.neighbors,
+    this.travel,
+    this.huntRegions = const [],
+    this.routes = const {},
+  });
 
   factory Location.fromJson(Map<String, dynamic> j) => Location(
     region: RegionInfo.fromJson(j['region'] as Map<String, dynamic>),
@@ -262,7 +278,14 @@ class Location {
     ],
     travel: j['travel'] is Map<String, dynamic> ? TravelInfo.fromJson(j['travel'] as Map<String, dynamic>) : null,
     huntRegions: [for (final r in (j['hunt_regions'] as List? ?? const [])) r as String],
+    routes: {
+      for (final e in (j['routes'] as Map<String, dynamic>? ?? const {}).entries)
+        e.key: Duration(seconds: ((e.value as Map<String, dynamic>)['seconds'] as num?)?.toInt() ?? 0),
+    },
   );
+
+  /// Travel time to every region a road leads to (DD-280).
+  final Map<String, Duration> routes;
 
   final RegionInfo region;
 

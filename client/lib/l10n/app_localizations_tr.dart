@@ -2372,7 +2372,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mapHint =>
-      'Parlayan bölgelere doğrudan gidebilirsin. Haritayı kaydır, yakınlaştır; ayrıntı için bölgeye dokun.';
+      'Seviyenin yettiği her bölgeye doğrudan gidebilirsin; süre en kısa yoldan hesaplanır. Haritayı kaydır, yakınlaştır; bölgeye dokun.';
 
   @override
   String get mapNoRoad => 'Buraya doğrudan yol yok. Yanındaki parlayan bölgeler üzerinden git.';

@@ -4213,7 +4213,7 @@ abstract class AppLocalizations {
   /// No description provided for @mapHint.
   ///
   /// In en, this message translates to:
-  /// **'Glowing regions are a road away. Drag and pinch the map; tap a region for details.'**
+  /// **'You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.'**
   String get mapHint;
 
   /// No description provided for @mapNoRoad.

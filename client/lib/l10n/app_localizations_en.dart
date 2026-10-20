@@ -2372,7 +2372,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get classJewelry => 'Jewelry';
 
   @override
-  String get mapHint => 'Glowing regions are a road away. Drag and pinch the map; tap a region for details.';
+  String get mapHint =>
+      'You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.';
 
   @override
   String get mapNoRoad => 'No direct road leads here. Travel through the glowing regions next to you.';

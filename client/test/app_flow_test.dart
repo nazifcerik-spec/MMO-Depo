@@ -720,7 +720,9 @@ void main() {
     expect(find.text('Open raid'), findsNothing);
   });
 
-  testWidgets('travel: pick the destination on the map, level gate, depart, turn back (DD-279)', (tester) async {
+  testWidgets('travel: pick any destination on the map, level gate, depart, turn back (DD-279, DD-280)', (
+    tester,
+  ) async {
     final (be, _, _) = await _inGame(tester);
     await tester.tap(find.byIcon(Icons.explore_outlined));
     await tester.pumpAndSettle();
@@ -744,9 +746,10 @@ void main() {
     await openRegion('dragon_peaks');
     expect(tester.widget<FilledButton>(find.byKey(const Key('map-go'))).onPressed, isNull, reason: 'needs level 40');
     await closeSheet();
+    // Far regions are one journey away too (DD-280): the shortest road's time.
     await openRegion('void_coast');
-    expect(find.textContaining('No direct road'), findsOneWidget);
-    expect(find.byKey(const Key('map-go')), findsNothing);
+    expect(find.text('Travel time: 25m'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.byKey(const Key('map-go'))).onPressed, isNull, reason: 'needs level 90');
     await closeSheet();
 
     await openRegion('whisperwood');
@@ -760,7 +763,7 @@ void main() {
     await tester.tap(find.text('Turn back'));
     await tester.pumpAndSettle();
     expect(be.travel, isNull);
-    expect(find.textContaining('Glowing regions'), findsOneWidget);
+    expect(find.textContaining('any region your level allows'), findsOneWidget);
   });
 
   testWidgets('workshop: learn, material-aware craft, skill gate, skill-up toast', (tester) async {

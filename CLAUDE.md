@@ -191,6 +191,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 90. **Yolculuk haritası (bitti)** — Sprint 90, DD-279. Migration 0043 (`world.region.map_x/map_y`). `content/map.yaml` ← `python scripts/gen_map.py` (gen_world'den sonra; ana yol yılan dizilim, kıta başı bant, zindan bölgesinin yanında). `/v1/world/regions` konum + `links`. İstemci Yolculuk = `WorldMapView` (kaydır/yakınlaştır, bulunulan bölgede açılır, düğüm üstünde seviye, komşular parlak, dokun → ayrıntı + Git).
 
+91. **Her bölgeye doğrudan yolculuk (bitti)** — Sprint 91, DD-280. `world.Catalog.Routes` (Dijkstra, üst/alt + bağlantı): her ulaşılabilir bölge tek yolculuk, süre en kısa güzergâh, seviye şartı yalnız varışta. `/location` `routes` (`{seconds, path}`) + `travel.path`. İstemci: her bölgede süre + Git, seviyesi yetmeyen soluk/kilitli, rota güzergâh boyunca. Not: yerel entegrasyon takımında dev `worker` konteyneri e-posta kuyruğunu boşaltıp `TestAccountRecoverySQL`'i düşürebilir — takım öncesi `docker compose stop worker`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

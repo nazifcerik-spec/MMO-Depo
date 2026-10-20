@@ -6,13 +6,12 @@
 //   - RegionLink: a non-parent shortcut adjacency (e.g. a road between two
 //     sibling wildernesses).
 //   - Travel: an in-transit state a character enters when leaving one region
-//     for another. Duration comes from the parent↔child edge weight or, when
-//     both regions share a RegionLink, from that link's travel_seconds.
+//     for another. Duration is the shortest route over the parent↔child edge
+//     weights and RegionLink travel_seconds (DD-280).
 //
 // Design decisions:
-//   - MVP path finder is single-hop: source and destination must be
-//     parent↔child OR linked. Multi-hop routing (A* over the graph) is a
-//     Phase 02 concern, and gates the addition of "long-haul" content.
+//   - Any region a road leads to is one journey (Catalog.Routes, Dijkstra);
+//     only the destination's level gate applies (DD-280).
 //   - Travel is server-authoritative and read-only until the arrival time.
 //     Complete refuses when `now < arrives_at` (E_TRAVEL_IN_PROGRESS);
 //     Cancel returns the character to `from_region_code` with no reward or
@@ -99,7 +98,7 @@ var (
 	ErrTravelNotActive  = errors.New("world: travel is not in progress")
 	ErrTravelNotReady   = errors.New("world: travel not yet arrived")
 	ErrSameRegion       = errors.New("world: destination equals current region")
-	ErrNoRoute          = errors.New("world: no direct route between regions")
+	ErrNoRoute          = errors.New("world: no road between regions")
 	ErrLevelRequirement = errors.New("world: character level below region min_level")
 	ErrValidation       = errors.New("world: validation")
 	ErrNoStartingRegion = errors.New("world: no starting region defined")

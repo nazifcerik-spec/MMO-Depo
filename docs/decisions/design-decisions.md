@@ -2662,6 +2662,28 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-280 — Her bölgeye doğrudan yolculuk
+**Karar:**
+- Yolla ulaşılabilen her bölge tek yolculuktur. Süre, yol ağı üzerindeki en kısa güzergâhın toplamıdır:
+  - Yol ağı: üst/alt bölge kenarları (`travel_seconds_from_parent`) ve bağlantılar.
+  - Hesap `world.Catalog.Routes`, Dijkstra ile; 54 bölgede doğrusal tarama yeterli.
+- Seviye şartı yalnız varılacak bölgeye uygulanır. Yol yoksa `400 E_NO_ROUTE`.
+- Tek adımlık `TravelDuration` kaldırıldı.
+- `GET /location` yanıtı:
+  - `routes`: her bölge için `{seconds, path}`.
+  - Sürmekte olan yolculukta `travel.path`.
+- İstemci:
+  - Haritada her bölgeye dokununca süre ve "Git" çıkar.
+  - Seviyesi yetmeyen bölgeler soluk ve kilitli.
+  - Yolculuk rotası güzergâh boyunca kesikli çizilir.
+
+**Reason:** Kullanıcı isteği: doğrudan seyahat.
+**Alternatives:** Yol üzerinde durak durak yolculuk; komşu dışına yolculuk için ücret.
+**Consequences:** Kıta düğümleri kısayol olur (kıtanın bölgeleri arası üst→alt geçiş). Demirkale → Sonsuzluğun Kıyısı ≈ 2 saat. Ara bölgelerin seviye şartı aranmaz. Testler: `TestCatalog_Routes`, `TestHTTPTravelAnywhere`, istemci harita testi.
+**Tarih:** 2026-10-20
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

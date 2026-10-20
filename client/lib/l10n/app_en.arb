@@ -1863,7 +1863,7 @@
   "statLifesteal": "% Lifesteal",
   "statDmgReduction": "% Damage reduction",
   "classJewelry": "Jewelry",
-  "mapHint": "Glowing regions are a road away. Drag and pinch the map; tap a region for details.",
+  "mapHint": "You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.",
   "mapNoRoad": "No direct road leads here. Travel through the glowing regions next to you.",
   "youAreHere": "You are here.",
   "travelTime": "Travel time: {time}",

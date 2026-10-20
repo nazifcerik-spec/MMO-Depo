@@ -28,47 +28,23 @@ func TestCatalog_StartingCode(t *testing.T) {
 	require.Equal(t, "city", c.StartingCode())
 }
 
-func TestCatalog_TravelDuration_ParentChildBothWays(t *testing.T) {
+// Any region a road leads to is one journey away, at the shortest route's
+// time (DD-280): cont is the hub between city and the wilds.
+func TestCatalog_Routes(t *testing.T) {
 	c := fakeCatalog(t)
-	// parent → child
-	d, ok := c.TravelDuration("cont", "city")
-	require.True(t, ok)
-	require.Equal(t, int32(60), d, "child's travel_seconds_from_parent used for parent→child")
-	// child → parent (symmetric)
-	d, ok = c.TravelDuration("city", "cont")
-	require.True(t, ok)
-	require.Equal(t, int32(60), d)
-}
+	r := c.Routes("city")
+	require.Len(t, r, 4, "every other region")
+	require.Equal(t, Route{Seconds: 60, Path: []string{"city", "cont"}}, r["cont"], "child → parent")
+	require.Equal(t, Route{Seconds: 180, Path: []string{"city", "cont", "wild_a"}}, r["wild_a"])
+	require.Equal(t, Route{Seconds: 240, Path: []string{"city", "cont", "wild_b"}}, r["wild_b"], "via the hub beats the link")
+	require.Equal(t, Route{Seconds: 380, Path: []string{"city", "cont", "wild_a", "dung"}}, r["dung"])
+	_, self := r["city"]
+	require.False(t, self, "the origin is no destination")
+	require.Equal(t, int32(240), c.Routes("wild_a")["wild_b"].Seconds, "the link: 240 < 120+180")
+	require.Nil(t, c.Routes("ghost"))
 
-func TestCatalog_TravelDuration_ExplicitLink(t *testing.T) {
-	c := fakeCatalog(t)
-	d, ok := c.TravelDuration("wild_a", "wild_b")
-	require.True(t, ok)
-	require.Equal(t, int32(240), d)
-	// reverse
-	d, ok = c.TravelDuration("wild_b", "wild_a")
-	require.True(t, ok)
-	require.Equal(t, int32(240), d)
-}
-
-func TestCatalog_TravelDuration_NoRouteBetweenUnrelated(t *testing.T) {
-	c := fakeCatalog(t)
-	_, ok := c.TravelDuration("city", "wild_b")
-	require.False(t, ok, "siblings without an explicit link cannot travel directly")
-}
-
-func TestCatalog_TravelDuration_SelfIsNotARoute(t *testing.T) {
-	c := fakeCatalog(t)
-	_, ok := c.TravelDuration("city", "city")
-	require.False(t, ok)
-}
-
-func TestCatalog_TravelDuration_UnknownRegions(t *testing.T) {
-	c := fakeCatalog(t)
-	_, ok := c.TravelDuration("ghost", "city")
-	require.False(t, ok)
-	_, ok = c.TravelDuration("city", "ghost")
-	require.False(t, ok)
+	island := NewCatalog([]Region{{Code: "a"}, {Code: "b"}}, nil)
+	require.Empty(t, island.Routes("a"), "no road, no route")
 }
 
 func TestCatalog_Neighbors_ContainsAllDirections(t *testing.T) {

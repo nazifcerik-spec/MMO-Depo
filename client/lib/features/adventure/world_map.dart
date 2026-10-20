@@ -7,16 +7,16 @@ import 'adventure_models.dart';
 
 /// The travel map (DD-279): every region at its content position with its
 /// level above it, continents as tinted bands, roads between linked regions.
-/// Direct destinations glow; tapping any region reports it to [onTap].
+/// Regions above the character's level are dimmed; tapping any region
+/// reports it to [onTap]. A journey under way is drawn along its [route].
 class WorldMapView extends StatefulWidget {
   const WorldMapView({
     super.key,
     required this.map,
     required this.here,
-    required this.neighbors,
     required this.level,
     required this.onTap,
-    this.travellingTo,
+    this.route = const [],
   });
 
   final WorldMap map;
@@ -24,10 +24,10 @@ class WorldMapView extends StatefulWidget {
   /// Where the character stands.
   final String here;
 
-  /// Direct destinations → travel time.
-  final Map<String, Duration> neighbors;
   final int level;
-  final String? travellingTo;
+
+  /// The regions of a journey under way, origin first (DD-280).
+  final List<String> route;
   final ValueChanged<RegionInfo> onTap;
 
   @override
@@ -81,9 +81,7 @@ class _WorldMapViewState extends State<WorldMapView> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: CustomPaint(
-                      painter: _MapPainter(widget.map, here: widget.here, travellingTo: widget.travellingTo),
-                    ),
+                    child: CustomPaint(painter: _MapPainter(widget.map, route: widget.route)),
                   ),
                   for (final r in regions) _node(context, r),
                 ],
@@ -111,7 +109,6 @@ class _WorldMapViewState extends State<WorldMapView> {
         region: r,
         size: size,
         here: r.code == widget.here,
-        reachable: widget.neighbors.containsKey(r.code),
         locked: r.minLevel > widget.level,
         onTap: () => widget.onTap(r),
       ),
@@ -124,7 +121,6 @@ class _MapNode extends StatelessWidget {
     required this.region,
     required this.size,
     required this.here,
-    required this.reachable,
     required this.locked,
     required this.onTap,
   });
@@ -132,7 +128,6 @@ class _MapNode extends StatelessWidget {
   final RegionInfo region;
   final double size;
   final bool here;
-  final bool reachable;
   final bool locked;
   final VoidCallback onTap;
 
@@ -142,9 +137,9 @@ class _MapNode extends StatelessWidget {
     final name = ContentNames.of('region', region.code);
     final ring = here
         ? Palette.accent
-        : reachable
-        ? (locked ? Palette.danger : Palette.success)
-        : Palette.borderStrong;
+        : locked
+        ? Palette.danger.withValues(alpha: 0.6)
+        : Palette.success;
     final icon = switch (region.kind) {
       'city' => Icons.location_city,
       'dungeon' => Icons.castle_outlined,
@@ -161,7 +156,7 @@ class _MapNode extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Opacity(
-          opacity: here || reachable ? 1 : 0.6,
+          opacity: locked ? 0.5 : 1,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -182,11 +177,11 @@ class _MapNode extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Palette.bgElevated,
-                  border: Border.all(color: ring, width: here || reachable ? 3 : 1.5),
+                  border: Border.all(color: ring, width: here ? 3 : 2),
                   boxShadow: [if (here) BoxShadow(color: Palette.accent.withValues(alpha: 0.5), blurRadius: 12)],
                 ),
                 child: Icon(
-                  locked && reachable ? Icons.lock_outline : icon,
+                  locked ? Icons.lock_outline : icon,
                   size: size * 0.5,
                   color: here ? Palette.accent : Palette.textPrimary,
                 ),
@@ -214,11 +209,10 @@ class _MapNode extends StatelessWidget {
 /// Continent bands, roads (links and zone–dungeon paths) and the route of a
 /// journey under way.
 class _MapPainter extends CustomPainter {
-  _MapPainter(this.map, {required this.here, this.travellingTo});
+  _MapPainter(this.map, {this.route = const []});
 
   final WorldMap map;
-  final String here;
-  final String? travellingTo;
+  final List<String> route;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -265,21 +259,23 @@ class _MapPainter extends CustomPainter {
       if (p != null) canvas.drawLine(Offset(p.mapX, p.mapY), Offset(r.mapX, r.mapY), path);
     }
 
-    final from = map.regions[here], to = map.regions[travellingTo];
-    if (from != null && to != null) {
-      final route = Paint()
-        ..color = Palette.accent
-        ..strokeWidth = 5
-        ..strokeCap = StrokeCap.round;
-      final a = Offset(from.mapX, from.mapY), b = Offset(to.mapX, to.mapY);
-      const dash = 14.0;
-      final total = (b - a).distance;
+    final stops = [
+      for (final code in route)
+        if (map.regions[code] case final r?) Offset(r.mapX, r.mapY),
+    ];
+    final ink = Paint()
+      ..color = Palette.accent
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round;
+    const dash = 14.0;
+    for (var i = 0; i + 1 < stops.length; i++) {
+      final a = stops[i], b = stops[i + 1], total = (b - a).distance;
       for (var d = 0.0; d < total; d += dash * 2) {
-        canvas.drawLine(a + (b - a) * (d / total), a + (b - a) * ((d + dash).clamp(0, total) / total), route);
+        canvas.drawLine(a + (b - a) * (d / total), a + (b - a) * ((d + dash).clamp(0, total) / total), ink);
       }
     }
   }
 
   @override
-  bool shouldRepaint(_MapPainter old) => old.map != map || old.here != here || old.travellingTo != travellingTo;
+  bool shouldRepaint(_MapPainter old) => old.map != map || old.route != route;
 }

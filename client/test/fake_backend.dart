@@ -520,6 +520,24 @@ class FakeBackend {
         ],
         'travel': ?travel,
         'hunt_regions': [region, 'whisperwood'],
+        'routes': {
+          'heartland': {
+            'seconds': 60,
+            'path': [region, 'heartland'],
+          },
+          'whisperwood': {
+            'seconds': 300,
+            'path': [region, 'whisperwood'],
+          },
+          'dragon_peaks': {
+            'seconds': 2100,
+            'path': [region, 'whisperwood', 'dragon_peaks'],
+          },
+          'void_coast': {
+            'seconds': 1500,
+            'path': [region, 'heartland', 'void_coast'],
+          },
+        },
       });
     }
     if (RegExp(r'^/v1/character/[^/]+/travel$').hasMatch(path)) {

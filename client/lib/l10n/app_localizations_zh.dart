@@ -2370,7 +2370,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get classJewelry => '饰品';
 
   @override
-  String get mapHint => '发光的区域可直接前往。拖动或缩放地图，点击区域查看详情。';
+  String get mapHint => '你可以直接前往等级允许的任何区域，时间按最短道路计算。拖动或缩放地图，点击区域。';
 
   @override
   String get mapNoRoad => '没有直达这里的道路。请经由你身边发光的区域前往。';

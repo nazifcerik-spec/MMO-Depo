@@ -686,7 +686,7 @@
   "statLifesteal": "% Can çalma",
   "statDmgReduction": "% Hasar azaltma",
   "classJewelry": "Takı",
-  "mapHint": "Parlayan bölgelere doğrudan gidebilirsin. Haritayı kaydır, yakınlaştır; ayrıntı için bölgeye dokun.",
+  "mapHint": "Seviyenin yettiği her bölgeye doğrudan gidebilirsin; süre en kısa yoldan hesaplanır. Haritayı kaydır, yakınlaştır; bölgeye dokun.",
   "mapNoRoad": "Buraya doğrudan yol yok. Yanındaki parlayan bölgeler üzerinden git.",
   "youAreHere": "Buradasın.",
   "travelTime": "Yolculuk süresi: {time}"

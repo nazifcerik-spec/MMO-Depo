@@ -84,10 +84,16 @@ func (h *Handler) Location(w http.ResponseWriter, r *http.Request) {
 		"region":        regionRow(view.Region),
 		"neighbors":     neighbors,
 		"hunt_regions":  view.HuntRegions,
+		"routes":        view.Routes,
 		"starting_code": view.StartingCode,
 	}
 	if view.Travel != nil {
-		resp["travel"] = travelRow(view.Travel, h.svc.cfg.Now())
+		row := travelRow(view.Travel, h.svc.cfg.Now())
+		// The road the journey takes, for the map (DD-280).
+		if r, ok := h.catalog.Catalog().Routes(view.Travel.FromRegionCode)[view.Travel.ToRegionCode]; ok {
+			row["path"] = r.Path
+		}
+		resp["travel"] = row
 	}
 	apierr.WriteJSON(w, http.StatusOK, resp)
 }
@@ -254,7 +260,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 	case errors.Is(err, ErrSameRegion):
 		apierr.Write(w, r, http.StatusBadRequest, "E_SAME_REGION", "already at destination")
 	case errors.Is(err, ErrNoRoute):
-		apierr.Write(w, r, http.StatusBadRequest, "E_NO_ROUTE", "no direct route to destination")
+		apierr.Write(w, r, http.StatusBadRequest, "E_NO_ROUTE", "no road leads to destination")
 	case errors.Is(err, ErrLevelRequirement):
 		apierr.Write(w, r, http.StatusForbidden, "E_LEVEL_REQUIREMENT", "character level below region min_level")
 	case errors.Is(err, ErrNoStartingRegion):

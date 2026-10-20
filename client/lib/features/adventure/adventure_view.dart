@@ -732,7 +732,7 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
   Future<void> _details(RegionInfo r) async {
     final l = AppLocalizations.of(context);
     final loc = _loc!;
-    final travel = {for (final n in loc.neighbors) n.region.code: n.travel}[r.code];
+    final travel = loc.routes[r.code];
     final locked = r.minLevel > widget.level;
     final go = await showModalBottomSheet<bool>(
       context: context,
@@ -856,9 +856,8 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
             child: WorldMapView(
               map: _map!,
               here: loc.region.code,
-              neighbors: {for (final n in loc.neighbors) n.region.code: n.travel},
               level: widget.level,
-              travellingTo: t?.to,
+              route: t == null ? const [] : (t.path.isEmpty ? [loc.region.code, t.to] : t.path),
               onTap: _details,
             ),
           ),

@@ -59,3 +59,24 @@ func TestHTTPWorldMap(t *testing.T) {
 	require.Len(t, links, 24)
 	require.Contains(t, links, map[string]any{"a": "greenwood", "b": "ironhold_city", "travel_seconds": 120.0})
 }
+
+// Any region is one journey away at the shortest route's time (DD-280):
+// from the city, Emberpeak via the Sundermere hub (60 + 360 s).
+func TestHTTPTravelAnywhere(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "warrior")
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 20 WHERE id = $1`, p.char)
+	require.NoError(t, err)
+	loc := p.ok("GET", p.path("/location"), nil)
+	routes := loc["routes"].(map[string]any)
+	require.Len(t, routes, 53, "every other region")
+	ember := routes["emberpeak"].(map[string]any)
+	require.Equal(t, 420.0, ember["seconds"])
+	require.Equal(t, []any{"ironhold_city", "sundermere", "emberpeak"}, ember["path"])
+
+	p.fail("POST", p.path("/travel"), map[string]any{"to_region_code": "misty_marshes"}, 403, "")
+	tr := p.ok("POST", p.path("/travel"), map[string]any{"to_region_code": "emberpeak"})
+	require.Equal(t, 420.0, tr["duration_seconds"])
+	travel := p.ok("GET", p.path("/location"), nil)["travel"].(map[string]any)
+	require.Equal(t, []any{"ironhold_city", "sundermere", "emberpeak"}, travel["path"])
+}

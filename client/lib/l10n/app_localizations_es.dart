@@ -2372,7 +2372,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mapHint =>
-      'Las zonas que brillan están a un camino. Arrastra y amplía el mapa; toca una zona para ver detalles.';
+      'Puedes viajar directamente a cualquier zona que tu nivel permita; el tiempo sigue el camino más corto. Arrastra y amplía el mapa; toca una zona.';
 
   @override
   String get mapNoRoad => 'Ningún camino directo lleva aquí. Viaja por las zonas que brillan a tu lado.';
