@@ -65,6 +65,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusForbidden, "E_LEVEL_REQUIREMENT", "character level too low")
 	case errors.Is(err, ErrInCombat):
 		apierr.Write(w, r, http.StatusConflict, "E_IN_COMBAT", "finish the hunt or dungeon first")
+	case errors.Is(err, ErrHuntOnly):
+		apierr.Write(w, r, http.StatusConflict, "E_HUNT_ONLY", "take it on a hunt as a supply")
 	case errors.Is(err, ErrNoEffect):
 		apierr.Write(w, r, http.StatusConflict, "E_HP_FULL", "hp is already full")
 	default:

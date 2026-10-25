@@ -372,17 +372,7 @@ items:
     bind_kind: boe
     affixable: false
 
-  # --- Consumables --- (healing potions: scripts/gen_crafting.py)
-  - code: potion_mp_small
-    display_name_key: item.potion_mp_small
-    item_class: consumable
-    item_subclass: potion
-    min_level: 1
-    base_value_copper: 20
-    base_weight_g: 200
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
+  # --- Consumables --- (healing and mana potions: scripts/gen_crafting.py)
 
   # >>> generated: cooking (scripts/gen_cooking.py)
   - code: food_grilled_guppy
@@ -818,4 +808,76 @@ items:
     max_stack: 20
     bind_kind: boe
     use_effect: { kind: heal_pct, amount: 85 }
+
+  - code: potion_mp_small
+    display_name_key: item.potion_mp_small
+    item_class: consumable
+    item_subclass: potion
+    min_level: 1
+    base_value_copper: 20
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 30 }
+
+  - code: potion_mp_medium
+    display_name_key: item.potion_mp_medium
+    item_class: consumable
+    item_subclass: potion
+    min_level: 100
+    base_value_copper: 60
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 40 }
+
+  - code: potion_mp_large
+    display_name_key: item.potion_mp_large
+    item_class: consumable
+    item_subclass: potion
+    min_level: 250
+    base_value_copper: 150
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 50 }
+
+  - code: potion_mp_xlarge
+    display_name_key: item.potion_mp_xlarge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 450
+    base_value_copper: 320
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 60 }
+
+  - code: potion_mp_huge
+    display_name_key: item.potion_mp_huge
+    item_class: consumable
+    item_subclass: potion
+    min_level: 650
+    base_value_copper: 600
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 70 }
+
+  - code: potion_mp_supreme
+    display_name_key: item.potion_mp_supreme
+    item_class: consumable
+    item_subclass: potion
+    min_level: 850
+    base_value_copper: 1000
+    base_weight_g: 250
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    use_effect: { kind: mana_pct, amount: 85 }
   # <<< generated: potions

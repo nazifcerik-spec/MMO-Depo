@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import '../inventory/inventory_models.dart';
+
 import '../activity/activity_models.dart';
 
 /// AFK hunt lengths (DD-249), same as gathering: 1, 3 or 6 hours (server cap
@@ -139,6 +141,8 @@ class CombatResult {
     this.newLevel,
     this.cleared,
     this.bossKilled = false,
+    this.fled = false,
+    this.suppliesUsed = const [],
   });
 
   /// [runKey] is `hunt` or `run`; drop counts use hunt's `*_drops` names.
@@ -162,6 +166,11 @@ class CombatResult {
       newLevel: (xp?['level'] as num?)?.toInt(),
       cleared: r['cleared'] as bool?,
       bossKilled: r['boss_killed'] as bool? ?? false,
+      fled: r['fled'] as bool? ?? false,
+      suppliesUsed: [
+        for (final u in (r['supplies_used'] as List? ?? const []).cast<Map<String, dynamic>>())
+          (u['code'] as String, (u['qty'] as num).toInt()),
+      ],
     );
   }
 
@@ -174,6 +183,22 @@ class CombatResult {
   /// Dungeon only: every wave + boss beaten.
   final bool? cleared;
   final bool bossKilled;
+
+  /// Hunt only (DD-288): broke off under 5% HP, and the supplies used.
+  final bool fled;
+  final List<(String, int)> suppliesUsed;
+}
+
+/// A consumable stack the bag can send on a hunt (DD-288): all units of one
+/// template, with what one unit does.
+class SupplyStock {
+  const SupplyStock({required this.item, required this.stock});
+
+  final BagItem item;
+  final int stock;
+
+  String get code => item.templateCode;
+  String get kind => item.supplyKind!;
 }
 
 class RegionInfo {

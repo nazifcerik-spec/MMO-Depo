@@ -6,13 +6,13 @@
     1000
   ],
   "role_means": {
-    "dps_afk_safety": 0.957,
+    "dps_afk_safety": 0.935,
     "dps_aoe": 0.478,
     "dps_boss": 0.551,
     "dps_group_value": 0.204,
     "dps_kill_speed": 0.454,
     "dps_survival": 0.235,
-    "support_afk_safety": 0.97,
+    "support_afk_safety": 1,
     "support_aoe": 0.167,
     "support_boss": 0.456,
     "support_group_value": 0.899,
@@ -497,7 +497,7 @@
           "survival": 15.716666666666667,
           "boss_win_rate": 0.5666666666666667,
           "boss_turns": 16.91176470588235,
-          "afk_safety": 1
+          "afk_safety": 0.9666666666666667
         }
       },
       "scores": {
@@ -550,7 +550,7 @@
           "survival": 24.916666666666668,
           "boss_win_rate": 0.9666666666666667,
           "boss_turns": 20.43103448275862,
-          "afk_safety": 0.85
+          "afk_safety": 1
         }
       },
       "scores": {
@@ -710,7 +710,7 @@
           "survival": 9.15,
           "boss_win_rate": 0.016666666666666666,
           "boss_turns": 13,
-          "afk_safety": 0.8
+          "afk_safety": 0.9666666666666667
         }
       },
       "scores": {
@@ -810,7 +810,7 @@
           "survival": 6.733333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.8333333333333334
+          "afk_safety": 0.95
         },
         "700": {
           "kill_turns": 2.2333333333333334,
@@ -818,11 +818,11 @@
           "survival": 7.283333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.9333333333333333
+          "afk_safety": 0.9
         }
       },
       "scores": {
-        "afk_safety": 0,
+        "afk_safety": 0.7,
         "aoe": 1,
         "boss": 0,
         "group_value": 0,
@@ -872,7 +872,7 @@
           "survival": 10.85,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 1
+          "afk_safety": 0.9666666666666667
         }
       },
       "scores": {
@@ -1192,7 +1192,7 @@
           "survival": 17.383333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 1
+          "afk_safety": 0.9833333333333333
         }
       },
       "scores": {
@@ -1236,7 +1236,7 @@
           "survival": 12.983333333333333,
           "boss_win_rate": 0.13333333333333333,
           "boss_turns": 26.75,
-          "afk_safety": 0.95
+          "afk_safety": 1
         },
         "700": {
           "kill_turns": 3.9166666666666665,
@@ -1244,11 +1244,11 @@
           "survival": 8.566666666666666,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.9166666666666666
+          "afk_safety": 0.9833333333333333
         }
       },
       "scores": {
-        "afk_safety": 0.7,
+        "afk_safety": 1,
         "aoe": 0.333,
         "boss": 0.072,
         "group_value": 0.974,
@@ -1290,7 +1290,7 @@
           "survival": 10.633333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 1
+          "afk_safety": 0.8333333333333334
         },
         "700": {
           "kill_turns": 3.25,
@@ -1298,11 +1298,11 @@
           "survival": 8.85,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.5833333333333334
+          "afk_safety": 0.5666666666666667
         }
       },
       "scores": {
-        "afk_safety": 1,
+        "afk_safety": 0,
         "aoe": 0.333,
         "boss": 0,
         "group_value": 0.342,
@@ -2039,7 +2039,7 @@
           "survival": 13.533333333333333,
           "boss_win_rate": 0.016666666666666666,
           "boss_turns": 33,
-          "afk_safety": 1
+          "afk_safety": 0.9666666666666667
         },
         "700": {
           "kill_turns": 5.833333333333333,
@@ -2047,11 +2047,11 @@
           "survival": 12.033333333333333,
           "boss_win_rate": 0,
           "boss_turns": 0,
-          "afk_safety": 0.9166666666666666
+          "afk_safety": 1
         }
       },
       "scores": {
-        "afk_safety": 1,
+        "afk_safety": 0.8,
         "aoe": 1,
         "boss": 0.007,
         "group_value": 0.342,

@@ -189,5 +189,19 @@
   "attrHoldHint": "Mantén − / + para repartir rápido",
   "gainHp": "Vida",
   "gainMp": "Maná",
-  "gainHpRegen": "Vida/s"
+  "gainHpRegen": "Vida/s",
+  "huntSupplies": "Suministros",
+  "huntSuppliesHint": "Las pociones se beben entre combates con menos de la mitad de vida, la comida cuando acaba su bonificación y las de maná con poco maná. Lo que sobre vuelve a tu bolsa.",
+  "supplyHp": "Pociones de vida",
+  "supplyMp": "Pociones de maná",
+  "supplyMpHint": "Para clases que usan maná, energía, concentración, energía natural o espíritu",
+  "supplyFood": "Comida",
+  "huntNoSupplies": "No tienes pociones ni comida: cómpralas en la tienda o fabrícalas.",
+  "restoresMpPct": "Rellena el {pct}% de tu maná",
+  "huntSupplyOnly": "Solo se usa como suministro de caza",
+  "errBadSupply": "Ese objeto no se puede llevar de caza.",
+  "errNotEnoughSupplies": "No tienes suficientes de ese suministro.",
+  "errHuntOnly": "Llévalo de caza como suministro.",
+  "huntFled": "Tu vida bajó del 5 %: abandonaste el combate",
+  "suppliesUsed": "Usado: {list}"
 }

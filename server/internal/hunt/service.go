@@ -12,8 +12,10 @@ import (
 
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/combat"
+	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/progression"
@@ -57,22 +59,41 @@ func DefaultServiceConfig() ServiceConfig { return ServiceConfig{Now: time.Now} 
 
 // Service is the hunt business logic.
 type Service struct {
-	repo     Repository
-	mobs     MobLookup
-	chars    SheetFetcher
-	xp       XPGranter
-	items    ItemGranter
-	txn      economy.TxnService
-	cfg      ServiceConfig
-	log      *slog.Logger
-	rngNew   func(seed int64) combat.RNG
-	progress progression.Recorder
-	notifier notification.Notifier // reward history (DD-242); nil = none
-	hp       HPWriter
-	skills   SkillSource
-	bag      BagRoom    // nil = no room check (DD-246)
-	regions  RegionGate // nil = every mob in reach (DD-273)
+	repo      Repository
+	mobs      MobLookup
+	chars     SheetFetcher
+	xp        XPGranter
+	items     ItemGranter
+	txn       economy.TxnService
+	cfg       ServiceConfig
+	log       *slog.Logger
+	rngNew    func(seed int64) combat.RNG
+	progress  progression.Recorder
+	notifier  notification.Notifier // reward history (DD-242); nil = none
+	hp        HPWriter
+	skills    SkillSource
+	bag       BagRoom    // nil = no room check (DD-246)
+	regions   RegionGate // nil = every mob in reach (DD-273)
+	templates Templates  // supply effects (DD-288); nil = no supplies
+	food      FoodBuffs  // a dish eaten before the hunt (DD-288); nil = in the sheet
 }
+
+// Templates resolves item templates for supplies (item.Service).
+type Templates interface {
+	Catalog() *item.Catalog
+}
+
+// WithSupplies lets a hunt take potions and dishes from the bag (DD-288).
+func (s *Service) WithSupplies(t Templates) *Service { s.templates = t; return s }
+
+// FoodBuffs reports a character's running food buff (consumable.Service).
+type FoodBuffs interface {
+	Active(ctx context.Context, characterID uuid.UUID) (*consumable.Buff, error)
+}
+
+// WithFood makes the start snapshot leave a running food buff out of the
+// sheet and carry it with its remaining time instead (DD-288).
+func (s *Service) WithFood(f FoodBuffs) *Service { s.food = f; return s }
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
@@ -147,6 +168,70 @@ type StartRequest struct {
 	AccountID       uuid.UUID
 	MobCode         string
 	DurationSeconds int32
+	Supplies        []SupplyRequest // potions and dishes taken from the bag (DD-288)
+}
+
+// SupplyRequest asks for qty units of a consumable from the bag.
+type SupplyRequest struct {
+	Code string `json:"template_code"`
+	Qty  int32  `json:"quantity"`
+}
+
+// SupplyFromTemplate is what a consumable does on a hunt: a healing potion
+// (heal_hp / heal_pct), a dish (healing with a buff) or a mana potion
+// (mana_pct). ok is false for anything else.
+func SupplyFromTemplate(t item.Template, qty int32) (Supply, bool) {
+	ue := t.UseEffect
+	if ue == nil || ue.Amount <= 0 {
+		return Supply{}, false
+	}
+	s := Supply{Code: t.Code, Qty: qty}
+	switch ue.Kind {
+	case "mana_pct":
+		s.Kind, s.MPPct = SupplyMP, int32(ue.Amount)
+	case "heal_pct", "heal_hp":
+		s.Kind = SupplyHP
+		if ue.Kind == "heal_pct" {
+			s.HealPct = int32(ue.Amount)
+		} else {
+			s.HealFlat = int32(ue.Amount)
+		}
+		if b := ue.Buff; b != nil {
+			s.Kind = SupplyFood
+			s.BuffAtk, s.BuffDef, s.BuffSecs = int32(b.AttackPct), int32(b.DefensePct), int32(b.Minutes)*60
+		}
+	default:
+		return Supply{}, false
+	}
+	return s, true
+}
+
+// supplies resolves the requested supplies for a character of level.
+func (s *Service) supplies(reqs []SupplyRequest, level int) ([]Supply, error) {
+	if len(reqs) == 0 {
+		return nil, nil
+	}
+	if s.templates == nil || len(reqs) > MaxSupplyKinds {
+		return nil, ErrBadSupply
+	}
+	out := make([]Supply, 0, len(reqs))
+	seen := map[string]bool{}
+	for _, r := range reqs {
+		if r.Qty < 1 || r.Qty > 999 || seen[r.Code] {
+			return nil, ErrBadSupply
+		}
+		seen[r.Code] = true
+		t, err := s.templates.Catalog().Get(r.Code)
+		if err != nil || int(t.MinLevel) > level {
+			return nil, ErrBadSupply
+		}
+		sup, ok := SupplyFromTemplate(t, r.Qty)
+		if !ok {
+			return nil, ErrBadSupply
+		}
+		out = append(out, sup)
+	}
+	return out, nil
 }
 
 // StartResult wraps the created contract.
@@ -186,9 +271,27 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 
 	// Freeze the player's Combatant snapshot at Start — mid-hunt gear swaps
-	// do not warp the log (matches activity's Snapshot pattern).
-	sheet, err := s.chars.Sheet(ctx, req.CharacterID, req.AccountID)
+	// do not warp the log (matches activity's Snapshot pattern). A running
+	// food buff stays out of it and runs on the hunt's own clock (DD-288).
+	var load Loadout
+	sheetCtx := ctx
+	if s.food != nil {
+		b, err := s.food.Active(ctx, req.CharacterID)
+		if err != nil {
+			return nil, err
+		}
+		if b != nil {
+			if left := int32(b.ExpiresAt.Sub(s.cfg.Now()).Seconds()); left > 0 {
+				load.Buff = &Buff{AttackPct: int32(b.AttackPct), DefensePct: int32(b.DefensePct), Secs: left}
+			}
+		}
+		sheetCtx = consumable.WithoutBuff(ctx)
+	}
+	sheet, err := s.chars.Sheet(sheetCtx, req.CharacterID, req.AccountID)
 	if err != nil {
+		return nil, err
+	}
+	if load.Supplies, err = s.supplies(req.Supplies, sheet.Level); err != nil {
 		return nil, err
 	}
 	if sheet.Resources.HPCurrent < 1 {
@@ -231,7 +334,10 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		UpdatedAt:      now,
 		Version:        1,
 	}
-	if err := s.repo.Create(ctx, c); err != nil {
+	if len(load.Supplies) > 0 || load.Buff != nil {
+		c.Loadout = &load
+	}
+	if err := s.repo.Create(ctx, c); err != nil { // holds the supplies in the same transaction
 		return nil, err
 	}
 	return &StartResult{Contract: c, MobDisplayKey: mob.DisplayNameKey}, nil
@@ -292,7 +398,11 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	// (DD-281; the snapshot's level, so a level-up mid-hunt does not change
 	// the reward). Fights run back to back for the time elapsed.
 	mob.XPReward = HuntXP(mob.XPReward, int(snapshot.Level), int(mob.Level))
-	hr := Roll(c.Seed, snapshot, mob, elapsed, combat.DefaultMaxTurns, s.rngNew)
+	var load Loadout
+	if c.Loadout != nil {
+		load = *c.Loadout
+	}
+	hr := RollWith(c.Seed, snapshot, mob, elapsed, combat.DefaultMaxTurns, s.rngNew, load)
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------
 	// Each LootSeconds of winning has a GearDropPct chance of gear from the
@@ -357,7 +467,9 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 			return nil, fmt.Errorf("hunt reveal hp: %w", err)
 		}
 	}
-	if err := s.repo.MarkRevealed(ctx, c.ID, resultJSON, txnID, now); err != nil {
+	// Marking it revealed uses up the supplies the roll drank and returns the
+	// rest to the bag, in one transaction (DD-288).
+	if err := s.repo.MarkRevealed(ctx, c.ID, resultJSON, txnID, now, hr.SuppliesUsed); err != nil {
 		// Race: someone else revealed. Refetch + return cached.
 		refreshed, gerr := s.repo.GetByID(ctx, c.ID)
 		if gerr == nil && refreshed.State == StateRevealed {
@@ -401,8 +513,9 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 // --- Stop -------------------------------------------------------------------
 
-// Stop cancels an active hunt with no reward. Idempotent for already-cancelled;
-// returns ErrNotActive for revealed contracts.
+// Stop cancels an active hunt with no reward; its supplies go back to the
+// bag untouched. Idempotent for already-cancelled; returns ErrNotActive for
+// revealed contracts.
 func (s *Service) Stop(ctx context.Context, contractID, accountID uuid.UUID) (*Contract, error) {
 	c, err := s.repo.GetByID(ctx, contractID)
 	if err != nil {

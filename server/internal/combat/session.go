@@ -9,6 +9,9 @@ type Session struct {
 	Player   Combatant
 	Mob      Combatant
 	MaxTurns int // hard cap; prevents pathological non-lethal loops from running forever
+	// FleeBelowPct: the player breaks off (OutcomeFled) once a mob's swing
+	// leaves it alive under this share of max HP. Zero = fight to the end.
+	FleeBelowPct int32
 }
 
 // DefaultMaxTurns keeps a session bounded when the caller supplies zero.
@@ -46,6 +49,7 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 				PlayerHPEnd: s.Player.HPCurrent,
 				MobHPEnd:    0,
 				Duration:    turn,
+				PlayerMPEnd: caster.mp,
 			}, nil
 		}
 		// --- Mob swings (unless stunned) ---
@@ -62,6 +66,17 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 				PlayerHPEnd: 0,
 				MobHPEnd:    s.Mob.HPCurrent,
 				Duration:    turn,
+				PlayerMPEnd: caster.mp,
+			}, nil
+		}
+		if s.FleeBelowPct > 0 && int64(s.Player.HPCurrent)*100 < int64(s.Player.HPMax)*int64(s.FleeBelowPct) {
+			return &Result{
+				Outcome:     OutcomeFled,
+				Turns:       log,
+				PlayerHPEnd: s.Player.HPCurrent,
+				MobHPEnd:    s.Mob.HPCurrent,
+				Duration:    turn,
+				PlayerMPEnd: caster.mp,
 			}, nil
 		}
 	}
@@ -71,6 +86,7 @@ func (s *Session) Resolve(rngNew func(seed int64) RNG, seed int64) (*Result, err
 		PlayerHPEnd: s.Player.HPCurrent,
 		MobHPEnd:    s.Mob.HPCurrent,
 		Duration:    s.MaxTurns,
+		PlayerMPEnd: caster.mp,
 	}, nil
 }
 
@@ -136,6 +152,9 @@ func newCaster(c *Combatant) *caster {
 	k := &caster{mp: c.MPMax, ready: make([]int, len(c.Skills)), pooled: c.Resource != ""}
 	if k.pooled {
 		k.mp = min(max(c.ResourceStart, 0), c.MPMax) // Rage, Chi, ... build up during the fight
+	}
+	if c.MPStart != nil {
+		k.mp = min(max(*c.MPStart, 0), c.MPMax)
 	}
 	return k
 }

@@ -386,6 +386,7 @@ class _Details extends StatelessWidget {
                 ),
             if (info.healHp > 0) Text(l.restoresHp(info.healHp), style: good),
             if (info.healPct > 0) Text(l.restoresHpPct(info.healPct), style: good),
+            if (info.manaPct > 0) Text(l.restoresMpPct(info.manaPct), style: good),
             if (info.buff case final b?) Text(l.foodBuffLine(b.attackPct, b.defensePct, b.minutes), style: good),
             if (info.minLevel > 1) row(l.requiresLevel, '${info.minLevel}'),
             if (info.classRestriction != null) row(l.characterClass, className(l, info.classRestriction!)),

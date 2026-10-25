@@ -63,16 +63,23 @@ type Combatant struct {
 	ResourcePerHit  int32  `json:",omitempty"`
 	ResourcePerTurn int32  `json:",omitempty"`
 	ResourceStart   int32  `json:",omitempty"`
-	BlockPct        int32  `json:",omitempty"` // chance to halve an incoming hit
-	CritDmgPct      int32  `json:",omitempty"` // extra crit damage %
-	ExecutePct      int32  `json:",omitempty"` // extra damage % vs targets at <= ExecuteThresholdPct HP
-	MissingHPDmgPct int32  `json:",omitempty"` // up to this extra damage % as own HP drops
-	LifestealPct    int32  `json:",omitempty"` // heal this % of damage dealt
-	DmgReductionPct int32  `json:",omitempty"` // incoming damage reduced by this %
+	// ResourceCarry: the pool is not refilled between a hunt's fights
+	// (mana-like pools, DD-288); the hunt starts each fight at MPStart.
+	ResourceCarry   bool  `json:",omitempty"`
+	BlockPct        int32 `json:",omitempty"` // chance to halve an incoming hit
+	CritDmgPct      int32 `json:",omitempty"` // extra crit damage %
+	ExecutePct      int32 `json:",omitempty"` // extra damage % vs targets at <= ExecuteThresholdPct HP
+	MissingHPDmgPct int32 `json:",omitempty"` // up to this extra damage % as own HP drops
+	LifestealPct    int32 `json:",omitempty"` // heal this % of damage dealt
+	DmgReductionPct int32 `json:",omitempty"` // incoming damage reduced by this %
 
 	// Barrier absorbs incoming damage while up (runtime state of an
 	// encounter, never part of a snapshot).
 	Barrier int32 `json:"-"`
+
+	// MPStart, when set, is the resource the fight starts with instead of
+	// the full / ResourceStart pool (a hunt carrying mana over, DD-288).
+	MPStart *int32 `json:"-"`
 }
 
 // ExecuteThresholdPct is the target HP share below which ExecutePct applies.
@@ -155,6 +162,7 @@ const (
 	OutcomeVictory Outcome = "victory" // player killed the mob
 	OutcomeDefeat  Outcome = "defeat"  // mob killed the player
 	OutcomeTimeout Outcome = "timeout" // hit MaxTurns with both alive
+	OutcomeFled    Outcome = "fled"    // the player broke off under Session.FleeBelowPct HP (DD-288)
 )
 
 // Result bundles what Resolve produces.
@@ -164,6 +172,7 @@ type Result struct {
 	PlayerHPEnd int32        `json:"player_hp_end"`
 	MobHPEnd    int32        `json:"mob_hp_end"`
 	Duration    int          `json:"duration_turns"`
+	PlayerMPEnd int32        `json:"player_mp_end"` // resource left (DD-288)
 }
 
 // --- Pipeline (pure) --------------------------------------------------------

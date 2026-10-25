@@ -14,8 +14,7 @@
 
 recipes:
   # Alchemy and gear recipes are generated (scripts/gen_crafting.py, DD-274).
-  # recipe_potion_mp_small retired by migration 0034 until mana persists
-  # between fights (DD-241); the item template stays.
+  # Mana potions came back with hunts carrying mana between fights (DD-288).
 
   # --- Smelting (DD-243, DD-244): skill = ore gathering level - 13 ---
   - code: recipe_aluminium_bar
@@ -826,6 +825,83 @@ recipes:
       - { template_code: ghost_mushroom, quantity: 1 }
     gold_cost_copper: 250
     output_template_code: potion_hp_supreme
+    output_stack: 1
+    profession_xp_reward: 2124
+    craft_seconds: 45
+
+  - code: recipe_potion_mp_small
+    display_name_key: recipe.potion_mp_small
+    profession_code: alchemy
+    min_skill: 1
+    inputs:
+      - { template_code: common_grass, quantity: 3 }
+    gold_cost_copper: 5
+    output_template_code: potion_mp_small
+    output_stack: 1
+    profession_xp_reward: 16
+    craft_seconds: 10
+
+  - code: recipe_potion_mp_medium
+    display_name_key: recipe.potion_mp_medium
+    profession_code: alchemy
+    min_skill: 10
+    inputs:
+      - { template_code: chamomile, quantity: 1 }
+      - { template_code: dandelion, quantity: 2 }
+    gold_cost_copper: 15
+    output_template_code: potion_mp_medium
+    output_stack: 1
+    profession_xp_reward: 27
+    craft_seconds: 15
+
+  - code: recipe_potion_mp_large
+    display_name_key: recipe.potion_mp_large
+    profession_code: alchemy
+    min_skill: 25
+    inputs:
+      - { template_code: red_sage, quantity: 1 }
+      - { template_code: lavender, quantity: 2 }
+    gold_cost_copper: 37
+    output_template_code: potion_mp_large
+    output_stack: 1
+    profession_xp_reward: 64
+    craft_seconds: 20
+
+  - code: recipe_potion_mp_xlarge
+    display_name_key: recipe.potion_mp_xlarge
+    profession_code: alchemy
+    min_skill: 45
+    inputs:
+      - { template_code: stormflower, quantity: 1 }
+      - { template_code: blue_thistle, quantity: 2 }
+    gold_cost_copper: 80
+    output_template_code: potion_mp_xlarge
+    output_stack: 1
+    profession_xp_reward: 206
+    craft_seconds: 30
+
+  - code: recipe_potion_mp_huge
+    display_name_key: recipe.potion_mp_huge
+    profession_code: alchemy
+    min_skill: 65
+    inputs:
+      - { template_code: spirit_lotus, quantity: 1 }
+      - { template_code: golden_clover, quantity: 2 }
+    gold_cost_copper: 150
+    output_template_code: potion_mp_huge
+    output_stack: 1
+    profession_xp_reward: 662
+    craft_seconds: 35
+
+  - code: recipe_potion_mp_supreme
+    display_name_key: recipe.potion_mp_supreme
+    profession_code: alchemy
+    min_skill: 85
+    inputs:
+      - { template_code: void_orchid, quantity: 1 }
+      - { template_code: ghost_mushroom, quantity: 2 }
+    gold_cost_copper: 250
+    output_template_code: potion_mp_supreme
     output_stack: 1
     profession_xp_reward: 2124
     craft_seconds: 45

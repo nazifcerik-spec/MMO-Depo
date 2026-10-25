@@ -632,9 +632,57 @@ void main() {
 
   testWidgets('hunt: level-aware default, start, early collect, result with level-up', (tester) async {
     final (be, _, _) = await _inGame(tester);
+    Map<String, dynamic> consumable(String id, String code, int slot, int qty, Map<String, dynamic> effect) => {
+      'instance_id': id,
+      'template_code': code,
+      'item_class': 'consumable',
+      'item_subclass': code.startsWith('food') ? 'food' : 'potion',
+      'slot': slot,
+      'stack_quantity': qty,
+      'max_stack': 20,
+      'rarity': 'common',
+      'use_effect': effect,
+    };
+    be.bag.addAll([
+      consumable('p1', 'potion_hp_small', 0, 3, {'kind': 'heal_pct', 'amount': 20}),
+      consumable('p2', 'potion_hp_small', 1, 2, {'kind': 'heal_pct', 'amount': 20}),
+      consumable('m1', 'potion_mp_small', 2, 4, {'kind': 'mana_pct', 'amount': 30}),
+      consumable('f1', 'food_grilled_guppy', 3, 2, {
+        'kind': 'heal_pct',
+        'amount': 15,
+        'buff': {'attack_pct': 2, 'defense_pct': 2, 'minutes': 60},
+      }),
+      {
+        'instance_id': 'ore',
+        'template_code': 'copper_ore',
+        'item_class': 'material',
+        'item_subclass': 'ore',
+        'slot': 4,
+        'stack_quantity': 9,
+        'max_stack': 999,
+        'rarity': 'common',
+      },
+    ]);
     await tester.tap(find.byIcon(Icons.explore_outlined));
     await tester.pumpAndSettle();
     expect(find.text('Choose your prey'), findsOneWidget);
+    // The hunt panel's own list (the page around it holds other scrollables),
+    // found from a widget on screen now.
+    Finder panelOf(Finder f) =>
+        find.byWidget(tester.widget<Scrollable>(find.ancestor(of: f, matching: find.byType(Scrollable)).first));
+    Future<void> startHunt() async {
+      final anchor = [
+        'Choose your prey',
+        'Duration',
+        'Supplies to take',
+      ].map(find.text).firstWhere((f) => f.evaluate().isNotEmpty);
+      await tester.scrollUntilVisible(find.text('Start hunt'), 200, scrollable: panelOf(anchor));
+      await tester.ensureVisible(find.text('Start hunt'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Start hunt'));
+      await tester.pumpAndSettle();
+    }
+
     expect(find.text('Cave Troll'), findsOneWidget);
     // Only mobs in reach are huntable; the rest are listed by region (DD-273).
     expect(find.textContaining('Hunting from here:'), findsOneWidget);
@@ -642,17 +690,20 @@ void main() {
     await tester.scrollUntilVisible(
       find.text('Monsters in other regions'),
       200,
-      scrollable: find.byType(Scrollable).last,
+      scrollable: panelOf(find.text('Choose your prey')),
     );
+    await tester.ensureVisible(find.text('Monsters in other regions')); // clear of the bottom bar
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Monsters in other regions'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Salt Desert'));
     await tester.pumpAndSettle();
     expect(find.text('Salt Desert'), findsOneWidget);
     expect(find.textContaining('Sand Wyrm'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Choose your prey'), -200, scrollable: find.byType(Scrollable).last);
+    await tester.scrollUntilVisible(find.text('Choose your prey'), -200, scrollable: panelOf(find.text('Salt Desert')));
 
     // Default = toughest mob at or below level 3.
-    await tester.tap(find.text('Start hunt'));
-    await tester.pumpAndSettle();
+    await startHunt();
     expect(be.activeHunt!['mob_code'], 'grey_wolf');
     await tester.tap(find.text('Abandon'));
     await tester.pumpAndSettle();
@@ -668,15 +719,40 @@ void main() {
     expect(find.text('30m'), findsNothing);
     await tester.tap(find.text('6h 00m'));
     await tester.pump();
-    await tester.tap(find.text('Start hunt'));
+    // Supplies from the bag (DD-288): stacks add up, materials are not offered.
+    await tester.scrollUntilVisible(find.text('Food'), 200, scrollable: panelOf(find.text('6h 00m')));
+    await tester.ensureVisible(find.byTooltip('+ Food Grilled Guppy'));
     await tester.pumpAndSettle();
+    expect(find.text('Supplies to take'), findsOneWidget);
+    expect(find.text('Healing potions'), findsOneWidget);
+    expect(find.text('Mana potions'), findsOneWidget);
+    expect(find.text('Refills 30% of your mana'), findsOneWidget);
+    expect(find.byKey(const Key('supply-potion_hp_small')), findsOneWidget);
+    expect(find.byKey(const Key('supply-copper_ore')), findsNothing);
+    expect(tester.widget<Text>(find.byKey(const Key('supply-potion_hp_small'))).data, '0 / 5');
+    Future<void> plus(String name) async {
+      await tester.ensureVisible(find.byTooltip('+ $name'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('+ $name'));
+      await tester.pump();
+    }
+
+    await plus('Potion Hp Small');
+    await plus('Potion Hp Small');
+    await plus('Food Grilled Guppy');
+    expect(tester.widget<Text>(find.byKey(const Key('supply-potion_hp_small'))).data, '2 / 5');
+    await startHunt();
     expect(be.activeHunt!['mob_code'], 'giant_rat');
+    expect(be.lastHuntSupplies, [
+      {'template_code': 'potion_hp_small', 'quantity': 2},
+      {'template_code': 'food_grilled_guppy', 'quantity': 1},
+    ]);
 
     await tester.tap(find.text('Collect'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Collect').last);
     await tester.pumpAndSettle();
-    expect(find.text('7 won · 1 lost · Level up! Now level 4'), findsOneWidget);
+    expect(find.text('7 won · 1 lost · Used: 2× Potion Hp Small · Level up! Now level 4'), findsOneWidget);
     expect(find.text('+160 XP'), findsOneWidget);
     expect(find.text('Rare × 1'), findsOneWidget);
     await tester.tap(find.text('Nice!'));
@@ -1597,6 +1673,14 @@ void main() {
     final (be, _, _) = await _inGame(tester);
     be.busyWith = 'crafting';
     await tester.tap(find.byIcon(Icons.explore_outlined));
+    await tester.pumpAndSettle();
+    final panel = find.byWidget(
+      tester.widget<Scrollable>(
+        find.ancestor(of: find.text('Choose your prey'), matching: find.byType(Scrollable)).first,
+      ),
+    );
+    await tester.scrollUntilVisible(find.text('Start hunt'), 200, scrollable: panel);
+    await tester.ensureVisible(find.text('Start hunt'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Start hunt'));
     await tester.pumpAndSettle();

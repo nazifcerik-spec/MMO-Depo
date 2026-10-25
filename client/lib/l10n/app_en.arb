@@ -1938,5 +1938,33 @@
   "attrHoldHint": "Hold − / + to spend quickly",
   "gainHp": "HP",
   "gainMp": "MP",
-  "gainHpRegen": "HP/s"
+  "gainHpRegen": "HP/s",
+  "huntSupplies": "Supplies to take",
+  "huntSuppliesHint": "Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.",
+  "supplyHp": "Healing potions",
+  "supplyMp": "Mana potions",
+  "supplyMpHint": "For classes using mana, energy, focus, nature energy or spirit",
+  "supplyFood": "Food",
+  "huntNoSupplies": "No potions or food in your bag: buy them at the shop or craft them.",
+  "restoresMpPct": "Refills {pct}% of your mana",
+  "@restoresMpPct": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "huntSupplyOnly": "Used only as a hunt supply",
+  "errBadSupply": "That item cannot be taken on a hunt.",
+  "errNotEnoughSupplies": "Your bag holds fewer of that supply.",
+  "errHuntOnly": "Take it on a hunt as a supply.",
+  "huntFled": "Your HP fell under 5%: you broke off the fight",
+  "suppliesUsed": "Used: {list}",
+  "@suppliesUsed": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  }
 }

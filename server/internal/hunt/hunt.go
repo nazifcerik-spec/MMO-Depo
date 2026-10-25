@@ -49,7 +49,8 @@ type Contract struct {
 	ExpiresAt      time.Time       `json:"expires_at"`
 	Seed           int64           `json:"-"`
 	State          State           `json:"state"`
-	PlayerSnapshot json.RawMessage `json:"-"` // frozen player Combatant so mid-hunt gear swaps don't warp the log
+	PlayerSnapshot json.RawMessage `json:"-"`                 // frozen player Combatant so mid-hunt gear swaps don't warp the log
+	Loadout        *Loadout        `json:"loadout,omitempty"` // supplies held for the hunt + a running food buff (DD-288)
 	RevealedAt     *time.Time      `json:"revealed_at,omitempty"`
 	RevealResult   json.RawMessage `json:"-"`
 	RevealTxnID    *uuid.UUID      `json:"reveal_txn_id,omitempty"`
@@ -86,7 +87,15 @@ var (
 	// ErrWrongRegion: the mob lives outside the regions the character can
 	// hunt from where it stands (DD-273).
 	ErrWrongRegion = errors.New("hunt: mob is in another region")
+	// ErrBadSupply: a requested supply is not a potion or dish the character
+	// can use, repeats, or asks for a bad quantity (DD-288).
+	ErrBadSupply = errors.New("hunt: not a usable supply")
+	// ErrNoSupplies: the bag holds fewer units than requested.
+	ErrNoSupplies = errors.New("hunt: not enough of a supply in the bag")
 )
+
+// MaxSupplyKinds bounds the supply stacks one hunt takes (DD-288).
+const MaxSupplyKinds = 8
 
 // --- Tuning -----------------------------------------------------------------
 

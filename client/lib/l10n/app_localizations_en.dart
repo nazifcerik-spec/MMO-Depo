@@ -2447,4 +2447,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gainHpRegen => 'HP/s';
+
+  @override
+  String get huntSupplies => 'Supplies to take';
+
+  @override
+  String get huntSuppliesHint =>
+      'Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.';
+
+  @override
+  String get supplyHp => 'Healing potions';
+
+  @override
+  String get supplyMp => 'Mana potions';
+
+  @override
+  String get supplyMpHint => 'For classes using mana, energy, focus, nature energy or spirit';
+
+  @override
+  String get supplyFood => 'Food';
+
+  @override
+  String get huntNoSupplies => 'No potions or food in your bag: buy them at the shop or craft them.';
+
+  @override
+  String restoresMpPct(int pct) {
+    return 'Refills $pct% of your mana';
+  }
+
+  @override
+  String get huntSupplyOnly => 'Used only as a hunt supply';
+
+  @override
+  String get errBadSupply => 'That item cannot be taken on a hunt.';
+
+  @override
+  String get errNotEnoughSupplies => 'Your bag holds fewer of that supply.';
+
+  @override
+  String get errHuntOnly => 'Take it on a hunt as a supply.';
+
+  @override
+  String get huntFled => 'Your HP fell under 5%: you broke off the fight';
+
+  @override
+  String suppliesUsed(String list) {
+    return 'Used: $list';
+  }
 }

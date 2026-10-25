@@ -48,6 +48,9 @@ class FakeBackend {
   final bag = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
+
+  /// The supplies the last hunt start asked for (DD-288).
+  List<dynamic>? lastHuntSupplies;
   Map<String, dynamic>? activeDungeon;
   Map<String, dynamic>? travel;
   String region = 'ironhold_city';
@@ -465,6 +468,7 @@ class FakeBackend {
         });
       }
       if (activeHunt != null) return error(409, 'E_HUNT_ACTIVE');
+      lastHuntSupplies = body['supplies'] as List?;
       activeHunt = _contract(
         'hunt-1',
         'mob_code',
@@ -481,7 +485,16 @@ class FakeBackend {
     if (path == '/v1/hunt/hunt-1/reveal') {
       activeHunt = null;
       return json(200, {
-        'hunt': {'victories': 7, 'defeats': 1, 'total_xp': 160, 'total_gold_copper': 840, 'rare_drops': 1},
+        'hunt': {
+          'victories': 7,
+          'defeats': 1,
+          'total_xp': 160,
+          'total_gold_copper': 840,
+          'rare_drops': 1,
+          'supplies_used': [
+            {'code': 'potion_hp_small', 'qty': 2},
+          ],
+        },
         'xp': {'level': 4, 'xp': 10, 'leveled_up': true},
       });
     }

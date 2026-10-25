@@ -50,6 +50,7 @@ class BagItem {
     this.bonuses = const [],
     this.healHp = 0,
     this.healPct = 0,
+    this.manaPct = 0,
     this.buff,
   });
 
@@ -82,6 +83,10 @@ class BagItem {
       },
       healPct: switch (j['use_effect']) {
         {'kind': 'heal_pct', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
+      manaPct: switch (j['use_effect']) {
+        {'kind': 'mana_pct', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
@@ -120,10 +125,23 @@ class BagItem {
   /// Share of max HP restored by one unit (use_effect heal_pct, DD-274); 0 = none.
   final int healPct;
 
+  /// Share of a hunter's mana a mana potion refills (use_effect mana_pct,
+  /// DD-288): only usable as a hunt supply.
+  final int manaPct;
+
   /// Food buff (DD-269); null for anything else.
   final FoodBuff? buff;
 
   bool get usable => healHp > 0 || healPct > 0 || buff != null;
+
+  /// What it is on a hunt (DD-288): `hp`, `mp`, `food`, or null.
+  String? get supplyKind => buff != null
+      ? 'food'
+      : manaPct > 0
+      ? 'mp'
+      : healHp > 0 || healPct > 0
+      ? 'hp'
+      : null;
 
   bool get equippable => equipSlot != null && equipSlot!.isNotEmpty;
 }

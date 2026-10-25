@@ -28,12 +28,15 @@ import (
 )
 
 var (
-	ErrNotFound    = errors.New("consumable: item not found")
-	ErrLocked      = errors.New("consumable: item is locked")
-	ErrNotUsable   = errors.New("consumable: item has no use effect")
-	ErrLevel       = errors.New("consumable: character level too low")
-	ErrInCombat    = errors.New("consumable: character is in a hunt or dungeon")
-	ErrNoEffect    = errors.New("consumable: effect would do nothing (hp already full)")
+	ErrNotFound  = errors.New("consumable: item not found")
+	ErrLocked    = errors.New("consumable: item is locked")
+	ErrNotUsable = errors.New("consumable: item has no use effect")
+	ErrLevel     = errors.New("consumable: character level too low")
+	ErrInCombat  = errors.New("consumable: character is in a hunt or dungeon")
+	ErrNoEffect  = errors.New("consumable: effect would do nothing (hp already full)")
+	// ErrHuntOnly: a mana potion refills the pool a hunt carries; it is
+	// taken on a hunt as a supply, not drunk from the bag (DD-288).
+	ErrHuntOnly    = errors.New("consumable: only usable as a hunt supply")
 	errBadTemplate = errors.New("consumable: unknown effect kind")
 )
 
@@ -156,6 +159,9 @@ func (s *Service) Use(ctx context.Context, characterID, accountID, itemID uuid.U
 		current := character.EffectiveHP(stored, storedAt, maxHP, sheet.Primary.Vitality, now)
 
 		buff := tmpl.UseEffect.Buff
+		if tmpl.UseEffect.Kind == "mana_pct" {
+			return ErrHuntOnly
+		}
 		switch tmpl.UseEffect.Kind {
 		case "heal_hp", "heal_pct":
 			hp, err := ApplyHeal(current, maxHP, HealAmount(tmpl.UseEffect.Kind, tmpl.UseEffect.Amount, maxHP))
@@ -221,9 +227,20 @@ func (s *Service) Active(ctx context.Context, characterID uuid.UUID) (*Buff, err
 	return &b, nil
 }
 
+type skipBuffKey struct{}
+
+// WithoutBuff marks ctx so the sheet leaves the food buff out: a hunt
+// snapshot carries the buff with its own clock instead (DD-288).
+func WithoutBuff(ctx context.Context) context.Context {
+	return context.WithValue(ctx, skipBuffKey{}, true)
+}
+
 // Modifiers is the sheet modifier source: the live food buff as attack and
 // defense percent (DD-269).
 func (s *Service) Modifiers(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
+	if ctx.Value(skipBuffKey{}) != nil {
+		return nil, nil
+	}
 	b, err := s.Active(ctx, id)
 	if err != nil || b == nil {
 		return nil, err

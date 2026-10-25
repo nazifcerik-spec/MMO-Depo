@@ -705,5 +705,19 @@
   "attrHoldHint": "Hızlı dağıtmak için − / + düğmesini basılı tut",
   "gainHp": "Can",
   "gainMp": "Mana",
-  "gainHpRegen": "Can/sn"
+  "gainHpRegen": "Can/sn",
+  "huntSupplies": "Ava götürülecekler",
+  "huntSuppliesHint": "İksirler savaşlar arasında canın yarının altına inince, yemekler bonusu bitince, mana iksirleri mana azalınca kullanılır. Kalanlar çantana döner.",
+  "supplyHp": "Can iksirleri",
+  "supplyMp": "Mana iksirleri",
+  "supplyMpHint": "Mana, enerji, odak, doğa enerjisi ya da ruh kullanan sınıflar için",
+  "supplyFood": "Yemekler",
+  "huntNoSupplies": "Çantanda iksir ya da yemek yok: dükkândan alabilir ya da üretebilirsin.",
+  "restoresMpPct": "Mananın %{pct} kadarını doldurur",
+  "huntSupplyOnly": "Yalnızca ava götürülerek kullanılır",
+  "errBadSupply": "Bu eşya ava götürülemez.",
+  "errNotEnoughSupplies": "Çantanda o malzemeden yeterince yok.",
+  "errHuntOnly": "Bunu ava götürerek kullanabilirsin.",
+  "huntFled": "Canın %5'in altına düştü, savaştan çekildin",
+  "suppliesUsed": "Kullanılan: {list}"
 }

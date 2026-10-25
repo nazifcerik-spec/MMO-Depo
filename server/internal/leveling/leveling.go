@@ -172,6 +172,11 @@ type Resource struct {
 	PerTurn  int    `yaml:"per_turn" json:"per_turn"`
 }
 
+// CarriedResources are the pools a hunt carries from fight to fight
+// (DD-288): spent mana stays spent until a potion or a rest. The builders
+// (rage, chi, rhythm, conviction) start every fight anew.
+var CarriedResources = map[string]bool{"mana": true, "energy": true, "focus": true, "nature_energy": true, "spirit": true}
+
 // RoleTags are the reusable role tags of class nodes (DD-252).
 var RoleTags = map[string]bool{
 	"tank": true, "bruiser": true, "melee_dps": true, "ranged_dps": true, "magic_dps": true,

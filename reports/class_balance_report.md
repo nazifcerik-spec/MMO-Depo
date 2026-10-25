@@ -8,9 +8,9 @@ Each final specialization is simulated with the production combat engine (skills
 
 | role | kill speed | survival | boss | AFK safety | aoe | group |
 |---|---|---|---|---|---|---|
-| dps | 0.45 | 0.23 | 0.55 | 0.96 | 0.48 | 0.20 |
+| dps | 0.45 | 0.23 | 0.55 | 0.94 | 0.48 | 0.20 |
 | tank | 0.06 | 0.65 | 0.30 | 1.00 | 0.05 | 0.77 |
-| support | 0.18 | 0.41 | 0.46 | 0.97 | 0.17 | 0.90 |
+| support | 0.18 | 0.41 | 0.46 | 1.00 | 0.17 | 0.90 |
 
 ## Specializations
 
@@ -22,15 +22,15 @@ Each final specialization is simulated with the production combat engine (skills
 | bard | skald | dirge_singer | support | 4.8 | 4.5 | 45.5 | 100% | 100% | 0.25 | 0.13 | 0.83 | 0.33 | 0.63 | 1.00 | boss, group | farming |
 | cleric | saint | high_priest | support | 7.7 | 8.0 | 27.2 | 92% | 100% | 0.06 | 0.07 | 0.31 | 0.00 | 0.97 | 1.00 | group, dungeon | solo, farming |
 | cleric | saint | aegis_priest | support | 10.1 | 10.2 | 22.9 | 13% | 100% | 0.01 | 0.06 | 0.04 | 0.00 | 0.95 | 1.00 | group, afk | farming |
-| cleric | oracle | prophet | support | 3.9 | 3.9 | 13.0 | 13% | 95% | 0.32 | 0.02 | 0.07 | 0.33 | 0.97 | 0.70 | group | solo |
-| cleric | oracle | exorcist | dps | 3.2 | 3.1 | 10.6 | 0% | 100% | 0.43 | 0.01 | 0.00 | 0.33 | 0.34 | 1.00 | boss, dungeon | farming |
+| cleric | oracle | prophet | support | 3.9 | 3.9 | 13.0 | 13% | 100% | 0.32 | 0.02 | 0.07 | 0.33 | 0.97 | 1.00 | group | solo |
+| cleric | oracle | exorcist | dps | 3.2 | 3.1 | 10.6 | 0% | 83% | 0.43 | 0.01 | 0.00 | 0.33 | 0.34 | 0.00 | boss, dungeon | farming |
 | druid | grove_keeper | life_binder | support | 7.3 | 7.8 | 300.0 | 100% | 100% | 0.07 | 1.00 | 0.30 | 0.00 | 0.97 | 1.00 | group | solo |
 | druid | grove_keeper | thorn_sage | dps | 3.1 | 3.0 | 49.5 | 100% | 100% | 0.46 | 0.15 | 0.47 | 0.67 | 0.34 | 1.00 | aoe, afk | boss |
 | druid | shapeshifter | bearwarden | tank | 7.1 | 7.7 | 295.5 | 100% | 100% | 0.07 | 0.98 | 0.28 | 0.00 | 0.54 | 1.00 | boss, afk | farming |
 | druid | shapeshifter | mooncaller | dps | 4.9 | 4.7 | 21.3 | 98% | 100% | 0.23 | 0.05 | 0.48 | 0.67 | 0.04 | 1.00 | farming | afk |
 | mage | arcanist | rune_master | dps | 2.0 | 1.8 | 8.7 | 10% | 100% | 0.87 | 0.01 | 0.13 | 0.67 | 0.26 | 1.00 | dungeon | afk |
 | mage | arcanist | chronomancer | dps | 3.0 | 2.9 | 10.6 | 5% | 100% | 0.49 | 0.01 | 0.05 | 0.33 | 0.53 | 1.00 | group, afk | farming |
-| mage | elementalist | pyromancer | dps | 2.2 | 2.1 | 6.7 | 0% | 83% | 0.74 | 0.00 | 0.00 | 1.00 | 0.00 | 0.00 | farming, aoe | afk |
+| mage | elementalist | pyromancer | dps | 2.2 | 2.1 | 6.7 | 0% | 95% | 0.74 | 0.00 | 0.00 | 1.00 | 0.00 | 0.70 | farming, aoe | afk |
 | mage | elementalist | cryomancer | dps | 3.8 | 3.4 | 10.6 | 0% | 100% | 0.39 | 0.01 | 0.00 | 0.67 | 0.26 | 1.00 | afk, aoe | boss |
 | monk | disciple | iron_body | tank | 6.2 | 6.2 | 300.0 | 100% | 100% | 0.13 | 1.00 | 0.47 | 0.00 | 0.53 | 1.00 | afk, boss | farming |
 | monk | disciple | spirit_walker | dps | 4.6 | 4.1 | 300.0 | 100% | 100% | 0.29 | 1.00 | 0.69 | 0.00 | 0.58 | 1.00 | afk, solo | aoe |
@@ -49,7 +49,7 @@ Each final specialization is simulated with the production combat engine (skills
 | rogue | duelist | blade_dancer | dps | 1.7 | 1.6 | 15.5 | 88% | 100% | 1.00 | 0.03 | 0.97 | 1.00 | 0.00 | 1.00 | farming, aoe | boss |
 | rogue | duelist | trickster | dps | 2.2 | 2.2 | 24.2 | 98% | 100% | 0.71 | 0.06 | 0.85 | 0.00 | 0.00 | 1.00 | afk, solo | farming |
 | shaman | totemist | earthwarden | tank | 6.1 | 6.1 | 65.2 | 100% | 100% | 0.14 | 0.20 | 0.29 | 0.00 | 0.90 | 1.00 | afk, group | farming |
-| shaman | totemist | storm_totemist | dps | 5.8 | 5.7 | 13.5 | 2% | 100% | 0.16 | 0.02 | 0.01 | 1.00 | 0.34 | 1.00 | aoe, farming | boss |
+| shaman | totemist | storm_totemist | dps | 5.8 | 5.7 | 13.5 | 2% | 97% | 0.16 | 0.02 | 0.01 | 1.00 | 0.34 | 0.80 | aoe, farming | boss |
 | shaman | spirit_caller | ancestor_sage | support | 8.7 | 8.7 | 237.4 | 100% | 100% | 0.04 | 0.79 | 0.30 | 0.00 | 0.97 | 1.00 | group | solo |
 | shaman | spirit_caller | hexer | support | 3.9 | 3.9 | 35.1 | 100% | 100% | 0.31 | 0.10 | 0.43 | 0.33 | 0.62 | 1.00 | boss | farming |
 | warrior | guardian | iron_fortress | tank | 7.9 | 8.2 | 75.0 | 100% | 100% | 0.05 | 0.23 | 0.28 | 0.00 | 0.79 | 1.00 | boss, afk, group | farming |

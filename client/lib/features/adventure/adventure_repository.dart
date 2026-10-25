@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../inventory/inventory_models.dart';
 import 'adventure_models.dart';
 
 /// Hunt, dungeon and travel endpoints for one character. Catalogs are
@@ -33,8 +34,33 @@ class AdventureRepository {
 
   Future<CombatContract?> activeHunt() async => _contract(await api.get('$_char/hunt/active'), 'mob_code');
 
-  Future<CombatContract> startHunt(String mobCode, Duration d) async =>
-      _contract(await api.post('$_char/hunt', {'mob_code': mobCode, 'duration_seconds': d.inSeconds}), 'mob_code')!;
+  /// Starts a hunt with [supplies] (template code -> units) taken from the
+  /// bag (DD-288).
+  Future<CombatContract> startHunt(String mobCode, Duration d, [Map<String, int> supplies = const {}]) async =>
+      _contract(
+        await api.post('$_char/hunt', {
+          'mob_code': mobCode,
+          'duration_seconds': d.inSeconds,
+          'supplies': [
+            for (final e in supplies.entries)
+              if (e.value > 0) {'template_code': e.key, 'quantity': e.value},
+          ],
+        }),
+        'mob_code',
+      )!;
+
+  /// The bag's potions and dishes, one entry per template (DD-288).
+  Future<List<SupplyStock>> supplies() async {
+    final bag = Bag.fromJson(await api.get('$_char/inventory'));
+    final first = <String, BagItem>{};
+    final stock = <String, int>{};
+    for (final i in bag.items) {
+      if (i.isLocked || i.supplyKind == null) continue;
+      first.putIfAbsent(i.templateCode, () => i);
+      stock[i.templateCode] = (stock[i.templateCode] ?? 0) + i.stack;
+    }
+    return [for (final e in first.entries) SupplyStock(item: e.value, stock: stock[e.key]!)];
+  }
 
   /// Collects the encounters fought so far and ends the hunt (idempotent).
   Future<CombatResult> revealHunt(String id) async =>

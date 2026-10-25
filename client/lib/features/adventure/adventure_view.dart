@@ -18,6 +18,10 @@ import 'adventure_models.dart';
 import 'adventure_repository.dart';
 import 'world_map.dart';
 import '../../shared/content_names.dart';
+import '../../shared/hold_repeat_button.dart';
+import '../inventory/inventory_models.dart';
+import '../inventory/item_images.dart';
+import '../inventory/item_widgets.dart';
 
 part 'raid_panel.dart';
 
@@ -175,6 +179,9 @@ String _resultSubtitle(AppLocalizations l, CombatResult r) => [
   if (r.cleared != null) r.cleared! ? l.dungeonCleared : l.dungeonFailed,
   if (r.bossKilled) l.bossKilled,
   l.huntSummary(r.victories, r.defeats),
+  if (r.fled) l.huntFled,
+  if (r.suppliesUsed.isNotEmpty)
+    l.suppliesUsed([for (final (code, n) in r.suppliesUsed) '$n× ${ContentNames.of('item', code)}'].join(', ')),
   if (r.leveledUp && r.newLevel != null) l.levelUp(r.newLevel!),
 ].join(' · ');
 
@@ -202,6 +209,11 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
 
   /// The player picked [_mob] themselves; otherwise it follows the level.
   bool _mobPicked = false;
+
+  /// The bag's potions and dishes, and how many of each to take (DD-288);
+  /// the choice is kept between hunts, capped by what is left.
+  List<SupplyStock> _stock = const [];
+  final Map<String, int> _take = {};
   Duration _duration = huntDurations.first;
 
   List<Duration> get _durations => [if (AppConfig.flavor == 'dev') const Duration(minutes: 5), ...huntDurations];
@@ -240,15 +252,24 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
 
   @override
   Future<void> fetch() async {
-    final r = await Future.wait<Object?>([widget.repo.mobs(), widget.repo.activeHunt(), widget.repo.location()]);
+    final r = await Future.wait<Object?>([
+      widget.repo.mobs(),
+      widget.repo.activeHunt(),
+      widget.repo.location(),
+      widget.repo.supplies(),
+    ]);
     _mobs = r[0]! as List<MobInfo>;
     _active = r[1] as CombatContract?;
     _reach = (r[2]! as Location).huntRegions;
+    _stock = r[3]! as List<SupplyStock>;
+    final have = {for (final s in _stock) s.code: s.stock};
+    _take.removeWhere((code, _) => !have.containsKey(code));
+    _take.updateAll((code, n) => n.clamp(0, have[code]!));
     if (!_mobPicked || !_mobs.any((m) => m.code == _mob && _inReach(m))) _mob = _defaultMob();
   }
 
   Future<void> _start() => run(() async {
-    final c = await widget.repo.startHunt(_mob!, _duration);
+    final c = await widget.repo.startHunt(_mob!, _duration, _take);
     if (mounted) setState(() => _active = c);
   });
 
@@ -263,6 +284,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
       if (!mounted) return;
       setState(() => _active = null);
       widget.dataVersion.value++;
+      unawaited(load()); // what came back to the bag
       await showLootSheet(
         context,
         title: ContentNames.of('mob', c.target),
@@ -285,6 +307,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
     await run(() async {
       await widget.repo.stopHunt(c.id);
       if (mounted) setState(() => _active = null);
+      await load(); // the supplies are back in the bag
     });
   }
 
@@ -351,6 +374,8 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
               ),
           ],
         ),
+        const SizedBox(height: Space.lg),
+        _SupplyPicker(stock: _stock, take: _take, onChanged: (code, n) => setState(() => _take[code] = n)),
         const SizedBox(height: Space.xl),
         FilledButton.icon(
           onPressed: _mob == null ? null : _start,
@@ -360,6 +385,82 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
         if (away.isNotEmpty) ...[const SizedBox(height: Space.lg), _AwayMobs(mobs: away)],
       ];
     });
+  }
+}
+
+/// The potions and dishes to take on a hunt, grouped by kind, each with
+/// what one unit does and a -/+ count (hold to repeat) up to the stock.
+class _SupplyPicker extends StatelessWidget {
+  const _SupplyPicker({required this.stock, required this.take, required this.onChanged});
+
+  final List<SupplyStock> stock;
+  final Map<String, int> take;
+  final void Function(String code, int n) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    String effect(BagItem i) => [
+      if (i.healHp > 0) l.restoresHp(i.healHp),
+      if (i.healPct > 0) l.restoresHpPct(i.healPct),
+      if (i.manaPct > 0) l.restoresMpPct(i.manaPct),
+      if (i.buff case final b?) l.foodBuffLine(b.attackPct, b.defensePct, b.minutes),
+    ].join(' · ');
+    Widget group(String kind, String title, [String? hint]) {
+      final rows = stock.where((s) => s.kind == kind).toList();
+      if (rows.isEmpty) return const SizedBox.shrink();
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: Space.sm),
+          Text(title, style: text.labelLarge),
+          if (hint != null) Text(hint, style: text.bodySmall?.copyWith(color: Palette.textMuted)),
+          for (final s in rows)
+            Row(
+              children: [
+                ItemArt(code: s.code, icon: itemIcon(s.item.itemClass, s.item.itemSubclass), size: 28),
+                const SizedBox(width: Space.sm),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(ContentNames.of('item', s.code), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(effect(s.item), style: text.bodySmall),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${take[s.code] ?? 0} / ${s.stock}',
+                  key: Key('supply-${s.code}'),
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
+                ),
+                HoldRepeatButton(
+                  tooltip: '- ${ContentNames.of('item', s.code)}',
+                  icon: Icons.remove_circle_outline,
+                  onStep: (take[s.code] ?? 0) > 0 ? () => onChanged(s.code, (take[s.code] ?? 0) - 1) : null,
+                ),
+                HoldRepeatButton(
+                  tooltip: '+ ${ContentNames.of('item', s.code)}',
+                  icon: Icons.add_circle_outline,
+                  onStep: (take[s.code] ?? 0) < s.stock ? () => onChanged(s.code, (take[s.code] ?? 0) + 1) : null,
+                ),
+              ],
+            ),
+        ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l.huntSupplies, style: text.titleSmall),
+        Text(stock.isEmpty ? l.huntNoSupplies : l.huntSuppliesHint, style: text.bodySmall),
+        group('hp', l.supplyHp),
+        group('mp', l.supplyMp, l.supplyMpHint),
+        group('food', l.supplyFood),
+      ],
+    );
   }
 }
 

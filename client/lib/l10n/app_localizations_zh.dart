@@ -2444,4 +2444,50 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get gainHpRegen => '生命/秒';
+
+  @override
+  String get huntSupplies => '携带补给';
+
+  @override
+  String get huntSuppliesHint => '战斗间生命低于一半时喝药水，增益结束时吃食物，法力不足时喝法力药水。剩余的会回到背包。';
+
+  @override
+  String get supplyHp => '治疗药水';
+
+  @override
+  String get supplyMp => '法力药水';
+
+  @override
+  String get supplyMpHint => '适用于使用法力、能量、专注、自然能量或灵力的职业';
+
+  @override
+  String get supplyFood => '食物';
+
+  @override
+  String get huntNoSupplies => '背包里没有药水或食物：可在商店购买或自行制作。';
+
+  @override
+  String restoresMpPct(int pct) {
+    return '恢复 $pct% 法力';
+  }
+
+  @override
+  String get huntSupplyOnly => '仅可作为狩猎补给使用';
+
+  @override
+  String get errBadSupply => '该物品无法带去狩猎。';
+
+  @override
+  String get errNotEnoughSupplies => '背包中该补给不足。';
+
+  @override
+  String get errHuntOnly => '请将其作为狩猎补给带上。';
+
+  @override
+  String get huntFled => '生命低于 5%：你撤离了战斗';
+
+  @override
+  String suppliesUsed(String list) {
+    return '已使用：$list';
+  }
 }

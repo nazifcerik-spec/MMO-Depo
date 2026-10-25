@@ -201,6 +201,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 95. **Nitelik ekranı + üretim süreleri + seviye sıralı zindan listesi (bitti)** — Sprint 95, DD-285..287. Nitelik −/+ basılı tutunca hızlanarak tekrarlar (`HoldRepeatButton`); `/leveling` `attributes.gains` (bir puanın sınıfa şu anki katkısı, `character.AttributeGains`) → ekranda "Puan başına" / "Eklenecek" satırları. Üretim süreleri kısaldı (ergitme 5–45 sn, yemek/iksir 10–50 sn, ekipman en çok 285 sn; `gen_crafting.py`, `gen_cooking.py`). `dungeon.Catalog.All` seviyeye göre sıralı (önceden map sırası).
 
+96. **Av malzemeleri + taşınan mana + %5'te çekilme (bitti)** — Sprint 96, DD-288. Migration 0044 (`hunt.contract.loadout`). `POST /hunt` `supplies` → çantadan ayrılır (`lock_owner='hunt'`, yığın bölünür), toplamada kullanılan düşer, kalan döner (`MarkRevealed`/`MarkCancelled` aynı tx). `hunt.RollWith`: başta iksirle tamamlama, zafer sonrası yemek (bonus süresince saldırı/savunma), yaralıyken iksir, mana < %30 mana iksiri, sonra kamp; can < %5 → `OutcomeFled`, av biter. Mana/enerji/odak/doğa enerjisi/ruh savaştan savaşa taşınır (savaş arası +%10). Yemek bonusu av saatine göre (`consumable.WithoutBuff`). Mana iksirleri `mana_pct` (6 kademe, simya, dükkân; yalnız av, `E_HUNT_ONLY`). İstemci: av ekranında "Ava götürülecekler" (grup, stok, basılı tutmalı −/+), sonuçta kullanılanlar + çekilme.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

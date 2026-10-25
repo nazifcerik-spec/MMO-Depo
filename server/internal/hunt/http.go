@@ -53,8 +53,9 @@ func (h *Handler) publish(accountID uuid.UUID, kind string, payload any) {
 
 // startBody is the POST /v1/character/{id}/hunt body.
 type startBody struct {
-	MobCode         string `json:"mob_code"`
-	DurationSeconds int32  `json:"duration_seconds"`
+	MobCode         string          `json:"mob_code"`
+	DurationSeconds int32           `json:"duration_seconds"`
+	Supplies        []SupplyRequest `json:"supplies"` // potions and dishes from the bag (DD-288)
 }
 
 // Start creates a new hunt contract.
@@ -79,6 +80,7 @@ func (h *Handler) Start(w http.ResponseWriter, r *http.Request) {
 		AccountID:       acct,
 		MobCode:         body.MobCode,
 		DurationSeconds: body.DurationSeconds,
+		Supplies:        body.Supplies,
 	})
 	if err != nil {
 		writeErr(w, r, err)
@@ -239,6 +241,10 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_TOO_WOUNDED", "rest or heal before fighting")
 	case errors.Is(err, ErrWrongRegion):
 		apierr.Write(w, r, http.StatusConflict, "E_MOB_REGION", "travel to the mob's region first")
+	case errors.Is(err, ErrBadSupply):
+		apierr.Write(w, r, http.StatusBadRequest, "E_BAD_SUPPLY", "not a potion or dish you can take")
+	case errors.Is(err, ErrNoSupplies):
+		apierr.Write(w, r, http.StatusConflict, "E_NOT_ENOUGH_SUPPLIES", "the bag holds fewer of that supply")
 	case errors.Is(err, ErrUnknownMob):
 		apierr.Write(w, r, http.StatusBadRequest, "E_UNKNOWN_MOB", "mob_code not in catalog")
 	case errors.Is(err, ErrValidation):

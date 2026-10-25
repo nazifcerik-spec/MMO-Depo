@@ -9,7 +9,8 @@ level. Every piece of random-drop gear gets a recipe:
   tailoring       cloth armor + holy tomes      herbs as fibre (+ hide lining)
   woodworking     staves, bows, lutes, totems   logs (+ bar fittings, feathers)
 
-Healing potions heal a share of max HP (heal_pct) and spread over the
+Healing potions heal a share of max HP (heal_pct) and mana potions refill a
+share of a hunter's carried pool (mana_pct, DD-288); both spread over the
 alchemy levels. Writes generated blocks into content/recipes.yaml and
 content/items.yaml and names in en, tr, zh-CN and es.
 
@@ -52,6 +53,16 @@ POTIONS = [
     ('potion_hp_huge', 650, 70, 600, None),
     ('potion_hp_supreme', 850, 85, 1000,
      L('Supreme Healing Potion', 'Yüce Can İksiri', '至高治疗药水', 'Poción de curación suprema')),
+]
+# Mana potions (mana_pct): code, level, percent of the pool, value, names.
+MANA_POTIONS = [
+    ('potion_mp_small', 1, 30, 20, L('Small Mana Potion', 'Küçük Mana İksiri', '小型法力药水', 'Poción de maná pequeña')),
+    ('potion_mp_medium', 100, 40, 60, L('Medium Mana Potion', 'Orta Boy Mana İksiri', '中型法力药水', 'Poción de maná mediana')),
+    ('potion_mp_large', 250, 50, 150, L('Large Mana Potion', 'Büyük Boy Mana İksiri', '大型法力药水', 'Poción de maná grande')),
+    ('potion_mp_xlarge', 450, 60, 320,
+     L('Extra Large Mana Potion', 'Ekstra Büyük Mana İksiri', '特大法力药水', 'Poción de maná extragrande')),
+    ('potion_mp_huge', 650, 70, 600, L('Huge Mana Potion', 'Dev Mana İksiri', '巨型法力药水', 'Poción de maná enorme')),
+    ('potion_mp_supreme', 850, 85, 1000, L('Supreme Mana Potion', 'Yüce Mana İksiri', '至高法力药水', 'Poción de maná suprema')),
 ]
 
 
@@ -181,6 +192,18 @@ for code, lvl, pct, value, title in POTIONS:
         for lang in names:
             names[lang]['item.' + code] = title[lang]
     inputs = merged([(pick(HERBS, skill), 2), (pick(HERBS, max(1, skill // 2)), 1)])
+    potion_recipes.append(recipe(code, 'alchemy', skill, inputs, max(1, value // 4),
+                                 max(15, round(0.25 * xp_to_next(skill))), round5(10 + 0.4 * skill)))
+for code, lvl, pct, value, title in MANA_POTIONS:
+    skill = skill_for(lvl)
+    potion_items.append('\n'.join([
+        '  - code: ' + code, '    display_name_key: item.' + code, '    item_class: consumable',
+        '    item_subclass: potion', '    min_level: %d' % lvl, '    base_value_copper: %d' % value,
+        '    base_weight_g: 250', '    stackable: true', '    max_stack: 20', '    bind_kind: boe',
+        '    use_effect: { kind: mana_pct, amount: %d }' % pct]))
+    for lang in names:
+        names[lang]['item.' + code] = title[lang]
+    inputs = merged([(pick(HERBS, skill), 1), (pick(HERBS, max(1, skill // 2)), 2)])
     potion_recipes.append(recipe(code, 'alchemy', skill, inputs, max(1, value // 4),
                                  max(15, round(0.25 * xp_to_next(skill))), round5(10 + 0.4 * skill)))
 for code, title in PROFESSIONS.items():

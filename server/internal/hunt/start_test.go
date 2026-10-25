@@ -29,7 +29,7 @@ func (m *memRepo) Active(context.Context, uuid.UUID) (*Contract, error) {
 func (m *memRepo) History(context.Context, uuid.UUID, int) ([]Contract, error) {
 	return nil, errors.New("unused")
 }
-func (m *memRepo) MarkRevealed(context.Context, uuid.UUID, json.RawMessage, uuid.UUID, time.Time) error {
+func (m *memRepo) MarkRevealed(context.Context, uuid.UUID, json.RawMessage, uuid.UUID, time.Time, []SupplyUse) error {
 	return errors.New("unused")
 }
 func (m *memRepo) MarkCancelled(context.Context, uuid.UUID, time.Time) error {

@@ -91,7 +91,9 @@ type UseBuff struct {
 }
 
 // validUseEffects: only effects with persisted state (HP, DD-218) exist yet.
-var validUseEffects = map[string]bool{"heal_hp": true, "heal_pct": true}
+// mana_pct refills a share of a hunter's carried pool; it only works as a
+// hunt supply (DD-288).
+var validUseEffects = map[string]bool{"heal_hp": true, "heal_pct": true, "mana_pct": true}
 
 // StatBonus is one entry of an item's equipped modifier stack.
 type StatBonus struct {
@@ -893,8 +895,11 @@ func validateItems(items []Item) error {
 			if !validUseEffects[ue.Kind] {
 				return fmt.Errorf("item %s: unknown use_effect kind %q", it.Code, ue.Kind)
 			}
-			if ue.Amount <= 0 || ue.Amount > 100_000 || (ue.Kind == "heal_pct" && ue.Amount > 100) {
-				return fmt.Errorf("item %s: use_effect amount out of (0, 100000] (heal_pct: 1..100)", it.Code)
+			if ue.Amount <= 0 || ue.Amount > 100_000 || (ue.Kind != "heal_hp" && ue.Amount > 100) {
+				return fmt.Errorf("item %s: use_effect amount out of (0, 100000] (heal_pct, mana_pct: 1..100)", it.Code)
+			}
+			if ue.Kind == "mana_pct" && ue.Buff != nil {
+				return fmt.Errorf("item %s: a mana potion has no buff", it.Code)
 			}
 			if b := ue.Buff; b != nil && (b.AttackPct < 0 || b.AttackPct > 50 || b.DefensePct < 0 || b.DefensePct > 50 ||
 				b.AttackPct+b.DefensePct == 0 || b.Minutes < 1 || b.Minutes > 1440) {

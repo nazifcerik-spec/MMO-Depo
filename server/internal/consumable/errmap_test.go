@@ -13,6 +13,7 @@ import (
 // like services do.
 func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for name, e := range map[string]error{
+		"ErrHuntOnly":  ErrHuntOnly,
 		"ErrInCombat":  ErrInCombat,
 		"ErrLevel":     ErrLevel,
 		"ErrLocked":    ErrLocked,

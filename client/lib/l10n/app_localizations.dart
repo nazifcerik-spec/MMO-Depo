@@ -4329,6 +4329,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'HP/s'**
   String get gainHpRegen;
+
+  /// No description provided for @huntSupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies to take'**
+  String get huntSupplies;
+
+  /// No description provided for @huntSuppliesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.'**
+  String get huntSuppliesHint;
+
+  /// No description provided for @supplyHp.
+  ///
+  /// In en, this message translates to:
+  /// **'Healing potions'**
+  String get supplyHp;
+
+  /// No description provided for @supplyMp.
+  ///
+  /// In en, this message translates to:
+  /// **'Mana potions'**
+  String get supplyMp;
+
+  /// No description provided for @supplyMpHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For classes using mana, energy, focus, nature energy or spirit'**
+  String get supplyMpHint;
+
+  /// No description provided for @supplyFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get supplyFood;
+
+  /// No description provided for @huntNoSupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'No potions or food in your bag: buy them at the shop or craft them.'**
+  String get huntNoSupplies;
+
+  /// No description provided for @restoresMpPct.
+  ///
+  /// In en, this message translates to:
+  /// **'Refills {pct}% of your mana'**
+  String restoresMpPct(int pct);
+
+  /// No description provided for @huntSupplyOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Used only as a hunt supply'**
+  String get huntSupplyOnly;
+
+  /// No description provided for @errBadSupply.
+  ///
+  /// In en, this message translates to:
+  /// **'That item cannot be taken on a hunt.'**
+  String get errBadSupply;
+
+  /// No description provided for @errNotEnoughSupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bag holds fewer of that supply.'**
+  String get errNotEnoughSupplies;
+
+  /// No description provided for @errHuntOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Take it on a hunt as a supply.'**
+  String get errHuntOnly;
+
+  /// No description provided for @huntFled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your HP fell under 5%: you broke off the fight'**
+  String get huntFled;
+
+  /// No description provided for @suppliesUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Used: {list}'**
+  String suppliesUsed(String list);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

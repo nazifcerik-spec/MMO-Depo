@@ -2793,6 +2793,50 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-288 — Av malzemeleri, taşınan mana ve %5'te çekilme
+**Karar:**
+- **Malzeme seçimi:** Av başlatılırken çantadan can iksiri, mana iksiri ve yemek seçilir (`POST /hunt` `supplies: [{template_code, quantity}]`, en fazla 8 tür). Malzemeler başlatma işleminin içinde ava ayrılır: `lock_owner='hunt'`, gerekirse yığın bölünür.
+  - Etkileri ve av öncesi yenmiş bir yemeğin kalan süresi kontrata `loadout` olarak donar (migration 0044).
+  - Toplamada kullanılan kadar düşülür, kalan çantaya döner. Bu, `MarkRevealed` ile aynı işlemde olur; tekrar toplamak fazla harcamaz.
+  - İptalde hepsi döner.
+  - Hatalar: `E_BAD_SUPPLY` (400), `E_NOT_ENOUGH_SUPPLIES` (409).
+- **Simülasyon (`hunt.RollWith`):**
+  - İlk savaştan önce fazla doldurmayacak iksirlerle can tamamlanır.
+  - Her zaferden sonra şu sırayla:
+    1. Bonusu yoksa bir yemek yenir. Yemek iyileştirir ve bonusu süresi boyunca saldırı/savunmayı yükseltir.
+    2. Yaralıyken (can < %50 ya da son savaşın 3 katı) en güçlü iksir içilir.
+    3. Mana %30'un altındaysa mana iksiri içilir.
+    4. Hâlâ yaralıysa kamp kurulur (dolum saniyede %1, mana da dolar).
+- **Çekilme:** Bir vuruş sonrası can %5'in altında kalırsa karakter savaştan çekilir (`combat.OutcomeFled`, `Session.FleeBelowPct`), av biter. O savaş ödül vermez.
+- **Kaynağın taşınması:**
+  - Mana, enerji, odak, doğa enerjisi ve ruh (`leveling.CarriedResources`, `Combatant.ResourceCarry`) savaştan savaşa taşınır.
+  - Kaynak savaşta her turda yenilenir, iki savaş arasında havuzun %10'u kadar dolar (`BreatherMPPct`). Bitince karakter temel saldırıyla devam eder.
+  - Öfke, chi, ritim ve inanç her savaşta sıfırdan birikir.
+- **Yemek bonusu:** Av anlık görüntüsü artık yemek bonusunu sheet'e katmaz (`consumable.WithoutBuff`). Bonus avın kendi saatiyle kalan süresi kadar işler.
+- **Mana iksirleri:** `mana_pct` etkisi; 6 kademe (Sv 1–850, %30–85), simya tarifleri, dükkânda Küçük/Orta/Büyük. Yalnızca ava götürülerek kullanılır; çantadan kullanmak 409 `E_HUNT_ONLY` döner.
+
+**Reason:** Kullanıcı isteği:
+- Savaş gerçekçi olsun, karakter hasar alsın.
+- Can %5'in altında savaş dursun.
+- Ava başlamadan çantadaki stoktan iksir ve yemek seçilsin.
+- Mana ve enerji kullanımı aktif olsun, mana iksiri seçilebilsin.
+- Yemek bonusları işlesin.
+
+**Alternatives:**
+- Kampı tamamen kaldırmak: malzemesiz bir av birkaç savaşta biterdi.
+- Mana bitince kamp kurmak: büyücü ve rahip seviye eğrisinin 4 katına yavaşlıyordu.
+- Malzemeyi başlangıçta silip toplarken yeniden üretmek: yeniden üretim tekrarında çift eşya riski vardı.
+
+**Consequences:**
+- İksirler kamp süresini kısaltır; saatlik öldürme ve XP artar.
+- Malzemesiz denge değişmedi: hedef testleri geçiyor, `hunt_xp.yaml` yeniden ayarlandı.
+- Eski kontratlarda kaynak taşınmaz.
+- Testler: `TestRollWith_*`, `TestSupplyFromTemplate`, `TestHTTPHuntSupplies`, istemci av akış testi (malzeme seçici).
+
+**Tarih:** 2026-10-26
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

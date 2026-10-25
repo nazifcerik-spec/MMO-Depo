@@ -63,6 +63,7 @@ class ItemInfo {
     this.bonuses = const [],
     this.healHp = 0,
     this.healPct = 0,
+    this.manaPct = 0,
     this.buff,
     this.weightGrams = 0,
     this.maxStack = 1,
@@ -87,6 +88,10 @@ class ItemInfo {
         {'kind': 'heal_pct', 'amount': final num a} => a.toInt(),
         _ => 0,
       },
+      manaPct: switch (j['use_effect']) {
+        {'kind': 'mana_pct', 'amount': final num a} => a.toInt(),
+        _ => 0,
+      },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
       bonuses: [
         if (raw is List)
@@ -104,6 +109,7 @@ class ItemInfo {
   final List<StatBonus> bonuses;
   final int healHp;
   final int healPct; // DD-274
+  final int manaPct; // DD-288
   final FoodBuff? buff; // DD-269
   final int weightGrams;
   final int maxStack;

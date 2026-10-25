@@ -289,7 +289,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	consumableSvc := consumable.NewService(pool, itemSvc, charSvc, logger)
 	sheetAdapter.WithModifierSource(consumableSvc.Modifiers)
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc).
-		WithRegionGate(worldSvc)
+		WithRegionGate(worldSvc).WithSupplies(itemSvc).WithFood(consumableSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder)
 	// Raids (DD-261): party runs of the group dungeon templates.

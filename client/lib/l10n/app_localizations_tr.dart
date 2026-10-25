@@ -2446,4 +2446,51 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get gainHpRegen => 'Can/sn';
+
+  @override
+  String get huntSupplies => 'Ava götürülecekler';
+
+  @override
+  String get huntSuppliesHint =>
+      'İksirler savaşlar arasında canın yarının altına inince, yemekler bonusu bitince, mana iksirleri mana azalınca kullanılır. Kalanlar çantana döner.';
+
+  @override
+  String get supplyHp => 'Can iksirleri';
+
+  @override
+  String get supplyMp => 'Mana iksirleri';
+
+  @override
+  String get supplyMpHint => 'Mana, enerji, odak, doğa enerjisi ya da ruh kullanan sınıflar için';
+
+  @override
+  String get supplyFood => 'Yemekler';
+
+  @override
+  String get huntNoSupplies => 'Çantanda iksir ya da yemek yok: dükkândan alabilir ya da üretebilirsin.';
+
+  @override
+  String restoresMpPct(int pct) {
+    return 'Mananın %$pct kadarını doldurur';
+  }
+
+  @override
+  String get huntSupplyOnly => 'Yalnızca ava götürülerek kullanılır';
+
+  @override
+  String get errBadSupply => 'Bu eşya ava götürülemez.';
+
+  @override
+  String get errNotEnoughSupplies => 'Çantanda o malzemeden yeterince yok.';
+
+  @override
+  String get errHuntOnly => 'Bunu ava götürerek kullanabilirsin.';
+
+  @override
+  String get huntFled => 'Canın %5\'in altına düştü, savaştan çekildin';
+
+  @override
+  String suppliesUsed(String list) {
+    return 'Kullanılan: $list';
+  }
 }

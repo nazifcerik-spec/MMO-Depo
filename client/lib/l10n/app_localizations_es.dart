@@ -2446,4 +2446,51 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get gainHpRegen => 'Vida/s';
+
+  @override
+  String get huntSupplies => 'Suministros';
+
+  @override
+  String get huntSuppliesHint =>
+      'Las pociones se beben entre combates con menos de la mitad de vida, la comida cuando acaba su bonificación y las de maná con poco maná. Lo que sobre vuelve a tu bolsa.';
+
+  @override
+  String get supplyHp => 'Pociones de vida';
+
+  @override
+  String get supplyMp => 'Pociones de maná';
+
+  @override
+  String get supplyMpHint => 'Para clases que usan maná, energía, concentración, energía natural o espíritu';
+
+  @override
+  String get supplyFood => 'Comida';
+
+  @override
+  String get huntNoSupplies => 'No tienes pociones ni comida: cómpralas en la tienda o fabrícalas.';
+
+  @override
+  String restoresMpPct(int pct) {
+    return 'Rellena el $pct% de tu maná';
+  }
+
+  @override
+  String get huntSupplyOnly => 'Solo se usa como suministro de caza';
+
+  @override
+  String get errBadSupply => 'Ese objeto no se puede llevar de caza.';
+
+  @override
+  String get errNotEnoughSupplies => 'No tienes suficientes de ese suministro.';
+
+  @override
+  String get errHuntOnly => 'Llévalo de caza como suministro.';
+
+  @override
+  String get huntFled => 'Tu vida bajó del 5 %: abandonaste el combate';
+
+  @override
+  String suppliesUsed(String list) {
+    return 'Usado: $list';
+  }
 }

@@ -166,6 +166,7 @@ func ApplyResource(c *Combatant, class string) {
 	}
 	c.ResourceStart = c.MPMax * int32(r.StartPct) / 100
 	c.ResourcePerHit, c.ResourcePerTurn = int32(r.PerHit), int32(r.PerTurn)
+	c.ResourceCarry = leveling.CarriedResources[r.Kind]
 }
 
 func summarizeCombatant(c Combatant) map[string]any {

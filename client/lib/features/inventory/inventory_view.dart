@@ -582,6 +582,14 @@ class _ItemDetail extends StatelessWidget {
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
                   ),
                 ),
+              if (item.manaPct > 0)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.md),
+                  child: Text(
+                    '${l.restoresMpPct(item.manaPct)}\n${l.huntSupplyOnly}',
+                    style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
+                  ),
+                ),
               if (bonuses.isNotEmpty) const SizedBox(height: Space.md),
               if (set case final s?) ...[SetSection(set: s, worn: worn), const SizedBox(height: Space.md)],
               if (item.stack > 1) row(l.quantity, Text('${item.stack} / ${item.maxStack}')),
