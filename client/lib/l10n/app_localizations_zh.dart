@@ -2419,4 +2419,29 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errNameMismatch => '名称不匹配。';
+
+  @override
+  String attrGainPerPoint(String gains) {
+    return '每点：$gains';
+  }
+
+  @override
+  String attrGainPending(String gains) {
+    return '将增加：$gains';
+  }
+
+  @override
+  String get attrNoEffect => '对你的职业无效';
+
+  @override
+  String get attrHoldHint => '长按 − / + 可快速分配';
+
+  @override
+  String get gainHp => '生命';
+
+  @override
+  String get gainMp => '法力';
+
+  @override
+  String get gainHpRegen => '生命/秒';
 }

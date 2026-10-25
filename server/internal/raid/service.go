@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
-	"sort"
 	"time"
 
 	"github.com/google/uuid"
@@ -79,7 +78,6 @@ func (s *Service) Catalog() []dungeon.Template {
 			out = append(out, t)
 		}
 	}
-	sort.Slice(out, func(i, j int) bool { return out[i].MinLevel < out[j].MinLevel })
 	return out
 }
 

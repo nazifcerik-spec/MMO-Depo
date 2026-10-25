@@ -2757,6 +2757,42 @@ En küçük threshold `HitAtMs` kazanır; `elapsed_effective = HitAtMs`; sonra y
 
 ---
 
+## DD-285 — Nitelik ekranı: basılı tutma + niteliğin sınıfa etkisi
+**Karar:**
+- Nitelik dağıtımında −/+ düğmeleri dokunuşta bir adım atar. Basılı tutulunca 350 ms sonra tekrarlamaya başlar: önce saniyede 8, 8 adımdan sonra saniyede 25 adım. Puan bitince ya da eklenen kalmayınca durur (`HoldRepeatButton`; adım çağrı anında denetlenir).
+- `GET /character/{id}/leveling` → `attributes.gains`: her niteliğin bir puanının şu an sınıfa kattığı değerler (`character.AttributeGains`). Sınıfın türetilmiş formül katsayısı × şu anki azalan getiri adımı (can, mana, saldırı, savunma, kritik, isabet, kaçınma, blok). Dayanıklılık için ek olarak saniyede can yenilenmesi.
+- Ekran her nitelikte "Puan başına: …" satırını gösterir. Eklenecek puan varken "Eklenecek: …" satırı da çıkar. Etkisi olmayan nitelikte "Sınıfına etkisi yok" yazar.
+
+**Reason:** Kullanıcı isteği. Seviye başına 3 puanla (DD-284) tek tek dokunmak yorucu. Hangi niteliğin ne verdiği görünmüyordu.
+**Alternatives:** Adet giriş alanı. Tahmini sheet önizlemesi (sunucu sheet hesabını istemciye kopyalamak gerekirdi).
+**Consequences:** Kazanç, eklenen puanlar boyunca şu anki adımla hesaplanır. Azalan getiri basamağı aşılırsa "Eklenecek" satırı yaklaşık bir değerdir. Ekipmandan gelen nitelikler basamak hesabına katılmaz. Testler: `TestHTTPProgression` (savaşçı katsayıları), istemci akış testi (basılı tutma, bırakınca fazladan adım yok, dokunuş tek adım).
+**Tarih:** 2026-10-25
+
+---
+
+## DD-286 — Üretim süreleri kısaldı
+**Karar:** Birim başı üretim süreleri:
+- Ergitme: 30–160 sn → 5–45 sn (`5 + 0,4 × beceri`).
+- Yemek: 20 + 2 × beceri → `10 + 0,4 × beceri` (10–50 sn).
+- İksir: 35 + 1,2 × beceri → `10 + 0,4 × beceri`.
+- Ekipman: (90 + 6 × beceri) × parça ağırlığı → `(20 + 1,6 × beceri) × ağırlık`. En uzun 1095 sn'den 285 sn'ye indi.
+
+Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergitme tarifleri elle düzenlendi).
+**Reason:** Kullanıcı isteği: üretim süreleri makul değildi (100 parçalık bir iş 30 saati aşıyordu).
+**Alternatives:** Süreyi tamamen kaldırmak (DD-264'ten önceki anlık üretim).
+**Consequences:** Meslek XP'si birim başı aynı kaldı, meslekler daha hızlı ilerler. Medyan süre 430 sn → 110 sn.
+**Tarih:** 2026-10-25
+
+---
+
+## DD-287 — Zindan ve baskın listesi seviyeye göre
+**Karar:** `dungeon.Catalog.All` şablonları seviyeye, eşitlikte koda göre sıralı döndürür. `GET /v1/dungeon/catalog` ve `GET /v1/raids` bu sırayla gelir. Raid servisindeki ayrı sıralama kaldırıldı.
+**Reason:** Kullanıcı isteği. Katalog bir map'ten okunduğu için zindan listesi her istekte rastgele sırayla geliyordu.
+**Consequences:** Test: `TestCatalogAllSortedByLevel`.
+**Tarih:** 2026-10-25
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -182,5 +182,12 @@
   "cancelCharacterDelete": "取消删除",
   "characterDeleted": "{name} 已删除。",
   "characterDeleteCancelled": "{name} 不会被删除。",
-  "errNameMismatch": "名称不匹配。"
+  "errNameMismatch": "名称不匹配。",
+  "attrGainPerPoint": "每点：{gains}",
+  "attrGainPending": "将增加：{gains}",
+  "attrNoEffect": "对你的职业无效",
+  "attrHoldHint": "长按 − / + 可快速分配",
+  "gainHp": "生命",
+  "gainMp": "法力",
+  "gainHpRegen": "生命/秒"
 }

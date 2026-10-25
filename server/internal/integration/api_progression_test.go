@@ -47,6 +47,14 @@ func TestHTTPProgression(t *testing.T) {
 	al := p.ok("POST", p.path("/attributes"), map[string]any{"strength": 3, "vitality": 2})
 	require.Equal(t, 3.0, al["allocated"].(map[string]any)["strength"])
 
+	// What one more point adds to a warrior (progression.yaml formulas; raw
+	// values are still in the full-value bracket).
+	gains := p.ok("GET", p.path("/leveling"), nil)["attributes"].(map[string]any)["gains"].(map[string]any)
+	require.Equal(t, map[string]any{"attack": 2.2, "block": 0.03}, gains["strength"])
+	require.Equal(t, map[string]any{"hp": 18.0, "defense": 1.2, "hp_regen": 0.05}, gains["vitality"])
+	require.Equal(t, map[string]any{"attack": 0.4, "crit": 0.05, "hit": 0.5, "dodge": 0.04}, gains["dexterity"])
+	require.Empty(t, gains["intelligence"], "nothing for a warrior")
+
 	tal := p.ok("GET", p.path("/talents"), nil)
 	require.Len(t, tal["trees"], 3)
 	avail := int(tal["available"].(float64))

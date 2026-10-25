@@ -167,7 +167,7 @@ for g in sorted(gear, key=lambda g: (g['min_level'], g['item_subclass'], g['code
     else:
         raise SystemExit('no profession crafts %s (%s)' % (g['code'], sub))
     gear_recipes.append(recipe(g['code'], prof, skill, merged(inputs), max(1, round(g['base_value_copper'] * 0.1)),
-                               max(10, round(0.25 * xp_to_next(skill) * w)), round5((90 + 6 * skill) * w)))
+                               max(10, round(0.25 * xp_to_next(skill) * w)), round5((20 + 1.6 * skill) * w)))
 
 potion_items, potion_recipes, names = [], [], {lang: {} for lang in ('en', 'tr', 'zh', 'es')}
 for code, lvl, pct, value, title in POTIONS:
@@ -182,7 +182,7 @@ for code, lvl, pct, value, title in POTIONS:
             names[lang]['item.' + code] = title[lang]
     inputs = merged([(pick(HERBS, skill), 2), (pick(HERBS, max(1, skill // 2)), 1)])
     potion_recipes.append(recipe(code, 'alchemy', skill, inputs, max(1, value // 4),
-                                 max(15, round(0.25 * xp_to_next(skill))), round5(35 + 1.2 * skill)))
+                                 max(15, round(0.25 * xp_to_next(skill))), round5(10 + 0.4 * skill)))
 for code, title in PROFESSIONS.items():
     for lang in names:
         names[lang]['profession.' + code] = title[lang]

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"sort"
 	"sync/atomic"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -29,11 +30,19 @@ func (c *Catalog) Get(code string) (Template, bool) {
 	return t, ok
 }
 
+// All lists the templates lowest level first (then by code), so every list
+// built from it is stable.
 func (c *Catalog) All() []Template {
 	out := make([]Template, 0, len(c.byCode))
 	for _, t := range c.byCode {
 		out = append(out, t)
 	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].MinLevel != out[j].MinLevel {
+			return out[i].MinLevel < out[j].MinLevel
+		}
+		return out[i].Code < out[j].Code
+	})
 	return out
 }
 

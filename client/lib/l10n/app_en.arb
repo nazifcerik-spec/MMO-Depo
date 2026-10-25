@@ -1917,5 +1917,26 @@
       }
     }
   },
-  "errNameMismatch": "The name does not match."
+  "errNameMismatch": "The name does not match.",
+  "attrGainPerPoint": "Per point: {gains}",
+  "@attrGainPerPoint": {
+    "placeholders": {
+      "gains": {
+        "type": "String"
+      }
+    }
+  },
+  "attrGainPending": "Adding: {gains}",
+  "@attrGainPending": {
+    "placeholders": {
+      "gains": {
+        "type": "String"
+      }
+    }
+  },
+  "attrNoEffect": "No effect for your class",
+  "attrHoldHint": "Hold − / + to spend quickly",
+  "gainHp": "HP",
+  "gainMp": "MP",
+  "gainHpRegen": "HP/s"
 }

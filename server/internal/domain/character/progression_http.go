@@ -55,6 +55,9 @@ type AttributeView struct {
 	Raw       map[string]int     `json:"raw"`
 	Allocated map[string]int     `json:"allocated"`
 	Effective map[string]float64 `json:"effective"`
+	// Gains: what one more point of each attribute adds to the class's
+	// stats right now (diminishing returns included), stat -> amount.
+	Gains map[string]map[string]float64 `json:"gains"`
 }
 
 type PointsView struct {
@@ -80,6 +83,38 @@ type MilestoneView struct {
 
 // RawAttributes are a character's attributes before gear: class base +
 // allocated points (equipment requirements read these).
+// AttributeGains is what one more raw point of each attribute adds to a
+// class's stats: its derived formula terms at the current diminishing-returns
+// step (hp, mp, attack, defense, crit, hit, dodge, block) and, for vitality,
+// HP regeneration per second.
+func AttributeGains(cfg *leveling.Config, class string, raw leveling.Stats) map[string]map[string]float64 {
+	k, ok := cfg.Class(class)
+	out := make(map[string]map[string]float64, len(leveling.Attributes))
+	for _, a := range leveling.Attributes {
+		g := map[string]float64{}
+		v := raw.Get(a)
+		if ok && k.Derived != nil {
+			step := cfg.EffectiveAttribute(v+1) - cfg.EffectiveAttribute(v)
+			d := k.Derived
+			terms := map[string]leveling.Term{"hp": d.HP, "attack": d.Attack, "defense": d.Armor,
+				"crit": d.Crit, "hit": d.Hit, "dodge": d.Dodge, "block": d.Block}
+			if d.MP != nil {
+				terms["mp"] = *d.MP
+			}
+			for stat, t := range terms {
+				if coef := t.Per[a]; coef != 0 {
+					g[stat] = math.Round(coef*step*1000) / 1000
+				}
+			}
+		}
+		if a == "vitality" {
+			g["hp_regen"] = math.Round((HPRegenPer2s(v+1)-HPRegenPer2s(v))/2*1000) / 1000
+		}
+		out[a] = g
+	}
+	return out
+}
+
 func RawAttributes(c *Character) leveling.Stats {
 	p := basePrimary(c)
 	return leveling.Stats{Strength: p.Strength, Vitality: p.Vitality, Dexterity: p.Agility,
@@ -126,6 +161,7 @@ func (s *Service) ProgressionSummary(ctx context.Context, id, accountID uuid.UUI
 		attr.Allocated[a] = c.Alloc.Get(a)
 		attr.Effective[a] = math.Round(cfg.EffectiveAttribute(raw.Get(a))*10) / 10
 	}
+	attr.Gains = AttributeGains(cfg, c.ClassCode, raw)
 	attr.Earned = cfg.AttributePointsEarned(level)
 	attr.Spent = c.Alloc.Total()
 	attr.Available = max(0, attr.Earned-attr.Spent)

@@ -4287,6 +4287,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The name does not match.'**
   String get errNameMismatch;
+
+  /// No description provided for @attrGainPerPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Per point: {gains}'**
+  String attrGainPerPoint(String gains);
+
+  /// No description provided for @attrGainPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding: {gains}'**
+  String attrGainPending(String gains);
+
+  /// No description provided for @attrNoEffect.
+  ///
+  /// In en, this message translates to:
+  /// **'No effect for your class'**
+  String get attrNoEffect;
+
+  /// No description provided for @attrHoldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold − / + to spend quickly'**
+  String get attrHoldHint;
+
+  /// No description provided for @gainHp.
+  ///
+  /// In en, this message translates to:
+  /// **'HP'**
+  String get gainHp;
+
+  /// No description provided for @gainMp.
+  ///
+  /// In en, this message translates to:
+  /// **'MP'**
+  String get gainMp;
+
+  /// No description provided for @gainHpRegen.
+  ///
+  /// In en, this message translates to:
+  /// **'HP/s'**
+  String get gainHpRegen;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

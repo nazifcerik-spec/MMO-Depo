@@ -698,5 +698,12 @@
   "cancelCharacterDelete": "Silmeyi iptal et",
   "characterDeleted": "{name} silindi.",
   "characterDeleteCancelled": "{name} silinmeyecek.",
-  "errNameMismatch": "Ad eşleşmiyor."
+  "errNameMismatch": "Ad eşleşmiyor.",
+  "attrGainPerPoint": "Puan başına: {gains}",
+  "attrGainPending": "Eklenecek: {gains}",
+  "attrNoEffect": "Sınıfına etkisi yok",
+  "attrHoldHint": "Hızlı dağıtmak için − / + düğmesini basılı tut",
+  "gainHp": "Can",
+  "gainMp": "Mana",
+  "gainHpRegen": "Can/sn"
 }

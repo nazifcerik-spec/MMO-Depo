@@ -1731,8 +1731,13 @@ void main() {
         ],
       },
       'attributes': {
-        'available': 3,
+        'available': 30,
         'raw': {'strength': 10, 'vitality': 10, 'dexterity': 7, 'intelligence': 4, 'wisdom': 5, 'luck': 5},
+        'gains': {
+          'strength': {'attack': 2.2, 'block': 0.03},
+          'vitality': {'hp': 18, 'defense': 1.2, 'hp_regen': 0.05},
+          'intelligence': <String, dynamic>{},
+        },
       },
       'talents': {'available': 2},
       'title': 'veteran',
@@ -1757,15 +1762,48 @@ void main() {
     expect(be.promotedTo, 'guardian');
     expect(find.text('PROMOTION AVAILABLE'), findsNothing, reason: 'the card reloads after choosing');
 
-    await tester.tap(find.text('Attributes · 3 points'));
+    await tester.tap(find.text('Attributes · 30 points'));
     await tester.pumpAndSettle();
+    // What a point adds to this class (DD-285).
+    expect(find.text('Per point: +2.2 Attack · +0.03% Block'), findsOneWidget);
+    expect(find.text('Per point: +18 HP · +1.2 Defense · +0.05 HP/s'), findsOneWidget);
+    expect(find.text('No effect for your class'), findsWidgets);
     await tester.tap(find.byTooltip('+ Strength'));
     await tester.tap(find.byTooltip('+ Strength'));
     await tester.tap(find.byTooltip('+ Vitality'));
     await tester.pump();
+    expect(find.text('Adding: +4.4 Attack · +0.06% Block'), findsOneWidget);
+
+    // Holding + keeps adding until the points run out; holding - takes back.
+    final hold = await tester.startGesture(tester.getCenter(find.byTooltip('+ Vitality')));
+    await tester.pump(const Duration(seconds: 5));
+    await hold.up();
+    await tester.pump();
+    expect(find.text('Attributes · 0 points'), findsOneWidget);
+    expect(find.text('Adding: +504 HP · +33.6 Defense · +1.4 HP/s'), findsOneWidget, reason: '28 points');
+    // The sheet's points line (the card behind it still shows 30).
+    int left() => int.parse(
+      RegExp(r'Attributes · (\d+) points')
+          .firstMatch(tester.widget<Text>(find.textContaining('points').last).data!)![1]!,
+    );
+    final back = await tester.startGesture(tester.getCenter(find.byTooltip('- Vitality')));
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(left(), 0, reason: 'a press does nothing until it is held');
+    for (var i = 0; i < 12; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    final held = left();
+    expect(held, inInclusiveRange(5, 15), reason: 'held: several steps back');
+    await back.up();
+    await tester.pump();
+    expect(left(), held, reason: 'releasing a hold adds no extra step');
+    await tester.tap(find.byTooltip('- Vitality'));
+    await tester.pump();
+    expect(left(), held + 1, reason: 'a tap is one step');
+
     await tester.tap(find.widgetWithText(FilledButton, 'Save'));
     await tester.pumpAndSettle();
-    expect(be.lastAllocation, {'strength': 2, 'vitality': 1});
+    expect(be.lastAllocation, {'strength': 2, 'vitality': 28 - held - 1});
 
     await tester.tap(find.text('Talents · 2 points'));
     await tester.pumpAndSettle();

@@ -2421,4 +2421,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errNameMismatch => 'El nombre no coincide.';
+
+  @override
+  String attrGainPerPoint(String gains) {
+    return 'Por punto: $gains';
+  }
+
+  @override
+  String attrGainPending(String gains) {
+    return 'Se añade: $gains';
+  }
+
+  @override
+  String get attrNoEffect => 'Sin efecto para tu clase';
+
+  @override
+  String get attrHoldHint => 'Mantén − / + para repartir rápido';
+
+  @override
+  String get gainHp => 'Vida';
+
+  @override
+  String get gainMp => 'Maná';
+
+  @override
+  String get gainHpRegen => 'Vida/s';
 }

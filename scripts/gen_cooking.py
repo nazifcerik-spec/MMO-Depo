@@ -150,7 +150,7 @@ for dish, fish, level, tier, herb, log, name in sorted(DISHES + extra_dishes(), 
         '      - { template_code: %s, quantity: 1 }' % herb,
         '      - { template_code: %s, quantity: 1 }' % log,
         '    gold_cost_copper: %d' % GOLD[tier], '    output_template_code: ' + code, '    output_stack: 2',
-        '    profession_xp_reward: %d' % XP[tier], '    craft_seconds: %d' % round5(20 + 2 * skill)]))
+        '    profession_xp_reward: %d' % XP[tier], '    craft_seconds: %d' % round5(10 + 0.4 * skill)]))
 
 for fname, body in (('items.yaml', items), ('recipes.yaml', recipes)):
     p = os.path.join(ROOT, fname)

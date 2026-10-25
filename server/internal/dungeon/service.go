@@ -491,6 +491,7 @@ func (s *Service) History(ctx context.Context, characterID, accountID uuid.UUID,
 }
 
 // ListCatalog returns the loaded solo dungeon templates for the client picker.
+// ListCatalog lists the solo dungeons, lowest level first.
 func (s *Service) ListCatalog() []Template {
 	var out []Template
 	for _, t := range s.dungeons.Catalog().All() {

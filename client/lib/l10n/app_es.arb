@@ -182,5 +182,12 @@
   "cancelCharacterDelete": "Cancelar eliminación",
   "characterDeleted": "{name} fue eliminado.",
   "characterDeleteCancelled": "{name} ya no se eliminará.",
-  "errNameMismatch": "El nombre no coincide."
+  "errNameMismatch": "El nombre no coincide.",
+  "attrGainPerPoint": "Por punto: {gains}",
+  "attrGainPending": "Se añade: {gains}",
+  "attrNoEffect": "Sin efecto para tu clase",
+  "attrHoldHint": "Mantén − / + para repartir rápido",
+  "gainHp": "Vida",
+  "gainMp": "Maná",
+  "gainHpRegen": "Vida/s"
 }

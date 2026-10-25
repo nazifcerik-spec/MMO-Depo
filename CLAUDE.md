@@ -199,6 +199,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 94. **Anında karakter silme + seviye başına 3 nitelik puanı (bitti)** — Sprint 94, DD-283..284. `POST /character/{id}/delete` (`confirm_name`) karakteri eşyalarıyla hemen siler (`character.PurgeTx`, worker da kullanır); 48 sa bekleme ve `CHARACTER_DELETE_GRACE` kalktı, `delete_grace` yalnız hesap silmede. Nitelik puanı seviye atlayışı başına 3 (Sv 1000'de 3022); `hunt_xp.yaml` yeniden ayarlandı, baskın boss saldırısı yükseltildi (titan 4,6 / elder_titan 7,0), raporlar yenilendi.
 
+95. **Nitelik ekranı + üretim süreleri + seviye sıralı zindan listesi (bitti)** — Sprint 95, DD-285..287. Nitelik −/+ basılı tutunca hızlanarak tekrarlar (`HoldRepeatButton`); `/leveling` `attributes.gains` (bir puanın sınıfa şu anki katkısı, `character.AttributeGains`) → ekranda "Puan başına" / "Eklenecek" satırları. Üretim süreleri kısaldı (ergitme 5–45 sn, yemek/iksir 10–50 sn, ekipman en çok 285 sn; `gen_crafting.py`, `gen_cooking.py`). `dungeon.Catalog.All` seviyeye göre sıralı (önceden map sırası).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

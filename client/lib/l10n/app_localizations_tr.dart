@@ -2421,4 +2421,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errNameMismatch => 'Ad eşleşmiyor.';
+
+  @override
+  String attrGainPerPoint(String gains) {
+    return 'Puan başına: $gains';
+  }
+
+  @override
+  String attrGainPending(String gains) {
+    return 'Eklenecek: $gains';
+  }
+
+  @override
+  String get attrNoEffect => 'Sınıfına etkisi yok';
+
+  @override
+  String get attrHoldHint => 'Hızlı dağıtmak için − / + düğmesini basılı tut';
+
+  @override
+  String get gainHp => 'Can';
+
+  @override
+  String get gainMp => 'Mana';
+
+  @override
+  String get gainHpRegen => 'Can/sn';
 }

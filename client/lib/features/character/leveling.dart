@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
@@ -52,6 +55,7 @@ class LevelingSummary {
     this.talentPoints = 0,
     this.raw = const {},
     this.effective = const {},
+    this.gains = const {},
     this.title = '',
     this.masteryTitle = '',
     this.masteryUnlocked = false,
@@ -85,6 +89,12 @@ class LevelingSummary {
         for (final e in (attrs['effective'] as Map<String, dynamic>? ?? const {}).entries)
           e.key: (e.value as num).toDouble(),
       },
+      gains: {
+        for (final e in (attrs['gains'] as Map<String, dynamic>? ?? const {}).entries)
+          e.key: {
+            for (final g in (e.value as Map<String, dynamic>? ?? const {}).entries) g.key: (g.value as num).toDouble(),
+          },
+      },
       title: j['title'] as String? ?? '',
       masteryTitle: mastery['title'] as String? ?? '',
       masteryUnlocked: mastery['unlocked'] == true,
@@ -110,6 +120,11 @@ class LevelingSummary {
   final int talentPoints;
   final Map<String, int> raw;
   final Map<String, double> effective;
+
+  /// What one more point of each attribute adds to the class now:
+  /// attribute -> stat (hp, mp, attack, defense, crit, hit, dodge, block,
+  /// hp_regen) -> amount.
+  final Map<String, Map<String, double>> gains;
   final String title;
   final String masteryTitle;
   final bool masteryUnlocked;
@@ -347,7 +362,8 @@ Future<String?> showPromotionSheet(BuildContext context, LevelingSummary s) {
   );
 }
 
-/// Attribute allocation: +/- per attribute within the available points.
+/// Attribute allocation: +/- per attribute within the available points
+/// (hold to repeat), each with what it adds to the class.
 class AttributeSheet extends StatefulWidget {
   const AttributeSheet({super.key, required this.summary});
 
@@ -364,10 +380,19 @@ class _AttributeSheetState extends State<AttributeSheet> {
 
   int get _left => widget.summary.attributePoints - _add.values.fold(0, (a, b) => a + b);
 
+  // Checked at call time: a held button can tick again before the rebuild
+  // that disables it.
+  void _step(String a, int by) {
+    final next = (_add[a] ?? 0) + by;
+    if (next < 0 || (by > 0 && _left <= 0)) return;
+    setState(() => _add[a] = next);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final s = widget.summary;
+    final text = Theme.of(context).textTheme;
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
@@ -375,9 +400,10 @@ class _AttributeSheetState extends State<AttributeSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l.attributePointsBtn(_left), style: Theme.of(context).textTheme.titleMedium),
+            Text(l.attributePointsBtn(_left), style: text.titleMedium),
+            Text(l.attrHoldHint, style: text.bodySmall),
             const SizedBox(height: Space.sm),
-            for (final a in attributeOrder)
+            for (final a in attributeOrder) ...[
               Row(
                 children: [
                   Expanded(child: Text(attributeName(a))),
@@ -385,18 +411,21 @@ class _AttributeSheetState extends State<AttributeSheet> {
                     '${(s.raw[a] ?? 0) + (_add[a] ?? 0)}',
                     style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
                   ),
-                  IconButton(
-                    tooltip: '-',
-                    icon: const Icon(Icons.remove_circle_outline),
-                    onPressed: (_add[a] ?? 0) > 0 ? () => setState(() => _add[a] = _add[a]! - 1) : null,
+                  HoldRepeatButton(
+                    tooltip: '- ${attributeName(a)}',
+                    icon: Icons.remove_circle_outline,
+                    onStep: (_add[a] ?? 0) > 0 ? () => _step(a, -1) : null,
                   ),
-                  IconButton(
+                  HoldRepeatButton(
                     tooltip: '+ ${attributeName(a)}',
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: _left > 0 ? () => setState(() => _add[a] = (_add[a] ?? 0) + 1) : null,
+                    icon: Icons.add_circle_outline,
+                    onStep: _left > 0 ? () => _step(a, 1) : null,
                   ),
                 ],
               ),
+              _GainLine(gains: s.gains[a] ?? const {}, adding: _add[a] ?? 0),
+              const SizedBox(height: Space.xs),
+            ],
             const SizedBox(height: Space.sm),
             FilledButton(
               onPressed: _add.values.any((v) => v > 0)
@@ -409,6 +438,131 @@ class _AttributeSheetState extends State<AttributeSheet> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// What a point of one attribute adds (and, while points are pending, what
+/// they will add). Gains are per point at the current diminishing-returns
+/// step, so a large pending sum is a close estimate; the server decides.
+class _GainLine extends StatelessWidget {
+  const _GainLine({required this.gains, required this.adding});
+
+  final Map<String, double> gains;
+  final int adding;
+
+  static const _order = ['attack', 'hp', 'defense', 'mp', 'crit', 'hit', 'dodge', 'block', 'hp_regen'];
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final small = Theme.of(context).textTheme.bodySmall;
+    if (gains.isEmpty) return Text(l.attrNoEffect, style: small?.copyWith(color: Palette.textMuted));
+    final num = NumberFormat.decimalPatternDigits(locale: Localizations.localeOf(context).toString(), decimalDigits: 2);
+    String fmt(double v) {
+      final t = num.format(v);
+      final sep = num.symbols.DECIMAL_SEP;
+      return t.contains(sep) ? t.replaceFirst(RegExp('${RegExp.escape(sep)}?0+\$'), '') : t;
+    }
+
+    String list(int times) => [
+      for (final stat in _order)
+        if (gains[stat] case final v?) _label(l, stat, '+${fmt(v * times)}'),
+    ].join(' · ');
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l.attrGainPerPoint(list(1)), style: small),
+        if (adding > 0)
+          Text(
+            l.attrGainPending(list(adding)),
+            style: small?.copyWith(color: Palette.accent, fontWeight: FontWeight.w600),
+          ),
+      ],
+    );
+  }
+
+  static String _label(AppLocalizations l, String stat, String v) => switch (stat) {
+    'hp' => '$v ${l.gainHp}',
+    'mp' => '$v ${l.gainMp}',
+    'attack' => '$v ${l.attack}',
+    'defense' => '$v ${l.defense}',
+    'crit' => '$v% ${l.crit}',
+    'hit' => '$v% ${l.hit}',
+    'dodge' => '$v${l.statEvasion}',
+    'block' => '$v${l.statBlock}',
+    'hp_regen' => '$v ${l.gainHpRegen}',
+    _ => '$v $stat',
+  };
+}
+
+/// An icon button that steps once on tap and keeps stepping, faster and
+/// faster, while held. [onStep] null disables it; a held press stops once
+/// the parent passes null (nothing left to add or remove).
+class HoldRepeatButton extends StatefulWidget {
+  const HoldRepeatButton({super.key, required this.icon, required this.tooltip, required this.onStep});
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback? onStep;
+
+  @override
+  State<HoldRepeatButton> createState() => _HoldRepeatButtonState();
+}
+
+class _HoldRepeatButtonState extends State<HoldRepeatButton> {
+  Timer? _timer;
+  int _repeats = 0;
+  bool _held = false; // the press already stepped: its tap must not step again
+
+  void _start() {
+    _stop();
+    _held = false; // a new press (a held one may end without a tap)
+    _timer = Timer(const Duration(milliseconds: 350), _tick);
+  }
+
+  void _tick() {
+    final step = widget.onStep;
+    if (step == null || !mounted) return _stop();
+    _held = true;
+    step();
+    _repeats++;
+    // 8/s at first, 25/s after a second of holding.
+    _timer = Timer(Duration(milliseconds: _repeats < 8 ? 120 : 40), _tick);
+  }
+
+  void _stop() {
+    _timer?.cancel();
+    _timer = null;
+    _repeats = 0;
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final step = widget.onStep;
+    return Listener(
+      onPointerDown: step == null ? null : (_) => _start(),
+      onPointerUp: (_) => _stop(),
+      onPointerCancel: (_) => _stop(),
+      child: IconButton(
+        tooltip: widget.tooltip,
+        icon: Icon(widget.icon),
+        onPressed: step == null
+            ? null
+            : () {
+                if (_held) {
+                  _held = false;
+                  return;
+                }
+                step();
+              },
       ),
     );
   }
