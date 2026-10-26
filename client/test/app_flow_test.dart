@@ -551,11 +551,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('+10 Attack'), findsOneWidget);
     expect(find.text('+10% STR'), findsOneWidget);
+    expect(find.text('That slot is empty: equipping adds all of these.'), findsOneWidget);
     final sheets = be.sheetGets;
     await tester.tap(find.text('Equip'));
     await tester.pumpAndSettle();
     expect(be.equipped['mainhand']?['instance_id'], 's1');
     expect(be.sheetGets, greaterThan(sheets), reason: 'gear change reloads the sheet');
+
+    // Another main-hand piece is compared with the worn sword, stat by stat.
+    await tester.tap(find.bySemanticsLabel('Staff Oak ×1'));
+    await tester.pumpAndSettle();
+    expect(find.text('Compared with what you wear'), findsOneWidget);
+    expect(find.text('Worn: Sharp Sword Iron'), findsOneWidget);
+    expect(find.text('-10'), findsOneWidget, reason: 'attack lost');
+    expect(find.text('-10%'), findsOneWidget, reason: 'STR lost');
+    Navigator.of(tester.element(find.text('Compared with what you wear'))).pop(); // close the sheet
+    await tester.pumpAndSettle();
 
     // Equipped slot → unequip back to the bag.
     await tester.tap(find.bySemanticsLabel('Main hand: Sharp Sword Iron'));

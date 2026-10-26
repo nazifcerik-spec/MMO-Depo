@@ -108,7 +108,13 @@ class _InventoryViewState extends State<InventoryView> {
       isScrollControlled: true,
       showDragHandle: true,
       backgroundColor: Palette.bgSurface,
-      builder: (_) => _ItemDetail(item: item, sellMult: _sellMult, set: set, worn: _wornCodes),
+      builder: (_) => _ItemDetail(
+        item: item,
+        sellMult: _sellMult,
+        set: set,
+        worn: _wornCodes,
+        replacing: item.equippable ? _equipped[equipTarget(item.equipSlot!, _equipped)] : null,
+      ),
     );
     if (action == null || !mounted) return;
     final l = AppLocalizations.of(context);
@@ -177,6 +183,13 @@ class _InventoryViewState extends State<InventoryView> {
                 code: item.templateCode,
                 subtitle: slotName(l, slot),
               ),
+              if (item.bonuses.isNotEmpty) const SizedBox(height: Space.lg),
+              for (final b in item.bonuses)
+                if (bonusText(l, b) case final t?)
+                  Text(
+                    t,
+                    style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
+                  ),
               if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
               const SizedBox(height: Space.xl),
               FilledButton(onPressed: () => Navigator.pop(c, _ItemAction.unequip), child: Text(l.unequip)),
@@ -519,11 +532,106 @@ class _ItemHeader extends StatelessWidget {
   }
 }
 
+/// A bag piece against the worn one it would replace: each stat's worn
+/// value, this piece's, and the change (green up, red down).
+class _Comparison extends StatelessWidget {
+  const _Comparison({required this.item, required this.worn});
+
+  final BagItem item;
+  final EquippedItem? worn;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    final w = worn;
+    final diffs = compareBonuses(item.bonuses, w?.bonuses ?? const []);
+    String num(double v) => v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);
+    String value(StatDiff d, double v, {bool sign = false}) {
+      final pct = d.kind != 'flat';
+      final s = pct ? num(v * 100) : num(v);
+      return '${sign && v > 0 ? '+' : ''}$s${pct ? '%' : ''}';
+    }
+
+    const head = TextStyle(fontSize: 12, color: Palette.textMuted, fontWeight: FontWeight.w600);
+    Widget cell(String s, {TextStyle? style, TextAlign align = TextAlign.end}) => Text(
+      s,
+      textAlign: align,
+      style: style ?? const TextStyle(fontFeatures: numeric),
+    );
+    final changed = diffs.where((d) => d.change.abs() > 1e-9).toList();
+    return Column(
+      key: const Key('item-compare'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l.compareTitle, style: text.titleSmall),
+        const SizedBox(height: 2),
+        Text(
+          w == null ? l.compareEmpty : l.compareWorn(itemName(w.templateCode, w.prefix, w.suffix)),
+          style: text.bodySmall,
+        ),
+        if (w != null && changed.isEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: Space.xs),
+            child: Text(l.compareSame, style: text.bodySmall),
+          )
+        else if (diffs.isNotEmpty) ...[
+          const SizedBox(height: Space.sm),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(2.2),
+              1: FlexColumnWidth(),
+              2: FlexColumnWidth(),
+              3: FlexColumnWidth(),
+            },
+            children: [
+              TableRow(
+                children: [
+                  cell(l.compareColStat, style: head, align: TextAlign.start),
+                  cell(l.compareColWorn, style: head),
+                  cell(l.compareColThis, style: head),
+                  cell(l.compareColDiff, style: head),
+                ],
+              ),
+              for (final d in diffs)
+                TableRow(
+                  children: [
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: Text(statName(l, d.target))),
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: cell(value(d, d.worn))),
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: cell(value(d, d.next))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: cell(
+                        d.change.abs() < 1e-9 ? '=' : value(d, d.change, sign: true),
+                        style: TextStyle(
+                          fontFeatures: numeric,
+                          fontWeight: FontWeight.w700,
+                          color: d.change > 1e-9
+                              ? Palette.success
+                              : d.change < -1e-9
+                              ? Palette.danger
+                              : Palette.textMuted,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 class _ItemDetail extends StatelessWidget {
-  const _ItemDetail({required this.item, required this.sellMult, this.set, this.worn = const []});
+  const _ItemDetail({required this.item, required this.sellMult, this.set, this.worn = const [], this.replacing});
 
   final BagItem item;
   final double? sellMult;
+
+  /// The worn piece this one would replace; null for an empty slot.
+  final EquippedItem? replacing;
 
   /// The raid set the item belongs to (DD-277) and the worn template codes.
   final ItemSet? set;
@@ -591,6 +699,7 @@ class _ItemDetail extends StatelessWidget {
                   ),
                 ),
               if (bonuses.isNotEmpty) const SizedBox(height: Space.md),
+              if (item.equippable) ...[_Comparison(item: item, worn: replacing), const SizedBox(height: Space.md)],
               if (set case final s?) ...[SetSection(set: s, worn: worn), const SizedBox(height: Space.md)],
               if (item.stack > 1) row(l.quantity, Text('${item.stack} / ${item.maxStack}')),
               if (item.minLevel > 1) row(l.requiresLevel, Text('${item.minLevel}')),

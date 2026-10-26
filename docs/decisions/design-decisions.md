@@ -2837,6 +2837,22 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-289 — Çantadaki ekipmanı giyili olanla karşılaştırma
+**Karar:**
+- Çantadaki kuşanılabilir bir eşyanın detayında "Giyili olanla karşılaştırma" bölümü gösterilir: değer, giyili eşyanınki, bu eşyanınki ve fark (artış yeşil, düşüş kırmızı).
+- İki eşyanın da gerçek bonusları (nadirlik ve ekler dahil, DD-275) değer başına toplanır; düz ve yüzde değerler ayrı satırdadır.
+- Karşılaştırılan eşya sunucunun değiştireceği eşyadır (`equipTarget`): aynı yuva; yüzük/tılsımda çiftin boş olanı, ikisi doluysa ilki.
+- Yuva boşsa bütün değerlerin ekleneceği yazar; aynıysa "değerler aynı" yazar.
+- Giyili eşyanın detayı da artık bonuslarını gösterir.
+- Ekipman yanıtının zaten taşıdığı `effective_bonuses` istemcide okunur; sunucu değişmedi.
+
+**Reason:** Kullanıcı isteği: değiştirme kararı vermek için iki eşyanın değer farkını görmek.
+**Alternatives:** Karakter sheet'inin kuşanınca nasıl değişeceğini sunucuda hesaplamak (yeni uç ve modifier yığını önizlemesi gerekirdi; set bonusu ve nitelik etkisini de içerirdi).
+**Consequences:** Set bonusu değişimi ve niteliklerin türetilmiş statlara etkisi tabloya girmez (set bölümü ayrıca gösterilir). Testler: `gear_compare_test.dart`, istemci çanta akış testi.
+**Tarih:** 2026-10-26
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

@@ -719,5 +719,13 @@
   "errNotEnoughSupplies": "Çantanda o malzemeden yeterince yok.",
   "errHuntOnly": "Bunu ava götürerek kullanabilirsin.",
   "huntFled": "Canın %5'in altına düştü, savaştan çekildin",
-  "suppliesUsed": "Kullanılan: {list}"
+  "suppliesUsed": "Kullanılan: {list}",
+  "compareTitle": "Giyili olanla karşılaştırma",
+  "compareWorn": "Giyili: {name}",
+  "compareEmpty": "Bu yuva boş: kuşanınca bu değerlerin hepsi eklenir.",
+  "compareColStat": "Değer",
+  "compareColWorn": "Giyili",
+  "compareColThis": "Bu",
+  "compareColDiff": "Fark",
+  "compareSame": "Giyili olanla değerler aynı."
 }

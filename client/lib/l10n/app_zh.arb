@@ -203,5 +203,13 @@
   "errNotEnoughSupplies": "背包中该补给不足。",
   "errHuntOnly": "请将其作为狩猎补给带上。",
   "huntFled": "生命低于 5%：你撤离了战斗",
-  "suppliesUsed": "已使用：{list}"
+  "suppliesUsed": "已使用：{list}",
+  "compareTitle": "与当前装备对比",
+  "compareWorn": "当前装备：{name}",
+  "compareEmpty": "该栏位为空：装备后将获得全部属性。",
+  "compareColStat": "属性",
+  "compareColWorn": "当前",
+  "compareColThis": "此件",
+  "compareColDiff": "变化",
+  "compareSame": "属性与当前装备相同。"
 }

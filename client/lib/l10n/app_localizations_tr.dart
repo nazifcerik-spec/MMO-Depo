@@ -2493,4 +2493,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String suppliesUsed(String list) {
     return 'Kullanılan: $list';
   }
+
+  @override
+  String get compareTitle => 'Giyili olanla karşılaştırma';
+
+  @override
+  String compareWorn(String name) {
+    return 'Giyili: $name';
+  }
+
+  @override
+  String get compareEmpty => 'Bu yuva boş: kuşanınca bu değerlerin hepsi eklenir.';
+
+  @override
+  String get compareColStat => 'Değer';
+
+  @override
+  String get compareColWorn => 'Giyili';
+
+  @override
+  String get compareColThis => 'Bu';
+
+  @override
+  String get compareColDiff => 'Fark';
+
+  @override
+  String get compareSame => 'Giyili olanla değerler aynı.';
 }

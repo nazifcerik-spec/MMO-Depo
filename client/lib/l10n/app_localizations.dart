@@ -4413,6 +4413,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Used: {list}'**
   String suppliesUsed(String list);
+
+  /// No description provided for @compareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compared with what you wear'**
+  String get compareTitle;
+
+  /// No description provided for @compareWorn.
+  ///
+  /// In en, this message translates to:
+  /// **'Worn: {name}'**
+  String compareWorn(String name);
+
+  /// No description provided for @compareEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'That slot is empty: equipping adds all of these.'**
+  String get compareEmpty;
+
+  /// No description provided for @compareColStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Stat'**
+  String get compareColStat;
+
+  /// No description provided for @compareColWorn.
+  ///
+  /// In en, this message translates to:
+  /// **'Worn'**
+  String get compareColWorn;
+
+  /// No description provided for @compareColThis.
+  ///
+  /// In en, this message translates to:
+  /// **'This'**
+  String get compareColThis;
+
+  /// No description provided for @compareColDiff.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get compareColDiff;
+
+  /// No description provided for @compareSame.
+  ///
+  /// In en, this message translates to:
+  /// **'Same stats as what you wear.'**
+  String get compareSame;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

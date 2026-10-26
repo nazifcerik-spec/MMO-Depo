@@ -215,16 +215,25 @@ class EquippedItem {
     required this.itemClass,
     this.prefix,
     this.suffix,
+    this.bonuses = const [],
   });
 
-  factory EquippedItem.fromJson(Map<String, dynamic> j) => EquippedItem(
-    instanceId: j['instance_id'] as String,
-    templateCode: j['template_code'] as String,
-    rarity: j['rarity'] as String? ?? 'common',
-    itemClass: j['item_class'] as String? ?? '',
-    prefix: j['prefix'] as String?,
-    suffix: j['suffix'] as String?,
-  );
+  factory EquippedItem.fromJson(Map<String, dynamic> j) {
+    final raw = j['effective_bonuses'] ?? j['stat_bonuses'];
+    return EquippedItem(
+      instanceId: j['instance_id'] as String,
+      templateCode: j['template_code'] as String,
+      rarity: j['rarity'] as String? ?? 'common',
+      itemClass: j['item_class'] as String? ?? '',
+      prefix: j['prefix'] as String?,
+      suffix: j['suffix'] as String?,
+      bonuses: [
+        if (raw is List)
+          for (final b in raw.whereType<Map<String, dynamic>>())
+            StatBonus(b['kind'] as String? ?? '', b['target'] as String? ?? '', (b['amount'] as num?)?.toDouble() ?? 0),
+      ],
+    );
+  }
 
   final String instanceId;
   final String templateCode;
@@ -232,6 +241,60 @@ class EquippedItem {
   final String itemClass;
   final String? prefix;
   final String? suffix;
+
+  /// What it adds — rarity and affixes applied (DD-275).
+  final List<StatBonus> bonuses;
+}
+
+/// The paired equipment slots (server inventory.PairedSlots, DD-276).
+const pairedSlots = {
+  'ring': ['ring1', 'ring2'],
+  'trinket': ['trinket1', 'trinket2'],
+};
+
+/// The slot an item with template [equipSlot] goes into, as the server
+/// picks it: a ring or trinket takes the first free one of its pair, the
+/// first when both are taken. Its current occupant is what it replaces.
+String equipTarget(String equipSlot, Map<String, EquippedItem> equipped) {
+  final pair = pairedSlots[equipSlot];
+  if (pair == null) return equipSlot;
+  return equipped.containsKey(pair[0]) && !equipped.containsKey(pair[1]) ? pair[1] : pair[0];
+}
+
+/// One stat in a gear comparison: what the worn piece adds and what the
+/// candidate would. Percent stats ([kind] mult_*) and flat ones stay apart.
+class StatDiff {
+  const StatDiff(this.kind, this.target, this.worn, this.next);
+
+  final String kind;
+  final String target;
+  final double worn;
+  final double next;
+
+  double get change => next - worn;
+}
+
+/// Stat by stat, the candidate's bonuses against the worn piece's (both
+/// summed per kind and target): the candidate's stats first, then those only
+/// the worn piece has.
+List<StatDiff> compareBonuses(List<StatBonus> candidate, List<StatBonus> worn) {
+  final order = <String>[];
+  final next = <String, double>{};
+  final now = <String, double>{};
+  void add(Map<String, double> into, StatBonus b) {
+    if (b.kind != 'flat' && b.kind != 'mult_add' && b.kind != 'mult_prod') return;
+    final k = '${b.kind}|${b.target}';
+    if (!order.contains(k)) order.add(k);
+    into[k] = (into[k] ?? 0) + b.amount;
+  }
+
+  for (final b in candidate) {
+    add(next, b);
+  }
+  for (final b in worn) {
+    add(now, b);
+  }
+  return [for (final k in order) StatDiff(k.split('|')[0], k.split('|')[1], now[k] ?? 0, next[k] ?? 0)];
 }
 
 /// Bag display orders. [slot] is the server's positional layout; the others

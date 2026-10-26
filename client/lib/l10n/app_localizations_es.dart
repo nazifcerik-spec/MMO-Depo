@@ -2493,4 +2493,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String suppliesUsed(String list) {
     return 'Usado: $list';
   }
+
+  @override
+  String get compareTitle => 'Comparado con lo que llevas';
+
+  @override
+  String compareWorn(String name) {
+    return 'Equipado: $name';
+  }
+
+  @override
+  String get compareEmpty => 'Esa ranura está vacía: al equiparlo se suman todos.';
+
+  @override
+  String get compareColStat => 'Atributo';
+
+  @override
+  String get compareColWorn => 'Equipado';
+
+  @override
+  String get compareColThis => 'Este';
+
+  @override
+  String get compareColDiff => 'Cambio';
+
+  @override
+  String get compareSame => 'Mismos atributos que lo que llevas.';
 }

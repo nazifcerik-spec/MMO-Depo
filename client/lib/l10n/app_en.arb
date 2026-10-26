@@ -1966,5 +1966,20 @@
         "type": "String"
       }
     }
-  }
+  },
+  "compareTitle": "Compared with what you wear",
+  "compareWorn": "Worn: {name}",
+  "@compareWorn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "compareEmpty": "That slot is empty: equipping adds all of these.",
+  "compareColStat": "Stat",
+  "compareColWorn": "Worn",
+  "compareColThis": "This",
+  "compareColDiff": "Change",
+  "compareSame": "Same stats as what you wear."
 }

@@ -203,5 +203,13 @@
   "errNotEnoughSupplies": "No tienes suficientes de ese suministro.",
   "errHuntOnly": "Llévalo de caza como suministro.",
   "huntFled": "Tu vida bajó del 5 %: abandonaste el combate",
-  "suppliesUsed": "Usado: {list}"
+  "suppliesUsed": "Usado: {list}",
+  "compareTitle": "Comparado con lo que llevas",
+  "compareWorn": "Equipado: {name}",
+  "compareEmpty": "Esa ranura está vacía: al equiparlo se suman todos.",
+  "compareColStat": "Atributo",
+  "compareColWorn": "Equipado",
+  "compareColThis": "Este",
+  "compareColDiff": "Cambio",
+  "compareSame": "Mismos atributos que lo que llevas."
 }

@@ -2490,4 +2490,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String suppliesUsed(String list) {
     return '已使用：$list';
   }
+
+  @override
+  String get compareTitle => '与当前装备对比';
+
+  @override
+  String compareWorn(String name) {
+    return '当前装备：$name';
+  }
+
+  @override
+  String get compareEmpty => '该栏位为空：装备后将获得全部属性。';
+
+  @override
+  String get compareColStat => '属性';
+
+  @override
+  String get compareColWorn => '当前';
+
+  @override
+  String get compareColThis => '此件';
+
+  @override
+  String get compareColDiff => '变化';
+
+  @override
+  String get compareSame => '属性与当前装备相同。';
 }
