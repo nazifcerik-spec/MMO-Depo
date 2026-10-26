@@ -211,5 +211,11 @@
   "compareColWorn": "Equipado",
   "compareColThis": "Este",
   "compareColDiff": "Cambio",
-  "compareSame": "Mismos atributos que lo que llevas."
+  "compareSame": "Mismos atributos que lo que llevas.",
+  "wearOk": "Tu clase puede llevarlo",
+  "wearClass": "Tu clase no puede llevarlo",
+  "wearLevel": "Requiere nivel {level}",
+  "wearAttribute": "Tus atributos no bastan",
+  "wearLegendClass": "no es para tu clase",
+  "wearLegendLater": "aún no (nivel o atributos)"
 }

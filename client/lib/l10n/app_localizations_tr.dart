@@ -2519,4 +2519,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get compareSame => 'Giyili olanla değerler aynı.';
+
+  @override
+  String get wearOk => 'Sınıfın bunu giyebilir';
+
+  @override
+  String get wearClass => 'Sınıfın bunu giyemez';
+
+  @override
+  String wearLevel(int level) {
+    return 'Seviye $level gerekli';
+  }
+
+  @override
+  String get wearAttribute => 'Niteliklerin yetmiyor';
+
+  @override
+  String get wearLegendClass => 'sınıfın giyemez';
+
+  @override
+  String get wearLegendLater => 'henüz değil (seviye ya da nitelik)';
 }

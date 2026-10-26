@@ -2516,4 +2516,24 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get compareSame => '属性与当前装备相同。';
+
+  @override
+  String get wearOk => '你的职业可以装备';
+
+  @override
+  String get wearClass => '你的职业无法装备';
+
+  @override
+  String wearLevel(int level) {
+    return '需要等级 $level';
+  }
+
+  @override
+  String get wearAttribute => '属性不足';
+
+  @override
+  String get wearLegendClass => '职业不可用';
+
+  @override
+  String get wearLegendLater => '暂不可用（等级或属性）';
 }

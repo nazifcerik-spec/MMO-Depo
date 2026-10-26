@@ -93,24 +93,62 @@ func (f ProfileFetcher) Get(ctx context.Context, id uuid.UUID) (*characterView, 
 // meetsRequirements checks a template against a character: class, level,
 // class branch and raw attribute minimums.
 func meetsRequirements(tmpl item.Template, c *characterView) error {
+	// What the class can never wear comes first, then what it cannot wear yet.
 	if tmpl.ClassRestriction != nil && *tmpl.ClassRestriction != "" && *tmpl.ClassRestriction != c.ClassCode {
 		return ErrClassRestriction
-	}
-	if int16(tmpl.MinLevel) > c.Level {
-		return ErrLevelRequirement
 	}
 	if len(c.Path) > 0 && !leveling.Current().CanUse(c.Path[len(c.Path)-1], tmpl.ItemSubclass) {
 		return ErrEquipmentPermission
 	}
 	rq := tmpl.Requirements
-	if rq == nil {
-		return nil
-	}
-	if rq.Spec != "" && !slices.Contains(c.Path, rq.Spec) {
+	if rq != nil && rq.Spec != "" && !slices.Contains(c.Path, rq.Spec) {
 		return ErrSpecRequirement
 	}
-	if c.Raw.Strength < rq.Strength || c.Raw.Vitality < rq.Vitality || c.Raw.Dexterity < rq.Dexterity {
+	if int16(tmpl.MinLevel) > c.Level {
+		return ErrLevelRequirement
+	}
+	if rq != nil && (c.Raw.Strength < rq.Strength || c.Raw.Vitality < rq.Vitality || c.Raw.Dexterity < rq.Dexterity) {
 		return ErrAttributeRequirement
+	}
+	return nil
+}
+
+// Wear verdicts for a bag item (DD-290).
+const (
+	WearOK        = "ok"
+	WearClass     = "class"     // the class (or its branch) never wears it
+	WearLevel     = "level"     // not yet: the level is too low
+	WearAttribute = "attribute" // not yet: attributes too low
+)
+
+// MarkWearable sets Wear on every equippable item: whether the character
+// can wear it now and, if not, why (the same checks as Equip).
+func (s *EquipmentService) MarkWearable(ctx context.Context, characterID uuid.UUID, items []BagItem) error {
+	var char *characterView
+	for i := range items {
+		it := &items[i]
+		if it.EquipSlotOnTmpl == nil || *it.EquipSlotOnTmpl == "" {
+			continue
+		}
+		tmpl, err := s.items.Catalog().Get(it.TemplateCode)
+		if err != nil {
+			continue
+		}
+		if char == nil {
+			if char, err = s.charView.Get(ctx, characterID); err != nil {
+				return err
+			}
+		}
+		switch err := meetsRequirements(tmpl, char); {
+		case err == nil:
+			it.Wear = WearOK
+		case errors.Is(err, ErrLevelRequirement):
+			it.Wear = WearLevel
+		case errors.Is(err, ErrAttributeRequirement):
+			it.Wear = WearAttribute
+		default:
+			it.Wear = WearClass
+		}
 	}
 	return nil
 }

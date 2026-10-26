@@ -2519,4 +2519,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get compareSame => 'Mismos atributos que lo que llevas.';
+
+  @override
+  String get wearOk => 'Tu clase puede llevarlo';
+
+  @override
+  String get wearClass => 'Tu clase no puede llevarlo';
+
+  @override
+  String wearLevel(int level) {
+    return 'Requiere nivel $level';
+  }
+
+  @override
+  String get wearAttribute => 'Tus atributos no bastan';
+
+  @override
+  String get wearLegendClass => 'no es para tu clase';
+
+  @override
+  String get wearLegendLater => 'aún no (nivel o atributos)';
 }

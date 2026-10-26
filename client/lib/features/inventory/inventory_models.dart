@@ -52,6 +52,7 @@ class BagItem {
     this.healPct = 0,
     this.manaPct = 0,
     this.buff,
+    this.wear,
   });
 
   factory BagItem.fromJson(Map<String, dynamic> j) {
@@ -90,6 +91,7 @@ class BagItem {
         _ => 0,
       },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
+      wear: j['wear'] as String?,
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -144,6 +146,13 @@ class BagItem {
       : null;
 
   bool get equippable => equipSlot != null && equipSlot!.isNotEmpty;
+
+  /// Can the character wear it (DD-290): `ok`, `class` (never: not for its
+  /// class), `level` or `attribute` (not yet); null for non-equipment or an
+  /// older server.
+  final String? wear;
+
+  bool get wearable => wear == null || wear == 'ok';
 }
 
 class Bag {
@@ -213,6 +222,7 @@ class EquippedItem {
     required this.templateCode,
     required this.rarity,
     required this.itemClass,
+    this.itemSubclass = '',
     this.prefix,
     this.suffix,
     this.bonuses = const [],
@@ -225,6 +235,7 @@ class EquippedItem {
       templateCode: j['template_code'] as String,
       rarity: j['rarity'] as String? ?? 'common',
       itemClass: j['item_class'] as String? ?? '',
+      itemSubclass: j['item_subclass'] as String? ?? '',
       prefix: j['prefix'] as String?,
       suffix: j['suffix'] as String?,
       bonuses: [
@@ -239,6 +250,7 @@ class EquippedItem {
   final String templateCode;
   final String rarity;
   final String itemClass;
+  final String itemSubclass;
   final String? prefix;
   final String? suffix;
 

@@ -4461,6 +4461,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Same stats as what you wear.'**
   String get compareSame;
+
+  /// No description provided for @wearOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Your class can wear this'**
+  String get wearOk;
+
+  /// No description provided for @wearClass.
+  ///
+  /// In en, this message translates to:
+  /// **'Your class can\'t wear this'**
+  String get wearClass;
+
+  /// No description provided for @wearLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs level {level}'**
+  String wearLevel(int level);
+
+  /// No description provided for @wearAttribute.
+  ///
+  /// In en, this message translates to:
+  /// **'Your attributes are too low'**
+  String get wearAttribute;
+
+  /// No description provided for @wearLegendClass.
+  ///
+  /// In en, this message translates to:
+  /// **'not for your class'**
+  String get wearLegendClass;
+
+  /// No description provided for @wearLegendLater.
+  ///
+  /// In en, this message translates to:
+  /// **'not yet (level or attributes)'**
+  String get wearLegendLater;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

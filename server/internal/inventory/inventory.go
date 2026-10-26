@@ -67,6 +67,9 @@ type BagItem struct {
 	// What the item adds when worn: stat_bonuses scaled by rarity plus its
 	// affixes (DD-275). Equippable items only.
 	EffectiveBonuses []skill.Modifier `json:"effective_bonuses,omitempty"`
+	// Wear: can the character wear it (bag view, equippable items only,
+	// DD-290): WearOK, or why not.
+	Wear string `json:"wear,omitempty"`
 }
 
 // EffectiveModifiers is what an item adds to the sheet (DD-275): its

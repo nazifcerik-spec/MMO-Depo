@@ -727,5 +727,11 @@
   "compareColWorn": "Giyili",
   "compareColThis": "Bu",
   "compareColDiff": "Fark",
-  "compareSame": "Giyili olanla değerler aynı."
+  "compareSame": "Giyili olanla değerler aynı.",
+  "wearOk": "Sınıfın bunu giyebilir",
+  "wearClass": "Sınıfın bunu giyemez",
+  "wearLevel": "Seviye {level} gerekli",
+  "wearAttribute": "Niteliklerin yetmiyor",
+  "wearLegendClass": "sınıfın giyemez",
+  "wearLegendLater": "henüz değil (seviye ya da nitelik)"
 }

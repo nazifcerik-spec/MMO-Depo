@@ -2853,6 +2853,21 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-290 — Çantada giyilebilir / giyilemez ayrımı ve eşya türü
+**Karar:**
+- `GET /character/{id}/inventory` her kuşanılabilir eşyaya `wear` alanı ekler (`inventory.EquipmentService.MarkWearable`). Değerler: `ok`, `class` (sınıfın ya da kolunun asla giyemediği: sınıf kısıtı, ekipman izni, uzmanlık şartı), `level`, `attribute` (henüz değil).
+- Değer kuşanmayla aynı kontrolden (`meetsRequirements`) gelir. Kontrolün sırası değişti: önce sınıf kaynaklı engeller, sonra seviye ve nitelik.
+- İstemci: sınıfın giyemediği eşya çantada soluk ve kırmızı işaretli, henüz giyilemeyen kum saati işaretli; çantada açıklama satırı var.
+- Eşya detayında yuva ve tür yazar (ör. "Göğüs · Deri zırh", "Ana el · Kılıç"; `equipment.<aile>` adları). Altında giyilebilirlik satırı vardır (yeşil / kırmızı / turuncu, "Seviye 50 gerekli"). Giyilemeyen eşyada Kuşan pasif kalır.
+- Giyili eşya detayında da tür görünür.
+
+**Reason:** Kullanıcı isteği: sınıfın giyebildiği ve giyemediği eşyalar çantada belirgin ayrılsın, eşyanın türü (kumaş, deri, plaka …) görünsün.
+**Alternatives:** İzinleri istemcide sınıf kataloğundan hesaplamak. Sunucu kuralı tek yerde kalsın diye seçilmedi; kumaş/deri/plaka, uzmanlık ve nitelik şartları kopyalanırdı.
+**Consequences:** Kuşanmada birden çok engel varsa artık önce sınıf hatası döner. Testler: `TestHTTPBagWearMarks`, istemci çanta testi.
+**Tarih:** 2026-10-26
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

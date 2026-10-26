@@ -211,5 +211,11 @@
   "compareColWorn": "当前",
   "compareColThis": "此件",
   "compareColDiff": "变化",
-  "compareSame": "属性与当前装备相同。"
+  "compareSame": "属性与当前装备相同。",
+  "wearOk": "你的职业可以装备",
+  "wearClass": "你的职业无法装备",
+  "wearLevel": "需要等级 {level}",
+  "wearAttribute": "属性不足",
+  "wearLegendClass": "职业不可用",
+  "wearLegendLater": "暂不可用（等级或属性）"
 }

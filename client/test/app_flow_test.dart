@@ -641,6 +641,62 @@ void main() {
     semantics.dispose();
   });
 
+  testWidgets('bag: gear the class cannot wear stands out, with its kind and why', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    Map<String, dynamic> gear(
+      String id,
+      String code,
+      int slot,
+      String sub,
+      String equip,
+      String wear, {
+      int level = 1,
+    }) => {
+      'instance_id': id,
+      'template_code': code,
+      'item_class': 'armor',
+      'item_subclass': sub,
+      'equip_slot': equip,
+      'slot': slot,
+      'stack_quantity': 1,
+      'max_stack': 1,
+      'rarity': 'common',
+      'min_level': level,
+      'wear': wear,
+    };
+    be.bag.addAll([
+      gear('a', 'chest_novice', 0, 'plate_armor', 'chest', 'ok'),
+      gear('b', 'robe_novice', 1, 'cloth_armor', 'chest', 'class'),
+      gear('c', 'chest_adamant', 2, 'plate_armor', 'chest', 'level', level: 50),
+    ]);
+    await tester.tap(find.byIcon(Icons.backpack_outlined));
+    await tester.pumpAndSettle();
+    // A legend explains the marks; the cloth robe is dimmed.
+    expect(find.text('not for your class'), findsOneWidget);
+    expect(find.text('not yet (level or attributes)'), findsOneWidget);
+    expect(find.byWidgetPredicate((w) => w is Opacity && w.opacity < 1), findsOneWidget, reason: 'only the robe');
+
+    await tester.tap(find.bySemanticsLabel("Robe Novice ×1 · Your class can't wear this"));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Chest · Cloth Armor'), findsOneWidget, reason: 'slot and armor kind');
+    expect(find.text("Your class can't wear this"), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Equip')).onPressed, isNull);
+    Navigator.of(tester.element(find.textContaining('Chest · Cloth Armor'))).pop();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Chest Adamant ×1 · Needs level 50'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Chest · Plate Armor'), findsOneWidget);
+    expect(find.text('Needs level 50'), findsOneWidget);
+    Navigator.of(tester.element(find.textContaining('Chest · Plate Armor'))).pop();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Chest Novice ×1'));
+    await tester.pumpAndSettle();
+    expect(find.text('Your class can wear this'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Equip')).onPressed, isNotNull);
+  });
+
   testWidgets('hunt: level-aware default, start, early collect, result with level-up', (tester) async {
     final (be, _, _) = await _inGame(tester);
     Map<String, dynamic> consumable(String id, String code, int slot, int qty, Map<String, dynamic> effect) => {

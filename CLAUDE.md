@@ -205,6 +205,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 97. **Ekipman karşılaştırma (bitti)** — Sprint 97, DD-289. Çantadaki kuşanılabilir eşyanın detayında giyili olanla tablo (değer / giyili / bu / fark, yeşil-kırmızı); `compareBonuses` (düz ve yüzde ayrı, değer başına toplam), `equipTarget` (yüzük/tılsım çift kuralı sunucuyla aynı). Giyili eşya detayı bonusları gösterir. Sunucu değişmedi (`effective_bonuses`).
 
+98. **Çantada giyilebilirlik + eşya türü (bitti)** — Sprint 98, DD-290. Çanta yanıtında `wear` (`ok`/`class`/`level`/`attribute`, `EquipmentService.MarkWearable` = `meetsRequirements`, önce sınıf engelleri). İstemci: sınıfın giyemediği soluk + kırmızı işaret, henüz giyilemeyen kum saati, açıklama satırı; detayda "Yuva · Tür" (ör. Göğüs · Deri zırh) + giyilebilirlik satırı, giyilemezse Kuşan pasif.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

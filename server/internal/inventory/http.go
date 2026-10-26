@@ -16,9 +16,13 @@ import (
 
 // Handler bundles the inventory endpoints.
 type Handler struct {
-	svc *Service
-	log *slog.Logger
+	svc  *Service
+	log  *slog.Logger
+	wear *EquipmentService // marks what the character can wear (DD-290); nil = no marks
 }
+
+// WithWear makes the bag view mark each equippable item wearable or not.
+func (h *Handler) WithWear(eq *EquipmentService) *Handler { h.wear = eq; return h }
 
 func NewHandler(svc *Service, logger *slog.Logger) *Handler {
 	if logger == nil {
@@ -39,6 +43,11 @@ func (h *Handler) View(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		writeErr(w, r, err)
 		return
+	}
+	if h.wear != nil {
+		if err := h.wear.MarkWearable(r.Context(), char, view.Items); err != nil {
+			h.log.WarnContext(r.Context(), "inventory: wear marks", slog.String("err", err.Error()))
+		}
 	}
 	apierr.WriteJSON(w, http.StatusOK, view)
 }

@@ -40,6 +40,7 @@ class ItemCell extends StatelessWidget {
     this.label,
     this.semantic,
     this.onTap,
+    this.wear,
   });
 
   final String? rarity;
@@ -55,6 +56,10 @@ class ItemCell extends StatelessWidget {
 
   /// Caption for empty equipment slots.
   final String? label;
+
+  /// Equipment the character cannot wear (DD-290): `class` dims the cell
+  /// with a red mark, `level` / `attribute` adds an amber one.
+  final String? wear;
   final String? semantic;
   final VoidCallback? onTap;
 
@@ -62,6 +67,11 @@ class ItemCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final filled = icon != null;
     final c = filled ? rarityColor(rarity ?? 'common') : Palette.borderSubtle;
+    final cell = _cell(filled, c);
+    return wear == 'class' ? Opacity(opacity: 0.4, child: cell) : cell;
+  }
+
+  Widget _cell(bool filled, Color c) {
     return Semantics(
       button: onTap != null,
       selected: selected,
@@ -116,6 +126,16 @@ class ItemCell extends StatelessWidget {
                   ),
                 ),
               if (locked) const Positioned(left: 2, top: 2, child: Icon(Icons.lock, size: 10, color: Palette.warning)),
+              if (wear case 'class' || 'level' || 'attribute')
+                Positioned(
+                  left: 2,
+                  bottom: 2,
+                  child: Icon(
+                    wear == 'class' ? Icons.block : Icons.hourglass_bottom,
+                    size: 12,
+                    color: wear == 'class' ? Palette.danger : Palette.warning,
+                  ),
+                ),
               if (selected)
                 const Positioned(right: 2, top: 2, child: Icon(Icons.check_circle, size: 14, color: Palette.accent)),
             ],
@@ -175,6 +195,19 @@ String? bonusText(AppLocalizations l, StatBonus b) {
 }
 
 String displayName(BagItem i) => itemName(i.templateCode, i.prefix, i.suffix);
+
+/// An equippable item's slot and kind: "Chest · Leather armor", "Main hand · Sword".
+String gearKind(AppLocalizations l, String slot, String subclass) =>
+    subclass.isEmpty ? slotName(l, slot) : '${slotName(l, slot)} · ${ContentNames.of('equipment', subclass)}';
+
+/// Why the character can or cannot wear an item (DD-290), with its colour.
+(String, Color, IconData)? wearLine(AppLocalizations l, BagItem i) => switch (i.wear) {
+  'ok' => (l.wearOk, Palette.success, Icons.check_circle_outline),
+  'class' => (l.wearClass, Palette.danger, Icons.block),
+  'level' => (l.wearLevel(i.minLevel), Palette.warning, Icons.hourglass_bottom),
+  'attribute' => (l.wearAttribute, Palette.warning, Icons.hourglass_bottom),
+  _ => null,
+};
 
 /// A raid set on a piece's details (DD-277): name, pieces worn, and each
 /// bonus with its piece count — the earned ones lit.

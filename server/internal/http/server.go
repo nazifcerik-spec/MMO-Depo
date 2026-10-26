@@ -126,7 +126,7 @@ func NewRouter(d Deps) http.Handler {
 	econHandler := economy.NewHandler(d.TxnService, d.Env == "dev", d.Logger)
 	activityHandler := activity.NewHandler(d.ActivityService, d.Logger)
 	itemHandler := item.NewHandler(d.ItemService, d.Logger)
-	invHandler := inventory.NewHandler(d.InventoryService, d.Logger)
+	invHandler := inventory.NewHandler(d.InventoryService, d.Logger).WithWear(d.EquipmentService)
 	equipHandler := inventory.NewEquipmentHandler(d.EquipmentService, d.Logger)
 	vendorHandler := vendor.NewHandler(d.VendorService, d.CharacterService, d.Logger)
 

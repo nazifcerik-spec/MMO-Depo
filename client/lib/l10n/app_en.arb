@@ -1981,5 +1981,18 @@
   "compareColWorn": "Worn",
   "compareColThis": "This",
   "compareColDiff": "Change",
-  "compareSame": "Same stats as what you wear."
+  "compareSame": "Same stats as what you wear.",
+  "wearOk": "Your class can wear this",
+  "wearClass": "Your class can't wear this",
+  "wearLevel": "Needs level {level}",
+  "@wearLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "wearAttribute": "Your attributes are too low",
+  "wearLegendClass": "not for your class",
+  "wearLegendLater": "not yet (level or attributes)"
 }

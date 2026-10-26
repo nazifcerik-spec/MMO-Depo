@@ -181,7 +181,7 @@ class _InventoryViewState extends State<InventoryView> {
                 rarity: item.rarity,
                 icon: itemIcon(item.itemClass),
                 code: item.templateCode,
-                subtitle: slotName(l, slot),
+                subtitle: gearKind(l, slot, item.itemSubclass),
               ),
               if (item.bonuses.isNotEmpty) const SizedBox(height: Space.lg),
               for (final b in item.bonuses)
@@ -395,6 +395,7 @@ class _InventoryViewState extends State<InventoryView> {
                 fontFeatures: numeric,
               ),
             ),
+            if (bag.items.any((i) => !i.wearable)) _WearLegend(),
             const SizedBox(height: Space.md),
             LayoutBuilder(
               builder: (context, box) {
@@ -433,7 +434,11 @@ class _InventoryViewState extends State<InventoryView> {
                         stack: item.stack,
                         locked: item.isLocked,
                         selected: _selected.contains(item.instanceId),
-                        semantic: '${displayName(item)} ×${item.stack}',
+                        wear: item.wear,
+                        semantic: [
+                          '${displayName(item)} ×${item.stack}',
+                          if (!item.wearable) ?wearLine(l, item)?.$1,
+                        ].join(' · '),
                         onTap: () => selecting ? _toggle(item) : _openBagItem(item),
                       );
                     },
@@ -624,6 +629,34 @@ class _Comparison extends StatelessWidget {
   }
 }
 
+/// What the bag's wear marks mean (DD-290).
+class _WearLegend extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    const style = TextStyle(fontSize: 12, color: Palette.textSecondary);
+    Widget item(IconData icon, Color color, String text) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 12, color: color),
+        const SizedBox(width: 4),
+        Flexible(child: Text(text, style: style)),
+      ],
+    );
+    return Padding(
+      padding: const EdgeInsets.only(top: Space.xs),
+      child: Wrap(
+        spacing: Space.md,
+        runSpacing: 2,
+        children: [
+          item(Icons.block, Palette.danger, l.wearLegendClass),
+          item(Icons.hourglass_bottom, Palette.warning, l.wearLegendLater),
+        ],
+      ),
+    );
+  }
+}
+
 class _ItemDetail extends StatelessWidget {
   const _ItemDetail({required this.item, required this.sellMult, this.set, this.worn = const [], this.replacing});
 
@@ -667,8 +700,26 @@ class _ItemDetail extends StatelessWidget {
                 rarity: item.rarity,
                 icon: itemIcon(item.itemClass, item.itemSubclass),
                 code: item.templateCode,
-                subtitle: item.equippable ? slotName(l, item.equipSlot!) : itemName(item.itemSubclass),
+                subtitle: item.equippable
+                    ? gearKind(l, item.equipSlot!, item.itemSubclass)
+                    : itemName(item.itemSubclass),
               ),
+              if (wearLine(l, item) case (final msg, final color, final icon)) ...[
+                const SizedBox(height: Space.sm),
+                Row(
+                  key: const Key('item-wear'),
+                  children: [
+                    Icon(icon, size: 16, color: color),
+                    const SizedBox(width: Space.xs),
+                    Expanded(
+                      child: Text(
+                        msg,
+                        style: TextStyle(color: color, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               const SizedBox(height: Space.lg),
               for (final b in bonuses)
                 Padding(
@@ -718,7 +769,10 @@ class _ItemDetail extends StatelessWidget {
                 if (item.usable)
                   FilledButton(onPressed: () => Navigator.pop(context, _ItemAction.use), child: Text(l.useItem)),
                 if (item.equippable)
-                  FilledButton(onPressed: () => Navigator.pop(context, _ItemAction.equip), child: Text(l.equip)),
+                  FilledButton(
+                    onPressed: item.wearable ? () => Navigator.pop(context, _ItemAction.equip) : null,
+                    child: Text(l.equip),
+                  ),
                 if (!item.isBound) ...[
                   const SizedBox(height: Space.sm),
                   FilledButton.tonal(
