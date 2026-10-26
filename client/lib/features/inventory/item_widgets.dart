@@ -180,13 +180,32 @@ String statName(AppLocalizations l, String target) => switch (target) {
   'crit_dmg_pct' => l.statCritDmg,
   'lifesteal_pct' => l.statLifesteal,
   'dmg_reduction_pct' => l.statDmgReduction,
+  // Profession enchants (DD-293).
+  'gather_yield_mining' => l.statGatherMining,
+  'gather_yield_herbalism' => l.statGatherHerbalism,
+  'gather_yield_woodcutting' => l.statGatherWoodcutting,
+  'gather_yield_fishing' => l.statGatherFishing,
+  'gather_yield_hunting' => l.statGatherHunting,
+  'craft_speed' => l.statCraftSpeed,
   _ => target,
 };
+
+/// The gear groups a scroll fits, readable: "weapons", "armor · jewelry".
+String enchantGroups(AppLocalizations l, EnchantInfo e) => [
+  for (final g in e.slots)
+    switch (g) {
+      'weapon' => l.enchantGroupWeapon,
+      'armor' => l.enchantGroupArmor,
+      'jewelry' => l.enchantGroupJewelry,
+      _ => l.enchantGroupAny,
+    },
+].join(' · ');
 
 /// "+10 Attack", "+10% STR". Clamp/set modifiers are engine details → hidden.
 String? bonusText(AppLocalizations l, StatBonus b) {
   final name = statName(l, b.target);
-  String num(double v) => v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);
+  String num(double v) =>
+      v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(2).replaceFirst(RegExp(r'0$'), '');
   return switch (b.kind) {
     'flat' => '${b.amount >= 0 ? '+' : ''}${num(b.amount)} $name',
     'mult_add' || 'mult_prod' => '${b.amount >= 0 ? '+' : ''}${num(b.amount * 100)}% $name',

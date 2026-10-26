@@ -55,7 +55,8 @@ func (h *Handler) Professions(w http.ResponseWriter, r *http.Request) {
 			"kind":             p.Kind,
 		})
 	}
-	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "professions": out})
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "professions": out,
+		"difficulty": DifficultyBands}) // recipe colors (DD-294)
 }
 
 func (h *Handler) Recipes(w http.ResponseWriter, r *http.Request) {

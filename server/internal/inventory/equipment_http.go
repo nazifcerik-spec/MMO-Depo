@@ -1,6 +1,7 @@
 package inventory
 
 import (
+	"encoding/json"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -70,6 +71,42 @@ func (h *EquipmentHandler) View(w http.ResponseWriter, r *http.Request) {
 		"character_id": charID.String(),
 		"slots":        slots,
 	})
+}
+
+// --- POST /v1/character/{id}/items/{item_id}/enchant (DD-293) ---------------
+
+type enchantBody struct {
+	ScrollID uuid.UUID `json:"scroll_id"`
+}
+
+// Enchant puts a scroll's enchant on the item.
+func (h *EquipmentHandler) Enchant(w http.ResponseWriter, r *http.Request) {
+	acct := httpctx.AccountID(r.Context())
+	if acct == uuid.Nil {
+		apierr.Write(w, r, http.StatusUnauthorized, "E_UNAUTHENTICATED", "auth required")
+		return
+	}
+	charID, err := uuid.Parse(chi.URLParam(r, "id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	itemID, err := uuid.Parse(chi.URLParam(r, "item_id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	var body enchantBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || body.ScrollID == uuid.Nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", "scroll_id required")
+		return
+	}
+	res, err := h.svc.Enchant(r.Context(), charID, itemID, body.ScrollID)
+	if err != nil {
+		writeEquipErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, res)
 }
 
 // --- POST /v1/character/{id}/equip/{item_id} --------------------------------
@@ -150,6 +187,10 @@ func writeEquipErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag full — cannot unequip")
 	case errors.Is(err, ErrLocked):
 		apierr.Write(w, r, http.StatusConflict, "E_ITEM_LOCKED", "item is locked")
+	case errors.Is(err, ErrNotEnchantScroll):
+		apierr.Write(w, r, http.StatusBadRequest, "E_NOT_ENCHANT", "that is not an enchanting scroll")
+	case errors.Is(err, ErrEnchantSlot):
+		apierr.Write(w, r, http.StatusConflict, "E_ENCHANT_SLOT", "the enchant does not fit that gear")
 	default:
 		apierr.Write(w, r, http.StatusInternalServerError, "E_INTERNAL", err.Error())
 	}

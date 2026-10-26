@@ -52,7 +52,7 @@ func (r *PgRepo) CreateInstancesBatch(ctx context.Context, instances []Instance)
 const selectBase = `
 	SELECT id, template_code, owner_character_id, stack_quantity, rarity,
 	       prefix_code, suffix_code, is_bound, is_locked, lock_owner,
-	       locked_ref_id, source_kind, source_ref_id, equipment_slot,
+	       locked_ref_id, source_kind, source_ref_id, equipment_slot, enchant_code,
 	       created_at, updated_at, version
 	  FROM inventory.item_instance`
 
@@ -62,7 +62,7 @@ func (r *PgRepo) scan(row pgx.Row) (*Instance, error) {
 	if err := row.Scan(
 		&i.ID, &i.TemplateCode, &i.OwnerCharacterID, &i.StackQuantity, &rarity,
 		&i.PrefixCode, &i.SuffixCode, &i.IsBound, &i.IsLocked, &i.LockOwner,
-		&i.LockedRefID, &i.SourceKind, &i.SourceRefID, &i.EquipmentSlot,
+		&i.LockedRefID, &i.SourceKind, &i.SourceRefID, &i.EquipmentSlot, &i.EnchantCode,
 		&i.CreatedAt, &i.UpdatedAt, &i.Version,
 	); err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {

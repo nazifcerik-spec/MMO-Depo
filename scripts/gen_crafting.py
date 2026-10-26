@@ -11,7 +11,9 @@ level. Every piece of random-drop gear gets a recipe:
 
 Healing potions heal a share of max HP (heal_pct) and mana potions refill a
 share of a hunter's carried pool (mana_pct, DD-288); both spread over the
-alchemy levels. Writes generated blocks into content/recipes.yaml and
+alchemy levels. Enchanting (DD-293) makes scrolls in ten tiers (skill 1, 10,
+... 90) that put a lasting enchant on gear: combat stats for every class on
+weapons, armor and jewelry, gathering yield and crafting speed on jewelry. Writes generated blocks into content/recipes.yaml and
 content/items.yaml and names in en, tr, zh-CN and es.
 
 Run from the repository root after gen_gear_types.py: python scripts/gen_crafting.py
@@ -34,6 +36,7 @@ PROFESSIONS = {
     'tailoring': L('Tailoring', 'Terzilik', '裁缝', 'Sastrería'),
     'woodworking': L('Woodworking', 'Ağaç İşçiliği', '木工', 'Carpintería'),
     'jewelcrafting': L('Jewelcrafting', 'Kuyumculuk', '珠宝加工', 'Joyería'),
+    'enchanting': L('Enchanting', 'Efsunlama', '附魔', 'Encantamiento'),  # DD-293
 }
 METAL = {'plate_armor', 'sword', 'axe', 'mace', 'two_handed_mace', 'dagger', 'short_sword', 'rapier',
          'fist_weapon', 'sickle', 'ritual_axe', 'shield'}
@@ -155,6 +158,8 @@ gear = [g for g in load('gear.yaml')['items'] if not set(g.get('requirements') o
 for g in sorted(gear, key=lambda g: (g['min_level'], g['item_subclass'], g['code'])):
     sub, slot, lvl = g['item_subclass'], g['equip_slot'], g['min_level']
     skill = skill_for(lvl)
+    if sub in JEWELRY:  # the ladder starts at level 25: a new jeweler needs a skill-1 recipe (DD-294)
+        skill = max(1, skill - 2)
     q, w = PIECE[slot]
     # Materials one level ahead of the skill, so the top tier (skill 99) uses
     # the level-100 nodes.
@@ -206,6 +211,67 @@ for code, lvl, pct, value, title in MANA_POTIONS:
     inputs = merged([(pick(HERBS, skill), 1), (pick(HERBS, max(1, skill // 2)), 2)])
     potion_recipes.append(recipe(code, 'alchemy', skill, inputs, max(1, value // 4),
                                  max(15, round(0.25 * xp_to_next(skill))), round5(10 + 0.4 * skill)))
+# Enchanting (DD-293): code, slot group, (kind, target, base, step per tier),
+# material builder, names. Percent stats (crit, hit, evasion, lifesteal,
+# crit damage) are flat points; the rest are mult_add shares. Gear groups
+# stack over their slots, so armor and jewelry enchants are smaller each.
+ORES, FISH = ladder('ore'), ladder('fish')
+GROUP = L('{0} Enchant: {1} {2}', '{0} Efsunu: {1} {2}', '{0}附魔：{1} {2}', 'Encantamiento de {0}: {1} {2}')
+GROUP_NAMES = {'weapon': L('Weapon', 'Silah', '武器', 'arma'), 'armor': L('Armor', 'Zırh', '护甲', 'armadura'),
+               'jewelry': L('Jewelry', 'Takı', '饰品', 'joya')}
+ENCHANTS = [
+    ('weapon_attack', 'weapon', ('mult_add', 'attack', 0.01, 0.005), L('Attack', 'Saldırı', '攻击', 'Ataque')),
+    ('weapon_crit', 'weapon', ('flat', 'crit_pct', 1, 0.5), L('Critical', 'Kritik', '暴击', 'Crítico')),
+    ('weapon_strength', 'weapon', ('mult_add', 'str', 0.015, 0.005), L('Strength', 'Güç', '力量', 'Fuerza')),
+    ('weapon_agility', 'weapon', ('mult_add', 'agi', 0.015, 0.005), L('Agility', 'Çeviklik', '敏捷', 'Agilidad')),
+    ('weapon_intellect', 'weapon', ('mult_add', 'int', 0.015, 0.005), L('Intellect', 'Zekâ', '智力', 'Intelecto')),
+    ('weapon_wisdom', 'weapon', ('mult_add', 'cha', 0.015, 0.005), L('Wisdom', 'Bilgelik', '智慧', 'Sabiduría')),
+    ('weapon_lifesteal', 'weapon', ('flat', 'lifesteal_pct', 0.5, 0.25), L('Lifesteal', 'Can Çalma', '吸血', 'Robo de vida')),
+    ('armor_defense', 'armor', ('mult_add', 'defense', 0.005, 0.0025), L('Defense', 'Savunma', '防御', 'Defensa')),
+    ('armor_health', 'armor', ('mult_add', 'hp_max', 0.005, 0.0025), L('Health', 'Can', '生命', 'Vida')),
+    ('armor_vitality', 'armor', ('mult_add', 'vit', 0.008, 0.003), L('Vitality', 'Dayanıklılık', '耐力', 'Vitalidad')),
+    ('armor_evasion', 'armor', ('flat', 'evasion_pct', 0.3, 0.15), L('Evasion', 'Kaçınma', '闪避', 'Evasión')),
+    ('jewelry_crit', 'jewelry', ('flat', 'crit_pct', 0.5, 0.25), L('Critical', 'Kritik', '暴击', 'Crítico')),
+    ('jewelry_hit', 'jewelry', ('flat', 'hit_pct', 0.5, 0.25), L('Accuracy', 'İsabet', '命中', 'Precisión')),
+    ('jewelry_luck', 'jewelry', ('mult_add', 'luck', 0.01, 0.005), L('Luck', 'Şans', '幸运', 'Suerte')),
+    ('jewelry_crit_damage', 'jewelry', ('flat', 'crit_dmg_pct', 1, 0.5), L('Critical Damage', 'Kritik Hasar', '暴击伤害', 'Daño crítico')),
+    ('jewelry_mining', 'jewelry', ('mult_add', 'gather_yield_mining', 0.02, 0.01), L('Miner', 'Madenci', '矿工', 'Minero')),
+    ('jewelry_herbalism', 'jewelry', ('mult_add', 'gather_yield_herbalism', 0.02, 0.01), L('Herbalist', 'Otacı', '草药师', 'Herbolario')),
+    ('jewelry_woodcutting', 'jewelry', ('mult_add', 'gather_yield_woodcutting', 0.02, 0.01), L('Lumberjack', 'Oduncu', '伐木工', 'Leñador')),
+    ('jewelry_fishing', 'jewelry', ('mult_add', 'gather_yield_fishing', 0.02, 0.01), L('Angler', 'Balıkçı', '渔夫', 'Pescador')),
+    ('jewelry_hunting', 'jewelry', ('mult_add', 'gather_yield_hunting', 0.02, 0.01), L('Trapper', 'Avcı', '猎人', 'Trampero')),
+    ('jewelry_craft_speed', 'jewelry', ('mult_add', 'craft_speed', 0.02, 0.01), L('Artisan', 'Zanaatkâr', '工匠', 'Artesano')),
+]
+ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+GATHERED = {'mining': ORES, 'herbalism': HERBS, 'woodcutting': LOGS, 'fishing': FISH, 'hunting': HIDES}
+enchant_items, enchant_recipes = [], []
+for tier in range(1, 11):
+    skill = 1 if tier == 1 else (tier - 1) * 10
+    lvl = 1 if tier == 1 else skill * 10
+    value = round(25 * 1.8 ** (tier - 1))
+    reach = min(100, skill + 1)
+    for key, group, (kind, target, base, step), title in ENCHANTS:
+        code = 'enchant_%s_%d' % (key, tier)
+        amount = round(base + step * (tier - 1), 4)
+        enchant_items.append('\n'.join([
+            '  - code: ' + code, '    display_name_key: item.' + code, '    item_class: consumable',
+            '    item_subclass: enchant_scroll', '    min_level: %d' % lvl, '    base_value_copper: %d' % value,
+            '    base_weight_g: 50', '    stackable: true', '    max_stack: 20', '    bind_kind: boe',
+            '    enchant: { slots: [%s], modifiers: [{ kind: %s, target: %s, amount: %s }] }' % (group, kind, target, amount)]))
+        for lang in names:
+            names[lang]['item.' + code] = GROUP[lang].format(GROUP_NAMES[group][lang], title[lang], ROMAN[tier - 1])
+        if target.startswith('gather_yield_'):
+            inputs = [(pick(GATHERED[target[len('gather_yield_'):]], reach), 3), (pick(STONES, reach), 1)]
+        elif target == 'craft_speed':
+            inputs = [(pick(bars, reach), 2), (pick(STONES, reach), 1)]
+        elif group == 'weapon':
+            inputs = [(pick(bars, reach), 1), (pick(STONES, reach), 1), (pick(HERBS, reach), 2)]
+        elif group == 'armor':
+            inputs = [(pick(HIDES, reach), 2), (pick(HERBS, reach), 2)]
+        else:
+            inputs = [(pick(STONES, reach), 2), (pick(HERBS, reach), 1)]
+        enchant_recipes.append(recipe(code, 'enchanting', skill, merged(inputs), max(1, value // 4),
+                                      max(15, round(0.25 * xp_to_next(skill))), round5(15 + 0.5 * skill)))
 for code, title in PROFESSIONS.items():
     for lang in names:
         names[lang]['profession.' + code] = title[lang]
@@ -214,10 +280,12 @@ p = os.path.join(ROOT, 'recipes.yaml')
 s, crlf = read(p)
 s = put_block(s, 'alchemy', '\n\n'.join(potion_recipes))
 s = put_block(s, 'gear', '\n\n'.join(gear_recipes))
+s = put_block(s, 'enchanting', '\n\n'.join(enchant_recipes))
 write(p, s, crlf)
 p = os.path.join(ROOT, 'items.yaml')
 s, crlf = read(p)
 s = put_block(s, 'potions', '\n\n'.join(potion_items))
+s = put_block(s, 'enchanting', '\n\n'.join(enchant_items))
 write(p, s, crlf)
 merge(names)
 by_prof = {}

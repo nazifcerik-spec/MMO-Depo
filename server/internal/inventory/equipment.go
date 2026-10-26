@@ -20,6 +20,10 @@ var (
 	ErrNotEquippable    = errors.New("inventory: item is not equippable")
 	ErrClassRestriction = errors.New("inventory: class restriction on item")
 	ErrLevelRequirement = errors.New("inventory: character level below item requirement")
+	// ErrNotEnchantScroll: what was given as the scroll does not enchant (DD-293).
+	ErrNotEnchantScroll = errors.New("inventory: not an enchanting scroll")
+	// ErrEnchantSlot: the scroll is not for that kind of gear.
+	ErrEnchantSlot      = errors.New("inventory: the enchant does not fit that gear")
 	ErrNothingEquipped  = errors.New("inventory: no item in that equipment slot")
 	ErrUnknownEquipSlot = errors.New("inventory: unknown equipment slot")
 )
@@ -111,6 +115,77 @@ func meetsRequirements(tmpl item.Template, c *characterView) error {
 		return ErrAttributeRequirement
 	}
 	return nil
+}
+
+// EnchantRepo applies an enchant (PgRepo).
+type EnchantRepo interface {
+	ApplyEnchant(ctx context.Context, characterID, itemID, scrollID uuid.UUID,
+		check func(scrollCode, targetCode string) error) (*string, error)
+}
+
+// EnchantResult is the response of an enchant.
+type EnchantResult struct {
+	ItemID      uuid.UUID `json:"item_id"`
+	EnchantCode string    `json:"enchant_code"`
+	Replaced    *string   `json:"replaced,omitempty"` // the enchant it overwrote
+}
+
+// Enchant puts a scroll's enchant on a piece of gear in the bag or worn
+// (DD-293): the scroll must be one the character's level can use and fit
+// the gear's slot; one scroll is used up and any previous enchant is
+// replaced.
+func (s *EquipmentService) Enchant(ctx context.Context, characterID, itemID, scrollID uuid.UUID) (*EnchantResult, error) {
+	repo, ok := s.inv.repo.(EnchantRepo)
+	if !ok {
+		return nil, fmt.Errorf("inventory: repository does not implement EnchantRepo")
+	}
+	char, err := s.charView.Get(ctx, characterID)
+	if err != nil {
+		return nil, err
+	}
+	cat := s.items.Catalog()
+	var code string
+	previous, err := repo.ApplyEnchant(ctx, characterID, itemID, scrollID, func(scrollCode, targetCode string) error {
+		scroll, err := cat.Get(scrollCode)
+		if err != nil || scroll.Enchant == nil {
+			return ErrNotEnchantScroll
+		}
+		if int16(scroll.MinLevel) > char.Level {
+			return ErrLevelRequirement
+		}
+		target, err := cat.Get(targetCode)
+		if err != nil || !target.IsEquippable() || !scroll.Enchant.Fits(*target.EquipSlot) {
+			return ErrEnchantSlot
+		}
+		code = scrollCode
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &EnchantResult{ItemID: itemID, EnchantCode: code, Replaced: previous}, nil
+}
+
+// ProfessionBonus is the share the worn gear's enchants add to a profession
+// target (item.ProfessionTargets, DD-293): gathering yield or crafting speed.
+func (s *EquipmentService) ProfessionBonus(ctx context.Context, characterID uuid.UUID, target string) (float64, error) {
+	repo, ok := s.inv.repo.(EquippedRepo)
+	if !ok {
+		return 0, fmt.Errorf("inventory: repository does not implement EquippedRepo")
+	}
+	list, err := repo.Equipped(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	var sum float64
+	for _, b := range list {
+		for _, m := range EffectiveModifiers(b) {
+			if string(m.Target) == target && m.Kind == skill.KindMultAdd {
+				sum += m.Amount
+			}
+		}
+	}
+	return sum, nil
 }
 
 // Wear verdicts for a bag item (DD-290).

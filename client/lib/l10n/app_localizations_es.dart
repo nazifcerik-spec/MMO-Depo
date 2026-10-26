@@ -2539,4 +2539,86 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get wearLegendLater => 'aún no (nivel o atributos)';
+
+  @override
+  String get enchantAction => 'Encantar';
+
+  @override
+  String get enchantPick => 'Elige el equipo a encantar';
+
+  @override
+  String get enchantNone => 'Ningún equipo encaja con este pergamino.';
+
+  @override
+  String enchantFits(String groups) {
+    return 'Se aplica a: $groups';
+  }
+
+  @override
+  String get enchantGroupWeapon => 'armas';
+
+  @override
+  String get enchantGroupArmor => 'armadura';
+
+  @override
+  String get enchantGroupJewelry => 'joyas';
+
+  @override
+  String get enchantGroupAny => 'cualquier equipo';
+
+  @override
+  String get enchantReplaceTitle => '¿Reemplazar el encantamiento?';
+
+  @override
+  String enchantReplaceBody(String old, String next) {
+    return '$old se pierde y $next ocupa su lugar.';
+  }
+
+  @override
+  String enchantDone(String item) {
+    return '$item encantado';
+  }
+
+  @override
+  String enchantOn(String name) {
+    return 'Encantamiento: $name';
+  }
+
+  @override
+  String get wornTag => 'equipado';
+
+  @override
+  String get errNotEnchant => 'No es un pergamino de encantamiento.';
+
+  @override
+  String get errEnchantSlot => 'El encantamiento no encaja en ese equipo.';
+
+  @override
+  String get statGatherMining => 'Rendimiento minero';
+
+  @override
+  String get statGatherHerbalism => 'Rendimiento de herboristería';
+
+  @override
+  String get statGatherWoodcutting => 'Rendimiento de tala';
+
+  @override
+  String get statGatherFishing => 'Rendimiento de pesca';
+
+  @override
+  String get statGatherHunting => 'Rendimiento de caza';
+
+  @override
+  String get statCraftSpeed => 'Velocidad de fabricación';
+
+  @override
+  String diffXp(int pct) {
+    return '$pct % XP';
+  }
+
+  @override
+  String get diffNoXp => 'sin XP';
+
+  @override
+  String get diffLegend => 'Color de receta: la XP que da a tu nivel';
 }

@@ -2540,4 +2540,86 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wearLegendLater => 'not yet (level or attributes)';
+
+  @override
+  String get enchantAction => 'Enchant';
+
+  @override
+  String get enchantPick => 'Choose the gear to enchant';
+
+  @override
+  String get enchantNone => 'None of your gear fits this scroll.';
+
+  @override
+  String enchantFits(String groups) {
+    return 'Goes on: $groups';
+  }
+
+  @override
+  String get enchantGroupWeapon => 'weapons';
+
+  @override
+  String get enchantGroupArmor => 'armor';
+
+  @override
+  String get enchantGroupJewelry => 'jewelry';
+
+  @override
+  String get enchantGroupAny => 'any gear';
+
+  @override
+  String get enchantReplaceTitle => 'Replace the enchant?';
+
+  @override
+  String enchantReplaceBody(String old, String next) {
+    return '$old is lost and $next takes its place.';
+  }
+
+  @override
+  String enchantDone(String item) {
+    return '$item enchanted';
+  }
+
+  @override
+  String enchantOn(String name) {
+    return 'Enchant: $name';
+  }
+
+  @override
+  String get wornTag => 'worn';
+
+  @override
+  String get errNotEnchant => 'That is not an enchanting scroll.';
+
+  @override
+  String get errEnchantSlot => 'The enchant doesn\'t fit that gear.';
+
+  @override
+  String get statGatherMining => 'Mining yield';
+
+  @override
+  String get statGatherHerbalism => 'Herbalism yield';
+
+  @override
+  String get statGatherWoodcutting => 'Woodcutting yield';
+
+  @override
+  String get statGatherFishing => 'Fishing yield';
+
+  @override
+  String get statGatherHunting => 'Hunting yield';
+
+  @override
+  String get statCraftSpeed => 'Crafting speed';
+
+  @override
+  String diffXp(int pct) {
+    return '$pct% XP';
+  }
+
+  @override
+  String get diffNoXp => 'no XP';
+
+  @override
+  String get diffLegend => 'Recipe colors: the XP a craft teaches at your skill';
 }

@@ -2536,4 +2536,86 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get wearLegendLater => '暂不可用（等级或属性）';
+
+  @override
+  String get enchantAction => '附魔';
+
+  @override
+  String get enchantPick => '选择要附魔的装备';
+
+  @override
+  String get enchantNone => '没有适合此卷轴的装备。';
+
+  @override
+  String enchantFits(String groups) {
+    return '适用：$groups';
+  }
+
+  @override
+  String get enchantGroupWeapon => '武器';
+
+  @override
+  String get enchantGroupArmor => '护甲';
+
+  @override
+  String get enchantGroupJewelry => '饰品';
+
+  @override
+  String get enchantGroupAny => '任意装备';
+
+  @override
+  String get enchantReplaceTitle => '替换附魔？';
+
+  @override
+  String enchantReplaceBody(String old, String next) {
+    return '$old将消失，由$next取代。';
+  }
+
+  @override
+  String enchantDone(String item) {
+    return '$item已附魔';
+  }
+
+  @override
+  String enchantOn(String name) {
+    return '附魔：$name';
+  }
+
+  @override
+  String get wornTag => '已装备';
+
+  @override
+  String get errNotEnchant => '这不是附魔卷轴。';
+
+  @override
+  String get errEnchantSlot => '该附魔不适用于此装备。';
+
+  @override
+  String get statGatherMining => '采矿产量';
+
+  @override
+  String get statGatherHerbalism => '采药产量';
+
+  @override
+  String get statGatherWoodcutting => '伐木产量';
+
+  @override
+  String get statGatherFishing => '钓鱼产量';
+
+  @override
+  String get statGatherHunting => '狩猎产量';
+
+  @override
+  String get statCraftSpeed => '制作速度';
+
+  @override
+  String diffXp(int pct) {
+    return '$pct% 经验';
+  }
+
+  @override
+  String get diffNoXp => '无经验';
+
+  @override
+  String get diffLegend => '配方颜色：按你的技能获得的经验';
 }

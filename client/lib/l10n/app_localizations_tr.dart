@@ -2539,4 +2539,86 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get wearLegendLater => 'henüz değil (seviye ya da nitelik)';
+
+  @override
+  String get enchantAction => 'Efsunla';
+
+  @override
+  String get enchantPick => 'Efsunlanacak eşyayı seç';
+
+  @override
+  String get enchantNone => 'Bu parşömene uyan eşyan yok.';
+
+  @override
+  String enchantFits(String groups) {
+    return 'Uygulanır: $groups';
+  }
+
+  @override
+  String get enchantGroupWeapon => 'silah';
+
+  @override
+  String get enchantGroupArmor => 'zırh';
+
+  @override
+  String get enchantGroupJewelry => 'takı';
+
+  @override
+  String get enchantGroupAny => 'her ekipman';
+
+  @override
+  String get enchantReplaceTitle => 'Efsun değişsin mi?';
+
+  @override
+  String enchantReplaceBody(String old, String next) {
+    return '$old kaybolur, yerine $next gelir.';
+  }
+
+  @override
+  String enchantDone(String item) {
+    return '$item efsunlandı';
+  }
+
+  @override
+  String enchantOn(String name) {
+    return 'Efsun: $name';
+  }
+
+  @override
+  String get wornTag => 'giyili';
+
+  @override
+  String get errNotEnchant => 'Bu bir efsun parşömeni değil.';
+
+  @override
+  String get errEnchantSlot => 'Bu efsun o eşyaya uymuyor.';
+
+  @override
+  String get statGatherMining => 'Madencilik verimi';
+
+  @override
+  String get statGatherHerbalism => 'Bitkicilik verimi';
+
+  @override
+  String get statGatherWoodcutting => 'Odunculuk verimi';
+
+  @override
+  String get statGatherFishing => 'Balıkçılık verimi';
+
+  @override
+  String get statGatherHunting => 'Avcılık verimi';
+
+  @override
+  String get statCraftSpeed => 'Üretim hızı';
+
+  @override
+  String diffXp(int pct) {
+    return '%$pct XP';
+  }
+
+  @override
+  String get diffNoXp => 'XP yok';
+
+  @override
+  String get diffLegend => 'Tarif rengi: seviyende üretimin kazandıracağı XP';
 }

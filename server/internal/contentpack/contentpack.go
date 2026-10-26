@@ -27,6 +27,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
@@ -55,6 +56,7 @@ type Item struct {
 	UseEffect        *UseEffect    `yaml:"use_effect"`
 	Gather           *Gather       `yaml:"gather"`
 	Requirements     *Requirements `yaml:"requirements"`
+	Enchant          *item.Enchant `yaml:"enchant"` // an enchanting scroll (DD-293)
 }
 
 // Requirements: class branch + raw attribute minimums (DD-250 §34).
@@ -866,6 +868,36 @@ var (
 	validStatTargets   = func(t string) bool { return skill.KnownTargets[skill.Target(t)] }
 )
 
+// validateEnchant checks an enchanting scroll (DD-293): a consumable that
+// fits known gear groups and adds one to three sheet or profession bonuses,
+// flat or percent, within sane bounds (percent stats are flat points).
+func validateEnchant(it Item, e *item.Enchant) error {
+	if it.ItemClass != "consumable" || it.ItemSubclass != "enchant_scroll" || it.UseEffect != nil {
+		return fmt.Errorf("item %s: enchant only on consumable/enchant_scroll items without use_effect", it.Code)
+	}
+	if len(e.Slots) == 0 || len(e.Modifiers) == 0 || len(e.Modifiers) > 3 {
+		return fmt.Errorf("item %s: enchant needs slots and 1..3 modifiers", it.Code)
+	}
+	for _, g := range e.Slots {
+		if _, ok := item.EnchantGroups[g]; !ok {
+			return fmt.Errorf("item %s: unknown enchant slot group %q", it.Code, g)
+		}
+	}
+	for _, m := range e.Modifiers {
+		prof := item.ProfessionTargets[m.Target]
+		if !prof && !skill.KnownTargets[skill.Target(m.Target)] {
+			return fmt.Errorf("item %s: unknown enchant target %q", it.Code, m.Target)
+		}
+		switch {
+		case m.Kind == "mult_add" && m.Amount > 0 && m.Amount <= 0.5:
+		case m.Kind == "flat" && !prof && m.Amount > 0 && m.Amount <= 100_000:
+		default:
+			return fmt.Errorf("item %s: enchant %s on %s needs mult_add 0..0.5 (or flat > 0 on sheet stats)", it.Code, m.Kind, m.Target)
+		}
+	}
+	return nil
+}
+
 func validateItems(items []Item) error {
 	seen := make(map[string]bool, len(items))
 	for i, it := range items {
@@ -904,6 +936,11 @@ func validateItems(items []Item) error {
 			if b := ue.Buff; b != nil && (b.AttackPct < 0 || b.AttackPct > 50 || b.DefensePct < 0 || b.DefensePct > 50 ||
 				b.AttackPct+b.DefensePct == 0 || b.Minutes < 1 || b.Minutes > 1440) {
 				return fmt.Errorf("item %s: use_effect buff needs 0..50 attack/defense pct (not both 0) and 1..1440 minutes", it.Code)
+			}
+		}
+		if e := it.Enchant; e != nil {
+			if err := validateEnchant(it, e); err != nil {
+				return err
 			}
 		}
 		if g := it.Gather; g != nil {
@@ -1178,8 +1215,8 @@ INSERT INTO content.item_template (
   code, display_name_key, item_class, item_subclass, min_level,
   base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
   no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect,
-  gather_kind, gather_level, gather_tier, requirements
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
+  gather_kind, gather_level, gather_tier, requirements, enchant
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   item_class         = EXCLUDED.item_class,
@@ -1201,6 +1238,7 @@ ON CONFLICT (code) DO UPDATE SET
   gather_level       = EXCLUDED.gather_level,
   gather_tier        = EXCLUDED.gather_tier,
   requirements       = EXCLUDED.requirements,
+  enchant            = EXCLUDED.enchant,
   version            = content.item_template.version + 1`
 
 	for _, it := range items {
@@ -1228,6 +1266,12 @@ ON CONFLICT (code) DO UPDATE SET
 				return fmt.Errorf("item %s: marshal requirements: %w", it.Code, err)
 			}
 		}
+		var enchant []byte // nil → SQL NULL (not a scroll)
+		if it.Enchant != nil {
+			if enchant, err = json.Marshal(it.Enchant); err != nil {
+				return fmt.Errorf("item %s: marshal enchant: %w", it.Code, err)
+			}
+		}
 		var gKind *string // nil → SQL NULL (not a gathering node)
 		var gLevel, gTier *int16
 		if g := it.Gather; g != nil {
@@ -1238,7 +1282,7 @@ ON CONFLICT (code) DO UPDATE SET
 			it.BaseValueCopper, it.BaseWeightG, it.Stackable, maxStack, bindKind,
 			it.NoTrade, it.NoSell, it.Affixable,
 			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses, useEffect,
-			gKind, gLevel, gTier, reqs,
+			gKind, gLevel, gTier, reqs, enchant,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert item %s: %w", it.Code, err)

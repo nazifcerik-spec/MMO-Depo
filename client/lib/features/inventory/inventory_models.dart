@@ -53,6 +53,8 @@ class BagItem {
     this.manaPct = 0,
     this.buff,
     this.wear,
+    this.enchantCode,
+    this.enchant,
   });
 
   factory BagItem.fromJson(Map<String, dynamic> j) {
@@ -92,6 +94,8 @@ class BagItem {
       },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
       wear: j['wear'] as String?,
+      enchantCode: j['enchant_code'] as String?,
+      enchant: EnchantInfo.fromJson(j['enchant']),
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -153,6 +157,44 @@ class BagItem {
   final String? wear;
 
   bool get wearable => wear == null || wear == 'ok';
+
+  /// The scroll whose enchant this gear holds (DD-293); null for none.
+  final String? enchantCode;
+
+  /// What this item puts on gear when it is an enchanting scroll.
+  final EnchantInfo? enchant;
+}
+
+/// An enchanting scroll's effect (DD-293): the gear groups it fits and what
+/// it adds. Mirrors server item.EnchantGroups.
+class EnchantInfo {
+  const EnchantInfo({required this.slots, required this.modifiers});
+
+  static EnchantInfo? fromJson(Object? j) => switch (j) {
+    final Map<String, dynamic> m => EnchantInfo(
+      slots: [for (final s in (m['slots'] as List? ?? const [])) s as String],
+      modifiers: [
+        for (final b in (m['modifiers'] as List? ?? const []).whereType<Map<String, dynamic>>())
+          StatBonus(b['kind'] as String? ?? '', b['target'] as String? ?? '', (b['amount'] as num?)?.toDouble() ?? 0),
+      ],
+    ),
+    _ => null,
+  };
+
+  final List<String> slots;
+  final List<StatBonus> modifiers;
+
+  static const groups = {
+    'weapon': ['mainhand', 'offhand'],
+    'armor': ['helm', 'chest', 'legs', 'boots', 'gloves'],
+    'jewelry': ['necklace', 'ring', 'trinket'],
+  };
+
+  /// Whether it goes on gear of a template slot (or a worn slot: ring1 is a ring).
+  bool fits(String slot) {
+    final s = slot.replaceAll(RegExp(r'[12]$'), '');
+    return slots.any((g) => g == 'any' || (groups[g]?.contains(s) ?? false));
+  }
 }
 
 class Bag {
@@ -226,6 +268,7 @@ class EquippedItem {
     this.prefix,
     this.suffix,
     this.bonuses = const [],
+    this.enchantCode,
   });
 
   factory EquippedItem.fromJson(Map<String, dynamic> j) {
@@ -236,6 +279,7 @@ class EquippedItem {
       rarity: j['rarity'] as String? ?? 'common',
       itemClass: j['item_class'] as String? ?? '',
       itemSubclass: j['item_subclass'] as String? ?? '',
+      enchantCode: j['enchant_code'] as String?,
       prefix: j['prefix'] as String?,
       suffix: j['suffix'] as String?,
       bonuses: [
@@ -254,8 +298,11 @@ class EquippedItem {
   final String? prefix;
   final String? suffix;
 
-  /// What it adds — rarity and affixes applied (DD-275).
+  /// What it adds — rarity, affixes and its enchant applied (DD-275, DD-293).
   final List<StatBonus> bonuses;
+
+  /// The scroll whose enchant it holds (DD-293).
+  final String? enchantCode;
 }
 
 /// The paired equipment slots (server inventory.PairedSlots, DD-276).

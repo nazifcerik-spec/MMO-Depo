@@ -881,3 +881,2525 @@ items:
     bind_kind: boe
     use_effect: { kind: mana_pct, amount: 85 }
   # <<< generated: potions
+
+  # >>> generated: enchanting (scripts/gen_crafting.py)
+  - code: enchant_weapon_attack_1
+    display_name_key: item.enchant_weapon_attack_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.01 }] }
+
+  - code: enchant_weapon_crit_1
+    display_name_key: item.enchant_weapon_crit_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 1.0 }] }
+
+  - code: enchant_weapon_strength_1
+    display_name_key: item.enchant_weapon_strength_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.015 }] }
+
+  - code: enchant_weapon_agility_1
+    display_name_key: item.enchant_weapon_agility_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.015 }] }
+
+  - code: enchant_weapon_intellect_1
+    display_name_key: item.enchant_weapon_intellect_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.015 }] }
+
+  - code: enchant_weapon_wisdom_1
+    display_name_key: item.enchant_weapon_wisdom_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.015 }] }
+
+  - code: enchant_weapon_lifesteal_1
+    display_name_key: item.enchant_weapon_lifesteal_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 0.5 }] }
+
+  - code: enchant_armor_defense_1
+    display_name_key: item.enchant_armor_defense_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.005 }] }
+
+  - code: enchant_armor_health_1
+    display_name_key: item.enchant_armor_health_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.005 }] }
+
+  - code: enchant_armor_vitality_1
+    display_name_key: item.enchant_armor_vitality_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.008 }] }
+
+  - code: enchant_armor_evasion_1
+    display_name_key: item.enchant_armor_evasion_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 0.3 }] }
+
+  - code: enchant_jewelry_crit_1
+    display_name_key: item.enchant_jewelry_crit_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 0.5 }] }
+
+  - code: enchant_jewelry_hit_1
+    display_name_key: item.enchant_jewelry_hit_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 0.5 }] }
+
+  - code: enchant_jewelry_luck_1
+    display_name_key: item.enchant_jewelry_luck_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.01 }] }
+
+  - code: enchant_jewelry_crit_damage_1
+    display_name_key: item.enchant_jewelry_crit_damage_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 1.0 }] }
+
+  - code: enchant_jewelry_mining_1
+    display_name_key: item.enchant_jewelry_mining_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.02 }] }
+
+  - code: enchant_jewelry_herbalism_1
+    display_name_key: item.enchant_jewelry_herbalism_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.02 }] }
+
+  - code: enchant_jewelry_woodcutting_1
+    display_name_key: item.enchant_jewelry_woodcutting_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.02 }] }
+
+  - code: enchant_jewelry_fishing_1
+    display_name_key: item.enchant_jewelry_fishing_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.02 }] }
+
+  - code: enchant_jewelry_hunting_1
+    display_name_key: item.enchant_jewelry_hunting_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.02 }] }
+
+  - code: enchant_jewelry_craft_speed_1
+    display_name_key: item.enchant_jewelry_craft_speed_1
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 1
+    base_value_copper: 25
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.02 }] }
+
+  - code: enchant_weapon_attack_2
+    display_name_key: item.enchant_weapon_attack_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.015 }] }
+
+  - code: enchant_weapon_crit_2
+    display_name_key: item.enchant_weapon_crit_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 1.5 }] }
+
+  - code: enchant_weapon_strength_2
+    display_name_key: item.enchant_weapon_strength_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.02 }] }
+
+  - code: enchant_weapon_agility_2
+    display_name_key: item.enchant_weapon_agility_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.02 }] }
+
+  - code: enchant_weapon_intellect_2
+    display_name_key: item.enchant_weapon_intellect_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.02 }] }
+
+  - code: enchant_weapon_wisdom_2
+    display_name_key: item.enchant_weapon_wisdom_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.02 }] }
+
+  - code: enchant_weapon_lifesteal_2
+    display_name_key: item.enchant_weapon_lifesteal_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 0.75 }] }
+
+  - code: enchant_armor_defense_2
+    display_name_key: item.enchant_armor_defense_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.0075 }] }
+
+  - code: enchant_armor_health_2
+    display_name_key: item.enchant_armor_health_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.0075 }] }
+
+  - code: enchant_armor_vitality_2
+    display_name_key: item.enchant_armor_vitality_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.011 }] }
+
+  - code: enchant_armor_evasion_2
+    display_name_key: item.enchant_armor_evasion_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 0.45 }] }
+
+  - code: enchant_jewelry_crit_2
+    display_name_key: item.enchant_jewelry_crit_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 0.75 }] }
+
+  - code: enchant_jewelry_hit_2
+    display_name_key: item.enchant_jewelry_hit_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 0.75 }] }
+
+  - code: enchant_jewelry_luck_2
+    display_name_key: item.enchant_jewelry_luck_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.015 }] }
+
+  - code: enchant_jewelry_crit_damage_2
+    display_name_key: item.enchant_jewelry_crit_damage_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 1.5 }] }
+
+  - code: enchant_jewelry_mining_2
+    display_name_key: item.enchant_jewelry_mining_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.03 }] }
+
+  - code: enchant_jewelry_herbalism_2
+    display_name_key: item.enchant_jewelry_herbalism_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.03 }] }
+
+  - code: enchant_jewelry_woodcutting_2
+    display_name_key: item.enchant_jewelry_woodcutting_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.03 }] }
+
+  - code: enchant_jewelry_fishing_2
+    display_name_key: item.enchant_jewelry_fishing_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.03 }] }
+
+  - code: enchant_jewelry_hunting_2
+    display_name_key: item.enchant_jewelry_hunting_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.03 }] }
+
+  - code: enchant_jewelry_craft_speed_2
+    display_name_key: item.enchant_jewelry_craft_speed_2
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 100
+    base_value_copper: 45
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.03 }] }
+
+  - code: enchant_weapon_attack_3
+    display_name_key: item.enchant_weapon_attack_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.02 }] }
+
+  - code: enchant_weapon_crit_3
+    display_name_key: item.enchant_weapon_crit_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 2.0 }] }
+
+  - code: enchant_weapon_strength_3
+    display_name_key: item.enchant_weapon_strength_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.025 }] }
+
+  - code: enchant_weapon_agility_3
+    display_name_key: item.enchant_weapon_agility_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.025 }] }
+
+  - code: enchant_weapon_intellect_3
+    display_name_key: item.enchant_weapon_intellect_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.025 }] }
+
+  - code: enchant_weapon_wisdom_3
+    display_name_key: item.enchant_weapon_wisdom_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.025 }] }
+
+  - code: enchant_weapon_lifesteal_3
+    display_name_key: item.enchant_weapon_lifesteal_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1.0 }] }
+
+  - code: enchant_armor_defense_3
+    display_name_key: item.enchant_armor_defense_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.01 }] }
+
+  - code: enchant_armor_health_3
+    display_name_key: item.enchant_armor_health_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.01 }] }
+
+  - code: enchant_armor_vitality_3
+    display_name_key: item.enchant_armor_vitality_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.014 }] }
+
+  - code: enchant_armor_evasion_3
+    display_name_key: item.enchant_armor_evasion_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 0.6 }] }
+
+  - code: enchant_jewelry_crit_3
+    display_name_key: item.enchant_jewelry_crit_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 1.0 }] }
+
+  - code: enchant_jewelry_hit_3
+    display_name_key: item.enchant_jewelry_hit_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 1.0 }] }
+
+  - code: enchant_jewelry_luck_3
+    display_name_key: item.enchant_jewelry_luck_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.02 }] }
+
+  - code: enchant_jewelry_crit_damage_3
+    display_name_key: item.enchant_jewelry_crit_damage_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 2.0 }] }
+
+  - code: enchant_jewelry_mining_3
+    display_name_key: item.enchant_jewelry_mining_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.04 }] }
+
+  - code: enchant_jewelry_herbalism_3
+    display_name_key: item.enchant_jewelry_herbalism_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.04 }] }
+
+  - code: enchant_jewelry_woodcutting_3
+    display_name_key: item.enchant_jewelry_woodcutting_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.04 }] }
+
+  - code: enchant_jewelry_fishing_3
+    display_name_key: item.enchant_jewelry_fishing_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.04 }] }
+
+  - code: enchant_jewelry_hunting_3
+    display_name_key: item.enchant_jewelry_hunting_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.04 }] }
+
+  - code: enchant_jewelry_craft_speed_3
+    display_name_key: item.enchant_jewelry_craft_speed_3
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 200
+    base_value_copper: 81
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.04 }] }
+
+  - code: enchant_weapon_attack_4
+    display_name_key: item.enchant_weapon_attack_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.025 }] }
+
+  - code: enchant_weapon_crit_4
+    display_name_key: item.enchant_weapon_crit_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 2.5 }] }
+
+  - code: enchant_weapon_strength_4
+    display_name_key: item.enchant_weapon_strength_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.03 }] }
+
+  - code: enchant_weapon_agility_4
+    display_name_key: item.enchant_weapon_agility_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.03 }] }
+
+  - code: enchant_weapon_intellect_4
+    display_name_key: item.enchant_weapon_intellect_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.03 }] }
+
+  - code: enchant_weapon_wisdom_4
+    display_name_key: item.enchant_weapon_wisdom_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.03 }] }
+
+  - code: enchant_weapon_lifesteal_4
+    display_name_key: item.enchant_weapon_lifesteal_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1.25 }] }
+
+  - code: enchant_armor_defense_4
+    display_name_key: item.enchant_armor_defense_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.0125 }] }
+
+  - code: enchant_armor_health_4
+    display_name_key: item.enchant_armor_health_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.0125 }] }
+
+  - code: enchant_armor_vitality_4
+    display_name_key: item.enchant_armor_vitality_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.017 }] }
+
+  - code: enchant_armor_evasion_4
+    display_name_key: item.enchant_armor_evasion_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 0.75 }] }
+
+  - code: enchant_jewelry_crit_4
+    display_name_key: item.enchant_jewelry_crit_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 1.25 }] }
+
+  - code: enchant_jewelry_hit_4
+    display_name_key: item.enchant_jewelry_hit_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 1.25 }] }
+
+  - code: enchant_jewelry_luck_4
+    display_name_key: item.enchant_jewelry_luck_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.025 }] }
+
+  - code: enchant_jewelry_crit_damage_4
+    display_name_key: item.enchant_jewelry_crit_damage_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 2.5 }] }
+
+  - code: enchant_jewelry_mining_4
+    display_name_key: item.enchant_jewelry_mining_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.05 }] }
+
+  - code: enchant_jewelry_herbalism_4
+    display_name_key: item.enchant_jewelry_herbalism_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.05 }] }
+
+  - code: enchant_jewelry_woodcutting_4
+    display_name_key: item.enchant_jewelry_woodcutting_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.05 }] }
+
+  - code: enchant_jewelry_fishing_4
+    display_name_key: item.enchant_jewelry_fishing_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.05 }] }
+
+  - code: enchant_jewelry_hunting_4
+    display_name_key: item.enchant_jewelry_hunting_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.05 }] }
+
+  - code: enchant_jewelry_craft_speed_4
+    display_name_key: item.enchant_jewelry_craft_speed_4
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 300
+    base_value_copper: 146
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.05 }] }
+
+  - code: enchant_weapon_attack_5
+    display_name_key: item.enchant_weapon_attack_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.03 }] }
+
+  - code: enchant_weapon_crit_5
+    display_name_key: item.enchant_weapon_crit_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 3.0 }] }
+
+  - code: enchant_weapon_strength_5
+    display_name_key: item.enchant_weapon_strength_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.035 }] }
+
+  - code: enchant_weapon_agility_5
+    display_name_key: item.enchant_weapon_agility_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.035 }] }
+
+  - code: enchant_weapon_intellect_5
+    display_name_key: item.enchant_weapon_intellect_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.035 }] }
+
+  - code: enchant_weapon_wisdom_5
+    display_name_key: item.enchant_weapon_wisdom_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.035 }] }
+
+  - code: enchant_weapon_lifesteal_5
+    display_name_key: item.enchant_weapon_lifesteal_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1.5 }] }
+
+  - code: enchant_armor_defense_5
+    display_name_key: item.enchant_armor_defense_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.015 }] }
+
+  - code: enchant_armor_health_5
+    display_name_key: item.enchant_armor_health_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.015 }] }
+
+  - code: enchant_armor_vitality_5
+    display_name_key: item.enchant_armor_vitality_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.02 }] }
+
+  - code: enchant_armor_evasion_5
+    display_name_key: item.enchant_armor_evasion_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 0.9 }] }
+
+  - code: enchant_jewelry_crit_5
+    display_name_key: item.enchant_jewelry_crit_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 1.5 }] }
+
+  - code: enchant_jewelry_hit_5
+    display_name_key: item.enchant_jewelry_hit_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 1.5 }] }
+
+  - code: enchant_jewelry_luck_5
+    display_name_key: item.enchant_jewelry_luck_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.03 }] }
+
+  - code: enchant_jewelry_crit_damage_5
+    display_name_key: item.enchant_jewelry_crit_damage_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3.0 }] }
+
+  - code: enchant_jewelry_mining_5
+    display_name_key: item.enchant_jewelry_mining_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.06 }] }
+
+  - code: enchant_jewelry_herbalism_5
+    display_name_key: item.enchant_jewelry_herbalism_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.06 }] }
+
+  - code: enchant_jewelry_woodcutting_5
+    display_name_key: item.enchant_jewelry_woodcutting_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.06 }] }
+
+  - code: enchant_jewelry_fishing_5
+    display_name_key: item.enchant_jewelry_fishing_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.06 }] }
+
+  - code: enchant_jewelry_hunting_5
+    display_name_key: item.enchant_jewelry_hunting_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.06 }] }
+
+  - code: enchant_jewelry_craft_speed_5
+    display_name_key: item.enchant_jewelry_craft_speed_5
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 400
+    base_value_copper: 262
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.06 }] }
+
+  - code: enchant_weapon_attack_6
+    display_name_key: item.enchant_weapon_attack_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.035 }] }
+
+  - code: enchant_weapon_crit_6
+    display_name_key: item.enchant_weapon_crit_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 3.5 }] }
+
+  - code: enchant_weapon_strength_6
+    display_name_key: item.enchant_weapon_strength_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.04 }] }
+
+  - code: enchant_weapon_agility_6
+    display_name_key: item.enchant_weapon_agility_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.04 }] }
+
+  - code: enchant_weapon_intellect_6
+    display_name_key: item.enchant_weapon_intellect_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.04 }] }
+
+  - code: enchant_weapon_wisdom_6
+    display_name_key: item.enchant_weapon_wisdom_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.04 }] }
+
+  - code: enchant_weapon_lifesteal_6
+    display_name_key: item.enchant_weapon_lifesteal_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 1.75 }] }
+
+  - code: enchant_armor_defense_6
+    display_name_key: item.enchant_armor_defense_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.0175 }] }
+
+  - code: enchant_armor_health_6
+    display_name_key: item.enchant_armor_health_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.0175 }] }
+
+  - code: enchant_armor_vitality_6
+    display_name_key: item.enchant_armor_vitality_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.023 }] }
+
+  - code: enchant_armor_evasion_6
+    display_name_key: item.enchant_armor_evasion_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 1.05 }] }
+
+  - code: enchant_jewelry_crit_6
+    display_name_key: item.enchant_jewelry_crit_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 1.75 }] }
+
+  - code: enchant_jewelry_hit_6
+    display_name_key: item.enchant_jewelry_hit_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 1.75 }] }
+
+  - code: enchant_jewelry_luck_6
+    display_name_key: item.enchant_jewelry_luck_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.035 }] }
+
+  - code: enchant_jewelry_crit_damage_6
+    display_name_key: item.enchant_jewelry_crit_damage_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 3.5 }] }
+
+  - code: enchant_jewelry_mining_6
+    display_name_key: item.enchant_jewelry_mining_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.07 }] }
+
+  - code: enchant_jewelry_herbalism_6
+    display_name_key: item.enchant_jewelry_herbalism_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.07 }] }
+
+  - code: enchant_jewelry_woodcutting_6
+    display_name_key: item.enchant_jewelry_woodcutting_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.07 }] }
+
+  - code: enchant_jewelry_fishing_6
+    display_name_key: item.enchant_jewelry_fishing_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.07 }] }
+
+  - code: enchant_jewelry_hunting_6
+    display_name_key: item.enchant_jewelry_hunting_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.07 }] }
+
+  - code: enchant_jewelry_craft_speed_6
+    display_name_key: item.enchant_jewelry_craft_speed_6
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 500
+    base_value_copper: 472
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.07 }] }
+
+  - code: enchant_weapon_attack_7
+    display_name_key: item.enchant_weapon_attack_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.04 }] }
+
+  - code: enchant_weapon_crit_7
+    display_name_key: item.enchant_weapon_crit_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 4.0 }] }
+
+  - code: enchant_weapon_strength_7
+    display_name_key: item.enchant_weapon_strength_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.045 }] }
+
+  - code: enchant_weapon_agility_7
+    display_name_key: item.enchant_weapon_agility_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.045 }] }
+
+  - code: enchant_weapon_intellect_7
+    display_name_key: item.enchant_weapon_intellect_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.045 }] }
+
+  - code: enchant_weapon_wisdom_7
+    display_name_key: item.enchant_weapon_wisdom_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.045 }] }
+
+  - code: enchant_weapon_lifesteal_7
+    display_name_key: item.enchant_weapon_lifesteal_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 2.0 }] }
+
+  - code: enchant_armor_defense_7
+    display_name_key: item.enchant_armor_defense_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.02 }] }
+
+  - code: enchant_armor_health_7
+    display_name_key: item.enchant_armor_health_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.02 }] }
+
+  - code: enchant_armor_vitality_7
+    display_name_key: item.enchant_armor_vitality_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.026 }] }
+
+  - code: enchant_armor_evasion_7
+    display_name_key: item.enchant_armor_evasion_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 1.2 }] }
+
+  - code: enchant_jewelry_crit_7
+    display_name_key: item.enchant_jewelry_crit_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 2.0 }] }
+
+  - code: enchant_jewelry_hit_7
+    display_name_key: item.enchant_jewelry_hit_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 2.0 }] }
+
+  - code: enchant_jewelry_luck_7
+    display_name_key: item.enchant_jewelry_luck_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.04 }] }
+
+  - code: enchant_jewelry_crit_damage_7
+    display_name_key: item.enchant_jewelry_crit_damage_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 4.0 }] }
+
+  - code: enchant_jewelry_mining_7
+    display_name_key: item.enchant_jewelry_mining_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.08 }] }
+
+  - code: enchant_jewelry_herbalism_7
+    display_name_key: item.enchant_jewelry_herbalism_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.08 }] }
+
+  - code: enchant_jewelry_woodcutting_7
+    display_name_key: item.enchant_jewelry_woodcutting_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.08 }] }
+
+  - code: enchant_jewelry_fishing_7
+    display_name_key: item.enchant_jewelry_fishing_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.08 }] }
+
+  - code: enchant_jewelry_hunting_7
+    display_name_key: item.enchant_jewelry_hunting_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.08 }] }
+
+  - code: enchant_jewelry_craft_speed_7
+    display_name_key: item.enchant_jewelry_craft_speed_7
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 600
+    base_value_copper: 850
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.08 }] }
+
+  - code: enchant_weapon_attack_8
+    display_name_key: item.enchant_weapon_attack_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.045 }] }
+
+  - code: enchant_weapon_crit_8
+    display_name_key: item.enchant_weapon_crit_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 4.5 }] }
+
+  - code: enchant_weapon_strength_8
+    display_name_key: item.enchant_weapon_strength_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.05 }] }
+
+  - code: enchant_weapon_agility_8
+    display_name_key: item.enchant_weapon_agility_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.05 }] }
+
+  - code: enchant_weapon_intellect_8
+    display_name_key: item.enchant_weapon_intellect_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.05 }] }
+
+  - code: enchant_weapon_wisdom_8
+    display_name_key: item.enchant_weapon_wisdom_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.05 }] }
+
+  - code: enchant_weapon_lifesteal_8
+    display_name_key: item.enchant_weapon_lifesteal_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 2.25 }] }
+
+  - code: enchant_armor_defense_8
+    display_name_key: item.enchant_armor_defense_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.0225 }] }
+
+  - code: enchant_armor_health_8
+    display_name_key: item.enchant_armor_health_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.0225 }] }
+
+  - code: enchant_armor_vitality_8
+    display_name_key: item.enchant_armor_vitality_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.029 }] }
+
+  - code: enchant_armor_evasion_8
+    display_name_key: item.enchant_armor_evasion_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 1.35 }] }
+
+  - code: enchant_jewelry_crit_8
+    display_name_key: item.enchant_jewelry_crit_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 2.25 }] }
+
+  - code: enchant_jewelry_hit_8
+    display_name_key: item.enchant_jewelry_hit_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 2.25 }] }
+
+  - code: enchant_jewelry_luck_8
+    display_name_key: item.enchant_jewelry_luck_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.045 }] }
+
+  - code: enchant_jewelry_crit_damage_8
+    display_name_key: item.enchant_jewelry_crit_damage_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 4.5 }] }
+
+  - code: enchant_jewelry_mining_8
+    display_name_key: item.enchant_jewelry_mining_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.09 }] }
+
+  - code: enchant_jewelry_herbalism_8
+    display_name_key: item.enchant_jewelry_herbalism_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.09 }] }
+
+  - code: enchant_jewelry_woodcutting_8
+    display_name_key: item.enchant_jewelry_woodcutting_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.09 }] }
+
+  - code: enchant_jewelry_fishing_8
+    display_name_key: item.enchant_jewelry_fishing_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.09 }] }
+
+  - code: enchant_jewelry_hunting_8
+    display_name_key: item.enchant_jewelry_hunting_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.09 }] }
+
+  - code: enchant_jewelry_craft_speed_8
+    display_name_key: item.enchant_jewelry_craft_speed_8
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 700
+    base_value_copper: 1531
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.09 }] }
+
+  - code: enchant_weapon_attack_9
+    display_name_key: item.enchant_weapon_attack_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }] }
+
+  - code: enchant_weapon_crit_9
+    display_name_key: item.enchant_weapon_crit_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 5.0 }] }
+
+  - code: enchant_weapon_strength_9
+    display_name_key: item.enchant_weapon_strength_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.055 }] }
+
+  - code: enchant_weapon_agility_9
+    display_name_key: item.enchant_weapon_agility_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.055 }] }
+
+  - code: enchant_weapon_intellect_9
+    display_name_key: item.enchant_weapon_intellect_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.055 }] }
+
+  - code: enchant_weapon_wisdom_9
+    display_name_key: item.enchant_weapon_wisdom_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.055 }] }
+
+  - code: enchant_weapon_lifesteal_9
+    display_name_key: item.enchant_weapon_lifesteal_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 2.5 }] }
+
+  - code: enchant_armor_defense_9
+    display_name_key: item.enchant_armor_defense_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.025 }] }
+
+  - code: enchant_armor_health_9
+    display_name_key: item.enchant_armor_health_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.025 }] }
+
+  - code: enchant_armor_vitality_9
+    display_name_key: item.enchant_armor_vitality_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.032 }] }
+
+  - code: enchant_armor_evasion_9
+    display_name_key: item.enchant_armor_evasion_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 1.5 }] }
+
+  - code: enchant_jewelry_crit_9
+    display_name_key: item.enchant_jewelry_crit_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 2.5 }] }
+
+  - code: enchant_jewelry_hit_9
+    display_name_key: item.enchant_jewelry_hit_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 2.5 }] }
+
+  - code: enchant_jewelry_luck_9
+    display_name_key: item.enchant_jewelry_luck_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.05 }] }
+
+  - code: enchant_jewelry_crit_damage_9
+    display_name_key: item.enchant_jewelry_crit_damage_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 5.0 }] }
+
+  - code: enchant_jewelry_mining_9
+    display_name_key: item.enchant_jewelry_mining_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.1 }] }
+
+  - code: enchant_jewelry_herbalism_9
+    display_name_key: item.enchant_jewelry_herbalism_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.1 }] }
+
+  - code: enchant_jewelry_woodcutting_9
+    display_name_key: item.enchant_jewelry_woodcutting_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.1 }] }
+
+  - code: enchant_jewelry_fishing_9
+    display_name_key: item.enchant_jewelry_fishing_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.1 }] }
+
+  - code: enchant_jewelry_hunting_9
+    display_name_key: item.enchant_jewelry_hunting_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.1 }] }
+
+  - code: enchant_jewelry_craft_speed_9
+    display_name_key: item.enchant_jewelry_craft_speed_9
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 800
+    base_value_copper: 2755
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.1 }] }
+
+  - code: enchant_weapon_attack_10
+    display_name_key: item.enchant_weapon_attack_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: attack, amount: 0.055 }] }
+
+  - code: enchant_weapon_crit_10
+    display_name_key: item.enchant_weapon_crit_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: crit_pct, amount: 5.5 }] }
+
+  - code: enchant_weapon_strength_10
+    display_name_key: item.enchant_weapon_strength_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: str, amount: 0.06 }] }
+
+  - code: enchant_weapon_agility_10
+    display_name_key: item.enchant_weapon_agility_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: agi, amount: 0.06 }] }
+
+  - code: enchant_weapon_intellect_10
+    display_name_key: item.enchant_weapon_intellect_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: int, amount: 0.06 }] }
+
+  - code: enchant_weapon_wisdom_10
+    display_name_key: item.enchant_weapon_wisdom_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: mult_add, target: cha, amount: 0.06 }] }
+
+  - code: enchant_weapon_lifesteal_10
+    display_name_key: item.enchant_weapon_lifesteal_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [weapon], modifiers: [{ kind: flat, target: lifesteal_pct, amount: 2.75 }] }
+
+  - code: enchant_armor_defense_10
+    display_name_key: item.enchant_armor_defense_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: defense, amount: 0.0275 }] }
+
+  - code: enchant_armor_health_10
+    display_name_key: item.enchant_armor_health_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: hp_max, amount: 0.0275 }] }
+
+  - code: enchant_armor_vitality_10
+    display_name_key: item.enchant_armor_vitality_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: mult_add, target: vit, amount: 0.035 }] }
+
+  - code: enchant_armor_evasion_10
+    display_name_key: item.enchant_armor_evasion_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [armor], modifiers: [{ kind: flat, target: evasion_pct, amount: 1.65 }] }
+
+  - code: enchant_jewelry_crit_10
+    display_name_key: item.enchant_jewelry_crit_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_pct, amount: 2.75 }] }
+
+  - code: enchant_jewelry_hit_10
+    display_name_key: item.enchant_jewelry_hit_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: hit_pct, amount: 2.75 }] }
+
+  - code: enchant_jewelry_luck_10
+    display_name_key: item.enchant_jewelry_luck_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: luck, amount: 0.055 }] }
+
+  - code: enchant_jewelry_crit_damage_10
+    display_name_key: item.enchant_jewelry_crit_damage_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 5.5 }] }
+
+  - code: enchant_jewelry_mining_10
+    display_name_key: item.enchant_jewelry_mining_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_mining, amount: 0.11 }] }
+
+  - code: enchant_jewelry_herbalism_10
+    display_name_key: item.enchant_jewelry_herbalism_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_herbalism, amount: 0.11 }] }
+
+  - code: enchant_jewelry_woodcutting_10
+    display_name_key: item.enchant_jewelry_woodcutting_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_woodcutting, amount: 0.11 }] }
+
+  - code: enchant_jewelry_fishing_10
+    display_name_key: item.enchant_jewelry_fishing_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_fishing, amount: 0.11 }] }
+
+  - code: enchant_jewelry_hunting_10
+    display_name_key: item.enchant_jewelry_hunting_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: gather_yield_hunting, amount: 0.11 }] }
+
+  - code: enchant_jewelry_craft_speed_10
+    display_name_key: item.enchant_jewelry_craft_speed_10
+    item_class: consumable
+    item_subclass: enchant_scroll
+    min_level: 900
+    base_value_copper: 4959
+    base_weight_g: 50
+    stackable: true
+    max_stack: 20
+    bind_kind: boe
+    enchant: { slots: [jewelry], modifiers: [{ kind: mult_add, target: craft_speed, amount: 0.11 }] }
+  # <<< generated: enchanting

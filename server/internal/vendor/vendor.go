@@ -72,6 +72,7 @@ type ItemSnapshot struct {
 	Suffix        *string `json:"suffix,omitempty"`
 	StackQuantity int32   `json:"stack_quantity"`
 	IsBound       bool    `json:"is_bound"`
+	Enchant       *string `json:"enchant,omitempty"` // DD-293
 }
 
 // --- Price formula ----------------------------------------------------------

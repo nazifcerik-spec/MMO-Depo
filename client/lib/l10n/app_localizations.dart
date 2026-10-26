@@ -4497,6 +4497,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'not yet (level or attributes)'**
   String get wearLegendLater;
+
+  /// No description provided for @enchantAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enchant'**
+  String get enchantAction;
+
+  /// No description provided for @enchantPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the gear to enchant'**
+  String get enchantPick;
+
+  /// No description provided for @enchantNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None of your gear fits this scroll.'**
+  String get enchantNone;
+
+  /// No description provided for @enchantFits.
+  ///
+  /// In en, this message translates to:
+  /// **'Goes on: {groups}'**
+  String enchantFits(String groups);
+
+  /// No description provided for @enchantGroupWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'weapons'**
+  String get enchantGroupWeapon;
+
+  /// No description provided for @enchantGroupArmor.
+  ///
+  /// In en, this message translates to:
+  /// **'armor'**
+  String get enchantGroupArmor;
+
+  /// No description provided for @enchantGroupJewelry.
+  ///
+  /// In en, this message translates to:
+  /// **'jewelry'**
+  String get enchantGroupJewelry;
+
+  /// No description provided for @enchantGroupAny.
+  ///
+  /// In en, this message translates to:
+  /// **'any gear'**
+  String get enchantGroupAny;
+
+  /// No description provided for @enchantReplaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace the enchant?'**
+  String get enchantReplaceTitle;
+
+  /// No description provided for @enchantReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{old} is lost and {next} takes its place.'**
+  String enchantReplaceBody(String old, String next);
+
+  /// No description provided for @enchantDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{item} enchanted'**
+  String enchantDone(String item);
+
+  /// No description provided for @enchantOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Enchant: {name}'**
+  String enchantOn(String name);
+
+  /// No description provided for @wornTag.
+  ///
+  /// In en, this message translates to:
+  /// **'worn'**
+  String get wornTag;
+
+  /// No description provided for @errNotEnchant.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not an enchanting scroll.'**
+  String get errNotEnchant;
+
+  /// No description provided for @errEnchantSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'The enchant doesn\'t fit that gear.'**
+  String get errEnchantSlot;
+
+  /// No description provided for @statGatherMining.
+  ///
+  /// In en, this message translates to:
+  /// **'Mining yield'**
+  String get statGatherMining;
+
+  /// No description provided for @statGatherHerbalism.
+  ///
+  /// In en, this message translates to:
+  /// **'Herbalism yield'**
+  String get statGatherHerbalism;
+
+  /// No description provided for @statGatherWoodcutting.
+  ///
+  /// In en, this message translates to:
+  /// **'Woodcutting yield'**
+  String get statGatherWoodcutting;
+
+  /// No description provided for @statGatherFishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Fishing yield'**
+  String get statGatherFishing;
+
+  /// No description provided for @statGatherHunting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunting yield'**
+  String get statGatherHunting;
+
+  /// No description provided for @statCraftSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting speed'**
+  String get statCraftSpeed;
+
+  /// No description provided for @diffXp.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% XP'**
+  String diffXp(int pct);
+
+  /// No description provided for @diffNoXp.
+  ///
+  /// In en, this message translates to:
+  /// **'no XP'**
+  String get diffNoXp;
+
+  /// No description provided for @diffLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe colors: the XP a craft teaches at your skill'**
+  String get diffLegend;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

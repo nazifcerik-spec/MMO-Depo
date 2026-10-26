@@ -2885,6 +2885,60 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-293 — Efsunlama mesleği: ekipmana kalıcı efsun
+**Karar:**
+- **Meslek ve parşömenler:** Yeni üretim mesleği `enchanting` (1–100). `gen_crafting.py` 21 efsun türü × 10 kademe parşömen üretir (beceri 1, 10 … 90; kullanım seviyesi 1, 100 … 900; 4 dilde ad). Her parşömenin bir tarifi vardır.
+- **Efsun türleri:**
+  - Silah: saldırı %, kritik, güç / çeviklik / zekâ / bilgelik % (her sınıfın ana niteliği), can çalma.
+  - Zırh: savunma %, can %, dayanıklılık %, kaçınma.
+  - Takı: kritik, isabet, şans %, kritik hasar.
+  - Meslek (takıda): beş toplama verimi (maden / bitki / odun / balık / av) % ve üretim hızı %.
+  - Yüzde statlar düz puan, diğerleri `mult_add`.
+  - Zırh ve takı yuvaları çok olduğu için tek tek küçük tutuldu.
+- **Veri modeli (migration 0045):**
+  - Şablonda `enchant` alanı: `slots` (weapon / armor / jewelry / any) ve `modifiers`. Contentpack bunu doğrular: tür `enchant_scroll`, hedef ve miktar sınırları.
+  - Eşya örneğinde `enchant_code` alanı: o parçanın taşıdığı efsunu veren parşömenin kodu.
+  - Her parçada tek efsun bulunur, yenisi eskisinin yerine geçer.
+- **Uygulama:** `POST /character/{id}/items/{item_id}/enchant` (`scroll_id`), çantadaki ya da giyili ekipmana. Parşömen ve hedef tek işlemde kilitlenir, bir parşömen düşer. Kontroller: parşömen seviyesi, yuva grubu. Hatalar: `E_NOT_ENCHANT`, `E_ENCHANT_SLOT`, `E_LEVEL_REQUIREMENT`.
+- **Bonusların işlemesi:**
+  - Çanta ve ekipman sorgusu efsunu birleştirir; `EffectiveModifiers` efsunu etkin bonuslara ekler. Böylece sheet, karşılaştırma tablosu ve eşya detayı efsunu kendiliğinden görür.
+  - Toplama verimi: yeni toplamada ustalık bonusuna eklenir (`EquipmentService.ProfessionBonus`).
+  - Üretim hızı: yeni işin birim süresini kısaltır (en çok %50, `crafting.WithSpeed`).
+  - Satış ve geri alım efsunu korur.
+- **İstemci:**
+  - Parşömen detayında uygulandığı yerler ve etkisi, "Efsunla" düğmesi.
+  - Uygun eşyaların listesi (giyili olanlar dahil, mevcut efsun gösterilir), değiştirme onayı.
+  - Ekipman detayında "Efsun: …" satırı. Meslek stat adları.
+
+**Reason:** Kullanıcı isteği: tüm sınıflara ve mesleklere uygun tariflerle efsunlama mesleği, ekipmana kalıcı efsun (seçilen model).
+**Alternatives:** Süreli efsun buff'ı. Diğer mesleklere ara malzeme.
+**Consequences:**
+- Efsunlar denge simülasyonunun üstünde güç ekler; kitler efsunsuzdur.
+- Takılarda savaş ve meslek efsunları aynı yuvaları paylaşır.
+- Testler: `TestHTTPEnchanting`, `TestShippedEnchanting`, `TestValidateEnchant`, `TestEnchantFits`, `TestStart_DifficultyAndSpeed`, istemci efsun akış testi.
+
+**Tarih:** 2026-10-27
+
+---
+
+## DD-294 — Tarif zorluğu (renk) ve XP payı
+**Karar:**
+- Tarifin min becerisi ile karakterin becerisi arasındaki farka göre renk ve XP payı (`crafting.DifficultyBands`):
+  - fark < 5: turuncu, tam XP
+  - < 10: sarı, %60
+  - < 20: yeşil, %25
+  - üstü: gri, XP yok
+- Pay iş başlarken hesaplanır ve dondurulan tarife yazılır.
+- `GET /v1/professions` bantları `difficulty` alanında döner. İstemci tarif adını renklendirir, yanında XP payını gösterir; meslek ekranında renk açıklaması vardır.
+- Hiçbir meslekte belli bir becerinin üstünde tüm tarifler grileşip öğretmeyi bırakmamalı (`TestRecipeLaddersNeverGoGrey`). Bu test kuyumculuğun beceri 3'ten başladığını yakaladı: yeni kuyumcu hiçbir şey üretemiyordu. Takı tarifleri 2 beceri aşağı çekildi, merdiven beceri 1'den başlıyor.
+
+**Reason:** Kullanıcı isteği: tüm mesleklerdeki tarifler derecelendirilsin (seçilen model: zorluk rengi).
+**Alternatives:** Unvan kademeleri. Becerine göre kalite yıldızı.
+**Consequences:** Eski, kolay tarifi tekrar tekrar üretmek artık meslek ilerletmez; ilerlemek için yeni tariflere geçmek gerekir. Toplama meslekleri değişmedi (tarifleri yok).
+**Tarih:** 2026-10-27
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

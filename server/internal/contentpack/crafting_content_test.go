@@ -40,7 +40,11 @@ func TestShippedCraftingCoversGear(t *testing.T) {
 		case it.EquipSlot != "" && it.Requirements == nil && it.ItemSubclass != "shield" && !setPiece[it.Code]:
 			r, ok := recipeFor[it.Code]
 			require.True(t, ok, "%s has no recipe", it.Code)
-			require.Equal(t, int16(max(1, (int(it.MinLevel)+9)/10)), r.MinSkill, "%s: skill = ceil(level/10)", it.Code)
+			want := max(1, (int(it.MinLevel)+9)/10)
+			if it.ItemClass == "jewelry" { // the jewelry ladder starts at skill 1 (DD-294)
+				want = max(1, want-2)
+			}
+			require.Equal(t, int16(want), r.MinSkill, "%s: skill = ceil(level/10)", it.Code)
 		case it.ItemSubclass == "bar":
 			require.True(t, used[it.Code], "%s is used by a recipe", it.Code)
 		}

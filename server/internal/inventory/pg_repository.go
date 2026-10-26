@@ -32,9 +32,11 @@ const bagSelect = `
 	       i.stack_quantity, t.max_stack, i.rarity,
 	       i.prefix_code, i.suffix_code, i.is_bound, i.is_locked, i.lock_owner,
 	       t.base_weight_g, t.base_value_copper,
-	       t.stat_bonuses, t.equip_slot, t.class_restriction, t.min_level, t.use_effect
+	       t.stat_bonuses, t.equip_slot, t.class_restriction, t.min_level, t.use_effect,
+	       i.enchant_code, e.enchant, t.enchant
 	  FROM inventory.item_instance i
-	  JOIN content.item_template t ON t.code = i.template_code`
+	  JOIN content.item_template t ON t.code = i.template_code
+	  LEFT JOIN content.item_template e ON e.code = i.enchant_code`
 
 func (r *PgRepo) scanBagItem(row pgx.Row) (BagItem, error) {
 	var b BagItem
@@ -45,6 +47,7 @@ func (r *PgRepo) scanBagItem(row pgx.Row) (BagItem, error) {
 		&b.Prefix, &b.Suffix, &b.IsBound, &b.IsLocked, &b.LockOwner,
 		&b.WeightGramsPer, &b.BaseValueCopper,
 		&b.StatBonusesRaw, &b.EquipSlotOnTmpl, &b.ClassRestriction, &b.MinLevel, &b.UseEffect,
+		&b.EnchantCode, &b.EnchantRaw, &b.Enchant,
 	)
 	if err == nil && b.EquipSlotOnTmpl != nil {
 		b.EffectiveBonuses = EffectiveModifiers(b)
@@ -338,6 +341,65 @@ func (r *PgRepo) SplitStack(ctx context.Context, sourceID, ownerID uuid.UUID, am
 }
 
 // --- Equipment methods (EquippedRepo) ---------------------------------------
+
+// ApplyEnchant puts a scroll's enchant on a piece of gear and uses up one
+// scroll, in one transaction with both rows locked (DD-293). check sees the
+// two template codes and refuses a mismatch; the previous enchant code (nil
+// for none) is returned.
+func (r *PgRepo) ApplyEnchant(ctx context.Context, characterID, itemID, scrollID uuid.UUID,
+	check func(scrollCode, targetCode string) error) (*string, error) {
+	var previous *string
+	err := pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		var scrollCode string
+		var stack int32
+		var locked bool
+		var owner *uuid.UUID
+		var equipped *string
+		err := tx.QueryRow(ctx, `
+			SELECT template_code, stack_quantity, is_locked, owner_character_id, equipment_slot
+			  FROM inventory.item_instance WHERE id = $1 FOR UPDATE`, scrollID).
+			Scan(&scrollCode, &stack, &locked, &owner, &equipped)
+		if errors.Is(err, pgx.ErrNoRows) || (err == nil && (owner == nil || *owner != characterID || equipped != nil)) {
+			return ErrNotFound
+		}
+		if err != nil {
+			return err
+		}
+		if locked {
+			return ErrLocked
+		}
+		var targetCode string
+		err = tx.QueryRow(ctx, `
+			SELECT template_code, is_locked, owner_character_id, enchant_code
+			  FROM inventory.item_instance WHERE id = $1 FOR UPDATE`, itemID).
+			Scan(&targetCode, &locked, &owner, &previous)
+		if errors.Is(err, pgx.ErrNoRows) || (err == nil && (owner == nil || *owner != characterID)) {
+			return ErrNotFound
+		}
+		if err != nil {
+			return err
+		}
+		if locked {
+			return ErrLocked
+		}
+		if err := check(scrollCode, targetCode); err != nil {
+			return err
+		}
+		if _, err := tx.Exec(ctx, `
+			UPDATE inventory.item_instance SET enchant_code = $2, updated_at = now(), version = version + 1
+			 WHERE id = $1`, itemID, scrollCode); err != nil {
+			return err
+		}
+		if stack > 1 {
+			_, err = tx.Exec(ctx, `UPDATE inventory.item_instance SET stack_quantity = stack_quantity - 1,
+				updated_at = now(), version = version + 1 WHERE id = $1`, scrollID)
+		} else {
+			_, err = tx.Exec(ctx, `DELETE FROM inventory.item_instance WHERE id = $1`, scrollID)
+		}
+		return err
+	})
+	return previous, err
+}
 
 func (r *PgRepo) Equipped(ctx context.Context, characterID uuid.UUID) ([]BagItem, error) {
 	rows, err := r.pool.Query(ctx,

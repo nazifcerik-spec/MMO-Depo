@@ -69,6 +69,43 @@ type Recipe struct {
 	Version            int32
 }
 
+// Recipe difficulty (DD-294): how far the character's skill is past a
+// recipe's minimum decides the color shown and the share of its profession
+// XP a craft pays. Grey recipes teach nothing more.
+const (
+	DifficultyOrange = "orange"
+	DifficultyYellow = "yellow"
+	DifficultyGreen  = "green"
+	DifficultyGrey   = "grey"
+)
+
+// DifficultyBand: a skill gap below Below is Color and pays XPFactor.
+type DifficultyBand struct {
+	Below    int16   `json:"below"`
+	Color    string  `json:"color"`
+	XPFactor float64 `json:"xp_factor"`
+}
+
+// DifficultyBands, closest first; a gap past the last is grey (no XP). The
+// recipe ladders keep a non-grey recipe within reach at every skill
+// (TestRecipeLaddersNeverGoGrey).
+var DifficultyBands = []DifficultyBand{
+	{Below: 5, Color: DifficultyOrange, XPFactor: 1},
+	{Below: 10, Color: DifficultyYellow, XPFactor: 0.6},
+	{Below: 20, Color: DifficultyGreen, XPFactor: 0.25},
+}
+
+// Difficulty is a recipe's color and XP share at a skill.
+func Difficulty(minSkill, skill int16) (string, float64) {
+	gap := skill - minSkill
+	for _, b := range DifficultyBands {
+		if gap < b.Below {
+			return b.Color, b.XPFactor
+		}
+	}
+	return DifficultyGrey, 0
+}
+
 // CharacterProfession is one row in crafting.character_profession — the
 // character's skill in a specific profession.
 type CharacterProfession struct {

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"math"
 	"time"
 
 	"github.com/google/uuid"
@@ -60,10 +61,23 @@ type Service struct {
 	cfg      ServiceConfig
 	log      *slog.Logger
 	progress progression.Recorder
+	speed    SpeedSource // worn enchants' crafting speed (DD-293); nil = none
 }
 
 // WithRecorder feeds crafts into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
+
+// SpeedSource reports a profession bonus from worn gear
+// (inventory.EquipmentService): here the "craft_speed" share.
+type SpeedSource interface {
+	ProfessionBonus(ctx context.Context, characterID uuid.UUID, target string) (float64, error)
+}
+
+// WithSpeed makes worn crafting-speed enchants shorten new jobs (DD-293).
+func (s *Service) WithSpeed(src SpeedSource) *Service { s.speed = src; return s }
+
+// MaxCraftSpeed caps how much enchants shorten a craft.
+const MaxCraftSpeed = 0.5
 
 func NewService(
 	repo Repository,
@@ -137,9 +151,20 @@ func (s *Service) Start(ctx context.Context, characterID, accountID uuid.UUID, r
 	if cp.Level < recipe.MinSkill {
 		return nil, ErrSkillTooLow
 	}
+	// The XP each unit pays follows the recipe's difficulty for the skill now
+	// (DD-294); the job freezes it with the recipe.
+	_, factor := Difficulty(recipe.MinSkill, cp.Level)
+	recipe.ProfessionXPReward = int32(math.Round(float64(recipe.ProfessionXPReward) * factor))
 	unit := recipe.CraftSeconds
 	if unit < 1 {
 		unit = DefaultCraftSeconds
+	}
+	if s.speed != nil {
+		speed, err := s.speed.ProfessionBonus(ctx, characterID, "craft_speed")
+		if err != nil {
+			return nil, err
+		}
+		unit = max(1, int32(math.Round(float64(unit)*(1-min(speed, MaxCraftSpeed)))))
 	}
 	if int64(unit)*int64(count) > MaxJobSeconds {
 		return nil, ErrJobTooLong

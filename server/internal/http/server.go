@@ -324,6 +324,8 @@ func NewRouter(d Deps) http.Handler {
 					Post("/equip/{item_id}", equipHandler.Equip)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/unequip/{slot}", equipHandler.Unequip)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/items/{item_id}/enchant", equipHandler.Enchant) // DD-293
 
 				// --- Hunt (Sprint 14) — AFK combat encounter contracts ---
 				if d.HuntHandler != nil {

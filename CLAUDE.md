@@ -209,6 +209,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 99. **Boşluksuz çanta + adet sayı kutusu (bitti)** — Sprint 99, DD-291..292. Çanta görüntülemesi yuvaları sırayı koruyarak 0..n-1'e sıkıştırır (`Repository.Compact`; her eşya işleminden sonraki yenilemede boşluk kapanır). Nitelik, av malzemesi, üretim adedi, pazar adedi: `QuantityField` (rakam, sınıra çekme, boş = en az); `HoldRepeatButton` kaldırıldı.
 
+100. **Efsunlama + tarif zorluğu (bitti)** — Sprint 100, DD-293..294. Migration 0045 (`item_template.enchant`, `item_instance.enchant_code`). `enchanting` mesleği: `gen_crafting.py` 21 tür × 10 kademe parşömen + tarif (silah: saldırı/kritik/güç/çeviklik/zekâ/bilgelik/can çalma; zırh: savunma/can/dayanıklılık/kaçınma; takı: kritik/isabet/şans/kritik hasar + 5 toplama verimi + üretim hızı). `POST /character/{id}/items/{item_id}/enchant` (`scroll_id`; tek işlem, bir parşömen; `E_ENCHANT_SLOT`/`E_NOT_ENCHANT`); efsun `EffectiveModifiers`'ta → sheet/karşılaştırma; toplama verimi ustalığa eklenir (`EquipmentService.ProfessionBonus`), üretim hızı `crafting.WithSpeed` (en çok %50); geri alım korur. Tarif zorluğu `crafting.DifficultyBands` (turuncu/sarı/yeşil/gri, XP 100/60/25/0, iş başında dondurulur), `/v1/professions` `difficulty`; istemci renk + XP payı + açıklama. Fix: kuyumculuk beceri 3'ten başlıyordu (yeni kuyumcu üretemezdi) → takı merdiveni −2 (`TestRecipeLaddersNeverGoGrey`).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

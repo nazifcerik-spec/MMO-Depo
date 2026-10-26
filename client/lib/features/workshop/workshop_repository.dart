@@ -52,6 +52,35 @@ class Recipe {
   final ItemInfo? info;
 }
 
+/// Recipe difficulty (DD-294): a skill gap below [below] is [color] and a
+/// craft pays [xpFactor] of the recipe's XP; past the last band it is grey.
+class DifficultyBand {
+  const DifficultyBand(this.below, this.color, this.xpFactor);
+
+  factory DifficultyBand.fromJson(Map<String, dynamic> j) =>
+      DifficultyBand((j['below'] as num).toInt(), j['color'] as String, (j['xp_factor'] as num).toDouble());
+
+  final int below;
+  final String color;
+  final double xpFactor;
+}
+
+/// The server's bands (crafting.DifficultyBands) until /v1/professions says otherwise.
+const defaultDifficulty = [
+  DifficultyBand(5, 'orange', 1),
+  DifficultyBand(10, 'yellow', 0.6),
+  DifficultyBand(20, 'green', 0.25),
+];
+
+/// A recipe's color and XP share at [skill].
+(String, double) recipeDifficulty(List<DifficultyBand> bands, int minSkill, int skill) {
+  final gap = skill - minSkill;
+  for (final b in bands) {
+    if (gap < b.below) return (b.color, b.xpFactor);
+  }
+  return ('grey', 0);
+}
+
 /// A recipe output's properties (GET /v1/recipes `output`).
 class ItemInfo {
   const ItemInfo({
@@ -229,12 +258,21 @@ class WorkshopRepository {
 
   String get _char => '/v1/character/$characterId';
 
-  Future<List<String>> professions() async => _professions ??= [
-    for (final p
-        in ((await api.get('/v1/professions'))['professions'] as List? ?? const []).cast<Map<String, dynamic>>())
-      // Gathering professions level on the Gather tab (DD-244).
-      if (p['kind'] != 'gathering') p['code'] as String,
-  ];
+  /// Recipe difficulty bands, read with [professions] (DD-294).
+  List<DifficultyBand> difficulty = defaultDifficulty;
+
+  Future<List<String>> professions() async {
+    if (_professions case final cached?) return cached;
+    final j = await api.get('/v1/professions');
+    if (j['difficulty'] case final List bands when bands.isNotEmpty) {
+      difficulty = [for (final b in bands.cast<Map<String, dynamic>>()) DifficultyBand.fromJson(b)];
+    }
+    return _professions = [
+      for (final p in (j['professions'] as List? ?? const []).cast<Map<String, dynamic>>())
+        // Gathering professions level on the Gather tab (DD-244).
+        if (p['kind'] != 'gathering') p['code'] as String,
+    ];
+  }
 
   /// One profession's recipes, fetched on first use: the gear professions
   /// hold hundreds each (DD-274).

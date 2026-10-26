@@ -87,6 +87,11 @@ func (r *PgRepo) Rebind(ctx context.Context, instanceID uuid.UUID) error {
 	return err
 }
 
+func (r *PgRepo) SetEnchant(ctx context.Context, instanceID uuid.UUID, enchantCode string) error {
+	_, err := r.pool.Exec(ctx, `UPDATE inventory.item_instance SET enchant_code = $2 WHERE id = $1`, instanceID, enchantCode)
+	return err
+}
+
 func (r *PgRepo) ClaimBuyback(ctx context.Context, id uuid.UUID, at time.Time) error {
 	const q = `UPDATE economy.vendor_buyback
 	              SET claimed_at = $2

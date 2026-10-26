@@ -261,7 +261,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Quests tick from the same event stream as mastery/achievements (DD-221).
 	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub)
 	recorder := progression.Recorders(progSvc, questSvc)
-	activitySvc.WithRecorder(recorder).WithGatherBonus(progSvc).WithNotifier(notifSvc)
+	activitySvc.WithRecorder(recorder).WithGatherBonus(gatherBonus{progSvc, equipSvc}).WithNotifier(notifSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).
 	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
 		effects, err := progSvc.ActiveBonuses(ctx, id)
@@ -291,7 +291,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc).
 		WithRegionGate(worldSvc).WithSupplies(itemSvc).WithFood(consumableSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
-	craftSvc.WithRecorder(recorder)
+	craftSvc.WithRecorder(recorder).WithSpeed(equipSvc) // crafting-speed enchants (DD-293)
 	// Raids (DD-261): party runs of the group dungeon templates.
 	raidSvc := raid.NewService(pool, dungCatSvc, combatSvc, charSvc, charSvc, itemSvc, txnSvc, logger,
 		func(seed int64) combat.RNG { return activity.NewRNG(seed) }).
@@ -417,6 +417,22 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 }
 
 // reloadFn adapts a plain closure to contentpack.Reloader.
+// gatherBonus adds the gathering-yield enchants of worn gear (DD-293) to
+// the mastery bonus a new gathering run freezes.
+type gatherBonus struct {
+	mastery *progression.Service
+	gear    *inventory.EquipmentService
+}
+
+func (g gatherBonus) GatherBonus(ctx context.Context, characterID uuid.UUID, kind string) (float64, float64, error) {
+	flat, mult, err := g.mastery.GatherBonus(ctx, characterID, kind)
+	if err != nil {
+		return 0, 0, err
+	}
+	gear, err := g.gear.ProfessionBonus(ctx, characterID, "gather_yield_"+kind)
+	return flat, mult + gear, err
+}
+
 type reloadFn func(ctx context.Context) error
 
 func (f reloadFn) Reload(ctx context.Context) error { return f(ctx) }

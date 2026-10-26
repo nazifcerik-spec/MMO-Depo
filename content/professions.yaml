@@ -40,6 +40,10 @@ professions:
     display_name_key: profession.smelting
     max_level: 100
 
+  - code: enchanting # scrolls that enchant gear (DD-293)
+    display_name_key: profession.enchanting
+    max_level: 100
+
   # Gathering professions (DD-244): levelled by gathering, never learned.
   - code: hunting
     display_name_key: profession.hunting

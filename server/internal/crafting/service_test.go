@@ -345,3 +345,63 @@ func TestProfessionXPToNext_MonotonicByLevel(t *testing.T) {
 	require.Equal(t, int32(64), ProfessionXPToNext(0))
 	require.Equal(t, int32(64), ProfessionXPToNext(-5))
 }
+
+func TestDifficulty(t *testing.T) {
+	for _, c := range []struct {
+		min, skill int16
+		color      string
+		factor     float64
+	}{
+		{10, 10, DifficultyOrange, 1}, {10, 14, DifficultyOrange, 1},
+		{10, 15, DifficultyYellow, 0.6}, {10, 19, DifficultyYellow, 0.6},
+		{10, 20, DifficultyGreen, 0.25}, {10, 29, DifficultyGreen, 0.25},
+		{10, 30, DifficultyGrey, 0}, {1, 100, DifficultyGrey, 0},
+	} {
+		color, f := Difficulty(c.min, c.skill)
+		require.Equal(t, c.color, color, "%d at %d", c.min, c.skill)
+		require.Equal(t, c.factor, f)
+	}
+}
+
+type fakeSpeed float64
+
+func (f fakeSpeed) ProfessionBonus(_ context.Context, _ uuid.UUID, target string) (float64, error) {
+	if target != "craft_speed" {
+		return 0, nil
+	}
+	return float64(f), nil
+}
+
+// A job freezes the XP the recipe's difficulty pays at the skill it starts
+// at (DD-294) and runs faster with crafting-speed enchants (DD-293).
+func TestStart_DifficultyAndSpeed(t *testing.T) {
+	svc, repo, _, _ := newTestSvc(t)
+	ctx := context.Background()
+	charID, acct := learned(t, svc)
+
+	job, err := svc.Start(ctx, charID, acct, "recipe_potion", 1)
+	require.NoError(t, err)
+	require.Equal(t, int32(100), job.Recipe.ProfessionXPReward, "orange: full XP")
+	require.Equal(t, int32(30), job.UnitSeconds)
+	require.NoError(t, repo.DeleteJob(ctx, job.ID))
+
+	repo.rows[key(charID, "alchemy")].Level = 8 // 7 past the recipe: yellow
+	job, err = svc.Start(ctx, charID, acct, "recipe_potion", 1)
+	require.NoError(t, err)
+	require.Equal(t, int32(60), job.Recipe.ProfessionXPReward)
+	require.NoError(t, repo.DeleteJob(ctx, job.ID))
+
+	repo.rows[key(charID, "alchemy")].Level = 40 // grey: teaches nothing
+	svc.WithSpeed(fakeSpeed(0.25))
+	job, err = svc.Start(ctx, charID, acct, "recipe_potion", 2)
+	require.NoError(t, err)
+	require.Zero(t, job.Recipe.ProfessionXPReward)
+	require.Equal(t, int32(23), job.UnitSeconds, "30 s less a quarter")
+	require.Equal(t, now.Add(46*time.Second), job.ReadyAt)
+	require.NoError(t, repo.DeleteJob(ctx, job.ID))
+
+	svc.WithSpeed(fakeSpeed(0.9))
+	job, err = svc.Start(ctx, charID, acct, "recipe_potion", 1)
+	require.NoError(t, err)
+	require.Equal(t, int32(15), job.UnitSeconds, "capped at half")
+}

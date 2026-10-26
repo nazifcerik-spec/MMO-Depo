@@ -1255,6 +1255,20 @@ class FakeBackend {
         'received_copper': ((item['base_value_copper'] as int) * 0.25 * (item['stack_quantity'] as int)).floor(),
       });
     }
+    final ench = RegExp(r'/items/([^/]+)/enchant$').firstMatch(path);
+    if (ench != null) {
+      final scroll = bag.firstWhere((i) => i['instance_id'] == body['scroll_id']);
+      final target = [...bag, ...equipped.values].firstWhere((i) => i['instance_id'] == ench[1]);
+      final previous = target['enchant_code'];
+      target['enchant_code'] = scroll['template_code'];
+      final left = (scroll['stack_quantity'] as int) - 1;
+      if (left == 0) {
+        bag.remove(scroll);
+      } else {
+        scroll['stack_quantity'] = left;
+      }
+      return json(200, {'item_id': ench[1], 'enchant_code': scroll['template_code'], 'replaced': ?previous});
+    }
     final use = RegExp(r'/items/([^/]+)/use$').firstMatch(path);
     if (use != null) {
       if (hp >= 120) return error(409, 'E_HP_FULL');

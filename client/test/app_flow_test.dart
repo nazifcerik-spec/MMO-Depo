@@ -697,6 +697,76 @@ void main() {
     expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Equip')).onPressed, isNotNull);
   });
 
+  testWidgets('bag: an enchanting scroll goes on fitting gear, replacing an old enchant', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.bag.addAll([
+      {
+        'instance_id': 'scroll',
+        'template_code': 'enchant_weapon_attack_1',
+        'item_class': 'consumable',
+        'item_subclass': 'enchant_scroll',
+        'slot': 0,
+        'stack_quantity': 2,
+        'max_stack': 20,
+        'rarity': 'common',
+        'enchant': {
+          'slots': ['weapon'],
+          'modifiers': [
+            {'kind': 'mult_add', 'target': 'attack', 'amount': 0.01},
+          ],
+        },
+      },
+      {
+        'instance_id': 'sword',
+        'template_code': 'sword_training',
+        'item_class': 'weapon',
+        'item_subclass': 'sword',
+        'equip_slot': 'mainhand',
+        'slot': 1,
+        'stack_quantity': 1,
+        'max_stack': 1,
+        'rarity': 'common',
+        'enchant_code': 'enchant_weapon_crit_1',
+      },
+      {
+        'instance_id': 'helm',
+        'template_code': 'helm_novice',
+        'item_class': 'armor',
+        'item_subclass': 'plate_armor',
+        'equip_slot': 'helm',
+        'slot': 2,
+        'stack_quantity': 1,
+        'max_stack': 1,
+        'rarity': 'common',
+      },
+    ]);
+    await tester.tap(find.byIcon(Icons.backpack_outlined));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Enchant Weapon Attack 1 ×2'));
+    await tester.pumpAndSettle();
+    expect(find.text('Goes on: weapons\n+1% Attack'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Enchant'));
+    await tester.pumpAndSettle();
+    // Only the sword fits a weapon scroll; its current enchant is shown.
+    expect(find.text('Choose the gear to enchant'), findsOneWidget);
+    expect(find.text('Sword Training'), findsOneWidget);
+    expect(find.text('Helm Novice'), findsNothing);
+    expect(find.text('Enchant: Enchant Weapon Crit 1'), findsOneWidget);
+    await tester.tap(find.text('Sword Training'));
+    await tester.pumpAndSettle();
+    expect(find.text('Replace the enchant?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Enchant'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sword Training enchanted'), findsOneWidget);
+    expect(be.bag.firstWhere((i) => i['instance_id'] == 'sword')['enchant_code'], 'enchant_weapon_attack_1');
+    expect(be.bag.firstWhere((i) => i['instance_id'] == 'scroll')['stack_quantity'], 1);
+
+    await tester.tap(find.bySemanticsLabel('Sword Training ×1'));
+    await tester.pumpAndSettle();
+    expect(find.text('Enchant: Enchant Weapon Attack 1'), findsOneWidget);
+  });
+
   testWidgets('hunt: level-aware default, start, early collect, result with level-up', (tester) async {
     final (be, _, _) = await _inGame(tester);
     Map<String, dynamic> consumable(String id, String code, int slot, int qty, Map<String, dynamic> effect) => {
@@ -1005,6 +1075,9 @@ void main() {
     final crafts = find.widgetWithText(FilledButton, 'Craft');
     expect(tester.widget<FilledButton>(crafts.at(1)).onPressed, isNull, reason: 'skill 1 < min 3');
     expect(find.text('30s each'), findsOneWidget);
+    // Recipe colors (DD-294): at skill 1 the skill-1 potion is orange, full XP.
+    expect(find.byKey(const Key('difficulty-legend')), findsOneWidget);
+    expect(tester.widget<Text>(find.byKey(const Key('diff-recipe_potion_hp_small'))).data, '100% XP');
     expect(find.text('1m each'), findsOneWidget, reason: 'no time from the server: 60 s');
     await tester.tap(crafts.first);
     await tester.pumpAndSettle();

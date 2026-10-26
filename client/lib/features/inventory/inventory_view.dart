@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/widgets.dart';
 import '../market/market_repository.dart';
@@ -12,7 +13,7 @@ import 'inventory_models.dart';
 import 'inventory_repository.dart';
 import 'item_widgets.dart';
 
-enum _ItemAction { use, equip, unequip, sell, list, destroy }
+enum _ItemAction { use, equip, unequip, sell, list, destroy, enchant }
 
 /// Bag + equipment tab: 12 equipment slots above the bag grid.
 /// Tapping an item opens its detail sheet; the chosen action runs here and
@@ -156,9 +157,90 @@ class _InventoryViewState extends State<InventoryView> {
         )) {
           await _run(() => widget.repo.destroy(item.instanceId));
         }
+      case _ItemAction.enchant:
+        await _enchant(item);
       case _ItemAction.unequip:
         break;
     }
+  }
+
+  /// A scroll onto gear (DD-293): pick a fitting piece from the bag or worn,
+  /// confirm when it replaces an enchant, then apply.
+  Future<void> _enchant(BagItem scroll) async {
+    final l = AppLocalizations.of(context);
+    final info = scroll.enchant!;
+    final bag = _bag;
+    final targets = <(String id, String name, String? current, bool worn, String code, String rarity, String cls)>[
+      for (final e in _equipped.entries)
+        if (info.fits(e.key))
+          (
+            e.value.instanceId,
+            itemName(e.value.templateCode, e.value.prefix, e.value.suffix),
+            e.value.enchantCode,
+            true,
+            e.value.templateCode,
+            e.value.rarity,
+            e.value.itemClass,
+          ),
+      if (bag != null)
+        for (final i in bag.items)
+          if (i.equippable && info.fits(i.equipSlot!))
+            (i.instanceId, displayName(i), i.enchantCode, false, i.templateCode, i.rarity, i.itemClass),
+    ];
+    final picked = await showModalBottomSheet<int>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      backgroundColor: Palette.bgSurface,
+      builder: (c) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l.enchantPick, style: Theme.of(c).textTheme.titleMedium),
+              const SizedBox(height: Space.sm),
+              if (targets.isEmpty) Text(l.enchantNone),
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (final (i, t) in targets.indexed)
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: SizedBox.square(
+                          dimension: 40,
+                          child: ItemCell(rarity: t.$6, icon: itemIcon(t.$7), code: t.$5),
+                        ),
+                        title: Text(t.$4 ? '${t.$2} (${l.wornTag})' : t.$2),
+                        subtitle: t.$3 == null ? null : Text(l.enchantOn(ContentNames.of('item', t.$3!))),
+                        onTap: () => Navigator.pop(c, i),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (picked == null || !mounted) return;
+    final t = targets[picked];
+    final name = displayName(scroll);
+    if (t.$3 != null &&
+        !await confirmAction(
+          context,
+          title: l.enchantReplaceTitle,
+          body: l.enchantReplaceBody(ContentNames.of('item', t.$3!), name),
+          action: l.enchantAction,
+        )) {
+      return;
+    }
+    await _run(() async {
+      await widget.repo.enchant(t.$1, scroll.instanceId);
+      if (mounted) toast(context, Text(l.enchantDone(t.$2)));
+    });
   }
 
   Future<void> _openEquipped(String slot, EquippedItem item) async {
@@ -190,6 +272,11 @@ class _InventoryViewState extends State<InventoryView> {
                     t,
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
                   ),
+              if (item.enchantCode case final e?)
+                Text(
+                  l.enchantOn(ContentNames.of('item', e)),
+                  style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
+                ),
               if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
               const SizedBox(height: Space.xl),
               FilledButton(onPressed: () => Navigator.pop(c, _ItemAction.unequip), child: Text(l.unequip)),
@@ -741,6 +828,22 @@ class _ItemDetail extends StatelessWidget {
                     style: const TextStyle(color: Palette.success, fontWeight: FontWeight.w600),
                   ),
                 ),
+              if (item.enchantCode case final e?)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.md),
+                  child: Text(
+                    l.enchantOn(ContentNames.of('item', e)),
+                    style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              if (item.enchant case final e?)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.md),
+                  child: Text(
+                    [l.enchantFits(enchantGroups(l, e)), for (final b in e.modifiers) ?bonusText(l, b)].join('\n'),
+                    style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
+                  ),
+                ),
               if (item.manaPct > 0)
                 Padding(
                   padding: const EdgeInsets.only(bottom: Space.md),
@@ -768,6 +871,11 @@ class _ItemDetail extends StatelessWidget {
               else ...[
                 if (item.usable)
                   FilledButton(onPressed: () => Navigator.pop(context, _ItemAction.use), child: Text(l.useItem)),
+                if (item.enchant != null)
+                  FilledButton(
+                    onPressed: () => Navigator.pop(context, _ItemAction.enchant),
+                    child: Text(l.enchantAction),
+                  ),
                 if (item.equippable)
                   FilledButton(
                     onPressed: item.wearable ? () => Navigator.pop(context, _ItemAction.equip) : null,

@@ -365,6 +365,7 @@ func (s *Service) Sell(ctx context.Context, req SellRequest) (*SellResult, error
 		Suffix:        inst.SuffixCode,
 		StackQuantity: inst.StackQuantity,
 		IsBound:       inst.IsBound,
+		Enchant:       inst.EnchantCode,
 	}
 	snapJSON, _ := json.Marshal(snap)
 
@@ -486,6 +487,11 @@ func (s *Service) Buyback(ctx context.Context, characterID, buybackID uuid.UUID,
 	if snap.IsBound {
 		if err := s.repo.Rebind(ctx, instances[0].ID); err != nil {
 			return nil, fmt.Errorf("buyback rebind: %w", err)
+		}
+	}
+	if snap.Enchant != nil {
+		if err := s.repo.SetEnchant(ctx, instances[0].ID, *snap.Enchant); err != nil {
+			return nil, fmt.Errorf("buyback enchant: %w", err)
 		}
 	}
 	if err := s.repo.ClaimBuyback(ctx, entry.ID, now); err != nil && !errors.Is(err, ErrBuybackClaimed) {

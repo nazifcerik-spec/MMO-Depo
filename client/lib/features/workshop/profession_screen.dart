@@ -120,6 +120,51 @@ List<Recipe> visibleRecipes(List<Recipe> all, int skill) {
   ];
 }
 
+/// Recipe colors (DD-294), like the classic trade-skill ones.
+Color difficultyColor(String color) => switch (color) {
+  'orange' => const Color(0xFFFF9800),
+  'yellow' => const Color(0xFFFFD54F),
+  'green' => Palette.success,
+  _ => Palette.textMuted,
+};
+
+String difficultyLabel(AppLocalizations l, double xpFactor) =>
+    xpFactor <= 0 ? l.diffNoXp : l.diffXp((xpFactor * 100).round());
+
+/// What the colors mean: each band's XP share, then grey.
+class _DifficultyLegend extends StatelessWidget {
+  const _DifficultyLegend({required this.bands});
+
+  final List<DifficultyBand> bands;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final small = Theme.of(context).textTheme.bodySmall;
+    Widget dot(String color, String text) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.circle, size: 10, color: difficultyColor(color)),
+        const SizedBox(width: 4),
+        Text(text, style: small),
+      ],
+    );
+    return Column(
+      key: const Key('difficulty-legend'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l.diffLegend, style: small),
+        const SizedBox(height: 2),
+        Wrap(
+          spacing: Space.md,
+          runSpacing: 2,
+          children: [for (final b in bands) dot(b.color, difficultyLabel(l, b.xpFactor)), dot('grey', l.diffNoXp)],
+        ),
+      ],
+    );
+  }
+}
+
 /// One profession's recipes. Tapping an item's name unfolds its properties;
 /// Craft asks how many when more than one can be made. Reloads on
 /// [dataVersion] (materials and gold change elsewhere).
@@ -162,6 +207,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
       widget.repo.materials(),
       widget.repo.gold(),
       widget.repo.activeCraft().then<Object>((j) => j ?? false),
+      widget.repo.professions(), // the difficulty bands (DD-294)
     ]);
     _skill = (r[1] as Map<String, Skill>)[widget.profession];
     _recipes = visibleRecipes(r[0] as List<Recipe>, _skill?.level ?? 0);
@@ -224,6 +270,8 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
                   color: Palette.epic,
                   valueText: l.xpValue(skill.xp, skill.xpToNext),
                 ),
+                const SizedBox(height: Space.xs),
+                _DifficultyLegend(bands: widget.repo.difficulty),
                 const SizedBox(height: Space.md),
               ],
               if (_job case final job?)
@@ -233,6 +281,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
                   recipe: rec,
                   have: _have,
                   skill: skill?.level ?? 0,
+                  difficulty: recipeDifficulty(widget.repo.difficulty, rec.minSkill, skill?.level ?? 0),
                   // One job at a time (DD-263).
                   onCraft: _job == null && _maxCrafts(rec) > 0 ? () => _craft(rec) : null,
                 ),
@@ -247,11 +296,20 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
 /// A recipe: output name (tap to unfold its properties), inputs with
 /// have/need, gold cost, skill gate, and the Craft button.
 class _RecipeTile extends StatefulWidget {
-  const _RecipeTile({required this.recipe, required this.have, required this.skill, required this.onCraft});
+  const _RecipeTile({
+    required this.recipe,
+    required this.have,
+    required this.skill,
+    required this.onCraft,
+    this.difficulty = ('orange', 1),
+  });
 
   final Recipe recipe;
   final Map<String, int> have;
   final int skill;
+
+  /// Color and XP share at the character's skill (DD-294).
+  final (String, double) difficulty;
   final VoidCallback? onCraft;
 
   @override
@@ -294,7 +352,13 @@ class _RecipeTileState extends State<_RecipeTile> {
                         ),
                         const SizedBox(width: Space.sm),
                         Expanded(
-                          child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: r.minSkill > widget.skill ? null : difficultyColor(widget.difficulty.$1),
+                            ),
+                          ),
                         ),
                         Icon(_open ? Icons.expand_less : Icons.expand_more, color: Palette.textSecondary),
                       ],
@@ -327,7 +391,13 @@ class _RecipeTileState extends State<_RecipeTile> {
                 Text(l.craftEach(shortDuration(l, Duration(seconds: r.craftSeconds))), style: small),
                 if (r.goldCost > 0) GoldText(r.goldCost, size: 12),
                 if (r.minSkill > widget.skill)
-                  Text(l.requiresSkill(r.minSkill), style: small?.copyWith(color: Palette.danger)),
+                  Text(l.requiresSkill(r.minSkill), style: small?.copyWith(color: Palette.danger))
+                else
+                  Text(
+                    difficultyLabel(l, widget.difficulty.$2),
+                    key: Key('diff-${r.code}'),
+                    style: small?.copyWith(color: difficultyColor(widget.difficulty.$1), fontWeight: FontWeight.w600),
+                  ),
               ],
             ),
             AnimatedSize(

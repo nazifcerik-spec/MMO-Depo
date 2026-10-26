@@ -70,6 +70,12 @@ type BagItem struct {
 	// Wear: can the character wear it (bag view, equippable items only,
 	// DD-290): WearOK, or why not.
 	Wear string `json:"wear,omitempty"`
+	// EnchantCode: the scroll whose enchant the piece holds (DD-293);
+	// EnchantRaw is that scroll's enchant, already in EffectiveBonuses.
+	EnchantCode *string         `json:"enchant_code,omitempty"`
+	EnchantRaw  json.RawMessage `json:"-"`
+	// Enchant: what this item puts on gear when it is a scroll.
+	Enchant json.RawMessage `json:"enchant,omitempty"`
 }
 
 // EffectiveModifiers is what an item adds to the sheet (DD-275): its
@@ -90,6 +96,16 @@ func EffectiveModifiers(b BagItem) []skill.Modifier {
 	}
 	for _, a := range item.AffixBonuses(b.Prefix, b.Suffix, b.MinLevel) {
 		out = append(out, skill.Modifier{Kind: skill.KindFlat, Target: skill.Target(a.Target), Amount: a.Amount})
+	}
+	// The enchant (DD-293); profession targets ride along for the gathering
+	// and crafting bonuses, the sheet ignores them.
+	if len(b.EnchantRaw) > 0 {
+		var e item.Enchant
+		if json.Unmarshal(b.EnchantRaw, &e) == nil {
+			for _, m := range e.Modifiers {
+				out = append(out, skill.Modifier{Kind: skill.ModifierKind(m.Kind), Target: skill.Target(m.Target), Amount: m.Amount})
+			}
+		}
 	}
 	return out
 }

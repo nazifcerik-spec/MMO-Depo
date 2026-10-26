@@ -59,6 +59,7 @@ type Template struct {
 	StatBonuses      []byte  // JSONB — parsed via skill.DecodeModifiers on demand
 	UseEffect        *UseEffect
 	Requirements     *Requirements // DD-250: class branch + raw attribute minimums
+	Enchant          *Enchant      // DD-293: an enchanting scroll; nil for anything else
 
 	// Gathering node (DD-244): profession, unlock level 1..100, tier 0..7.
 	// Empty kind = not gathered.
@@ -103,6 +104,7 @@ type Instance struct {
 	SourceKind       *string
 	SourceRefID      *uuid.UUID
 	EquipmentSlot    *string // Sprint 11: nil = in bag or detached; set = equipped
+	EnchantCode      *string // DD-293: the scroll whose enchant the piece holds
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	Version          int32

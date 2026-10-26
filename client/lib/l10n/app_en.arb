@@ -1994,5 +1994,67 @@
   },
   "wearAttribute": "Your attributes are too low",
   "wearLegendClass": "not for your class",
-  "wearLegendLater": "not yet (level or attributes)"
+  "wearLegendLater": "not yet (level or attributes)",
+  "enchantAction": "Enchant",
+  "enchantPick": "Choose the gear to enchant",
+  "enchantNone": "None of your gear fits this scroll.",
+  "enchantFits": "Goes on: {groups}",
+  "@enchantFits": {
+    "placeholders": {
+      "groups": {
+        "type": "String"
+      }
+    }
+  },
+  "enchantGroupWeapon": "weapons",
+  "enchantGroupArmor": "armor",
+  "enchantGroupJewelry": "jewelry",
+  "enchantGroupAny": "any gear",
+  "enchantReplaceTitle": "Replace the enchant?",
+  "enchantReplaceBody": "{old} is lost and {next} takes its place.",
+  "@enchantReplaceBody": {
+    "placeholders": {
+      "old": {
+        "type": "String"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
+  },
+  "enchantDone": "{item} enchanted",
+  "@enchantDone": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "enchantOn": "Enchant: {name}",
+  "@enchantOn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wornTag": "worn",
+  "errNotEnchant": "That is not an enchanting scroll.",
+  "errEnchantSlot": "The enchant doesn't fit that gear.",
+  "statGatherMining": "Mining yield",
+  "statGatherHerbalism": "Herbalism yield",
+  "statGatherWoodcutting": "Woodcutting yield",
+  "statGatherFishing": "Fishing yield",
+  "statGatherHunting": "Hunting yield",
+  "statCraftSpeed": "Crafting speed",
+  "diffXp": "{pct}% XP",
+  "@diffXp": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "diffNoXp": "no XP",
+  "diffLegend": "Recipe colors: the XP a craft teaches at your skill"
 }

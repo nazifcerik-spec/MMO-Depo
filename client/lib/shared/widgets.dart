@@ -21,6 +21,8 @@ String errorText(AppLocalizations l, Object error) {
     'E_BAD_SUPPLY' => l.errBadSupply,
     'E_NOT_ENOUGH_SUPPLIES' => l.errNotEnoughSupplies,
     'E_HUNT_ONLY' => l.errHuntOnly,
+    'E_NOT_ENCHANT' => l.errNotEnchant,
+    'E_ENCHANT_SLOT' => l.errEnchantSlot,
     'E_NAME_MISMATCH' => l.errNameMismatch,
     'E_SLOT_CAP' => l.errSlotCap,
     'E_NOT_PLAYABLE' => l.errNotPlayable,

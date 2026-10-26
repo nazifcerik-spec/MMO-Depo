@@ -27,6 +27,10 @@ class InventoryRepository {
 
   Future<void> unequip(String slot) => api.post('$_base/unequip/$slot', const {});
 
+  /// Puts a scroll's enchant on gear in the bag or worn (DD-293).
+  Future<void> enchant(String itemId, String scrollId) =>
+      api.post('$_base/items/$itemId/enchant', {'scroll_id': scrollId});
+
   /// Returns the copper actually received (server-computed).
   Future<int> sell(String itemId) async {
     final j = await api.post('/v1/vendor/$generalVendor/sell', {
