@@ -91,9 +91,9 @@ func TestMove_ToEmptySlot(t *testing.T) {
 
 	require.NoError(t, svc.Move(context.Background(), owner, id, 10))
 
-	view, _ := svc.View(context.Background(), owner)
-	require.Len(t, view.Items, 1)
-	require.Equal(t, inventory.Slot(10), view.Items[0].Slot)
+	bag, _ := repo.Bag(context.Background(), owner) // as stored: the view would close the gap
+	require.Len(t, bag, 1)
+	require.Equal(t, inventory.Slot(10), bag[0].Slot)
 }
 
 func TestMove_Swap(t *testing.T) {
@@ -120,8 +120,26 @@ func TestMove_SelfIsNoop(t *testing.T) {
 
 	require.NoError(t, svc.Move(context.Background(), owner, id, 3))
 
-	view, _ := svc.View(context.Background(), owner)
-	require.Equal(t, inventory.Slot(3), view.Items[0].Slot)
+	bag, _ := repo.Bag(context.Background(), owner)
+	require.Equal(t, inventory.Slot(3), bag[0].Slot)
+}
+
+// The bag view closes the gaps sales and destroys leave, keeping the order
+// (DD-291).
+func TestView_ClosesGaps(t *testing.T) {
+	svc, repo := newSvc()
+	owner := uuid.New()
+	c := seedItem(repo, owner, "copper_ore", 1, 99, 7, true)
+	a := seedItem(repo, owner, "iron_ore", 1, 99, 2, true)
+	b := seedItem(repo, owner, "tin_ore", 1, 99, 4, true)
+
+	view, err := svc.View(context.Background(), owner)
+	require.NoError(t, err)
+	slotByID := map[uuid.UUID]inventory.Slot{}
+	for _, it := range view.Items {
+		slotByID[it.InstanceID] = it.Slot
+	}
+	require.Equal(t, map[uuid.UUID]inventory.Slot{a: 0, b: 1, c: 2}, slotByID)
 }
 
 func TestMove_OutOfRange(t *testing.T) {
@@ -155,15 +173,15 @@ func TestSplit_Success(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEqual(t, uuid.Nil, newID)
 
-	view, _ := svc.View(context.Background(), owner)
-	require.Len(t, view.Items, 2)
+	bag, _ := repo.Bag(context.Background(), owner)
+	require.Len(t, bag, 2)
 	// Original decremented to 6; new stack has 4 in slot 5.
 	var orig, split *inventory.BagItem
-	for i := range view.Items {
-		if view.Items[i].InstanceID == id {
-			orig = &view.Items[i]
-		} else if view.Items[i].InstanceID == newID {
-			split = &view.Items[i]
+	for i := range bag {
+		if bag[i].InstanceID == id {
+			orig = &bag[i]
+		} else if bag[i].InstanceID == newID {
+			split = &bag[i]
 		}
 	}
 	require.NotNil(t, orig)

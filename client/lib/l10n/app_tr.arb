@@ -702,7 +702,7 @@
   "attrGainPerPoint": "Puan başına: {gains}",
   "attrGainPending": "Eklenecek: {gains}",
   "attrNoEffect": "Sınıfına etkisi yok",
-  "attrHoldHint": "Hızlı dağıtmak için − / + düğmesini basılı tut",
+  "attrInputHint": "Her niteliğe vereceğin puanı kutuya yaz",
   "gainHp": "Can",
   "gainMp": "Mana",
   "gainHpRegen": "Can/sn",

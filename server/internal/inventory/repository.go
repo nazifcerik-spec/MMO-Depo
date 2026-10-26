@@ -28,6 +28,10 @@ type Repository interface {
 	// slot that are neither locked (mail/market escrow) nor equipped.
 	Unslotted(ctx context.Context, characterID uuid.UUID) ([]item.Instance, error)
 
+	// Compact closes the gaps a sale, a destroy or a listing leaves: bag
+	// items move to slots 0..n-1 in their current order (DD-291).
+	Compact(ctx context.Context, characterID uuid.UUID) error
+
 	// AssignSlot atomically sets slot on the item, checking:
 	//   - owner_character_id matches
 	//   - slot is currently null

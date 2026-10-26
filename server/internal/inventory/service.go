@@ -36,6 +36,11 @@ func (s *Service) View(ctx context.Context, characterID uuid.UUID) (*View, error
 			return nil, err
 		}
 	}
+	// No holes: every item operation reloads the bag, which closes the gaps
+	// it left (DD-291).
+	if err := s.repo.Compact(ctx, characterID); err != nil {
+		return nil, err
+	}
 	items, err := s.repo.Bag(ctx, characterID)
 	if err != nil {
 		return nil, err

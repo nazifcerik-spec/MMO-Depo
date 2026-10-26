@@ -18,7 +18,7 @@ import 'adventure_models.dart';
 import 'adventure_repository.dart';
 import 'world_map.dart';
 import '../../shared/content_names.dart';
-import '../../shared/hold_repeat_button.dart';
+import '../../shared/quantity_field.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
 import '../inventory/item_widgets.dart';
@@ -389,7 +389,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
 }
 
 /// The potions and dishes to take on a hunt, grouped by kind, each with
-/// what one unit does and a -/+ count (hold to repeat) up to the stock.
+/// what one unit does and a number box up to the stock.
 class _SupplyPicker extends StatelessWidget {
   const _SupplyPicker({required this.stock, required this.take, required this.onChanged});
 
@@ -430,21 +430,16 @@ class _SupplyPicker extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  '${take[s.code] ?? 0} / ${s.stock}',
+                const SizedBox(width: Space.sm),
+                QuantityField(
                   key: Key('supply-${s.code}'),
-                  style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
+                  semanticLabel: ContentNames.of('item', s.code),
+                  value: take[s.code] ?? 0,
+                  max: s.stock,
+                  onChanged: (v) => onChanged(s.code, v),
                 ),
-                HoldRepeatButton(
-                  tooltip: '- ${ContentNames.of('item', s.code)}',
-                  icon: Icons.remove_circle_outline,
-                  onStep: (take[s.code] ?? 0) > 0 ? () => onChanged(s.code, (take[s.code] ?? 0) - 1) : null,
-                ),
-                HoldRepeatButton(
-                  tooltip: '+ ${ContentNames.of('item', s.code)}',
-                  icon: Icons.add_circle_outline,
-                  onStep: (take[s.code] ?? 0) < s.stock ? () => onChanged(s.code, (take[s.code] ?? 0) + 1) : null,
-                ),
+                const SizedBox(width: Space.xs),
+                Text('/ ${s.stock}', style: const TextStyle(fontFeatures: numeric)),
               ],
             ),
         ],

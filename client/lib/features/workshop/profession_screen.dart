@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
+import '../../shared/quantity_field.dart';
 import '../../shared/widgets.dart';
 import '../inventory/item_widgets.dart';
 import 'workshop_repository.dart';
@@ -400,7 +401,7 @@ class _Details extends StatelessWidget {
   }
 }
 
-/// Quantity picker: slider plus −/+ and a "max" shortcut.
+/// Quantity picker: a number box, a slider and a "max" shortcut.
 class _CraftCountDialog extends StatefulWidget {
   const _CraftCountDialog({required this.name, required this.max, required this.unitSeconds});
 
@@ -428,16 +429,15 @@ class _CraftCountDialogState extends State<_CraftCountDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(icon: const Icon(Icons.remove), onPressed: _n > 1 ? () => _set(_n - 1) : null),
-              SizedBox(
-                width: 56,
-                child: Text(
-                  '$_n',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontFeatures: numeric),
-                ),
+              QuantityField(
+                key: const Key('craft-count'),
+                value: _n,
+                min: 1,
+                max: widget.max,
+                width: 80,
+                onChanged: _set,
               ),
-              IconButton(icon: const Icon(Icons.add), onPressed: _n < widget.max ? () => _set(_n + 1) : null),
+              const SizedBox(width: Space.sm),
               TextButton(onPressed: () => _set(widget.max), child: Text('max ${widget.max}')),
             ],
           ),

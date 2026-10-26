@@ -6,7 +6,7 @@ import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
-import '../../shared/hold_repeat_button.dart';
+import '../../shared/quantity_field.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 
@@ -361,8 +361,8 @@ Future<String?> showPromotionSheet(BuildContext context, LevelingSummary s) {
   );
 }
 
-/// Attribute allocation: +/- per attribute within the available points
-/// (hold to repeat), each with what it adds to the class.
+/// Attribute allocation: a number box per attribute within the available
+/// points, each with what it adds to the class.
 class AttributeSheet extends StatefulWidget {
   const AttributeSheet({super.key, required this.summary});
 
@@ -379,14 +379,6 @@ class _AttributeSheetState extends State<AttributeSheet> {
 
   int get _left => widget.summary.attributePoints - _add.values.fold(0, (a, b) => a + b);
 
-  // Checked at call time: a held button can tick again before the rebuild
-  // that disables it.
-  void _step(String a, int by) {
-    final next = (_add[a] ?? 0) + by;
-    if (next < 0 || (by > 0 && _left <= 0)) return;
-    setState(() => _add[a] = next);
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -400,7 +392,7 @@ class _AttributeSheetState extends State<AttributeSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(l.attributePointsBtn(_left), style: text.titleMedium),
-            Text(l.attrHoldHint, style: text.bodySmall),
+            Text(l.attrInputHint, style: text.bodySmall),
             const SizedBox(height: Space.sm),
             for (final a in attributeOrder) ...[
               Row(
@@ -410,15 +402,13 @@ class _AttributeSheetState extends State<AttributeSheet> {
                     '${(s.raw[a] ?? 0) + (_add[a] ?? 0)}',
                     style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
                   ),
-                  HoldRepeatButton(
-                    tooltip: '- ${attributeName(a)}',
-                    icon: Icons.remove_circle_outline,
-                    onStep: (_add[a] ?? 0) > 0 ? () => _step(a, -1) : null,
-                  ),
-                  HoldRepeatButton(
-                    tooltip: '+ ${attributeName(a)}',
-                    icon: Icons.add_circle_outline,
-                    onStep: _left > 0 ? () => _step(a, 1) : null,
+                  const SizedBox(width: Space.md),
+                  QuantityField(
+                    key: Key('attr-$a'),
+                    semanticLabel: attributeName(a),
+                    value: _add[a] ?? 0,
+                    max: (_add[a] ?? 0) + _left, // what is left of the points
+                    onChanged: (v) => setState(() => _add[a] = v),
                   ),
                 ],
               ),

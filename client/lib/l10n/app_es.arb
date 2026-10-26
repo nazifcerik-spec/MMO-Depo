@@ -186,7 +186,7 @@
   "attrGainPerPoint": "Por punto: {gains}",
   "attrGainPending": "Se añade: {gains}",
   "attrNoEffect": "Sin efecto para tu clase",
-  "attrHoldHint": "Mantén − / + para repartir rápido",
+  "attrInputHint": "Escribe cuántos puntos recibe cada atributo",
   "gainHp": "Vida",
   "gainMp": "Maná",
   "gainHpRegen": "Vida/s",

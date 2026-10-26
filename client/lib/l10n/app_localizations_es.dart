@@ -2436,7 +2436,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get attrNoEffect => 'Sin efecto para tu clase';
 
   @override
-  String get attrHoldHint => 'Mantén − / + para repartir rápido';
+  String get attrInputHint => 'Escribe cuántos puntos recibe cada atributo';
 
   @override
   String get gainHp => 'Vida';

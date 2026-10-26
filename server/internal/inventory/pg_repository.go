@@ -92,6 +92,49 @@ func (r *PgRepo) Unslotted(ctx context.Context, characterID uuid.UUID) ([]item.I
 	return out, rows.Err()
 }
 
+func (r *PgRepo) Compact(ctx context.Context, characterID uuid.UUID) error {
+	return pgx.BeginFunc(ctx, r.pool, func(tx pgx.Tx) error {
+		rows, err := tx.Query(ctx, `
+			SELECT id, slot FROM inventory.item_instance
+			 WHERE owner_character_id = $1 AND slot IS NOT NULL
+			 ORDER BY slot FOR UPDATE`, characterID)
+		if err != nil {
+			return err
+		}
+		type placed struct {
+			id   uuid.UUID
+			slot int16
+		}
+		list, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (placed, error) {
+			var p placed
+			return p, r.Scan(&p.id, &p.slot)
+		})
+		if err != nil {
+			return err
+		}
+		var ids []uuid.UUID
+		var to []int16
+		for n, p := range list {
+			if p.slot != int16(n) {
+				ids, to = append(ids, p.id), append(to, int16(n))
+			}
+		}
+		if len(ids) == 0 {
+			return nil
+		}
+		// Clear first: the (owner, slot) index is checked row by row, and a
+		// mover's new slot may still hold another mover.
+		if _, err := tx.Exec(ctx, `UPDATE inventory.item_instance SET slot = NULL WHERE id = ANY($1)`, ids); err != nil {
+			return err
+		}
+		_, err = tx.Exec(ctx, `
+			UPDATE inventory.item_instance i SET slot = m.slot, updated_at = now(), version = i.version + 1
+			  FROM unnest($1::uuid[], $2::smallint[]) AS m(id, slot)
+			 WHERE i.id = m.id`, ids, to)
+		return err
+	})
+}
+
 func (r *PgRepo) OccupiedSlots(ctx context.Context, characterID uuid.UUID) ([]Slot, error) {
 	rows, err := r.pool.Query(ctx,
 		`SELECT slot FROM inventory.item_instance

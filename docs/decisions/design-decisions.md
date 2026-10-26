@@ -2868,6 +2868,23 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-291 — Çantada boşluk kalmaz
+**Karar:** Çanta görüntülemesi (`inventory.Service.View`, `Repository.Compact`) taşan eşyaları yerleştirdikten sonra yuvaları sıkıştırır: çantadaki eşyalar mevcut sıralarıyla 0..n-1'e taşınır. Taşınacaklar önce NULL'a alınır, sonra yeni yuvalarına yazılır; tek işlemde, satır kilitli. Bunun nedeni `(owner, slot)` benzersiz indeksinin satır satır denetlenmesi.
+**Reason:** Kullanıcı isteği. Satış, silme, pazara koyma, kullanım ya da av malzemesi gibi her eşya işleminden sonra istemci çantayı yeniden yükler; boşluklar kendiliğinden kapanır, açıkta kalan bir uç gerekmez.
+**Alternatives:** Her işlemin sonunda ayrı ayrı sıkıştırmak (onlarca yol). Yalnız istemcide boşluksuz göstermek (sunucu yeni eşyaları aradaki boş yuvalara koyar, sıra karışırdı).
+**Consequences:** Belirli bir yuvaya taşıma/bölme artık sırayı belirler; boşluk bırakmaz. İstemci zaten taşıma kullanmıyor. Testler: `TestView_ClosesGaps`, `TestHTTPInventoryOps` (sıra temelli).
+**Tarih:** 2026-10-26
+
+---
+
+## DD-292 — Adet seçimi sayı kutusuyla
+**Karar:** Nitelik puanı, ava götürülecek iksir/yemek, üretim adedi ve pazar ilanı adedi ortak `QuantityField` ile girilir: yalnız rakam; en azla en çok arasına çekilir, en çoğu aşan sayı en çoğa iner; boş kutu en az sayılır; dokununca sayı seçilir. Nitelikte en çok değer kalan puandır, malzemede stoktur. −/+ ve basılı tutma (`HoldRepeatButton`, DD-285) kaldırıldı. Üretimde kaydırıcı ve "max", pazarda kaydırıcı kaldı.
+**Reason:** Kullanıcı isteği: adet −/+ yerine yazılarak girilsin; girilen sayı kadar işlem yapılsın.
+**Consequences:** Testler: istemci nitelik, av malzemesi ve üretim akış testleri.
+**Tarih:** 2026-10-26
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

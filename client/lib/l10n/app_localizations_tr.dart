@@ -2436,7 +2436,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get attrNoEffect => 'Sınıfına etkisi yok';
 
   @override
-  String get attrHoldHint => 'Hızlı dağıtmak için − / + düğmesini basılı tut';
+  String get attrInputHint => 'Her niteliğe vereceğin puanı kutuya yaz';
 
   @override
   String get gainHp => 'Can';

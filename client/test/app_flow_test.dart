@@ -788,7 +788,7 @@ void main() {
     await tester.pump();
     // Supplies from the bag (DD-288): stacks add up, materials are not offered.
     await tester.scrollUntilVisible(find.text('Food'), 200, scrollable: panelOf(find.text('6h 00m')));
-    await tester.ensureVisible(find.byTooltip('+ Food Grilled Guppy'));
+    await tester.ensureVisible(find.byKey(const Key('supply-food_grilled_guppy')));
     await tester.pumpAndSettle();
     expect(find.text('Supplies to take'), findsOneWidget);
     expect(find.text('Healing potions'), findsOneWidget);
@@ -796,18 +796,22 @@ void main() {
     expect(find.text('Refills 30% of your mana'), findsOneWidget);
     expect(find.byKey(const Key('supply-potion_hp_small')), findsOneWidget);
     expect(find.byKey(const Key('supply-copper_ore')), findsNothing);
-    expect(tester.widget<Text>(find.byKey(const Key('supply-potion_hp_small'))).data, '0 / 5');
-    Future<void> plus(String name) async {
-      await tester.ensureVisible(find.byTooltip('+ $name'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('+ $name'));
-      await tester.pump();
-    }
-
-    await plus('Potion Hp Small');
-    await plus('Potion Hp Small');
-    await plus('Food Grilled Guppy');
-    expect(tester.widget<Text>(find.byKey(const Key('supply-potion_hp_small'))).data, '2 / 5');
+    expect(find.text('/ 5'), findsOneWidget, reason: 'stacks add up');
+    // Typed counts; more than the stock snaps to the stock (DD-292).
+    await tester.enterText(find.byKey(const Key('supply-potion_hp_small')), '9');
+    await tester.pump();
+    expect(
+      tester
+          .widget<TextField>(
+            find.descendant(of: find.byKey(const Key('supply-potion_hp_small')), matching: find.byType(TextField)),
+          )
+          .controller!
+          .text,
+      '5',
+    );
+    await tester.enterText(find.byKey(const Key('supply-potion_hp_small')), '2');
+    await tester.enterText(find.byKey(const Key('supply-food_grilled_guppy')), '1');
+    await tester.pump();
     await startHunt();
     expect(be.activeHunt!['mob_code'], 'giant_rat');
     expect(be.lastHuntSupplies, [
@@ -1575,8 +1579,9 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Craft').first);
     await tester.pumpAndSettle();
     expect(find.text('How many Potion Hp Small?'), findsOneWidget);
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.enterText(find.byKey(const Key('craft-count')), '2');
     await tester.pump();
+    expect(find.text('Craft ×2'), findsOneWidget);
     await tester.tap(find.text('max 3'));
     await tester.pump();
     expect(find.text('Total 1m'), findsOneWidget);
@@ -1919,42 +1924,36 @@ void main() {
     expect(find.text('Per point: +2.2 Attack · +0.03% Block'), findsOneWidget);
     expect(find.text('Per point: +18 HP · +1.2 Defense · +0.05 HP/s'), findsOneWidget);
     expect(find.text('No effect for your class'), findsWidgets);
-    await tester.tap(find.byTooltip('+ Strength'));
-    await tester.tap(find.byTooltip('+ Strength'));
-    await tester.tap(find.byTooltip('+ Vitality'));
+    // Points are typed into each attribute's box (DD-292).
+    await tester.enterText(find.byKey(const Key('attr-strength')), '2');
+    await tester.enterText(find.byKey(const Key('attr-vitality')), '1');
     await tester.pump();
     expect(find.text('Adding: +4.4 Attack · +0.06% Block'), findsOneWidget);
+    expect(find.text('Attributes · 27 points'), findsOneWidget);
 
-    // Holding + keeps adding until the points run out; holding - takes back.
-    final hold = await tester.startGesture(tester.getCenter(find.byTooltip('+ Vitality')));
-    await tester.pump(const Duration(seconds: 5));
-    await hold.up();
+    // More than is left snaps to what is left; an emptied box counts as 0.
+    await tester.enterText(find.byKey(const Key('attr-vitality')), '99');
     await tester.pump();
     expect(find.text('Attributes · 0 points'), findsOneWidget);
-    expect(find.text('Adding: +504 HP · +33.6 Defense · +1.4 HP/s'), findsOneWidget, reason: '28 points');
-    // The sheet's points line (the card behind it still shows 30).
-    int left() => int.parse(
-      RegExp(r'Attributes · (\d+) points')
-          .firstMatch(tester.widget<Text>(find.textContaining('points').last).data!)![1]!,
+    expect(
+      tester
+          .widget<TextField>(
+            find.descendant(of: find.byKey(const Key('attr-vitality')), matching: find.byType(TextField)),
+          )
+          .controller!
+          .text,
+      '28',
     );
-    final back = await tester.startGesture(tester.getCenter(find.byTooltip('- Vitality')));
-    await tester.pump(const Duration(milliseconds: 100));
-    expect(left(), 0, reason: 'a press does nothing until it is held');
-    for (var i = 0; i < 12; i++) {
-      await tester.pump(const Duration(milliseconds: 100));
-    }
-    final held = left();
-    expect(held, inInclusiveRange(5, 15), reason: 'held: several steps back');
-    await back.up();
+    expect(find.text('Adding: +504 HP · +33.6 Defense · +1.4 HP/s'), findsOneWidget, reason: '28 points');
+    await tester.enterText(find.byKey(const Key('attr-vitality')), '');
     await tester.pump();
-    expect(left(), held, reason: 'releasing a hold adds no extra step');
-    await tester.tap(find.byTooltip('- Vitality'));
+    expect(find.text('Attributes · 28 points'), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('attr-vitality')), '17');
     await tester.pump();
-    expect(left(), held + 1, reason: 'a tap is one step');
 
     await tester.tap(find.widgetWithText(FilledButton, 'Save'));
     await tester.pumpAndSettle();
-    expect(be.lastAllocation, {'strength': 2, 'vitality': 28 - held - 1});
+    expect(be.lastAllocation, {'strength': 2, 'vitality': 17});
 
     await tester.tap(find.text('Talents · 2 points'));
     await tester.pumpAndSettle();

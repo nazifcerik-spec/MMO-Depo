@@ -6,6 +6,7 @@ import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
+import '../../shared/quantity_field.dart';
 import '../../shared/widgets.dart';
 import '../character/models.dart';
 import '../inventory/inventory_models.dart';
@@ -339,7 +340,18 @@ class _ListingSheetState extends State<_ListingSheet> {
               ),
               if (item.stack > 1) ...[
                 const SizedBox(height: Space.lg),
-                Text(l.quantityOf(_qty, item.stack), style: text.bodySmall),
+                Row(
+                  children: [
+                    Expanded(child: Text(l.quantityOf(_qty, item.stack), style: text.bodySmall)),
+                    QuantityField(
+                      key: const Key('listing-qty'),
+                      value: _qty,
+                      min: 1,
+                      max: item.stack,
+                      onChanged: (v) => setState(() => _qty = v),
+                    ),
+                  ],
+                ),
                 Slider(
                   value: _qty.toDouble(),
                   min: 1,

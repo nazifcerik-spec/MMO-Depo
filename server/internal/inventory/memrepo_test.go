@@ -70,6 +70,22 @@ func (r *MemoryRepo) Unslotted(_ context.Context, characterID uuid.UUID) ([]item
 	return out, nil
 }
 
+func (r *MemoryRepo) Compact(_ context.Context, characterID uuid.UUID) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	var bag []*memItem
+	for _, it := range r.items {
+		if it.OwnerID == characterID && it.Slot >= 0 {
+			bag = append(bag, it)
+		}
+	}
+	sort.Slice(bag, func(i, j int) bool { return bag[i].Slot < bag[j].Slot })
+	for n, it := range bag {
+		it.Slot = Slot(n)
+	}
+	return nil
+}
+
 func (r *MemoryRepo) OccupiedSlots(_ context.Context, characterID uuid.UUID) ([]Slot, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()

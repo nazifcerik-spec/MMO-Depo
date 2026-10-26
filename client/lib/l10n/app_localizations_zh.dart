@@ -2434,7 +2434,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get attrNoEffect => '对你的职业无效';
 
   @override
-  String get attrHoldHint => '长按 − / + 可快速分配';
+  String get attrInputHint => '输入每项属性要分配的点数';
 
   @override
   String get gainHp => '生命';

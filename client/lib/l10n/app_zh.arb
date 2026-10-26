@@ -186,7 +186,7 @@
   "attrGainPerPoint": "每点：{gains}",
   "attrGainPending": "将增加：{gains}",
   "attrNoEffect": "对你的职业无效",
-  "attrHoldHint": "长按 − / + 可快速分配",
+  "attrInputHint": "输入每项属性要分配的点数",
   "gainHp": "生命",
   "gainMp": "法力",
   "gainHpRegen": "生命/秒",

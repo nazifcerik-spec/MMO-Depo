@@ -4306,11 +4306,11 @@ abstract class AppLocalizations {
   /// **'No effect for your class'**
   String get attrNoEffect;
 
-  /// No description provided for @attrHoldHint.
+  /// No description provided for @attrInputHint.
   ///
   /// In en, this message translates to:
-  /// **'Hold − / + to spend quickly'**
-  String get attrHoldHint;
+  /// **'Type how many points each attribute gets'**
+  String get attrInputHint;
 
   /// No description provided for @gainHp.
   ///

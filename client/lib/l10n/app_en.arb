@@ -1935,7 +1935,7 @@
     }
   },
   "attrNoEffect": "No effect for your class",
-  "attrHoldHint": "Hold − / + to spend quickly",
+  "attrInputHint": "Type how many points each attribute gets",
   "gainHp": "HP",
   "gainMp": "MP",
   "gainHpRegen": "HP/s",

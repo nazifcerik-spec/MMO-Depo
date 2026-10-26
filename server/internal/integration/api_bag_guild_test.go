@@ -45,25 +45,27 @@ func TestHTTPInventoryOps(t *testing.T) {
 	sword := w.give(me, "sword_iron", 1).ID.String()
 	inv := func(id, op string) string { return p.path("/inventory/" + id + op) }
 
-	// Split part of a stack into an empty slot.
+	// Split part of a stack into an empty slot; the bag view closes the gap
+	// before it (DD-291): it sits right after the ore and the sword.
 	part := p.ok("POST", inv(ore, "/split"), map[string]any{"amount": 3, "target_slot": 40})["new_instance_id"].(string)
-	require.Equal(t, 40.0, p.slotOf(part))
+	require.Equal(t, 2.0, p.slotOf(part))
 	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 0, "target_slot": 41}, 400, "E_INVALID_SPLIT")
 	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 7, "target_slot": 41}, 400, "E_INVALID_SPLIT")
 	p.fail("POST", inv(sword, "/split"), map[string]any{"amount": 1, "target_slot": 41}, 409, "E_NOT_STACKABLE")
-	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": 40}, 409, "E_SLOT_OCCUPIED")
+	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": p.slotOf(sword)}, 409, "E_SLOT_OCCUPIED")
 	p.fail("POST", inv(ore, "/split"), map[string]any{"amount": 1, "target_slot": inventory.BagSlotCap}, 400, "E_SLOT_OUT_OF_RANGE")
 	p.fail("POST", inv(uuid.NewString(), "/split"), map[string]any{"amount": 1, "target_slot": 41}, 404, "E_NOT_FOUND")
 	p.fail("POST", inv("nope", "/split"), map[string]any{"amount": 1, "target_slot": 41}, 400, "E_INVALID_ID")
 	p.fail("POST", inv(ore, "/split"), "{", 400, "E_INVALID_JSON")
 
-	// Move: to an empty slot, swap with an occupied one, onto itself.
+	// Move: past the others (still last once the gap closes), swap with an
+	// occupied slot, onto itself.
 	p.ok("POST", inv(part, "/move"), map[string]any{"target_slot": 50})
-	require.Equal(t, 50.0, p.slotOf(part))
-	swordSlot := p.slotOf(sword)
+	require.Equal(t, 2.0, p.slotOf(part))
+	swordSlot, partSlot := p.slotOf(sword), p.slotOf(part)
 	p.ok("POST", inv(part, "/move"), map[string]any{"target_slot": swordSlot})
 	require.Equal(t, swordSlot, p.slotOf(part))
-	require.Equal(t, 50.0, p.slotOf(sword))
+	require.Equal(t, partSlot, p.slotOf(sword))
 	p.ok("POST", inv(part, "/move"), map[string]any{"target_slot": swordSlot})
 	p.fail("POST", inv(part, "/move"), map[string]any{"target_slot": -1}, 400, "E_SLOT_OUT_OF_RANGE")
 	p.fail("POST", inv(uuid.NewString(), "/move"), map[string]any{"target_slot": 1}, 404, "E_NOT_FOUND")

@@ -207,6 +207,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 98. **Çantada giyilebilirlik + eşya türü (bitti)** — Sprint 98, DD-290. Çanta yanıtında `wear` (`ok`/`class`/`level`/`attribute`, `EquipmentService.MarkWearable` = `meetsRequirements`, önce sınıf engelleri). İstemci: sınıfın giyemediği soluk + kırmızı işaret, henüz giyilemeyen kum saati, açıklama satırı; detayda "Yuva · Tür" (ör. Göğüs · Deri zırh) + giyilebilirlik satırı, giyilemezse Kuşan pasif.
 
+99. **Boşluksuz çanta + adet sayı kutusu (bitti)** — Sprint 99, DD-291..292. Çanta görüntülemesi yuvaları sırayı koruyarak 0..n-1'e sıkıştırır (`Repository.Compact`; her eşya işleminden sonraki yenilemede boşluk kapanır). Nitelik, av malzemesi, üretim adedi, pazar adedi: `QuantityField` (rakam, sınıra çekme, boş = en az); `HoldRepeatButton` kaldırıldı.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
