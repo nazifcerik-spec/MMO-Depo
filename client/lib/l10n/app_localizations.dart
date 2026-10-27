@@ -4791,6 +4791,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That listing is gone or full.'**
   String get errListingGone;
+
+  /// No description provided for @workGathering.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering'**
+  String get workGathering;
+
+  /// No description provided for @workAdventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure'**
+  String get workAdventure;
+
+  /// No description provided for @workRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid'**
+  String get workRaid;
+
+  /// No description provided for @workTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travelling'**
+  String get workTravel;
+
+  /// No description provided for @workCrafting.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting'**
+  String get workCrafting;
+
+  /// No description provided for @workIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Idle'**
+  String get workIdle;
+
+  /// No description provided for @errDungeonRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel to this place on the map first.'**
+  String get errDungeonRegion;
+
+  /// No description provided for @dungeonsElsewhere.
+  ///
+  /// In en, this message translates to:
+  /// **'More dungeons and raids open as you travel: each is entered from its own region on the map.'**
+  String get dungeonsElsewhere;
+
+  /// No description provided for @dungeonNoneHere.
+  ///
+  /// In en, this message translates to:
+  /// **'No dungeon in reach here. Travel on the map to a dungeon region.'**
+  String get dungeonNoneHere;
+
+  /// No description provided for @dungeonXp.
+  ///
+  /// In en, this message translates to:
+  /// **'≈ {xp} XP for you'**
+  String dungeonXp(int xp);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

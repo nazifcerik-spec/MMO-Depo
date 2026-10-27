@@ -2704,4 +2704,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errListingGone => '该招募已结束或已满。';
+
+  @override
+  String get workGathering => '采集';
+
+  @override
+  String get workAdventure => '冒险';
+
+  @override
+  String get workRaid => '团队副本';
+
+  @override
+  String get workTravel => '旅行';
+
+  @override
+  String get workCrafting => '制作';
+
+  @override
+  String get workIdle => '空闲';
+
+  @override
+  String get errDungeonRegion => '请先在地图上前往此处。';
+
+  @override
+  String get dungeonsElsewhere => '旅行时会开放更多地下城和团队副本：每个都需从地图上的所在区域进入。';
+
+  @override
+  String get dungeonNoneHere => '此处没有可进入的地下城，请在地图上前往地下城区域。';
+
+  @override
+  String dungeonXp(int xp) {
+    return '你约获得 $xp 经验';
+  }
 }

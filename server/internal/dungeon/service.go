@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"math"
+	"slices"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,7 +19,6 @@ import (
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
-	"math"
 )
 
 // --- Ports ------------------------------------------------------------------
@@ -77,11 +78,37 @@ type Service struct {
 	skills   SkillSource
 	bag      BagRoom        // nil = no room check (DD-246)
 	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
+	regions  RegionGate     // nil = every dungeon in reach (DD-302)
 }
 
 // WithPartyShare shares dungeon XP with party members running dungeons
 // meanwhile (DD-296).
 func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
+
+// RegionGate lists the regions whose dungeons a character can enter from
+// where it stands (world.Service).
+type RegionGate interface {
+	DungeonRegions(ctx context.Context, characterID uuid.UUID) ([]string, error)
+}
+
+// WithRegionGate makes dungeons regional (DD-302).
+func (s *Service) WithRegionGate(g RegionGate) *Service { s.regions = g; return s }
+
+// InReach is the region gate shared with raids: nil when the character can
+// enter a dungeon of region from where it stands.
+func InReach(ctx context.Context, g RegionGate, characterID uuid.UUID, region string) error {
+	if g == nil || region == "" {
+		return nil
+	}
+	reach, err := g.DungeonRegions(ctx, characterID)
+	if err != nil {
+		return err
+	}
+	if !slices.Contains(reach, region) {
+		return ErrWrongRegion
+	}
+	return nil
+}
 
 // WithRecorder feeds reveal results into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
@@ -175,6 +202,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 	if c.Level < tmpl.MinLevel {
 		return nil, ErrLevelRequirement
+	}
+	if err := InReach(ctx, s.regions, req.CharacterID, tmpl.RegionCode); err != nil {
+		return nil, err
 	}
 
 	// Solo dungeons have no weekly lockout (DD-262): rewards follow the
@@ -306,7 +336,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 	if boss, ok := s.mobs.Catalog().Get(tmpl.BossMobCode); ok { // boss bonus follows the same level rule (DD-254, DD-262)
 		cfg := leveling.Current()
-		tmpl.BonusXP = cfg.ScaleMobXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level))
+		tmpl.BonusXP = cfg.ScaleDungeonXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level)) // DD-303
 		tmpl.BonusGoldCopper = int64(math.Round(float64(tmpl.BonusGoldCopper) * cfg.MobXPFactor(int(snapshot.Level), int(boss.Level))))
 	}
 	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl), int(snapshot.Level)},
@@ -543,7 +573,7 @@ type afkXPMobs struct {
 
 func (m afkXPMobs) Get(code string) (combat.Mob, bool) {
 	mob, ok := m.inner.Get(code)
-	mob.XPReward = leveling.Current().ScaleMobXP(m.xp, m.level, int(mob.Level))
+	mob.XPReward = leveling.Current().ScaleDungeonXP(m.xp, m.level, int(mob.Level)) // DD-303
 	return mob, ok
 }
 

@@ -47,7 +47,8 @@ type Service struct {
 	progress progression.Recorder
 	notifier notification.Notifier
 	pub      Publisher
-	parties  Parties // raid finding (DD-299); nil = no queue or board
+	parties  Parties            // raid finding (DD-299); nil = no queue or board
+	regions  dungeon.RegionGate // nil = every raid in reach (DD-302)
 	now      func() time.Time
 	log      *slog.Logger
 	rngNew   func(int64) combat.RNG
@@ -69,7 +70,11 @@ func (s *Service) WithBagRoom(b dungeon.BagRoom) *Service        { s.bag = b; re
 func (s *Service) WithRecorder(r progression.Recorder) *Service  { s.progress = r; return s }
 func (s *Service) WithNotifier(n notification.Notifier) *Service { s.notifier = n; return s }
 func (s *Service) WithPublisher(p Publisher) *Service            { s.pub = p; return s }
-func (s *Service) WithClock(now func() time.Time) *Service       { s.now = now; return s }
+
+// WithRegionGate makes raids regional (DD-302): a lobby is opened, a queue
+// joined and a party advertised from the raid's region only.
+func (s *Service) WithRegionGate(g dungeon.RegionGate) *Service { s.regions = g; return s }
+func (s *Service) WithClock(now func() time.Time) *Service      { s.now = now; return s }
 
 // Catalog lists the raid templates, lowest level first.
 func (s *Service) Catalog() []dungeon.Template {
@@ -107,6 +112,9 @@ func (s *Service) Create(ctx context.Context, actor, account uuid.UUID, code str
 	}
 	if leader != actor {
 		return nil, ErrNotLeader
+	}
+	if err := dungeon.InReach(ctx, s.regions, actor, tmpl.RegionCode); err != nil {
+		return nil, err
 	}
 	snap, err := s.snapshot(ctx, actor, account, tmpl)
 	if err != nil {

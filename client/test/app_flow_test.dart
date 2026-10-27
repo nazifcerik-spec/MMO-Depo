@@ -58,7 +58,13 @@ Future<(FakeBackend, FakeSocketServer, MemoryTokenStore)> _inGame(WidgetTester t
 }
 
 /// The vertical list inside the visible panel (tab views also scroll sideways).
-final _list = find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).last;
+// The page's vertical list (a text field inside it scrolls sideways).
+final _list = find
+    .descendant(
+      of: find.byType(ListView),
+      matching: find.byWidgetPredicate((w) => w is Scrollable && w.axisDirection == AxisDirection.down),
+    )
+    .last;
 
 void main() {
   testWidgets('login validates, shows server errors, then lands on character select', (tester) async {
@@ -915,6 +921,10 @@ void main() {
     await tester.tap(find.text('Dungeon'));
     await tester.pumpAndSettle();
 
+    // Only dungeons entered from here (DD-302); each says what it pays this
+    // character (DD-303).
+    expect(find.text('Far Keep'), findsNothing);
+    expect(find.text('≈ 6000 XP for you'), findsOneWidget);
     final enters = find.widgetWithText(FilledButton, 'Enter');
     expect(tester.widget<FilledButton>(enters.at(1)).onPressed, isNull, reason: 'Sunken Crypt needs level 18');
 
@@ -1595,27 +1605,37 @@ void main() {
     expect(find.text('Password changed. Your other devices were signed out.'), findsOneWidget);
   });
 
-  testWidgets('party: accept invite, then create/invite/promote as leader; push reloads', (tester) async {
+  testWidgets('party: on the character sheet: accept, activities, form by invite, promote, chat (DD-301)', (
+    tester,
+  ) async {
     final (be, ws, _) = await _inGame(tester);
+    // The party lives on the character sheet; an invite push reloads it.
     be.partyInvites.add({'id': 'pi-1', 'invited_by_name': 'Aria'});
-    await tester.tap(find.byTooltip('Social'));
+    ws.last.push('party.invite');
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.widgetWithText(Tab, 'Party'));
-    await tester.tap(find.widgetWithText(Tab, 'Party'));
+    await tester.scrollUntilVisible(find.text('Invitations'), 200, scrollable: _list);
+    await tester.ensureVisible(find.byTooltip('Accept'));
     await tester.pumpAndSettle();
-
-    expect(find.text('Invitations'), findsOneWidget);
     await tester.tap(find.byTooltip('Accept'));
     await tester.pumpAndSettle();
     expect(find.text('Party (2/5)'), findsOneWidget);
     expect(find.byTooltip('More'), findsNothing, reason: 'members cannot manage the party');
 
-    await tester.tap(find.text('Leave'));
+    // What each member is doing (DD-301).
+    (be.party!['members'] as List).first['activity'] = {'kind': 'gathering', 'detail': 'mining'};
+    ws.last.push('party.changed');
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Gathering: Mining'), findsOneWidget);
+    expect(find.textContaining('Idle'), findsOneWidget);
+
+    await tester.ensureVisible(find.widgetWithText(OutlinedButton, 'Leave'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Leave'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Leave'));
     await tester.pumpAndSettle();
     // No party: the first invite forms one (DD-297).
     expect(find.text('Create party'), findsNothing);
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Invite'));
     await tester.enterText(find.byType(TextField), 'Brak');
     await tester.tap(find.widgetWithText(FilledButton, 'Invite'));
     await tester.pumpAndSettle();
@@ -1628,6 +1648,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Party (2/5)'), findsOneWidget);
 
+    await tester.ensureVisible(find.byTooltip('More'));
     await tester.tap(find.byTooltip('More'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Make leader'));
@@ -1635,11 +1656,12 @@ void main() {
     expect(be.party!['leader_character_id'], 'char-7');
     expect(find.byTooltip('More'), findsNothing, reason: 'no longer leader');
 
-    // Party chat jumps to the chat tab's party channel.
+    // Party chat opens Social on the party channel.
     await tester.ensureVisible(find.text('Party chat'));
     await tester.tap(find.text('Party chat'));
     await tester.pumpAndSettle();
     expect(be.chatRead.last, 'party');
+    expect(find.widgetWithText(Tab, 'Party'), findsNothing, reason: 'no party tab in Social any more');
   });
 
   testWidgets('guild: found with fee confirm, MOTD, rank change within permissions, schedule + cancel disband', (
@@ -1831,7 +1853,7 @@ void main() {
 
   testWidgets('progression: achievements sorted, mastery bonus, reputation, title select + clear', (tester) async {
     final (be, _, _) = await _inGame(tester);
-    await tester.scrollUntilVisible(find.text('Achievements & mastery'), 200);
+    await tester.scrollUntilVisible(find.text('Achievements & mastery'), 200, scrollable: _list);
     await tester.tap(find.text('Achievements & mastery'));
     await tester.pumpAndSettle();
 
@@ -2027,6 +2049,14 @@ void main() {
 
   testWidgets('class skills: unlocked active + passive described, higher tier locked', (tester) async {
     await _inGame(tester);
+    // Folded until opened (DD-301).
+    await tester.scrollUntilVisible(find.byKey(const Key('skills-section')), 200, scrollable: _list);
+    expect(find.text('Backstab · Active'), findsNothing);
+    final header = find.descendant(of: find.byKey(const Key('skills-section')), matching: find.byType(InkWell)).first;
+    await tester.ensureVisible(header);
+    await tester.pumpAndSettle();
+    await tester.tap(header);
+    await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Eviscerate · Active'), 200, scrollable: _list);
     expect(find.text('Backstab · Active'), findsOneWidget);
     expect(find.text('200% damage · 12 MP · every 3 turns'), findsOneWidget);

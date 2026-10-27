@@ -194,6 +194,8 @@ func (h *Handler) Catalog(w http.ResponseWriter, r *http.Request) {
 			"boss_mob_code":     t.BossMobCode,
 			"bonus_gold_copper": t.BonusGoldCopper,
 			"bonus_xp":          t.BonusXP,
+			"xp":                t.BaseXP(), // at its own level; members' levels scale it (DD-303)
+			"region_code":       t.RegionCode,
 		})
 	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "dungeons": out})
@@ -240,6 +242,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_DUNGEON_WEEKLY_LOCKED", "already cleared this dungeon this week")
 	case errors.Is(err, ErrUnknownDungeon):
 		apierr.Write(w, r, http.StatusNotFound, "E_UNKNOWN_DUNGEON", "dungeon_code not in catalog")
+	case errors.Is(err, ErrWrongRegion):
+		apierr.Write(w, r, http.StatusConflict, "E_DUNGEON_REGION", "enter this dungeon from its region")
 	case errors.Is(err, ErrLevelRequirement):
 		apierr.Write(w, r, http.StatusForbidden, "E_LEVEL_REQUIREMENT", "character level below min_level")
 	case errors.Is(err, ErrBagFull):

@@ -2710,4 +2710,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errListingGone => 'That listing is gone or full.';
+
+  @override
+  String get workGathering => 'Gathering';
+
+  @override
+  String get workAdventure => 'Adventure';
+
+  @override
+  String get workRaid => 'Raid';
+
+  @override
+  String get workTravel => 'Travelling';
+
+  @override
+  String get workCrafting => 'Crafting';
+
+  @override
+  String get workIdle => 'Idle';
+
+  @override
+  String get errDungeonRegion => 'Travel to this place on the map first.';
+
+  @override
+  String get dungeonsElsewhere =>
+      'More dungeons and raids open as you travel: each is entered from its own region on the map.';
+
+  @override
+  String get dungeonNoneHere => 'No dungeon in reach here. Travel on the map to a dungeon region.';
+
+  @override
+  String dungeonXp(int xp) {
+    return '≈ $xp XP for you';
+  }
 }

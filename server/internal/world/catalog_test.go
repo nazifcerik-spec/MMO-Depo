@@ -80,3 +80,12 @@ func TestCatalog_Links(t *testing.T) {
 	c := fakeCatalog(t)
 	require.Equal(t, []RegionLink{{RegionA: "wild_a", RegionB: "wild_b", TravelSeconds: 240}}, c.Links())
 }
+
+// Dungeons are in reach from their region, a linked one, or a child region
+// such as the entrance node (DD-302).
+func TestCatalog_DungeonRegions(t *testing.T) {
+	c := fakeCatalog(t)
+	require.ElementsMatch(t, []string{"dung", "wild_a"}, c.DungeonRegions("dung"), "the entrance sees its zone")
+	require.Contains(t, c.DungeonRegions("wild_a"), "wild_b", "linked regions as in hunting")
+	require.Nil(t, c.DungeonRegions("nope"))
+}

@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../core/live_events.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../workshop/workshop_view.dart' show professionName;
 import 'group_repository.dart';
 
 String guildRankName(AppLocalizations l, int rank) => switch (rank) {
@@ -102,8 +104,24 @@ Widget _inviteTile(AppLocalizations l, GroupInvite i, VoidCallback accept, VoidC
 
 // --- Party --------------------------------------------------------------------
 
+/// What a party member is doing, readable (DD-301): "Gathering: Mining",
+/// "Adventure: Hunt · Young Boar", "Crafting: Smelting"; idle without one.
+String memberActivity(AppLocalizations l, ({String kind, String detail})? a) => switch (a) {
+  null => l.workIdle,
+  (kind: 'gathering', :final detail) => '${l.workGathering}: ${activityName(l, detail)}',
+  (kind: 'hunt', :final detail) => '${l.workAdventure}: ${l.workHunt} · ${ContentNames.of('mob', detail)}',
+  (kind: 'dungeon', :final detail) => '${l.workAdventure}: ${l.workDungeon} · ${ContentNames.of('dungeon', detail)}',
+  (kind: 'raid', :final detail) => '${l.workAdventure}: ${l.workRaid} · ${ContentNames.of('dungeon', detail)}',
+  (kind: 'travel', :final detail) => '${l.workTravel}: ${ContentNames.of('region', detail)}',
+  (kind: 'crafting', :final detail) => '${l.workCrafting}: ${professionName(l, detail)}',
+  (:final kind, detail: _) => kind,
+};
+
+/// The party: members with what each is doing, invites, leader actions.
+/// Built as a column for the character sheet (DD-301); reloads on `party.*`
+/// pushes and whenever [reload] fires.
 class PartyPanel extends StatefulWidget {
-  const PartyPanel({super.key, required this.repo, required this.live, this.onChat});
+  const PartyPanel({super.key, required this.repo, required this.live, this.onChat, this.reload});
 
   final GroupRepository repo;
   final LiveEvents live;
@@ -111,24 +129,31 @@ class PartyPanel extends StatefulWidget {
   /// Opens the party chat channel.
   final VoidCallback? onChat;
 
+  /// Fires when the owner refreshes (members' activities change silently).
+  final Listenable? reload;
+
   @override
   State<PartyPanel> createState() => _PartyPanelState();
 }
 
 enum _PartyAction { promote, kick }
 
-class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, AutomaticKeepAliveClientMixin {
+class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload {
   Party? _party;
   List<GroupInvite> _invites = const [];
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
     listen(widget.live, 'party.');
+    widget.reload?.addListener(load);
     load();
+  }
+
+  @override
+  void dispose() {
+    widget.reload?.removeListener(load);
+    super.dispose();
   }
 
   @override
@@ -155,13 +180,29 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, A
     if (ok) await _do(disband ? widget.repo.disbandParty : widget.repo.leaveParty);
   }
 
+  /// Like [frame], as a column: the sheet around it scrolls.
+  Widget _column(List<Widget> Function() children) {
+    final l = AppLocalizations.of(context);
+    if (!loaded) {
+      return error != null
+          ? MessageView(message: errorText(l, error!), onRetry: load)
+          : const Padding(
+              padding: EdgeInsets.all(Space.lg),
+              child: Center(child: CircularProgressIndicator()),
+            );
+    }
+    return AbsorbPointer(
+      absorbing: busy,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     final l = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
     final me = widget.repo.characterId;
-    return frame(() {
+    return _column(() {
       final p = _party;
       if (p == null) {
         return [
@@ -198,7 +239,11 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, A
               color: m.id == p.leaderId ? Palette.accent : Palette.textSecondary,
             ),
             title: Text(m.name),
-            subtitle: Text('${l.levelShort(m.level)} · ${className(l, m.classCode)}'),
+            subtitle: Text(
+              '${l.levelShort(m.level)} · ${className(l, m.classCode)}\n${memberActivity(l, m.activity)}',
+              key: Key('member-${m.id}'),
+            ),
+            isThreeLine: true,
             trailing: leader && m.id != me
                 ? PopupMenuButton<_PartyAction>(
                     tooltip: l.more,

@@ -2996,6 +2996,33 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-301 — Parti karakter sayfasında; üyenin yaptığı iş görünür; yetenekler katlanır
+
+**Context:** Parti Sosyal ekranının bir sekmesindeydi; üyelerin o an ne yaptığı görünmüyordu. Karakter sayfasındaki yetenek listesi uzundu.
+**Decision:** Parti bölümü karakter sayfasına taşındı (Sosyal'den Parti sekmesi kalktı; "Parti sohbeti" Sosyal'i parti kanalında açar). Parti yanıtında her üyenin `activity` {kind, detail} alanı tek-işlem tablolarından (DD-263) okunur: toplama (tür), av (canavar), zindan, baskın, yolculuk (varış), üretim (meslek). İstemci "Toplama: Madencilik", "Macera: Av · Yaban Domuzu", "Üretim: Ergitme", "Boşta" yazar; bölüm `party.*` itişlerinde, sayfa yenilemesinde ve veri sürümünde yenilenir. Yetenekler bölümü katlanır, kapalı başlar.
+**Consequences:** Üyenin iş başlatması itiş göndermez; etkinlik sayfa yenilenince güncellenir.
+**Tarih:** 2026-10-27
+
+---
+
+## DD-302 — Zindan ve baskınlar haritadaki yerinden
+
+**Context:** Zindan ve baskın listeleri her yerde tamamı görünüyordu.
+**Decision:** `content.dungeon_template.region_code` (migration 0047, zorunlu, contentpack doğrular): zindan dalga canavarlarının çoğunun bulunduğu bölgede (üretilen zindanlar kendi bölgelerinde, `gen_world.py` yazar). Erişim `world.Catalog.DungeonRegions` = av erişimi (bölge + yolla bağlı bölgeler) + üst bölge (zindan giriş düğümü kendi bölgesini görür); `/location` `dungeon_regions`. Tek kişilik zindan başlatma, baskın lobisi açma, sıraya girme ve ilan verme bu kapıdan geçer (`E_DUNGEON_REGION` 409); ilan panosundan partiye katılma her yerden olur. İstemci yalnız erişilen zindan/baskınları gösterir, boşsa haritaya yönlendirir.
+**Consequences:** Başlangıç bölgesinden ilk zindan (Kül Mahzeni) görünür; ötesi yolculukla açılır.
+**Tarih:** 2026-10-27
+
+---
+
+## DD-303 — Zindan ve baskın XP'si karakterin seviyesine göre
+
+**Context:** Zindan XP'si dakika başı sabitti (1000/dk × süre + sabit boss bonusu); yalnız karakter 10+ seviye yüksekse bantla düşüyordu, hiç artmıyordu; kartlarda sabit "+XP" yazıyordu.
+**Decision:** `dungeon_level_xp` (progression.yaml): canavar karakterden düşükse avdaki göreli düşüş (DD-281: %5 serbest, (1 − fark/seviye)^4, taban %10); yüksekse serbest bandın ötesindeki göreli fark kadar fazla, en çok %50 (`up_cap` 1,5). Her dalga zaferi ve boss bonusu üyenin kendi seviyesiyle ölçeklenir (baskında her üye ayrı). Katalog `xp` (zindanın kendi seviyesindeki tam koşu XP'si); istemci "Sana ≈ N XP" gösterir (yüksekse yeşil, düşükse soluk). Altın eski bantlarla kalır.
+**Consequences:** Kendinden yüksek zindana giren daha çok, aşağıdakini tekrar eden daha az XP alır.
+**Tarih:** 2026-10-27
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

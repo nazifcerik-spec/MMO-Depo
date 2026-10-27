@@ -16,7 +16,16 @@ import 'social_repository.dart';
 
 /// Chat, friends and mail for one character (opened from the home app bar).
 class SocialScreen extends StatefulWidget {
-  const SocialScreen({super.key, required this.repo, required this.live, required this.dataVersion});
+  const SocialScreen({
+    super.key,
+    required this.repo,
+    required this.live,
+    required this.dataVersion,
+    this.channel = 'global',
+  });
+
+  /// The chat channel it opens on ('party' from the party section).
+  final String channel;
 
   final SocialRepository repo;
   final LiveEvents live;
@@ -29,7 +38,7 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderStateMixin {
-  late final _tabs = TabController(length: 5, vsync: this);
+  late final _tabs = TabController(length: 4, vsync: this);
   late final _groups = GroupRepository(widget.repo.api, widget.repo.characterId);
   final _chat = GlobalKey<_ChatPanelState>();
 
@@ -60,7 +69,6 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
             Tab(text: l.tabChat),
             Tab(text: l.tabFriends),
             Tab(text: l.tabMail),
-            Tab(text: l.tabParty),
             Tab(text: l.tabGuild),
           ],
         ),
@@ -70,17 +78,9 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
           child: TabBarView(
             controller: _tabs,
             children: [
-              _ChatPanel(key: _chat, repo: widget.repo, live: widget.live),
+              _ChatPanel(key: _chat, repo: widget.repo, live: widget.live, channel: widget.channel),
               _FriendsPanel(repo: widget.repo, onWhisper: _whisper),
               _MailPanel(repo: widget.repo, dataVersion: widget.dataVersion),
-              PartyPanel(
-                repo: _groups,
-                live: widget.live,
-                onChat: () {
-                  _tabs.animateTo(0);
-                  _chat.currentState?.openChannel('party');
-                },
-              ),
               GuildPanel(repo: _groups, live: widget.live),
             ],
           ),
@@ -93,10 +93,11 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
 // --- Chat ---------------------------------------------------------------------
 
 class _ChatPanel extends StatefulWidget {
-  const _ChatPanel({super.key, required this.repo, required this.live});
+  const _ChatPanel({super.key, required this.repo, required this.live, this.channel = 'global'});
 
   final SocialRepository repo;
   final LiveEvents live;
+  final String channel;
 
   @override
   State<_ChatPanel> createState() => _ChatPanelState();
@@ -108,7 +109,7 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
   final _input = TextEditingController();
   StreamSubscription<LiveEvent>? _sub;
 
-  String _channel = 'global';
+  late String _channel = widget.channel;
   String? _peer; // whisper partner name
   List<ChatMessage> _messages = const []; // oldest first
   final _seen = <int>{};
@@ -189,8 +190,6 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
   }
 
   void openWhisper(String name) => _select('whisper', peer: name);
-
-  void openChannel(String channel) => _select(channel);
 
   Future<void> _send() async {
     final text = _input.text.trim();

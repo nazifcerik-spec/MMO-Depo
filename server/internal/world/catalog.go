@@ -171,6 +171,17 @@ func (c *Catalog) HuntRegions(code string) []string {
 	return out
 }
 
+// DungeonRegions lists the regions whose dungeons and raids a character in
+// region code can see and enter (DD-302): the hunting reach plus the parent
+// region, so a dungeon's entrance node (a child of its zone) counts too.
+func (c *Catalog) DungeonRegions(code string) []string {
+	out := c.HuntRegions(code)
+	if r, ok := c.regions[code]; ok && r.ParentCode != nil {
+		out = append(out, *r.ParentCode)
+	}
+	return out
+}
+
 // --- CatalogService ---------------------------------------------------------
 
 // CatalogService wraps the catalog behind an atomic pointer so contentpack

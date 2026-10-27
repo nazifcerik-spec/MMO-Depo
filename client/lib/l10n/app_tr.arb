@@ -782,5 +782,15 @@
   "raidBoardEmpty": "Açık ilan yok.",
   "raidJoinParty": "Partiye katıl",
   "raidPickRaid": "Baskın",
-  "errListingGone": "Bu ilan artık yok ya da parti dolu."
+  "errListingGone": "Bu ilan artık yok ya da parti dolu.",
+  "workGathering": "Toplama",
+  "workAdventure": "Macera",
+  "workRaid": "Baskın",
+  "workTravel": "Yolculuk",
+  "workCrafting": "Üretim",
+  "workIdle": "Boşta",
+  "errDungeonRegion": "Önce haritada buraya git.",
+  "dungeonsElsewhere": "Yolculuk ettikçe başka zindan ve baskınlar açılır: her biri haritada kendi bölgesinden girilir.",
+  "dungeonNoneHere": "Burada girilebilecek zindan yok. Haritadan bir zindan bölgesine git.",
+  "dungeonXp": "Sana ≈ {xp} XP"
 }

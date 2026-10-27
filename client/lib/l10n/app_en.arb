@@ -2128,5 +2128,22 @@
   "raidBoardEmpty": "No open listings.",
   "raidJoinParty": "Join party",
   "raidPickRaid": "Raid",
-  "errListingGone": "That listing is gone or full."
+  "errListingGone": "That listing is gone or full.",
+  "workGathering": "Gathering",
+  "workAdventure": "Adventure",
+  "workRaid": "Raid",
+  "workTravel": "Travelling",
+  "workCrafting": "Crafting",
+  "workIdle": "Idle",
+  "errDungeonRegion": "Travel to this place on the map first.",
+  "dungeonsElsewhere": "More dungeons and raids open as you travel: each is entered from its own region on the map.",
+  "dungeonNoneHere": "No dungeon in reach here. Travel on the map to a dungeon region.",
+  "dungeonXp": "≈ {xp} XP for you",
+  "@dungeonXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -410,7 +410,7 @@ for z in ZONES:
                               '    parent_code: ' + z['code'], '    min_level: %d' % d['level'],
                               '    travel_seconds_from_parent: 300', '    safe: false']))
     dungeons.append('\n'.join(['  - code: ' + d['code'], '    display_name_key: dungeon.' + d['code'],
-                               '    min_level: %d' % d['level'],
+                               '    min_level: %d' % d['level'], '    region_code: ' + z['code'],
                                '    duration_seconds: %d         # %d minutes' % (d['minutes'] * 60, d['minutes']),
                                '    waves:',
                                '      - { mob_code: %s, count: 3 }' % d['waves'][0],
@@ -420,6 +420,8 @@ for z in ZONES:
                                '    bonus_xp: %d' % d['xp']]))
 
 raids = []
+# A raid sits where its wave mobs live (DD-302).
+MOB_ZONE = {code: z['code'] for z in ZONES for code, _, _, _ in z['mobs']}
 for r in RAIDS:
     code, level, n = r['boss']
     put('mob.' + code, n)
@@ -428,7 +430,7 @@ for r in RAIDS:
     gold = round(3 * 25000 * (r['level'] / 88) ** 1.75)
     xp = round(3 * 30000 * (r['level'] / 88) ** 2.07)
     raids.append('\n'.join(['  - code: ' + r['code'], '    display_name_key: dungeon.' + r['code'],
-                             '    min_level: %d' % r['level'],
+                             '    min_level: %d' % r['level'], '    region_code: ' + MOB_ZONE[r['waves'][0]],
                              '    duration_seconds: 3600         # 60 minutes',
                              '    group_min: 2', '    group_max: 5',
                              '    waves:',

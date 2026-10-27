@@ -222,6 +222,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 103. **CI yeşil (bitti)** — DD-300. `migrations` işinde düşen kapsam kapısıydı: eşikler Windows Go ölçümüyle yükseltilmişti, CI'ın Linux Go'su ifadeleri farklı sayıyor (admin/observability/skill eşikleri CI ölçümüne çekildi; ölçüm Docker komutuyla). `lint`: kullanılmayan test alanı; `client`: e2e aracı 3'lü reveal; birleşik test `-timeout 30m`.
 
+104. **Parti karakter sayfasında + üye etkinliği + bölgesel zindan/baskın + seviyeli zindan XP'si (bitti)** — Sprint 104, DD-301..303. Migration 0047 (`dungeon_template.region_code`). Parti bölümü karakter sayfasında (`PartyPanel` sütun, Sosyal'de Parti sekmesi yok, `SocialScreen(channel: 'party')`), üye `activity` (tek-işlem tablolarından), yetenekler katlanır. Zindan/baskın `region_code` (`gen_world.py`), erişim `DungeonRegions` (av erişimi + üst bölge), `/location` `dungeon_regions`, `dungeon.InReach` kapısı (`E_DUNGEON_REGION`; zindan başlatma, lobi, sıra, ilan). XP `leveling.DungeonXPScale` (`dungeon_level_xp`: altında av düşüşü, üstünde en çok +%50), katalog `xp`, istemci "Sana ≈ N XP".
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

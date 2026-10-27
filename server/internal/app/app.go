@@ -292,7 +292,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	sheetAdapter.WithModifierSource(consumableSvc.Modifiers)
 	huntSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc).
 		WithRegionGate(worldSvc).WithSupplies(itemSvc).WithFood(consumableSvc)
-	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
+	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc).
+		WithRegionGate(worldSvc) // dungeons by map location (DD-302)
 	craftSvc.WithRecorder(recorder).WithSpeed(equipSvc) // crafting-speed enchants (DD-293)
 	// Party XP sharing (DD-296): same-kind jobs of party members pool their XP.
 	shareSvc := partyxp.NewService(pool, partyGrant{charSvc, craftSvc, gatherSvc}, logger).WithPublisher(wsPub)
@@ -313,7 +314,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// --- Party + Guild (Sprint 20) ---
 	partySvc := party.NewService(pool, charSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc)
 	partyHandler := party.NewHandler(partySvc)
-	raidSvc.WithParties(partySvc) // raid queue + listing board (DD-299)
+	raidSvc.WithParties(partySvc).WithRegionGate(worldSvc) // raid finding (DD-299), by location (DD-302)
 	guildHandler := guild.NewHandler(guild.NewService(pool, charSvc, txnSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc))
 	logger.Info("party + guild wired")
 

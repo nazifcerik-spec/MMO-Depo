@@ -10,6 +10,7 @@ import (
 
 	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/domain/character"
+	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 )
@@ -28,7 +29,7 @@ func (h *Handler) Catalog(w http.ResponseWriter, _ *http.Request) {
 		out = append(out, map[string]any{
 			"code": t.Code, "display_name_key": t.DisplayNameKey, "min_level": t.MinLevel,
 			"duration_seconds": t.DurationSecs, "encounters": t.TotalEncounters(), "boss_mob_code": t.BossMobCode,
-			"bonus_gold_copper": t.BonusGoldCopper, "bonus_xp": t.BonusXP,
+			"bonus_gold_copper": t.BonusGoldCopper, "bonus_xp": t.BonusXP, "xp": t.BaseXP(), "region_code": t.RegionCode,
 			"group_min": t.GroupMin, "group_max": t.GroupMax, "boss_gear": BossGear,
 		})
 	}
@@ -266,6 +267,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		ErrInParty:             {http.StatusConflict, "E_ALREADY_IN_PARTY"},
 		ErrNotQueued:           {http.StatusNotFound, "E_NOT_QUEUED"},
 		ErrListed:              {http.StatusConflict, "E_LISTING_GONE"},
+		dungeon.ErrWrongRegion: {http.StatusConflict, "E_DUNGEON_REGION"},
 		character.ErrForbidden: {http.StatusNotFound, "E_NOT_FOUND"},
 		character.ErrNotFound:  {http.StatusNotFound, "E_NOT_FOUND"},
 	} {

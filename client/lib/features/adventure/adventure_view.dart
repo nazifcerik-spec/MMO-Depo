@@ -598,13 +598,30 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
   @override
   void initState() {
     super.initState();
+    widget.dataVersion.addListener(load); // an arrival changes what is in reach
     load();
   }
 
   @override
+  void dispose() {
+    widget.dataVersion.removeListener(load);
+    super.dispose();
+  }
+
+  @override
   Future<void> fetch() async {
-    final r = await Future.wait<Object?>([widget.repo.dungeons(), widget.repo.activeDungeon()]);
-    _dungeons = r[0]! as List<DungeonInfo>;
+    final r = await Future.wait<Object?>([
+      widget.repo.dungeons(),
+      widget.repo.activeDungeon(),
+      widget.repo.location(),
+      widget.repo.mobs(), // the XP scale
+    ]);
+    final here = r[2]! as Location;
+    // Only the dungeons entered from here (DD-302).
+    _dungeons = [
+      for (final d in r[0]! as List<DungeonInfo>)
+        if (d.inReach(here)) d,
+    ];
     _active = r[1] as CombatContract?;
   }
 
@@ -666,6 +683,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
       }
       final text = Theme.of(context).textTheme;
       return [
+        if (_dungeons.isEmpty) Text(l.dungeonNoneHere, style: text.bodySmall),
         for (final d in _dungeons) ...[
           Card(
             child: Padding(
@@ -698,10 +716,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
                     children: [
                       Text(l.bonus, style: text.bodySmall),
                       GoldText(d.bonusGold, size: 13),
-                      Text(
-                        l.xpGain(d.bonusXp),
-                        style: const TextStyle(fontSize: 12, color: Palette.epic, fontWeight: FontWeight.w600),
-                      ),
+                      _DungeonXp(xp: d.xp, factor: widget.repo.dungeonXP.factor(widget.level, d.minLevel)),
                     ],
                   ),
                   const SizedBox(height: Space.md),
@@ -715,9 +730,33 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
           ),
           const SizedBox(height: Space.md),
         ],
+        Text(l.dungeonsElsewhere, style: text.bodySmall),
       ];
     });
   }
+}
+
+/// What a run pays the character (DD-303): the dungeon's XP scaled by the
+/// level gap; green above the base, muted below it.
+class _DungeonXp extends StatelessWidget {
+  const _DungeonXp({required this.xp, required this.factor});
+
+  final int xp;
+  final double factor;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    AppLocalizations.of(context).dungeonXp((xp * factor).round()),
+    style: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: factor > 1.001
+          ? Palette.success
+          : factor < 0.999
+          ? Palette.textMuted
+          : Palette.epic,
+    ),
+  );
 }
 
 /// Solo dungeons and party raids (DD-261) under one segment.

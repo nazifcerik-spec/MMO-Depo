@@ -217,5 +217,5 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 	// either way (DD-281); the client shows each mob's XP, the server
 	// applies it.
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"count": len(out), "mobs": out,
-		"hunt_level_xp": leveling.Current().HuntLevelXP})
+		"hunt_level_xp": leveling.Current().HuntLevelXP, "dungeon_level_xp": leveling.Current().DungeonLevelXP})
 }

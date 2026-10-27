@@ -81,11 +81,12 @@ func (h *Handler) Location(w http.ResponseWriter, r *http.Request) {
 		neighbors = append(neighbors, row)
 	}
 	resp := map[string]any{
-		"region":        regionRow(view.Region),
-		"neighbors":     neighbors,
-		"hunt_regions":  view.HuntRegions,
-		"routes":        view.Routes,
-		"starting_code": view.StartingCode,
+		"region":          regionRow(view.Region),
+		"neighbors":       neighbors,
+		"hunt_regions":    view.HuntRegions,
+		"dungeon_regions": view.DungeonRegions,
+		"routes":          view.Routes,
+		"starting_code":   view.StartingCode,
 	}
 	if view.Travel != nil {
 		row := travelRow(view.Travel, h.svc.cfg.Now())

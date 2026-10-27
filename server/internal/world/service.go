@@ -57,12 +57,14 @@ func NewService(repo TravelRepository, catalog CatalogLookup, chars CharacterBin
 
 // LocationView is the compound response for GET /v1/character/{id}/location.
 type LocationView struct {
-	Region       Region           `json:"region"`
-	Neighbors    []NeighborInfo   `json:"neighbors"`
-	HuntRegions  []string         `json:"hunt_regions"`
-	Routes       map[string]Route `json:"routes"`           // every reachable region (DD-280)
-	Travel       *Travel          `json:"travel,omitempty"` // active in-progress travel, if any
-	StartingCode string           `json:"starting_code,omitempty"`
+	Region      Region         `json:"region"`
+	Neighbors   []NeighborInfo `json:"neighbors"`
+	HuntRegions []string       `json:"hunt_regions"`
+	// DungeonRegions: whose dungeons and raids are in reach (DD-302).
+	DungeonRegions []string         `json:"dungeon_regions"`
+	Routes         map[string]Route `json:"routes"`           // every reachable region (DD-280)
+	Travel         *Travel          `json:"travel,omitempty"` // active in-progress travel, if any
+	StartingCode   string           `json:"starting_code,omitempty"`
 }
 
 // CurrentRegionCode resolves the character's current region — either the
@@ -92,6 +94,16 @@ func (s *Service) HuntRegions(ctx context.Context, characterID uuid.UUID) ([]str
 	return s.catalog.Catalog().HuntRegions(code), nil
 }
 
+// DungeonRegions lists the regions whose dungeons the character can enter
+// from where it stands (DD-302).
+func (s *Service) DungeonRegions(ctx context.Context, characterID uuid.UUID) ([]string, error) {
+	code, err := s.CurrentRegionCode(ctx, characterID)
+	if err != nil {
+		return nil, err
+	}
+	return s.catalog.Catalog().DungeonRegions(code), nil
+}
+
 // Location returns the character's current region + neighbors + active travel
 // (nil when not travelling).
 func (s *Service) Location(ctx context.Context, characterID, accountID uuid.UUID) (*LocationView, error) {
@@ -111,11 +123,12 @@ func (s *Service) Location(ctx context.Context, characterID, accountID uuid.UUID
 		return nil, ErrUnknownRegion
 	}
 	view := &LocationView{
-		Region:       region,
-		Neighbors:    cat.Neighbors(code),
-		HuntRegions:  cat.HuntRegions(code),
-		Routes:       cat.Routes(code),
-		StartingCode: cat.StartingCode(),
+		Region:         region,
+		Neighbors:      cat.Neighbors(code),
+		HuntRegions:    cat.HuntRegions(code),
+		DungeonRegions: cat.DungeonRegions(code),
+		Routes:         cat.Routes(code),
+		StartingCode:   cat.StartingCode(),
 	}
 	active, err := s.repo.Active(ctx, characterID)
 	if err == nil {

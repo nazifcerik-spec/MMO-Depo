@@ -21,6 +21,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"character.ErrNotFound":  character.ErrNotFound,
 		"ErrForbidden":           ErrForbidden,
 		"ErrLevelRequirement":    ErrLevelRequirement,
+		"ErrWrongRegion":         ErrWrongRegion,
 		"ErrNotActive":           ErrNotActive,
 		"ErrNotFound":            ErrNotFound,
 		"ErrNotReady":            ErrNotReady,

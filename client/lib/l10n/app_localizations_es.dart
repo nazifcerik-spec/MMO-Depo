@@ -2709,4 +2709,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errListingGone => 'Ese anuncio ya no existe o está lleno.';
+
+  @override
+  String get workGathering => 'Recolección';
+
+  @override
+  String get workAdventure => 'Aventura';
+
+  @override
+  String get workRaid => 'Incursión';
+
+  @override
+  String get workTravel => 'Viajando';
+
+  @override
+  String get workCrafting => 'Fabricación';
+
+  @override
+  String get workIdle => 'Inactivo';
+
+  @override
+  String get errDungeonRegion => 'Primero viaja a este lugar en el mapa.';
+
+  @override
+  String get dungeonsElsewhere =>
+      'Más mazmorras e incursiones se abren al viajar: cada una se entra desde su región del mapa.';
+
+  @override
+  String get dungeonNoneHere => 'No hay mazmorras aquí. Viaja por el mapa a una región con mazmorra.';
+
+  @override
+  String dungeonXp(int xp) {
+    return '≈ $xp PX para ti';
+  }
 }

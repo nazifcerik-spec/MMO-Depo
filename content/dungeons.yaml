@@ -9,11 +9,14 @@
 #   boss_mob_code      final encounter
 #   bonus_gold_copper  boss kill ekstra gold
 #   bonus_xp           boss kill ekstra xp
+#   region_code        bulunduğu bölge: oradan, ona yolu olan bölgeden ya da alt
+#                      bölgesinden görünür ve başlatılır (DD-302)
 
 dungeons:
   - code: crypt_of_ashes
     display_name_key: dungeon.crypt_of_ashes
     min_level: 6
+    region_code: greenwood
     duration_seconds: 900         # 15 minutes
     waves:
       - { mob_code: grey_wolf,    count: 3 }
@@ -26,6 +29,7 @@ dungeons:
   - code: forest_hollow
     display_name_key: dungeon.forest_hollow
     min_level: 11
+    region_code: whispering_reach
     duration_seconds: 1200        # 20 minutes
     waves:
       - { mob_code: goblin_raider,  count: 3 }
@@ -38,6 +42,7 @@ dungeons:
   - code: shadowfen_ruins
     display_name_key: dungeon.shadowfen_ruins
     min_level: 17
+    region_code: whispering_reach
     duration_seconds: 1800        # 30 minutes
     waves:
       - { mob_code: dire_wolf,       count: 3 }
@@ -50,6 +55,7 @@ dungeons:
   - code: obsidian_spire
     display_name_key: dungeon.obsidian_spire
     min_level: 23
+    region_code: emberpeak
     duration_seconds: 2400        # 40 minutes
     waves:
       - { mob_code: shadow_stalker, count: 3 }
@@ -63,6 +69,7 @@ dungeons:
   - code: sunken_temple
     display_name_key: dungeon.sunken_temple
     min_level: 38
+    region_code: misty_marshes
     duration_seconds: 2700         # 45 minutes
     waves:
       - { mob_code: mist_leech, count: 3 }
@@ -75,6 +82,7 @@ dungeons:
   - code: forgotten_mine
     display_name_key: dungeon.forgotten_mine
     min_level: 63
+    region_code: iron_mountains
     duration_seconds: 3000         # 50 minutes
     waves:
       - { mob_code: mountain_troll, count: 3 }
@@ -87,6 +95,7 @@ dungeons:
   - code: northern_keep
     display_name_key: dungeon.northern_keep
     min_level: 88
+    region_code: northern_keep_ruins
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: ghost_guard, count: 3 }
@@ -99,6 +108,7 @@ dungeons:
   - code: rebel_camp
     display_name_key: dungeon.rebel_camp
     min_level: 128
+    region_code: crown_plains
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: rebel_rider, count: 3 }
@@ -111,6 +121,7 @@ dungeons:
   - code: fire_root
     display_name_key: dungeon.fire_root
     min_level: 178
+    region_code: burnt_forest
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: ash_wolf, count: 3 }
@@ -123,6 +134,7 @@ dungeons:
   - code: buried_palace
     display_name_key: dungeon.buried_palace
     min_level: 228
+    region_code: salt_desert
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: sand_scorpion, count: 3 }
@@ -135,6 +147,7 @@ dungeons:
   - code: royal_crypt
     display_name_key: dungeon.royal_crypt
     min_level: 278
+    region_code: crown_graveyard
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: royal_skeleton, count: 3 }
@@ -147,6 +160,7 @@ dungeons:
   - code: sunken_fleet
     display_name_key: dungeon.sunken_fleet
     min_level: 328
+    region_code: storm_coast
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: sea_raider, count: 3 }
@@ -159,6 +173,7 @@ dungeons:
   - code: brood_cavern
     display_name_key: dungeon.brood_cavern
     min_level: 378
+    region_code: dragon_slopes
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: young_dragon, count: 3 }
@@ -171,6 +186,7 @@ dungeons:
   - code: lost_grove
     display_name_key: dungeon.lost_grove
     min_level: 428
+    region_code: mist_forest
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: fey_wolf, count: 3 }
@@ -183,6 +199,7 @@ dungeons:
   - code: crystal_heart
     display_name_key: dungeon.crystal_heart
     min_level: 478
+    region_code: crystal_caves
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: crystal_spider, count: 3 }
@@ -195,6 +212,7 @@ dungeons:
   - code: volcano_heart
     display_name_key: dungeon.volcano_heart
     min_level: 528
+    region_code: volcanic_isle
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: magma_golem, count: 3 }
@@ -207,6 +225,7 @@ dungeons:
   - code: dragon_throne
     display_name_key: dungeon.dragon_throne
     min_level: 578
+    region_code: throne_peaks
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: dragon_knight, count: 3 }
@@ -219,6 +238,7 @@ dungeons:
   - code: darkened_observatory
     display_name_key: dungeon.darkened_observatory
     min_level: 628
+    region_code: dark_plains
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: shadow_rider, count: 3 }
@@ -231,6 +251,7 @@ dungeons:
   - code: clock_tower
     display_name_key: dungeon.clock_tower
     min_level: 678
+    region_code: lost_city
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: ghost_noble, count: 3 }
@@ -243,6 +264,7 @@ dungeons:
   - code: storm_fortress
     display_name_key: dungeon.storm_fortress
     min_level: 728
+    region_code: floating_isles
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: cloud_giant, count: 3 }
@@ -255,6 +277,7 @@ dungeons:
   - code: rift_core
     display_name_key: dungeon.rift_core
     min_level: 778
+    region_code: rift_edge
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: void_creature, count: 3 }
@@ -267,6 +290,7 @@ dungeons:
   - code: celestial_dome
     display_name_key: dungeon.celestial_dome
     min_level: 828
+    region_code: celestial_temple
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: fallen_angel, count: 3 }
@@ -279,6 +303,7 @@ dungeons:
   - code: sunken_throne
     display_name_key: dungeon.sunken_throne
     min_level: 878
+    region_code: ash_sea
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: ash_leviathan, count: 3 }
@@ -291,6 +316,7 @@ dungeons:
   - code: bastion_keep
     display_name_key: dungeon.bastion_keep
     min_level: 928
+    region_code: last_bastion
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: doom_rider, count: 3 }
@@ -303,6 +329,7 @@ dungeons:
   - code: eternal_throne
     display_name_key: dungeon.eternal_throne
     min_level: 978
+    region_code: edge_of_eternity
     duration_seconds: 3600         # 60 minutes
     waves:
       - { mob_code: void_dragon, count: 3 }
@@ -317,6 +344,7 @@ dungeons:
   - code: north_keep_siege
     display_name_key: dungeon.north_keep_siege
     min_level: 100
+    region_code: northern_keep_ruins
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
@@ -331,6 +359,7 @@ dungeons:
   - code: crownless_palace
     display_name_key: dungeon.crownless_palace
     min_level: 300
+    region_code: crown_graveyard
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
@@ -345,6 +374,7 @@ dungeons:
   - code: dragon_king_lair
     display_name_key: dungeon.dragon_king_lair
     min_level: 600
+    region_code: throne_peaks
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
@@ -359,6 +389,7 @@ dungeons:
   - code: time_lord_tower
     display_name_key: dungeon.time_lord_tower
     min_level: 700
+    region_code: lost_city
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
@@ -373,6 +404,7 @@ dungeons:
   - code: archangels_fall
     display_name_key: dungeon.archangels_fall
     min_level: 850
+    region_code: celestial_temple
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
@@ -387,6 +419,7 @@ dungeons:
   - code: fallen_god_throne
     display_name_key: dungeon.fallen_god_throne
     min_level: 1000
+    region_code: edge_of_eternity
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5

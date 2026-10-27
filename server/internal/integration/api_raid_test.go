@@ -47,6 +47,9 @@ func TestHTTPRaidFlow(t *testing.T) {
 	a.fail("POST", a.path("/raid"), map[string]any{"raid_code": "crypt_of_ashes"}, 404, "E_UNKNOWN_RAID")
 
 	// Calling a lobby off frees the party for a new one.
+	// Opened only where the raid is (DD-302).
+	a.fail("POST", a.path("/raid"), map[string]any{"raid_code": code}, 409, "E_DUNGEON_REGION")
+	w.placeAt(t, "northern_keep_ruins", a.char)
 	first := a.ok("POST", a.path("/raid"), map[string]any{"raid_code": code})["raid"].(map[string]any)["id"].(string)
 	a.fail("POST", a.path("/raid"), map[string]any{"raid_code": code}, 409, "")
 	a.ok("POST", a.path("/raid/"+first+"/leave"), map[string]any{})

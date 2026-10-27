@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
+import '../../core/live_events.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
 import '../progression/progression_screen.dart' show bonusText;
+import '../social/group_panels.dart';
+import '../social/group_repository.dart';
 import 'character_repository.dart';
 import 'leveling.dart';
 import 'models.dart';
@@ -23,7 +26,15 @@ class CharacterSheetView extends StatefulWidget {
     required this.dataVersion,
     this.onOpenProgress,
     this.onSheet,
+    this.live,
+    this.onPartyChat,
   });
+
+  /// Pushes for the party section (DD-301); null = no party section.
+  final LiveEvents? live;
+
+  /// Opens the party chat.
+  final VoidCallback? onPartyChat;
 
   final CharacterRepository repo;
   final CharacterSheet initial;
@@ -44,6 +55,10 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   LevelingSummary? _leveling;
   FoodBuff? _buff;
   late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
+  late final _groups = GroupRepository(widget.repo.api, widget.initial.id);
+
+  /// Pull-to-refresh reloads the party section too (members' activities).
+  final _partyReload = ValueNotifier(0);
 
   @override
   void initState() {
@@ -144,6 +159,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   }
 
   Future<void> _refresh() async {
+    _partyReload.value++;
     try {
       await _fetch();
     } on ApiError catch (e) {
@@ -263,10 +279,19 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               ),
             ],
           ),
+          if (widget.live case final live?) ...[
+            const SizedBox(height: Space.lg),
+            _Section(
+              title: l.tabParty,
+              children: [PartyPanel(repo: _groups, live: live, onChat: widget.onPartyChat, reload: _partyReload)],
+            ),
+          ],
           if (_skills?.isNotEmpty ?? false) ...[
             const SizedBox(height: Space.lg),
             _Section(
+              key: const Key('skills-section'),
               title: l.skills,
+              collapsible: true, // folded until opened (DD-301)
               children: [
                 for (final k in _skills!)
                   if (_onPath(k)) _SkillRow(skill: k, level: s.level),
@@ -346,33 +371,56 @@ class _SkillRow extends StatelessWidget {
   }
 }
 
-class _Section extends StatelessWidget {
-  const _Section({this.title, required this.children});
+class _Section extends StatefulWidget {
+  const _Section({super.key, this.title, required this.children, this.collapsible = false});
 
   final String? title;
   final List<Widget> children;
 
+  /// Folded until its title is tapped.
+  final bool collapsible;
+
+  @override
+  State<_Section> createState() => _SectionState();
+}
+
+class _SectionState extends State<_Section> {
+  late bool _open = !widget.collapsible;
+
   @override
   Widget build(BuildContext context) {
+    final title = widget.title;
+    final label = title == null
+        ? null
+        : Text(
+            title,
+            style: const TextStyle(
+              fontSize: 11,
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w700,
+              color: Palette.textMuted,
+            ),
+          );
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(Space.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (title != null) ...[
-              Text(
-                title!,
-                style: const TextStyle(
-                  fontSize: 11,
-                  letterSpacing: 1.2,
-                  fontWeight: FontWeight.w700,
-                  color: Palette.textMuted,
-                ),
-              ),
-              const SizedBox(height: Space.md),
-            ],
-            ...children,
+            if (label != null)
+              widget.collapsible
+                  ? InkWell(
+                      onTap: () => setState(() => _open = !_open),
+                      child: Row(
+                        children: [
+                          Expanded(child: label),
+                          Icon(_open ? Icons.expand_less : Icons.expand_more, color: Palette.textSecondary),
+                        ],
+                      ),
+                    )
+                  : label,
+            if (label != null && _open) const SizedBox(height: Space.md),
+            if (_open) ...widget.children,
           ],
         ),
       ),

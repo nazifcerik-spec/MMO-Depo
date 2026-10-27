@@ -126,3 +126,34 @@ func TestHuntXPFalloff(t *testing.T) {
 		require.Error(t, c.Prepare(), name)
 	}
 }
+
+// Dungeon XP follows the member's level (DD-303): mobs below pay as in
+// hunting, mobs above up to UpCap more.
+func TestDungeonXPScale(t *testing.T) {
+	d := leveling.DungeonXPScale{Down: leveling.HuntXPFalloff{FreePct: 0.05, Power: 4, Floor: 0.1}, UpCap: 1.5}
+	for _, tc := range []struct {
+		player, mob int
+		want        float64
+	}{
+		{40, 40, 1}, {40, 42, 1}, {40, 38, 1}, // the free band both ways
+		{40, 34, 0.6561},         // below: the hunting falloff
+		{40, 46, 1.1},            // above: 4 past free over 40
+		{40, 80, 1.5}, {0, 5, 1}, // capped; unknown level: full
+	} {
+		require.InDelta(t, tc.want, d.Factor(tc.player, tc.mob), 1e-9, "player %d mob %d", tc.player, tc.mob)
+	}
+	require.Equal(t, 1.0, leveling.DungeonXPScale{}.Factor(40, 80), "not configured: full")
+	c := validConfig()
+	c.DungeonLevelXP = d
+	require.NoError(t, c.Prepare())
+	require.EqualValues(t, 110, c.ScaleDungeonXP(100, 40, 46))
+	for name, bad := range map[string]leveling.DungeonXPScale{
+		"negative cap": {UpCap: -1},
+		"huge cap":     {UpCap: 9},
+		"bad down":     {Down: leveling.HuntXPFalloff{Power: -1}},
+	} {
+		c := validConfig()
+		c.DungeonLevelXP = bad
+		require.Error(t, c.Prepare(), name)
+	}
+}

@@ -71,7 +71,7 @@ type Listing struct {
 // Enqueue puts the actor in the queue for a raid (a new raid replaces the
 // old place). Only characters in no party who meet the level queue.
 func (s *Service) Enqueue(ctx context.Context, actor, account uuid.UUID, code string) (*QueueStatus, error) {
-	tmpl, err := s.eligible(ctx, actor, account, code)
+	tmpl, err := s.eligibleHere(ctx, actor, account, code)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +225,7 @@ func (s *Service) Advertise(ctx context.Context, actor, account uuid.UUID, code 
 	if s.parties == nil {
 		return nil, ErrNotFound
 	}
-	tmpl, err := s.eligible(ctx, actor, account, code)
+	tmpl, err := s.eligibleHere(ctx, actor, account, code)
 	if err != nil {
 		return nil, err
 	}
@@ -399,4 +399,14 @@ func (s *Service) eligible(ctx context.Context, actor, account uuid.UUID, code s
 		return tmpl, ErrLevelRequirement
 	}
 	return tmpl, nil
+}
+
+// eligibleHere is eligible plus the region gate: queueing and advertising
+// happen where the raid is (DD-302); joining a listed party does not.
+func (s *Service) eligibleHere(ctx context.Context, actor, account uuid.UUID, code string) (dungeon.Template, error) {
+	tmpl, err := s.eligible(ctx, actor, account, code)
+	if err != nil {
+		return tmpl, err
+	}
+	return tmpl, dungeon.InReach(ctx, s.regions, actor, tmpl.RegionCode)
 }

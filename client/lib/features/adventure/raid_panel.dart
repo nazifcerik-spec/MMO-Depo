@@ -29,6 +29,7 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
   List<RaidInfo> _raids = const [];
   RaidCurrent _cur = const RaidCurrent(inParty: false, isLeader: false, lockouts: {});
   List<RaidListing> _board = const [];
+  Location? _here; // raids are entered where they are (DD-302)
   String? _pick; // the raid chosen to queue for or advertise
   StreamSubscription<LiveEvent>? _sub;
   Timer? _poll;
@@ -53,9 +54,15 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
 
   @override
   Future<void> fetch() async {
-    final r = await Future.wait<Object>([widget.repo.raids(), widget.repo.raid()]);
+    final r = await Future.wait<Object>([
+      widget.repo.raids(),
+      widget.repo.raid(),
+      widget.repo.location(),
+      widget.repo.mobs(), // the XP scale
+    ]);
     _raids = r[0] as List<RaidInfo>;
     _cur = r[1] as RaidCurrent;
+    _here = r[2] as Location;
     final free = _cur.raid == null && _cur.lobby == null && !_cur.inParty;
     _board = free ? await widget.repo.raidListings() : const [];
     _poll?.cancel();
@@ -66,12 +73,23 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
           });
   }
 
-  /// Raids the character may queue for or advertise: level reached, not
-  /// cleared this week.
-  List<RaidInfo> get _open => [
+  /// Raids entered from where the character stands (DD-302).
+  List<RaidInfo> get _near => [
     for (final r in _raids)
+      if (_here == null || r.dungeon.inReach(_here!)) r,
+  ];
+
+  /// Raids the character may queue for or advertise here: in reach, level
+  /// reached, not cleared this week.
+  List<RaidInfo> get _open => [
+    for (final r in _near)
       if (r.dungeon.minLevel <= widget.level && !_cur.lockouts.contains(r.code)) r,
   ];
+
+  /// Raids whose listed parties the character may join: anywhere, level
+  /// reached, not cleared this week.
+  bool _canJoin(String code) =>
+      _raids.any((r) => r.code == code && r.dungeon.minLevel <= widget.level && !_cur.lockouts.contains(r.code));
 
   RaidInfo? _info(String code) => _raids.where((r) => r.code == code).firstOrNull;
 
@@ -127,7 +145,8 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
           const SizedBox(height: Space.lg),
         ],
         if (active == null && !_cur.inParty) ...[..._boardSection(l, text), const SizedBox(height: Space.lg)],
-        for (final r in _raids) ...[
+        if (active == null && _near.isEmpty) Text(l.dungeonNoneHere, style: text.bodySmall),
+        for (final r in _near) ...[
           _raidCard(l, text, r, canOpen: active == null && _cur.isLeader),
           const SizedBox(height: Space.md),
         ],
@@ -247,9 +266,7 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
                 ),
               const SizedBox(height: Space.sm),
               FilledButton.tonal(
-                onPressed: _open.any((r) => r.code == b.code)
-                    ? () => _act(() => widget.repo.joinRaidListing(b.id))
-                    : null,
+                onPressed: _canJoin(b.code) ? () => _act(() => widget.repo.joinRaidListing(b.id)) : null,
                 child: Text(l.raidJoinParty),
               ),
             ],
@@ -291,10 +308,7 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
               children: [
                 Text(l.bonus, style: text.bodySmall),
                 GoldText(d.bonusGold, size: 13),
-                Text(
-                  l.xpGain(d.bonusXp),
-                  style: const TextStyle(fontSize: 12, color: Palette.epic, fontWeight: FontWeight.w600),
-                ),
+                _DungeonXp(xp: d.xp, factor: widget.repo.dungeonXP.factor(widget.level, d.minLevel)),
               ],
             ),
             Text(

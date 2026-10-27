@@ -2709,4 +2709,37 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errListingGone => 'Bu ilan artık yok ya da parti dolu.';
+
+  @override
+  String get workGathering => 'Toplama';
+
+  @override
+  String get workAdventure => 'Macera';
+
+  @override
+  String get workRaid => 'Baskın';
+
+  @override
+  String get workTravel => 'Yolculuk';
+
+  @override
+  String get workCrafting => 'Üretim';
+
+  @override
+  String get workIdle => 'Boşta';
+
+  @override
+  String get errDungeonRegion => 'Önce haritada buraya git.';
+
+  @override
+  String get dungeonsElsewhere =>
+      'Yolculuk ettikçe başka zindan ve baskınlar açılır: her biri haritada kendi bölgesinden girilir.';
+
+  @override
+  String get dungeonNoneHere => 'Burada girilebilecek zindan yok. Haritadan bir zindan bölgesine git.';
+
+  @override
+  String dungeonXp(int xp) {
+    return 'Sana ≈ $xp XP';
+  }
 }

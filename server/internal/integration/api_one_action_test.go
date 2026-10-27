@@ -92,6 +92,22 @@ func TestHTTPDungeonsUnlimitedAndLevelGated(t *testing.T) {
 		require.Equal(t, false, res["lockout_written"])
 	}
 
+	// Dungeons are entered where they are (DD-302): from the region, a linked
+	// one, or the entrance node; the catalog says where and what a run pays.
+	for _, d := range items(p.ok("GET", "/v1/dungeon/catalog", nil), "dungeons") {
+		if d["code"] == "forgotten_mine" {
+			require.Equal(t, "iron_mountains", d["region_code"])
+			require.Positive(t, d["xp"].(float64))
+		}
+	}
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET level = 70 WHERE id = $1`, p.char)
+	require.NoError(t, err)
+	p.fail("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "forgotten_mine"}, 409, "E_DUNGEON_REGION")
+	w.placeAt(t, "forgotten_mine", p.char)
+	require.Contains(t, p.ok("GET", p.path("/location"), nil)["dungeon_regions"], "iron_mountains")
+	mine := p.ok("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "forgotten_mine"})["contract"].(map[string]any)["id"].(string)
+	p.ok("POST", "/v1/dungeon/"+mine+"/stop", map[string]any{})
+
 	// Raids keep their level gate for every member.
 	lead, low := newHTTPPlayer(t, "warrior"), newHTTPPlayer(t, "cleric")
 	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET level = 100 WHERE id = $1`, lead.char)
@@ -100,6 +116,7 @@ func TestHTTPDungeonsUnlimitedAndLevelGated(t *testing.T) {
 	lead.ok("POST", lead.path("/party/invite"), map[string]any{"target_name": low.name})
 	inv := items(low.ok("GET", low.path("/party/invites"), nil), "invites")[0]["id"].(string)
 	low.ok("POST", low.path("/party/invites/"+inv+"/accept"), map[string]any{})
+	w.placeAt(t, "northern_keep_ruins", lead.char) // the raid's region (DD-302)
 	id := lead.ok("POST", lead.path("/raid"), map[string]any{"raid_code": "north_keep_siege"})["raid"].(map[string]any)["id"].(string)
 	low.fail("POST", low.path("/raid/"+id+"/join"), map[string]any{}, 403, "E_LEVEL_REQUIREMENT")
 }

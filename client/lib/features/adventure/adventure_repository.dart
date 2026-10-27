@@ -25,10 +25,14 @@ class AdventureRepository {
   /// Hunting XP fall-off by level gap (DD-281), filled by [mobs].
   HuntXPFalloff huntXP = const HuntXPFalloff();
 
+  /// Dungeon and raid XP by level gap (DD-303), filled by [mobs].
+  DungeonXPScale dungeonXP = const DungeonXPScale();
+
   Future<List<MobInfo>> mobs() async {
     if (_mobs case final cached?) return cached;
     final j = await api.get('/v1/mobs');
     huntXP = HuntXPFalloff.fromJson(j['hunt_level_xp'] as Map<String, dynamic>?);
+    dungeonXP = DungeonXPScale.fromJson(j['dungeon_level_xp'] as Map<String, dynamic>?);
     return _mobs = [for (final m in (j['mobs'] as List? ?? const []).cast<Map<String, dynamic>>()) MobInfo.fromJson(m)];
   }
 

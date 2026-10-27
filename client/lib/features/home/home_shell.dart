@@ -173,6 +173,15 @@ class _HomeShellState extends State<HomeShell> {
       initial: widget.initial,
       dataVersion: _dataVersion,
       onSheet: (s) => _level.value = s.level,
+      live: _live,
+      onPartyChat: () => _push(
+        SocialScreen(
+          repo: SocialRepository(widget.auth.api, widget.initial.id),
+          live: _live,
+          dataVersion: _dataVersion,
+          channel: 'party',
+        ),
+      ),
       onOpenProgress: () => _push(
         ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
       ),

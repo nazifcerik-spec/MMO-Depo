@@ -317,9 +317,12 @@ type Config struct {
 	// HuntLevelXP scales a hunted mob's own XP by the level gap in either
 	// direction (DD-281). Zero value = always full.
 	HuntLevelXP HuntXPFalloff `yaml:"hunt_level_xp" json:"hunt_level_xp"`
-	Classes     []Class       `yaml:"classes" json:"classes"`
-	Trees       []Tree        `yaml:"talent_trees" json:"talent_trees"`
-	Unlocks     []Unlock      `yaml:"-" json:"unlocks"`
+	// DungeonLevelXP scales dungeon and raid XP by the level gap (DD-303).
+	// Zero value = always full.
+	DungeonLevelXP DungeonXPScale `yaml:"dungeon_level_xp" json:"dungeon_level_xp"`
+	Classes        []Class        `yaml:"classes" json:"classes"`
+	Trees          []Tree         `yaml:"talent_trees" json:"talent_trees"`
+	Unlocks        []Unlock       `yaml:"-" json:"unlocks"`
 
 	table    []int64
 	classes  map[string]*Class
@@ -346,6 +349,35 @@ type HuntXPFalloff struct {
 	FreePct float64 `yaml:"free_pct" json:"free_pct"`
 	Power   float64 `yaml:"power"    json:"power"`
 	Floor   float64 `yaml:"floor"    json:"floor"`
+}
+
+// DungeonXPScale scales dungeon and raid XP by the level gap (DD-303): a mob
+// below the character pays as in hunting (Down); one above pays more, by the
+// relative gap past Down's free band, up to UpCap.
+type DungeonXPScale struct {
+	Down  HuntXPFalloff `yaml:"down"   json:"down"`
+	UpCap float64       `yaml:"up_cap" json:"up_cap"`
+}
+
+// Factor is the share of a dungeon mob's XP a character of playerLevel earns.
+func (d DungeonXPScale) Factor(playerLevel, mobLevel int) float64 {
+	if playerLevel <= 0 || mobLevel <= 0 {
+		return 1
+	}
+	if mobLevel <= playerLevel {
+		return d.Down.Factor(playerLevel, mobLevel)
+	}
+	free := max(1, int(math.Round(d.Down.FreePct*float64(playerLevel))))
+	gap := mobLevel - playerLevel
+	if gap <= free || d.UpCap <= 1 {
+		return 1
+	}
+	return math.Min(d.UpCap, 1+float64(gap-free)/float64(playerLevel))
+}
+
+// ScaleDungeonXP applies DungeonLevelXP to an XP amount (rounded).
+func (c *Config) ScaleDungeonXP(xp int32, playerLevel, mobLevel int) int32 {
+	return int32(math.Round(float64(xp) * c.DungeonLevelXP.Factor(playerLevel, mobLevel)))
 }
 
 // Factor is the share of a mob's XP a character of playerLevel earns.
@@ -484,6 +516,10 @@ func (c *Config) Prepare() error {
 	}
 	if h := c.HuntLevelXP; h.FreePct < 0 || h.FreePct > 1 || h.Power < 0 || h.Floor < 0 || h.Floor > 1 {
 		return errors.New("leveling: hunt_level_xp needs free_pct and floor in 0..1 and power >= 0")
+	}
+	if d := c.DungeonLevelXP; d.Down.FreePct < 0 || d.Down.FreePct > 1 || d.Down.Power < 0 || d.Down.Floor < 0 ||
+		d.Down.Floor > 1 || d.UpCap < 0 || d.UpCap > 3 {
+		return errors.New("leveling: dungeon_level_xp needs down like hunt_level_xp and up_cap in 0..3")
 	}
 	for i, b := range c.MobLevelXP {
 		last := i == len(c.MobLevelXP)-1

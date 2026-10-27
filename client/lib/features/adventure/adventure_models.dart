@@ -40,6 +40,30 @@ class HuntXPFalloff {
   int xp(int mobXP, int playerLevel, int mobLevel) => (mobXP * factor(playerLevel, mobLevel)).round();
 }
 
+/// Dungeon and raid XP by the level gap (DD-303): below the character as in
+/// hunting ([down]), above it more, up to [upCap]. Mirrors
+/// leveling.DungeonXPScale; display only.
+class DungeonXPScale {
+  const DungeonXPScale({this.down = const HuntXPFalloff(), this.upCap = 0});
+
+  factory DungeonXPScale.fromJson(Map<String, dynamic>? j) => DungeonXPScale(
+    down: HuntXPFalloff.fromJson(j?['down'] as Map<String, dynamic>?),
+    upCap: (j?['up_cap'] as num?)?.toDouble() ?? 0,
+  );
+
+  final HuntXPFalloff down;
+  final double upCap;
+
+  double factor(int playerLevel, int mobLevel) {
+    if (playerLevel <= 0 || mobLevel <= 0) return 1;
+    if (mobLevel <= playerLevel) return down.factor(playerLevel, mobLevel);
+    final free = math.max(1, (down.freePct * playerLevel).round());
+    final gap = mobLevel - playerLevel;
+    if (gap <= free || upCap <= 1) return 1;
+    return math.min(upCap, 1 + (gap - free) / playerLevel);
+  }
+}
+
 class MobInfo {
   const MobInfo({
     required this.code,
@@ -90,6 +114,8 @@ class DungeonInfo {
     required this.bossMobCode,
     required this.bonusGold,
     required this.bonusXp,
+    this.xp = 0,
+    this.regionCode = '',
   });
 
   factory DungeonInfo.fromJson(Map<String, dynamic> j) {
@@ -102,8 +128,19 @@ class DungeonInfo {
       bossMobCode: j['boss_mob_code'] as String? ?? '',
       bonusGold: n('bonus_gold_copper'),
       bonusXp: n('bonus_xp'),
+      xp: n('xp'),
+      regionCode: j['region_code'] as String? ?? '',
     );
   }
+
+  /// A full run's XP at the dungeon's own level (DD-303).
+  final int xp;
+
+  /// Where it is entered (DD-302); empty = anywhere.
+  final String regionCode;
+
+  /// Whether it can be entered from where the character stands.
+  bool inReach(Location loc) => regionCode.isEmpty || loc.dungeonRegions.contains(regionCode);
 
   final String code;
   final int minLevel;
@@ -310,6 +347,7 @@ class Location {
     required this.neighbors,
     this.travel,
     this.huntRegions = const [],
+    this.dungeonRegions = const [],
     this.routes = const {},
   });
 
@@ -321,6 +359,7 @@ class Location {
     ],
     travel: j['travel'] is Map<String, dynamic> ? TravelInfo.fromJson(j['travel'] as Map<String, dynamic>) : null,
     huntRegions: [for (final r in (j['hunt_regions'] as List? ?? const [])) r as String],
+    dungeonRegions: [for (final r in (j['dungeon_regions'] as List? ?? const [])) r as String],
     routes: {
       for (final e in (j['routes'] as Map<String, dynamic>? ?? const {}).entries)
         e.key: Duration(seconds: ((e.value as Map<String, dynamic>)['seconds'] as num?)?.toInt() ?? 0),
@@ -334,6 +373,9 @@ class Location {
 
   /// Regions whose mobs can be hunted from here: this one and its road links (DD-273).
   final List<String> huntRegions;
+
+  /// Regions whose dungeons and raids are in reach from here (DD-302).
+  final List<String> dungeonRegions;
   final List<Neighbor> neighbors;
   final TravelInfo? travel;
 }

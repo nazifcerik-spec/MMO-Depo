@@ -182,6 +182,15 @@ func bagIDs(items []inventory.BagItem) []uuid.UUID {
 	return out
 }
 
+// placeAt moves characters to a region, as a finished journey would.
+func (w *testEnv) placeAt(t *testing.T, region string, chars ...string) {
+	t.Helper()
+	for _, c := range chars {
+		_, err := w.p.Exec(w.ctx, `UPDATE character.character SET location_region_code = $2 WHERE id = $1`, c, region)
+		require.NoError(t, err)
+	}
+}
+
 func (e *events) reset() {
 	e.mu.Lock()
 	defer e.mu.Unlock()

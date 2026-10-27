@@ -180,7 +180,7 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 			continue
 		}
 		mob, _ := mobs.Get(e.MobCode)
-		rw.XP += int64(cfg.ScaleMobXP(perKill, level, int(mob.Level)))
+		rw.XP += int64(cfg.ScaleDungeonXP(perKill, level, int(mob.Level))) // each member's own level (DD-303)
 		rw.GoldCopper += e.GoldCopper
 		switch d := r.Uint64() % 100; {
 		case d < 60:
@@ -191,7 +191,7 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 			rw.Legendary++
 		}
 		if e.IsBoss {
-			rw.XP += int64(cfg.ScaleMobXP(tmpl.BonusXP, level, int(mob.Level)))
+			rw.XP += int64(cfg.ScaleDungeonXP(tmpl.BonusXP, level, int(mob.Level)))
 			rw.GoldCopper += tmpl.BonusGoldCopper
 			rw.Rare++
 		} else {

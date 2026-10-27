@@ -25,6 +25,16 @@ type Member struct {
 	ClassCode   string    `json:"class_code"`
 	RoleHint    *string   `json:"role_hint,omitempty"`
 	JoinedAt    time.Time `json:"joined_at"`
+	// Activity is what the member is doing now (DD-301); nil = idle.
+	Activity *Activity `json:"activity,omitempty"`
+}
+
+// Activity is a member's running action: its kind (gathering, hunt,
+// dungeon, raid, travel, crafting) and what (the gathering kind, mob,
+// dungeon, raid, destination or profession).
+type Activity struct {
+	Kind   string `json:"kind"`
+	Detail string `json:"detail"`
 }
 
 type Party struct {

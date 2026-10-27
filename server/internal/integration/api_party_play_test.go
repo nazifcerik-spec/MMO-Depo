@@ -35,6 +35,12 @@ func TestHTTPPartyXPShare(t *testing.T) {
 		return xp + level*1_000_000 // order-preserving: a level-up still counts as more
 	}
 	ra, rb := start(a), start(b)
+	// The party shows what each member is doing (DD-301).
+	for _, m := range a.ok("GET", a.path("/party"), nil)["party"].(map[string]any)["members"].([]any) {
+		act := m.(map[string]any)["activity"].(map[string]any)
+		require.Equal(t, "gathering", act["kind"])
+		require.Equal(t, "fishing", act["detail"])
+	}
 
 	res := a.ok("POST", "/v1/activity/"+ra+"/reveal", map[string]any{})
 	share := res["party_share"].(map[string]any)
@@ -94,6 +100,11 @@ func TestHTTPRaidFinding(t *testing.T) {
 	}
 	low := newHTTPPlayer(t, "warrior")
 	q := func(p *hc) string { return p.path("/raid/queue") }
+	// Queueing and advertising happen in the raid's region (DD-302).
+	ps[0].fail("POST", q(ps[0]), map[string]any{"raid_code": code}, 409, "E_DUNGEON_REGION")
+	for _, p := range ps {
+		w.placeAt(t, "northern_keep_ruins", p.char)
+	}
 	cur := func(p *hc) map[string]any { return p.ok("GET", p.path("/raid"), nil) }
 
 	// Queue: level gate, unknown raid, not from a party.

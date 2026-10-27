@@ -52,6 +52,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_RAID_NOT_OPEN' => l.errRaidNotOpen,
     'E_RAID_NOT_ENOUGH' => l.errRaidNotEnough,
     'E_LISTING_GONE' => l.errListingGone,
+    'E_DUNGEON_REGION' => l.errDungeonRegion,
     'E_RAID_FULL' => l.errGroupFull,
     'E_RAID_NOT_RUNNING' => l.errNotActive,
     'E_RAID_NOT_READY' => l.errNotReady,

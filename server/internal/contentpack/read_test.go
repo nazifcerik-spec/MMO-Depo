@@ -27,7 +27,7 @@ func TestValidateRefs_Rejects(t *testing.T) {
 			Professions: []Profession{{Code: "p"}},
 			Vendors:     []Vendor{{Code: "v", Sells: []VendorSell{{TemplateCode: "a"}}}},
 			Recipes:     []Recipe{{Code: "r", ProfessionCode: "p", OutputTemplateCode: "b", Inputs: []RecipeInput{{TemplateCode: "a"}}}},
-			Dungeons:    []Dungeon{{Code: "d", BossMobCode: "m", Waves: []DungeonWave{{MobCode: "m"}}}},
+			Dungeons:    []Dungeon{{Code: "d", BossMobCode: "m", Waves: []DungeonWave{{MobCode: "m"}}, RegionCode: "g"}},
 		}
 	}
 	check := func(p *Pack) error {
@@ -47,6 +47,8 @@ func TestValidateRefs_Rejects(t *testing.T) {
 		"mob region":        func(p *Pack) { p.Mobs[0].RegionCode = "zz" },
 		"mob no region":     func(p *Pack) { p.Mobs[0].RegionCode = "" },
 		"raid boss region":  func(p *Pack) { p.Mobs[0].RaidBoss = true },
+		"dungeon region":    func(p *Pack) { p.Dungeons[0].RegionCode = "zz" },
+		"dungeon no region": func(p *Pack) { p.Dungeons[0].RegionCode = "" },
 	} {
 		p := base()
 		mut(p)

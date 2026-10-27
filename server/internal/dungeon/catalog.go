@@ -81,7 +81,7 @@ func (s *CatalogService) ReloadCatalog(ctx context.Context, pool *pgxpool.Pool) 
 func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	rows, err := pool.Query(ctx, `
 		SELECT code, display_name_key, min_level, duration_seconds,
-		       waves, boss_mob_code, bonus_gold_copper, bonus_xp, group_min, group_max
+		       waves, boss_mob_code, bonus_gold_copper, bonus_xp, group_min, group_max, COALESCE(region_code, '')
 		  FROM content.dungeon_template
 		 ORDER BY min_level, code`)
 	if err != nil {
@@ -95,7 +95,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		var wavesJSON []byte
 		if err := rows.Scan(
 			&t.Code, &t.DisplayNameKey, &t.MinLevel, &t.DurationSecs,
-			&wavesJSON, &t.BossMobCode, &t.BonusGoldCopper, &t.BonusXP, &t.GroupMin, &t.GroupMax,
+			&wavesJSON, &t.BossMobCode, &t.BonusGoldCopper, &t.BonusXP, &t.GroupMin, &t.GroupMax, &t.RegionCode,
 		); err != nil {
 			return nil, fmt.Errorf("dungeon scan: %w", err)
 		}

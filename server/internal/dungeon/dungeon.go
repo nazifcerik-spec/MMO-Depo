@@ -26,9 +26,12 @@ package dungeon
 import (
 	"encoding/json"
 	"errors"
+	"math"
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // State is the contract lifecycle marker.
@@ -99,6 +102,13 @@ type Template struct {
 	BonusXP         int32 // paid on top of accumulated wave xp when boss dies
 	GroupMin        int16 // party size bounds (DD-261); 1/1 = a solo dungeon
 	GroupMax        int16
+	RegionCode      string // where it is entered (DD-302); empty = anywhere
+}
+
+// BaseXP is what a full run pays at the dungeon's own level: the minutes of
+// fighting plus the boss bonus (DD-303). Each member's level scales it.
+func (t *Template) BaseXP() int64 {
+	return int64(math.Round(leveling.Current().AFKCombatXPPerMinute*float64(t.DurationSecs)/60)) + int64(t.BonusXP)
 }
 
 // IsRaid reports whether the template is a raid (a group run, DD-261).
@@ -158,6 +168,7 @@ var (
 	ErrTooWounded       = errors.New("dungeon: character has no hp left")
 	ErrBagFull          = errors.New("dungeon: bag full")
 	ErrLevelRequirement = errors.New("dungeon: character level below min_level")
+	ErrWrongRegion      = errors.New("dungeon: not entered from this region")
 	ErrValidation       = errors.New("dungeon: validation")
 )
 

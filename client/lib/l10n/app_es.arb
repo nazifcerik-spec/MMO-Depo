@@ -266,5 +266,15 @@
   "raidBoardEmpty": "No hay anuncios abiertos.",
   "raidJoinParty": "Unirse",
   "raidPickRaid": "Incursión",
-  "errListingGone": "Ese anuncio ya no existe o está lleno."
+  "errListingGone": "Ese anuncio ya no existe o está lleno.",
+  "workGathering": "Recolección",
+  "workAdventure": "Aventura",
+  "workRaid": "Incursión",
+  "workTravel": "Viajando",
+  "workCrafting": "Fabricación",
+  "workIdle": "Inactivo",
+  "errDungeonRegion": "Primero viaja a este lugar en el mapa.",
+  "dungeonsElsewhere": "Más mazmorras e incursiones se abren al viajar: cada una se entra desde su región del mapa.",
+  "dungeonNoneHere": "No hay mazmorras aquí. Viaja por el mapa a una región con mazmorra.",
+  "dungeonXp": "≈ {xp} PX para ti"
 }

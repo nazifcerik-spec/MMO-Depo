@@ -1,7 +1,14 @@
 import '../../core/api_client.dart';
 
 class GroupMember {
-  const GroupMember({required this.id, required this.name, required this.level, required this.classCode, this.rank});
+  const GroupMember({
+    required this.id,
+    required this.name,
+    required this.level,
+    required this.classCode,
+    this.rank,
+    this.activity,
+  });
 
   factory GroupMember.fromJson(Map<String, dynamic> j) => GroupMember(
     id: j['character_id'] as String,
@@ -9,6 +16,10 @@ class GroupMember {
     level: (j['level'] as num?)?.toInt() ?? 1,
     classCode: j['class_code'] as String? ?? '',
     rank: (j['rank_index'] as num?)?.toInt(),
+    activity: switch (j['activity']) {
+      {'kind': final String kind} && final Map a => (kind: kind, detail: a['detail'] as String? ?? ''),
+      _ => null,
+    },
   );
 
   final String id;
@@ -18,6 +29,10 @@ class GroupMember {
 
   /// Guild rank index (0 leader … 4 initiate); null for party members.
   final int? rank;
+
+  /// A party member's running action (DD-301): gathering, hunt, dungeon,
+  /// raid, travel or crafting, and what; null = idle.
+  final ({String kind, String detail})? activity;
 }
 
 class Party {

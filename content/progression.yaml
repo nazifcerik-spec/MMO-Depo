@@ -71,6 +71,11 @@ mob_level_xp:
 # never under 10%. Farming far weaker mobs must not beat hunting at level.
 hunt_level_xp: { free_pct: 0.05, power: 4, floor: 0.10 }
 
+# Dungeon and raid XP (DD-303) follows each member's level: below the
+# character a mob pays as in hunting (down), above it up to 50% more, growing
+# with the relative gap past the same free band.
+dungeon_level_xp: { down: { free_pct: 0.05, power: 4, floor: 0.10 }, up_cap: 1.5 }
+
 # Support specializations without a party convert this share of their
 # support_power into attack (Solo Adaptation, DD-252).
 solo_adaptation: { ratio: 0.35 }

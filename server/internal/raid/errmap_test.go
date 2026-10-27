@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/otter/server/internal/domain/character"
+	"github.com/otter/server/internal/dungeon"
 )
 
 // Every domain error must map to a client status: an unmapped one reaches
@@ -18,7 +19,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for _, e := range []error{character.ErrForbidden, character.ErrNotFound,
 		ErrUnknownRaid, ErrNotFound, ErrNoParty, ErrNotLeader, ErrNotInParty, ErrLobbyExists, ErrAlreadyInRaid,
 		ErrNotForming, ErrRaidFull, ErrNotEnough, ErrNotRunning, ErrNotReady, ErrNotMember,
-		ErrLevelRequirement, ErrWeeklyLockout, ErrTooWounded, ErrBagFull, ErrInParty, ErrNotQueued, ErrListed} {
+		ErrLevelRequirement, ErrWeeklyLockout, ErrTooWounded, ErrBagFull, ErrInParty, ErrNotQueued, ErrListed, dungeon.ErrWrongRegion} {
 		rec := httptest.NewRecorder()
 		writeErr(rec, httptest.NewRequest(http.MethodGet, "/", nil), fmt.Errorf("context: %w", e))
 		require.Less(t, rec.Code, http.StatusInternalServerError, e.Error())

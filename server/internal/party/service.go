@@ -533,9 +533,25 @@ func livePartyOf(ctx context.Context, q querier, character uuid.UUID) (uuid.UUID
 }
 
 func liveMembers(ctx context.Context, q querier, partyID uuid.UUID) ([]Member, error) {
+	// Each member's running action, from the one-action tables (DD-263):
+	// at most one is active at a time.
 	rows, err := q.Query(ctx, `
-		SELECT c.id, c.name, c.level, c.class_code, m.role_hint, m.joined_at
+		SELECT c.id, c.name, c.level, c.class_code, m.role_hint, m.joined_at, a.kind, a.detail
 		  FROM social.party_member m JOIN character.character c ON c.id = m.character_id
+		  LEFT JOIN LATERAL (
+		        SELECT 'gathering' AS kind, ac.kind::text AS detail FROM activity.contract ac
+		         WHERE ac.character_id = c.id AND ac.state = 'active'
+		  UNION ALL SELECT 'hunt', h.mob_code::text FROM hunt.contract h
+		         WHERE h.character_id = c.id AND h.state = 'active'
+		  UNION ALL SELECT 'dungeon', d.dungeon_code::text FROM dungeon.contract d
+		         WHERE d.character_id = c.id AND d.state = 'active'
+		  UNION ALL SELECT 'raid', r.raid_code::text FROM raid.member rm JOIN raid.run r ON r.id = rm.run_id
+		         WHERE rm.character_id = c.id AND rm.active
+		  UNION ALL SELECT 'travel', t.to_region_code::text FROM world.travel t
+		         WHERE t.character_id = c.id AND t.state = 'in_progress'
+		  UNION ALL SELECT 'crafting', j.recipe->>'ProfessionCode' FROM crafting.job j
+		         WHERE j.character_id = c.id AND j.state = 'active'
+		  LIMIT 1) a ON true
 		 WHERE m.party_id = $1 AND m.left_at IS NULL
 		 ORDER BY m.joined_at`, partyID)
 	if err != nil {
@@ -543,7 +559,14 @@ func liveMembers(ctx context.Context, q querier, partyID uuid.UUID) ([]Member, e
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Member, error) {
 		var m Member
-		err := r.Scan(&m.CharacterID, &m.Name, &m.Level, &m.ClassCode, &m.RoleHint, &m.JoinedAt)
+		var kind, detail *string
+		err := r.Scan(&m.CharacterID, &m.Name, &m.Level, &m.ClassCode, &m.RoleHint, &m.JoinedAt, &kind, &detail)
+		if kind != nil {
+			m.Activity = &Activity{Kind: *kind}
+			if detail != nil {
+				m.Activity.Detail = *detail
+			}
+		}
 		return m, err
 	})
 }

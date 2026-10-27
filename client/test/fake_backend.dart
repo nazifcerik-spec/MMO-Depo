@@ -412,6 +412,10 @@ class FakeBackend {
   http.Response? _adventure(http.Request req, String path, Map body) {
     if (path == '/v1/mobs') {
       return json(200, {
+        'dungeon_level_xp': {
+          'down': {'free_pct': 0.05, 'power': 4, 'floor': 0.1},
+          'up_cap': 1.5,
+        },
         'mobs': [
           {
             'code': 'giant_rat',
@@ -475,6 +479,17 @@ class FakeBackend {
             'boss_mob_code': 'rat_king',
             'bonus_gold_copper': 500,
             'bonus_xp': 120,
+            'xp': 6000,
+            'region_code': 'whisperwood',
+          },
+          // Entered from a region out of reach (DD-302): not listed.
+          {
+            'code': 'far_keep',
+            'min_level': 3,
+            'duration_seconds': 900,
+            'encounters': 6,
+            'boss_mob_code': 'rat_king',
+            'region_code': 'dragon_peaks',
           },
           {
             'code': 'sunken_crypt',
@@ -575,6 +590,7 @@ class FakeBackend {
         ],
         'travel': ?travel,
         'hunt_regions': [region, 'whisperwood'],
+        'dungeon_regions': [region, 'whisperwood'],
         'routes': {
           'heartland': {
             'seconds': 60,
