@@ -792,5 +792,13 @@
   "errDungeonRegion": "Önce haritada buraya git.",
   "dungeonsElsewhere": "Yolculuk ettikçe başka zindan ve baskınlar açılır: her biri haritada kendi bölgesinden girilir.",
   "dungeonNoneHere": "Burada girilebilecek zindan yok. Haritadan bir zindan bölgesine git.",
-  "dungeonXp": "Sana ≈ {xp} XP"
+  "dungeonXp": "Sana ≈ {xp} XP",
+  "appVersionLine": "Sürüm {version}",
+  "updateButton": "Güncelle",
+  "updateAvailable": "Yeni sürüm hazır: {version}",
+  "updateLatest": "Uygulama güncel",
+  "updateConfirm": "{version} sürümü indirilip kurulsun mu? ({size} MB)",
+  "updateDownloading": "İndiriliyor…",
+  "updatePermission": "MeNa World'ün uygulama yüklemesine izin ver, sonra yeniden Güncelle'ye dokun.",
+  "updateFailed": "Güncelleme alınamadı. Bağlantını kontrol et."
 }

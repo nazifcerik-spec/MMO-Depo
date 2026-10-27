@@ -2742,4 +2742,34 @@ class AppLocalizationsTr extends AppLocalizations {
   String dungeonXp(int xp) {
     return 'Sana ≈ $xp XP';
   }
+
+  @override
+  String appVersionLine(String version) {
+    return 'Sürüm $version';
+  }
+
+  @override
+  String get updateButton => 'Güncelle';
+
+  @override
+  String updateAvailable(String version) {
+    return 'Yeni sürüm hazır: $version';
+  }
+
+  @override
+  String get updateLatest => 'Uygulama güncel';
+
+  @override
+  String updateConfirm(String version, int size) {
+    return '$version sürümü indirilip kurulsun mu? ($size MB)';
+  }
+
+  @override
+  String get updateDownloading => 'İndiriliyor…';
+
+  @override
+  String get updatePermission => 'MeNa World\'ün uygulama yüklemesine izin ver, sonra yeniden Güncelle\'ye dokun.';
+
+  @override
+  String get updateFailed => 'Güncelleme alınamadı. Bağlantını kontrol et.';
 }

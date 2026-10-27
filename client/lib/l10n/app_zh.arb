@@ -276,5 +276,13 @@
   "errDungeonRegion": "请先在地图上前往此处。",
   "dungeonsElsewhere": "旅行时会开放更多地下城和团队副本：每个都需从地图上的所在区域进入。",
   "dungeonNoneHere": "此处没有可进入的地下城，请在地图上前往地下城区域。",
-  "dungeonXp": "你约获得 {xp} 经验"
+  "dungeonXp": "你约获得 {xp} 经验",
+  "appVersionLine": "版本 {version}",
+  "updateButton": "更新",
+  "updateAvailable": "新版本可用：{version}",
+  "updateLatest": "已是最新版本",
+  "updateConfirm": "下载并安装 {version} 版本（{size} MB）？",
+  "updateDownloading": "正在下载…",
+  "updatePermission": "请允许 MeNa World 安装应用，然后再次点击更新。",
+  "updateFailed": "无法获取更新，请检查网络连接。"
 }

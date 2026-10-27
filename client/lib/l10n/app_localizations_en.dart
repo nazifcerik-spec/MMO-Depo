@@ -2743,4 +2743,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String dungeonXp(int xp) {
     return '≈ $xp XP for you';
   }
+
+  @override
+  String appVersionLine(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get updateButton => 'Update';
+
+  @override
+  String updateAvailable(String version) {
+    return 'New version ready: $version';
+  }
+
+  @override
+  String get updateLatest => 'You have the latest version';
+
+  @override
+  String updateConfirm(String version, int size) {
+    return 'Download and install version $version ($size MB)?';
+  }
+
+  @override
+  String get updateDownloading => 'Downloading…';
+
+  @override
+  String get updatePermission => 'Allow installs from MeNa World, then tap Update again.';
+
+  @override
+  String get updateFailed => 'Could not get the update. Check your connection.';
 }

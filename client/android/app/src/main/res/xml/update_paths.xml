@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The only file the update FileProvider shares: the downloaded APK (DD-304). -->
+<paths>
+    <cache-path name="updates" path="updates/" />
+</paths>

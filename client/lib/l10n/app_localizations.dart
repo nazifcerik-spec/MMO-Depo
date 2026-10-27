@@ -4851,6 +4851,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'≈ {xp} XP for you'**
   String dungeonXp(int xp);
+
+  /// No description provided for @appVersionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersionLine(String version);
+
+  /// No description provided for @updateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateButton;
+
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'New version ready: {version}'**
+  String updateAvailable(String version);
+
+  /// No description provided for @updateLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the latest version'**
+  String get updateLatest;
+
+  /// No description provided for @updateConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Download and install version {version} ({size} MB)?'**
+  String updateConfirm(String version, int size);
+
+  /// No description provided for @updateDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading…'**
+  String get updateDownloading;
+
+  /// No description provided for @updatePermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow installs from MeNa World, then tap Update again.'**
+  String get updatePermission;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get the update. Check your connection.'**
+  String get updateFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -2736,4 +2736,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String dungeonXp(int xp) {
     return '你约获得 $xp 经验';
   }
+
+  @override
+  String appVersionLine(String version) {
+    return '版本 $version';
+  }
+
+  @override
+  String get updateButton => '更新';
+
+  @override
+  String updateAvailable(String version) {
+    return '新版本可用：$version';
+  }
+
+  @override
+  String get updateLatest => '已是最新版本';
+
+  @override
+  String updateConfirm(String version, int size) {
+    return '下载并安装 $version 版本（$size MB）？';
+  }
+
+  @override
+  String get updateDownloading => '正在下载…';
+
+  @override
+  String get updatePermission => '请允许 MeNa World 安装应用，然后再次点击更新。';
+
+  @override
+  String get updateFailed => '无法获取更新，请检查网络连接。';
 }

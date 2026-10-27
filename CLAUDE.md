@@ -224,6 +224,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 104. **Parti karakter sayfasında + üye etkinliği + bölgesel zindan/baskın + seviyeli zindan XP'si (bitti)** — Sprint 104, DD-301..303. Migration 0047 (`dungeon_template.region_code`). Parti bölümü karakter sayfasında (`PartyPanel` sütun, Sosyal'de Parti sekmesi yok, `SocialScreen(channel: 'party')`), üye `activity` (tek-işlem tablolarından), yetenekler katlanır. Zindan/baskın `region_code` (`gen_world.py`), erişim `DungeonRegions` (av erişimi + üst bölge), `/location` `dungeon_regions`, `dungeon.InReach` kapısı (`E_DUNGEON_REGION`; zindan başlatma, lobi, sıra, ilan). XP `leveling.DungeonXPScale` (`dungeon_level_xp`: altında av düşüşü, üstünde en çok +%50), katalog `xp`, istemci "Sana ≈ N XP".
 
+105. **Uygulama içi güncelleme (bitti)** — Sprint 105, DD-304. Karakter sayfasında sürüm + Güncelle (`UpdateTile`, `core/app_update.dart`): `UPDATE_FEED_URL` JSON'u → onay → indir → `MainActivity` `mena/update` kanalı + FileProvider ile sistem yükleyicisi. Yayın: `powershell -ExecutionPolicy Bypass -File scripts/release-apk.ps1 -Version x.y.z` (derler + `releases` dalına `latest.json` + APK; `-NoPublish` yalnız derler). APK bu makinenin imzasıyla, yalnız buradan yayınlanır.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -3021,6 +3021,13 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 **Consequences:** Kendinden yüksek zindana giren daha çok, aşağıdakini tekrar eden daha az XP alır.
 **Tarih:** 2026-10-27
 
+## DD-304 — Uygulama içi güncelleme (sideload APK)
+
+**Context:** Her sürüm telefona kabloyla (`adb install`) kuruluyordu; uygulama mağazada değil, APK yerel debug anahtarıyla imzalı.
+**Decision:** Karakter sayfasının altında sürüm satırı + **Güncelle** butonu (`UpdateTile`, yalnız Android ve `UPDATE_FEED_URL` verilmişse). Akış: `latest.json` (`{version, apk, size}`) okunur → sürüm büyükse onay → APK indirilir (ilerleme çubuğu, boyut doğrulanır, yalnız https + akışla aynı host) → `MainActivity` `mena/update` kanalı sabit `cache/updates/update.apk` dosyasını FileProvider ile sistem yükleyicisine verir; "bilinmeyen uygulama yükleme" izni yoksa ayar sayfasını açar. Yayın: `scripts/release-apk.ps1 -Version x.y.z` bu makinede derler (`--build-number` = x·10000+y·100+z, arm + arm64) ve yalnız `latest.json` + APK içeren tek commit'lik `releases` dalına force push eder (main değil); oyun `raw.githubusercontent.com` üzerinden okur. Açılışta çalıştırma başına bir kontrol; sunucu değişmedi.
+**Consequences:** Sürüm bütünlüğünü Android imza kontrolü sağlar (farklı anahtarla imzalı APK kurulmaz); bu yüzden yayın imzalı makineden yapılır, ileride gerçek yükleme anahtarına (DD-233) geçişte bir kez kaldırıp kurmak gerekir. `REQUEST_INSTALL_PACKAGES` mağaza sürümünde kaldırılmalı. Bu özelliği içeren ilk sürüm (1.25.0) bir kez kabloyla kurulur.
+**Tarih:** 2026-10-28
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

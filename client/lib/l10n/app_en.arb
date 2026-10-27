@@ -2145,5 +2145,37 @@
         "type": "int"
       }
     }
-  }
+  },
+  "appVersionLine": "Version {version}",
+  "@appVersionLine": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateButton": "Update",
+  "updateAvailable": "New version ready: {version}",
+  "@updateAvailable": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateLatest": "You have the latest version",
+  "updateConfirm": "Download and install version {version} ({size} MB)?",
+  "@updateConfirm": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "updateDownloading": "Downloading…",
+  "updatePermission": "Allow installs from MeNa World, then tap Update again.",
+  "updateFailed": "Could not get the update. Check your connection."
 }

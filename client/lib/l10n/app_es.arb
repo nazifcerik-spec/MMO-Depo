@@ -276,5 +276,13 @@
   "errDungeonRegion": "Primero viaja a este lugar en el mapa.",
   "dungeonsElsewhere": "Más mazmorras e incursiones se abren al viajar: cada una se entra desde su región del mapa.",
   "dungeonNoneHere": "No hay mazmorras aquí. Viaja por el mapa a una región con mazmorra.",
-  "dungeonXp": "≈ {xp} PX para ti"
+  "dungeonXp": "≈ {xp} PX para ti",
+  "appVersionLine": "Versión {version}",
+  "updateButton": "Actualizar",
+  "updateAvailable": "Nueva versión lista: {version}",
+  "updateLatest": "Tienes la última versión",
+  "updateConfirm": "¿Descargar e instalar la versión {version} ({size} MB)?",
+  "updateDownloading": "Descargando…",
+  "updatePermission": "Permite instalaciones desde MeNa World y vuelve a tocar Actualizar.",
+  "updateFailed": "No se pudo obtener la actualización. Revisa tu conexión."
 }
