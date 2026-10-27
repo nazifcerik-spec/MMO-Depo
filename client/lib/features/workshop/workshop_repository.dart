@@ -96,6 +96,7 @@ class ItemInfo {
     this.buff,
     this.weightGrams = 0,
     this.maxStack = 1,
+    this.enchant,
   });
 
   factory ItemInfo.fromJson(Map<String, dynamic> j) {
@@ -122,6 +123,7 @@ class ItemInfo {
         _ => 0,
       },
       buff: FoodBuff.fromUseEffect(j['use_effect']),
+      enchant: EnchantInfo.fromJson(j['enchant']),
       bonuses: [
         if (raw is List)
           for (final b in raw.whereType<Map<String, dynamic>>())
@@ -142,6 +144,9 @@ class ItemInfo {
   final FoodBuff? buff; // DD-269
   final int weightGrams;
   final int maxStack;
+
+  /// What an enchanting scroll puts on gear (DD-293).
+  final EnchantInfo? enchant;
 }
 
 /// A learned profession's progress.

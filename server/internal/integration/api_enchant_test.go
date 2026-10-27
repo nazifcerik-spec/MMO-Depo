@@ -56,6 +56,8 @@ func TestHTTPEnchanting(t *testing.T) {
 	row := bagRow(sword)
 	require.Equal(t, "enchant_weapon_attack_1", row["enchant_code"])
 	require.Contains(t, row["effective_bonuses"], map[string]any{"kind": "mult_add", "target": "attack", "amount": 0.01})
+	attack := []any{map[string]any{"kind": "mult_add", "target": "attack", "amount": 0.01}}
+	require.Equal(t, attack, row["enchant_effect"].(map[string]any)["modifiers"], "what the enchant adds")
 
 	// Worn, a new enchant replaces the old one and reaches the sheet.
 	p.ok("POST", p.path("/equip/"+sword), map[string]any{})
@@ -66,6 +68,19 @@ func TestHTTPEnchanting(t *testing.T) {
 	res = p.ok("POST", path(sword), withScroll("enchant_weapon_crit_1"))
 	require.Equal(t, "enchant_weapon_attack_1", res["replaced"])
 	require.Equal(t, before+1, crit(), "+1 crit from the enchant")
+	worn := p.ok("GET", p.path("/equipment"), nil)["slots"].(map[string]any)["mainhand"].(map[string]any)
+	require.Equal(t, "enchant_weapon_crit_1", worn["enchant_code"])
+	require.Equal(t, []any{"weapon"}, worn["enchant_effect"].(map[string]any)["slots"])
+
+	// A scroll recipe says what its scroll does.
+	var recipe map[string]any
+	for _, r := range items(p.ok("GET", "/v1/recipes?profession=enchanting", nil), "recipes") {
+		if r["output_template_code"] == "enchant_weapon_attack_1" {
+			recipe = r
+		}
+	}
+	require.NotNil(t, recipe)
+	require.Equal(t, attack, recipe["output"].(map[string]any)["enchant"].(map[string]any)["modifiers"])
 
 	// A sale and its buyback keep the enchant.
 	p.ok("POST", p.path("/unequip/mainhand"), map[string]any{})

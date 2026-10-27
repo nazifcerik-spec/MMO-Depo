@@ -2621,4 +2621,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get diffLegend => 'Color de receta: la XP que da a tu nivel';
+
+  @override
+  String get recipeGroupEnchantWeapon => 'Encantamientos de arma';
+
+  @override
+  String get recipeGroupEnchantArmor => 'Encantamientos de armadura';
+
+  @override
+  String get recipeGroupEnchantJewelry => 'Encantamientos de joyería';
+
+  @override
+  String get recipeGroupEnchantProfession => 'Encantamientos de oficio';
 }

@@ -727,6 +727,12 @@ void main() {
         'max_stack': 1,
         'rarity': 'common',
         'enchant_code': 'enchant_weapon_crit_1',
+        'enchant_effect': {
+          'slots': ['weapon'],
+          'modifiers': [
+            {'kind': 'flat', 'target': 'crit_pct', 'amount': 1},
+          ],
+        },
       },
       {
         'instance_id': 'helm',
@@ -752,7 +758,8 @@ void main() {
     expect(find.text('Choose the gear to enchant'), findsOneWidget);
     expect(find.text('Sword Training'), findsOneWidget);
     expect(find.text('Helm Novice'), findsNothing);
-    expect(find.text('Enchant: Enchant Weapon Crit 1'), findsOneWidget);
+    // The current enchant says what it adds (DD-295).
+    expect(find.text('Enchant: Enchant Weapon Crit 1 · +1 Crit'), findsOneWidget);
     await tester.tap(find.text('Sword Training'));
     await tester.pumpAndSettle();
     expect(find.text('Replace the enchant?'), findsOneWidget);
@@ -764,7 +771,7 @@ void main() {
 
     await tester.tap(find.bySemanticsLabel('Sword Training ×1'));
     await tester.pumpAndSettle();
-    expect(find.text('Enchant: Enchant Weapon Attack 1'), findsOneWidget);
+    expect(find.text('Enchant: Enchant Weapon Attack 1 · +1% Attack'), findsOneWidget);
   });
 
   testWidgets('hunt: level-aware default, start, early collect, result with level-up', (tester) async {
@@ -1052,7 +1059,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.handyman_outlined).first);
     await tester.pumpAndSettle();
     expect(find.text('Alchemy'), findsOneWidget);
-    expect(find.widgetWithText(FilledButton, 'Learn'), findsNWidgets(2));
+    expect(find.widgetWithText(FilledButton, 'Learn'), findsNWidgets(3));
 
     await tester.tap(find.widgetWithText(FilledButton, 'Learn').first);
     await tester.pumpAndSettle();
@@ -1096,6 +1103,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Crafted Potion Hp Small ×1 · Alchemy is now level 2'), findsOneWidget);
     expect(find.text('Crafting Potion Hp Small ×1'), findsNothing);
+  });
+
+  testWidgets('workshop: recipes sit under headings that fold; scrolls say what they add', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.skills.addAll({'blacksmithing': 1, 'enchanting': 1});
+    await tester.tap(find.byIcon(Icons.handyman_outlined).first);
+    await tester.pumpAndSettle();
+
+    // Blacksmithing: helms and gloves apart; a tapped heading folds.
+    await tester.tap(find.text('Blacksmithing'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('group-slot:helm')), findsOneWidget);
+    expect(find.byKey(const Key('group-slot:gloves')), findsOneWidget);
+    expect(find.text('Gloves Iron'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('group-slot:gloves')));
+    await tester.pumpAndSettle();
+    expect(find.text('Gloves Iron'), findsNothing);
+    expect(find.text('Helm Iron'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    // Enchanting: weapon and profession enchants apart, each with its effect.
+    await tester.tap(find.text('Enchanting'));
+    await tester.pumpAndSettle();
+    expect(find.text('Weapon enchants'), findsOneWidget);
+    expect(find.text('Profession enchants'), findsOneWidget);
+    expect(find.text('+1% Attack'), findsOneWidget);
+    expect(find.text('+2% Mining yield'), findsOneWidget);
   });
 
   testWidgets('shop: affordable buy with price guard, buy back a sold item', (tester) async {

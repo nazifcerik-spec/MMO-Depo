@@ -170,23 +170,45 @@ class _InventoryViewState extends State<InventoryView> {
     final l = AppLocalizations.of(context);
     final info = scroll.enchant!;
     final bag = _bag;
-    final targets = <(String id, String name, String? current, bool worn, String code, String rarity, String cls)>[
-      for (final e in _equipped.entries)
-        if (info.fits(e.key))
+    final targets =
+        <
           (
-            e.value.instanceId,
-            itemName(e.value.templateCode, e.value.prefix, e.value.suffix),
-            e.value.enchantCode,
-            true,
-            e.value.templateCode,
-            e.value.rarity,
-            e.value.itemClass,
-          ),
-      if (bag != null)
-        for (final i in bag.items)
-          if (i.equippable && info.fits(i.equipSlot!))
-            (i.instanceId, displayName(i), i.enchantCode, false, i.templateCode, i.rarity, i.itemClass),
-    ];
+            String id,
+            String name,
+            String? current,
+            bool worn,
+            String code,
+            String rarity,
+            String cls,
+            EnchantInfo? effect,
+          )
+        >[
+          for (final e in _equipped.entries)
+            if (info.fits(e.key))
+              (
+                e.value.instanceId,
+                itemName(e.value.templateCode, e.value.prefix, e.value.suffix),
+                e.value.enchantCode,
+                true,
+                e.value.templateCode,
+                e.value.rarity,
+                e.value.itemClass,
+                e.value.enchantEffect,
+              ),
+          if (bag != null)
+            for (final i in bag.items)
+              if (i.equippable && info.fits(i.equipSlot!))
+                (
+                  i.instanceId,
+                  displayName(i),
+                  i.enchantCode,
+                  false,
+                  i.templateCode,
+                  i.rarity,
+                  i.itemClass,
+                  i.enchantEffect,
+                ),
+        ];
     final picked = await showModalBottomSheet<int>(
       context: context,
       showDragHandle: true,
@@ -214,7 +236,7 @@ class _InventoryViewState extends State<InventoryView> {
                           child: ItemCell(rarity: t.$6, icon: itemIcon(t.$7), code: t.$5),
                         ),
                         title: Text(t.$4 ? '${t.$2} (${l.wornTag})' : t.$2),
-                        subtitle: t.$3 == null ? null : Text(l.enchantOn(ContentNames.of('item', t.$3!))),
+                        subtitle: t.$3 == null ? null : Text(enchantLabel(l, t.$3!, t.$8)),
                         onTap: () => Navigator.pop(c, i),
                       ),
                   ],
@@ -274,7 +296,7 @@ class _InventoryViewState extends State<InventoryView> {
                   ),
               if (item.enchantCode case final e?)
                 Text(
-                  l.enchantOn(ContentNames.of('item', e)),
+                  enchantLabel(l, e, item.enchantEffect),
                   style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
                 ),
               if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
@@ -832,7 +854,7 @@ class _ItemDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Space.md),
                   child: Text(
-                    l.enchantOn(ContentNames.of('item', e)),
+                    enchantLabel(l, e, item.enchantEffect),
                     style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
                   ),
                 ),

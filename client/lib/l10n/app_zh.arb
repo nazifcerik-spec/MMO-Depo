@@ -241,5 +241,9 @@
   "statCraftSpeed": "制作速度",
   "diffXp": "{pct}% 经验",
   "diffNoXp": "无经验",
-  "diffLegend": "配方颜色：按你的技能获得的经验"
+  "diffLegend": "配方颜色：按你的技能获得的经验",
+  "recipeGroupEnchantWeapon": "武器附魔",
+  "recipeGroupEnchantArmor": "护甲附魔",
+  "recipeGroupEnchantJewelry": "饰品附魔",
+  "recipeGroupEnchantProfession": "专业附魔"
 }

@@ -2618,4 +2618,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get diffLegend => '配方颜色：按你的技能获得的经验';
+
+  @override
+  String get recipeGroupEnchantWeapon => '武器附魔';
+
+  @override
+  String get recipeGroupEnchantArmor => '护甲附魔';
+
+  @override
+  String get recipeGroupEnchantJewelry => '饰品附魔';
+
+  @override
+  String get recipeGroupEnchantProfession => '专业附魔';
 }

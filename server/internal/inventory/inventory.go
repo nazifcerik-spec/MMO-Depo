@@ -71,9 +71,10 @@ type BagItem struct {
 	// DD-290): WearOK, or why not.
 	Wear string `json:"wear,omitempty"`
 	// EnchantCode: the scroll whose enchant the piece holds (DD-293);
-	// EnchantRaw is that scroll's enchant, already in EffectiveBonuses.
+	// EnchantRaw is that scroll's enchant (shown as what it adds; also
+	// already in EffectiveBonuses).
 	EnchantCode *string         `json:"enchant_code,omitempty"`
-	EnchantRaw  json.RawMessage `json:"-"`
+	EnchantRaw  json.RawMessage `json:"enchant_effect,omitempty"`
 	// Enchant: what this item puts on gear when it is a scroll.
 	Enchant json.RawMessage `json:"enchant,omitempty"`
 }

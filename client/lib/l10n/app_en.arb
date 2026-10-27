@@ -2056,5 +2056,9 @@
     }
   },
   "diffNoXp": "no XP",
-  "diffLegend": "Recipe colors: the XP a craft teaches at your skill"
+  "diffLegend": "Recipe colors: the XP a craft teaches at your skill",
+  "recipeGroupEnchantWeapon": "Weapon enchants",
+  "recipeGroupEnchantArmor": "Armor enchants",
+  "recipeGroupEnchantJewelry": "Jewelry enchants",
+  "recipeGroupEnchantProfession": "Profession enchants"
 }

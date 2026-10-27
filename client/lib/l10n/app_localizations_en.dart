@@ -2622,4 +2622,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get diffLegend => 'Recipe colors: the XP a craft teaches at your skill';
+
+  @override
+  String get recipeGroupEnchantWeapon => 'Weapon enchants';
+
+  @override
+  String get recipeGroupEnchantArmor => 'Armor enchants';
+
+  @override
+  String get recipeGroupEnchantJewelry => 'Jewelry enchants';
+
+  @override
+  String get recipeGroupEnchantProfession => 'Profession enchants';
 }

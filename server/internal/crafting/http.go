@@ -282,6 +282,9 @@ func outputRow(t item.Template) map[string]any {
 	if t.UseEffect != nil {
 		row["use_effect"] = t.UseEffect
 	}
+	if t.Enchant != nil { // what a scroll puts on gear (DD-293)
+		row["enchant"] = t.Enchant
+	}
 	return row
 }
 

@@ -4641,6 +4641,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recipe colors: the XP a craft teaches at your skill'**
   String get diffLegend;
+
+  /// No description provided for @recipeGroupEnchantWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'Weapon enchants'**
+  String get recipeGroupEnchantWeapon;
+
+  /// No description provided for @recipeGroupEnchantArmor.
+  ///
+  /// In en, this message translates to:
+  /// **'Armor enchants'**
+  String get recipeGroupEnchantArmor;
+
+  /// No description provided for @recipeGroupEnchantJewelry.
+  ///
+  /// In en, this message translates to:
+  /// **'Jewelry enchants'**
+  String get recipeGroupEnchantJewelry;
+
+  /// No description provided for @recipeGroupEnchantProfession.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession enchants'**
+  String get recipeGroupEnchantProfession;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

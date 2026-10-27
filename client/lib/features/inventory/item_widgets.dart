@@ -201,6 +201,17 @@ String enchantGroups(AppLocalizations l, EnchantInfo e) => [
     },
 ].join(' · ');
 
+/// What an enchant adds, readable: "+1% Attack, +0.5 Crit" (DD-295).
+String enchantEffects(AppLocalizations l, EnchantInfo e) => [for (final b in e.modifiers) ?bonusText(l, b)].join(', ');
+
+/// "Enchant: Weapon Attack I · +1% Attack": the enchant a piece holds and,
+/// when the server sent it, what it adds.
+String enchantLabel(AppLocalizations l, String code, EnchantInfo? effect) {
+  final on = l.enchantOn(ContentNames.of('item', code));
+  final adds = effect == null ? '' : enchantEffects(l, effect);
+  return adds.isEmpty ? on : '$on · $adds';
+}
+
 /// "+10 Attack", "+10% STR". Clamp/set modifiers are engine details → hidden.
 String? bonusText(AppLocalizations l, StatBonus b) {
   final name = statName(l, b.target);

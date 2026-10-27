@@ -599,6 +599,7 @@ class FakeBackend {
         'professions': [
           {'code': 'alchemy', 'max_level': 50},
           {'code': 'blacksmithing', 'max_level': 50},
+          {'code': 'enchanting', 'max_level': 100},
         ],
       });
     }
@@ -636,6 +637,37 @@ class FakeBackend {
             'output_template_code': 'potion_mp_small',
             'output_stack': 1,
           },
+          // Headings (DD-295): armor by slot, scrolls by the gear they go on.
+          for (final (code, slot) in [('helm_iron', 'helm'), ('gloves_iron', 'gloves')])
+            {
+              'code': 'recipe_$code',
+              'profession_code': 'blacksmithing',
+              'min_skill': 1,
+              'output_template_code': code,
+              'output_stack': 1,
+              'output': {'item_class': 'armor', 'item_subclass': 'plate_armor', 'equip_slot': slot},
+            },
+          for (final (code, slot, target, amount) in [
+            ('enchant_weapon_attack_1', 'weapon', 'attack', 0.01),
+            ('enchant_jewelry_mining_1', 'jewelry', 'gather_yield_mining', 0.02),
+          ])
+            {
+              'code': 'recipe_$code',
+              'profession_code': 'enchanting',
+              'min_skill': 1,
+              'output_template_code': code,
+              'output_stack': 1,
+              'output': {
+                'item_class': 'consumable',
+                'item_subclass': 'enchant_scroll',
+                'enchant': {
+                  'slots': [slot],
+                  'modifiers': [
+                    {'kind': 'mult_add', 'target': target, 'amount': amount},
+                  ],
+                },
+              },
+            },
         ],
       });
     }
@@ -1261,6 +1293,7 @@ class FakeBackend {
       final target = [...bag, ...equipped.values].firstWhere((i) => i['instance_id'] == ench[1]);
       final previous = target['enchant_code'];
       target['enchant_code'] = scroll['template_code'];
+      target['enchant_effect'] = scroll['enchant'];
       final left = (scroll['stack_quantity'] as int) - 1;
       if (left == 0) {
         bag.remove(scroll);

@@ -54,6 +54,7 @@ class BagItem {
     this.buff,
     this.wear,
     this.enchantCode,
+    this.enchantEffect,
     this.enchant,
   });
 
@@ -95,6 +96,7 @@ class BagItem {
       buff: FoodBuff.fromUseEffect(j['use_effect']),
       wear: j['wear'] as String?,
       enchantCode: j['enchant_code'] as String?,
+      enchantEffect: EnchantInfo.fromJson(j['enchant_effect']),
       enchant: EnchantInfo.fromJson(j['enchant']),
       bonuses: [
         if (raw is List)
@@ -160,6 +162,9 @@ class BagItem {
 
   /// The scroll whose enchant this gear holds (DD-293); null for none.
   final String? enchantCode;
+
+  /// What that enchant adds (DD-295).
+  final EnchantInfo? enchantEffect;
 
   /// What this item puts on gear when it is an enchanting scroll.
   final EnchantInfo? enchant;
@@ -269,6 +274,7 @@ class EquippedItem {
     this.suffix,
     this.bonuses = const [],
     this.enchantCode,
+    this.enchantEffect,
   });
 
   factory EquippedItem.fromJson(Map<String, dynamic> j) {
@@ -280,6 +286,7 @@ class EquippedItem {
       itemClass: j['item_class'] as String? ?? '',
       itemSubclass: j['item_subclass'] as String? ?? '',
       enchantCode: j['enchant_code'] as String?,
+      enchantEffect: EnchantInfo.fromJson(j['enchant_effect']),
       prefix: j['prefix'] as String?,
       suffix: j['suffix'] as String?,
       bonuses: [
@@ -303,6 +310,9 @@ class EquippedItem {
 
   /// The scroll whose enchant it holds (DD-293).
   final String? enchantCode;
+
+  /// What that enchant adds (DD-295).
+  final EnchantInfo? enchantEffect;
 }
 
 /// The paired equipment slots (server inventory.PairedSlots, DD-276).

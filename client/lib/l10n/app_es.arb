@@ -241,5 +241,9 @@
   "statCraftSpeed": "Velocidad de fabricación",
   "diffXp": "{pct} % XP",
   "diffNoXp": "sin XP",
-  "diffLegend": "Color de receta: la XP que da a tu nivel"
+  "diffLegend": "Color de receta: la XP que da a tu nivel",
+  "recipeGroupEnchantWeapon": "Encantamientos de arma",
+  "recipeGroupEnchantArmor": "Encantamientos de armadura",
+  "recipeGroupEnchantJewelry": "Encantamientos de joyería",
+  "recipeGroupEnchantProfession": "Encantamientos de oficio"
 }

@@ -211,6 +211,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 100. **Efsunlama + tarif zorluğu (bitti)** — Sprint 100, DD-293..294. Migration 0045 (`item_template.enchant`, `item_instance.enchant_code`). `enchanting` mesleği: `gen_crafting.py` 21 tür × 10 kademe parşömen + tarif (silah: saldırı/kritik/güç/çeviklik/zekâ/bilgelik/can çalma; zırh: savunma/can/dayanıklılık/kaçınma; takı: kritik/isabet/şans/kritik hasar + 5 toplama verimi + üretim hızı). `POST /character/{id}/items/{item_id}/enchant` (`scroll_id`; tek işlem, bir parşömen; `E_ENCHANT_SLOT`/`E_NOT_ENCHANT`); efsun `EffectiveModifiers`'ta → sheet/karşılaştırma; toplama verimi ustalığa eklenir (`EquipmentService.ProfessionBonus`), üretim hızı `crafting.WithSpeed` (en çok %50); geri alım korur. Tarif zorluğu `crafting.DifficultyBands` (turuncu/sarı/yeşil/gri, XP 100/60/25/0, iş başında dondurulur), `/v1/professions` `difficulty`; istemci renk + XP payı + açıklama. Fix: kuyumculuk beceri 3'ten başlıyordu (yeni kuyumcu üretemezdi) → takı merdiveni −2 (`TestRecipeLaddersNeverGoGrey`).
 
+101. **Efsun değerleri + tarif başlıkları (bitti)** — Sprint 101, DD-295. Çanta/ekipman yanıtı `enchant_effect` (ekipmanda `enchant_code` da), tarif çıktısı `enchant`; istemci `enchantLabel` ("Efsun: Ad · +%1 Saldırı"), tarif kartında parşömen etkisi. Meslek sayfası `groupRecipes`: silah/kalkan türe, zırh/takı yuvaya, efsun silah/zırh/takı/meslek, diğerleri alt sınıfa göre katlanır başlıklar.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

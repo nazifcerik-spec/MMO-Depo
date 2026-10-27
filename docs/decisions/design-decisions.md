@@ -2939,6 +2939,16 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-295 — Efsun değerleri görünür, tarifler başlıklar altında
+
+**Context:** Efsunlu eşyada yalnız efsunun adı görünüyordu; ne kattığı bilinmiyordu (değer eşyanın toplam bonuslarına karışıyordu). Ekipman meslekleri yüzlerce tarifi tek liste hâlinde gösteriyordu; başlık ile eldiven, silah efsunu ile takı efsunu iç içeydi.
+**Decision:** Çanta ve ekipman yanıtları bağlı efsunun tanımını `enchant_effect` olarak verir (ekipman yanıtında `enchant_code` da eksikti, eklendi); `GET /v1/recipes` çıktısı parşömenin `enchant` tanımını taşır. İstemci "Efsun: Ad · +%1 Saldırı" gösterir (çanta, giyili, efsun seçimi); tarif kartında parşömenin etkisi açmadan görünür. Meslek sayfasında tarifler başlıklar altında: silah ve kalkanlar türüne göre (Kılıç, Balta…), zırh ve takı yuvaya göre (Başlık, Göğüs, Bacak, Eldiven, Çizme, Kolye, Yüzük, Tılsım), efsunlar silah / zırh / takı / meslek (toplama verimi + üretim hızı) olarak, diğerleri alt sınıfa göre. Başlık sayıyı gösterir, dokununca katlanır; tek başlıklı meslekte başlık çıkmaz. Başlık içi sıra (önce en yeni açılan) korunur.
+**Alternatives:** Efsunu eşyanın bonus satırları arasında işaretlemek (aynı stat iki kaynaktan gelince okunmaz). Sekmeli filtre (çok sekme dar ekranda sığmaz).
+**Consequences:** Gruplama yalnız istemcide; sunucu sırası değişmedi.
+**Tarih:** 2026-10-27
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

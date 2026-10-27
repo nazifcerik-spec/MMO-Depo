@@ -65,6 +65,10 @@ func (h *EquipmentHandler) View(w http.ResponseWriter, r *http.Request) {
 		if len(b.EffectiveBonuses) > 0 {
 			row["effective_bonuses"] = b.EffectiveBonuses // rarity + affixes (DD-275)
 		}
+		if b.EnchantCode != nil { // DD-293
+			row["enchant_code"] = *b.EnchantCode
+			row["enchant_effect"] = b.EnchantRaw
+		}
 		slots[slot] = row
 	}
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{

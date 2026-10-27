@@ -2621,4 +2621,16 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get diffLegend => 'Tarif rengi: seviyende üretimin kazandıracağı XP';
+
+  @override
+  String get recipeGroupEnchantWeapon => 'Silah efsunları';
+
+  @override
+  String get recipeGroupEnchantArmor => 'Zırh efsunları';
+
+  @override
+  String get recipeGroupEnchantJewelry => 'Takı efsunları';
+
+  @override
+  String get recipeGroupEnchantProfession => 'Meslek efsunları';
 }

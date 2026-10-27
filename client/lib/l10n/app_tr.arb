@@ -757,5 +757,9 @@
   "statCraftSpeed": "Üretim hızı",
   "diffXp": "%{pct} XP",
   "diffNoXp": "XP yok",
-  "diffLegend": "Tarif rengi: seviyende üretimin kazandıracağı XP"
+  "diffLegend": "Tarif rengi: seviyende üretimin kazandıracağı XP",
+  "recipeGroupEnchantWeapon": "Silah efsunları",
+  "recipeGroupEnchantArmor": "Zırh efsunları",
+  "recipeGroupEnchantJewelry": "Takı efsunları",
+  "recipeGroupEnchantProfession": "Meslek efsunları"
 }

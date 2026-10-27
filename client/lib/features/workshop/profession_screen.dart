@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/quantity_field.dart';
@@ -120,6 +121,61 @@ List<Recipe> visibleRecipes(List<Recipe> all, int skill) {
   ];
 }
 
+/// The slot order of recipe headings after the weapons (DD-295).
+const _slotOrder = ['offhand', 'helm', 'chest', 'legs', 'gloves', 'boots', 'necklace', 'ring', 'trinket'];
+const _enchantOrder = ['weapon', 'armor', 'jewelry', 'profession'];
+
+/// A recipe's heading on its profession page (DD-295) as (rank, key):
+/// weapons and shields by kind, armor and jewelry by slot, enchanting
+/// scrolls by the gear they go on (profession enchants apart), anything
+/// else by its subclass.
+(int, String) recipeGroup(Recipe r) {
+  final info = r.info;
+  if (info == null) return (100, '');
+  if (info.enchant case final e?) {
+    final profession = e.modifiers.any((m) => m.target.startsWith('gather_yield_') || m.target == 'craft_speed');
+    final g = profession ? 'profession' : (e.slots.isEmpty ? 'any' : e.slots.first);
+    final i = _enchantOrder.indexOf(g);
+    return (20 + (i < 0 ? _enchantOrder.length : i), 'enchant:$g');
+  }
+  final slot = info.equipSlot ?? '';
+  if (info.itemClass == 'weapon') return (0, 'equipment:${info.itemSubclass}');
+  if (slot == 'offhand') return (1, 'equipment:${info.itemSubclass}');
+  final i = _slotOrder.indexOf(slot);
+  if (slot.isNotEmpty) return (2 + (i < 0 ? _slotOrder.length : i), 'slot:$slot');
+  return (50, 'sub:${info.itemSubclass}');
+}
+
+/// [recipes] under their headings, in heading order; each keeps its order.
+List<(String, List<Recipe>)> groupRecipes(List<Recipe> recipes) {
+  final groups = <String, List<Recipe>>{};
+  final rank = <String, int>{};
+  for (final r in recipes) {
+    final (n, key) = recipeGroup(r);
+    rank[key] = n;
+    (groups[key] ??= []).add(r);
+  }
+  final keys = groups.keys.toList()..sort((a, b) => rank[a] != rank[b] ? rank[a]!.compareTo(rank[b]!) : a.compareTo(b));
+  return [for (final k in keys) (k, groups[k]!)];
+}
+
+String recipeGroupName(AppLocalizations l, String key) {
+  final i = key.indexOf(':');
+  final (kind, code) = i < 0 ? ('', key) : (key.substring(0, i), key.substring(i + 1));
+  return switch (kind) {
+    'equipment' => ContentNames.of('equipment', code),
+    'slot' => slotName(l, code),
+    'enchant' => switch (code) {
+      'weapon' => l.recipeGroupEnchantWeapon,
+      'armor' => l.recipeGroupEnchantArmor,
+      'jewelry' => l.recipeGroupEnchantJewelry,
+      'profession' => l.recipeGroupEnchantProfession,
+      _ => l.enchantGroupAny,
+    },
+    _ => humanize(code),
+  };
+}
+
 /// Recipe colors (DD-294), like the classic trade-skill ones.
 Color difficultyColor(String color) => switch (color) {
   'orange' => const Color(0xFFFF9800),
@@ -180,7 +236,10 @@ class ProfessionScreen extends StatefulWidget {
 }
 
 class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
-  List<Recipe> _recipes = const [];
+  List<(String, List<Recipe>)> _groups = const [];
+
+  /// Folded headings (DD-295).
+  final _closed = <String>{};
   Skill? _skill;
   Map<String, int> _have = const {};
   int _gold = 0;
@@ -210,7 +269,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
       widget.repo.professions(), // the difficulty bands (DD-294)
     ]);
     _skill = (r[1] as Map<String, Skill>)[widget.profession];
-    _recipes = visibleRecipes(r[0] as List<Recipe>, _skill?.level ?? 0);
+    _groups = groupRecipes(visibleRecipes(r[0] as List<Recipe>, _skill?.level ?? 0));
     _have = r[2] as Map<String, int>;
     _gold = r[3] as int;
     _job = r[4] is CraftJob ? r[4] as CraftJob : null;
@@ -276,17 +335,61 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
               ],
               if (_job case final job?)
                 CraftJobCard(job: job, onCollect: () => _collect(job), onComplete: () => setState(() {})),
-              for (final rec in _recipes)
-                _RecipeTile(
-                  recipe: rec,
-                  have: _have,
-                  skill: skill?.level ?? 0,
-                  difficulty: recipeDifficulty(widget.repo.difficulty, rec.minSkill, skill?.level ?? 0),
-                  // One job at a time (DD-263).
-                  onCraft: _job == null && _maxCrafts(rec) > 0 ? () => _craft(rec) : null,
-                ),
+              for (final (key, recipes) in _groups) ...[
+                // One heading alone says nothing; they show from two up.
+                if (_groups.length > 1)
+                  _GroupHeader(
+                    key: Key('group-$key'),
+                    name: recipeGroupName(l, key),
+                    count: recipes.length,
+                    open: !_closed.contains(key),
+                    onTap: () => setState(() => _closed.contains(key) ? _closed.remove(key) : _closed.add(key)),
+                  ),
+                if (_groups.length == 1 || !_closed.contains(key))
+                  for (final rec in recipes)
+                    _RecipeTile(
+                      key: ValueKey(rec.code),
+                      recipe: rec,
+                      have: _have,
+                      skill: skill?.level ?? 0,
+                      difficulty: recipeDifficulty(widget.repo.difficulty, rec.minSkill, skill?.level ?? 0),
+                      // One job at a time (DD-263).
+                      onCraft: _job == null && _maxCrafts(rec) > 0 ? () => _craft(rec) : null,
+                    ),
+              ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A recipe heading: name, recipe count, fold arrow (DD-295).
+class _GroupHeader extends StatelessWidget {
+  const _GroupHeader({super.key, required this.name, required this.count, required this.open, required this.onTap});
+
+  final String name;
+  final int count;
+  final bool open;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return InkWell(
+      borderRadius: BorderRadius.circular(Radii.sm),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(Space.xs, Space.md, Space.xs, Space.sm),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(name, style: text.titleSmall?.copyWith(color: Palette.accent)),
+            ),
+            Text('$count', style: text.bodySmall),
+            Icon(open ? Icons.expand_less : Icons.expand_more, color: Palette.textSecondary),
+          ],
         ),
       ),
     );
@@ -297,6 +400,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
 /// have/need, gold cost, skill gate, and the Craft button.
 class _RecipeTile extends StatefulWidget {
   const _RecipeTile({
+    super.key,
     required this.recipe,
     required this.have,
     required this.skill,
@@ -369,6 +473,15 @@ class _RecipeTileState extends State<_RecipeTile> {
                 FilledButton.tonal(style: compactButton, onPressed: widget.onCraft, child: Text(l.craft)),
               ],
             ),
+            // What a scroll adds, without unfolding (DD-295).
+            if (info?.enchant case final e?)
+              Padding(
+                padding: const EdgeInsets.only(top: Space.xs),
+                child: Text(
+                  enchantEffects(l, e),
+                  style: small?.copyWith(color: Palette.epic, fontWeight: FontWeight.w600),
+                ),
+              ),
             const SizedBox(height: Space.xs),
             Wrap(
               spacing: Space.sm,
@@ -459,6 +572,11 @@ class _Details extends StatelessWidget {
             if (info.healPct > 0) Text(l.restoresHpPct(info.healPct), style: good),
             if (info.manaPct > 0) Text(l.restoresMpPct(info.manaPct), style: good),
             if (info.buff case final b?) Text(l.foodBuffLine(b.attackPct, b.defensePct, b.minutes), style: good),
+            if (info.enchant case final e?) ...[
+              Text(l.enchantFits(enchantGroups(l, e))),
+              for (final b in e.modifiers)
+                if (bonusText(l, b) case final t?) Text(t, style: good),
+            ],
             if (info.minLevel > 1) row(l.requiresLevel, '${info.minLevel}'),
             if (info.classRestriction != null) row(l.characterClass, className(l, info.classRestriction!)),
             row(l.weight, l.weightGrams(info.weightGrams)),
