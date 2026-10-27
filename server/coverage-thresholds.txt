@@ -3,11 +3,14 @@
 # improves; lowering needs a DD. Faz 01 exit target for core domain is 80%
 # (docs/testing/README.md) - the Postgres-backed paths get there through the
 # integration suite (internal/integration, run in CI against a real DB).
+# Measure with the CI toolchain (Linux, Go 1.27.x latest; CLAUDE.md "Coverage
+# gate (CI ile aynı)"): Windows Go 1.27.1 counts statements differently and
+# reads several points higher (DD-300).
 #
 # package                     min%
 internal/action               98
 internal/activity             81
-internal/admin                34
+internal/admin                32
 internal/classskill           92
 internal/combat               88
 internal/consumable           80
@@ -29,7 +32,7 @@ internal/itemset              94
 internal/mail                 50
 internal/market               80
 internal/notification         84
-internal/observability        63
+internal/observability        56
 internal/party                84
 internal/partyxp              86
 internal/privacy              78
@@ -39,7 +42,7 @@ internal/progression          81
 internal/quest                87
 internal/raid                 82
 internal/ratelimit            43
-internal/skill                95
+internal/skill                92
 internal/social               78
 internal/vendor               80
 internal/worker               51

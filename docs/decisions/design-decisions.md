@@ -2987,6 +2987,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-300 — Kapsam eşikleri CI araç zinciriyle ölçülür
+
+**Context:** CI'ın `migrations` işi en az 45 commit'tir kırmızıydı; günlükler yönetici yetkisi istediğinden görülemiyordu. CI birebir Docker'da (golang:1.27-alpine + temiz Postgres 16) üretilince testlerin hepsinin geçtiği, düşenin kapsam kapısı olduğu görüldü: yerel Windows Go 1.27.1 ile CI'ın Go 1.27.x'i aynı kod bloklarına farklı ifade sayısı yazıyor (ör. bir blok 5'e karşı 1), Windows değerleri birkaç puan yüksek. Eşikler Windows ölçümleriyle yükseltildiği için admin (%33,8 < 34), observability (%57,7 < 63), skill (%94,0 < 95) CI'da düşüyordu. Aynı turda `lint` (kullanılmayan test alanı) ve `client` (e2e aracı, DD-296) da onarıldı; birleşik test adımına `-timeout 30m`.
+**Decision:** Eşikler CI araç zincirinin ölçümünden ~2 puan aşağıda tutulur: admin 32, observability 56, skill 92 (kod kapsamı düşmedi, ölçüm farkı). Ölçüm CLAUDE.md'deki Docker komutuyla yapılır.
+**Consequences:** Eşik yükseltilirken Windows değerine değil Docker/CI değerine bakılır.
+**Tarih:** 2026-10-27
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

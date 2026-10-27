@@ -51,6 +51,11 @@ cd server && DATABASE_URL=postgres://otter:otter@localhost:5432/otter?sslmode=di
 # Coverage gate (CI ile aynı — birim + entegrasyon birleşik profil, DD-223; migrated DB gerekir)
 cd server && DATABASE_URL=postgres://otter:otter@localhost:5432/otter?sslmode=disable go test -tags integration -coverpkg=./... -coverprofile=../cover.out ./... && sh ../scripts/coverage_gate.sh profile coverage-thresholds.txt ../cover.out
 
+# Coverage gate, CI ile aynı araç zinciri (Linux Go; Windows Go ifadeleri farklı sayar, DD-300).
+# Ağ + temiz Postgres: docker network create ci-net; docker run -d --name ci-pg --network ci-net -e POSTGRES_USER=otter -e POSTGRES_PASSWORD=otter -e POSTGRES_DB=otter postgres:16-alpine
+# migrate/migrate:v4.17.0 ile up, sonra (repo kökünden, Git Bash'te MSYS_NO_PATHCONV=1):
+docker run --rm --network ci-net -v "$(cygpath -w "$PWD"):/repo" -w /repo/server -e DATABASE_URL=postgres://otter:otter@ci-pg:5432/otter?sslmode=disable -e GOFLAGS=-buildvcs=false golang:1.27-alpine sh -c 'go test -tags integration -count=1 -timeout 30m -coverpkg=./... -coverprofile=/tmp/c.out ./... >/dev/null; sh ../scripts/coverage_gate.sh profile coverage-thresholds.txt /tmp/c.out'
+
 # Client
 cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://localhost:8080
 ```
@@ -214,6 +219,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 101. **Efsun değerleri + tarif başlıkları (bitti)** — Sprint 101, DD-295. Çanta/ekipman yanıtı `enchant_effect` (ekipmanda `enchant_code` da), tarif çıktısı `enchant`; istemci `enchantLabel` ("Efsun: Ad · +%1 Saldırı"), tarif kartında parşömen etkisi. Meslek sayfası `groupRecipes`: silah/kalkan türe, zırh/takı yuvaya, efsun silah/zırh/takı/meslek, diğerleri alt sınıfa göre katlanır başlıklar.
 
 102. **Parti oyunu: XP paylaşımı + 2–5 kişi + ölçekli baskın + parti bulma (bitti)** — Sprint 102, DD-296..299. Migration 0046 (`social.party_xp_share`, `raid.queue`, `raid.listing`). Yeni `internal/partyxp` (`Split` saf fonksiyon + `Service.Share`): aynı tür işin (toplama türü / üretim mesleği / av / zindan) çakışan dilimlerinde XP havuzda eşit bölünür, ortak başına +%3; toplama/av/zindan/üretim `WithPartyShare`, yanıtta `party_share`, alıcıya WS `party.xp_share`. Parti: ilk davet partiyi kurar, tek kişi kalınca dağılır; `LeadOrCreate`/`Join`/`Form`. Baskın `group_min` 2, `raid.GroupHPPct/GroupAttackPct` grup boyutuna göre (`TestRaidTargets` her boyut %40–90). Parti bulma (`raid/lfg.go`): sıra (5 kişi ya da 5 dk + en az 2 → rastgele parti + lobi, bildirim `raid_matched`), ilan panosu. İstemci: Parti sekmesi (davetle kurulur, paylaşım açıklaması, Parti sohbeti butonu), TR'de "Grup" → "Parti", sonuç ekranlarında paylaşım satırı, Baskınlar'da Parti bul kartı + ilan panosu.
+
+103. **CI yeşil (bitti)** — DD-300. `migrations` işinde düşen kapsam kapısıydı: eşikler Windows Go ölçümüyle yükseltilmişti, CI'ın Linux Go'su ifadeleri farklı sayıyor (admin/observability/skill eşikleri CI ölçümüne çekildi; ölçüm Docker komutuyla). `lint`: kullanılmayan test alanı; `client`: e2e aracı 3'lü reveal; birleşik test `-timeout 30m`.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
