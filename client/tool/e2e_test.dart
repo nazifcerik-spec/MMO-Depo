@@ -118,7 +118,7 @@ void main() {
     final active = await repo.active(a.id);
     expect(active!.contract.id, started.contract.id);
     expect(active.current.target, 'raw_stone');
-    final (y, _) = await repo.reveal(started.contract.id);
+    final (y, _, _) = await repo.reveal(started.contract.id);
     expect(y.goldCopper, greaterThanOrEqualTo(0));
     expect(y.items.every((i) => i.templateCode == 'raw_stone'), isTrue);
     expect(await repo.active(a.id), isNull);

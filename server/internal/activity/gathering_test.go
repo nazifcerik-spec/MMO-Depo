@@ -18,10 +18,9 @@ import (
 var now = time.Date(2026, 10, 14, 12, 0, 0, 0, time.UTC)
 
 type fakeGathering struct {
-	level  int
-	xp     []int
-	nodes  []activity.GatherNode
-	levels map[activity.Kind]int
+	level int
+	xp    []int
+	nodes []activity.GatherNode
 }
 
 func (f *fakeGathering) Nodes(activity.Kind) []activity.GatherNode { return f.nodes }

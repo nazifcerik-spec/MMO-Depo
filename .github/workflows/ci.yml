@@ -93,7 +93,9 @@ jobs:
           cache-dependency-path: server/go.sum
       - name: unit + integration tests (merged coverage)
         working-directory: server
-        run: go test -tags integration -count=1 -coverpkg=./... -coverprofile=../cover.out ./...
+        # The integration package takes ~5 min on a dev machine; the default
+        # 10 min per package is too tight on a CI runner.
+        run: go test -tags integration -count=1 -timeout 30m -coverpkg=./... -coverprofile=../cover.out ./...
       - name: coverage gate
         working-directory: server
         run: sh ../scripts/coverage_gate.sh profile coverage-thresholds.txt ../cover.out
