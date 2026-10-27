@@ -181,3 +181,9 @@ func bagIDs(items []inventory.BagItem) []uuid.UUID {
 	}
 	return out
 }
+
+func (e *events) reset() {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	e.kinds = nil
+}

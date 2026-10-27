@@ -47,6 +47,7 @@ Future<void> collectCraftJob(
         if (res.made > 0) l.crafted(itemName(res.output), res.stack),
         if (res.refunded > 0) l.craftCollected(res.made, res.refunded),
         if (res.leveledUp) l.skillUp(professionName(l, job.profession), res.skillAfter),
+        if (res.party != null) res.party!.text(l),
       ].join(' · '),
     ),
   );

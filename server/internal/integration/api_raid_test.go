@@ -24,7 +24,7 @@ func TestHTTPRaidFlow(t *testing.T) {
 	cat := items(a.ok("GET", "/v1/raids", nil), "raids")
 	require.Len(t, cat, 6)
 	require.Equal(t, code, cat[0]["code"])
-	require.Equal(t, 3.0, cat[0]["group_min"])
+	require.Equal(t, 2.0, cat[0]["group_min"])
 	for _, d := range items(a.ok("GET", "/v1/dungeon/catalog", nil), "dungeons") {
 		require.NotEqual(t, code, d["code"], "raids are not solo dungeons")
 	}
@@ -55,13 +55,13 @@ func TestHTTPRaidFlow(t *testing.T) {
 	raid := a.ok("POST", a.path("/raid"), map[string]any{"raid_code": code})["raid"].(map[string]any)
 	id := raid["id"].(string)
 	require.Len(t, raid["members"], 1)
+	a.fail("POST", a.path("/raid/"+id+"/start"), map[string]any{}, 409, "E_RAID_NOT_ENOUGH")
 	lobby := b.ok("GET", b.path("/raid"), nil)
 	require.Nil(t, lobby["raid"])
 	require.Equal(t, id, lobby["lobby"].(map[string]any)["id"])
 	b.ok("POST", b.path("/raid/"+id+"/join"), map[string]any{})
 	b.fail("POST", b.path("/raid/"+id+"/join"), map[string]any{}, 409, "E_ALREADY_IN_RAID")
 	outsider.fail("POST", outsider.path("/raid/"+id+"/join"), map[string]any{}, 409, "E_NOT_IN_PARTY")
-	a.fail("POST", a.path("/raid/"+id+"/start"), map[string]any{}, 409, "E_RAID_NOT_ENOUGH")
 	c.ok("POST", c.path("/raid/"+id+"/join"), map[string]any{})
 	c.ok("POST", c.path("/raid/"+id+"/leave"), map[string]any{})
 	c.fail("POST", c.path("/raid/"+id+"/leave"), map[string]any{}, 404, "E_NOT_FOUND")

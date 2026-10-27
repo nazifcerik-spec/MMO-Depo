@@ -18,7 +18,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 	for _, e := range []error{character.ErrForbidden, character.ErrNotFound,
 		ErrUnknownRaid, ErrNotFound, ErrNoParty, ErrNotLeader, ErrNotInParty, ErrLobbyExists, ErrAlreadyInRaid,
 		ErrNotForming, ErrRaidFull, ErrNotEnough, ErrNotRunning, ErrNotReady, ErrNotMember,
-		ErrLevelRequirement, ErrWeeklyLockout, ErrTooWounded, ErrBagFull} {
+		ErrLevelRequirement, ErrWeeklyLockout, ErrTooWounded, ErrBagFull, ErrInParty, ErrNotQueued, ErrListed} {
 		rec := httptest.NewRecorder()
 		writeErr(rec, httptest.NewRequest(http.MethodGet, "/", nil), fmt.Errorf("context: %w", e))
 		require.Less(t, rec.Code, http.StatusInternalServerError, e.Error())

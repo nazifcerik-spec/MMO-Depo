@@ -12,6 +12,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/notification"
+	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
 )
 
@@ -102,8 +103,9 @@ type Service struct {
 	progress progression.Recorder
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
-	gather   Gathering // gathering professions (DD-244); nil = gold only
-	bag      BagRoom   // nil = no room check
+	gather   Gathering      // gathering professions (DD-244); nil = gold only
+	bag      BagRoom        // nil = no room check
+	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
 	cfg      ServiceConfig
 	log      *slog.Logger
 }
@@ -117,6 +119,10 @@ func NewService(repo Repository, chars CharacterFetcher, txn economy.TxnService,
 	}
 	return &Service{repo: repo, chars: chars, txn: txn, cfg: cfg, log: logger}
 }
+
+// WithPartyShare shares gathering XP with party members gathering the same
+// kind (DD-296).
+func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
 
 // WithRecorder feeds reveal yields into progression (Sprint 24).
 // WithNotifier records each collection in the reward history (DD-242).
@@ -171,6 +177,8 @@ type RevealResult struct {
 	LedgerTxnID uuid.UUID       `json:"ledger_txn_id"`
 	Replayed    bool            `json:"replayed"`
 	Gather      *GatherProgress `json:"gather,omitempty"` // gathering level after this haul (DD-244)
+	// Party is how the gathering XP was shared (DD-296); nil = not shared.
+	Party *partyxp.Outcome `json:"party_share,omitempty"`
 }
 
 // --- Start ------------------------------------------------------------------
@@ -365,10 +373,19 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	// Gathering XP (DD-244): per unit, by the resource's tier. After the
 	// contract is marked revealed, so a replay never grants it twice.
 	var progress *GatherProgress
+	var party *partyxp.Outcome
 	var extra map[string]any
 	if units := yield.CommonCount + yield.RareCount + yield.LegendaryCount; s.gather != nil && units > 0 {
 		snap := parseSnapshot(contract.Snapshot)
-		p, err := s.gather.AddXP(ctx, contract.CharacterID, contract.Kind, units*tierXP[tierIndex(snap.TargetTier)])
+		xp := units * tierXP[tierIndex(snap.TargetTier)]
+		shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
+			Kind: partyxp.GatherPrefix + string(contract.Kind), Character: contract.CharacterID, Ref: contract.ID,
+			Start: contract.StartedAt, End: contract.StartedAt.Add(time.Duration(elapsed) * time.Second), XP: int64(xp),
+		})
+		if len(shared.Partners) > 0 {
+			party, xp = &shared, int(shared.Kept)
+		}
+		p, err := s.gather.AddXP(ctx, contract.CharacterID, contract.Kind, xp)
 		if err != nil {
 			s.log.WarnContext(ctx, "activity: gathering xp failed", "contract", contract.ID.String(), "err", err.Error())
 		} else {
@@ -381,7 +398,7 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		Source: "activity", Target: string(contract.Kind),
 		GoldCopper: yield.GoldCopper, Items: RewardItems(yield.Items), Extra: extra,
 	}.Notice())
-	return &RevealResult{Yield: yield, LedgerTxnID: txnID, Replayed: false, Gather: progress}, nil
+	return &RevealResult{Yield: yield, LedgerTxnID: txnID, Replayed: false, Gather: progress, Party: party}, nil
 }
 
 // --- Stop -------------------------------------------------------------------

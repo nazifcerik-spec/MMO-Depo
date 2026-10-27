@@ -30,13 +30,14 @@ internal/mail                 50
 internal/market               80
 internal/notification         84
 internal/observability        63
-internal/party                81
+internal/party                84
+internal/partyxp              86
 internal/privacy              78
 internal/support              80
 internal/clienterr            91
 internal/progression          81
 internal/quest                87
-internal/raid                 81
+internal/raid                 82
 internal/ratelimit            43
 internal/skill                95
 internal/social               78

@@ -1,6 +1,7 @@
-// Package party implements ephemeral groups of up to 5 characters
+// Package party implements ephemeral groups of 2 to 5 characters
 // (Sprint 20, docs/party/*). v1: leader-only invites, 60s invite TTL,
-// loot rule fixed to 'personal', no activity binding yet.
+// loot rule fixed to 'personal'. A party forms around its first invite (or
+// a raid listing) and disbands when it is down to one member (DD-297).
 package party
 
 import (
@@ -13,6 +14,7 @@ import (
 
 const (
 	SizeCap   = 5
+	SizeMin   = 2 // fewer and the party disbands (DD-297)
 	InviteTTL = 60 * time.Second
 )
 

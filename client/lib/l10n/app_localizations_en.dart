@@ -1154,7 +1154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Create one and invite friends — fights go better together.';
+  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
 
   @override
   String get createParty => 'Create party';
@@ -1183,7 +1183,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leavePartyTitle => 'Leave the party?';
 
   @override
-  String get leavePartyBody => 'If you are the leader, the longest-standing member takes over.';
+  String get leavePartyBody =>
+      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
 
   @override
   String get disbandPartyTitle => 'Disband the party?';
@@ -2017,7 +2018,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get raidOpen => 'Open raid';
 
   @override
-  String get raidNeedParty => 'Raids are for a party. Form one under Social → Party.';
+  String get raidNeedParty =>
+      'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.';
 
   @override
   String get raidLeaderOnly => 'Your party leader opens raids.';
@@ -2634,4 +2636,78 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recipeGroupEnchantProfession => 'Profession enchants';
+
+  @override
+  String get partyHint =>
+      'Members doing the same work at the same time (the same gathering, profession, hunting or dungeons) pool their XP and split it evenly, +3% per partner.';
+
+  @override
+  String get partyChat => 'Party chat';
+
+  @override
+  String partyShared(String names, int kept, int earned) {
+    return 'Shared with $names: you keep $kept of $earned XP';
+  }
+
+  @override
+  String evPartyXp(int xp, String work) {
+    return 'Party share: +$xp XP ($work)';
+  }
+
+  @override
+  String evRaidMatched(String raid) {
+    return 'A party was found for $raid. See Raids.';
+  }
+
+  @override
+  String get nkRaidMatched => 'Raid party found';
+
+  @override
+  String get workHunt => 'Hunting';
+
+  @override
+  String get workDungeon => 'Dungeon';
+
+  @override
+  String get raidFind => 'Find a party';
+
+  @override
+  String get raidQueueJoin => 'Queue';
+
+  @override
+  String get raidQueueLeave => 'Leave queue';
+
+  @override
+  String raidQueued(String raid, int waiting) {
+    return 'Queued for $raid · $waiting waiting';
+  }
+
+  @override
+  String get raidQueueHint => 'A random party forms once 5 are waiting, or after 5 minutes with at least 2.';
+
+  @override
+  String get raidAdvertise => 'Advertise';
+
+  @override
+  String get raidUnlist => 'Remove listing';
+
+  @override
+  String raidListed(String raid) {
+    return 'Your party is on the board for $raid';
+  }
+
+  @override
+  String get raidBoard => 'Listing board';
+
+  @override
+  String get raidBoardEmpty => 'No open listings.';
+
+  @override
+  String get raidJoinParty => 'Join party';
+
+  @override
+  String get raidPickRaid => 'Raid';
+
+  @override
+  String get errListingGone => 'That listing is gone or full.';
 }

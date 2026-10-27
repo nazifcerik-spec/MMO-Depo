@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -40,6 +41,7 @@ import (
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
+	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
@@ -292,6 +294,12 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		WithRegionGate(worldSvc).WithSupplies(itemSvc).WithFood(consumableSvc)
 	dungSvc.WithRecorder(recorder).WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithNotifier(notifSvc).WithBagRoom(invSvc)
 	craftSvc.WithRecorder(recorder).WithSpeed(equipSvc) // crafting-speed enchants (DD-293)
+	// Party XP sharing (DD-296): same-kind jobs of party members pool their XP.
+	shareSvc := partyxp.NewService(pool, partyGrant{charSvc, craftSvc, gatherSvc}, logger).WithPublisher(wsPub)
+	activitySvc.WithPartyShare(shareSvc)
+	huntSvc.WithPartyShare(shareSvc)
+	dungSvc.WithPartyShare(shareSvc)
+	craftSvc.WithPartyShare(shareSvc)
 	// Raids (DD-261): party runs of the group dungeon templates.
 	raidSvc := raid.NewService(pool, dungCatSvc, combatSvc, charSvc, charSvc, itemSvc, txnSvc, logger,
 		func(seed int64) combat.RNG { return activity.NewRNG(seed) }).
@@ -303,7 +311,9 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		func() string { return worldCatSvc.Catalog().StartingCode() }, logger))
 
 	// --- Party + Guild (Sprint 20) ---
-	partyHandler := party.NewHandler(party.NewService(pool, charSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc))
+	partySvc := party.NewService(pool, charSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc)
+	partyHandler := party.NewHandler(partySvc)
+	raidSvc.WithParties(partySvc) // raid queue + listing board (DD-299)
 	guildHandler := guild.NewHandler(guild.NewService(pool, charSvc, txnSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc))
 	logger.Info("party + guild wired")
 
@@ -431,6 +441,29 @@ func (g gatherBonus) GatherBonus(ctx context.Context, characterID uuid.UUID, kin
 	}
 	gear, err := g.gear.ProfessionBonus(ctx, characterID, "gather_yield_"+kind)
 	return flat, mult + gear, err
+}
+
+// partyGrant pays a party member's XP share (DD-296): character XP for
+// hunts and dungeons (once per job and member), profession XP otherwise.
+type partyGrant struct {
+	chars  *character.Service
+	craft  *crafting.Service
+	gather *gathering.Service
+}
+
+func (g partyGrant) GrantShare(ctx context.Context, kind string, characterID uuid.UUID, xp int64, ref uuid.UUID) error {
+	switch {
+	case kind == partyxp.KindHunt || kind == partyxp.KindDungeon:
+		_, err := g.chars.GrantXP(ctx, characterID, xp, character.XPSource{Kind: "party_share", ID: ref.String(),
+			Metadata: map[string]any{"work": kind}})
+		return err
+	case strings.HasPrefix(kind, partyxp.GatherPrefix):
+		_, err := g.gather.AddXP(ctx, characterID, activity.Kind(strings.TrimPrefix(kind, partyxp.GatherPrefix)), int(xp))
+		return err
+	case strings.HasPrefix(kind, partyxp.CraftPrefix):
+		return g.craft.GrantXP(ctx, characterID, strings.TrimPrefix(kind, partyxp.CraftPrefix), int32(xp))
+	}
+	return fmt.Errorf("party share: unknown work kind %q", kind)
 }
 
 type reloadFn func(ctx context.Context) error

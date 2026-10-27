@@ -2161,7 +2161,7 @@ abstract class AppLocalizations {
   /// No description provided for @noParty.
   ///
   /// In en, this message translates to:
-  /// **'You\'re not in a party. Create one and invite friends — fights go better together.'**
+  /// **'You\'re not in a party. Invite someone and a party forms (2–5 members).'**
   String get noParty;
 
   /// No description provided for @createParty.
@@ -2215,7 +2215,7 @@ abstract class AppLocalizations {
   /// No description provided for @leavePartyBody.
   ///
   /// In en, this message translates to:
-  /// **'If you are the leader, the longest-standing member takes over.'**
+  /// **'If you are the leader, the longest-standing member takes over. A party left with one member disbands.'**
   String get leavePartyBody;
 
   /// No description provided for @disbandPartyTitle.
@@ -3619,7 +3619,7 @@ abstract class AppLocalizations {
   /// No description provided for @raidNeedParty.
   ///
   /// In en, this message translates to:
-  /// **'Raids are for a party. Form one under Social → Party.'**
+  /// **'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.'**
   String get raidNeedParty;
 
   /// No description provided for @raidLeaderOnly.
@@ -4665,6 +4665,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profession enchants'**
   String get recipeGroupEnchantProfession;
+
+  /// No description provided for @partyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Members doing the same work at the same time (the same gathering, profession, hunting or dungeons) pool their XP and split it evenly, +3% per partner.'**
+  String get partyHint;
+
+  /// No description provided for @partyChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Party chat'**
+  String get partyChat;
+
+  /// No description provided for @partyShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared with {names}: you keep {kept} of {earned} XP'**
+  String partyShared(String names, int kept, int earned);
+
+  /// No description provided for @evPartyXp.
+  ///
+  /// In en, this message translates to:
+  /// **'Party share: +{xp} XP ({work})'**
+  String evPartyXp(int xp, String work);
+
+  /// No description provided for @evRaidMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'A party was found for {raid}. See Raids.'**
+  String evRaidMatched(String raid);
+
+  /// No description provided for @nkRaidMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid party found'**
+  String get nkRaidMatched;
+
+  /// No description provided for @workHunt.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunting'**
+  String get workHunt;
+
+  /// No description provided for @workDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeon'**
+  String get workDungeon;
+
+  /// No description provided for @raidFind.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a party'**
+  String get raidFind;
+
+  /// No description provided for @raidQueueJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue'**
+  String get raidQueueJoin;
+
+  /// No description provided for @raidQueueLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave queue'**
+  String get raidQueueLeave;
+
+  /// No description provided for @raidQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued for {raid} · {waiting} waiting'**
+  String raidQueued(String raid, int waiting);
+
+  /// No description provided for @raidQueueHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A random party forms once 5 are waiting, or after 5 minutes with at least 2.'**
+  String get raidQueueHint;
+
+  /// No description provided for @raidAdvertise.
+  ///
+  /// In en, this message translates to:
+  /// **'Advertise'**
+  String get raidAdvertise;
+
+  /// No description provided for @raidUnlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove listing'**
+  String get raidUnlist;
+
+  /// No description provided for @raidListed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your party is on the board for {raid}'**
+  String raidListed(String raid);
+
+  /// No description provided for @raidBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Listing board'**
+  String get raidBoard;
+
+  /// No description provided for @raidBoardEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No open listings.'**
+  String get raidBoardEmpty;
+
+  /// No description provided for @raidJoinParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Join party'**
+  String get raidJoinParty;
+
+  /// No description provided for @raidPickRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid'**
+  String get raidPickRaid;
+
+  /// No description provided for @errListingGone.
+  ///
+  /// In en, this message translates to:
+  /// **'That listing is gone or full.'**
+  String get errListingGone;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

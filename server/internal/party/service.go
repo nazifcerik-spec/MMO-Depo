@@ -89,22 +89,127 @@ func (s *Service) Create(ctx context.Context, actor, account uuid.UUID) (*Party,
 	}
 	var partyID uuid.UUID
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
-		if err := tx.QueryRow(ctx,
-			`INSERT INTO social.party (leader_character_id) VALUES ($1) RETURNING id`, actor).
-			Scan(&partyID); err != nil {
-			return err
-		}
-		_, err := tx.Exec(ctx,
-			`INSERT INTO social.party_member (party_id, character_id) VALUES ($1, $2)`, partyID, actor)
-		if isUnique(err) {
-			return ErrAlreadyInParty
-		}
+		var err error
+		partyID, err = createParty(ctx, tx, actor)
 		return err
 	})
 	if err != nil {
 		return nil, err
 	}
 	return loadParty(ctx, s.pool, partyID)
+}
+
+// createParty opens a party led by leader.
+func createParty(ctx context.Context, tx pgx.Tx, leader uuid.UUID) (uuid.UUID, error) {
+	var partyID uuid.UUID
+	if err := tx.QueryRow(ctx,
+		`INSERT INTO social.party (leader_character_id) VALUES ($1) RETURNING id`, leader).
+		Scan(&partyID); err != nil {
+		return uuid.Nil, err
+	}
+	_, err := tx.Exec(ctx,
+		`INSERT INTO social.party_member (party_id, character_id) VALUES ($1, $2)`, partyID, leader)
+	if isUnique(err) {
+		return uuid.Nil, ErrAlreadyInParty
+	}
+	return partyID, err
+}
+
+// LeadOrCreate returns the actor's party, opening one led by the actor when
+// they have none (a raid listing, DD-299). Only the leader may advertise.
+func (s *Service) LeadOrCreate(ctx context.Context, actor, account uuid.UUID) (uuid.UUID, error) {
+	if err := s.chars.Owns(ctx, actor, account); err != nil {
+		return uuid.Nil, err
+	}
+	var partyID uuid.UUID
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+		p, err := lockActorParty(ctx, tx, actor)
+		if errors.Is(err, ErrNotInParty) {
+			partyID, err = createParty(ctx, tx, actor)
+			return err
+		}
+		if err != nil {
+			return err
+		}
+		if p.leader != actor {
+			return ErrNotLeader
+		}
+		partyID = p.id
+		return nil
+	})
+	return partyID, err
+}
+
+// Join adds the actor to a party without an invite (a raid listing,
+// DD-299).
+func (s *Service) Join(ctx context.Context, actor, account, partyID uuid.UUID) error {
+	if err := s.chars.Owns(ctx, actor, account); err != nil {
+		return err
+	}
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+		return addMembers(ctx, tx, partyID, []uuid.UUID{actor})
+	})
+	if err != nil {
+		return err
+	}
+	s.notifyMembers(ctx, partyID, "party.changed", map[string]any{"party_id": partyID, "joined": actor})
+	return nil
+}
+
+// Form puts characters that are in no party into a new one, the first
+// leading (the raid queue, DD-299). All or nothing.
+func (s *Service) Form(ctx context.Context, members []uuid.UUID) (uuid.UUID, error) {
+	if len(members) < SizeMin || len(members) > SizeCap {
+		return uuid.Nil, ErrPartyFull
+	}
+	var partyID uuid.UUID
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+		var err error
+		if partyID, err = createParty(ctx, tx, members[0]); err != nil {
+			return err
+		}
+		return addMembers(ctx, tx, partyID, members[1:])
+	})
+	if err != nil {
+		return uuid.Nil, err
+	}
+	s.notifyMembers(ctx, partyID, "party.changed", map[string]any{"party_id": partyID, "formed": true})
+	return partyID, nil
+}
+
+// addMembers joins characters to a live party under its row lock, within
+// its size cap.
+func addMembers(ctx context.Context, tx pgx.Tx, partyID uuid.UUID, chars []uuid.UUID) error {
+	var sizeCap int16
+	var disbanded *time.Time
+	err := tx.QueryRow(ctx, `SELECT size_cap, disbanded_at FROM social.party WHERE id = $1 FOR UPDATE`, partyID).
+		Scan(&sizeCap, &disbanded)
+	if errors.Is(err, pgx.ErrNoRows) || (err == nil && disbanded != nil) {
+		return ErrNotFound
+	}
+	if err != nil {
+		return err
+	}
+	var n int
+	if err := tx.QueryRow(ctx, `
+		SELECT count(*) FROM social.party_member WHERE party_id = $1 AND left_at IS NULL`, partyID).Scan(&n); err != nil {
+		return err
+	}
+	if n+len(chars) > int(sizeCap) {
+		return ErrPartyFull
+	}
+	for _, c := range chars {
+		if _, err := tx.Exec(ctx, `
+			INSERT INTO social.party_member (party_id, character_id) VALUES ($1, $2)
+			ON CONFLICT (party_id, character_id) DO UPDATE SET left_at = NULL, joined_at = now()`,
+			partyID, c); err != nil {
+			if isUnique(err) {
+				return ErrAlreadyInParty
+			}
+			return err
+		}
+	}
+	return nil
 }
 
 // Invite sends a 60s invite to the character named targetName.
@@ -122,6 +227,12 @@ func (s *Service) Invite(ctx context.Context, actor, account uuid.UUID, targetNa
 	inv := &Invite{InvitedBy: actor, TargetCharacter: target, ExpiresAt: s.now().UTC().Add(InviteTTL)}
 	err = pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		p, err := lockActorParty(ctx, tx, actor)
+		if errors.Is(err, ErrNotInParty) { // the first invite forms the party (DD-297)
+			if _, err = createParty(ctx, tx, actor); err != nil {
+				return err
+			}
+			p, err = lockActorParty(ctx, tx, actor)
+		}
 		if err != nil {
 			return err
 		}
@@ -189,31 +300,9 @@ func (s *Service) Accept(ctx context.Context, actor, account, inviteID uuid.UUID
 		if status != "pending" || !expires.After(s.now()) {
 			return ErrInviteInvalid
 		}
-		var sizeCap int16
-		var disbanded *time.Time
-		if err := tx.QueryRow(ctx, `
-			SELECT size_cap, disbanded_at FROM social.party WHERE id = $1 FOR UPDATE`, partyID).
-			Scan(&sizeCap, &disbanded); err != nil {
-			return err
-		}
-		if disbanded != nil {
-			return ErrInviteInvalid
-		}
-		var n int
-		if err := tx.QueryRow(ctx, `
-			SELECT count(*) FROM social.party_member WHERE party_id = $1 AND left_at IS NULL`, partyID).
-			Scan(&n); err != nil {
-			return err
-		}
-		if n >= int(sizeCap) {
-			return ErrPartyFull
-		}
-		if _, err := tx.Exec(ctx, `
-			INSERT INTO social.party_member (party_id, character_id) VALUES ($1, $2)
-			ON CONFLICT (party_id, character_id) DO UPDATE SET left_at = NULL, joined_at = now()`,
-			partyID, actor); err != nil {
-			if isUnique(err) {
-				return ErrAlreadyInParty
+		if err := addMembers(ctx, tx, partyID, []uuid.UUID{actor}); err != nil {
+			if errors.Is(err, ErrNotFound) {
+				return ErrInviteInvalid
 			}
 			return err
 		}
@@ -244,7 +333,7 @@ func (s *Service) Decline(ctx context.Context, actor, account, inviteID uuid.UUI
 }
 
 // Leave removes the actor. A departing leader hands off to the earliest
-// joiner; the last one out disbands the party.
+// joiner; a party left with one member disbands (DD-297).
 func (s *Service) Leave(ctx context.Context, actor, account uuid.UUID) error {
 	if err := s.chars.Owns(ctx, actor, account); err != nil {
 		return err
@@ -267,6 +356,7 @@ func (s *Service) removeMember(ctx context.Context, actor, target uuid.UUID, rea
 	var partyID uuid.UUID
 	var disbanded bool
 	var targetAccount uuid.UUID
+	var rest []uuid.UUID // accounts told of a disband
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		p, err := lockActorParty(ctx, tx, actor)
 		if err != nil {
@@ -296,6 +386,13 @@ func (s *Service) removeMember(ctx context.Context, actor, target uuid.UUID, rea
 			RETURNING c.account_id`, p.id, target).Scan(&targetAccount); err != nil {
 			return err
 		}
+		if len(members)-1 < SizeMin && len(members) >= SizeMin { // a party of one is no party
+			disbanded = true
+			if rest, err = memberAccounts(ctx, tx, p.id); err != nil {
+				return err
+			}
+			return disband(ctx, tx, p.id)
+		}
 		if target != p.leader {
 			return nil
 		}
@@ -316,6 +413,9 @@ func (s *Service) removeMember(ctx context.Context, actor, target uuid.UUID, rea
 	}
 	if !disbanded {
 		s.notifyMembers(ctx, partyID, "party.changed", map[string]any{"party_id": partyID, reason: target})
+	}
+	for _, a := range rest {
+		s.publish(a, "party.disbanded", map[string]any{"party_id": partyID})
 	}
 	return nil
 }

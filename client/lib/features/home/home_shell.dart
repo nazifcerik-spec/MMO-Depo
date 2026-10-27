@@ -127,8 +127,21 @@ class _HomeShellState extends State<HomeShell> {
     _refreshQuests();
   }
 
+  /// A kind of shared work, readable (DD-296): "Fishing", "Smelting", "Hunting".
+  String _workName(AppLocalizations l, String kind) => switch (kind) {
+    'hunt' => l.workHunt,
+    'dungeon' => l.workDungeon,
+    _ when kind.startsWith('gather:') => activityName(l, kind.substring(7)),
+    _ when kind.startsWith('craft:') => professionName(l, kind.substring(6)),
+    _ => kind,
+  };
+
   void _onEvent(LiveEvent e) {
     final l = AppLocalizations.of(context);
+    // Party events name the character they are for; others on the account skip them.
+    if (e.payload['character_id'] case final String c when c != widget.initial.id) {
+      if (e.kind == 'party.xp_share' || e.kind == 'raid.matched') return;
+    }
     final (message, refresh) = switch (e.kind) {
       'hunt.reveal' || 'dungeon.reveal' => (null, true),
       'achievement.unlocked' => (l.evAchievement, true),
@@ -138,6 +151,11 @@ class _HomeShellState extends State<HomeShell> {
       'party.invite' => (l.evPartyInvite, false),
       'guild.invite' => (l.evGuildInvite, false),
       'quest.completed' => (l.evQuestComplete, false),
+      'party.xp_share' => (
+        l.evPartyXp((e.payload['xp'] as num?)?.toInt() ?? 0, _workName(l, e.payload['kind'] as String? ?? '')),
+        true,
+      ),
+      'raid.matched' => (l.evRaidMatched(ContentNames.of('dungeon', e.payload['raid_code'] as String? ?? '')), true),
       'system.dev_broadcast' => (e.payload['message'] as String?, false),
       _ => (null, false),
     };

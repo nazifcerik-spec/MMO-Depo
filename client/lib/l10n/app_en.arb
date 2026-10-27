@@ -789,7 +789,7 @@
       }
     }
   },
-  "noParty": "You're not in a party. Create one and invite friends — fights go better together.",
+  "noParty": "You're not in a party. Invite someone and a party forms (2–5 members).",
   "createParty": "Create party",
   "pendingInvites": "Invitations",
   "partyMembers": "Party ({count}/{cap})",
@@ -808,7 +808,7 @@
   "leave": "Leave",
   "disband": "Disband",
   "leavePartyTitle": "Leave the party?",
-  "leavePartyBody": "If you are the leader, the longest-standing member takes over.",
+  "leavePartyBody": "If you are the leader, the longest-standing member takes over. A party left with one member disbands.",
   "disbandPartyTitle": "Disband the party?",
   "disbandPartyBody": "Everyone is removed from the party.",
   "rankLeader": "Leader",
@@ -1529,7 +1529,7 @@
     }
   },
   "raidOpen": "Open raid",
-  "raidNeedParty": "Raids are for a party. Form one under Social → Party.",
+  "raidNeedParty": "Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.",
   "raidLeaderOnly": "Your party leader opens raids.",
   "raidLobby": "Raid lobby",
   "raidJoin": "Join",
@@ -2060,5 +2060,73 @@
   "recipeGroupEnchantWeapon": "Weapon enchants",
   "recipeGroupEnchantArmor": "Armor enchants",
   "recipeGroupEnchantJewelry": "Jewelry enchants",
-  "recipeGroupEnchantProfession": "Profession enchants"
+  "recipeGroupEnchantProfession": "Profession enchants",
+  "partyHint": "Members doing the same work at the same time (the same gathering, profession, hunting or dungeons) pool their XP and split it evenly, +3% per partner.",
+  "partyChat": "Party chat",
+  "partyShared": "Shared with {names}: you keep {kept} of {earned} XP",
+  "@partyShared": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      },
+      "kept": {
+        "type": "int"
+      },
+      "earned": {
+        "type": "int"
+      }
+    }
+  },
+  "evPartyXp": "Party share: +{xp} XP ({work})",
+  "@evPartyXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "work": {
+        "type": "String"
+      }
+    }
+  },
+  "evRaidMatched": "A party was found for {raid}. See Raids.",
+  "@evRaidMatched": {
+    "placeholders": {
+      "raid": {
+        "type": "String"
+      }
+    }
+  },
+  "nkRaidMatched": "Raid party found",
+  "workHunt": "Hunting",
+  "workDungeon": "Dungeon",
+  "raidFind": "Find a party",
+  "raidQueueJoin": "Queue",
+  "raidQueueLeave": "Leave queue",
+  "raidQueued": "Queued for {raid} · {waiting} waiting",
+  "@raidQueued": {
+    "placeholders": {
+      "raid": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "int"
+      }
+    }
+  },
+  "raidQueueHint": "A random party forms once 5 are waiting, or after 5 minutes with at least 2.",
+  "raidAdvertise": "Advertise",
+  "raidUnlist": "Remove listing",
+  "raidListed": "Your party is on the board for {raid}",
+  "@raidListed": {
+    "placeholders": {
+      "raid": {
+        "type": "String"
+      }
+    }
+  },
+  "raidBoard": "Listing board",
+  "raidBoardEmpty": "No open listings.",
+  "raidJoinParty": "Join party",
+  "raidPickRaid": "Raid",
+  "errListingGone": "That listing is gone or full."
 }

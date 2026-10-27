@@ -182,6 +182,7 @@ String _resultSubtitle(AppLocalizations l, CombatResult r) => [
   if (r.fled) l.huntFled,
   if (r.suppliesUsed.isNotEmpty)
     l.suppliesUsed([for (final (code, n) in r.suppliesUsed) '$n× ${ContentNames.of('item', code)}'].join(', ')),
+  if (r.party != null) r.party!.text(l),
   if (r.leveledUp && r.newLevel != null) l.levelUp(r.newLevel!),
 ].join(' · ');
 

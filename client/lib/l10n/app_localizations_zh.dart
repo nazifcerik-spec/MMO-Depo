@@ -1154,7 +1154,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Create one and invite friends — fights go better together.';
+  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
 
   @override
   String get createParty => 'Create party';
@@ -1183,7 +1183,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get leavePartyTitle => 'Leave the party?';
 
   @override
-  String get leavePartyBody => 'If you are the leader, the longest-standing member takes over.';
+  String get leavePartyBody =>
+      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
 
   @override
   String get disbandPartyTitle => 'Disband the party?';
@@ -2017,7 +2018,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get raidOpen => '开启团队副本';
 
   @override
-  String get raidNeedParty => '团队副本需要队伍。请在 社交 → 队伍 中组队。';
+  String get raidNeedParty => '团队副本需要队伍。可在下方排队随机组队、加入招募或发布自己的招募。';
 
   @override
   String get raidLeaderOnly => '由队长开启团队副本。';
@@ -2630,4 +2631,77 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get recipeGroupEnchantProfession => '专业附魔';
+
+  @override
+  String get partyHint => '同时进行同类工作（相同采集、专业、狩猎或地下城）的成员会汇总经验并平分，每位同伴 +3%。';
+
+  @override
+  String get partyChat => '队伍聊天';
+
+  @override
+  String partyShared(String names, int kept, int earned) {
+    return '与$names共享：$earned 经验中你获得 $kept';
+  }
+
+  @override
+  String evPartyXp(int xp, String work) {
+    return '队伍分享：+$xp 经验（$work）';
+  }
+
+  @override
+  String evRaidMatched(String raid) {
+    return '已为$raid找到队伍，请查看团队副本。';
+  }
+
+  @override
+  String get nkRaidMatched => '团队匹配成功';
+
+  @override
+  String get workHunt => '狩猎';
+
+  @override
+  String get workDungeon => '地下城';
+
+  @override
+  String get raidFind => '寻找队伍';
+
+  @override
+  String get raidQueueJoin => '排队';
+
+  @override
+  String get raidQueueLeave => '离开队列';
+
+  @override
+  String raidQueued(String raid, int waiting) {
+    return '正在排队：$raid · $waiting 人等待';
+  }
+
+  @override
+  String get raidQueueHint => '等待满 5 人，或 5 分钟后至少 2 人时，会自动随机组队。';
+
+  @override
+  String get raidAdvertise => '发布招募';
+
+  @override
+  String get raidUnlist => '撤销招募';
+
+  @override
+  String raidListed(String raid) {
+    return '你的队伍正在招募：$raid';
+  }
+
+  @override
+  String get raidBoard => '招募列表';
+
+  @override
+  String get raidBoardEmpty => '暂无招募。';
+
+  @override
+  String get raidJoinParty => '加入队伍';
+
+  @override
+  String get raidPickRaid => '团队副本';
+
+  @override
+  String get errListingGone => '该招募已结束或已满。';
 }

@@ -108,6 +108,20 @@ class AdventureRepository {
 
   Future<void> startRaid(String id) => api.post('$_char/raid/$id/start', const {});
 
+  // --- raid finding (DD-299) ---------------------------------------------------
+
+  Future<void> queueRaid(String code) => api.post('$_char/raid/queue', {'raid_code': code});
+  Future<void> leaveRaidQueue() => api.post('$_char/raid/queue/leave', const {});
+  Future<void> advertiseRaid(String code) => api.post('$_char/raid/listing', {'raid_code': code});
+  Future<void> unlistRaid() => api.post('$_char/raid/listing/close', const {});
+  Future<void> joinRaidListing(String id) => api.post('$_char/raid/listings/$id/join', const {});
+
+  Future<List<RaidListing>> raidListings() async => [
+    for (final r
+        in ((await api.get('$_char/raid/listings'))['listings'] as List? ?? const []).cast<Map<String, dynamic>>())
+      RaidListing.fromJson(r),
+  ];
+
   /// Only once the raid has ended (E_RAID_NOT_READY); idempotent.
   Future<CombatResult> revealRaid(String id) async => raidResult(await api.post('$_char/raid/$id/reveal', const {}));
 

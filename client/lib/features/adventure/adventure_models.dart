@@ -1,3 +1,5 @@
+import '../../shared/party_share.dart';
+
 import 'dart:math' as math;
 
 import '../inventory/inventory_models.dart';
@@ -143,6 +145,7 @@ class CombatResult {
     this.bossKilled = false,
     this.fled = false,
     this.suppliesUsed = const [],
+    this.party,
   });
 
   /// [runKey] is `hunt` or `run`; drop counts use hunt's `*_drops` names.
@@ -151,10 +154,12 @@ class CombatResult {
     int n(String k) => (r[k] as num?)?.toInt() ?? 0;
     final items = [for (final i in (j['items'] as List? ?? const [])) LootItem.fromJson(i as Map<String, dynamic>)];
     final xp = j['xp'] as Map<String, dynamic>?;
+    final party = PartyShare.fromJson(j['party_share']);
     return CombatResult(
+      party: party,
       loot: Loot(
         goldCopper: n('total_gold_copper'),
-        xp: n('total_xp'),
+        xp: party?.kept ?? n('total_xp'), // what reached the character (DD-296)
         items: items,
         counts: items.isEmpty
             ? {'common': n('common_drops'), 'rare': n('rare_drops'), 'legendary': n('legendary_drops')}
@@ -187,6 +192,9 @@ class CombatResult {
   /// Hunt only (DD-288): broke off under 5% HP, and the supplies used.
   final bool fled;
   final List<(String, int)> suppliesUsed;
+
+  /// How the XP was shared with the party (DD-296); null = not shared.
+  final PartyShare? party;
 }
 
 /// A consumable stack the bag can send on a hunt (DD-288): all units of one
@@ -422,7 +430,15 @@ class RaidRun {
 /// What the raid screen shows: the raid the character is in, or its party's
 /// open lobby, plus this week's cleared raids.
 class RaidCurrent {
-  const RaidCurrent({this.raid, this.lobby, required this.inParty, required this.isLeader, required this.lockouts});
+  const RaidCurrent({
+    this.raid,
+    this.lobby,
+    required this.inParty,
+    required this.isLeader,
+    required this.lockouts,
+    this.queue,
+    this.listing,
+  });
 
   factory RaidCurrent.fromJson(Map<String, dynamic> j) => RaidCurrent(
     raid: j['raid'] is Map<String, dynamic> ? RaidRun.fromJson(j['raid'] as Map<String, dynamic>) : null,
@@ -430,6 +446,8 @@ class RaidCurrent {
     inParty: j['in_party'] as bool? ?? false,
     isLeader: j['is_leader'] as bool? ?? false,
     lockouts: {...(j['lockouts'] as List? ?? const []).cast<String>()},
+    queue: j['queue'] is Map<String, dynamic> ? RaidQueue.fromJson(j['queue'] as Map<String, dynamic>) : null,
+    listing: j['listing'] is Map<String, dynamic> ? RaidListing.fromJson(j['listing'] as Map<String, dynamic>) : null,
   );
 
   final RaidRun? raid;
@@ -437,6 +455,43 @@ class RaidCurrent {
   final bool inParty;
   final bool isLeader;
   final Set<String> lockouts;
+
+  /// Raid finding (DD-299): the character's queue place, its party's listing.
+  final RaidQueue? queue;
+  final RaidListing? listing;
+}
+
+/// A place in the raid queue (DD-299).
+class RaidQueue {
+  const RaidQueue({required this.code, required this.waiting});
+
+  factory RaidQueue.fromJson(Map<String, dynamic> j) =>
+      RaidQueue(code: j['raid_code'] as String? ?? '', waiting: (j['waiting'] as num?)?.toInt() ?? 0);
+
+  final String code;
+  final int waiting;
+}
+
+/// A party on the raid board (DD-299): its members, the leader first.
+class RaidListing {
+  const RaidListing({required this.id, required this.code, required this.members});
+
+  factory RaidListing.fromJson(Map<String, dynamic> j) => RaidListing(
+    id: j['id'] as String,
+    code: j['raid_code'] as String? ?? '',
+    members: [
+      for (final m in (j['members'] as List? ?? const []).cast<Map<String, dynamic>>())
+        (
+          name: m['name'] as String? ?? '',
+          level: (m['level'] as num?)?.toInt() ?? 1,
+          classCode: m['class_code'] as String? ?? '',
+        ),
+    ],
+  );
+
+  final String id;
+  final String code;
+  final List<({String name, int level, String classCode})> members;
 }
 
 /// A member's raid collection as a [CombatResult]: the shared fight's outcome

@@ -399,7 +399,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get evMailReceived => 'Yeni postan var.';
 
   @override
-  String get evPartyInvite => 'Bir gruba davet edildin.';
+  String get evPartyInvite => 'Bir partiye davet edildin.';
 
   @override
   String get evGuildInvite => 'Bir loncaya davet edildin.';
@@ -909,7 +909,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chanGuild => 'Lonca';
 
   @override
-  String get chanParty => 'Grup';
+  String get chanParty => 'Parti';
 
   @override
   String get chatEmpty => 'Henüz mesaj yok. Merhaba de!';
@@ -1139,7 +1139,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errAlreadyVerified => 'E-postan zaten doğrulanmış.';
 
   @override
-  String get tabParty => 'Grup';
+  String get tabParty => 'Parti';
 
   @override
   String get tabGuild => 'Lonca';
@@ -1153,17 +1153,17 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get noParty => 'Bir grupta değilsin. Grup kur ve arkadaşlarını davet et — dövüşler birlikte daha kolay.';
+  String get noParty => 'Bir partide değilsin. Birini davet ettiğinde parti kurulur (2–5 kişi).';
 
   @override
-  String get createParty => 'Grup kur';
+  String get createParty => 'Parti kur';
 
   @override
   String get pendingInvites => 'Davetler';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Grup ($count/$cap)';
+    return 'Parti ($count/$cap)';
   }
 
   @override
@@ -1179,16 +1179,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get disband => 'Dağıt';
 
   @override
-  String get leavePartyTitle => 'Gruptan ayrılınsın mı?';
+  String get leavePartyTitle => 'Partiden ayrılınsın mı?';
 
   @override
-  String get leavePartyBody => 'Liderse, grupta en uzun süredir olan üye liderliği devralır.';
+  String get leavePartyBody =>
+      'Liderse, partide en uzun süredir olan üye liderliği devralır. Tek kişi kalırsa parti dağılır.';
 
   @override
-  String get disbandPartyTitle => 'Grup dağıtılsın mı?';
+  String get disbandPartyTitle => 'Parti dağıtılsın mı?';
 
   @override
-  String get disbandPartyBody => 'Herkes gruptan çıkarılır.';
+  String get disbandPartyBody => 'Herkes partiden çıkarılır.';
 
   @override
   String get rankLeader => 'Lider';
@@ -1280,7 +1281,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get cancelDisband => 'Dağıtmayı iptal et';
 
   @override
-  String get errAlreadyInGroup => 'Zaten bir grupta.';
+  String get errAlreadyInGroup => 'Zaten bir partide ya da loncada.';
 
   @override
   String get errNotLeader => 'Bunu yalnızca lider yapabilir.';
@@ -2005,7 +2006,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String raidGroup(int min, int max) {
-    return '$min–$max kişilik grup';
+    return '$min–$max kişilik parti';
   }
 
   @override
@@ -2017,10 +2018,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get raidOpen => 'Baskın aç';
 
   @override
-  String get raidNeedParty => 'Baskınlar grupla yapılır. Grubu Sosyal → Grup bölümünden kurabilirsin.';
+  String get raidNeedParty =>
+      'Baskınlar partiyle yapılır. Aşağıdan sıraya girip rastgele bir partiye katılabilir, ilan panosundan bir partiye girebilir ya da ilan verebilirsin.';
 
   @override
-  String get raidLeaderOnly => 'Baskını grup lideri açar.';
+  String get raidLeaderOnly => 'Baskını parti lideri açar.';
 
   @override
   String get raidLobby => 'Baskın lobisi';
@@ -2066,10 +2068,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get raidCollected => 'aldı';
 
   @override
-  String get errRaidNeedsParty => 'Önce bir gruba katıl.';
+  String get errRaidNeedsParty => 'Önce bir partiye katıl.';
 
   @override
-  String get errRaidExists => 'Grubunun zaten açık bir baskını var.';
+  String get errRaidExists => 'Partinin zaten açık bir baskını var.';
 
   @override
   String get errAlreadyInRaid => 'Zaten bir baskındasın.';
@@ -2633,4 +2635,78 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recipeGroupEnchantProfession => 'Meslek efsunları';
+
+  @override
+  String get partyHint =>
+      'Aynı işi aynı anda yapan üyeler (aynı toplama türü, meslek, av ya da zindan) XP\'lerini havuzda toplayıp eşit bölüşür; ortak başına +%3 bonus.';
+
+  @override
+  String get partyChat => 'Parti sohbeti';
+
+  @override
+  String partyShared(String names, int kept, int earned) {
+    return '$names ile paylaşıldı: $earned XP\'den sana $kept XP';
+  }
+
+  @override
+  String evPartyXp(int xp, String work) {
+    return 'Parti paylaşımı: +$xp XP ($work)';
+  }
+
+  @override
+  String evRaidMatched(String raid) {
+    return '$raid için parti bulundu. Baskınlar\'a bak.';
+  }
+
+  @override
+  String get nkRaidMatched => 'Baskın partisi bulundu';
+
+  @override
+  String get workHunt => 'Av';
+
+  @override
+  String get workDungeon => 'Zindan';
+
+  @override
+  String get raidFind => 'Parti bul';
+
+  @override
+  String get raidQueueJoin => 'Sıraya gir';
+
+  @override
+  String get raidQueueLeave => 'Sıradan çık';
+
+  @override
+  String raidQueued(String raid, int waiting) {
+    return '$raid sırasındasın · $waiting kişi bekliyor';
+  }
+
+  @override
+  String get raidQueueHint => '5 kişi toplanınca ya da 5 dakika sonra en az 2 kişiyle rastgele parti kurulur.';
+
+  @override
+  String get raidAdvertise => 'İlan ver';
+
+  @override
+  String get raidUnlist => 'İlanı kaldır';
+
+  @override
+  String raidListed(String raid) {
+    return 'Partin panoda: $raid';
+  }
+
+  @override
+  String get raidBoard => 'İlan panosu';
+
+  @override
+  String get raidBoardEmpty => 'Açık ilan yok.';
+
+  @override
+  String get raidJoinParty => 'Partiye katıl';
+
+  @override
+  String get raidPickRaid => 'Baskın';
+
+  @override
+  String get errListingGone => 'Bu ilan artık yok ya da parti dolu.';
 }

@@ -3,7 +3,9 @@ part of 'adventure_view.dart';
 // --- Raids (DD-261) -------------------------------------------------------------
 
 /// Party raids: the leader opens a lobby, members join, the leader starts it;
-/// once it has run every member collects their own rewards.
+/// once it has run every member collects their own rewards. Without a party,
+/// a character queues for a random one or joins a listing on the board; a
+/// leader can advertise (DD-299).
 class _RaidPanel extends StatefulWidget {
   const _RaidPanel({required this.repo, required this.dataVersion, required this.level, this.live});
 
@@ -11,7 +13,8 @@ class _RaidPanel extends StatefulWidget {
   final ValueNotifier<int> dataVersion;
   final int level;
 
-  /// Lobby changes of the party arrive as `raid.changed`.
+  /// Lobby changes arrive as `raid.changed`, a formed queue party as
+  /// `raid.matched`, party changes as `party.*`.
   final LiveEvents? live;
 
   @override
@@ -19,9 +22,16 @@ class _RaidPanel extends StatefulWidget {
 }
 
 class _RaidPanelState extends State<_RaidPanel> with PanelState {
+  /// While queued, a look at the queue every so often lets a waiting queue
+  /// form its smaller party (the server forms it on a look).
+  static const _queuePoll = Duration(seconds: 30);
+
   List<RaidInfo> _raids = const [];
   RaidCurrent _cur = const RaidCurrent(inParty: false, isLeader: false, lockouts: {});
+  List<RaidListing> _board = const [];
+  String? _pick; // the raid chosen to queue for or advertise
   StreamSubscription<LiveEvent>? _sub;
+  Timer? _poll;
 
   String get _me => widget.repo.characterId;
 
@@ -29,12 +39,15 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
   void initState() {
     super.initState();
     load();
-    _sub = widget.live?.events.where((e) => e.kind == 'raid.changed').listen((_) => load());
+    _sub = widget.live?.events
+        .where((e) => e.kind == 'raid.changed' || e.kind == 'raid.matched' || e.kind.startsWith('party.'))
+        .listen((_) => load());
   }
 
   @override
   void dispose() {
     _sub?.cancel();
+    _poll?.cancel();
     super.dispose();
   }
 
@@ -43,7 +56,22 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
     final r = await Future.wait<Object>([widget.repo.raids(), widget.repo.raid()]);
     _raids = r[0] as List<RaidInfo>;
     _cur = r[1] as RaidCurrent;
+    final free = _cur.raid == null && _cur.lobby == null && !_cur.inParty;
+    _board = free ? await widget.repo.raidListings() : const [];
+    _poll?.cancel();
+    _poll = _cur.queue == null
+        ? null
+        : Timer(_queuePoll, () {
+            if (mounted) load();
+          });
   }
+
+  /// Raids the character may queue for or advertise: level reached, not
+  /// cleared this week.
+  List<RaidInfo> get _open => [
+    for (final r in _raids)
+      if (r.dungeon.minLevel <= widget.level && !_cur.lockouts.contains(r.code)) r,
+  ];
 
   RaidInfo? _info(String code) => _raids.where((r) => r.code == code).firstOrNull;
 
@@ -94,6 +122,11 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
             child: Text(l.raidLeaderOnly, style: text.bodySmall),
           ),
         if (active != null) ...[_runCard(l, text, active), const SizedBox(height: Space.lg)],
+        if (active == null && (!_cur.inParty || _cur.isLeader)) ...[
+          _findCard(l, text),
+          const SizedBox(height: Space.lg),
+        ],
+        if (active == null && !_cur.inParty) ...[..._boardSection(l, text), const SizedBox(height: Space.lg)],
         for (final r in _raids) ...[
           _raidCard(l, text, r, canOpen: active == null && _cur.isLeader),
           const SizedBox(height: Space.md),
@@ -101,6 +134,129 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
       ];
     });
   }
+
+  /// Queue for a random party, or advertise one (DD-299).
+  Widget _findCard(AppLocalizations l, TextTheme text) {
+    final open = _open;
+    if (!open.any((r) => r.code == _pick)) _pick = open.lastOrNull?.code; // the highest by default
+    final queue = _cur.queue;
+    final listing = _cur.listing;
+    String name(String code) => ContentNames.of('dungeon', code);
+    return Card(
+      key: const Key('raid-find'),
+      child: Padding(
+        padding: const EdgeInsets.all(Space.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l.raidFind, style: text.titleMedium),
+            const SizedBox(height: Space.sm),
+            if (queue != null) ...[
+              Text(l.raidQueued(name(queue.code), queue.waiting), style: text.bodyMedium),
+              const SizedBox(height: Space.xs),
+              Text(l.raidQueueHint, style: text.bodySmall),
+              const SizedBox(height: Space.md),
+              OutlinedButton(onPressed: () => _act(widget.repo.leaveRaidQueue), child: Text(l.raidQueueLeave)),
+            ] else if (listing != null) ...[
+              Text(l.raidListed(name(listing.code)), style: text.bodyMedium),
+              const SizedBox(height: Space.md),
+              OutlinedButton(onPressed: () => _act(widget.repo.unlistRaid), child: Text(l.raidUnlist)),
+            ] else ...[
+              DropdownButton<String>(
+                key: const Key('raid-pick'),
+                isExpanded: true,
+                value: _pick,
+                hint: Text(l.raidPickRaid),
+                items: [
+                  for (final r in open)
+                    DropdownMenuItem(
+                      value: r.code,
+                      child: Text('${name(r.code)} · ${l.levelShort(r.dungeon.minLevel)}'),
+                    ),
+                ],
+                onChanged: (v) => setState(() => _pick = v),
+              ),
+              const SizedBox(height: Space.sm),
+              Row(
+                children: [
+                  if (!_cur.inParty) ...[
+                    Expanded(
+                      child: FilledButton.tonal(
+                        onPressed: _pick == null ? null : () => _act(() => widget.repo.queueRaid(_pick!)),
+                        child: Text(l.raidQueueJoin),
+                      ),
+                    ),
+                    const SizedBox(width: Space.sm),
+                  ],
+                  Expanded(
+                    child: FilledButton.tonal(
+                      onPressed: _pick == null ? null : () => _act(() => widget.repo.advertiseRaid(_pick!)),
+                      child: Text(l.raidAdvertise),
+                    ),
+                  ),
+                ],
+              ),
+              if (!_cur.inParty) ...[const SizedBox(height: Space.sm), Text(l.raidQueueHint, style: text.bodySmall)],
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Parties advertising for members; joining puts the character in the
+  /// party, and in its lobby when one is open.
+  List<Widget> _boardSection(AppLocalizations l, TextTheme text) => [
+    Text(l.raidBoard, style: text.titleMedium),
+    const SizedBox(height: Space.sm),
+    if (_board.isEmpty) Text(l.raidBoardEmpty, style: text.bodySmall),
+    for (final b in _board)
+      Card(
+        key: Key('listing-${b.id}'),
+        child: Padding(
+          padding: const EdgeInsets.all(Space.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(child: Text(ContentNames.of('dungeon', b.code), style: text.titleSmall)),
+                  Text(l.raidMembers(b.members.length, _info(b.code)?.groupMax ?? 5), style: text.bodySmall),
+                ],
+              ),
+              for (final (i, m) in b.members.indexed)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Row(
+                    children: [
+                      Icon(
+                        i == 0 ? Icons.star : Icons.person_outline,
+                        size: 14,
+                        color: i == 0 ? Palette.accent : Palette.textSecondary,
+                      ),
+                      const SizedBox(width: Space.xs),
+                      Expanded(
+                        child: Text(
+                          '${m.name} · ${l.levelShort(m.level)} · ${className(l, m.classCode)}',
+                          style: text.bodySmall,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: Space.sm),
+              FilledButton.tonal(
+                onPressed: _open.any((r) => r.code == b.code)
+                    ? () => _act(() => widget.repo.joinRaidListing(b.id))
+                    : null,
+                child: Text(l.raidJoinParty),
+              ),
+            ],
+          ),
+        ),
+      ),
+  ];
 
   Widget _raidCard(AppLocalizations l, TextTheme text, RaidInfo r, {required bool canOpen}) {
     final d = r.dungeon;

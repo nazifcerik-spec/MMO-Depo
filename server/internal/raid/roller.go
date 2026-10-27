@@ -19,6 +19,21 @@ const (
 	GearDropPct  = 4   // gear chance per wave kill (as in dungeons)
 )
 
+// GroupHPPct and GroupAttackPct size every enemy of a raid to the group
+// that fights it (DD-298), indexed by member count (2..5): every size clears
+// about 60% of runs at the raid's level (balance.TestRaidTargets), where a
+// full party used to clear nearly all and a pair none.
+var (
+	GroupHPPct     = [6]int32{46, 46, 46, 77, 104, 127}
+	GroupAttackPct = [6]int32{73, 73, 73, 89, 102, 113}
+)
+
+// groupScale is the scaling row for n members (clamped to 1..5).
+func groupScale(n int) (hp, attack int32) {
+	n = max(1, min(n, len(GroupHPPct)-1))
+	return GroupHPPct[n], GroupAttackPct[n]
+}
+
 // MobLookup resolves mob templates (combat.Catalog satisfies).
 type MobLookup interface {
 	Get(code string) (combat.Mob, bool)
@@ -57,6 +72,7 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		ps[i].Name = Label(int16(i + 1))
 	}
 	res := &Result{}
+	hpPct, atkPct := groupScale(len(ps))
 	seq := 0
 	fight := func(mob combat.Mob, wave int, boss bool) bool {
 		seq++
@@ -69,8 +85,10 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 			g.AoEEvery, g.AoEPct, g.StunImmune = BossAoEEvery, BossAoEPct, true
 		} else {
 			g.Mob.HPMax = g.Mob.HPMax * AddHPPct / 100
-			g.Mob.HPCurrent = g.Mob.HPMax
 		}
+		g.Mob.HPMax = max(1, int32(int64(g.Mob.HPMax)*int64(hpPct)/100))
+		g.Mob.HPCurrent = g.Mob.HPMax
+		g.Mob.Attack = max(1, int32(int64(g.Mob.Attack)*int64(atkPct)/100))
 		rec := Encounter{Index: seq, Wave: wave, IsBoss: boss, MobCode: mob.Code}
 		out, err := g.Resolve(rngNew, seed+int64(seq)+1)
 		if err != nil { // nobody standing: content or input bug, end the run

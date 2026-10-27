@@ -60,6 +60,12 @@ class FakeBackend {
   Map<String, dynamic>? raidRun;
   bool raidInParty = true;
   final raidLockouts = <String>[];
+
+  /// Raid finding (DD-299): the queue place, own listing, the board, calls.
+  Map<String, dynamic>? raidQueue;
+  Map<String, dynamic>? raidListing;
+  final raidBoard = <Map<String, dynamic>>[];
+  final raidCalls = <String>[];
   final equipped = <String, Map<String, dynamic>>{};
   int sheetGets = 0;
   int slotCap = 2;
@@ -78,6 +84,7 @@ class FakeBackend {
     final r = raidRun;
     final members = (r?['members'] as List? ?? const []).cast<Map<String, dynamic>>();
     final mine = members.any((m) => m['character_id'] == 'char-1');
+    if (method == 'GET' && path.endsWith('/listings')) return json(200, {'listings': raidBoard});
     if (method == 'GET') {
       return json(200, {
         'raid': mine ? r : null,
@@ -85,7 +92,27 @@ class FakeBackend {
         'in_party': raidInParty,
         'is_leader': raidInParty,
         'lockouts': raidLockouts,
+        'queue': ?raidQueue,
+        'listing': ?raidListing,
       });
+    }
+    final finding = RegExp(r'/raid/(queue|queue/leave|listing|listing/close|listings/[^/]+/join)$').firstMatch(path);
+    if (finding != null) {
+      raidCalls.add(finding[1]!);
+      switch (finding[1]) {
+        case 'queue':
+          raidQueue = {'raid_code': 'north_keep_siege', 'waiting': 1};
+        case 'queue/leave':
+          raidQueue = null;
+        case 'listing':
+          raidListing = {'id': 'l-mine', 'raid_code': 'north_keep_siege', 'members': <Object>[]};
+          raidInParty = true;
+        case 'listing/close':
+          raidListing = null;
+        default:
+          raidInParty = true;
+      }
+      return json(200, {});
     }
     if (path.endsWith('/raid')) {
       raidRun = {
@@ -773,6 +800,13 @@ class FakeBackend {
           };
           return json(201, {'party': party});
         case '/invite':
+          // The first invite forms the party (DD-297).
+          party ??= {
+            'id': 'p-1',
+            'leader_character_id': me,
+            'size_cap': 5,
+            'members': [_member(me, 'Grim')],
+          };
           return json(201, {'id': 'inv-9'});
         case '/promote':
           party!['leader_character_id'] = body['target_character_id'];
@@ -1110,6 +1144,7 @@ class FakeBackend {
   final chat = <Map<String, dynamic>>[]; // oldest first
   final mail = <Map<String, dynamic>>[];
   final chatSent = <String>[];
+  final chatRead = <String>[]; // channels whose history was fetched
   Map? lastMail;
   int _chatId = 100;
 
@@ -1141,6 +1176,7 @@ class FakeBackend {
     if (sub == 'blocks' && !post) return json(200, {'blocked': blocked});
     final ch = RegExp(r'^chat/([a-z]+)$').firstMatch(sub);
     if (ch != null) {
+      chatRead.add(ch[1]!);
       if (ch[1] == 'guild') return error(409, 'E_NOT_IN_CHANNEL');
       final target = req.url.queryParameters['target'];
       final rows = chat.where((c) => c['channel'] == ch[1] && (target == null || c['from_name'] == target)).toList();

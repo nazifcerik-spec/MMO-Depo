@@ -55,8 +55,9 @@ func (w *world) raidClearRate(group []string, level int, t dungeon.Template) flo
 	return float64(n) / raidSeeds
 }
 
-// TestRaidMatrix prints clear rates per group (run with -v): five at the
-// raid's level and five levels up, three at its level.
+// TestRaidMatrix prints the clear rate per group size (run with -v): the
+// average over ten mixed groups and the worst group, at the raid's level,
+// then a full party five levels up.
 func TestRaidMatrix(t *testing.T) {
 	if !testing.Verbose() {
 		t.Skip("prints a matrix: run with -v")
@@ -66,24 +67,31 @@ func TestRaidMatrix(t *testing.T) {
 	for _, r := range w.raids {
 		lv := int(r.MinLevel)
 		fmt.Fprintf(&b, "%-18s %4d |", r.Code, lv)
-		for _, g := range raidGroups(lv, 5) {
-			fmt.Fprintf(&b, " %3.0f", 100*w.raidClearRate(g, lv, r))
+		for n := 2; n <= 5; n++ {
+			avg, worst := w.raidSize(lv, n, r)
+			fmt.Fprintf(&b, " %dp %3.0f/%3.0f", n, 100*avg, 100*worst)
 		}
-		b.WriteString(" | +5:")
-		for _, g := range raidGroups(min(lv+5, 1000), 5) {
-			fmt.Fprintf(&b, " %3.0f", 100*w.raidClearRate(g, min(lv+5, 1000), r))
-		}
-		b.WriteString(" | 3p:")
-		for _, g := range raidGroups(lv, 3) {
-			fmt.Fprintf(&b, " %3.0f", 100*w.raidClearRate(g, lv, r))
-		}
-		b.WriteString("\n")
+		up, _ := w.raidSize(min(lv+5, 1000), 5, r)
+		fmt.Fprintf(&b, " | +5: %3.0f\n", 100*up)
 	}
 	t.Log("\n" + b.String())
 }
 
-// TestRaidTargets pins the DD-261 targets: a full mixed party at the raid's
-// level usually clears it, a minimal party of three rarely does.
+// raidSize is the average clear rate of ten mixed groups of n and the worst.
+func (w *world) raidSize(level, n int, t dungeon.Template) (avg, worst float64) {
+	worst = 1
+	for _, g := range raidGroups(level, n) {
+		c := w.raidClearRate(g, level, t)
+		avg += c
+		worst = min(worst, c)
+	}
+	return avg / 10, worst
+}
+
+// TestRaidTargets pins the DD-298 targets: raids take a party of two to
+// five, sized to it, so every size at the raid's level clears it about as
+// often (40..90% on average) and a full party five levels up clears
+// at least 60% (level 1000 has no higher level).
 func TestRaidTargets(t *testing.T) {
 	if raceDetector {
 		t.Skip("pure simulation: runs in the coverage job (no -race)")
@@ -92,18 +100,15 @@ func TestRaidTargets(t *testing.T) {
 	require.Len(t, w.raids, 6)
 	for _, r := range w.raids {
 		lv := int(r.MinLevel)
-		var full, three float64
-		for _, g := range raidGroups(lv, 5) {
-			at := w.raidClearRate(g, lv, r)
-			require.GreaterOrEqual(t, at, 0.40, "%s %v at min level: clearable", r.Code, g)
-			full += at
+		require.EqualValues(t, 2, r.GroupMin, r.Code)
+		require.EqualValues(t, 5, r.GroupMax, r.Code)
+		for n := 2; n <= 5; n++ {
+			avg, worst := w.raidSize(lv, n, r)
+			t.Logf("%s Sv %d, %d members: %.2f (worst %.2f)", r.Code, lv, n, avg, worst)
+			assert.GreaterOrEqual(t, avg, 0.40, "%s with %d: clearable", r.Code, n)
+			assert.LessOrEqual(t, avg, 0.90, "%s with %d: still a challenge", r.Code, n)
 		}
-		for _, g := range raidGroups(lv, 3) {
-			three += w.raidClearRate(g, lv, r)
-		}
-		full, three = full/10, three/10
-		t.Logf("%s Sv %d: five %.2f, three %.2f", r.Code, lv, full, three)
-		require.GreaterOrEqual(t, full, 0.70, "%s: five at min level clear most runs", r.Code)
-		assert.LessOrEqual(t, three, 0.30, "%s: three at min level rarely clear", r.Code)
+		up, _ := w.raidSize(min(lv+5, 1000), 5, r)
+		assert.GreaterOrEqual(t, up, 0.60, "%s: five levels up a full party clears most runs", r.Code)
 	}
 }

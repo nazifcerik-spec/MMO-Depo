@@ -128,7 +128,7 @@ class _ActivityViewState extends State<ActivityView> {
       return;
     }
     await _run(() async {
-      final (y, g) = await widget.repo.reveal(a.contract.id);
+      final (y, g, share) = await widget.repo.reveal(a.contract.id);
       if (!mounted) return;
       setState(() => _active = null);
       widget.dataVersion.value++;
@@ -140,9 +140,11 @@ class _ActivityViewState extends State<ActivityView> {
         loot: y.toLoot(),
         subtitle: g == null || g.gained == 0
             ? null
-            : g.leveledUp
-            ? '${l.gatherXpGained(name, g.gained)} · ${l.gatherLevelUp(name, g.level)}'
-            : l.gatherXpGained(name, g.gained),
+            : [
+                l.gatherXpGained(name, g.gained),
+                if (g.leveledUp) l.gatherLevelUp(name, g.level),
+                if (share != null) share.text(l),
+              ].join(' · '),
       );
     });
   }

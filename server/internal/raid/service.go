@@ -47,6 +47,7 @@ type Service struct {
 	progress progression.Recorder
 	notifier notification.Notifier
 	pub      Publisher
+	parties  Parties // raid finding (DD-299); nil = no queue or board
 	now      func() time.Time
 	log      *slog.Logger
 	rngNew   func(int64) combat.RNG
@@ -111,23 +112,43 @@ func (s *Service) Create(ctx context.Context, actor, account uuid.UUID, code str
 	if err != nil {
 		return nil, err
 	}
+	runID, err := s.openLobby(ctx, partyID, tmpl, []lobbyMember{{id: actor, snap: snap}})
+	if err != nil {
+		return nil, err
+	}
+	return s.load(ctx, runID)
+}
+
+// lobbyMember is a character entering a lobby with its frozen snapshot.
+type lobbyMember struct {
+	id   uuid.UUID
+	snap []byte
+}
+
+// openLobby opens a party's raid lobby, the first member leading, the rest
+// in their order.
+func (s *Service) openLobby(ctx context.Context, partyID uuid.UUID, tmpl dungeon.Template, members []lobbyMember) (uuid.UUID, error) {
 	runID := uuid.New()
-	err = pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `
 			INSERT INTO raid.run (id, party_id, raid_code, leader_character_id, state, duration_seconds)
-			VALUES ($1, $2, $3, $4, 'forming', $5)`, runID, partyID, tmpl.Code, actor, tmpl.DurationSecs); err != nil {
+			VALUES ($1, $2, $3, $4, 'forming', $5)`, runID, partyID, tmpl.Code, members[0].id, tmpl.DurationSecs); err != nil {
 			return err
 		}
-		_, err := tx.Exec(ctx, `
-			INSERT INTO raid.member (id, run_id, character_id, slot, snapshot) VALUES ($1, $2, $3, 1, $4)`,
-			uuid.New(), runID, actor, snap)
-		return err
+		for i, m := range members {
+			if _, err := tx.Exec(ctx, `
+				INSERT INTO raid.member (id, run_id, character_id, slot, snapshot) VALUES ($1, $2, $3, $4, $5)`,
+				uuid.New(), runID, m.id, i+1, m.snap); err != nil {
+				return err
+			}
+		}
+		return nil
 	})
 	if err != nil {
-		return nil, uniqueErr(err)
+		return uuid.Nil, uniqueErr(err)
 	}
 	s.notifyParty(ctx, partyID, runID, StateForming)
-	return s.load(ctx, runID)
+	return runID, nil
 }
 
 // Join adds a party member to the lobby.
@@ -257,6 +278,9 @@ func (s *Service) Start(ctx context.Context, actor, account, runID uuid.UUID) (*
 			return ErrNotEnough
 		}
 		now := s.now().UTC()
+		if _, err := tx.Exec(ctx, `DELETE FROM raid.listing WHERE party_id = $1`, partyID); err != nil {
+			return err // off the board once under way (DD-299)
+		}
 		_, err = tx.Exec(ctx, `
 			UPDATE raid.run SET state = 'running', started_at = $2, expires_at = $3, seed = $4, updated_at = $2
 			 WHERE id = $1`, runID, now, now.Add(time.Duration(dur)*time.Second), seedOf(runID, uuid.New()))
@@ -451,6 +475,9 @@ type Current struct {
 	IsLeader bool     `json:"is_leader"`
 	Lockouts []string `json:"lockouts"` // raids cleared this week
 	WeekKey  string   `json:"week_key"`
+	// Raid finding (DD-299): the character's queue place, its party's listing.
+	Queue   *QueueStatus `json:"queue,omitempty"`
+	Listing *Listing     `json:"listing,omitempty"`
 }
 
 func (s *Service) Current(ctx context.Context, actor, account uuid.UUID) (*Current, error) {
@@ -472,6 +499,9 @@ func (s *Service) Current(ctx context.Context, actor, account uuid.UUID) (*Curre
 	switch {
 	case err == nil:
 		out.InParty, out.IsLeader = true, leader == actor
+		if out.Listing, err = s.partyListing(ctx, partyID); err != nil {
+			return nil, err
+		}
 		if out.Raid == nil {
 			err := s.pool.QueryRow(ctx, `SELECT id FROM raid.run WHERE party_id = $1 AND state = 'forming'`, partyID).Scan(&runID)
 			if err == nil {
@@ -499,6 +529,22 @@ func (s *Service) Current(ctx context.Context, actor, account uuid.UUID) (*Curre
 		if _, err := s.template(c); err == nil {
 			out.Lockouts = append(out.Lockouts, c)
 		}
+	}
+	// A look at the queue is also when a waiting queue forms its party.
+	var queuedFor string
+	if err := s.pool.QueryRow(ctx, `SELECT raid_code FROM raid.queue WHERE character_id = $1`, actor).
+		Scan(&queuedFor); err == nil && !out.InParty {
+		if tmpl, err := s.template(queuedFor); err == nil {
+			s.match(ctx, tmpl)
+		}
+		if out.Queue, err = s.queueStatus(ctx, actor); err != nil {
+			return nil, err
+		}
+		if out.Queue == nil { // matched just now: the new party and lobby
+			return s.Current(ctx, actor, account)
+		}
+	} else if err != nil && !errors.Is(err, pgx.ErrNoRows) {
+		return nil, err
 	}
 	return out, nil
 }

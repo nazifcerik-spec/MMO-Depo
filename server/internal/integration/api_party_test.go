@@ -20,13 +20,13 @@ func TestHTTPPartyLifecycle(t *testing.T) {
 	}
 
 	require.Nil(t, lead.ok("GET", pp(lead, ""), nil)["party"])
-	lead.fail("POST", pp(lead, "/invite"), map[string]any{"target_name": b.name}, 409, "E_NOT_IN_PARTY")
 	lead.fail("POST", pp(lead, "/leave"), map[string]any{}, 409, "E_NOT_IN_PARTY")
-	lead.ok("POST", pp(lead, ""), map[string]any{})
+	// The first invite forms the party (DD-297).
+	inv := invite(lead, b)
+	require.NotNil(t, lead.ok("GET", pp(lead, ""), nil)["party"])
 	lead.fail("POST", pp(lead, ""), map[string]any{}, 409, "E_ALREADY_IN_PARTY")
 
 	// Invites: decline, bad ids, self, unknown, duplicate.
-	inv := invite(lead, b)
 	b.ok("POST", pp(b, "/invites/"+inv+"/decline"), map[string]any{})
 	b.fail("POST", pp(b, "/invites/"+inv+"/accept"), map[string]any{}, 409, "E_INVITE_INVALID")
 	b.fail("POST", pp(b, "/invites/nope/decline"), map[string]any{}, 400, "E_INVALID_ID")
@@ -60,10 +60,16 @@ func TestHTTPPartyLifecycle(t *testing.T) {
 	party := lead.ok("GET", pp(lead, ""), nil)["party"].(map[string]any)
 	require.Len(t, party["members"], 5)
 
-	// Leaving hands over leadership; the last one out disbands.
+	// Leaving hands over leadership; the leader disbands.
 	lead.ok("POST", pp(lead, "/leave"), map[string]any{})
 	require.Nil(t, lead.ok("GET", pp(lead, ""), nil)["party"])
 	b.ok("POST", pp(b, "/disband"), map[string]any{})
 	require.Nil(t, b.ok("GET", pp(b, ""), nil)["party"])
 	ps[6].fail("GET", "/v1/character/"+b.char+"/party", nil, 404, "")
+
+	// A party of two whose other member leaves is no party (DD-297).
+	pair := invite(ps[5], ps[6])
+	ps[6].ok("POST", pp(ps[6], "/invites/"+pair+"/accept"), map[string]any{})
+	ps[6].ok("POST", pp(ps[6], "/leave"), map[string]any{})
+	require.Nil(t, ps[5].ok("GET", pp(ps[5], ""), nil)["party"])
 }

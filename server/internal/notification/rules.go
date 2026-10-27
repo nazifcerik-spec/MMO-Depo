@@ -44,6 +44,7 @@ var DefaultModes = map[string]Mode{
 	"market_sold":          ModePushAndInbox,
 	"market_expiring":      ModeOff,
 	"party_invite":         ModePushAndInbox,
+	"raid_matched":         ModePushAndInbox, // the raid queue formed a party (DD-299)
 	"guild_invite":         ModePushAndInbox,
 	"achievement_unlocked": ModeSilentPush,
 	"support_reply":        ModePushAndInbox, // DD-234
@@ -71,6 +72,7 @@ var RateRules = map[string]RateRule{
 	"friend_online":        {5, time.Minute},
 	"market_sold":          {20, time.Minute},
 	"party_invite":         {10, 30 * time.Second},
+	"raid_matched":         {6, time.Minute},
 	"guild_invite":         {10, 30 * time.Second},
 	"achievement_unlocked": {10, time.Minute},
 }

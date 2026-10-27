@@ -126,6 +126,7 @@ func (h *Handler) Reveal(w http.ResponseWriter, r *http.Request) {
 		"ledger_txn_id": res.LedgerTxnID.String(),
 		"replayed":      res.Replayed,
 		"gather":        res.Gather,
+		"party_share":   res.Party, // DD-296; null when not shared
 	})
 }
 

@@ -68,6 +68,116 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	apierr.WriteJSON(w, http.StatusCreated, map[string]any{"raid": run})
 }
 
+// --- Raid finding (DD-299) ---------------------------------------------------
+
+type raidCodeBody struct {
+	RaidCode string `json:"raid_code"`
+}
+
+func decodeCode(w http.ResponseWriter, r *http.Request) (string, bool) {
+	var body raidCodeBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
+		return "", false
+	}
+	return body.RaidCode, true
+}
+
+// Enqueue: POST /raid/queue {raid_code}.
+func (h *Handler) Enqueue(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	code, ok := decodeCode(w, r)
+	if !ok {
+		return
+	}
+	q, err := h.svc.Enqueue(r.Context(), char, acct, code)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"queue": q})
+}
+
+// Dequeue: POST /raid/queue/leave.
+func (h *Handler) Dequeue(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	if err := h.svc.Dequeue(r.Context(), char, acct); err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"left": true})
+}
+
+// Listings: GET /raid/listings?raid=.
+func (h *Handler) Listings(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	ls, err := h.svc.Listings(r.Context(), char, acct, r.URL.Query().Get("raid"))
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"listings": ls})
+}
+
+// Advertise: POST /raid/listing {raid_code}.
+func (h *Handler) Advertise(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	code, ok := decodeCode(w, r)
+	if !ok {
+		return
+	}
+	l, err := h.svc.Advertise(r.Context(), char, acct, code)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"listing": l})
+}
+
+// Unlist: POST /raid/listing/close.
+func (h *Handler) Unlist(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	if err := h.svc.Unlist(r.Context(), char, acct); err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"closed": true})
+}
+
+// JoinListing: POST /raid/listings/{listing_id}/join.
+func (h *Handler) JoinListing(w http.ResponseWriter, r *http.Request) {
+	acct, char, ok := ids(w, r)
+	if !ok {
+		return
+	}
+	id, err := uuid.Parse(chi.URLParam(r, "listing_id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", "invalid listing id")
+		return
+	}
+	l, err := h.svc.JoinListing(r.Context(), char, acct, id)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"listing": l})
+}
+
 // Join, Leave, Start and Reveal act on {raid_id}.
 func (h *Handler) Join(w http.ResponseWriter, r *http.Request) {
 	h.runAction(w, r, func(acct, char, run uuid.UUID) (any, error) {
@@ -153,6 +263,9 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		ErrWeeklyLockout:       {http.StatusConflict, "E_RAID_WEEKLY_LOCKED"},
 		ErrTooWounded:          {http.StatusConflict, "E_TOO_WOUNDED"},
 		ErrBagFull:             {http.StatusConflict, "E_BAG_FULL"},
+		ErrInParty:             {http.StatusConflict, "E_ALREADY_IN_PARTY"},
+		ErrNotQueued:           {http.StatusNotFound, "E_NOT_QUEUED"},
+		ErrListed:              {http.StatusConflict, "E_LISTING_GONE"},
 		character.ErrForbidden: {http.StatusNotFound, "E_NOT_FOUND"},
 		character.ErrNotFound:  {http.StatusNotFound, "E_NOT_FOUND"},
 	} {

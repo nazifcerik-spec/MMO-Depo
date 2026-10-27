@@ -429,7 +429,8 @@ func TestHTTPSocialAndEconomy(t *testing.T) {
 	a.ok("GET", a.path("/party"), nil)
 	a.ok("POST", a.path("/party/promote"), map[string]any{"target_character_id": b.char})
 	b.ok("POST", b.path("/party/kick"), map[string]any{"target_character_id": a.char})
-	b.ok("POST", b.path("/party/disband"), map[string]any{})
+	// Down to one member the party is gone (DD-297).
+	b.fail("POST", b.path("/party/disband"), map[string]any{}, 409, "E_NOT_IN_PARTY")
 
 	g := a.ok("POST", a.path("/guild"), map[string]any{"name": "Http " + randHex(3), "tag": randTag()})
 	gid := g["guild"].(map[string]any)["id"].(string)

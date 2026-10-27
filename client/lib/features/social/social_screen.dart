@@ -73,7 +73,14 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
               _ChatPanel(key: _chat, repo: widget.repo, live: widget.live),
               _FriendsPanel(repo: widget.repo, onWhisper: _whisper),
               _MailPanel(repo: widget.repo, dataVersion: widget.dataVersion),
-              PartyPanel(repo: _groups, live: widget.live),
+              PartyPanel(
+                repo: _groups,
+                live: widget.live,
+                onChat: () {
+                  _tabs.animateTo(0);
+                  _chat.currentState?.openChannel('party');
+                },
+              ),
               GuildPanel(repo: _groups, live: widget.live),
             ],
           ),
@@ -182,6 +189,8 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
   }
 
   void openWhisper(String name) => _select('whisper', peer: name);
+
+  void openChannel(String channel) => _select(channel);
 
   Future<void> _send() async {
     final text = _input.text.trim();

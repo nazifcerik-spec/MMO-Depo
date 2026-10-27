@@ -1154,7 +1154,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Create one and invite friends — fights go better together.';
+  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
 
   @override
   String get createParty => 'Create party';
@@ -1183,7 +1183,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get leavePartyTitle => 'Leave the party?';
 
   @override
-  String get leavePartyBody => 'If you are the leader, the longest-standing member takes over.';
+  String get leavePartyBody =>
+      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
 
   @override
   String get disbandPartyTitle => 'Disband the party?';
@@ -2017,7 +2018,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get raidOpen => 'Abrir incursión';
 
   @override
-  String get raidNeedParty => 'Las incursiones son para un grupo. Forma uno en Social → Grupo.';
+  String get raidNeedParty =>
+      'Las incursiones son para un grupo. Ponte en cola para uno al azar, únete a un anuncio o publica el tuyo.';
 
   @override
   String get raidLeaderOnly => 'El líder del grupo abre las incursiones.';
@@ -2633,4 +2635,78 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recipeGroupEnchantProfession => 'Encantamientos de oficio';
+
+  @override
+  String get partyHint =>
+      'Los miembros que hacen el mismo trabajo a la vez (misma recolección, oficio, caza o mazmorras) juntan su PX y lo reparten a partes iguales, +3 % por compañero.';
+
+  @override
+  String get partyChat => 'Chat de grupo';
+
+  @override
+  String partyShared(String names, int kept, int earned) {
+    return 'Compartido con $names: te quedas $kept de $earned PX';
+  }
+
+  @override
+  String evPartyXp(int xp, String work) {
+    return 'Reparto de grupo: +$xp PX ($work)';
+  }
+
+  @override
+  String evRaidMatched(String raid) {
+    return 'Se encontró un grupo para $raid. Mira Incursiones.';
+  }
+
+  @override
+  String get nkRaidMatched => 'Grupo de incursión';
+
+  @override
+  String get workHunt => 'Caza';
+
+  @override
+  String get workDungeon => 'Mazmorra';
+
+  @override
+  String get raidFind => 'Buscar grupo';
+
+  @override
+  String get raidQueueJoin => 'Hacer cola';
+
+  @override
+  String get raidQueueLeave => 'Salir de la cola';
+
+  @override
+  String raidQueued(String raid, int waiting) {
+    return 'En cola para $raid · $waiting esperando';
+  }
+
+  @override
+  String get raidQueueHint => 'Se forma un grupo al azar cuando esperan 5, o tras 5 minutos con al menos 2.';
+
+  @override
+  String get raidAdvertise => 'Anunciar';
+
+  @override
+  String get raidUnlist => 'Retirar anuncio';
+
+  @override
+  String raidListed(String raid) {
+    return 'Tu grupo está en el tablón: $raid';
+  }
+
+  @override
+  String get raidBoard => 'Tablón de anuncios';
+
+  @override
+  String get raidBoardEmpty => 'No hay anuncios abiertos.';
+
+  @override
+  String get raidJoinParty => 'Unirse';
+
+  @override
+  String get raidPickRaid => 'Incursión';
+
+  @override
+  String get errListingGone => 'Ese anuncio ya no existe o está lleno.';
 }

@@ -2949,6 +2949,44 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-296 — Parti XP paylaşımı: aynı işi yapanlar havuzda bölüşür
+
+**Context:** Partiye girmenin toplama, üretim ve avda bir karşılığı yoktu. İstek: aynı işi yapan parti üyeleri kazandıkları XP'yi paylaşsın (iki kişi balık tutuyorsa onlar, üç kişi maden kazıyorsa onlar kendi aralarında).
+**Decision:** Yeni `internal/partyxp`. İş türü: toplama türü (`gather:<tür>`), üretim mesleği (`craft:<meslek>`), av, zindan. Bir iş bitince (toplama/av/zindan teslimi, üretim işi toplaması) XP'si iş süresine eşit yayılmış sayılır; o sırada canlı partideki üyelerin aynı türdeki işleriyle (çalışan: planlanan bitişe kadar; biten: toplandığı ana kadar; durdurulan sayılmaz) çakışan her dilimde n kişi çalışıyorsa dilimin XP'si n'e bölünür ve her birine × (1 + 0,03 × (n−1)) verilir; çakışmayan dilimler sahibine kalır. 6 saatlik işin yanında 1 saatlik iş yalnız o saati paylaşır. Her üyenin işi kendi bitişinde aynı şekilde bölüşüldüğü için iki eşit ortak solonun %103'ünü alır. Ortak payı: av/zindan karakter XP'si (`xp_grant` kaynak `party_share`, iş başı bir kez), toplama/üretim meslek XP'si; `social.party_xp_share` (iş, alıcı) PK payı bir kez öder. Yanıtlarda `party_share` {earned, kept, partners}; alıcıya WS `party.xp_share`. Ortak bulunamazsa ya da sorgu hata verirse iş paylaşılmaz (sahibi hiç kaybetmez). Baskın zaten ortak savaş — paylaşıma girmez.
+**Alternatives:** Her ortak diğerlerinin XP'sinin bir yüzdesini bonus alır (kimse kaybetmez). Yalnız tür eşleşmesi (zaman önemsiz). Kullanıcı havuz + ortak başına %3 ve süreyle orantılı paylaşımı seçti.
+**Consequences:** Az kazanan çok kazanandan yararlanır; aynı türde düşük seviyeli bir ortak yüksek seviyelinin XP'sinden pay alır (parti üyeliği gerektirdiği için kabul). Paylaşım teslim anında hesaplanır; sonradan iptal edilen bir ortak işi pay almış olabilir.
+**Tarih:** 2026-10-27
+
+---
+
+## DD-297 — Parti en az 2 kişi
+
+**Context:** Parti tek kişiyle kurulup öyle kalabiliyordu.
+**Decision:** Parti 2–5 kişi. Partisi olmayan biri davet gönderince parti kendiliğinden kurulur (ayrı "Parti kur" adımı yok; uç nokta yerinde). Ayrılma ya da çıkarma sonrası tek kişi kalırsa parti dağılır (`party.disbanded`). Rastgele sıra partiyi bir seferde kurar (`party.Service.Form`), ilan panosuna davetsiz katılım `Join`, ilan veren için `LeadOrCreate`.
+**Consequences:** Davet bekleyen ya da ilanı açık tek kişilik parti geçici olarak var olur; ikinci üye gelip giderse dağılır.
+**Tarih:** 2026-10-27
+
+---
+
+## DD-298 — Baskınlar 2–5 kişi, zorluk kişi sayısına göre
+
+**Context:** Baskın 3–5 kişiydi ve tam parti neredeyse her koşuda temizliyordu (5 kişi ~%97), 2 kişi hiç.
+**Decision:** `group_min` 2. Baskının her düşmanının canı ve saldırısı grup boyutuyla ölçeklenir (`raid.GroupHPPct`/`GroupAttackPct`; 2: %46/%73, 3: %77/%89, 4: %104/%102, 5: %127/%113). Her boyut baskının kendi seviyesinde ortalama ~%50–85 temizler (`balance.TestRaidTargets`: her boyut %40–90, tam parti 5 seviye üstte ≥ %60). Ölçek koşu anındaki üye sayısından (anlık görüntülerden) gelir.
+**Consequences:** Tam parti için baskın belirgin şekilde zorlaştı; küçük gruplar baskına girebilir ama kişi başı ödül aynı kalır.
+**Tarih:** 2026-10-27
+
+---
+
+## DD-299 — Baskın için parti bulma: sıra + ilan panosu
+
+**Context:** Baskın için parti kurmanın tek yolu isimle davetti.
+**Decision:** İkisi birden. (1) Sıra (`raid.queue`): partisi olmayan, seviyesi yeten karakter bir baskın için sıraya girer; o baskın için 5 kişi bekliyorsa hemen, ya da ilk bekleyen 5 dk beklemişse en az 2 kişiyle rastgele parti kurulur (en uzun bekleyen lider), lobi açılır, girebilen herkes içinde; bildirim `raid_matched` + WS `raid.matched`. Eşleştirme sıraya girişte ve sıranın her görüntülenişinde (`GET /raid`) denenir; istemci sıradayken 30 sn'de bir bakar. (2) İlan panosu (`raid.listing`): lider (partisi yoksa kendisi için kurulur) partisini bir baskın için ilan eder; partisiz, seviyesi yeten herkes tek dokunuşla partiye katılır, açık lobi varsa lobiye de girer; parti dolunca, baskın başlayınca ya da lider kaldırınca ilan kalkar. Uçlar `POST /raid/queue`, `/raid/queue/leave`, `GET /raid/listings?raid=`, `POST /raid/listing`, `/raid/listing/close`, `/raid/listings/{id}/join`; `GET /raid` `queue` + `listing`.
+**Alternatives:** Ayrı eşleştirme worker işi (worker'a baskın servislerini taşımak gerekirdi).
+**Consequences:** Kimse sıraya bakmazsa 5 dk sonrası eşleşme bir sonraki bakışa kalır.
+**Tarih:** 2026-10-27
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

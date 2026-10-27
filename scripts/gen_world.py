@@ -430,7 +430,7 @@ for r in RAIDS:
     raids.append('\n'.join(['  - code: ' + r['code'], '    display_name_key: dungeon.' + r['code'],
                              '    min_level: %d' % r['level'],
                              '    duration_seconds: 3600         # 60 minutes',
-                             '    group_min: 3', '    group_max: 5',
+                             '    group_min: 2', '    group_max: 5',
                              '    waves:',
                              '      - { mob_code: %s, count: 3 }' % r['waves'][0],
                              '      - { mob_code: %s, count: 3 }' % r['waves'][1],

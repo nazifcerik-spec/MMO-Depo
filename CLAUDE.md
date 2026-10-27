@@ -213,6 +213,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 101. **Efsun değerleri + tarif başlıkları (bitti)** — Sprint 101, DD-295. Çanta/ekipman yanıtı `enchant_effect` (ekipmanda `enchant_code` da), tarif çıktısı `enchant`; istemci `enchantLabel` ("Efsun: Ad · +%1 Saldırı"), tarif kartında parşömen etkisi. Meslek sayfası `groupRecipes`: silah/kalkan türe, zırh/takı yuvaya, efsun silah/zırh/takı/meslek, diğerleri alt sınıfa göre katlanır başlıklar.
 
+102. **Parti oyunu: XP paylaşımı + 2–5 kişi + ölçekli baskın + parti bulma (bitti)** — Sprint 102, DD-296..299. Migration 0046 (`social.party_xp_share`, `raid.queue`, `raid.listing`). Yeni `internal/partyxp` (`Split` saf fonksiyon + `Service.Share`): aynı tür işin (toplama türü / üretim mesleği / av / zindan) çakışan dilimlerinde XP havuzda eşit bölünür, ortak başına +%3; toplama/av/zindan/üretim `WithPartyShare`, yanıtta `party_share`, alıcıya WS `party.xp_share`. Parti: ilk davet partiyi kurar, tek kişi kalınca dağılır; `LeadOrCreate`/`Join`/`Form`. Baskın `group_min` 2, `raid.GroupHPPct/GroupAttackPct` grup boyutuna göre (`TestRaidTargets` her boyut %40–90). Parti bulma (`raid/lfg.go`): sıra (5 kişi ya da 5 dk + en az 2 → rastgele parti + lobi, bildirim `raid_matched`), ilan panosu. İstemci: Parti sekmesi (davetle kurulur, paylaşım açıklaması, Parti sohbeti butonu), TR'de "Grup" → "Parti", sonuç ekranlarında paylaşım satırı, Baskınlar'da Parti bul kartı + ilan panosu.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

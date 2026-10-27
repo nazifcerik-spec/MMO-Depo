@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../shared/party_share.dart';
 import '../inventory/inventory_models.dart';
 
 class Recipe {
@@ -166,12 +167,16 @@ class CraftResult {
     required this.leveledUp,
     this.made = 0,
     this.refunded = 0,
+    this.party,
   });
 
   final String output;
   final int stack;
   final int skillAfter;
   final bool leveledUp;
+
+  /// How the XP was shared with the party (DD-296).
+  final PartyShare? party;
 
   /// Units delivered and units whose materials + gold came back (DD-264).
   final int made;
@@ -339,6 +344,7 @@ class WorkshopRepository {
       leveledUp: j['leveled_up'] as bool? ?? false,
       made: (j['made'] as num?)?.toInt() ?? 0,
       refunded: (j['refunded'] as num?)?.toInt() ?? 0,
+      party: PartyShare.fromJson(j['party_share']),
     );
   }
 

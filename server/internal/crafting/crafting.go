@@ -30,6 +30,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/partyxp"
 )
 
 // Profession is a top-level meslek category. Loaded from content pack.
@@ -133,7 +135,9 @@ type CraftResult struct {
 	Count              int       `json:"count"`    // units the job was started with (DD-245)
 	Made               int       `json:"made"`     // units delivered (DD-264)
 	Refunded           int       `json:"refunded"` // unfinished units whose gold + inputs came back
-	Replayed           bool      `json:"replayed,omitempty"`
+	// Party is how the XP was shared (DD-296); nil = not shared.
+	Party    *partyxp.Outcome `json:"party_share,omitempty"`
+	Replayed bool             `json:"replayed,omitempty"`
 }
 
 // Job states.

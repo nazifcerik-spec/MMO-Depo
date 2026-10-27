@@ -18,6 +18,7 @@ import (
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/notification"
+	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
 	"math"
 )
@@ -72,11 +73,15 @@ type Service struct {
 	notifier  notification.Notifier // reward history (DD-242); nil = none
 	hp        HPWriter
 	skills    SkillSource
-	bag       BagRoom    // nil = no room check (DD-246)
-	regions   RegionGate // nil = every mob in reach (DD-273)
-	templates Templates  // supply effects (DD-288); nil = no supplies
-	food      FoodBuffs  // a dish eaten before the hunt (DD-288); nil = in the sheet
+	bag       BagRoom        // nil = no room check (DD-246)
+	regions   RegionGate     // nil = every mob in reach (DD-273)
+	templates Templates      // supply effects (DD-288); nil = no supplies
+	food      FoodBuffs      // a dish eaten before the hunt (DD-288); nil = in the sheet
+	share     partyxp.Sharer // party XP sharing (DD-296); nil = none
 }
+
+// WithPartyShare shares hunt XP with party members hunting meanwhile (DD-296).
+func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
 
 // Templates resolves item templates for supplies (item.Service).
 type Templates interface {
@@ -353,6 +358,8 @@ type RevealResult struct {
 	Items       []activity.GrantedItem   `json:"items,omitempty"`
 	XPGain      *character.XPGrantResult `json:"xp,omitempty"`
 	Replayed    bool                     `json:"replayed"`
+	// Party is how the XP was shared (DD-296); nil = not shared.
+	Party *partyxp.Outcome `json:"party_share,omitempty"`
 }
 
 // Reveal is idempotent — repeated calls return the cached response. Rewards
@@ -485,8 +492,16 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}
 
 	var xpResult *character.XPGrantResult
-	if s.xp != nil && hr.TotalXP > 0 {
-		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, hr.TotalXP, character.XPSource{
+	var party *partyxp.Outcome
+	xp := hr.TotalXP
+	if shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
+		Kind: partyxp.KindHunt, Character: c.CharacterID, Ref: c.ID,
+		Start: c.StartedAt, End: c.StartedAt.Add(time.Duration(elapsed) * time.Second), XP: xp,
+	}); len(shared.Partners) > 0 {
+		party, xp = &shared, shared.Kept
+	}
+	if s.xp != nil && xp > 0 {
+		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, xp, character.XPSource{
 			Kind: "hunt", ID: c.ID.String(), Metadata: map[string]any{"mob": c.MobCode, "victories": hr.Victories}})
 		if err != nil {
 			s.log.WarnContext(ctx, "hunt: xp grant failed (contract already revealed, no retry)",
@@ -501,13 +516,13 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	notification.Send(ctx, s.notifier, s.log, notification.Reward{
 		AccountID: accountID, CharacterID: c.CharacterID, Ref: c.ID,
 		Source: "hunt", Target: c.MobCode,
-		GoldCopper: hr.TotalGoldCopper, XP: hr.TotalXP, Items: activity.RewardItems(granted),
+		GoldCopper: hr.TotalGoldCopper, XP: xp, Items: activity.RewardItems(granted),
 		NewLevel: newLevel(xpResult),
 		Extra:    map[string]any{"victories": hr.Victories, "defeats": hr.Defeats},
 	}.Notice())
 	return &RevealResult{
 		Hunt: hr, Elapsed: elapsed, LedgerTxnID: txnID,
-		Items: granted, XPGain: xpResult, Replayed: false,
+		Items: granted, XPGain: xpResult, Replayed: false, Party: party,
 	}, nil
 }
 

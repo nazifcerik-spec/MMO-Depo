@@ -352,6 +352,13 @@ func NewRouter(d Deps) http.Handler {
 					r.With(idem).Post("/raid/{raid_id}/leave", h.Leave)
 					r.With(idem).Post("/raid/{raid_id}/start", h.Start)
 					r.With(idem).Post("/raid/{raid_id}/reveal", h.Reveal)
+					// Raid finding (DD-299): queue + listing board.
+					r.With(idem).Post("/raid/queue", h.Enqueue)
+					r.With(idem).Post("/raid/queue/leave", h.Dequeue)
+					r.Get("/raid/listings", h.Listings)
+					r.With(idem).Post("/raid/listing", h.Advertise)
+					r.With(idem).Post("/raid/listing/close", h.Unlist)
+					r.With(idem).Post("/raid/listings/{listing_id}/join", h.JoinListing)
 				}
 
 				// --- World / Travel (Sprint 16) ---

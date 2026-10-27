@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../shared/party_share.dart';
 import 'activity_models.dart';
 
 class ActivityRepository {
@@ -37,9 +38,13 @@ class ActivityRepository {
 
   /// Collects what was earned so far and ends the contract. Idempotent on the
   /// server (a retried reveal returns the cached result).
-  Future<(ActivityYield, GatherProgress?)> reveal(String contractId) async {
+  Future<(ActivityYield, GatherProgress?, PartyShare?)> reveal(String contractId) async {
     final j = await api.post('/v1/activity/$contractId/reveal', const {});
-    return (ActivityYield.fromJson(j['yield'] as Map<String, dynamic>?), GatherProgress.fromJson(j['gather']));
+    return (
+      ActivityYield.fromJson(j['yield'] as Map<String, dynamic>?),
+      GatherProgress.fromJson(j['gather']),
+      PartyShare.fromJson(j['party_share']), // DD-296
+    );
   }
 
   /// Abandons the contract; accrued yield is forfeited.

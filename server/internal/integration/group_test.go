@@ -22,9 +22,6 @@ func TestPartyLifecycle(t *testing.T) {
 
 	_, err := svc.Get(w.ctx, lead.ID, lead.Account)
 	require.ErrorIs(t, err, party.ErrNotInParty)
-	_, err = svc.Invite(w.ctx, lead.ID, lead.Account, b.Name)
-	require.ErrorIs(t, err, party.ErrNotInParty, "invite needs a party")
-
 	p, err := svc.Create(w.ctx, lead.ID, lead.Account)
 	require.NoError(t, err)
 	require.Equal(t, lead.ID, p.LeaderCharacterID)
@@ -76,15 +73,13 @@ func TestPartyLifecycle(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, b.ID, p.LeaderCharacterID)
 
-	// The leader leaving hands over; the last one out disbands.
+	// Down to one member the party disbands (DD-297).
+	ev.reset()
 	require.NoError(t, svc.Leave(w.ctx, b.ID, b.Account))
-	p, err = svc.Get(w.ctx, lead.ID, lead.Account)
-	require.NoError(t, err)
-	require.Equal(t, lead.ID, p.LeaderCharacterID)
-	require.Len(t, p.Members, 1)
-	require.NoError(t, svc.Leave(w.ctx, lead.ID, lead.Account))
 	_, err = svc.Get(w.ctx, lead.ID, lead.Account)
 	require.ErrorIs(t, err, party.ErrNotInParty)
+	require.True(t, ev.has("party.disbanded"))
+	require.ErrorIs(t, svc.Leave(w.ctx, lead.ID, lead.Account), party.ErrNotInParty)
 
 	// Disband by the leader removes everyone.
 	_, err = svc.Create(w.ctx, lead.ID, lead.Account)
@@ -97,6 +92,61 @@ func TestPartyLifecycle(t *testing.T) {
 	require.NoError(t, svc.Disband(w.ctx, lead.ID, lead.Account))
 	_, err = svc.Get(w.ctx, c.ID, c.Account)
 	require.ErrorIs(t, err, party.ErrNotInParty)
+}
+
+// A party forms around its first invite, or all at once from the raid
+// queue; anyone may join an advertised one (DD-297, DD-299).
+func TestPartyForming(t *testing.T) {
+	w := newWorld(t)
+	svc := party.NewService(w.p, w.chars, nil)
+	lead, b, c := w.player("warrior", 1), w.player("mage", 1), w.player("rogue", 1)
+
+	_, err := svc.Invite(w.ctx, lead.ID, lead.Account, "Nobody"+randHex(3))
+	require.ErrorIs(t, err, party.ErrTargetNotFound)
+	_, err = svc.Get(w.ctx, lead.ID, lead.Account)
+	require.ErrorIs(t, err, party.ErrNotInParty, "a failed invite forms nothing")
+	inv, err := svc.Invite(w.ctx, lead.ID, lead.Account, b.Name)
+	require.NoError(t, err)
+	p, err := svc.Get(w.ctx, lead.ID, lead.Account)
+	require.NoError(t, err)
+	require.Equal(t, lead.ID, p.LeaderCharacterID)
+	require.Equal(t, p.ID, inv.PartyID)
+
+	// LeadOrCreate: the leader's party, a new one, or a refusal.
+	id, err := svc.LeadOrCreate(w.ctx, lead.ID, lead.Account)
+	require.NoError(t, err)
+	require.Equal(t, p.ID, id)
+	_, err = svc.Accept(w.ctx, b.ID, b.Account, inv.ID)
+	require.NoError(t, err)
+	_, err = svc.LeadOrCreate(w.ctx, b.ID, b.Account)
+	require.ErrorIs(t, err, party.ErrNotLeader)
+	solo, err := svc.LeadOrCreate(w.ctx, c.ID, c.Account)
+	require.NoError(t, err)
+	require.NotEqual(t, p.ID, solo)
+
+	// Join: no invite needed, but not into a second party or a gone one.
+	require.ErrorIs(t, svc.Join(w.ctx, c.ID, c.Account, p.ID), party.ErrAlreadyInParty)
+	require.NoError(t, svc.Leave(w.ctx, c.ID, c.Account))
+	require.NoError(t, svc.Join(w.ctx, c.ID, c.Account, p.ID))
+	require.ErrorIs(t, svc.Join(w.ctx, c.ID, c.Account, uuid.New()), party.ErrNotFound)
+	p, err = svc.Get(w.ctx, c.ID, c.Account)
+	require.NoError(t, err)
+	require.Len(t, p.Members, 3)
+
+	// Form: all at once, first leads; too few, or anyone already grouped, fails whole.
+	d, e := w.player("cleric", 1), w.player("ranger", 1)
+	_, err = svc.Form(w.ctx, []uuid.UUID{d.ID})
+	require.Error(t, err)
+	_, err = svc.Form(w.ctx, []uuid.UUID{d.ID, e.ID, c.ID})
+	require.ErrorIs(t, err, party.ErrAlreadyInParty)
+	_, err = svc.Get(w.ctx, d.ID, d.Account)
+	require.ErrorIs(t, err, party.ErrNotInParty, "a failed form leaves nobody grouped")
+	formed, err := svc.Form(w.ctx, []uuid.UUID{d.ID, e.ID})
+	require.NoError(t, err)
+	p, err = svc.Get(w.ctx, e.ID, e.Account)
+	require.NoError(t, err)
+	require.Equal(t, formed, p.ID)
+	require.Equal(t, d.ID, p.LeaderCharacterID)
 }
 
 func TestPartyFull(t *testing.T) {

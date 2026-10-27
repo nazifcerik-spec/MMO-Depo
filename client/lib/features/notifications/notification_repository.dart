@@ -37,6 +37,7 @@ const tunableKinds = [
   'market_sold',
   'mail_received',
   'party_invite',
+  'raid_matched',
   'guild_invite',
   'achievement_unlocked',
 ];

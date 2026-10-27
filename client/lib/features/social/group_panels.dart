@@ -103,10 +103,13 @@ Widget _inviteTile(AppLocalizations l, GroupInvite i, VoidCallback accept, VoidC
 // --- Party --------------------------------------------------------------------
 
 class PartyPanel extends StatefulWidget {
-  const PartyPanel({super.key, required this.repo, required this.live});
+  const PartyPanel({super.key, required this.repo, required this.live, this.onChat});
 
   final GroupRepository repo;
   final LiveEvents live;
+
+  /// Opens the party chat channel.
+  final VoidCallback? onChat;
 
   @override
   State<PartyPanel> createState() => _PartyPanelState();
@@ -164,7 +167,10 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, A
         return [
           Text(l.noParty, style: text.bodySmall),
           const SizedBox(height: Space.md),
-          FilledButton.tonal(onPressed: () => _do(widget.repo.createParty), child: Text(l.createParty)),
+          // The first invite forms the party (DD-297).
+          _InviteField(onInvite: (n) => _do(() => widget.repo.inviteToParty(n))),
+          const SizedBox(height: Space.md),
+          Text(l.partyHint, style: text.bodySmall),
           if (_invites.isNotEmpty) ...[
             const SizedBox(height: Space.lg),
             Text(l.pendingInvites, style: text.titleMedium),
@@ -181,6 +187,8 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, A
       final leader = p.leaderId == me;
       return [
         Text(l.partyMembers(p.members.length, p.sizeCap), style: text.titleMedium),
+        const SizedBox(height: Space.xs),
+        Text(l.partyHint, style: text.bodySmall),
         const SizedBox(height: Space.sm),
         for (final m in p.members)
           ListTile(
@@ -207,6 +215,10 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload, A
         if (leader && p.members.length < p.sizeCap) ...[
           const SizedBox(height: Space.md),
           _InviteField(onInvite: (n) => _do(() => widget.repo.inviteToParty(n))),
+        ],
+        if (widget.onChat case final chat?) ...[
+          const SizedBox(height: Space.md),
+          FilledButton.tonalIcon(onPressed: chat, icon: const Icon(Icons.forum_outlined), label: Text(l.partyChat)),
         ],
         const SizedBox(height: Space.xl),
         OutlinedButton(

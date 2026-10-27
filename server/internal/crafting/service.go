@@ -14,6 +14,7 @@ import (
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
 )
 
@@ -61,8 +62,13 @@ type Service struct {
 	cfg      ServiceConfig
 	log      *slog.Logger
 	progress progression.Recorder
-	speed    SpeedSource // worn enchants' crafting speed (DD-293); nil = none
+	speed    SpeedSource    // worn enchants' crafting speed (DD-293); nil = none
+	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
 }
+
+// WithPartyShare shares crafting XP with party members crafting in the same
+// profession (DD-296).
+func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
 
 // WithRecorder feeds crafts into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
@@ -75,6 +81,17 @@ type SpeedSource interface {
 
 // WithSpeed makes worn crafting-speed enchants shorten new jobs (DD-293).
 func (s *Service) WithSpeed(src SpeedSource) *Service { s.speed = src; return s }
+
+// GrantXP adds profession XP from outside a craft: a party member's share
+// (DD-296). The profession's level cap applies.
+func (s *Service) GrantXP(ctx context.Context, characterID uuid.UUID, profession string, xp int32) error {
+	maxLevel := int16(100)
+	if p, ok := s.catalog.Catalog().Profession(profession); ok {
+		maxLevel = p.MaxLevel
+	}
+	_, _, err := s.repo.AddXP(ctx, characterID, profession, xp, maxLevel)
+	return err
+}
 
 // MaxCraftSpeed caps how much enchants shorten a craft.
 const MaxCraftSpeed = 0.5
@@ -311,6 +328,13 @@ func (s *Service) Collect(ctx context.Context, characterID, accountID, jobID uui
 			res.SkillBefore, res.SkillAfter = before.Level, before.Level
 		}
 		res.XPGained = rec.ProfessionXPReward * int32(made)
+		end := job.StartedAt.Add(time.Duration(made*int(job.UnitSeconds)) * time.Second)
+		if shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
+			Kind: partyxp.CraftPrefix + rec.ProfessionCode, Character: characterID, Ref: job.ID,
+			Start: job.StartedAt, End: end, XP: int64(res.XPGained),
+		}); len(shared.Partners) > 0 {
+			res.Party, res.XPGained = &shared, int32(shared.Kept)
+		}
 		updated, leveled, err := s.repo.AddXP(ctx, characterID, rec.ProfessionCode, res.XPGained, maxLevel)
 		if err != nil {
 			s.log.WarnContext(ctx, "crafting: xp grant failed after a collected job",

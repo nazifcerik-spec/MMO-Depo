@@ -994,8 +994,69 @@ void main() {
     be.raidInParty = false;
     await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000);
     await tester.pumpAndSettle();
-    expect(find.text('Raids are for a party. Form one under Social → Party.'), findsOneWidget);
+    expect(
+      find.text(
+        'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.',
+      ),
+      findsOneWidget,
+    );
     expect(find.text('Open raid'), findsNothing);
+  });
+
+  testWidgets('raid finding: queue and leave it, join a listed party, advertise as leader (DD-299)', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.raidInParty = false;
+    be.raidBoard.add({
+      'id': 'l-1',
+      'raid_code': 'north_keep_siege',
+      'members': [
+        {'name': 'Aria', 'level': 120, 'class_code': 'cleric'},
+      ],
+    });
+    await tester.tap(find.byIcon(Icons.explore_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dungeon'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Raids'));
+    await tester.pumpAndSettle();
+
+    // Out of a party: queue or advertise the chosen raid; the board lists parties.
+    expect(find.text('Find a party'), findsOneWidget);
+    expect(find.text('Listing board'), findsOneWidget);
+    expect(find.text('Aria · Lvl 120 · Cleric'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Queue'));
+    await tester.pumpAndSettle();
+    expect(be.raidCalls, ['queue']);
+    expect(find.text('Queued for North Keep Siege · 1 waiting'), findsOneWidget);
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Leave queue'));
+    await tester.pumpAndSettle();
+    expect(find.text('Queued for North Keep Siege · 1 waiting'), findsNothing);
+
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Join party'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Join party'));
+    await tester.pumpAndSettle();
+    expect(be.raidCalls.last, 'listings/l-1/join');
+    expect(find.text('Listing board'), findsNothing, reason: 'in a party now');
+
+    // A leader advertises; the card then offers to take it down.
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Advertise'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Advertise'));
+    await tester.pumpAndSettle();
+    expect(find.text('Your party is on the board for North Keep Siege'), findsOneWidget);
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Remove listing'));
+    await tester.pumpAndSettle();
+    expect(be.raidCalls.last, 'listing/close');
+  });
+
+  testWidgets('party share: a partner share toasts for the character it is for (DD-296)', (tester) async {
+    final (be, ws, _) = await _inGame(tester);
+    ws.last.push('party.xp_share', {'character_id': 'char-1', 'kind': 'gather:fishing', 'xp': 42});
+    await tester.pumpAndSettle();
+    expect(find.text('Party share: +42 XP (Fishing)'), findsOneWidget);
+    // Another character of the account gets its own share: not this one's toast.
+    ws.last.push('party.xp_share', {'character_id': 'char-2', 'kind': 'hunt', 'xp': 9});
+    await tester.pumpAndSettle();
+    expect(find.text('Party share: +9 XP (Hunting)'), findsNothing);
   });
 
   testWidgets('travel: pick any destination on the map, level gate, depart, turn back (DD-279, DD-280)', (
@@ -1553,14 +1614,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Leave'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create party'));
-    await tester.pumpAndSettle();
-    expect(find.text('Party (1/5)'), findsOneWidget);
-
+    // No party: the first invite forms one (DD-297).
+    expect(find.text('Create party'), findsNothing);
     await tester.enterText(find.byType(TextField), 'Brak');
     await tester.tap(find.widgetWithText(FilledButton, 'Invite'));
     await tester.pumpAndSettle();
     expect(be.groupCalls, contains('party/invite {"target_name":"Brak"}'));
+    expect(find.text('Party (1/5)'), findsOneWidget);
 
     // Someone joins: the server pushes party.changed and the panel reloads.
     (be.party!['members'] as List).add({'character_id': 'char-7', 'name': 'Brak', 'level': 2, 'class_code': 'mage'});
@@ -1574,6 +1634,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(be.party!['leader_character_id'], 'char-7');
     expect(find.byTooltip('More'), findsNothing, reason: 'no longer leader');
+
+    // Party chat jumps to the chat tab's party channel.
+    await tester.ensureVisible(find.text('Party chat'));
+    await tester.tap(find.text('Party chat'));
+    await tester.pumpAndSettle();
+    expect(be.chatRead.last, 'party');
   });
 
   testWidgets('guild: found with fee confirm, MOTD, rank change within permissions, schedule + cancel disband', (
