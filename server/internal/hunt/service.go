@@ -410,6 +410,9 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		load = *c.Loadout
 	}
 	hr := RollWith(c.Seed, snapshot, mob, elapsed, combat.DefaultMaxTurns, s.rngNew, load)
+	if hr.Report.End == combat.EndTimeUp && elapsed < c.DurationSecs {
+		hr.Report.End = combat.EndEarly // collected before the planned end (DD-308)
+	}
 
 	// --- Item mint (idempotent by source_ref_id = contract.ID) --------------
 	// Each LootSeconds of winning has a GearDropPct chance of gear from the

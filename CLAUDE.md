@@ -230,6 +230,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 107. **Baskınlar zorlaştı (bitti)** — Sprint 107, DD-307. Migration 0049 (`dungeon_template.power_pct`). Baskın düşmanları da `Mob.Effective` (güç + kaçınma) + baskın başı `power_pct` (`gen_world.py` `RAID_POWER`, tam parti ~%40 temizleme). `TestRaidTargets` bandı %30–70, +5 tam parti ≥ %55.
 
+108. **Savaş raporu (bitti)** — Sprint 108, DD-308. `combat.Report` (`report.go`): bitiş nedeni + son savaşın iki tarafı + isabet şansları + vuruş toplamları + en düşük can; av/zindan/baskın sonuçlarında `report` (baskında `Report.For` üyeye göre). İstemci `FightReportCard` (`adventure/fight_report.dart`) ganimet sayfasının altında (`showLootSheet` `footer`).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

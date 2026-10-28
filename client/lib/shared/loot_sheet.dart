@@ -8,24 +8,33 @@ import '../l10n/app_localizations.dart';
 import 'widgets.dart';
 
 /// Shows a reveal result (activity / hunt / dungeon) as a bottom sheet.
-Future<void> showLootSheet(BuildContext context, {required String title, required Loot loot, String? subtitle}) {
+Future<void> showLootSheet(
+  BuildContext context, {
+  required String title,
+  required Loot loot,
+  String? subtitle,
+  Widget? footer,
+}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
     backgroundColor: Palette.bgSurface,
-    builder: (_) => LootSheet(title: title, subtitle: subtitle, loot: loot),
+    builder: (_) => LootSheet(title: title, subtitle: subtitle, loot: loot, footer: footer),
   );
 }
 
 /// Loot reveal (docs/ui/design-system.md §10): rows scale 0.8→1.0 with a
 /// rarity aura, staggered; one controller drives the whole list.
 class LootSheet extends StatefulWidget {
-  const LootSheet({super.key, required this.title, required this.loot, this.subtitle});
+  const LootSheet({super.key, required this.title, required this.loot, this.subtitle, this.footer});
 
   final String title;
   final String? subtitle;
   final Loot loot;
+
+  /// Shown under the loot, e.g. a fight report (DD-308).
+  final Widget? footer;
 
   @override
   State<LootSheet> createState() => _LootSheetState();
@@ -125,6 +134,7 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
                 _stagger(i++, n, _LootRow(label: '${rarityName(l, c.key)} × ${c.value}', rarity: c.key)),
                 const SizedBox(height: Space.sm),
               ],
+              if (widget.footer case final f?) ...[const SizedBox(height: Space.sm), f],
               const SizedBox(height: Space.md),
               FilledButton(onPressed: () => Navigator.of(context).pop(), child: Text(l.lootCollect)),
             ],

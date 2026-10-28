@@ -2767,4 +2767,93 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get updateFailed => 'No se pudo obtener la actualización. Revisa tu conexión.';
+
+  @override
+  String get fightReport => 'Informe de combate';
+
+  @override
+  String get endTimeUp => 'Se acabó el tiempo: duró hasta el final previsto.';
+
+  @override
+  String get endEarly => 'Recogido antes: se detuvo antes del final previsto.';
+
+  @override
+  String endFled(String mob) {
+    return 'Tu vida bajó del 5 % contra $mob: te retiraste.';
+  }
+
+  @override
+  String endDefeat(String mob) {
+    return 'Caíste ante $mob.';
+  }
+
+  @override
+  String endPartyDefeat(String mob) {
+    return 'El grupo cayó ante $mob.';
+  }
+
+  @override
+  String endTimeout(String mob) {
+    return 'El combate con $mob superó el límite de turnos: se detuvo.';
+  }
+
+  @override
+  String get endCleared => 'Superada: cayeron todas las oleadas y el jefe.';
+
+  @override
+  String get repCampHint =>
+      'Por debajo del 50 % de vida el cazador acampa hasta llenarla antes del siguiente combate, así que rara vez baja al 5 %.';
+
+  @override
+  String get repYou => 'Tú';
+
+  @override
+  String get repLevel => 'Nivel';
+
+  @override
+  String get repHp => 'Vida';
+
+  @override
+  String get repAttack => 'Ataque';
+
+  @override
+  String get repDefense => 'Defensa';
+
+  @override
+  String get repEvasion => 'Evasión';
+
+  @override
+  String get repHitChance => 'Prob. de acierto';
+
+  @override
+  String get repCrit => 'Crítico';
+
+  @override
+  String repFights(int n) {
+    return '$n combates';
+  }
+
+  @override
+  String repSwings(int hits, int swings, int pct, int avg, int max) {
+    return '$hits/$swings aciertos ($pct %), media $avg, máx. $max';
+  }
+
+  @override
+  String get repYourSwings => 'Tus golpes';
+
+  @override
+  String get repPartySwings => 'Golpes del grupo';
+
+  @override
+  String get repEnemySwings => 'Golpes del enemigo';
+
+  @override
+  String repLowest(int pct) {
+    return 'Vida más baja en combate: $pct %';
+  }
+
+  @override
+  String repRest(String time) {
+    return 'Acampado: $time';
+  }
 }

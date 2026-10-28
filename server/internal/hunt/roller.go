@@ -112,6 +112,8 @@ type HuntResult struct {
 	PlayerHPFinal int32             `json:"player_hp_final"`
 	// SuppliesUsed: units used per supply, in loadout order (DD-288).
 	SuppliesUsed []SupplyUse `json:"supplies_used,omitempty"`
+	// Report: why the hunt ended and how the fights went (DD-308).
+	Report *combat.Report `json:"report,omitempty"`
 }
 
 // Roll fights `mob` back to back for budgetSecs of hunting time (DD-281):
@@ -150,7 +152,8 @@ func RollWith(
 	rngFactory func(seed int64) combat.RNG,
 	load Loadout,
 ) *HuntResult {
-	res := &HuntResult{Encounters: []EncounterRecord{}}
+	res := &HuntResult{Encounters: []EncounterRecord{}, Report: combat.NewReport()}
+	res.Report.End = combat.EndTimeUp
 	k := newKit(player, load)
 	k.prepare(res, 0, true)
 	var gold, loot float64
@@ -178,6 +181,7 @@ func RollWith(
 		}
 		res.ElapsedSecs += fight
 		res.Completed++
+		res.Report.Fight(enc, nil, sess.Mob, out.Turns)
 		if k.carry {
 			k.mp = min(player.MPMax, out.PlayerMPEnd+player.MPMax*BreatherMPPct/100)
 		}
@@ -214,15 +218,18 @@ func RollWith(
 			res.Defeats++
 			res.StoppedOnDeath = true
 			k.hp, stop = 0, true
+			res.Report.End, res.Report.EndMob = combat.EndDefeat, mob.Code
 		case combat.OutcomeFled:
 			// Nearly dead: the hunter breaks off and goes home (DD-288).
 			res.Fled = true
 			k.hp, stop = out.PlayerHPEnd, true
+			res.Report.End, res.Report.EndMob = combat.EndFled, mob.Code
 		case combat.OutcomeTimeout:
 			// Something is off with the pick (a mob nothing kills): stop
 			// without a reward for it.
 			res.Timeouts++
 			k.hp, stop = out.PlayerHPEnd, true
+			res.Report.End, res.Report.EndMob = combat.EndTimeout, mob.Code
 		}
 		if len(res.Encounters) < MaxLoggedEncounters {
 			res.Encounters = append(res.Encounters, rec)

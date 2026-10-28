@@ -33,6 +33,16 @@ func TestRoll_BackToBack(t *testing.T) {
 	require.Equal(t, int32(res.FightTurns*TurnSeconds)+res.RestSecs, res.ElapsedSecs)
 	require.LessOrEqual(t, res.ElapsedSecs, int32(3600))
 	require.Greater(t, res.ElapsedSecs, int32(3600-60), "the hour is used up")
+	// The fight report (DD-308): the time ran out; every fight is counted.
+	rep := res.Report
+	require.Equal(t, combat.EndTimeUp, rep.End)
+	require.Equal(t, res.Completed, rep.Fights)
+	require.Equal(t, "boar", rep.EnemyID)
+	require.Positive(t, rep.Yours.Hits)
+	require.LessOrEqual(t, rep.Yours.Hits, rep.Yours.Swings)
+	require.Positive(t, rep.Yours.Damage)
+	require.Less(t, rep.LowestHPPct, 100)
+	require.Equal(t, combat.HitChance(rep.You.HitPct, rep.Enemy.EvasionPct), rep.HitChance)
 	require.InDelta(t, int(res.ElapsedSecs)/LootSeconds, res.LootRolls, 1, "the wins' time in LootSeconds")
 	// Gold per hour of hunting: 30 × 5..15 copper, however fast the kills.
 	require.InDelta(t, 300, res.TotalGoldCopper, 120)

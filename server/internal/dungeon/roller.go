@@ -33,6 +33,8 @@ type RunResult struct {
 	Encounters      []EncounterRecord `json:"encounters"`
 	PlayerHPFinal   int32             `json:"player_hp_final"`
 	BossKilled      bool              `json:"boss_killed"`
+	// Report: why the run ended and how the fights went (DD-308).
+	Report *combat.Report `json:"report,omitempty"`
 }
 
 // MobLookup is the subset of combat.Catalog the roller needs — kept as an
@@ -61,7 +63,8 @@ func Roll(
 	maxTurnsPerEncounter int,
 	rngFactory func(seed int64) combat.RNG,
 ) *RunResult {
-	res := &RunResult{Encounters: make([]EncounterRecord, 0, tmpl.TotalEncounters())}
+	res := &RunResult{Encounters: make([]EncounterRecord, 0, tmpl.TotalEncounters()), Report: combat.NewReport()}
+	rep := res.Report
 	if len(tmpl.Waves) == 0 {
 		res.PlayerHPFinal = player.HPCurrent
 		return res
@@ -79,7 +82,7 @@ func Roll(
 				res.PlayerHPFinal = player.HPCurrent
 				return res
 			}
-			rec, killed, ended := resolveOne(baseSeed, seq, player, mob, wIdx+1, false, maxTurnsPerEncounter, rngFactory)
+			rec, killed, ended := resolveOne(baseSeed, seq, player, mob, wIdx+1, false, maxTurnsPerEncounter, rngFactory, rep)
 			res.Encounters = append(res.Encounters, rec)
 			switch rec.Outcome {
 			case combat.OutcomeVictory:
@@ -94,11 +97,13 @@ func Roll(
 				res.StoppedOnDeath = true
 				res.PlayerHPFinal = 0
 				_ = killed // unused; kept for symmetry with boss branch
+				rep.End, rep.EndMob = combat.EndDefeat, mob.Code
 				return res
 			case combat.OutcomeTimeout:
 				res.Timeouts++
 				res.PlayerHPFinal = rec.PlayerHPAft
 				player.HPCurrent = rec.PlayerHPAft
+				rep.End, rep.EndMob = combat.EndTimeout, mob.Code
 				return res
 			}
 			if ended {
@@ -114,7 +119,7 @@ func Roll(
 		return res
 	}
 	seq++
-	rec, _, _ := resolveOne(baseSeed, seq, player, bossMob, 0, true, maxTurnsPerEncounter, rngFactory)
+	rec, _, _ := resolveOne(baseSeed, seq, player, bossMob, 0, true, maxTurnsPerEncounter, rngFactory, rep)
 	res.Encounters = append(res.Encounters, rec)
 	switch rec.Outcome {
 	case combat.OutcomeVictory:
@@ -123,6 +128,7 @@ func Roll(
 		res.TotalGoldCopper += rec.GoldCopper + tmpl.BonusGoldCopper
 		res.BossKilled = true
 		res.Cleared = true
+		rep.End = combat.EndCleared
 		// Guaranteed rare from the boss + one wave-table roll for a bonus item.
 		res.RareDrops++
 		accumulateDrop(res, rngFactory(baseSeed+int64(seq)+8001))
@@ -131,9 +137,11 @@ func Roll(
 		res.Defeats++
 		res.StoppedOnDeath = true
 		res.PlayerHPFinal = 0
+		rep.End, rep.EndMob = combat.EndDefeat, bossMob.Code
 	case combat.OutcomeTimeout:
 		res.Timeouts++
 		res.PlayerHPFinal = rec.PlayerHPAft
+		rep.End, rep.EndMob = combat.EndTimeout, bossMob.Code
 	}
 	return res
 }
@@ -150,7 +158,7 @@ func resolveOne(
 	baseSeed int64, seq int,
 	player combat.Combatant, mob combat.Mob,
 	wave int, isBoss bool, maxTurns int,
-	rngFactory func(seed int64) combat.RNG,
+	rngFactory func(seed int64) combat.RNG, rep *combat.Report,
 ) (rec EncounterRecord, killed bool, ended bool) {
 	enc := player.Clone() // HP carries over; skills + MP (full each fight) too
 	enc.Name = "player"
@@ -162,6 +170,9 @@ func resolveOne(
 	}
 	sess := &combat.Session{Player: enc, Mob: mobC, MaxTurns: maxTurns}
 	out, err := sess.Resolve(rngFactory, baseSeed+int64(seq)+1)
+	if err == nil {
+		rep.Fight(enc, nil, mobC, out.Turns)
+	}
 	if err != nil {
 		return EncounterRecord{
 			Index: seq, Wave: wave, IsBoss: isBoss, MobCode: mob.Code,

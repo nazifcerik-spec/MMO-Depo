@@ -2767,4 +2767,93 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get updateFailed => 'Güncelleme alınamadı. Bağlantını kontrol et.';
+
+  @override
+  String get fightReport => 'Savaş raporu';
+
+  @override
+  String get endTimeUp => 'Süre doldu: planlanan sonuna kadar sürdü.';
+
+  @override
+  String get endEarly => 'Erken toplandı: süre bitmeden durduruldu.';
+
+  @override
+  String endFled(String mob) {
+    return '$mob karşısında canın %5\'in altına düştü: çekilip döndün.';
+  }
+
+  @override
+  String endDefeat(String mob) {
+    return '$mob karşısında yenildin.';
+  }
+
+  @override
+  String endPartyDefeat(String mob) {
+    return 'Parti $mob karşısında düştü.';
+  }
+
+  @override
+  String endTimeout(String mob) {
+    return '$mob ile savaş tur sınırını aştı: durdu.';
+  }
+
+  @override
+  String get endCleared => 'Temizlendi: tüm dalgalar ve boss düştü.';
+
+  @override
+  String get repCampHint =>
+      'Can %50\'nin altına inince avcı sonraki savaştan önce kampta canını doldurur; bu yüzden av nadiren %5\'e düşer.';
+
+  @override
+  String get repYou => 'Sen';
+
+  @override
+  String get repLevel => 'Seviye';
+
+  @override
+  String get repHp => 'Can';
+
+  @override
+  String get repAttack => 'Saldırı';
+
+  @override
+  String get repDefense => 'Savunma';
+
+  @override
+  String get repEvasion => 'Kaçınma';
+
+  @override
+  String get repHitChance => 'İsabet şansı';
+
+  @override
+  String get repCrit => 'Kritik';
+
+  @override
+  String repFights(int n) {
+    return '$n savaş';
+  }
+
+  @override
+  String repSwings(int hits, int swings, int pct, int avg, int max) {
+    return '$hits/$swings isabet (%$pct), ort. $avg, en çok $max';
+  }
+
+  @override
+  String get repYourSwings => 'Senin vuruşların';
+
+  @override
+  String get repPartySwings => 'Partinin vuruşları';
+
+  @override
+  String get repEnemySwings => 'Düşmanın vuruşları';
+
+  @override
+  String repLowest(int pct) {
+    return 'Savaşta en düşük can: %$pct';
+  }
+
+  @override
+  String repRest(String time) {
+    return 'Kampta dinlenme: $time';
+  }
 }

@@ -2761,4 +2761,92 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get updateFailed => '无法获取更新，请检查网络连接。';
+
+  @override
+  String get fightReport => '战斗报告';
+
+  @override
+  String get endTimeUp => '时间到：一直持续到计划结束。';
+
+  @override
+  String get endEarly => '提前领取：在计划结束前停止。';
+
+  @override
+  String endFled(String mob) {
+    return '对战$mob时生命低于5%：你撤退了。';
+  }
+
+  @override
+  String endDefeat(String mob) {
+    return '你被$mob击败。';
+  }
+
+  @override
+  String endPartyDefeat(String mob) {
+    return '队伍被$mob击败。';
+  }
+
+  @override
+  String endTimeout(String mob) {
+    return '与$mob的战斗超过回合上限：已停止。';
+  }
+
+  @override
+  String get endCleared => '已通关：所有波次和首领都被击败。';
+
+  @override
+  String get repCampHint => '生命低于50%时，猎人会在下一场战斗前扎营回满，因此狩猎很少降到5%。';
+
+  @override
+  String get repYou => '你';
+
+  @override
+  String get repLevel => '等级';
+
+  @override
+  String get repHp => '生命';
+
+  @override
+  String get repAttack => '攻击';
+
+  @override
+  String get repDefense => '防御';
+
+  @override
+  String get repEvasion => '闪避';
+
+  @override
+  String get repHitChance => '命中率';
+
+  @override
+  String get repCrit => '暴击';
+
+  @override
+  String repFights(int n) {
+    return '$n 场战斗';
+  }
+
+  @override
+  String repSwings(int hits, int swings, int pct, int avg, int max) {
+    return '命中 $hits/$swings（$pct%），平均 $avg，最高 $max';
+  }
+
+  @override
+  String get repYourSwings => '你的攻击';
+
+  @override
+  String get repPartySwings => '队伍的攻击';
+
+  @override
+  String get repEnemySwings => '敌人的攻击';
+
+  @override
+  String repLowest(int pct) {
+    return '战斗中最低生命：$pct%';
+  }
+
+  @override
+  String repRest(String time) {
+    return '扎营休息：$time';
+  }
 }

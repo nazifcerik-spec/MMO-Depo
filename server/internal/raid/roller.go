@@ -59,6 +59,9 @@ type Result struct {
 	BossKilled bool        `json:"boss_killed"`
 	Encounters []Encounter `json:"encounters"`
 	HPFinal    []int32     `json:"hp_final"`
+	// Report: why the raid ended and how the party's fights went (DD-308);
+	// Reveal turns it to the collecting member's view.
+	Report *combat.Report `json:"report,omitempty"`
 }
 
 // Roll fights the waves and then the boss with the whole group. HP carries
@@ -71,7 +74,7 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		ps[i] = players[i].Clone()
 		ps[i].Name = Label(int16(i + 1))
 	}
-	res := &Result{}
+	res := &Result{Report: combat.NewReport()}
 	hpPct, atkPct := groupScale(len(ps))
 	if p := int32(tmpl.PowerPct); p > 0 { // the raid's own strength (DD-307)
 		hpPct, atkPct = hpPct*p/100, atkPct*p/100
@@ -94,6 +97,9 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		g.Mob.Attack = max(1, int32(int64(g.Mob.Attack)*int64(atkPct)/100))
 		rec := Encounter{Index: seq, Wave: wave, IsBoss: boss, MobCode: mob.Code}
 		out, err := g.Resolve(rngNew, seed+int64(seq)+1)
+		if err == nil {
+			res.Report.Fight(enc[0], enc, g.Mob, out.Turns)
+		}
 		if err != nil { // nobody standing: content or input bug, end the run
 			rec.Outcome = combat.OutcomeTimeout
 			rec.HPAfter = hpOf(ps)
@@ -111,6 +117,10 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		res.Encounters = append(res.Encounters, rec)
 		if out.Outcome != combat.OutcomeVictory {
 			res.Wiped = out.Outcome == combat.OutcomeDefeat
+			res.Report.End, res.Report.EndMob = combat.EndTimeout, mob.Code
+			if res.Wiped {
+				res.Report.End = combat.EndDefeat
+			}
 			return false
 		}
 		for i := range ps { // a breather before the next pack (DD-229)
@@ -138,6 +148,7 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 	}
 	if fight(boss, 0, true) {
 		res.BossKilled, res.Cleared = true, true
+		res.Report.End = combat.EndCleared
 	}
 	return done()
 }

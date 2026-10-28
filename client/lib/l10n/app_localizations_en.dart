@@ -2768,4 +2768,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateFailed => 'Could not get the update. Check your connection.';
+
+  @override
+  String get fightReport => 'Fight report';
+
+  @override
+  String get endTimeUp => 'Time ran out: it went on to the planned end.';
+
+  @override
+  String get endEarly => 'Collected early: stopped before the planned end.';
+
+  @override
+  String endFled(String mob) {
+    return 'HP fell below 5% against $mob: you broke off and came back.';
+  }
+
+  @override
+  String endDefeat(String mob) {
+    return 'You fell to $mob.';
+  }
+
+  @override
+  String endPartyDefeat(String mob) {
+    return 'The party fell to $mob.';
+  }
+
+  @override
+  String endTimeout(String mob) {
+    return 'The fight with $mob went past the turn limit: it stopped.';
+  }
+
+  @override
+  String get endCleared => 'Cleared: every wave and the boss fell.';
+
+  @override
+  String get repCampHint =>
+      'Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.';
+
+  @override
+  String get repYou => 'You';
+
+  @override
+  String get repLevel => 'Level';
+
+  @override
+  String get repHp => 'HP';
+
+  @override
+  String get repAttack => 'Attack';
+
+  @override
+  String get repDefense => 'Defense';
+
+  @override
+  String get repEvasion => 'Evasion';
+
+  @override
+  String get repHitChance => 'Hit chance';
+
+  @override
+  String get repCrit => 'Crit';
+
+  @override
+  String repFights(int n) {
+    return '$n fights';
+  }
+
+  @override
+  String repSwings(int hits, int swings, int pct, int avg, int max) {
+    return '$hits/$swings hits ($pct%), avg $avg, max $max';
+  }
+
+  @override
+  String get repYourSwings => 'Your swings';
+
+  @override
+  String get repPartySwings => 'The party\'s swings';
+
+  @override
+  String get repEnemySwings => 'Enemy swings';
+
+  @override
+  String repLowest(int pct) {
+    return 'Lowest HP in a fight: $pct%';
+  }
+
+  @override
+  String repRest(String time) {
+    return 'Camped: $time';
+  }
 }

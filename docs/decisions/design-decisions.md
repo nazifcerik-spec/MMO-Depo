@@ -3051,6 +3051,13 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 **Consequences:** Tüm boyutlarda ortalama temizleme %38–62; en kolay baskınlar belirgin zorlaştı, yüksek seviyeliler hafifçe. Baskın ödülleri değişmedi.
 **Tarih:** 2026-10-28
 
+## DD-308 — Av, zindan ve baskın savaş raporu
+
+**Context:** Oyuncu bir koşunun neden bittiğini (süre mi, %5 can mı) ve karakterle canavar arasındaki güç dengesini göremiyordu; avda can hiç %5'e düşmüyor gibi görünüyordu.
+**Decision:** `combat.Report` her av/zindan/baskın sonucunda (`hunt.report`, `run.report`, `result.report`): bitiş nedeni (`time_up`, `collected_early`, `fled`, `defeat`, `timeout`, `cleared`) + sonlandıran canavar; son savaştaki iki tarafın statları (seviye, can, saldırı, savunma, kaçınma, kritik; zindan boss'u boyutlanmış hâliyle) ve `TryHit` ile aynı kırpılmış isabet şansları; tüm savaşların toplamı (vuruş/isabet/kritik/hasar/en yüksek vuruş, iki taraf), savaş içindeki en düşük can %'si; avda kamp süresi. Baskında vuruşlar partinin toplamı, statlar ve isabet şansları toplayan üyenin kendisi (`Report.For`). Reveal sonucuyla saklanır; eski koşularda yok. İstemci ganimet sayfasının altında "Savaş raporu" kartı; avda, can %50'nin altında kampta dolduğu için %5'e nadiren inildiği açıklanır.
+**Consequences:** Oyuncu güç farkını ve bitiş nedenini her koşuda görür. Savaş mekaniği değişmedi.
+**Tarih:** 2026-10-28
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

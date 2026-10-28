@@ -1,3 +1,4 @@
+import 'fight_report.dart';
 import '../../shared/party_share.dart';
 
 import 'dart:math' as math;
@@ -183,6 +184,7 @@ class CombatResult {
     this.fled = false,
     this.suppliesUsed = const [],
     this.party,
+    this.report,
   });
 
   /// [runKey] is `hunt` or `run`; drop counts use hunt's `*_drops` names.
@@ -213,6 +215,7 @@ class CombatResult {
         for (final u in (r['supplies_used'] as List? ?? const []).cast<Map<String, dynamic>>())
           (u['code'] as String, (u['qty'] as num).toInt()),
       ],
+      report: FightReport.fromJson(r['report'], restSeconds: n('rest_seconds')),
     );
   }
 
@@ -230,8 +233,11 @@ class CombatResult {
   final bool fled;
   final List<(String, int)> suppliesUsed;
 
-  /// How the XP was shared with the party (DD-296); null = not shared.
+  /// The party bonus on the XP (DD-305); null = none.
   final PartyShare? party;
+
+  /// Why the run ended and how the fights went (DD-308); null on old runs.
+  final FightReport? report;
 }
 
 /// A consumable stack the bag can send on a hunt (DD-288): all units of one
@@ -559,5 +565,6 @@ CombatResult raidResult(Map<String, dynamic> j) {
     newLevel: (xp?['level'] as num?)?.toInt(),
     cleared: r['cleared'] as bool? ?? false,
     bossKilled: r['boss_killed'] as bool? ?? false,
+    report: FightReport.fromJson(r['report']),
   );
 }

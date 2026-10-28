@@ -4893,6 +4893,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not get the update. Check your connection.'**
   String get updateFailed;
+
+  /// No description provided for @fightReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Fight report'**
+  String get fightReport;
+
+  /// No description provided for @endTimeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ran out: it went on to the planned end.'**
+  String get endTimeUp;
+
+  /// No description provided for @endEarly.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected early: stopped before the planned end.'**
+  String get endEarly;
+
+  /// No description provided for @endFled.
+  ///
+  /// In en, this message translates to:
+  /// **'HP fell below 5% against {mob}: you broke off and came back.'**
+  String endFled(String mob);
+
+  /// No description provided for @endDefeat.
+  ///
+  /// In en, this message translates to:
+  /// **'You fell to {mob}.'**
+  String endDefeat(String mob);
+
+  /// No description provided for @endPartyDefeat.
+  ///
+  /// In en, this message translates to:
+  /// **'The party fell to {mob}.'**
+  String endPartyDefeat(String mob);
+
+  /// No description provided for @endTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The fight with {mob} went past the turn limit: it stopped.'**
+  String endTimeout(String mob);
+
+  /// No description provided for @endCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared: every wave and the boss fell.'**
+  String get endCleared;
+
+  /// No description provided for @repCampHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.'**
+  String get repCampHint;
+
+  /// No description provided for @repYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get repYou;
+
+  /// No description provided for @repLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get repLevel;
+
+  /// No description provided for @repHp.
+  ///
+  /// In en, this message translates to:
+  /// **'HP'**
+  String get repHp;
+
+  /// No description provided for @repAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'Attack'**
+  String get repAttack;
+
+  /// No description provided for @repDefense.
+  ///
+  /// In en, this message translates to:
+  /// **'Defense'**
+  String get repDefense;
+
+  /// No description provided for @repEvasion.
+  ///
+  /// In en, this message translates to:
+  /// **'Evasion'**
+  String get repEvasion;
+
+  /// No description provided for @repHitChance.
+  ///
+  /// In en, this message translates to:
+  /// **'Hit chance'**
+  String get repHitChance;
+
+  /// No description provided for @repCrit.
+  ///
+  /// In en, this message translates to:
+  /// **'Crit'**
+  String get repCrit;
+
+  /// No description provided for @repFights.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} fights'**
+  String repFights(int n);
+
+  /// No description provided for @repSwings.
+  ///
+  /// In en, this message translates to:
+  /// **'{hits}/{swings} hits ({pct}%), avg {avg}, max {max}'**
+  String repSwings(int hits, int swings, int pct, int avg, int max);
+
+  /// No description provided for @repYourSwings.
+  ///
+  /// In en, this message translates to:
+  /// **'Your swings'**
+  String get repYourSwings;
+
+  /// No description provided for @repPartySwings.
+  ///
+  /// In en, this message translates to:
+  /// **'The party\'s swings'**
+  String get repPartySwings;
+
+  /// No description provided for @repEnemySwings.
+  ///
+  /// In en, this message translates to:
+  /// **'Enemy swings'**
+  String get repEnemySwings;
+
+  /// No description provided for @repLowest.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest HP in a fight: {pct}%'**
+  String repLowest(int pct);
+
+  /// No description provided for @repRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Camped: {time}'**
+  String repRest(String time);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

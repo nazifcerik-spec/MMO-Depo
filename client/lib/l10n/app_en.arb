@@ -2166,5 +2166,97 @@
   },
   "updateDownloading": "Downloading…",
   "updatePermission": "Allow installs from MeNa World, then tap Update again.",
-  "updateFailed": "Could not get the update. Check your connection."
+  "updateFailed": "Could not get the update. Check your connection.",
+  "fightReport": "Fight report",
+  "endTimeUp": "Time ran out: it went on to the planned end.",
+  "endEarly": "Collected early: stopped before the planned end.",
+  "endFled": "HP fell below 5% against {mob}: you broke off and came back.",
+  "@endFled": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
+  "endDefeat": "You fell to {mob}.",
+  "@endDefeat": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
+  "endPartyDefeat": "The party fell to {mob}.",
+  "@endPartyDefeat": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
+  "endTimeout": "The fight with {mob} went past the turn limit: it stopped.",
+  "@endTimeout": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
+  "endCleared": "Cleared: every wave and the boss fell.",
+  "repCampHint": "Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.",
+  "repYou": "You",
+  "repLevel": "Level",
+  "repHp": "HP",
+  "repAttack": "Attack",
+  "repDefense": "Defense",
+  "repEvasion": "Evasion",
+  "repHitChance": "Hit chance",
+  "repCrit": "Crit",
+  "repFights": "{n} fights",
+  "@repFights": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "repSwings": "{hits}/{swings} hits ({pct}%), avg {avg}, max {max}",
+  "@repSwings": {
+    "placeholders": {
+      "hits": {
+        "type": "int"
+      },
+      "swings": {
+        "type": "int"
+      },
+      "pct": {
+        "type": "int"
+      },
+      "avg": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "repYourSwings": "Your swings",
+  "repPartySwings": "The party's swings",
+  "repEnemySwings": "Enemy swings",
+  "repLowest": "Lowest HP in a fight: {pct}%",
+  "@repLowest": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "repRest": "Camped: {time}",
+  "@repRest": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

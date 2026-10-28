@@ -16,6 +16,7 @@ import '../events/event_repository.dart';
 import '../events/events_panel.dart';
 import 'adventure_models.dart';
 import 'adventure_repository.dart';
+import 'fight_report.dart';
 import 'world_map.dart';
 import '../../shared/content_names.dart';
 import '../../shared/quantity_field.dart';
@@ -291,6 +292,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
         title: ContentNames.of('mob', c.target),
         subtitle: _resultSubtitle(l, r),
         loot: r.loot,
+        footer: r.report == null ? null : FightReportCard(report: r.report!, hunt: true),
       );
     });
   }
@@ -641,6 +643,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
       title: ContentNames.of('dungeon', c.target),
       subtitle: _resultSubtitle(l, r),
       loot: r.loot,
+      footer: r.report == null ? null : FightReportCard(report: r.report!),
     );
   });
 

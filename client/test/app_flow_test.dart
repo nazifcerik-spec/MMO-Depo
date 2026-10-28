@@ -14,6 +14,7 @@ import 'package:otter/core/token_store.dart';
 import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/character/models.dart';
 import 'package:otter/shared/links.dart';
+import 'package:otter/shared/loot_sheet.dart';
 
 import 'fake_backend.dart';
 import 'fake_ws.dart';
@@ -909,6 +910,18 @@ void main() {
     expect(find.text('7 won · 1 lost · Used: 2× Potion Hp Small · Level up! Now level 4'), findsOneWidget);
     expect(find.text('+160 XP'), findsOneWidget);
     expect(find.text('Rare × 1'), findsOneWidget);
+    // The fight report (DD-308): why it ended and how the sides measured up.
+    final report = find.byKey(const Key('fight-report'));
+    final sheet = find.descendant(of: find.byType(LootSheet), matching: find.byType(Scrollable)).first;
+    await tester.scrollUntilVisible(report, 200, scrollable: sheet);
+    expect(find.text('HP fell below 5% against Cave Troll: you broke off and came back.'), findsOneWidget);
+    expect(find.descendant(of: report, matching: find.text('87%')), findsOneWidget);
+    expect(find.text('Your swings: 35/40 hits (88%), avg 60, max 88'), findsOneWidget);
+    expect(find.text('Enemy swings: 30/38 hits (79%), avg 30, max 45'), findsOneWidget);
+    expect(find.text('Lowest HP in a fight: 3%'), findsOneWidget);
+    expect(find.textContaining('Camped: '), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Nice!'), 200, scrollable: sheet);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Nice!'));
     await tester.pumpAndSettle();
     expect(find.text('Choose your prey'), findsOneWidget);

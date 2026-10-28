@@ -365,6 +365,7 @@ func (s *Service) Reveal(ctx context.Context, actor, account, runID uuid.UUID) (
 	}
 	mobs := s.mobs.Catalog()
 	res := Roll(run.Seed, players, tmpl, mobs, s.rngNew)
+	res.Report = res.Report.For(me.combatant) // this member's side (DD-308)
 	level := int(me.combatant.Level)
 	rw := MemberReward(res, int16(pos+1), level, run.Members[pos].ClassCode, run.Seed, tmpl, mobs, s.rngNew)
 	// The whole party runs it together: +3% XP per member (DD-305).

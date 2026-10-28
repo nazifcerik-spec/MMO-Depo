@@ -47,6 +47,12 @@ func TestRollClearsAndIsDeterministic(t *testing.T) {
 		require.GreaterOrEqual(t, e.GoldCopper, int64(10))
 	}
 	require.Equal(t, "p2", Label(2))
+	require.Equal(t, combat.EndCleared, a.Report.End)
+	require.Equal(t, 3, a.Report.Fights)
+	// Each member sees its own stats against the same enemy (DD-308).
+	me := a.Report.For(party[2])
+	require.Equal(t, party[2].HPMax, me.You.HPMax)
+	require.Equal(t, a.Report.Yours, me.Yours)
 }
 
 func TestRollWipeStopsTheRun(t *testing.T) {
@@ -54,6 +60,8 @@ func TestRollWipeStopsTheRun(t *testing.T) {
 	res := Roll(7, weak, testRaid, testMobs, rng)
 	require.True(t, res.Wiped)
 	require.False(t, res.Cleared)
+	require.Equal(t, combat.EndDefeat, res.Report.End)
+	require.NotEmpty(t, res.Report.EndMob)
 	require.Equal(t, []int32{0, 0, 0}, res.HPFinal)
 	require.Len(t, res.Encounters, 1)
 

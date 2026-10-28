@@ -27,6 +27,11 @@ func TestHTTPCombatRewind(t *testing.T) {
 	res := p.ok("POST", "/v1/hunt/"+hid+"/reveal", map[string]any{})
 	hunt := res["hunt"].(map[string]any)
 	require.Positive(t, hunt["victories"].(float64), "%v", res)
+	// The fight report (DD-308): collected at the end, every fight counted.
+	rep := hunt["report"].(map[string]any)
+	require.Equal(t, "time_up", rep["end"])
+	require.Equal(t, hunt["completed_encounters"], rep["fights"])
+	require.Equal(t, "young_boar", rep["enemy_code"])
 	again := p.ok("POST", "/v1/hunt/"+hid+"/reveal", map[string]any{})
 	require.Equal(t, hunt["victories"], again["hunt"].(map[string]any)["victories"], "reveal replays")
 	q := items(p.ok("GET", p.path("/quests"), nil), "open")
@@ -53,6 +58,7 @@ func TestHTTPCombatRewind(t *testing.T) {
 	require.NoError(t, err)
 	run := p.ok("POST", "/v1/dungeon/"+did+"/reveal", map[string]any{})
 	r := run["run"].(map[string]any)
+	require.Contains(t, []any{"cleared", "defeat", "timeout"}, r["report"].(map[string]any)["end"])
 	p.ok("POST", "/v1/dungeon/"+did+"/reveal", map[string]any{}) // replay
 	if r["cleared"] == true {
 		p.fail("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"}, 409, "")

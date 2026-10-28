@@ -118,6 +118,7 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
       title: ContentNames.of('dungeon', r.code),
       subtitle: _resultSubtitle(l, res),
       loot: res.loot,
+      footer: res.report == null ? null : FightReportCard(report: res.report!, party: true),
     );
     await load();
   });

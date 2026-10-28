@@ -55,6 +55,10 @@ func TestRoll_ClearedRunGrantsBossBonus(t *testing.T) {
 	require.True(t, res.BossKilled)
 	require.False(t, res.StoppedOnDeath)
 	require.Equal(t, 4, res.Victories, "3 waves + 1 boss")
+	require.Equal(t, combat.EndCleared, res.Report.End)
+	require.Equal(t, 4, res.Report.Fights)
+	require.Equal(t, "boss", res.Report.EnemyID, "the last fight: the boss")
+	require.Equal(t, int32(200*110/100*BossHPPct/100), res.Report.Enemy.HPMax, "the boss as fought: field scaling + boss size")
 	require.GreaterOrEqual(t, res.TotalXP, int64(3*10+200+250), "wave xp + boss xp + bonus xp")
 	require.GreaterOrEqual(t, res.TotalGoldCopper, int64(3*5+100+500))
 	require.GreaterOrEqual(t, res.RareDrops, 1, "boss kill grants guaranteed rare")
@@ -77,6 +81,9 @@ func TestRoll_StopsOnDeath(t *testing.T) {
 	require.False(t, res.Cleared)
 	require.False(t, res.BossKilled)
 	require.Zero(t, res.Victories)
+	require.Equal(t, combat.EndDefeat, res.Report.End)
+	require.Equal(t, "drake", res.Report.EndMob)
+	require.Zero(t, res.Report.LowestHPPct)
 	require.Zero(t, res.TotalXP, "defeat first wave → no bonus xp granted")
 }
 
