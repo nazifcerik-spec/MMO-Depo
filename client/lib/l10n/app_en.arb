@@ -2285,5 +2285,16 @@
         "type": "int"
       }
     }
+  },
+  "storyTitle": "Story",
+  "storyOpen": "Story mode",
+  "storyComingSoon": "Story mode is coming soon. Chapters will appear here as they are written.",
+  "storyLocked": "Opens at level {level}",
+  "@storyLocked": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
   }
 }

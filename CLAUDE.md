@@ -238,6 +238,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 111. **Küfür sansürü + otomatik susturma (bitti)** — Sprint 111, DD-312. Migration 0051 (`social.profanity_strike`, sistem mute, `chat_message.system_kind`). `internal/profanity.Censor` (TR+EN, katlama/leet/tekrar, kök + tam kelime). Sohbette `*`; günde 7 küfür → 5 dk mute + genel sohbette `profanity_mute` satırı.
 
+112. **Hikâye modu alanı (bitti)** — Sprint 112, DD-313. `content/story.yaml` (boş, biçim açıklamalı) + i18n `story.<code>` / `story.<code>.body`; `internal/story` + `GET /v1/story`. İstemci `features/story/story_screen.dart` (karakter sayfasından).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

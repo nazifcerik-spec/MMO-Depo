@@ -48,6 +48,7 @@ import (
 	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
 	"github.com/otter/server/internal/social"
+	"github.com/otter/server/internal/story"
 	"github.com/otter/server/internal/support"
 	"github.com/otter/server/internal/vendor"
 	"github.com/otter/server/internal/world"
@@ -509,6 +510,7 @@ func NewRouter(d Deps) http.Handler {
 
 			// --- Public item set catalog (DD-277) ---
 			r.Get("/item-sets", itemset.CatalogHandler)
+			r.Get("/story", story.CatalogHandler) // story mode chapters (DD-313)
 
 			// --- Public mob catalog (client hunt picker) ---
 			if d.CombatHandler != nil {

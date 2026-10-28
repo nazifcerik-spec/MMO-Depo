@@ -2883,4 +2883,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String chatMutedNotice(String name, int min) {
     return '$name 因说脏话被禁言 $min 分钟。';
   }
+
+  @override
+  String get storyTitle => '剧情';
+
+  @override
+  String get storyOpen => '剧情模式';
+
+  @override
+  String get storyComingSoon => '剧情模式即将推出。章节写好后会在这里出现。';
+
+  @override
+  String storyLocked(int level) {
+    return '$level 级开放';
+  }
 }

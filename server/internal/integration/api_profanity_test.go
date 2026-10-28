@@ -16,7 +16,7 @@ func TestHTTPChatProfanity(t *testing.T) {
 	msg := p.ok("POST", p.path("/chat"), map[string]any{"channel": "global", "body": "siktir git amk"})
 	require.Equal(t, "****** git ***", msg["body"])
 
-	p.ok("POST", p.path("/chat"), map[string]any{"channel": "global", "body": "fuck shit bitch"})       // 5
+	p.ok("POST", p.path("/chat"), map[string]any{"channel": "global", "body": "fuck shit bitch"})    // 5
 	p.ok("POST", p.path("/chat"), map[string]any{"channel": "global", "body": "orospu ve pezevenk"}) // 7: muted
 	p.fail("POST", p.path("/chat"), map[string]any{"channel": "global", "body": "merhaba"}, 403, "E_MUTED")
 

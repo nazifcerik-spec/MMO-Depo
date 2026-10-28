@@ -2892,4 +2892,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String chatMutedNotice(String name, int min) {
     return '$name was muted for $min minutes for swearing.';
   }
+
+  @override
+  String get storyTitle => 'Story';
+
+  @override
+  String get storyOpen => 'Story mode';
+
+  @override
+  String get storyComingSoon => 'Story mode is coming soon. Chapters will appear here as they are written.';
+
+  @override
+  String storyLocked(int level) {
+    return 'Opens at level $level';
+  }
 }

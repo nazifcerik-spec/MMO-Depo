@@ -317,5 +317,9 @@
   "dailyTomorrow": "Vuelve mañana",
   "dailyDay": "Día {n}",
   "dailyOpen": "Recompensa diaria",
-  "chatMutedNotice": "{name} fue silenciado {min} minutos por insultar."
+  "chatMutedNotice": "{name} fue silenciado {min} minutos por insultar.",
+  "storyTitle": "Historia",
+  "storyOpen": "Modo historia",
+  "storyComingSoon": "El modo historia llegará pronto. Los capítulos aparecerán aquí a medida que se escriban.",
+  "storyLocked": "Se abre en el nivel {level}"
 }

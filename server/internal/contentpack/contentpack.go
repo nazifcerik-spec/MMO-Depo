@@ -31,6 +31,7 @@ import (
 	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/skill"
+	"github.com/otter/server/internal/story"
 )
 
 // --- YAML shapes ------------------------------------------------------------
@@ -368,6 +369,9 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	if err := itemset.Install(p.ItemSets); err != nil {
 		return res, fmt.Errorf("contentpack: item sets: %w", err)
 	}
+	if err := story.Install(p.Story); err != nil {
+		return res, fmt.Errorf("contentpack: story: %w", err)
+	}
 	for _, r := range l.reloaders {
 		if err := r.Reload(ctx); err != nil {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
@@ -405,6 +409,7 @@ type Pack struct {
 	Skills      []ClassSkill
 	Progression *leveling.Config // nil = engine defaults (no progression.yaml)
 	ItemSets    []itemset.Set    // raid sets (DD-277)
+	Story       []story.Chapter  // story mode chapters (DD-313)
 	Strings     *Strings
 }
 
@@ -447,6 +452,9 @@ func Read(dir string) (*Pack, error) {
 	}
 	p.Items = append(p.Items, setItems...)
 	if p.ItemSets, err = loadSetsFile(f("sets.yaml")); err != nil {
+		return nil, err
+	}
+	if p.Story, err = loadStoryFile(f("story.yaml")); err != nil {
 		return nil, err
 	}
 	if err := validateItems(p.Items); err != nil {
@@ -620,6 +628,27 @@ func loadItemsFile(path string) ([]Item, error) {
 		return nil, fmt.Errorf("validate %s: %w", path, err)
 	}
 	return f.Items, nil
+}
+
+// loadStoryFile reads the story mode chapters (DD-313); no file = none.
+func loadStoryFile(path string) ([]story.Chapter, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read %s: %w", path, err)
+	}
+	var f struct {
+		Chapters []story.Chapter `yaml:"chapters"`
+	}
+	if err := yaml.Unmarshal(raw, &f); err != nil {
+		return nil, fmt.Errorf("parse %s: %w", path, err)
+	}
+	if err := story.Validate(f.Chapters); err != nil {
+		return nil, fmt.Errorf("validate %s: %w", path, err)
+	}
+	return f.Chapters, nil
 }
 
 // loadSetsFile reads the `sets` list of sets.yaml (DD-277); the file's

@@ -5097,6 +5097,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} was muted for {min} minutes for swearing.'**
   String chatMutedNotice(String name, int min);
+
+  /// No description provided for @storyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get storyTitle;
+
+  /// No description provided for @storyOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Story mode'**
+  String get storyOpen;
+
+  /// No description provided for @storyComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Story mode is coming soon. Chapters will appear here as they are written.'**
+  String get storyComingSoon;
+
+  /// No description provided for @storyLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens at level {level}'**
+  String storyLocked(int level);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

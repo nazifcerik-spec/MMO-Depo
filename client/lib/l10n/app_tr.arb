@@ -833,5 +833,9 @@
   "dailyTomorrow": "Yarın gel",
   "dailyDay": "{n}. gün",
   "dailyOpen": "Günlük ödül",
-  "chatMutedNotice": "{name} küfürlü konuştuğu için {min} dakika susturuldu."
+  "chatMutedNotice": "{name} küfürlü konuştuğu için {min} dakika susturuldu.",
+  "storyTitle": "Hikâye",
+  "storyOpen": "Hikâye modu",
+  "storyComingSoon": "Hikâye modu yakında. Bölümler yazıldıkça burada açılacak.",
+  "storyLocked": "{level}. seviyede açılır"
 }

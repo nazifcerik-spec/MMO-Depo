@@ -2891,4 +2891,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String chatMutedNotice(String name, int min) {
     return '$name küfürlü konuştuğu için $min dakika susturuldu.';
   }
+
+  @override
+  String get storyTitle => 'Hikâye';
+
+  @override
+  String get storyOpen => 'Hikâye modu';
+
+  @override
+  String get storyComingSoon => 'Hikâye modu yakında. Bölümler yazıldıkça burada açılacak.';
+
+  @override
+  String storyLocked(int level) {
+    return '$level. seviyede açılır';
+  }
 }

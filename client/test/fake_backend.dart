@@ -30,6 +30,9 @@ class FakeBackend {
   /// Daily login reward (DD-311): off by default so entering the game shows
   /// no window.
   bool dailyClaimable = false;
+
+  /// Story mode chapters (DD-313).
+  List<Map<String, dynamic>> story = [];
   int dailyClaims = 0;
   int gatherLevel = 20;
 
@@ -214,6 +217,7 @@ class FakeBackend {
       if (body['password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
       return json(200, _session());
     }
+    if (path == '/v1/story') return json(200, {'chapters': story});
     if (path == '/v1/character/char-1/daily-reward' || path == '/v1/character/char-1/daily-reward/claim') {
       if (path.endsWith('/claim')) {
         if (!dailyClaimable) return error(409, 'E_ALREADY_CLAIMED');

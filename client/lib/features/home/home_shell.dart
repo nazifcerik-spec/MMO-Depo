@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
@@ -186,6 +187,7 @@ class _HomeShellState extends State<HomeShell> {
         ),
       ),
       onOpenDaily: _openDaily,
+      onOpenStory: () => _push(StoryScreen(api: widget.auth.api, level: _level.value)),
       onOpenProgress: () => _push(
         ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
       ),

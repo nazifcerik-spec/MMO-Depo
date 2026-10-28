@@ -317,5 +317,9 @@
   "dailyTomorrow": "明天再来",
   "dailyDay": "第{n}天",
   "dailyOpen": "每日奖励",
-  "chatMutedNotice": "{name} 因说脏话被禁言 {min} 分钟。"
+  "chatMutedNotice": "{name} 因说脏话被禁言 {min} 分钟。",
+  "storyTitle": "剧情",
+  "storyOpen": "剧情模式",
+  "storyComingSoon": "剧情模式即将推出。章节写好后会在这里出现。",
+  "storyLocked": "{level} 级开放"
 }

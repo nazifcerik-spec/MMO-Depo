@@ -2891,4 +2891,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String chatMutedNotice(String name, int min) {
     return '$name fue silenciado $min minutos por insultar.';
   }
+
+  @override
+  String get storyTitle => 'Historia';
+
+  @override
+  String get storyOpen => 'Modo historia';
+
+  @override
+  String get storyComingSoon =>
+      'El modo historia llegará pronto. Los capítulos aparecerán aquí a medida que se escriban.';
+
+  @override
+  String storyLocked(int level) {
+    return 'Se abre en el nivel $level';
+  }
 }

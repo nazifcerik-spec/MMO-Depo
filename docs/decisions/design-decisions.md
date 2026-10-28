@@ -3094,6 +3094,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-313 — Hikâye modu alanı
+
+**Context:** Oyuncu hikâye modu için içeriğini sonradan dolduracağı bir alan istedi.
+**Decision:** `content/story.yaml` (`chapters`: `code`, `min_level`, isteğe bağlı `requires` = daha önceki bölüm; şimdilik boş, dosya başında biçim açıklaması). Başlık ve metin `content/i18n` içinde `story.<code>` ve `story.<code>.body` (dört dilde zorunlu, contentpack doğrular). Yeni `internal/story` (bellekte katalog, contentpack kurar), public `GET /v1/story`. İstemci: karakter sayfasında Hikâye modu butonu → `StoryScreen` (boşken "yakında", bölümler seviye kilitli, dokununca metin).
+**Consequences:** İçerik eklemek yalnız YAML + çeviri ister; okuma ilerlemesi ve ödüller sonraki adım.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

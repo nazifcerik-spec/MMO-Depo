@@ -1,0 +1,9 @@
+# Story mode chapters (DD-313), shown in this order in the game's Story
+# screen. Each chapter:
+#   - code: chapter_01          # unique; names come from content/i18n:
+#                               #   story.chapter_01       (title)
+#                               #   story.chapter_01.body  (the text)
+#     min_level: 1              # opens at this character level
+#     requires: chapter_00      # optional: an earlier chapter read first
+# Empty for now: the game shows "coming soon".
+chapters: []
