@@ -5055,6 +5055,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What came in so far goes to your bag, and the same run starts again for the same time.'**
   String get restartBody;
+
+  /// No description provided for @dailyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily login reward'**
+  String get dailyTitle;
+
+  /// No description provided for @dailyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim once a day on any character. Seven days in a row pay the most; a missed day starts the cycle again.'**
+  String get dailyBody;
+
+  /// No description provided for @dailyClaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get dailyClaim;
+
+  /// No description provided for @dailyTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Come back tomorrow'**
+  String get dailyTomorrow;
+
+  /// No description provided for @dailyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {n}'**
+  String dailyDay(int n);
+
+  /// No description provided for @dailyOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reward'**
+  String get dailyOpen;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -26,6 +26,11 @@ class FakeBackend {
   String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
   int restarts = 0;
+
+  /// Daily login reward (DD-311): off by default so entering the game shows
+  /// no window.
+  bool dailyClaimable = false;
+  int dailyClaims = 0;
   int gatherLevel = 20;
 
   // --- class catalog (DD-253) ---
@@ -208,6 +213,29 @@ class FakeBackend {
       if (body['password'] == 'busy-horse') return error(503, 'E_BUSY'); // argon2 slots full (DD-238)
       if (body['password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
       return json(200, _session());
+    }
+    if (path == '/v1/character/char-1/daily-reward' || path == '/v1/character/char-1/daily-reward/claim') {
+      if (path.endsWith('/claim')) {
+        if (!dailyClaimable) return error(409, 'E_ALREADY_CLAIMED');
+        dailyClaimable = false;
+        dailyClaims++;
+      }
+      final status = {
+        'claimable': dailyClaimable,
+        'day': dailyClaimable ? 1 : 2,
+        'streak': dailyClaimable ? 0 : 1,
+        'rewards': [
+          for (var d = 1; d <= 7; d++)
+            {'day': d, 'gold_copper': 1000 * d, if (d == 3) 'potion': 'potion_hp_small', if (d == 3) 'potion_qty': 3},
+        ],
+      };
+      if (path.endsWith('/claim')) {
+        return json(200, {
+          'reward': {'day': 1, 'gold_copper': 1000},
+          'status': status,
+        });
+      }
+      return json(200, status);
     }
     if (path == '/v1/auth/register') {
       if (body['accept_terms'] != true) return error(400, 'E_VALIDATION');

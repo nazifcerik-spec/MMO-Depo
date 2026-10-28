@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../daily/daily_reward.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/live_events.dart';
@@ -67,6 +68,7 @@ class _HomeShellState extends State<HomeShell> {
     _live.start();
     _refreshUnread();
     _refreshQuests();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _openDaily(onlyClaimable: true));
     _lifecycle = AppLifecycleListener(
       onResume: () {
         _live.start();
@@ -121,6 +123,20 @@ class _HomeShellState extends State<HomeShell> {
     }
   }
 
+  late final _daily = DailyRepository(widget.auth.api, widget.initial.id);
+
+  /// The daily login reward (DD-311): opened on entering the game while
+  /// today's is unclaimed, and from the character sheet.
+  Future<void> _openDaily({bool onlyClaimable = false}) async {
+    try {
+      final st = await _daily.status();
+      if (!mounted || (onlyClaimable && !st.claimable)) return;
+      if (await showDailyReward(context, _daily, st)) _dataVersion.value++;
+    } on ApiError {
+      // the reward waits for the next visit
+    }
+  }
+
   Future<void> _push(Widget screen) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
     _refreshUnread();
@@ -169,6 +185,7 @@ class _HomeShellState extends State<HomeShell> {
           channel: 'party',
         ),
       ),
+      onOpenDaily: _openDaily,
       onOpenProgress: () => _push(
         ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
       ),

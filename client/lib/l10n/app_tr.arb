@@ -826,5 +826,11 @@
   "repRest": "Kampta dinlenme: {time}",
   "restart": "Yeniden başlat",
   "restartTitle": "Toplayıp yeniden başlatılsın mı?",
-  "restartBody": "Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar."
+  "restartBody": "Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar.",
+  "dailyTitle": "Günlük giriş ödülü",
+  "dailyBody": "Her gün herhangi bir karakterinle bir kez al. Yedi gün üst üste en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.",
+  "dailyClaim": "Al",
+  "dailyTomorrow": "Yarın gel",
+  "dailyDay": "{n}. gün",
+  "dailyOpen": "Günlük ödül"
 }

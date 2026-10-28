@@ -234,6 +234,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 109. **Meslek eğrisi + yeniden başlat (bitti)** — Sprint 109, DD-309..310. `ProfessionXPToNext` 72 × 1,06^N (%20 zor). `POST /v1/{hunt,activity}/{id}/restart` (topla + aynı işi aynı süreyle başlat; av malzemeleri çantada kalan kadar; başlatılamazsa `restart_error`). İstemci Topla yanında Yeniden başlat (toplama + av).
 
+110. **Günlük giriş ödülü (bitti)** — Sprint 110, DD-311. Migration 0050 (`progression.daily_login`). `internal/dailyreward`: hesap başı günde bir, 7 günlük döngü (kaçırılınca baştan), altın gün çarpanı × 50 × Sv^1,5, 3./6. gün can iksiri. `GET/POST /v1/character/{id}/daily-reward[/claim]`. İstemci `features/daily/daily_reward.dart` (girişte pencere + karakter sayfasında buton).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

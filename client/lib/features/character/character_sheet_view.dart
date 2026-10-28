@@ -25,6 +25,7 @@ class CharacterSheetView extends StatefulWidget {
     required this.initial,
     required this.dataVersion,
     this.onOpenProgress,
+    this.onOpenDaily,
     this.onSheet,
     this.live,
     this.onPartyChat,
@@ -40,6 +41,9 @@ class CharacterSheetView extends StatefulWidget {
   final CharacterSheet initial;
   final ValueNotifier<int> dataVersion;
   final VoidCallback? onOpenProgress;
+
+  /// Opens the daily login reward (DD-311).
+  final VoidCallback? onOpenDaily;
 
   /// Every fresh sheet (the shell tracks the level from it).
   final ValueChanged<CharacterSheet>? onSheet;
@@ -296,6 +300,14 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
                 for (final k in _skills!)
                   if (_onPath(k)) _SkillRow(skill: k, level: s.level),
               ],
+            ),
+          ],
+          if (widget.onOpenDaily != null) ...[
+            const SizedBox(height: Space.lg),
+            OutlinedButton.icon(
+              onPressed: widget.onOpenDaily,
+              icon: const Icon(Icons.card_giftcard_outlined),
+              label: Text(l.dailyOpen),
             ),
           ],
           if (widget.onOpenProgress != null) ...[

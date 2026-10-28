@@ -3076,6 +3076,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-311 — Günlük giriş ödülü
+
+**Context:** Oyuncu günlük giriş ödülü istedi.
+**Decision:** Yeni `internal/dailyreward` + migration 0050 `progression.daily_login` (hesap başı son gün + seri). Hesap başına UTC günde bir alım, alan karaktere ödenir; 7 günlük döngü, bir gün kaçırılırsa 1. günden başlar. Altın = gün çarpanı (1,1,2,2,3,3,6) × 50 × seviye^1,5 bakır (`RewardFor`); 3. gün 3, 6. gün 5 seviyeye uygun can iksiri (`potion_hp_*` seviye kademesi). Alım hesap satırı kilidi altında; altın `daily-<hesap>-<gün>` defter anahtarıyla bir kez. Uçlar `GET /v1/character/{id}/daily-reward`, `POST .../daily-reward/claim` (`E_ALREADY_CLAIMED`). İstemci: oyuna girerken alınmamışsa 7 kutulu pencere açılır; karakter sayfasında Günlük ödül butonu.
+**Consequences:** Her gün giriş teşvik edilir; ödül seviyeyle ölçeklenir, alt karakterlerle çoğaltılamaz (hesap başı).
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

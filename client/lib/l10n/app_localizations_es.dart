@@ -2865,4 +2865,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get restartBody => 'Lo obtenido hasta ahora va a tu bolsa y lo mismo vuelve a empezar con la misma duración.';
+
+  @override
+  String get dailyTitle => 'Recompensa diaria';
+
+  @override
+  String get dailyBody =>
+      'Reclama una vez al día con cualquier personaje. Siete días seguidos dan más; si faltas un día, el ciclo vuelve a empezar.';
+
+  @override
+  String get dailyClaim => 'Reclamar';
+
+  @override
+  String get dailyTomorrow => 'Vuelve mañana';
+
+  @override
+  String dailyDay(int n) {
+    return 'Día $n';
+  }
+
+  @override
+  String get dailyOpen => 'Recompensa diaria';
 }

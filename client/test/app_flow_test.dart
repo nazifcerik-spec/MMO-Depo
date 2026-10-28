@@ -450,6 +450,34 @@ void main() {
     expect(be.sheetGets, greaterThan(sheetsBefore), reason: 'reveal bumps other tabs');
   });
 
+  testWidgets('daily reward: shown on entering while unclaimed, claim once (DD-311)', (tester) async {
+    final be = FakeBackend()
+      ..dailyClaimable = true
+      ..characters.add({
+        'id': 'char-1',
+        'name': 'Grim',
+        'race_code': 'orc',
+        'class_code': 'rogue',
+        'level': 3,
+        'state': 'active',
+      });
+    final store = MemoryTokenStore();
+    await be.api(store).login('grim', 'correct-horse');
+    await _boot(tester, be, store: store);
+    await tester.tap(find.text('Grim'));
+    await tester.pumpAndSettle();
+    expect(find.text('Daily login reward'), findsOneWidget);
+    expect(find.text('Day 7'), findsOneWidget);
+    expect(find.text('3× Potion Hp Small'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('daily-claim')));
+    await tester.pumpAndSettle();
+    expect(be.dailyClaims, 1);
+    expect(find.text('Come back tomorrow'), findsOneWidget);
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    expect(find.text('Daily login reward'), findsNothing);
+  });
+
   testWidgets('gathering restart: collect so far, the same run starts again (DD-310)', (tester) async {
     final (be, _, _) = await _inGame(tester);
     await tester.tap(find.text('Gather'));

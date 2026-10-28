@@ -2865,4 +2865,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get restartBody => 'Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar.';
+
+  @override
+  String get dailyTitle => 'Günlük giriş ödülü';
+
+  @override
+  String get dailyBody =>
+      'Her gün herhangi bir karakterinle bir kez al. Yedi gün üst üste en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.';
+
+  @override
+  String get dailyClaim => 'Al';
+
+  @override
+  String get dailyTomorrow => 'Yarın gel';
+
+  @override
+  String dailyDay(int n) {
+    return '$n. gün';
+  }
+
+  @override
+  String get dailyOpen => 'Günlük ödül';
 }

@@ -2858,4 +2858,24 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get restartBody => '目前的收获放入背包，并以相同时长重新开始。';
+
+  @override
+  String get dailyTitle => '每日登录奖励';
+
+  @override
+  String get dailyBody => '每天可用任意角色领取一次。连续七天收益最高；中断一天将重新开始。';
+
+  @override
+  String get dailyClaim => '领取';
+
+  @override
+  String get dailyTomorrow => '明天再来';
+
+  @override
+  String dailyDay(int n) {
+    return '第$n天';
+  }
+
+  @override
+  String get dailyOpen => '每日奖励';
 }

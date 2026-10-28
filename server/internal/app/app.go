@@ -23,6 +23,7 @@ import (
 	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/crafting"
+	"github.com/otter/server/internal/dailyreward"
 	"github.com/otter/server/internal/domain/auth"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/dungeon"
@@ -413,6 +414,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		ClassSkills:       classSkills,
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumableSvc),
+		DailyHandler:      dailyreward.NewHandler(dailyreward.NewService(pool, txnSvc, itemSvc)),
 		AdminHandler:      adminHandler,
 		SupportHandler:    support.NewHandler(supportSvc),
 		ClientErrHandler:  clienterr.NewHandler(clientErrSvc),

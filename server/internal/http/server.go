@@ -23,6 +23,7 @@ import (
 	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/contentpack"
 	"github.com/otter/server/internal/crafting"
+	"github.com/otter/server/internal/dailyreward"
 	"github.com/otter/server/internal/domain/auth"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/domain/health"
@@ -98,6 +99,7 @@ type Deps struct {
 	CORSOrigins       []string
 	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
 	ConsumableHandler *consumable.Handler
+	DailyHandler      *dailyreward.Handler // DD-311
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -302,6 +304,11 @@ func NewRouter(d Deps) http.Handler {
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/items/{item_id}/use", h.Use)
 					r.Get("/buff", h.Active) // food buff (DD-269)
+				}
+				if h := d.DailyHandler; h != nil { // daily login reward (DD-311)
+					r.Get("/daily-reward", h.Status)
+					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+						Post("/daily-reward/claim", h.Claim)
 				}
 
 				// --- Buybacks (character-scoped) ---

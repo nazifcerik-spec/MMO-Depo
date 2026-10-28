@@ -310,5 +310,11 @@
   "repRest": "扎营休息：{time}",
   "restart": "重新开始",
   "restartTitle": "领取并重新开始？",
-  "restartBody": "目前的收获放入背包，并以相同时长重新开始。"
+  "restartBody": "目前的收获放入背包，并以相同时长重新开始。",
+  "dailyTitle": "每日登录奖励",
+  "dailyBody": "每天可用任意角色领取一次。连续七天收益最高；中断一天将重新开始。",
+  "dailyClaim": "领取",
+  "dailyTomorrow": "明天再来",
+  "dailyDay": "第{n}天",
+  "dailyOpen": "每日奖励"
 }

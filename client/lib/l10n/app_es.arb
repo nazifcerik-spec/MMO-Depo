@@ -310,5 +310,11 @@
   "repRest": "Acampado: {time}",
   "restart": "Reiniciar",
   "restartTitle": "¿Recoger y empezar de nuevo?",
-  "restartBody": "Lo obtenido hasta ahora va a tu bolsa y lo mismo vuelve a empezar con la misma duración."
+  "restartBody": "Lo obtenido hasta ahora va a tu bolsa y lo mismo vuelve a empezar con la misma duración.",
+  "dailyTitle": "Recompensa diaria",
+  "dailyBody": "Reclama una vez al día con cualquier personaje. Siete días seguidos dan más; si faltas un día, el ciclo vuelve a empezar.",
+  "dailyClaim": "Reclamar",
+  "dailyTomorrow": "Vuelve mañana",
+  "dailyDay": "Día {n}",
+  "dailyOpen": "Recompensa diaria"
 }

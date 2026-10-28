@@ -2261,5 +2261,18 @@
   },
   "restart": "Restart",
   "restartTitle": "Collect and start again?",
-  "restartBody": "What came in so far goes to your bag, and the same run starts again for the same time."
+  "restartBody": "What came in so far goes to your bag, and the same run starts again for the same time.",
+  "dailyTitle": "Daily login reward",
+  "dailyBody": "Claim once a day on any character. Seven days in a row pay the most; a missed day starts the cycle again.",
+  "dailyClaim": "Claim",
+  "dailyTomorrow": "Come back tomorrow",
+  "dailyDay": "Day {n}",
+  "@dailyDay": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyOpen": "Daily reward"
 }

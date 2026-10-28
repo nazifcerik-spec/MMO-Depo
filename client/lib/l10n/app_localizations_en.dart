@@ -2866,4 +2866,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restartBody => 'What came in so far goes to your bag, and the same run starts again for the same time.';
+
+  @override
+  String get dailyTitle => 'Daily login reward';
+
+  @override
+  String get dailyBody =>
+      'Claim once a day on any character. Seven days in a row pay the most; a missed day starts the cycle again.';
+
+  @override
+  String get dailyClaim => 'Claim';
+
+  @override
+  String get dailyTomorrow => 'Come back tomorrow';
+
+  @override
+  String dailyDay(int n) {
+    return 'Day $n';
+  }
+
+  @override
+  String get dailyOpen => 'Daily reward';
 }
