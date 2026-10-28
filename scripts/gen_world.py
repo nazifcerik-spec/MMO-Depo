@@ -420,6 +420,10 @@ for z in ZONES:
                                '    bonus_xp: %d' % d['xp']]))
 
 raids = []
+# Each raid's enemy strength in percent (DD-307), tuned by the balance
+# simulation so a full party at the raid's level clears about 40% of runs.
+RAID_POWER = {'north_keep_siege': 97, 'crownless_palace': 97, 'dragon_king_lair': 87,
+              'time_lord_tower': 86, 'archangels_fall': 86, 'fallen_god_throne': 90}
 # A raid sits where its wave mobs live (DD-302).
 MOB_ZONE = {code: z['code'] for z in ZONES for code, _, _, _ in z['mobs']}
 for r in RAIDS:
@@ -433,6 +437,7 @@ for r in RAIDS:
                              '    min_level: %d' % r['level'], '    region_code: ' + MOB_ZONE[r['waves'][0]],
                              '    duration_seconds: 3600         # 60 minutes',
                              '    group_min: 2', '    group_max: 5',
+                             '    power_pct: %d' % RAID_POWER[r['code']],
                              '    waves:',
                              '      - { mob_code: %s, count: 3 }' % r['waves'][0],
                              '      - { mob_code: %s, count: 3 }' % r['waves'][1],

@@ -103,6 +103,7 @@ type Template struct {
 	GroupMin        int16 // party size bounds (DD-261); 1/1 = a solo dungeon
 	GroupMax        int16
 	RegionCode      string // where it is entered (DD-302); empty = anywhere
+	PowerPct        int16  // a raid's enemy HP and attack in percent (DD-307); 0 = 100
 }
 
 // BaseXP is what a full run pays at the dungeon's own level: the minutes of

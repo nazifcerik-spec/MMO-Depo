@@ -348,6 +348,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 97
     waves:
       - { mob_code: keep_gargoyle, count: 3 }
       - { mob_code: fallen_commander, count: 3 }
@@ -363,6 +364,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 97
     waves:
       - { mob_code: tomb_keeper, count: 3 }
       - { mob_code: black_knight, count: 3 }
@@ -378,6 +380,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 87
     waves:
       - { mob_code: throne_guardian, count: 3 }
       - { mob_code: dragon_sorcerer, count: 3 }
@@ -393,6 +396,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 86
     waves:
       - { mob_code: stone_gargoyle, count: 3 }
       - { mob_code: cursed_sorcerer, count: 3 }
@@ -408,6 +412,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 86
     waves:
       - { mob_code: light_hunter, count: 3 }
       - { mob_code: celestial_dragon, count: 3 }
@@ -423,6 +428,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
+    power_pct: 90
     waves:
       - { mob_code: throne_sentinel, count: 3 }
       - { mob_code: god_shadow, count: 3 }

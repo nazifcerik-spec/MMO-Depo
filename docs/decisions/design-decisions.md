@@ -3044,6 +3044,13 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 **Consequences:** Savaşlar uzar, ölüm riski artar; seviye atlama süresi XP ayarıyla korunur. Seviye arttıkça isabet (çeviklik) daha değerli.
 **Tarih:** 2026-10-28
 
+## DD-307 — Baskınlar da zorlaştı
+
+**Context:** DD-306'da baskın düşmanları canavar güçlendirmesinden muaf tutulmuştu; oyuncu baskınların da zorlaşmasını istedi. Tam parti ortalama temizleme %46–87 arasındaydı (Sv 100/300/1000 baskınları kolaydı).
+**Decision:** Baskın düşmanları da `Mob.Effective` ile savaşır (%110 güç + seviye kaçınması; `AsRaidCombatant` kalktı). Kaçınma yüksek seviyede çok daha sert vurduğundan her baskına kendi gücü eklendi: `content.dungeon_template.power_pct` (migration 0049; 25..400, solo zindanlar 100), grup boyutu tablosunun üstüne can ve saldırıyı çarpar. Değerler denge simülasyonuyla tam partinin baskın seviyesinde ~%40 temizlemesine ayarlandı (`gen_world.py` `RAID_POWER`: 97/97/87/86/86/90). `TestRaidTargets`: her boyut ortalama %30–70 (önce %40–90), tam parti +5 seviyede ≥ %55 (önce %60; Sv 1000 hariç).
+**Consequences:** Tüm boyutlarda ortalama temizleme %38–62; en kolay baskınlar belirgin zorlaştı, yüksek seviyeliler hafifçe. Baskın ödülleri değişmedi.
+**Tarih:** 2026-10-28
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

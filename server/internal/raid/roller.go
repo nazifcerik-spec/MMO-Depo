@@ -73,6 +73,9 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 	}
 	res := &Result{}
 	hpPct, atkPct := groupScale(len(ps))
+	if p := int32(tmpl.PowerPct); p > 0 { // the raid's own strength (DD-307)
+		hpPct, atkPct = hpPct*p/100, atkPct*p/100
+	}
 	seq := 0
 	fight := func(mob combat.Mob, wave int, boss bool) bool {
 		seq++
@@ -80,7 +83,7 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		for i := range ps {
 			enc[i] = ps[i].Clone() // buffs and the level gap stay inside the encounter
 		}
-		g := &combat.Group{Players: enc, Mob: mob.AsRaidCombatant(), MaxTurns: MaxTurns}
+		g := &combat.Group{Players: enc, Mob: mob.AsCombatant(), MaxTurns: MaxTurns}
 		if boss {
 			g.AoEEvery, g.AoEPct, g.StunImmune = BossAoEEvery, BossAoEPct, true
 		} else {

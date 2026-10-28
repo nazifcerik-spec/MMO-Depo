@@ -56,12 +56,8 @@ func (m Mob) Effective() Mob {
 }
 
 // AsCombatant builds a fresh Combatant with full HP for a live encounter.
-func (m Mob) AsCombatant() Combatant { return m.Effective().AsRaidCombatant() }
-
-// AsRaidCombatant is the mob with its content stats: raid enemies are tuned
-// as a whole to the group's size (DD-298), so the field scaling of DD-306
-// stays out of raids.
-func (m Mob) AsRaidCombatant() Combatant {
+func (m Mob) AsCombatant() Combatant {
+	m = m.Effective()
 	return Combatant{
 		Name:       m.Code,
 		HPMax:      m.HPMax,

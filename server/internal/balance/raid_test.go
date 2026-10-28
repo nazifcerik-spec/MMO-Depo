@@ -88,10 +88,10 @@ func (w *world) raidSize(level, n int, t dungeon.Template) (avg, worst float64) 
 	return avg / 10, worst
 }
 
-// TestRaidTargets pins the DD-298 targets: raids take a party of two to
-// five, sized to it, so every size at the raid's level clears it about as
-// often (40..90% on average) and a full party five levels up clears
-// at least 60% (level 1000 has no higher level).
+// TestRaidTargets pins the DD-298 targets, made harder by DD-307: raids
+// take a party of two to five, sized to it, so every size at the raid's
+// level clears it about as often (30..70% on average) and a full party five
+// levels up clears at least 55% (level 1000 has no higher level).
 func TestRaidTargets(t *testing.T) {
 	if raceDetector {
 		t.Skip("pure simulation: runs in the coverage job (no -race)")
@@ -105,10 +105,12 @@ func TestRaidTargets(t *testing.T) {
 		for n := 2; n <= 5; n++ {
 			avg, worst := w.raidSize(lv, n, r)
 			t.Logf("%s Sv %d, %d members: %.2f (worst %.2f)", r.Code, lv, n, avg, worst)
-			assert.GreaterOrEqual(t, avg, 0.40, "%s with %d: clearable", r.Code, n)
-			assert.LessOrEqual(t, avg, 0.90, "%s with %d: still a challenge", r.Code, n)
+			assert.GreaterOrEqual(t, avg, 0.30, "%s with %d: clearable", r.Code, n)
+			assert.LessOrEqual(t, avg, 0.70, "%s with %d: still a challenge", r.Code, n)
 		}
-		up, _ := w.raidSize(min(lv+5, 1000), 5, r)
-		assert.GreaterOrEqual(t, up, 0.60, "%s: five levels up a full party clears most runs", r.Code)
+		if lv < 1000 {
+			up, _ := w.raidSize(lv+5, 5, r)
+			assert.GreaterOrEqual(t, up, 0.55, "%s: five levels up a full party clears most runs", r.Code)
+		}
 	}
 }

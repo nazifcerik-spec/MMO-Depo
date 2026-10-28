@@ -127,12 +127,21 @@ func TestValidateDungeons(t *testing.T) {
 		"wave mob":   func(d *Dungeon) { d.Waves[0].MobCode = "" },
 		"wave count": func(d *Dungeon) { d.Waves[0].Count = 33 },
 		"bonus":      func(d *Dungeon) { d.BonusXP = -1 },
+		"solo power": func(d *Dungeon) { d.PowerPct = 90 },
+		"raid power": func(d *Dungeon) { d.GroupMin, d.GroupMax, d.PowerPct = 2, 5, 500 },
 	} {
 		d := ok()
 		mut(&d)
 		require.Error(t, validateDungeons([]Dungeon{d}), name)
 	}
 	require.Error(t, validateDungeons([]Dungeon{ok(), ok()}), "duplicate")
+	// A raid sets its own strength; unset means 100 (DD-307).
+	ds := []Dungeon{ok()}
+	ds[0].GroupMin, ds[0].GroupMax, ds[0].PowerPct = 2, 5, 87
+	require.NoError(t, validateDungeons(ds))
+	ds = []Dungeon{ok()}
+	require.NoError(t, validateDungeons(ds))
+	require.EqualValues(t, 100, ds[0].PowerPct)
 }
 
 func TestValidateMobs(t *testing.T) {

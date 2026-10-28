@@ -148,10 +148,6 @@ func TestMobAsCombatant_FullHP(t *testing.T) {
 	require.Equal(t, int32(11), c.Attack)
 	require.Equal(t, int32(3), c.Defense) // 3.3 rounds down
 	require.Equal(t, int32(12), c.EvasionPct, "10 + 120/50")
-	// Raid enemies keep their content stats (tuned to the group, DD-298).
-	r := m.AsRaidCombatant()
-	require.Equal(t, int32(100), r.HPMax)
-	require.Equal(t, int32(10), r.EvasionPct)
 }
 
 func TestLevelEvasion(t *testing.T) {

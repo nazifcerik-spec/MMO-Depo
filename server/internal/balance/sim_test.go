@@ -81,7 +81,7 @@ func load(t *testing.T) *world {
 	sort.Slice(w.mobs, func(i, j int) bool { return w.mobs[i].Level < w.mobs[j].Level })
 	for _, d := range p.Dungeons {
 		t := dungeon.Template{Code: d.Code, MinLevel: d.MinLevel, BossMobCode: d.BossMobCode, DurationSecs: d.DurationSeconds,
-			GroupMin: d.GroupMin, GroupMax: d.GroupMax, BonusXP: d.BonusXP, BonusGoldCopper: d.BonusGoldCopper}
+			GroupMin: d.GroupMin, GroupMax: d.GroupMax, BonusXP: d.BonusXP, BonusGoldCopper: d.BonusGoldCopper, PowerPct: d.PowerPct}
 		for _, wv := range d.Waves {
 			t.Waves = append(t.Waves, dungeon.Wave{MobCode: wv.MobCode, Count: wv.Count})
 		}

@@ -165,6 +165,9 @@ type Dungeon struct {
 	GroupMax int16 `yaml:"group_max"`
 	// RegionCode: where it is entered (DD-302).
 	RegionCode string `yaml:"region_code"`
+	// PowerPct: a raid's enemy HP and attack in percent (DD-307); zero =
+	// 100, solo dungeons stay 100.
+	PowerPct int16 `yaml:"power_pct"`
 }
 
 type DungeonWave struct {
@@ -1153,6 +1156,12 @@ func validateDungeons(dungeons []Dungeon) error {
 			return fmt.Errorf("dungeon %s: group size must be 1 <= group_min <= group_max <= 5", d.Code)
 		}
 		dungeons[i].GroupMin, dungeons[i].GroupMax = lo, hi
+		if d.PowerPct == 0 {
+			dungeons[i].PowerPct = 100
+		}
+		if p := dungeons[i].PowerPct; p < 25 || p > 400 || (hi == 1 && p != 100) {
+			return fmt.Errorf("dungeon %s: power_pct must be 25..400, and 100 for a solo dungeon", d.Code)
+		}
 	}
 	return nil
 }
@@ -1390,8 +1399,8 @@ func (l *Loader) upsertDungeons(ctx context.Context, dungeons []Dungeon) error {
 	const q = `
 INSERT INTO content.dungeon_template (
   code, display_name_key, min_level, duration_seconds,
-  waves, boss_mob_code, bonus_gold_copper, bonus_xp, group_min, group_max, region_code
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+  waves, boss_mob_code, bonus_gold_copper, bonus_xp, group_min, group_max, region_code, power_pct
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   min_level          = EXCLUDED.min_level,
@@ -1403,6 +1412,7 @@ ON CONFLICT (code) DO UPDATE SET
   group_min          = EXCLUDED.group_min,
   group_max          = EXCLUDED.group_max,
   region_code        = EXCLUDED.region_code,
+  power_pct          = EXCLUDED.power_pct,
   version            = content.dungeon_template.version + 1`
 
 	for _, d := range dungeons {
@@ -1412,7 +1422,7 @@ ON CONFLICT (code) DO UPDATE SET
 		}
 		_, err = tx.Exec(ctx, q,
 			d.Code, d.DisplayNameKey, d.MinLevel, d.DurationSeconds,
-			waves, d.BossMobCode, d.BonusGoldCopper, d.BonusXP, d.GroupMin, d.GroupMax, d.RegionCode,
+			waves, d.BossMobCode, d.BonusGoldCopper, d.BonusXP, d.GroupMin, d.GroupMax, d.RegionCode, d.PowerPct,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert dungeon %s: %w", d.Code, err)
