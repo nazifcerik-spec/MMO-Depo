@@ -1913,6 +1913,8 @@ void main() {
   testWidgets('progression: achievements sorted, mastery bonus, reputation, title select + clear', (tester) async {
     final (be, _, _) = await _inGame(tester);
     await tester.scrollUntilVisible(find.text('Achievements & mastery'), 200, scrollable: _list);
+    await tester.ensureVisible(find.text('Achievements & mastery'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Achievements & mastery'));
     await tester.pumpAndSettle();
 
