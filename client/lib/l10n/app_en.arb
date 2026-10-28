@@ -2061,9 +2061,9 @@
   "recipeGroupEnchantArmor": "Armor enchants",
   "recipeGroupEnchantJewelry": "Jewelry enchants",
   "recipeGroupEnchantProfession": "Profession enchants",
-  "partyHint": "Members doing the same work at the same time (the same gathering, profession, hunting or dungeons) pool their XP and split it evenly, +3% per partner.",
+  "partyHint": "Members doing the same work at the same time (the same gathering kind, profession, hunt or dungeon) each earn +3% XP per member working: five together earn +15%. Nobody gives XP away.",
   "partyChat": "Party chat",
-  "partyShared": "Shared with {names}: you keep {kept} of {earned} XP",
+  "partyShared": "Party bonus with {names}: {earned} → {kept} XP",
   "@partyShared": {
     "placeholders": {
       "names": {
@@ -2074,17 +2074,6 @@
       },
       "earned": {
         "type": "int"
-      }
-    }
-  },
-  "evPartyXp": "Party share: +{xp} XP ({work})",
-  "@evPartyXp": {
-    "placeholders": {
-      "xp": {
-        "type": "int"
-      },
-      "work": {
-        "type": "String"
       }
     }
   },

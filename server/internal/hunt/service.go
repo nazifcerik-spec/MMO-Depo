@@ -73,15 +73,15 @@ type Service struct {
 	notifier  notification.Notifier // reward history (DD-242); nil = none
 	hp        HPWriter
 	skills    SkillSource
-	bag       BagRoom        // nil = no room check (DD-246)
-	regions   RegionGate     // nil = every mob in reach (DD-273)
-	templates Templates      // supply effects (DD-288); nil = no supplies
-	food      FoodBuffs      // a dish eaten before the hunt (DD-288); nil = in the sheet
-	share     partyxp.Sharer // party XP sharing (DD-296); nil = none
+	bag       BagRoom         // nil = no room check (DD-246)
+	regions   RegionGate      // nil = every mob in reach (DD-273)
+	templates Templates       // supply effects (DD-288); nil = no supplies
+	food      FoodBuffs       // a dish eaten before the hunt (DD-288); nil = in the sheet
+	party     partyxp.Booster // party XP bonus (DD-305); nil = none
 }
 
-// WithPartyShare shares hunt XP with party members hunting meanwhile (DD-296).
-func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
+// WithPartyBonus adds the party bonus for members hunting alongside (DD-305).
+func (s *Service) WithPartyBonus(p partyxp.Booster) *Service { s.party = p; return s }
 
 // Templates resolves item templates for supplies (item.Service).
 type Templates interface {
@@ -358,7 +358,7 @@ type RevealResult struct {
 	Items       []activity.GrantedItem   `json:"items,omitempty"`
 	XPGain      *character.XPGrantResult `json:"xp,omitempty"`
 	Replayed    bool                     `json:"replayed"`
-	// Party is how the XP was shared (DD-296); nil = not shared.
+	// Party is the party bonus on the XP (DD-305); nil = none.
 	Party *partyxp.Outcome `json:"party_share,omitempty"`
 }
 
@@ -494,8 +494,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	var xpResult *character.XPGrantResult
 	var party *partyxp.Outcome
 	xp := hr.TotalXP
-	if shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
-		Kind: partyxp.KindHunt, Character: c.CharacterID, Ref: c.ID,
+	if shared := partyxp.BoostIf(ctx, s.party, partyxp.Work{
+		Kind: partyxp.KindHunt, Character: c.CharacterID,
 		Start: c.StartedAt, End: c.StartedAt.Add(time.Duration(elapsed) * time.Second), XP: xp,
 	}); len(shared.Partners) > 0 {
 		party, xp = &shared, shared.Kept

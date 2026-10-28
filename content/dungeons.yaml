@@ -21,7 +21,7 @@ dungeons:
     waves:
       - { mob_code: grey_wolf,    count: 3 }
       - { mob_code: bandit_scout, count: 3 }
-      - { mob_code: cave_bat,     count: 3 }
+      - { mob_code: cave_bat,     count: 2 }
     boss_mob_code: goblin_raider
     bonus_gold_copper: 250
     bonus_xp: 300
@@ -33,7 +33,7 @@ dungeons:
     duration_seconds: 1200        # 20 minutes
     waves:
       - { mob_code: goblin_raider,  count: 3 }
-      - { mob_code: marsh_lurker,   count: 3 }
+      - { mob_code: marsh_lurker,   count: 2 }
       - { mob_code: forest_troll,   count: 2 }
     boss_mob_code: dire_wolf
     bonus_gold_copper: 700

@@ -2633,19 +2633,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recipeGroupEnchantProfession => '专业附魔';
 
   @override
-  String get partyHint => '同时进行同类工作（相同采集、专业、狩猎或地下城）的成员会汇总经验并平分，每位同伴 +3%。';
+  String get partyHint => '同时进行相同工作（同一采集、职业、狩猎或地下城）的成员，每位参与成员使每人获得 +3% 经验：五人同时为 +15%。不会分走任何人的经验。';
 
   @override
   String get partyChat => '队伍聊天';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return '与$names共享：$earned 经验中你获得 $kept';
-  }
-
-  @override
-  String evPartyXp(int xp, String work) {
-    return '队伍分享：+$xp 经验（$work）';
+    return '与$names的队伍加成：$earned → $kept 经验';
   }
 
   @override

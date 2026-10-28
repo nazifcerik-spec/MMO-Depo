@@ -226,6 +226,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 105. **Uygulama içi güncelleme (bitti)** — Sprint 105, DD-304. Karakter listesinin altında sürüm + Güncelle (`UpdateTile`, `core/app_update.dart`): `UPDATE_FEED_URL` JSON'u → onay → indir → `MainActivity` `mena/update` kanalı + FileProvider ile sistem yükleyicisi. Yayın: `powershell -ExecutionPolicy Bypass -File scripts/release-apk.ps1 -Version x.y.z` (derler + `releases` dalına `latest.json` + APK; `-NoPublish` yalnız derler). APK bu makinenin imzasıyla, yalnız buradan yayınlanır.
 
+106. **Parti XP bonusu + güçlü canavarlar (bitti)** — Sprint 106, DD-305..306. Migration 0048 (`social.party_xp_share` kalktı). Parti XP'si paylaşılmaz: aynı tür işi birlikte yapan n üye (kendisi dahil, n ≥ 2) dilim başı `partyxp.Factor(n)` = 1 + 0,03n (5 kişi +%15); baskın üyesi `Factor(üye sayısı)`. Canavarlar `combat.Mob.Effective`: can/saldırı/savunma %110, kaçınma + seviye/50 (en çok 20); baskın düşmanları içerik değerinde (`AsRaidCombatant`). `hunt_xp.yaml` yeniden ayarlandı; iki erken zindanda birer düşman az.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

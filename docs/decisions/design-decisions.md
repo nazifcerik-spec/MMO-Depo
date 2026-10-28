@@ -3028,6 +3028,22 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 **Consequences:** Sürüm bütünlüğünü Android imza kontrolü sağlar (farklı anahtarla imzalı APK kurulmaz); bu yüzden yayın imzalı makineden yapılır, ileride gerçek yükleme anahtarına (DD-233) geçişte bir kez kaldırıp kurmak gerekir. `REQUEST_INSTALL_PACKAGES` mağaza sürümünde kaldırılmalı. Bu özelliği içeren ilk sürüm (1.25.0) bir kez kabloyla kurulur.
 **Tarih:** 2026-10-28
 
+## DD-305 — Parti XP'si paylaşım değil bonus
+
+**Context:** DD-296'da aynı işi yapan parti üyelerinin XP'si havuzda toplanıp bölüşülüyordu; oyuncu bunu istemedi.
+**Decision:** Paylaşım kalktı. Bitmiş bir işin her diliminde aynı tür işi (aynı toplama türü, üretim mesleği, av, zindan) yapan n ≥ 2 parti üyesi varsa (kişinin kendisi dahil) kişinin o dilimdeki XP'si `1 + 0,03 × n` ile çarpılır: 2 kişi +%6, 5 kişi +%15. Kimse kimseye XP vermez; her üye bonusunu kendi işi bitince alır (`partyxp.Boost`, `Factor`). Baskında bütün parti aynı işi yapar: üye XP'si `Factor(üye sayısı)`. Yanıttaki `party_share` = `{earned, kept, partners[{character_id, name}]}` (kept = bonuslu). `social.party_xp_share` tablosu ve `party.xp_share` WS olayı kaldırıldı (migration 0048).
+**Consequences:** Partide aynı işi yapmak herkese kazandırır, kimseden almaz; tek başına çalışan parti üyesi bonus almaz.
+**Tarih:** 2026-10-28
+
+---
+
+## DD-306 — Canavarlar %10 güçlü + seviyeye göre kaçınma
+
+**Context:** Oyuncu canavarların güçlenmesini ve yüksek seviyeli canavarların daha çevik olmasını istedi.
+**Decision:** `combat.Mob.Effective`: can, saldırı ve savunma içerik değerinin %110'u (`MobPowerPct`); kaçınma = arketip kaçınması + seviye/50 (`LevelEvasion`, en çok +20; Sv 100 +2, Sv 500 +10, Sv 1000 +20). Av, zindan, dünya simülasyonu ve `/v1/mobs` (artık `evasion_pct` da) bu değerleri kullanır. Baskın düşmanları içerik değerleriyle kalır (`AsRaidCombatant`): baskınlar grup boyutuna göre bütün olarak ayarlı (DD-298) ve deneme yüksek seviyede temizlemenin %5'in altına düştüğünü gösterdi. Av XP'si yeni güce göre yeniden ayarlandı (`TestTuneHuntXP`, seviye süresi korunur). Sınıf farkı sınırını (%40) aşan iki erken zindanda birer düşman azaltıldı (Küller Mahzeni yarasa 3→2, Orman Kovuğu bataklık 3→2).
+**Consequences:** Savaşlar uzar, ölüm riski artar; seviye atlama süresi XP ayarıyla korunur. Seviye arttıkça isabet (çeviklik) daha değerli.
+**Tarih:** 2026-10-28
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

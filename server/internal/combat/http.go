@@ -199,6 +199,7 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 		if m.RaidBoss { // not huntable (DD-261)
 			continue
 		}
+		m = m.Effective() // as it fights (DD-306)
 		out = append(out, map[string]any{
 			"code":             m.Code,
 			"display_name_key": m.DisplayNameKey,
@@ -206,6 +207,7 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 			"hp_max":           m.HPMax,
 			"attack":           m.Attack,
 			"defense":          m.Defense,
+			"evasion_pct":      m.EvasionPct,
 			"xp_reward":        m.XPReward,
 			"gold_copper_min":  m.GoldCopperMin,
 			"gold_copper_max":  m.GoldCopperMax,

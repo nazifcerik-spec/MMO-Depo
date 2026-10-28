@@ -1,7 +1,7 @@
 import '../l10n/app_localizations.dart';
 
-/// How a finished job's XP was split with party members doing the same work
-/// (DD-296): the job's XP, what the earner kept, who shared it.
+/// The party bonus on a finished job's XP (DD-305): the XP before and after
+/// it, and the members who worked alongside.
 class PartyShare {
   const PartyShare({required this.earned, required this.kept, required this.partners});
 

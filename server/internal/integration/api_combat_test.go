@@ -13,7 +13,8 @@ import (
 func TestHTTPCombatRewind(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 6 WHERE id = $1`, p.char)
+	// Gearless: a margin over the level 6 dungeon so the run reaches the boss (DD-306).
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 12 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 
 	p.ok("POST", p.path("/quests/main_01_first_hunt/accept"), map[string]any{})
@@ -62,7 +63,7 @@ func TestHTTPCombatRewind(t *testing.T) {
 	// Reward history (DD-242): one entry per collected contract (replays add
 	// none), stored read, in its own list apart from the regular inbox.
 	rewards := items(p.ok("GET", "/v1/notifications?rewards=1", nil), "notifications")
-	require.Len(t, rewards, 2, "hunt + dungeon")
+	require.Len(t, rewards, 2, "hunt + dungeon: %v", run)
 	for _, n := range rewards {
 		require.Equal(t, "reward_collected", n["kind"])
 		require.NotNil(t, n["read_at"], "history must not raise the unread badge")

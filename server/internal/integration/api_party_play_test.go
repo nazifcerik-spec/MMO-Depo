@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Party XP sharing (DD-296): two party members fishing at the same time
-// pool their fishing XP; each gets half of the other's, plus 3%.
-func TestHTTPPartyXPShare(t *testing.T) {
+// Party XP bonus (DD-305): two party members fishing at the same time each
+// keep their own XP plus 3% per member working (+6%); nobody gives XP away.
+func TestHTTPPartyXPBonus(t *testing.T) {
 	w := newWorld(t)
 	a, b := newHTTPPlayer(t, "warrior"), newHTTPPlayer(t, "mage")
 	inv := a.ok("POST", a.path("/party/invite"), map[string]any{"target_name": b.name})["id"].(string)
@@ -34,6 +34,13 @@ func TestHTTPPartyXPShare(t *testing.T) {
 		}
 		return xp + level*1_000_000 // order-preserving: a level-up still counts as more
 	}
+	bonus := func(res map[string]any) map[string]any {
+		share := res["party_share"].(map[string]any)
+		earned, kept := share["earned"].(float64), share["kept"].(float64)
+		require.Positive(t, earned)
+		require.InDelta(t, earned*1.06, kept, 1, "two members: +6%")
+		return share
+	}
 	ra, rb := start(a), start(b)
 	// The party shows what each member is doing (DD-301).
 	for _, m := range a.ok("GET", a.path("/party"), nil)["party"].(map[string]any)["members"].([]any) {
@@ -42,28 +49,17 @@ func TestHTTPPartyXPShare(t *testing.T) {
 		require.Equal(t, "fishing", act["detail"])
 	}
 
-	res := a.ok("POST", "/v1/activity/"+ra+"/reveal", map[string]any{})
-	share := res["party_share"].(map[string]any)
-	earned, kept := share["earned"].(float64), share["kept"].(float64)
-	require.Positive(t, earned)
-	require.InDelta(t, earned/2*1.03, kept, 1, "half the haul, plus 3%")
+	share := bonus(a.ok("POST", "/v1/activity/"+ra+"/reveal", map[string]any{}))
 	partners := share["partners"].([]any)
 	require.Len(t, partners, 1)
 	require.Equal(t, b.char, partners[0].(map[string]any)["character_id"])
-	require.InDelta(t, kept, partners[0].(map[string]any)["xp"].(float64), 1)
-	require.Positive(t, fishingXP(b), "the partner was paid before their own haul")
+	require.Zero(t, fishingXP(b), "nothing is given to the partner")
 
-	var shares int
-	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT count(*) FROM social.party_xp_share WHERE source_ref = $1`, ra).Scan(&shares))
-	require.Equal(t, 1, shares)
-
-	// B's own haul shares back with A the same way.
 	before := fishingXP(a)
-	res = b.ok("POST", "/v1/activity/"+rb+"/reveal", map[string]any{})
-	require.NotNil(t, res["party_share"])
-	require.Greater(t, fishingXP(a), before)
+	bonus(b.ok("POST", "/v1/activity/"+rb+"/reveal", map[string]any{}))
+	require.Equal(t, before, fishingXP(a), "B's haul gives A nothing either")
 
-	// Hunts share character XP the same way.
+	// Hunts get the bonus on character XP the same way.
 	hunt := func(p *hc) string {
 		h := p.ok("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 600})
 		id := h["contract"].(map[string]any)["id"].(string)
@@ -76,12 +72,9 @@ func TestHTTPPartyXPShare(t *testing.T) {
 	hunt(b)
 	hres := a.ok("POST", "/v1/hunt/"+ha+"/reveal", map[string]any{})
 	require.NotNil(t, hres["party_share"], "%v", hres)
-	var granted int64
-	require.NoError(t, w.p.QueryRow(w.ctx, `SELECT amount FROM character.xp_grant
-		WHERE character_id = $1 AND source = 'party_share' AND source_id = $2`, b.char, ha).Scan(&granted))
-	require.Positive(t, granted)
+	bonus(hres)
 
-	// Someone outside the party, or doing other work, shares nothing.
+	// Someone outside the party gets no bonus.
 	c := newHTTPPlayer(t, "rogue")
 	rc := start(c)
 	require.Nil(t, c.ok("POST", "/v1/activity/"+rc+"/reveal", map[string]any{})["party_share"])

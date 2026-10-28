@@ -1,10 +1,8 @@
-// Package partyxp shares the XP of a finished job among the party members
-// doing the same kind of work (DD-296). For every stretch of the job during
-// which n members of the earner's party worked the same kind, the earner's
-// XP of that stretch is pooled and split evenly over the n of them, plus 3%
-// for each partner; the stretches nobody else worked stay the earner's own.
-// Every member's own job is shared the same way when it ends, so two equal
-// partners each end up with 103% of their solo XP.
+// Package partyxp is the party bonus on XP (DD-305): for every stretch of
+// a finished job during which n ≥ 2 members of the earner's party (the
+// earner included) worked the same kind of work, the earner's XP of that
+// stretch grows by 3% per member — five together earn 115%. Nobody gives
+// anything away; each member's own job gets the bonus when it ends.
 package partyxp
 
 import (
@@ -15,8 +13,16 @@ import (
 	"github.com/google/uuid"
 )
 
-// BonusPerPartner is the party bonus on a shared stretch, per partner.
-const BonusPerPartner = 0.03
+// BonusPerMember is the party bonus on a stretch, per member working it.
+const BonusPerMember = 0.03
+
+// Factor is the XP multiplier of n members working together.
+func Factor(n int) float64 {
+	if n < 2 {
+		return 1
+	}
+	return 1 + BonusPerMember*float64(n)
+}
 
 // Work kinds: a gathering kind and a crafting profession are kinds of their
 // own ("gather:fishing", "craft:smelting"); hunts and dungeons are one each.
@@ -31,7 +37,6 @@ const (
 type Work struct {
 	Kind      string
 	Character uuid.UUID
-	Ref       uuid.UUID // the contract or job: keys the shares once
 	Start     time.Time
 	End       time.Time
 	XP        int64
@@ -40,34 +45,30 @@ type Work struct {
 // Interval is a partner's same-kind job window.
 type Interval struct{ Start, End time.Time }
 
-// Share is what one partner received from a job.
-type Share struct {
+// Partner is a party member who worked alongside.
+type Partner struct {
 	CharacterID uuid.UUID `json:"character_id"`
 	Name        string    `json:"name"`
-	XP          int64     `json:"xp"`
 }
 
-// Outcome is the earner's side: the job's XP, what the earner keeps, and
-// the partners' shares. Without partners Kept equals Earned.
+// Outcome is the job's XP before (Earned) and after (Kept) the party bonus.
+// Without partners Kept equals Earned.
 type Outcome struct {
-	Earned   int64   `json:"earned"`
-	Kept     int64   `json:"kept"`
-	Partners []Share `json:"partners,omitempty"`
+	Earned   int64     `json:"earned"`
+	Kept     int64     `json:"kept"`
+	Partners []Partner `json:"partners,omitempty"`
 }
 
-// Solo is the outcome of a job nobody shared.
+// Solo is the outcome of a job nobody worked alongside.
 func Solo(xp int64) Outcome { return Outcome{Earned: xp, Kept: xp} }
 
-// Split divides w.XP, earned evenly over [w.Start, w.End], between the
-// earner and partners (each partner's windows of the same kind of work):
-// on a stretch where n are working, each of them gets the stretch's XP / n
-// × (1 + BonusPerPartner × (n−1)). Returns the earner's XP and each
-// partner's, rounded.
-func Split(w Work, partners [][]Interval) (keep int64, gifts []int64) {
-	gifts = make([]int64, len(partners))
+// Boost returns w.XP, earned evenly over [w.Start, w.End], with the party
+// bonus of every stretch the partners (each one's windows of the same kind
+// of work) worked alongside, rounded.
+func Boost(w Work, partners [][]Interval) int64 {
 	total := w.End.Sub(w.Start).Seconds()
 	if w.XP <= 0 || total <= 0 || len(partners) == 0 {
-		return max(w.XP, 0), gifts
+		return max(w.XP, 0)
 	}
 	cuts := []time.Time{w.Start, w.End}
 	for _, p := range partners {
@@ -80,9 +81,7 @@ func Split(w Work, partners [][]Interval) (keep int64, gifts []int64) {
 		}
 	}
 	sort.Slice(cuts, func(i, j int) bool { return cuts[i].Before(cuts[j]) })
-	keepF := 0.0
-	giftF := make([]float64, len(partners))
-	active := make([]bool, len(partners))
+	xp := 0.0
 	for i := 1; i < len(cuts); i++ {
 		a, b := cuts[i-1], cuts[i]
 		if !b.After(a) {
@@ -90,29 +89,14 @@ func Split(w Work, partners [][]Interval) (keep int64, gifts []int64) {
 		}
 		mid := a.Add(b.Sub(a) / 2)
 		n := 1
-		for j, p := range partners {
-			active[j] = covers(p, mid)
-			if active[j] {
+		for _, p := range partners {
+			if covers(p, mid) {
 				n++
 			}
 		}
-		part := float64(w.XP) * b.Sub(a).Seconds() / total
-		if n == 1 {
-			keepF += part
-			continue
-		}
-		each := part / float64(n) * (1 + BonusPerPartner*float64(n-1))
-		keepF += each
-		for j := range partners {
-			if active[j] {
-				giftF[j] += each
-			}
-		}
+		xp += float64(w.XP) * b.Sub(a).Seconds() / total * Factor(n)
 	}
-	for j, g := range giftF {
-		gifts[j] = int64(g + 0.5)
-	}
-	return int64(keepF + 0.5), gifts
+	return int64(xp + 0.5)
 }
 
 func covers(p []Interval, t time.Time) bool {
@@ -124,15 +108,15 @@ func covers(p []Interval, t time.Time) bool {
 	return false
 }
 
-// Sharer shares a finished job's XP (Service satisfies).
-type Sharer interface {
-	Share(ctx context.Context, w Work) Outcome
+// Booster applies the party bonus to a finished job (Service satisfies).
+type Booster interface {
+	Boost(ctx context.Context, w Work) Outcome
 }
 
-// ShareIf shares through s, or keeps everything when there is no sharer.
-func ShareIf(ctx context.Context, s Sharer, w Work) Outcome {
-	if s == nil {
+// BoostIf boosts through b, or leaves the XP as it is without one.
+func BoostIf(ctx context.Context, b Booster, w Work) Outcome {
+	if b == nil {
 		return Solo(w.XP)
 	}
-	return s.Share(ctx, w)
+	return b.Boost(ctx, w)
 }

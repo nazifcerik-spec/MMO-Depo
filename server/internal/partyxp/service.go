@@ -11,105 +11,55 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// Granter pays a partner's share: profession XP for gathering and crafting
-// kinds, character XP for hunts and dungeons. Must be idempotent per
-// (character, ref) or tolerate being called once.
-type Granter interface {
-	GrantShare(ctx context.Context, kind string, characterID uuid.UUID, xp int64, ref uuid.UUID) error
-}
-
-// Publisher tells a partner what they received (wsgateway adapter satisfies).
-type Publisher interface {
-	Publish(accountID uuid.UUID, kind string, payload any) int
-}
-
-// Service finds the earner's partners and pays their shares.
+// Service finds the earner's partners for the bonus.
 type Service struct {
-	pool  *pgxpool.Pool
-	grant Granter
-	pub   Publisher
-	log   *slog.Logger
+	pool *pgxpool.Pool
+	log  *slog.Logger
 }
 
-func NewService(pool *pgxpool.Pool, grant Granter, logger *slog.Logger) *Service {
+func NewService(pool *pgxpool.Pool, logger *slog.Logger) *Service {
 	if logger == nil {
 		logger = slog.Default()
 	}
-	return &Service{pool: pool, grant: grant, log: logger}
+	return &Service{pool: pool, log: logger}
 }
-
-func (s *Service) WithPublisher(p Publisher) *Service { s.pub = p; return s }
 
 type partner struct {
 	id      uuid.UUID
-	account uuid.UUID
 	name    string
 	windows []Interval
 }
 
-// Share splits w among the earner's live party members whose jobs of the
-// same kind overlap it, pays them and returns the earner's side. A failure
-// to look partners up never costs the earner: the job then stays unshared.
-func (s *Service) Share(ctx context.Context, w Work) Outcome {
+// Boost applies the party bonus of the earner's live party members whose
+// jobs of the same kind overlap w. A failure to look partners up never
+// costs the earner anything but the bonus.
+func (s *Service) Boost(ctx context.Context, w Work) Outcome {
 	if w.XP <= 0 || !w.End.After(w.Start) {
 		return Solo(w.XP)
 	}
 	partners, err := s.partners(ctx, w)
 	if err != nil {
-		s.log.WarnContext(ctx, "partyxp: partner lookup failed", "ref", w.Ref.String(), "err", err.Error())
+		s.log.WarnContext(ctx, "partyxp: partner lookup failed", "character", w.Character.String(), "err", err.Error())
 		return Solo(w.XP)
 	}
 	if len(partners) == 0 {
 		return Solo(w.XP)
 	}
 	windows := make([][]Interval, len(partners))
+	out := Outcome{Earned: w.XP}
 	for i, p := range partners {
 		windows[i] = p.windows
+		out.Partners = append(out.Partners, Partner{CharacterID: p.id, Name: p.name})
 	}
-	keep, gifts := Split(w, windows)
-	out := Outcome{Earned: w.XP, Kept: keep}
-	for i, p := range partners {
-		if gifts[i] <= 0 {
-			continue
-		}
-		paid, err := s.pay(ctx, w, p, gifts[i])
-		if err != nil {
-			s.log.WarnContext(ctx, "partyxp: share not paid", "ref", w.Ref.String(),
-				"partner", p.id.String(), "err", err.Error())
-			continue
-		}
-		out.Partners = append(out.Partners, Share{CharacterID: p.id, Name: p.name, XP: gifts[i]})
-		if paid && s.pub != nil {
-			s.pub.Publish(p.account, "party.xp_share", map[string]any{
-				"character_id": p.id, "from_character_id": w.Character, "kind": w.Kind, "xp": gifts[i],
-			})
-		}
-	}
+	out.Kept = Boost(w, windows)
 	return out
-}
-
-// pay records a share once and grants it; false = already paid.
-func (s *Service) pay(ctx context.Context, w Work, p partner, xp int64) (bool, error) {
-	tag, err := s.pool.Exec(ctx, `
-		INSERT INTO social.party_xp_share (source_ref, recipient_character_id, giver_character_id, work_kind, xp)
-		VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING`, w.Ref, p.id, w.Character, w.Kind, xp)
-	if err != nil {
-		return false, err
-	}
-	if tag.RowsAffected() == 0 {
-		return false, nil
-	}
-	if s.grant == nil {
-		return true, nil
-	}
-	return true, s.grant.GrantShare(ctx, w.Kind, p.id, xp, w.Ref)
 }
 
 // partners are the earner's live party members (not the earner) with their
 // windows of the same kind of work overlapping w; members without one drop.
 func (s *Service) partners(ctx context.Context, w Work) ([]partner, error) {
 	rows, err := s.pool.Query(ctx, `
-		SELECT c.id, c.account_id, c.name
+		SELECT c.id, c.name
 		  FROM social.party_member me
 		  JOIN social.party p ON p.id = me.party_id AND p.disbanded_at IS NULL
 		  JOIN social.party_member m ON m.party_id = p.id AND m.left_at IS NULL AND m.character_id <> me.character_id
@@ -121,7 +71,7 @@ func (s *Service) partners(ctx context.Context, w Work) ([]partner, error) {
 	}
 	members, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (partner, error) {
 		var p partner
-		err := r.Scan(&p.id, &p.account, &p.name)
+		err := r.Scan(&p.id, &p.name)
 		return p, err
 	})
 	if err != nil || len(members) == 0 {

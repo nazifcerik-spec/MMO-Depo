@@ -62,13 +62,13 @@ type Service struct {
 	cfg      ServiceConfig
 	log      *slog.Logger
 	progress progression.Recorder
-	speed    SpeedSource    // worn enchants' crafting speed (DD-293); nil = none
-	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
+	speed    SpeedSource     // worn enchants' crafting speed (DD-293); nil = none
+	party    partyxp.Booster // party XP bonus (DD-305); nil = none
 }
 
-// WithPartyShare shares crafting XP with party members crafting in the same
-// profession (DD-296).
-func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
+// WithPartyBonus adds the party bonus for members crafting in the same
+// profession alongside (DD-305).
+func (s *Service) WithPartyBonus(p partyxp.Booster) *Service { s.party = p; return s }
 
 // WithRecorder feeds crafts into progression (Sprint 24).
 func (s *Service) WithRecorder(r progression.Recorder) *Service { s.progress = r; return s }
@@ -329,8 +329,8 @@ func (s *Service) Collect(ctx context.Context, characterID, accountID, jobID uui
 		}
 		res.XPGained = rec.ProfessionXPReward * int32(made)
 		end := job.StartedAt.Add(time.Duration(made*int(job.UnitSeconds)) * time.Second)
-		if shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
-			Kind: partyxp.CraftPrefix + rec.ProfessionCode, Character: characterID, Ref: job.ID,
+		if shared := partyxp.BoostIf(ctx, s.party, partyxp.Work{
+			Kind: partyxp.CraftPrefix + rec.ProfessionCode, Character: characterID,
 			Start: job.StartedAt, End: end, XP: int64(res.XPGained),
 		}); len(shared.Partners) > 0 {
 			res.Party, res.XPGained = &shared, int32(shared.Kept)

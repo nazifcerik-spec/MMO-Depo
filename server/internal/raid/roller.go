@@ -80,7 +80,7 @@ func Roll(seed int64, players []combat.Combatant, tmpl dungeon.Template, mobs Mo
 		for i := range ps {
 			enc[i] = ps[i].Clone() // buffs and the level gap stay inside the encounter
 		}
-		g := &combat.Group{Players: enc, Mob: mob.AsCombatant(), MaxTurns: MaxTurns}
+		g := &combat.Group{Players: enc, Mob: mob.AsRaidCombatant(), MaxTurns: MaxTurns}
 		if boss {
 			g.AoEEvery, g.AoEPct, g.StunImmune = BossAoEEvery, BossAoEPct, true
 		} else {

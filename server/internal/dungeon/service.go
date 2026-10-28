@@ -76,14 +76,14 @@ type Service struct {
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	hp       HPWriter
 	skills   SkillSource
-	bag      BagRoom        // nil = no room check (DD-246)
-	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
-	regions  RegionGate     // nil = every dungeon in reach (DD-302)
+	bag      BagRoom         // nil = no room check (DD-246)
+	party    partyxp.Booster // party XP bonus (DD-305); nil = none
+	regions  RegionGate      // nil = every dungeon in reach (DD-302)
 }
 
-// WithPartyShare shares dungeon XP with party members running dungeons
-// meanwhile (DD-296).
-func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
+// WithPartyBonus adds the party bonus for members running dungeons
+// alongside (DD-305).
+func (s *Service) WithPartyBonus(p partyxp.Booster) *Service { s.party = p; return s }
 
 // RegionGate lists the regions whose dungeons a character can enter from
 // where it stands (world.Service).
@@ -289,7 +289,7 @@ type RevealResult struct {
 	Replayed    bool                     `json:"replayed"`
 	WeekKey     string                   `json:"week_key"`
 	Lockout     bool                     `json:"lockout_written"`
-	// Party is how the XP was shared (DD-296); nil = not shared.
+	// Party is the party bonus on the XP (DD-305); nil = none.
 	Party *partyxp.Outcome `json:"party_share,omitempty"`
 }
 
@@ -450,8 +450,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	var xpResult *character.XPGrantResult
 	var party *partyxp.Outcome
 	xp := run.TotalXP
-	if shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
-		Kind: partyxp.KindDungeon, Character: c.CharacterID, Ref: c.ID,
+	if shared := partyxp.BoostIf(ctx, s.party, partyxp.Work{
+		Kind: partyxp.KindDungeon, Character: c.CharacterID,
 		Start: c.StartedAt, End: c.StartedAt.Add(time.Duration(c.DurationSecs) * time.Second), XP: xp,
 	}); len(shared.Partners) > 0 {
 		party, xp = &shared, shared.Kept

@@ -29,8 +29,39 @@ type Mob struct {
 	RegionCode     string // where it is hunted (DD-273); empty for raid bosses
 }
 
+// MobPowerPct scales every mob's HP, attack and defense over its content
+// values (DD-306).
+const MobPowerPct = 110
+
+// Level evasion (DD-306): a mob dodges one point more per LevelEvasionStep
+// levels on top of its archetype's evasion, at most LevelEvasionCap.
+const (
+	LevelEvasionStep = 50
+	LevelEvasionCap  = 20
+)
+
+// LevelEvasion is the evasion a mob of the level gains.
+func LevelEvasion(level int16) int32 {
+	return min(int32(level)/LevelEvasionStep, LevelEvasionCap)
+}
+
+// Effective is the mob as it fights and as the catalog shows it: content
+// stats with the power scale and the level evasion (DD-306).
+func (m Mob) Effective() Mob {
+	m.HPMax = m.HPMax * MobPowerPct / 100
+	m.Attack = m.Attack * MobPowerPct / 100
+	m.Defense = m.Defense * MobPowerPct / 100
+	m.EvasionPct = min(m.EvasionPct+LevelEvasion(m.Level), 100)
+	return m
+}
+
 // AsCombatant builds a fresh Combatant with full HP for a live encounter.
-func (m Mob) AsCombatant() Combatant {
+func (m Mob) AsCombatant() Combatant { return m.Effective().AsRaidCombatant() }
+
+// AsRaidCombatant is the mob with its content stats: raid enemies are tuned
+// as a whole to the group's size (DD-298), so the field scaling of DD-306
+// stays out of raids.
+func (m Mob) AsRaidCombatant() Combatant {
 	return Combatant{
 		Name:       m.Code,
 		HPMax:      m.HPMax,

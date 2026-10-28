@@ -20,6 +20,7 @@ import (
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/notification"
+	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
 )
 
@@ -366,6 +367,8 @@ func (s *Service) Reveal(ctx context.Context, actor, account, runID uuid.UUID) (
 	res := Roll(run.Seed, players, tmpl, mobs, s.rngNew)
 	level := int(me.combatant.Level)
 	rw := MemberReward(res, int16(pos+1), level, run.Members[pos].ClassCode, run.Seed, tmpl, mobs, s.rngNew)
+	// The whole party runs it together: +3% XP per member (DD-305).
+	rw.XP = int64(float64(rw.XP)*partyxp.Factor(len(run.Members)) + 0.5)
 	memberID := run.Members[pos].ID
 
 	var granted []activity.GrantedItem

@@ -103,7 +103,8 @@ func TestHTTPDungeonConcurrentReveal(t *testing.T) {
 func TestHTTPDungeonBossDropsGear(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 16 WHERE id = $1`, p.char)
+	// Gearless and unallocated: a wide margin so the boss always falls (DD-306).
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 25 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 	id := p.ok("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"})["contract"].(map[string]any)["id"].(string)
 	_, err = w.p.Exec(w.ctx, `
@@ -111,7 +112,7 @@ func TestHTTPDungeonBossDropsGear(t *testing.T) {
 		 WHERE id = $1`, id)
 	require.NoError(t, err)
 	res := p.ok("POST", "/v1/dungeon/"+id+"/reveal", map[string]any{})
-	require.Equal(t, true, res["run"].(map[string]any)["cleared"], "level 16 clears a level 6 dungeon")
+	require.Equal(t, true, res["run"].(map[string]any)["cleared"], "level 25 clears a level 6 dungeon: %v", res)
 
 	// Boss goblin_raider is level 8: equipment from the highest tier it
 	// reaches, the level-5 iron tier.

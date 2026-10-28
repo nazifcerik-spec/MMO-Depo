@@ -139,10 +139,25 @@ func TestSession_PlayerKillsBeforeCounter(t *testing.T) {
 }
 
 func TestMobAsCombatant_FullHP(t *testing.T) {
-	m := Mob{Code: "test", HPMax: 100, Attack: 10, Defense: 3, CritPct: 5, HitPct: 80, EvasionPct: 10}
+	m := Mob{Code: "test", Level: 120, HPMax: 100, Attack: 10, Defense: 3, CritPct: 5, HitPct: 80, EvasionPct: 10}
 	c := m.AsCombatant()
-	require.Equal(t, int32(100), c.HPCurrent)
-	require.Equal(t, int32(100), c.HPMax)
 	require.Equal(t, "test", c.Name)
-	require.Equal(t, int32(10), c.Attack)
+	// Field mobs fight 10% stronger and dodge more with level (DD-306).
+	require.Equal(t, int32(110), c.HPMax)
+	require.Equal(t, c.HPMax, c.HPCurrent)
+	require.Equal(t, int32(11), c.Attack)
+	require.Equal(t, int32(3), c.Defense) // 3.3 rounds down
+	require.Equal(t, int32(12), c.EvasionPct, "10 + 120/50")
+	// Raid enemies keep their content stats (tuned to the group, DD-298).
+	r := m.AsRaidCombatant()
+	require.Equal(t, int32(100), r.HPMax)
+	require.Equal(t, int32(10), r.EvasionPct)
+}
+
+func TestLevelEvasion(t *testing.T) {
+	require.Equal(t, int32(0), LevelEvasion(1))
+	require.Equal(t, int32(2), LevelEvasion(100))
+	require.Equal(t, int32(10), LevelEvasion(500))
+	require.Equal(t, int32(LevelEvasionCap), LevelEvasion(1000))
+	require.Equal(t, int32(100), Mob{EvasionPct: 95, Level: 1000}.Effective().EvasionPct)
 }

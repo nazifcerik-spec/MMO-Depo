@@ -2638,19 +2638,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get partyHint =>
-      'Los miembros que hacen el mismo trabajo a la vez (misma recolección, oficio, caza o mazmorras) juntan su PX y lo reparten a partes iguales, +3 % por compañero.';
+      'Los miembros que hacen el mismo trabajo a la vez (la misma recolección, profesión, caza o mazmorra) ganan cada uno +3 % PX por miembro: cinco juntos, +15 %. Nadie cede PX.';
 
   @override
   String get partyChat => 'Chat de grupo';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return 'Compartido con $names: te quedas $kept de $earned PX';
-  }
-
-  @override
-  String evPartyXp(int xp, String work) {
-    return 'Reparto de grupo: +$xp PX ($work)';
+    return 'Bonificación de grupo con $names: $earned → $kept PX';
   }
 
   @override

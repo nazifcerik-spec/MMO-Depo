@@ -4669,7 +4669,7 @@ abstract class AppLocalizations {
   /// No description provided for @partyHint.
   ///
   /// In en, this message translates to:
-  /// **'Members doing the same work at the same time (the same gathering, profession, hunting or dungeons) pool their XP and split it evenly, +3% per partner.'**
+  /// **'Members doing the same work at the same time (the same gathering kind, profession, hunt or dungeon) each earn +3% XP per member working: five together earn +15%. Nobody gives XP away.'**
   String get partyHint;
 
   /// No description provided for @partyChat.
@@ -4681,14 +4681,8 @@ abstract class AppLocalizations {
   /// No description provided for @partyShared.
   ///
   /// In en, this message translates to:
-  /// **'Shared with {names}: you keep {kept} of {earned} XP'**
+  /// **'Party bonus with {names}: {earned} → {kept} XP'**
   String partyShared(String names, int kept, int earned);
-
-  /// No description provided for @evPartyXp.
-  ///
-  /// In en, this message translates to:
-  /// **'Party share: +{xp} XP ({work})'**
-  String evPartyXp(int xp, String work);
 
   /// No description provided for @evRaidMatched.
   ///

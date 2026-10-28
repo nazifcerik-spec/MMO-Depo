@@ -103,9 +103,9 @@ type Service struct {
 	progress progression.Recorder
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
-	gather   Gathering      // gathering professions (DD-244); nil = gold only
-	bag      BagRoom        // nil = no room check
-	share    partyxp.Sharer // party XP sharing (DD-296); nil = none
+	gather   Gathering       // gathering professions (DD-244); nil = gold only
+	bag      BagRoom         // nil = no room check
+	party    partyxp.Booster // party XP bonus (DD-305); nil = none
 	cfg      ServiceConfig
 	log      *slog.Logger
 }
@@ -120,9 +120,9 @@ func NewService(repo Repository, chars CharacterFetcher, txn economy.TxnService,
 	return &Service{repo: repo, chars: chars, txn: txn, cfg: cfg, log: logger}
 }
 
-// WithPartyShare shares gathering XP with party members gathering the same
-// kind (DD-296).
-func (s *Service) WithPartyShare(p partyxp.Sharer) *Service { s.share = p; return s }
+// WithPartyBonus adds the party bonus for members gathering the same kind
+// alongside (DD-305).
+func (s *Service) WithPartyBonus(p partyxp.Booster) *Service { s.party = p; return s }
 
 // WithRecorder feeds reveal yields into progression (Sprint 24).
 // WithNotifier records each collection in the reward history (DD-242).
@@ -177,7 +177,7 @@ type RevealResult struct {
 	LedgerTxnID uuid.UUID       `json:"ledger_txn_id"`
 	Replayed    bool            `json:"replayed"`
 	Gather      *GatherProgress `json:"gather,omitempty"` // gathering level after this haul (DD-244)
-	// Party is how the gathering XP was shared (DD-296); nil = not shared.
+	// Party is the party bonus on the gathering XP (DD-305); nil = none.
 	Party *partyxp.Outcome `json:"party_share,omitempty"`
 }
 
@@ -378,8 +378,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	if units := yield.CommonCount + yield.RareCount + yield.LegendaryCount; s.gather != nil && units > 0 {
 		snap := parseSnapshot(contract.Snapshot)
 		xp := units * tierXP[tierIndex(snap.TargetTier)]
-		shared := partyxp.ShareIf(ctx, s.share, partyxp.Work{
-			Kind: partyxp.GatherPrefix + string(contract.Kind), Character: contract.CharacterID, Ref: contract.ID,
+		shared := partyxp.BoostIf(ctx, s.party, partyxp.Work{
+			Kind: partyxp.GatherPrefix + string(contract.Kind), Character: contract.CharacterID,
 			Start: contract.StartedAt, End: contract.StartedAt.Add(time.Duration(elapsed) * time.Second), XP: int64(xp),
 		})
 		if len(shared.Partners) > 0 {

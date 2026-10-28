@@ -166,7 +166,7 @@ func resolveOne(
 		return EncounterRecord{
 			Index: seq, Wave: wave, IsBoss: isBoss, MobCode: mob.Code,
 			Outcome:     combat.OutcomeTimeout, // treat validate errors as timeouts
-			PlayerHPAft: player.HPCurrent, MobHPAft: mob.HPMax,
+			PlayerHPAft: player.HPCurrent, MobHPAft: mobC.HPMax,
 		}, false, true
 	}
 	rec = EncounterRecord{

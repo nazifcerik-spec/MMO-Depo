@@ -1058,17 +1058,6 @@ void main() {
     expect(be.raidCalls.last, 'listing/close');
   });
 
-  testWidgets('party share: a partner share toasts for the character it is for (DD-296)', (tester) async {
-    final (be, ws, _) = await _inGame(tester);
-    ws.last.push('party.xp_share', {'character_id': 'char-1', 'kind': 'gather:fishing', 'xp': 42});
-    await tester.pumpAndSettle();
-    expect(find.text('Party share: +42 XP (Fishing)'), findsOneWidget);
-    // Another character of the account gets its own share: not this one's toast.
-    ws.last.push('party.xp_share', {'character_id': 'char-2', 'kind': 'hunt', 'xp': 9});
-    await tester.pumpAndSettle();
-    expect(find.text('Party share: +9 XP (Hunting)'), findsNothing);
-  });
-
   testWidgets('travel: pick any destination on the map, level gate, depart, turn back (DD-279, DD-280)', (
     tester,
   ) async {

@@ -2638,19 +2638,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get partyHint =>
-      'Aynı işi aynı anda yapan üyeler (aynı toplama türü, meslek, av ya da zindan) XP\'lerini havuzda toplayıp eşit bölüşür; ortak başına +%3 bonus.';
+      'Aynı işi aynı anda yapan üyeler (aynı toplama türü, meslek, av ya da zindan) çalışan üye başına +%3 XP kazanır: beş kişi birlikte +%15. Kimse XP\'sinden vermez.';
 
   @override
   String get partyChat => 'Parti sohbeti';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return '$names ile paylaşıldı: $earned XP\'den sana $kept XP';
-  }
-
-  @override
-  String evPartyXp(int xp, String work) {
-    return 'Parti paylaşımı: +$xp XP ($work)';
+    return '$names ile parti bonusu: $earned → $kept XP';
   }
 
   @override

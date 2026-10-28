@@ -135,7 +135,7 @@ type CraftResult struct {
 	Count              int       `json:"count"`    // units the job was started with (DD-245)
 	Made               int       `json:"made"`     // units delivered (DD-264)
 	Refunded           int       `json:"refunded"` // unfinished units whose gold + inputs came back
-	// Party is how the XP was shared (DD-296); nil = not shared.
+	// Party is the party bonus on the XP (DD-305); nil = none.
 	Party    *partyxp.Outcome `json:"party_share,omitempty"`
 	Replayed bool             `json:"replayed,omitempty"`
 }
