@@ -2906,4 +2906,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String storyLocked(int level) {
     return 'Se abre en el nivel $level';
   }
+
+  @override
+  String get bankTitle => 'Banco';
+
+  @override
+  String get bankHint =>
+      'Compartido por todos tus personajes. Toca un objeto de tu bolsa para depositarlo o uno del banco para sacarlo. Los objetos ligados se quedan con su personaje.';
+
+  @override
+  String get bankEmpty => 'El banco está vacío.';
+
+  @override
+  String get bankDeposit => 'Depositar';
+
+  @override
+  String get bankWithdraw => 'Sacar';
+
+  @override
+  String get errBankFull => 'El banco está lleno.';
+
+  @override
+  String get errItemBound => 'Los objetos ligados se quedan con su personaje.';
+
+  @override
+  String get errItemEquipped => 'Quítate el objeto primero.';
 }

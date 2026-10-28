@@ -321,5 +321,13 @@
   "storyTitle": "Historia",
   "storyOpen": "Modo historia",
   "storyComingSoon": "El modo historia llegará pronto. Los capítulos aparecerán aquí a medida que se escriban.",
-  "storyLocked": "Se abre en el nivel {level}"
+  "storyLocked": "Se abre en el nivel {level}",
+  "bankTitle": "Banco",
+  "bankHint": "Compartido por todos tus personajes. Toca un objeto de tu bolsa para depositarlo o uno del banco para sacarlo. Los objetos ligados se quedan con su personaje.",
+  "bankEmpty": "El banco está vacío.",
+  "bankDeposit": "Depositar",
+  "bankWithdraw": "Sacar",
+  "errBankFull": "El banco está lleno.",
+  "errItemBound": "Los objetos ligados se quedan con su personaje.",
+  "errItemEquipped": "Quítate el objeto primero."
 }

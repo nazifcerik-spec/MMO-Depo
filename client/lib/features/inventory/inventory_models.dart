@@ -202,6 +202,21 @@ class EnchantInfo {
   }
 }
 
+/// The account bank (DD-314): its items (slot = bank slot) and size.
+class Bank {
+  const Bank({required this.items, required this.slotCap, required this.slotsUsed});
+
+  factory Bank.fromJson(Map<String, dynamic> j) => Bank(
+    items: [for (final i in (j['items'] as List? ?? const [])) BagItem.fromJson(i as Map<String, dynamic>)],
+    slotCap: (j['slot_cap'] as num?)?.toInt() ?? 200,
+    slotsUsed: (j['slots_used'] as num?)?.toInt() ?? 0,
+  );
+
+  final List<BagItem> items;
+  final int slotCap;
+  final int slotsUsed;
+}
+
 class Bag {
   const Bag({
     required this.items,

@@ -55,6 +55,9 @@ class FakeBackend {
   /// When set, starting a hunt is refused: busy with this action (DD-263).
   String? busyWith;
   final bag = <Map<String, dynamic>>[];
+
+  /// The account bank (DD-314).
+  final bank = <Map<String, dynamic>>[];
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
 
@@ -1367,6 +1370,22 @@ class FakeBackend {
   }
 
   http.Response? _inventory(http.Request req, String path, Map body) {
+    Map<String, dynamic> bankView() => {'items': bank, 'slot_cap': 200, 'slots_used': bank.length};
+    if (path.endsWith('/bank')) return json(200, bankView());
+    if (path.endsWith('/bank/deposit') || path.endsWith('/bank/withdraw')) {
+      final deposit = path.endsWith('/deposit');
+      final from = deposit ? bag : bank, to = deposit ? bank : bag;
+      final i = from.firstWhere((x) => x['instance_id'] == body['item_id']);
+      final qty = body['quantity'] as int;
+      if (qty < (i['stack_quantity'] as int)) {
+        i['stack_quantity'] = (i['stack_quantity'] as int) - qty;
+        to.add({...i, 'instance_id': '${i['instance_id']}-part', 'stack_quantity': qty, 'slot': to.length});
+      } else {
+        from.remove(i);
+        to.add({...i, 'slot': to.length});
+      }
+      return json(200, bankView());
+    }
     if (path.endsWith('/inventory') && req.method == 'GET') {
       return json(200, {
         'items': bag,

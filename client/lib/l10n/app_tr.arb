@@ -837,5 +837,13 @@
   "storyTitle": "Hikâye",
   "storyOpen": "Hikâye modu",
   "storyComingSoon": "Hikâye modu yakında. Bölümler yazıldıkça burada açılacak.",
-  "storyLocked": "{level}. seviyede açılır"
+  "storyLocked": "{level}. seviyede açılır",
+  "bankTitle": "Banka",
+  "bankHint": "Tüm karakterlerin ortak deposu. Çantandaki bir eşyaya dokunarak yatır, bankadakine dokunarak al. Bağlı eşyalar karakterinde kalır.",
+  "bankEmpty": "Banka boş.",
+  "bankDeposit": "Yatır",
+  "bankWithdraw": "Al",
+  "errBankFull": "Banka dolu.",
+  "errItemBound": "Bağlı eşyalar karakterinde kalır.",
+  "errItemEquipped": "Önce eşyayı çıkar."
 }

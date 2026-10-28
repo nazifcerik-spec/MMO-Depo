@@ -2905,4 +2905,29 @@ class AppLocalizationsTr extends AppLocalizations {
   String storyLocked(int level) {
     return '$level. seviyede açılır';
   }
+
+  @override
+  String get bankTitle => 'Banka';
+
+  @override
+  String get bankHint =>
+      'Tüm karakterlerin ortak deposu. Çantandaki bir eşyaya dokunarak yatır, bankadakine dokunarak al. Bağlı eşyalar karakterinde kalır.';
+
+  @override
+  String get bankEmpty => 'Banka boş.';
+
+  @override
+  String get bankDeposit => 'Yatır';
+
+  @override
+  String get bankWithdraw => 'Al';
+
+  @override
+  String get errBankFull => 'Banka dolu.';
+
+  @override
+  String get errItemBound => 'Bağlı eşyalar karakterinde kalır.';
+
+  @override
+  String get errItemEquipped => 'Önce eşyayı çıkar.';
 }

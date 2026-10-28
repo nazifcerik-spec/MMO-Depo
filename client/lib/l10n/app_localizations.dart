@@ -5121,6 +5121,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Opens at level {level}'**
   String storyLocked(int level);
+
+  /// No description provided for @bankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bankTitle;
+
+  /// No description provided for @bankHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.'**
+  String get bankHint;
+
+  /// No description provided for @bankEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The bank is empty.'**
+  String get bankEmpty;
+
+  /// No description provided for @bankDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get bankDeposit;
+
+  /// No description provided for @bankWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Take'**
+  String get bankWithdraw;
+
+  /// No description provided for @errBankFull.
+  ///
+  /// In en, this message translates to:
+  /// **'The bank is full.'**
+  String get errBankFull;
+
+  /// No description provided for @errItemBound.
+  ///
+  /// In en, this message translates to:
+  /// **'Bound items stay with their character.'**
+  String get errItemBound;
+
+  /// No description provided for @errItemEquipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the item off first.'**
+  String get errItemEquipped;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

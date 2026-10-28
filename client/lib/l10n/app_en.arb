@@ -2296,5 +2296,13 @@
         "type": "int"
       }
     }
-  }
+  },
+  "bankTitle": "Bank",
+  "bankHint": "Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.",
+  "bankEmpty": "The bank is empty.",
+  "bankDeposit": "Deposit",
+  "bankWithdraw": "Take",
+  "errBankFull": "The bank is full.",
+  "errItemBound": "Bound items stay with their character.",
+  "errItemEquipped": "Take the item off first."
 }

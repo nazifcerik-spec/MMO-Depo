@@ -3103,6 +3103,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-314 — Hesap bankası (200 kutu, tüm karakterler ortak)
+
+**Context:** Oyuncu tüm karakterlerin ortak kullandığı 200 kutuluk bir banka istedi.
+**Decision:** Migration 0052: `inventory.item_instance.bank_account_id` + `bank_slot` (0..199, hesap başı UNIQUE; bankadaki eşyanın sahibi karakter yok, ikisi birlikte dolu ya da boş). Karakter silinse de banka kalır; hesap temizlenince (`privacy.Purge`) silinir. `inventory.Service.Bank/Deposit/Withdraw` (hesap başı advisory lock): yatırmada adet (0 = tümü), aynı eşyanın yer olan banka yığınına eklenir yoksa ilk boş kutuya; kısmi miktar yeni örnek olur. Kuşanılı (`E_ITEM_EQUIPPED`), kilitli ve bağlı (`E_ITEM_BOUND`) eşya girmez; banka dolu `E_BANK_FULL`. Çekmede çanta yeri önce kontrol edilir (`E_BAG_FULL`), eşya taşan yerleşim yoluyla yığına eklenir ya da boş yuvaya girer. Uçlar `GET /v1/character/{id}/bank`, `POST .../bank/{deposit,withdraw}` (`item_id`, `quantity`). İstemci: Çanta başlığında Banka → `BankScreen` (banka + çanta listesi, dokun → adet → yatır/al).
+**Consequences:** Karakterler arası eşya aktarımı banka üzerinden; bağlı eşyalar karakterde kalır. Altın bankası kapsam dışı.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

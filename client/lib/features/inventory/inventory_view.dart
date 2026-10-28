@@ -9,6 +9,7 @@ import '../../shared/contract_progress.dart';
 import '../../shared/widgets.dart';
 import '../market/market_repository.dart';
 import '../market/market_view.dart';
+import 'bank_screen.dart';
 import 'inventory_models.dart';
 import 'inventory_repository.dart';
 import 'item_widgets.dart';
@@ -56,6 +57,16 @@ class _InventoryViewState extends State<InventoryView> {
   void dispose() {
     widget.dataVersion.removeListener(_load);
     super.dispose();
+  }
+
+  /// The account bank (DD-314); the bag reloads on return.
+  Future<void> _openBank() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => BankScreen(repo: widget.repo, dataVersion: widget.dataVersion),
+      ),
+    );
+    await _load();
   }
 
   Future<void> _load() async {
@@ -474,6 +485,12 @@ class _InventoryViewState extends State<InventoryView> {
                   : Row(
                       children: [
                         Expanded(child: Text(l.bag, style: text.titleMedium)),
+                        TextButton.icon(
+                          key: const Key('open-bank'),
+                          onPressed: _openBank,
+                          icon: const Icon(Icons.account_balance_outlined, size: 18),
+                          label: Text(l.bankTitle),
+                        ),
                         PopupMenuButton<BagSort>(
                           tooltip: l.sortLabel,
                           initialValue: _sort,

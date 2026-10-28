@@ -172,5 +172,6 @@ var (
 		`DELETE FROM notification.preference_kind WHERE account_id = $1`,
 		`DELETE FROM notification.preference WHERE account_id = $1`,
 		`DELETE FROM ops.support_ticket WHERE account_id = $1`,
+		`DELETE FROM inventory.item_instance WHERE bank_account_id = $1`, // the account bank (DD-314)
 	}
 )

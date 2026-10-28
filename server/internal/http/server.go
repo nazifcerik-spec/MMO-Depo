@@ -326,6 +326,13 @@ func NewRouter(d Deps) http.Handler {
 						Delete("/", invHandler.Delete)
 				})
 
+				// --- Account bank (DD-314) ---
+				r.Get("/bank", invHandler.BankView)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/bank/deposit", invHandler.BankDeposit)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/bank/withdraw", invHandler.BankWithdraw)
+
 				// --- Equipment (Sprint 11) ---
 				r.Get("/equipment", equipHandler.View)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).

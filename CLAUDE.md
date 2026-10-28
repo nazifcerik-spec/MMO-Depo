@@ -240,6 +240,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 112. **Hikâye modu alanı (bitti)** — Sprint 112, DD-313. `content/story.yaml` (boş, biçim açıklamalı) + i18n `story.<code>` / `story.<code>.body`; `internal/story` + `GET /v1/story`. İstemci `features/story/story_screen.dart` (karakter sayfasından).
 
+113. **Hesap bankası (bitti)** — Sprint 113, DD-314. Migration 0052 (`item_instance.bank_account_id/bank_slot`). `inventory` `bank.go`: 200 kutu, hesap kilidi, kısmi yatır/çek, yığın birleştirme, bağlı/kuşanılı/kilitli girmez. `GET/POST /v1/character/{id}/bank[/deposit|/withdraw]`. İstemci `inventory/bank_screen.dart` (Çanta → Banka).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

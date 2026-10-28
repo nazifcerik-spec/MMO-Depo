@@ -701,6 +701,46 @@ void main() {
     semantics.dispose();
   });
 
+  testWidgets('bank: deposit part of a stack, take it back (DD-314)', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.bag.add({
+      'instance_id': 'ore',
+      'template_code': 'copper_ore',
+      'item_class': 'material',
+      'item_subclass': 'ore',
+      'slot': 0,
+      'stack_quantity': 10,
+      'max_stack': 999,
+      'rarity': 'common',
+      'is_bound': false,
+      'is_locked': false,
+      'min_level': 1,
+    });
+    await tester.tap(find.byIcon(Icons.backpack_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('open-bank')));
+    await tester.pumpAndSettle();
+    expect(find.text('The bank is empty.'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('bag-ore')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.descendant(of: find.byKey(const Key('bank-qty')), matching: find.byType(TextField)),
+      '4',
+    );
+    await tester.tap(find.widgetWithText(FilledButton, 'Deposit'));
+    await tester.pumpAndSettle();
+    expect(be.bank.single['stack_quantity'], 4);
+    expect(be.bag.single['stack_quantity'], 6);
+    expect(find.text('The bank is empty.'), findsNothing);
+
+    await tester.tap(find.byKey(const Key('bank-ore-part')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Take'));
+    await tester.pumpAndSettle();
+    expect(be.bank, isEmpty);
+  });
+
   testWidgets('bag: gear the class cannot wear stands out, with its kind and why', (tester) async {
     final (be, _, _) = await _inGame(tester);
     Map<String, dynamic> gear(

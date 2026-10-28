@@ -321,5 +321,13 @@
   "storyTitle": "剧情",
   "storyOpen": "剧情模式",
   "storyComingSoon": "剧情模式即将推出。章节写好后会在这里出现。",
-  "storyLocked": "{level} 级开放"
+  "storyLocked": "{level} 级开放",
+  "bankTitle": "银行",
+  "bankHint": "所有角色共享。点击背包物品存入，点击银行物品取出。绑定物品留在角色身上。",
+  "bankEmpty": "银行是空的。",
+  "bankDeposit": "存入",
+  "bankWithdraw": "取出",
+  "errBankFull": "银行已满。",
+  "errItemBound": "绑定物品不能存入银行。",
+  "errItemEquipped": "请先卸下该物品。"
 }

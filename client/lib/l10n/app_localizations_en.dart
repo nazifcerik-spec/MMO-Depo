@@ -2906,4 +2906,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String storyLocked(int level) {
     return 'Opens at level $level';
   }
+
+  @override
+  String get bankTitle => 'Bank';
+
+  @override
+  String get bankHint =>
+      'Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.';
+
+  @override
+  String get bankEmpty => 'The bank is empty.';
+
+  @override
+  String get bankDeposit => 'Deposit';
+
+  @override
+  String get bankWithdraw => 'Take';
+
+  @override
+  String get errBankFull => 'The bank is full.';
+
+  @override
+  String get errItemBound => 'Bound items stay with their character.';
+
+  @override
+  String get errItemEquipped => 'Take the item off first.';
 }

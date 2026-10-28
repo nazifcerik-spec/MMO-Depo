@@ -11,6 +11,15 @@ class InventoryRepository {
 
   Future<Bag> bag() async => Bag.fromJson(await api.get('$_base/inventory'));
 
+  /// The account bank (DD-314); deposit/withdraw answer with the new bank.
+  Future<Bank> bank() async => Bank.fromJson(await api.get('$_base/bank'));
+
+  Future<Bank> deposit(String itemId, int qty) async =>
+      Bank.fromJson(await api.post('$_base/bank/deposit', {'item_id': itemId, 'quantity': qty}));
+
+  Future<Bank> withdraw(String itemId, int qty) async =>
+      Bank.fromJson(await api.post('$_base/bank/withdraw', {'item_id': itemId, 'quantity': qty}));
+
   Future<Map<String, EquippedItem>> equipment() async {
     final j = await api.get('$_base/equipment');
     final slots = j['slots'] as Map<String, dynamic>? ?? const {};

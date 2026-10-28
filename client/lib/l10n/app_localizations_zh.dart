@@ -2897,4 +2897,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String storyLocked(int level) {
     return '$level 级开放';
   }
+
+  @override
+  String get bankTitle => '银行';
+
+  @override
+  String get bankHint => '所有角色共享。点击背包物品存入，点击银行物品取出。绑定物品留在角色身上。';
+
+  @override
+  String get bankEmpty => '银行是空的。';
+
+  @override
+  String get bankDeposit => '存入';
+
+  @override
+  String get bankWithdraw => '取出';
+
+  @override
+  String get errBankFull => '银行已满。';
+
+  @override
+  String get errItemBound => '绑定物品不能存入银行。';
+
+  @override
+  String get errItemEquipped => '请先卸下该物品。';
 }

@@ -1,6 +1,7 @@
 package inventory
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -136,6 +137,60 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	apierr.WriteJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
+// --- Bank (DD-314) -------------------------------------------------------------
+
+// BankView is GET /v1/character/{id}/bank: the account's bank.
+func (h *Handler) BankView(w http.ResponseWriter, r *http.Request) {
+	acct, _, ok := requireCharacterOwner(w, r)
+	if !ok {
+		return
+	}
+	v, err := h.svc.Bank(r.Context(), acct)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, v)
+}
+
+type bankReq struct {
+	ItemID   uuid.UUID `json:"item_id"`
+	Quantity int32     `json:"quantity"` // 0 = the whole stack
+}
+
+// BankDeposit is POST /v1/character/{id}/bank/deposit.
+func (h *Handler) BankDeposit(w http.ResponseWriter, r *http.Request) {
+	h.bankMove(w, r, h.svc.Deposit)
+}
+
+// BankWithdraw is POST /v1/character/{id}/bank/withdraw.
+func (h *Handler) BankWithdraw(w http.ResponseWriter, r *http.Request) {
+	h.bankMove(w, r, h.svc.Withdraw)
+}
+
+func (h *Handler) bankMove(w http.ResponseWriter, r *http.Request,
+	move func(ctx context.Context, characterID, accountID, itemID uuid.UUID, qty int32) error) {
+	acct, char, ok := requireCharacterOwner(w, r)
+	if !ok {
+		return
+	}
+	var body bankReq
+	if err := decodeJSON(r, &body); err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
+		return
+	}
+	if err := move(r.Context(), char, acct, body.ItemID, body.Quantity); err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	v, err := h.svc.Bank(r.Context(), acct)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, v)
+}
+
 // --- helpers ----------------------------------------------------------------
 
 func requireCharacterOwner(w http.ResponseWriter, r *http.Request) (uuid.UUID, uuid.UUID, bool) {
@@ -179,6 +234,12 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_NOT_STACKABLE", "item cannot be split")
 	case errors.Is(err, ErrInvalidSplit):
 		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_SPLIT", "invalid split amount")
+	case errors.Is(err, ErrBankFull):
+		apierr.Write(w, r, http.StatusConflict, "E_BANK_FULL", "bank is full")
+	case errors.Is(err, ErrBound):
+		apierr.Write(w, r, http.StatusConflict, "E_ITEM_BOUND", "bound items stay with their character")
+	case errors.Is(err, ErrEquipped):
+		apierr.Write(w, r, http.StatusConflict, "E_ITEM_EQUIPPED", "take the item off first")
 	default:
 		apierr.Write(w, r, http.StatusInternalServerError, "E_INTERNAL", err.Error())
 	}
