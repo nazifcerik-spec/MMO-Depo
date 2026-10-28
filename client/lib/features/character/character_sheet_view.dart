@@ -13,7 +13,6 @@ import '../social/group_repository.dart';
 import 'character_repository.dart';
 import 'leveling.dart';
 import 'models.dart';
-import 'update_tile.dart';
 import '../../shared/content_names.dart';
 
 /// Character sheet tab (docs/ui/character-sheet.md): resource bars, XP,
@@ -307,7 +306,6 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               label: Text(l.progress),
             ),
           ],
-          const UpdateTile(), // in-app updates (DD-304)
         ],
       ),
     );

@@ -6,7 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart' show confirmAction;
 import '../../shared/widgets.dart';
 
-/// Version line + Update button on the character sheet (DD-304). Checks the
+/// Version line + Update button under the character list (DD-304). Checks the
 /// feed once per run; a tap checks again, asks, downloads and opens the
 /// system installer. Hidden where in-app updates do not apply.
 class UpdateTile extends StatefulWidget {

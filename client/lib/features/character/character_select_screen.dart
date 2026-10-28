@@ -10,6 +10,7 @@ import 'character_repository.dart';
 import '../home/home_shell.dart';
 import 'create_character_screen.dart';
 import 'models.dart';
+import 'update_tile.dart';
 
 class CharacterSelectScreen extends StatefulWidget {
   const CharacterSelectScreen({super.key, required this.auth, required this.repo});
@@ -149,6 +150,7 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
                     ),
                     const SizedBox(height: Space.md),
                   ],
+                  const UpdateTile(), // in-app updates (DD-304)
                 ],
               ),
             ),
