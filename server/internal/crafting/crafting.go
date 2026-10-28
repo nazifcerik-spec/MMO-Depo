@@ -194,12 +194,13 @@ var (
 
 // --- Tuning -----------------------------------------------------------------
 
-// ProfessionXPToNext is the shared profession curve (DD-244): level N → N+1
-// needs round(60 × 1.06^N) XP — 64 at 1, ~1 100 at 50, ~19 200 at 99.
+// ProfessionXPToNext is the shared profession curve (DD-244), 20% steeper
+// since DD-309: level N → N+1 needs round(72 × 1.06^N) XP — 76 at 1,
+// ~1 330 at 50, ~23 000 at 99.
 // Kept in code (not YAML) since balance tuning belongs with the engine.
 func ProfessionXPToNext(level int16) int32 {
 	if level < 1 {
 		level = 1
 	}
-	return int32(math.Round(60 * math.Pow(1.06, float64(level))))
+	return int32(math.Round(72 * math.Pow(1.06, float64(level))))
 }

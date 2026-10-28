@@ -307,5 +307,8 @@
   "repPartySwings": "队伍的攻击",
   "repEnemySwings": "敌人的攻击",
   "repLowest": "战斗中最低生命：{pct}%",
-  "repRest": "扎营休息：{time}"
+  "repRest": "扎营休息：{time}",
+  "restart": "重新开始",
+  "restartTitle": "领取并重新开始？",
+  "restartBody": "目前的收获放入背包，并以相同时长重新开始。"
 }

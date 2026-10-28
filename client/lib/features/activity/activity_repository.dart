@@ -47,6 +47,27 @@ class ActivityRepository {
     );
   }
 
+  /// Collects what was earned so far and starts the same run again (DD-310):
+  /// the collection, the new run (null when it could not start) and why not.
+  Future<((ActivityYield, GatherProgress?, PartyShare?), ActiveActivity?, ApiError?)> restart(String contractId) async {
+    final j = await api.post('/v1/activity/$contractId/restart', const {});
+    final c = j['contract'];
+    return (
+      (
+        ActivityYield.fromJson(j['yield'] as Map<String, dynamic>?),
+        GatherProgress.fromJson(j['gather']),
+        PartyShare.fromJson(j['party_share']),
+      ),
+      c is Map<String, dynamic>
+          ? ActiveActivity(
+              ActivityContract.fromJson(c),
+              const ActivityYield(completionRatio: 0, goldCopper: 0, common: 0, rare: 0, legendary: 0),
+            )
+          : null,
+      j['restart_error'] is String ? ApiError(409, j['restart_error'] as String) : null,
+    );
+  }
+
   /// Abandons the contract; accrued yield is forfeited.
   Future<void> stop(String contractId) => api.post('/v1/activity/$contractId/stop', const {});
 }

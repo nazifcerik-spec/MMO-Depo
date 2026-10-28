@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/loot_sheet.dart';
+import '../../shared/party_share.dart';
 import '../../shared/widgets.dart';
 import '../inventory/item_images.dart';
 import 'activity_models.dart';
@@ -128,25 +129,54 @@ class _ActivityViewState extends State<ActivityView> {
       return;
     }
     await _run(() async {
-      final (y, g, share) = await widget.repo.reveal(a.contract.id);
+      final got = await widget.repo.reveal(a.contract.id);
       if (!mounted) return;
       setState(() => _active = null);
       widget.dataVersion.value++;
       _loadSkills();
-      final name = activityName(l, a.contract.kind);
-      await showLootSheet(
-        context,
-        title: name,
-        loot: y.toLoot(),
-        subtitle: g == null || g.gained == 0
-            ? null
-            : [
-                l.gatherXpGained(name, g.gained),
-                if (g.leveledUp) l.gatherLevelUp(name, g.level),
-                if (share != null) share.text(l),
-              ].join(' · '),
-      );
+      await _showHaul(a, got);
     });
+  }
+
+  /// Collects what came in so far and runs the same again (DD-310).
+  Future<void> _restart(ActiveActivity a) async {
+    final l = AppLocalizations.of(context);
+    if (!a.contract.completeAt(DateTime.now()) &&
+        !await confirmAction(context, title: l.restartTitle, body: l.restartBody, action: l.restart)) {
+      return;
+    }
+    (ActivityYield, GatherProgress?, PartyShare?)? got;
+    ApiError? err;
+    await _run(() async {
+      final (haul, next, e) = await widget.repo.restart(a.contract.id);
+      if (!mounted) return;
+      (got, err) = (haul, e);
+      setState(() => _active = next);
+      widget.dataVersion.value++;
+      _loadSkills();
+    });
+    // Shown once the new run is on screen and idle.
+    if (got == null || !mounted) return;
+    await _showHaul(a, got!);
+    if (err != null && mounted) toast(context, Text(errorText(l, err!)));
+  }
+
+  Future<void> _showHaul(ActiveActivity a, (ActivityYield, GatherProgress?, PartyShare?) got) {
+    final l = AppLocalizations.of(context);
+    final (y, g, share) = got;
+    final name = activityName(l, a.contract.kind);
+    return showLootSheet(
+      context,
+      title: name,
+      loot: y.toLoot(),
+      subtitle: g == null || g.gained == 0
+          ? null
+          : [
+              l.gatherXpGained(name, g.gained),
+              if (g.leveledUp) l.gatherLevelUp(name, g.level),
+              if (share != null) share.text(l),
+            ].join(' · '),
+    );
   }
 
   Future<void> _abandon(ActiveActivity a) async {
@@ -337,11 +367,25 @@ class _ActivityViewState extends State<ActivityView> {
         ),
       ),
       const SizedBox(height: Space.lg),
-      FilledButton(
-        onPressed: _busy ? null : () => _collect(a),
-        child: _busy
-            ? const SizedBox.square(dimension: 22, child: CircularProgressIndicator(strokeWidth: 2.5))
-            : Text(l.collect),
+      Row(
+        children: [
+          Expanded(
+            child: FilledButton(
+              onPressed: _busy ? null : () => _collect(a),
+              child: _busy
+                  ? const SizedBox.square(dimension: 22, child: CircularProgressIndicator(strokeWidth: 2.5))
+                  : Text(l.collect),
+            ),
+          ),
+          const SizedBox(width: Space.sm),
+          Expanded(
+            child: OutlinedButton.icon(
+              onPressed: _busy ? null : () => _restart(a),
+              icon: const Icon(Icons.replay, size: 18),
+              label: Text(l.restart),
+            ),
+          ),
+        ],
       ),
       const SizedBox(height: Space.sm),
       TextButton(

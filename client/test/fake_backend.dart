@@ -25,6 +25,7 @@ class FakeBackend {
   int verificationResends = 0;
   String? passwordChangedTo;
   Map<String, dynamic>? activeActivity;
+  int restarts = 0;
   int gatherLevel = 20;
 
   // --- class catalog (DD-253) ---
@@ -341,12 +342,25 @@ class FakeBackend {
       };
       return json(201, {'contract': activeActivity, 'full_yield_peek': {}});
     }
-    final done = RegExp(r'^/v1/activity/([^/]+)/(reveal|stop)$').firstMatch(path);
+    final done = RegExp(r'^/v1/activity/([^/]+)/(reveal|stop|restart)$').firstMatch(path);
     if (done != null) {
-      if (activeActivity == null) return error(409, 'E_NOT_ACTIVE');
+      final old = activeActivity;
+      if (old == null) return error(409, 'E_NOT_ACTIVE');
       activeActivity = null;
       if (done[2] == 'stop') return json(200, {'id': done[1], 'state': 'cancelled'});
+      if (done[2] == 'restart') {
+        // DD-310: the haul so far plus the same run again.
+        restarts++;
+        final now = DateTime.now().toUtc();
+        activeActivity = {
+          ...old,
+          'id': 'act-2',
+          'started_at': now.toIso8601String(),
+          'expires_at': now.add(Duration(seconds: old['duration_seconds'] as int)).toIso8601String(),
+        };
+      }
       return json(200, {
+        if (done[2] == 'restart') 'contract': activeActivity,
         'yield': {
           'gold_copper': 1520,
           'common_count': 2,

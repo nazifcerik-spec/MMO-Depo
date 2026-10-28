@@ -72,6 +72,17 @@ class AdventureRepository {
 
   Future<void> stopHunt(String id) => api.post('/v1/hunt/$id/stop', const {});
 
+  /// Collects the hunt so far and starts the same hunt again (DD-310): the
+  /// result, the new hunt (null when it could not start) and why not.
+  Future<(CombatResult, CombatContract?, ApiError?)> restartHunt(String id) async {
+    final j = await api.post('/v1/hunt/$id/restart', const {});
+    return (
+      CombatResult.fromJson(j['reveal'] as Map<String, dynamic>? ?? const {}, 'hunt'),
+      _contract(j, 'mob_code'),
+      j['restart_error'] is String ? ApiError(409, j['restart_error'] as String) : null,
+    );
+  }
+
   // --- dungeon --------------------------------------------------------------
 
   Future<List<DungeonInfo>> dungeons() async => _dungeons ??= [

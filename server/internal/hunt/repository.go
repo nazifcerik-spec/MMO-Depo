@@ -116,6 +116,17 @@ func (r *PgRepo) Create(ctx context.Context, c *Contract) error {
 // holdSupply takes qty units of a template out of the character's bag
 // (smallest stacks first) into instances locked to the hunt (DD-288): whole
 // stacks are locked, a partial one is split.
+//
+// SupplyStock is how many units of a consumable the bag holds free.
+func (r *PgRepo) SupplyStock(ctx context.Context, characterID uuid.UUID, code string) (int32, error) {
+	var n int32
+	err := r.pool.QueryRow(ctx, `
+		SELECT COALESCE(SUM(stack_quantity), 0)::int FROM inventory.item_instance
+		 WHERE owner_character_id = $1 AND template_code = $2 AND is_locked = false
+		   AND equipment_slot IS NULL`, characterID, code).Scan(&n)
+	return n, err
+}
+
 func holdSupply(ctx context.Context, tx pgx.Tx, characterID, huntID uuid.UUID, code string, qty int32) error {
 	rows, err := tx.Query(ctx, `
 		SELECT id, stack_quantity FROM inventory.item_instance

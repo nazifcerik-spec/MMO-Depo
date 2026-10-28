@@ -3058,6 +3058,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 **Consequences:** Oyuncu güç farkını ve bitiş nedenini her koşuda görür. Savaş mekaniği değişmedi.
 **Tarih:** 2026-10-28
 
+## DD-309 — Meslek ve toplama seviyeleri %20 daha zor
+
+**Context:** Oyuncu meslek ve toplama seviye atlamasının %20 zorlaşmasını istedi.
+**Decision:** Ortak meslek eğrisi `crafting.ProfessionXPToNext` = round(72 × 1,06^N) (önce 60 × 1,06^N): her seviye %20 daha fazla XP ister. Toplama meslekleri aynı eğriyi kullanır (`gathering`).
+**Consequences:** Meslek 100'e ulaşmak %20 daha uzun sürer; mevcut XP ve seviyeler korunur.
+**Tarih:** 2026-10-29
+
+---
+
+## DD-310 — Av ve toplamada yeniden başlat
+
+**Context:** Oyuncu her seferinde topla → yeniden seç → başlat yapmak istemiyordu.
+**Decision:** `POST /v1/hunt/{id}/restart` ve `POST /v1/activity/{id}/restart`: etkin işi o ana kadarki kazancıyla toplar (reveal ile aynı, avda rapor `collected_early`), sonra aynı işi aynı planlanan süreyle yeniden başlatır (av: canavar + malzemeler, çantada kalan kadar — `SupplyStock`; toplama: tür + kaynak + parametreler). Toplama her durumda geçerli kalır; yeni başlangıç olmazsa yanıt `contract: null` + `restart_error` (ör. `E_BAG_FULL`, `E_TOO_WOUNDED`; `apierr.CodeOf`). Zindan, baskın, yolculuk ve üretimde yok. İstemci: Topla'nın yanında Yeniden başlat (süre dolmadan onay), ganimet sayfası yeni iş ekrandayken açılır.
+**Consequences:** Tek dokunuşla aynı işe devam edilir; tek işlem kuralı korunur (toplama başlatmadan önce biter).
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

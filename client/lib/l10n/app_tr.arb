@@ -823,5 +823,8 @@
   "repPartySwings": "Partinin vuruşları",
   "repEnemySwings": "Düşmanın vuruşları",
   "repLowest": "Savaşta en düşük can: %{pct}",
-  "repRest": "Kampta dinlenme: {time}"
+  "repRest": "Kampta dinlenme: {time}",
+  "restart": "Yeniden başlat",
+  "restartTitle": "Toplayıp yeniden başlatılsın mı?",
+  "restartBody": "Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar."
 }

@@ -2857,4 +2857,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String repRest(String time) {
     return 'Camped: $time';
   }
+
+  @override
+  String get restart => 'Restart';
+
+  @override
+  String get restartTitle => 'Collect and start again?';
+
+  @override
+  String get restartBody => 'What came in so far goes to your bag, and the same run starts again for the same time.';
 }

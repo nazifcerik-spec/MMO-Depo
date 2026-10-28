@@ -5037,6 +5037,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Camped: {time}'**
   String repRest(String time);
+
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
+
+  /// No description provided for @restartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect and start again?'**
+  String get restartTitle;
+
+  /// No description provided for @restartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'What came in so far goes to your bag, and the same run starts again for the same time.'**
+  String get restartBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

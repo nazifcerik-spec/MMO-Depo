@@ -491,6 +491,8 @@ func NewRouter(d Deps) http.Handler {
 					Post("/hunt/{contract_id}/reveal", d.HuntHandler.Reveal)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/hunt/{contract_id}/stop", d.HuntHandler.Stop)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/hunt/{contract_id}/restart", d.HuntHandler.Restart) // DD-310
 			}
 
 			// --- Content names (DD-230): cacheable ---
@@ -608,6 +610,8 @@ func NewRouter(d Deps) http.Handler {
 				Post("/activity/{contract_id}/reveal", activityHandler.Reveal)
 			r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 				Post("/activity/{contract_id}/stop", activityHandler.Stop)
+			r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+				Post("/activity/{contract_id}/restart", activityHandler.Restart) // DD-310
 
 			// --- Vendor (Sprint 10) ---
 			// GET must live inside the Route: chi's Route mounts a subrouter on

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
+	"net/http/httptest"
 
 	chimw "github.com/go-chi/chi/v5/middleware"
 )
@@ -55,4 +56,14 @@ func WriteField(w http.ResponseWriter, r *http.Request, status int, code, messag
 			CorrelationID: chimw.GetReqID(r.Context()),
 		},
 	})
+}
+
+// CodeOf is the error code write answers with, for a success response that
+// carries a partial failure (a restart whose collection stood, DD-310).
+func CodeOf(r *http.Request, write func(http.ResponseWriter, *http.Request)) string {
+	rec := httptest.NewRecorder()
+	write(rec, r)
+	var body map[string]Error
+	_ = json.Unmarshal(rec.Body.Bytes(), &body)
+	return body["error"].Code
 }

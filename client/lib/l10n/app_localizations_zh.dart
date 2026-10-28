@@ -2849,4 +2849,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String repRest(String time) {
     return '扎营休息：$time';
   }
+
+  @override
+  String get restart => '重新开始';
+
+  @override
+  String get restartTitle => '领取并重新开始？';
+
+  @override
+  String get restartBody => '目前的收获放入背包，并以相同时长重新开始。';
 }

@@ -2856,4 +2856,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String repRest(String time) {
     return 'Kampta dinlenme: $time';
   }
+
+  @override
+  String get restart => 'Yeniden başlat';
+
+  @override
+  String get restartTitle => 'Toplayıp yeniden başlatılsın mı?';
+
+  @override
+  String get restartBody => 'Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar.';
 }

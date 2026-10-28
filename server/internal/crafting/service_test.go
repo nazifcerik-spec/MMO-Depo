@@ -333,17 +333,17 @@ func TestJob_ConsumeRaceUndoesTheStart(t *testing.T) {
 	require.Equal(t, 3, (&Job{Count: 3}).Done(now), "no unit time: all done")
 }
 func TestProfessionXPToNext_MonotonicByLevel(t *testing.T) {
-	require.Equal(t, int32(64), ProfessionXPToNext(1))
-	require.Equal(t, int32(67), ProfessionXPToNext(2))
-	require.Equal(t, int32(107), ProfessionXPToNext(10))
-	require.Equal(t, int32(1105), ProfessionXPToNext(50))
-	require.Equal(t, int32(19206), ProfessionXPToNext(99))
+	require.Equal(t, int32(76), ProfessionXPToNext(1))
+	require.Equal(t, int32(81), ProfessionXPToNext(2))
+	require.Equal(t, int32(129), ProfessionXPToNext(10))
+	require.Equal(t, int32(1326), ProfessionXPToNext(50))
+	require.Equal(t, int32(23047), ProfessionXPToNext(99))
 	for l := int16(1); l < 100; l++ {
 		require.Greater(t, ProfessionXPToNext(l+1), ProfessionXPToNext(l))
 	}
 	// Clamps sub-1 levels to 1's cost.
-	require.Equal(t, int32(64), ProfessionXPToNext(0))
-	require.Equal(t, int32(64), ProfessionXPToNext(-5))
+	require.Equal(t, int32(76), ProfessionXPToNext(0))
+	require.Equal(t, int32(76), ProfessionXPToNext(-5))
 }
 
 func TestDifficulty(t *testing.T) {

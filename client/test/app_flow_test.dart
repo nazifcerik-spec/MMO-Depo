@@ -450,6 +450,31 @@ void main() {
     expect(be.sheetGets, greaterThan(sheetsBefore), reason: 'reveal bumps other tabs');
   });
 
+  testWidgets('gathering restart: collect so far, the same run starts again (DD-310)', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    await tester.tap(find.text('Gather'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Fishing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Salmon'));
+    await _gatherScrollTo(tester, 'Start Fishing');
+    await tester.tap(find.text('Start Fishing'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Restart'));
+    await tester.pumpAndSettle();
+    expect(find.text('Collect and start again?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Restart'));
+    await tester.pumpAndSettle();
+    expect(be.restarts, 1);
+    expect(find.text('Copper Ore'), findsOneWidget, reason: 'the haul so far');
+    await tester.tap(find.text('Nice!'));
+    await tester.pumpAndSettle();
+    expect(be.activeActivity!['id'], 'act-2');
+    expect(be.activeActivity!['target'], 'salmon');
+    expect(find.text('Restart'), findsOneWidget, reason: 'the new run is on screen');
+  });
+
   testWidgets('hunting resources show the animal when its picture ships', (tester) async {
     ItemImages.animals = {'forest_rat'};
     addTearDown(() => ItemImages.animals = const {});

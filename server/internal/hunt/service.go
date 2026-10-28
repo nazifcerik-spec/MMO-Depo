@@ -348,6 +348,51 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	return &StartResult{Contract: c, MobDisplayKey: mob.DisplayNameKey}, nil
 }
 
+// --- Restart ----------------------------------------------------------------
+
+// Restart collects an active hunt so far and starts the same hunt again
+// (DD-310): the same mob and planned duration, and the same supplies as far
+// as the bag still holds them. The collection stands even when the new
+// start fails (the error says why).
+func (s *Service) Restart(ctx context.Context, contractID, accountID uuid.UUID) (*RevealResult, *StartResult, error) {
+	c, err := s.repo.GetByID(ctx, contractID)
+	if err != nil {
+		return nil, nil, err
+	}
+	if err := s.chars.Owns(ctx, c.CharacterID, accountID); err != nil {
+		return nil, nil, err
+	}
+	if c.State != StateActive {
+		return nil, nil, ErrNotActive
+	}
+	rev, err := s.Reveal(ctx, contractID, accountID)
+	if err != nil {
+		return nil, nil, err
+	}
+	req := StartRequest{CharacterID: c.CharacterID, AccountID: accountID, MobCode: c.MobCode,
+		DurationSeconds: c.DurationSecs}
+	stock, _ := s.repo.(interface {
+		SupplyStock(ctx context.Context, characterID uuid.UUID, code string) (int32, error)
+	})
+	if c.Loadout != nil {
+		for _, sp := range c.Loadout.Supplies {
+			qty := sp.Qty
+			if stock != nil {
+				n, err := stock.SupplyStock(ctx, c.CharacterID, sp.Code)
+				if err != nil {
+					return rev, nil, err
+				}
+				qty = min(qty, n)
+			}
+			if qty > 0 {
+				req.Supplies = append(req.Supplies, SupplyRequest{Code: sp.Code, Qty: qty})
+			}
+		}
+	}
+	st, err := s.Start(ctx, req)
+	return rev, st, err
+}
+
 // --- Reveal -----------------------------------------------------------------
 
 // RevealResult is the reveal HTTP response.

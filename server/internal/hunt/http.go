@@ -120,6 +120,35 @@ func (h *Handler) Reveal(w http.ResponseWriter, r *http.Request) {
 	apierr.WriteJSON(w, http.StatusOK, res)
 }
 
+// Restart collects the hunt so far and starts the same hunt again (DD-310):
+// the reveal as /reveal answers it plus the new contract (null, with
+// restart_error, when it could not start).
+func (h *Handler) Restart(w http.ResponseWriter, r *http.Request) {
+	acct := httpctx.AccountID(r.Context())
+	if acct == uuid.Nil {
+		apierr.Write(w, r, http.StatusUnauthorized, "E_UNAUTHENTICATED", "auth required")
+		return
+	}
+	contractID, err := uuid.Parse(chi.URLParam(r, "contract_id"))
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	rev, st, err := h.svc.Restart(r.Context(), contractID, acct)
+	if rev == nil {
+		writeErr(w, r, err)
+		return
+	}
+	out := map[string]any{"reveal": rev, "contract": nil}
+	if st != nil {
+		out["contract"] = st.Contract
+	}
+	if err != nil {
+		out["restart_error"] = apierr.CodeOf(r, func(w http.ResponseWriter, r *http.Request) { writeErr(w, r, err) })
+	}
+	apierr.WriteJSON(w, http.StatusOK, out)
+}
+
 // Stop cancels the active hunt (no reward).
 func (h *Handler) Stop(w http.ResponseWriter, r *http.Request) {
 	acct := httpctx.AccountID(r.Context())

@@ -76,9 +76,9 @@ func TestLevelsStartAtOneAndGrowWithXP(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, 1, lvl, "no row yet")
 
-	p, err := svc.AddXP(ctx, char, activity.KindMining, 140) // 64 + 67 = 131
+	p, err := svc.AddXP(ctx, char, activity.KindMining, 165) // 76 + 81 = 157 (DD-309)
 	require.NoError(t, err)
-	require.Equal(t, activity.GatherProgress{Level: 3, XP: 9, XPToNext: 71, Gained: 140, LeveledUp: true}, p)
+	require.Equal(t, activity.GatherProgress{Level: 3, XP: 8, XPToNext: 86, Gained: 165, LeveledUp: true}, p)
 	lvl, _ = svc.Level(ctx, char, activity.KindMining)
 	require.Equal(t, 3, lvl)
 

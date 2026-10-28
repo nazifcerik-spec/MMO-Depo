@@ -232,6 +232,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 108. **Savaş raporu (bitti)** — Sprint 108, DD-308. `combat.Report` (`report.go`): bitiş nedeni + son savaşın iki tarafı + isabet şansları + vuruş toplamları + en düşük can; av/zindan/baskın sonuçlarında `report` (baskında `Report.For` üyeye göre). İstemci `FightReportCard` (`adventure/fight_report.dart`) ganimet sayfasının altında (`showLootSheet` `footer`).
 
+109. **Meslek eğrisi + yeniden başlat (bitti)** — Sprint 109, DD-309..310. `ProfessionXPToNext` 72 × 1,06^N (%20 zor). `POST /v1/{hunt,activity}/{id}/restart` (topla + aynı işi aynı süreyle başlat; av malzemeleri çantada kalan kadar; başlatılamazsa `restart_error`). İstemci Topla yanında Yeniden başlat (toplama + av).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

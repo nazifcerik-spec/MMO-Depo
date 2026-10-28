@@ -2258,5 +2258,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "restart": "Restart",
+  "restartTitle": "Collect and start again?",
+  "restartBody": "What came in so far goes to your bag, and the same run starts again for the same time."
 }

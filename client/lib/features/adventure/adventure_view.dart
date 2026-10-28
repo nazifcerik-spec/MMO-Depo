@@ -114,6 +114,7 @@ class _RunningCard extends StatelessWidget {
     required this.onComplete,
     this.hint,
     this.collectBeforeEnd = true,
+    this.onRestart,
   });
 
   final IconData icon;
@@ -128,6 +129,9 @@ class _RunningCard extends StatelessWidget {
   final VoidCallback onCollect;
   final VoidCallback onAbandon;
   final VoidCallback onComplete;
+
+  /// Collect so far and run the same again (DD-310); hunts only.
+  final VoidCallback? onRestart;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +168,23 @@ class _RunningCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: Space.lg),
-        FilledButton(onPressed: done || collectBeforeEnd ? onCollect : null, child: Text(l.collect)),
+        Row(
+          children: [
+            Expanded(
+              child: FilledButton(onPressed: done || collectBeforeEnd ? onCollect : null, child: Text(l.collect)),
+            ),
+            if (onRestart != null) ...[
+              const SizedBox(width: Space.sm),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: onRestart,
+                  icon: const Icon(Icons.replay, size: 18),
+                  label: Text(l.restart),
+                ),
+              ),
+            ],
+          ],
+        ),
         const SizedBox(height: Space.sm),
         TextButton(
           onPressed: onAbandon,
@@ -287,15 +307,39 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
       setState(() => _active = null);
       widget.dataVersion.value++;
       unawaited(load()); // what came back to the bag
-      await showLootSheet(
-        context,
-        title: ContentNames.of('mob', c.target),
-        subtitle: _resultSubtitle(l, r),
-        loot: r.loot,
-        footer: r.report == null ? null : FightReportCard(report: r.report!, hunt: true),
-      );
+      await _showResult(c, r);
     });
   }
+
+  /// Collects the hunt so far and hunts the same again (DD-310).
+  Future<void> _restart(CombatContract c) async {
+    final l = AppLocalizations.of(context);
+    if (!ContractProgress.isDone(c.expiresAt) &&
+        !await confirmAction(context, title: l.restartTitle, body: l.restartBody, action: l.restart)) {
+      return;
+    }
+    CombatResult? res;
+    ApiError? err;
+    await run(() async {
+      final (r, next, e) = await widget.repo.restartHunt(c.id);
+      if (!mounted) return;
+      (res, err) = (r, e);
+      setState(() => _active = next);
+      widget.dataVersion.value++;
+      if (next == null) unawaited(load());
+    });
+    if (res == null || !mounted) return;
+    await _showResult(c, res!);
+    if (err != null && mounted) toast(context, Text(errorText(l, err!)));
+  }
+
+  Future<void> _showResult(CombatContract c, CombatResult r) => showLootSheet(
+    context,
+    title: ContentNames.of('mob', c.target),
+    subtitle: _resultSubtitle(AppLocalizations.of(context), r),
+    loot: r.loot,
+    footer: r.report == null ? null : FightReportCard(report: r.report!, hunt: true),
+  );
 
   Future<void> _abandon(CombatContract c) async {
     final l = AppLocalizations.of(context);
@@ -328,6 +372,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
             endsAt: a.expiresAt,
             doneLabel: l.huntDone,
             onCollect: () => _collect(a),
+            onRestart: () => _restart(a),
             onAbandon: () => _abandon(a),
             onComplete: () => setState(() {}),
           ),

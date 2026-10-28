@@ -307,5 +307,8 @@
   "repPartySwings": "Golpes del grupo",
   "repEnemySwings": "Golpes del enemigo",
   "repLowest": "Vida más baja en combate: {pct} %",
-  "repRest": "Acampado: {time}"
+  "repRest": "Acampado: {time}",
+  "restart": "Reiniciar",
+  "restartTitle": "¿Recoger y empezar de nuevo?",
+  "restartBody": "Lo obtenido hasta ahora va a tu bolsa y lo mismo vuelve a empezar con la misma duración."
 }

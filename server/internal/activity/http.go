@@ -121,13 +121,45 @@ func (h *Handler) Reveal(w http.ResponseWriter, r *http.Request) {
 		writeActivityErr(w, r, err)
 		return
 	}
-	apierr.WriteJSON(w, http.StatusOK, map[string]any{
+	apierr.WriteJSON(w, http.StatusOK, revealResponse(res))
+}
+
+func revealResponse(res *RevealResult) map[string]any {
+	return map[string]any{
 		"yield":         res.Yield,
 		"ledger_txn_id": res.LedgerTxnID.String(),
 		"replayed":      res.Replayed,
 		"gather":        res.Gather,
-		"party_share":   res.Party, // DD-296; null when not shared
-	})
+		"party_share":   res.Party, // DD-305; null without a party bonus
+	}
+}
+
+// --- POST /v1/activity/{contract_id}/restart --------------------------------
+
+// Restart collects the activity so far and starts it again (DD-310): the
+// reveal as /reveal answers it, plus the new contract (null and an error
+// code when it could not start).
+func (h *Handler) Restart(w http.ResponseWriter, r *http.Request) {
+	acct := httpctx.AccountID(r.Context())
+	id, err := parseUUIDParam(r, "contract_id")
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	rev, st, err := h.svc.Restart(r.Context(), id, acct)
+	if rev == nil {
+		writeActivityErr(w, r, err)
+		return
+	}
+	out := revealResponse(rev)
+	out["contract"] = nil
+	if st != nil {
+		out["contract"] = contractResponse(st.Contract)
+	}
+	if err != nil {
+		out["restart_error"] = apierr.CodeOf(r, func(w http.ResponseWriter, r *http.Request) { writeActivityErr(w, r, err) })
+	}
+	apierr.WriteJSON(w, http.StatusOK, out)
 }
 
 // --- POST /v1/activity/{contract_id}/stop -----------------------------------

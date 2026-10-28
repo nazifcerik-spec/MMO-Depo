@@ -267,6 +267,29 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 
 // --- Reveal -----------------------------------------------------------------
 
+// Restart collects an active activity so far and starts the same one again
+// (DD-310): kind, gathering resource, params and planned duration. The
+// collection stands even when the new start fails.
+func (s *Service) Restart(ctx context.Context, contractID, accountID uuid.UUID) (*RevealResult, *StartResult, error) {
+	c, err := s.repo.GetByID(ctx, contractID)
+	if err != nil {
+		return nil, nil, err
+	}
+	if _, err := s.chars.GetOwned(ctx, c.CharacterID, accountID); err != nil {
+		return nil, nil, ErrForbidden
+	}
+	if c.State != StateActive {
+		return nil, nil, ErrNotActive
+	}
+	rev, err := s.Reveal(ctx, contractID, accountID)
+	if err != nil {
+		return nil, nil, err
+	}
+	st, err := s.Start(ctx, StartRequest{CharacterID: c.CharacterID, AccountID: accountID, Kind: c.Kind,
+		DurationSeconds: c.DurationSeconds, Target: parseSnapshot(c.Snapshot).Target, Params: c.Params})
+	return rev, st, err
+}
+
 // Reveal is idempotent — repeated calls return the cached response (state
 // stays 'revealed'; no new ledger writes). Partial reveal is supported: if
 // the user reveals before expires_at, they get yield proportional to elapsed.
