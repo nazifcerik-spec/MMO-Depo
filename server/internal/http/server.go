@@ -50,6 +50,7 @@ import (
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/story"
 	"github.com/otter/server/internal/support"
+	"github.com/otter/server/internal/trade"
 	"github.com/otter/server/internal/vendor"
 	"github.com/otter/server/internal/world"
 	"github.com/otter/server/internal/worldevent"
@@ -101,6 +102,7 @@ type Deps struct {
 	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
 	ConsumableHandler *consumable.Handler
 	DailyHandler      *dailyreward.Handler // DD-311
+	TradeHandler      *trade.Handler       // DD-315
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -305,6 +307,9 @@ func NewRouter(d Deps) http.Handler {
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/items/{item_id}/use", h.Use)
 					r.Get("/buff", h.Active) // food buff (DD-269)
+				}
+				if h := d.TradeHandler; h != nil { // player trading (DD-315)
+					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
 				}
 				if h := d.DailyHandler; h != nil { // daily login reward (DD-311)
 					r.Get("/daily-reward", h.Status)

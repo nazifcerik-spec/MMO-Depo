@@ -58,6 +58,9 @@ class FakeBackend {
 
   /// The account bank (DD-314).
   final bank = <Map<String, dynamic>>[];
+
+  /// The open trade (DD-315); the other side gets ready with the player.
+  Map<String, dynamic>? trade;
   int hp = 30; // current HP for consumable tests (max 120)
   Map<String, dynamic>? activeHunt;
 
@@ -221,6 +224,33 @@ class FakeBackend {
       return json(200, _session());
     }
     if (path == '/v1/story') return json(200, {'chapters': story});
+    if (path.startsWith('/v1/character/char-1/trade')) {
+      final rest = path.substring('/v1/character/char-1/trade'.length);
+      Map<String, dynamic> side(String name) => {
+        'name': name,
+        'items': <Map<String, dynamic>>[],
+        'tax_copper': 0,
+        'ready': false,
+      };
+      if (rest.isEmpty && req.method == 'POST') {
+        trade = {'id': 't1', 'state': 'open', 'me': side('Grim'), 'them': side(body['target_name'] as String)};
+      } else if (rest.endsWith('/offer')) {
+        final i = bag.firstWhere((x) => x['instance_id'] == body['item_id']);
+        (trade!['me'] as Map)['items'] = [
+          {
+            'instance_id': i['instance_id'],
+            'template_code': i['template_code'],
+            'quantity': body['quantity'],
+            'rarity': 'common',
+            'tax_copper': 8000,
+          },
+        ];
+        (trade!['me'] as Map)['tax_copper'] = 8000;
+      } else if (rest.endsWith('/ready')) {
+        trade!['state'] = 'done';
+      }
+      return json(200, {'trade': trade});
+    }
     if (path == '/v1/character/char-1/daily-reward' || path == '/v1/character/char-1/daily-reward/claim') {
       if (path.endsWith('/claim')) {
         if (!dailyClaimable) return error(409, 'E_ALREADY_CLAIMED');

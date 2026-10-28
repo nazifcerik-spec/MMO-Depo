@@ -2931,4 +2931,78 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Quítate el objeto primero.';
+
+  @override
+  String get tabTrade => 'Intercambio';
+
+  @override
+  String get tradeHint =>
+      'Intercambia objetos con otro jugador. Ambos ponen objetos y confirman; cada lado paga un impuesto del 8 % del precio medio de mercado de lo que da, por unidad.';
+
+  @override
+  String get tradeWith => 'Nombre del jugador';
+
+  @override
+  String get tradeOpen => 'Iniciar intercambio';
+
+  @override
+  String tradeTitle(String name) {
+    return 'Intercambio con $name';
+  }
+
+  @override
+  String get tradeYours => 'Tú das';
+
+  @override
+  String tradeTheirs(String name) {
+    return '$name da';
+  }
+
+  @override
+  String get tradeNothing => 'Nada todavía.';
+
+  @override
+  String get tradeAdd => 'Añadir objeto';
+
+  @override
+  String get tradeRemove => 'Retirar';
+
+  @override
+  String get tradeTax => 'Tu impuesto';
+
+  @override
+  String get tradeReady => 'Listo';
+
+  @override
+  String get tradeWaiting => 'No listo';
+
+  @override
+  String get tradeConfirm => 'Confirmar intercambio';
+
+  @override
+  String get tradeWaitingThem => 'Esperando al otro jugador';
+
+  @override
+  String get tradeCancel => 'Cancelar intercambio';
+
+  @override
+  String get tradeCancelBody => 'No se intercambia nada.';
+
+  @override
+  String get tradeDone => 'Intercambio completado.';
+
+  @override
+  String get errTradeBusy => 'Uno de vosotros ya está intercambiando.';
+
+  @override
+  String get errTradeClosed => 'Ese intercambio terminó.';
+
+  @override
+  String get errTradeItem => 'Ese objeto no se puede intercambiar ahora.';
+
+  @override
+  String get errTradeEmpty => 'Primero pon algo.';
+
+  @override
+  String get errTradeTooMany => 'Demasiados objetos en el intercambio.';
 }

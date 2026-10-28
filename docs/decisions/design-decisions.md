@@ -3112,6 +3112,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-315 — Oyuncular arası takas + %8 vergi
+
+**Context:** Oyuncu kendi aralarında eşya değiş tokuşu ve işlem ücreti olarak, takas edilen eşyaların ortalama pazar değerinin adet başına %8'i kadar vergi istedi (100g ortalamalı 10 cevher → 80g).
+**Decision:** Yeni `internal/trade` + migration 0053 (`trade.session`, `trade.offer`). Akış: isimle takas aç (karakter başına tek açık takas; ikisi sabit sırada kilitlenir) → her taraf çantasından en çok 12 eşya koyar (adet; kilitli/bağlı/kuşanılı olamaz) → değişiklik iki tarafın da onayını sıfırlar → ikisi onaylayınca tamamlanır. 15 dk değişiklik olmazsa kapanır. Vergi her taraf için verdiği eşyalardan: `round(ortalama birim fiyat × adet × %8)`; ortalama = son 30 günün `market.price_history` adet ağırlıklı ortalaması, yoksa şablonun taban değeri. Tamamlama: iki çantada yer kontrolü → vergiler defterden `tax_sink`'e (taraf başı idempotent anahtar; yetmezse `E_INSUFFICIENT_GOLD`) → tek tx'te eşyalar el değiştirir (kısmi yığın ayrılır; araya giren değişiklik `E_TRADE_ITEM`) → başarısızlıkta vergi iadesi → gelen eşyalar çantaya yerleşir. WS `trade.changed`. Uçlar `/v1/character/{id}/trade` (GET, POST aç) + `/{trade_id}/{offer,remove,ready,cancel}`. İstemci: Sosyal → Takas sekmesi (oyuncu adı, iki taraf, eşya ekle + adet, vergi, onay durumu, onayla/iptal).
+**Consequences:** Oyuncular güvenli eşya değiş tokuşu yapar; vergi altını ekonomiden çıkarır. Takasta altın yok (yalnız eşya).
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

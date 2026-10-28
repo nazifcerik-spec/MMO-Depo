@@ -5169,6 +5169,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take the item off first.'**
   String get errItemEquipped;
+
+  /// No description provided for @tabTrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade'**
+  String get tabTrade;
+
+  /// No description provided for @tradeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.'**
+  String get tradeHint;
+
+  /// No description provided for @tradeWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Player name'**
+  String get tradeWith;
+
+  /// No description provided for @tradeOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Start trade'**
+  String get tradeOpen;
+
+  /// No description provided for @tradeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade with {name}'**
+  String tradeTitle(String name);
+
+  /// No description provided for @tradeYours.
+  ///
+  /// In en, this message translates to:
+  /// **'You give'**
+  String get tradeYours;
+
+  /// No description provided for @tradeTheirs.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} gives'**
+  String tradeTheirs(String name);
+
+  /// No description provided for @tradeNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet.'**
+  String get tradeNothing;
+
+  /// No description provided for @tradeAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get tradeAdd;
+
+  /// No description provided for @tradeRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Take back'**
+  String get tradeRemove;
+
+  /// No description provided for @tradeTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Your tax'**
+  String get tradeTax;
+
+  /// No description provided for @tradeReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get tradeReady;
+
+  /// No description provided for @tradeWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Not ready'**
+  String get tradeWaiting;
+
+  /// No description provided for @tradeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm trade'**
+  String get tradeConfirm;
+
+  /// No description provided for @tradeWaitingThem.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the other player'**
+  String get tradeWaitingThem;
+
+  /// No description provided for @tradeCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel trade'**
+  String get tradeCancel;
+
+  /// No description provided for @tradeCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing changes hands.'**
+  String get tradeCancelBody;
+
+  /// No description provided for @tradeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade complete.'**
+  String get tradeDone;
+
+  /// No description provided for @errTradeBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'One of you is already trading.'**
+  String get errTradeBusy;
+
+  /// No description provided for @errTradeClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'That trade is over.'**
+  String get errTradeClosed;
+
+  /// No description provided for @errTradeItem.
+  ///
+  /// In en, this message translates to:
+  /// **'That item cannot be traded now.'**
+  String get errTradeItem;
+
+  /// No description provided for @errTradeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Put something up first.'**
+  String get errTradeEmpty;
+
+  /// No description provided for @errTradeTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many items in the trade.'**
+  String get errTradeTooMany;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

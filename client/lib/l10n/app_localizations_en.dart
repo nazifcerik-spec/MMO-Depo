@@ -2931,4 +2931,78 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Take the item off first.';
+
+  @override
+  String get tabTrade => 'Trade';
+
+  @override
+  String get tradeHint =>
+      'Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.';
+
+  @override
+  String get tradeWith => 'Player name';
+
+  @override
+  String get tradeOpen => 'Start trade';
+
+  @override
+  String tradeTitle(String name) {
+    return 'Trade with $name';
+  }
+
+  @override
+  String get tradeYours => 'You give';
+
+  @override
+  String tradeTheirs(String name) {
+    return '$name gives';
+  }
+
+  @override
+  String get tradeNothing => 'Nothing yet.';
+
+  @override
+  String get tradeAdd => 'Add item';
+
+  @override
+  String get tradeRemove => 'Take back';
+
+  @override
+  String get tradeTax => 'Your tax';
+
+  @override
+  String get tradeReady => 'Ready';
+
+  @override
+  String get tradeWaiting => 'Not ready';
+
+  @override
+  String get tradeConfirm => 'Confirm trade';
+
+  @override
+  String get tradeWaitingThem => 'Waiting for the other player';
+
+  @override
+  String get tradeCancel => 'Cancel trade';
+
+  @override
+  String get tradeCancelBody => 'Nothing changes hands.';
+
+  @override
+  String get tradeDone => 'Trade complete.';
+
+  @override
+  String get errTradeBusy => 'One of you is already trading.';
+
+  @override
+  String get errTradeClosed => 'That trade is over.';
+
+  @override
+  String get errTradeItem => 'That item cannot be traded now.';
+
+  @override
+  String get errTradeEmpty => 'Put something up first.';
+
+  @override
+  String get errTradeTooMany => 'Too many items in the trade.';
 }

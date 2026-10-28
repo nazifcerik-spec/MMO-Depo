@@ -10,6 +10,8 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../inventory/inventory_repository.dart';
+import 'trade_panel.dart';
 import 'group_panels.dart';
 import 'group_repository.dart';
 import 'social_repository.dart';
@@ -38,7 +40,7 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderStateMixin {
-  late final _tabs = TabController(length: 4, vsync: this);
+  late final _tabs = TabController(length: 5, vsync: this);
   late final _groups = GroupRepository(widget.repo.api, widget.repo.characterId);
   final _chat = GlobalKey<_ChatPanelState>();
 
@@ -70,6 +72,7 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
             Tab(text: l.tabFriends),
             Tab(text: l.tabMail),
             Tab(text: l.tabGuild),
+            Tab(text: l.tabTrade),
           ],
         ),
       ),
@@ -82,6 +85,11 @@ class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderSt
               _FriendsPanel(repo: widget.repo, onWhisper: _whisper),
               _MailPanel(repo: widget.repo, dataVersion: widget.dataVersion),
               GuildPanel(repo: _groups, live: widget.live),
+              TradePanel(
+                repo: TradeRepository(widget.repo.api, widget.repo.characterId),
+                bag: InventoryRepository(widget.repo.api, widget.repo.characterId),
+                live: widget.live,
+              ),
             ],
           ),
         ),

@@ -50,6 +50,7 @@ import (
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/support"
+	"github.com/otter/server/internal/trade"
 	"github.com/otter/server/internal/vendor"
 	"github.com/otter/server/internal/world"
 	"github.com/otter/server/internal/worldevent"
@@ -415,6 +416,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumableSvc),
 		DailyHandler:      dailyreward.NewHandler(dailyreward.NewService(pool, txnSvc, itemSvc)),
+		TradeHandler:      trade.NewHandler(trade.NewService(pool, txnSvc, invSvc, logger).WithPublisher(wsPub)),
 		AdminHandler:      adminHandler,
 		SupportHandler:    support.NewHandler(supportSvc),
 		ClientErrHandler:  clienterr.NewHandler(clientErrSvc),

@@ -2930,4 +2930,78 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Önce eşyayı çıkar.';
+
+  @override
+  String get tabTrade => 'Takas';
+
+  @override
+  String get tradeHint =>
+      'Başka bir oyuncuyla eşya takas et. İkiniz de eşya koyup onaylarsınız; her taraf verdiği eşyaların ortalama pazar fiyatının %8\'ini adet başına vergi olarak öder.';
+
+  @override
+  String get tradeWith => 'Oyuncu adı';
+
+  @override
+  String get tradeOpen => 'Takas başlat';
+
+  @override
+  String tradeTitle(String name) {
+    return '$name ile takas';
+  }
+
+  @override
+  String get tradeYours => 'Senin verdiğin';
+
+  @override
+  String tradeTheirs(String name) {
+    return '$name veriyor';
+  }
+
+  @override
+  String get tradeNothing => 'Henüz bir şey yok.';
+
+  @override
+  String get tradeAdd => 'Eşya ekle';
+
+  @override
+  String get tradeRemove => 'Geri al';
+
+  @override
+  String get tradeTax => 'Ödeyeceğin vergi';
+
+  @override
+  String get tradeReady => 'Hazır';
+
+  @override
+  String get tradeWaiting => 'Bekliyor';
+
+  @override
+  String get tradeConfirm => 'Takası onayla';
+
+  @override
+  String get tradeWaitingThem => 'Karşı taraf bekleniyor';
+
+  @override
+  String get tradeCancel => 'Takası iptal et';
+
+  @override
+  String get tradeCancelBody => 'Hiçbir eşya el değiştirmez.';
+
+  @override
+  String get tradeDone => 'Takas tamamlandı.';
+
+  @override
+  String get errTradeBusy => 'Taraflardan biri zaten takasta.';
+
+  @override
+  String get errTradeClosed => 'Bu takas sona erdi.';
+
+  @override
+  String get errTradeItem => 'Bu eşya şu an takas edilemez.';
+
+  @override
+  String get errTradeEmpty => 'Önce bir eşya koyun.';
+
+  @override
+  String get errTradeTooMany => 'Takasta çok fazla eşya var.';
 }

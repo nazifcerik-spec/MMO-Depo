@@ -242,6 +242,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 113. **Hesap bankası (bitti)** — Sprint 113, DD-314. Migration 0052 (`item_instance.bank_account_id/bank_slot`). `inventory` `bank.go`: 200 kutu, hesap kilidi, kısmi yatır/çek, yığın birleştirme, bağlı/kuşanılı/kilitli girmez. `GET/POST /v1/character/{id}/bank[/deposit|/withdraw]`. İstemci `inventory/bank_screen.dart` (Çanta → Banka).
 
+114. **Oyuncular arası takas (bitti)** — Sprint 114, DD-315. Migration 0053 (`trade.session/offer`). `internal/trade`: iki taraf eşya koyar, değişiklik onayları sıfırlar, ikisi onaylayınca tek seferde el değiştirir; taraf başı vergi = verdiği eşyaların 30 günlük ortalama pazar fiyatı (yoksa taban değer) × adet × %8 → `tax_sink`. WS `trade.changed`. İstemci `social/trade_panel.dart` (Sosyal → Takas).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

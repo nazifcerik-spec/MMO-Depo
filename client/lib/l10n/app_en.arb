@@ -2304,5 +2304,42 @@
   "bankWithdraw": "Take",
   "errBankFull": "The bank is full.",
   "errItemBound": "Bound items stay with their character.",
-  "errItemEquipped": "Take the item off first."
+  "errItemEquipped": "Take the item off first.",
+  "tabTrade": "Trade",
+  "tradeHint": "Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.",
+  "tradeWith": "Player name",
+  "tradeOpen": "Start trade",
+  "tradeTitle": "Trade with {name}",
+  "@tradeTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tradeYours": "You give",
+  "tradeTheirs": "{name} gives",
+  "@tradeTheirs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tradeNothing": "Nothing yet.",
+  "tradeAdd": "Add item",
+  "tradeRemove": "Take back",
+  "tradeTax": "Your tax",
+  "tradeReady": "Ready",
+  "tradeWaiting": "Not ready",
+  "tradeConfirm": "Confirm trade",
+  "tradeWaitingThem": "Waiting for the other player",
+  "tradeCancel": "Cancel trade",
+  "tradeCancelBody": "Nothing changes hands.",
+  "tradeDone": "Trade complete.",
+  "errTradeBusy": "One of you is already trading.",
+  "errTradeClosed": "That trade is over.",
+  "errTradeItem": "That item cannot be traded now.",
+  "errTradeEmpty": "Put something up first.",
+  "errTradeTooMany": "Too many items in the trade."
 }

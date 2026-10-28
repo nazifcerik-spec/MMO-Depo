@@ -200,7 +200,12 @@ func (s *Service) Withdraw(ctx context.Context, characterID, accountID, itemID u
 	if err != nil {
 		return err
 	}
-	// Into the bag: onto stacks, else a free slot (the overflow path).
+	return s.PlaceOverflow(ctx, characterID)
+}
+
+// PlaceOverflow puts the character's unslotted items into the bag: onto
+// stacks, else free slots (items that arrived from the bank or a trade).
+func (s *Service) PlaceOverflow(ctx context.Context, characterID uuid.UUID) error {
 	overflow, err := s.repo.Unslotted(ctx, characterID)
 	if err != nil || len(overflow) == 0 {
 		return err

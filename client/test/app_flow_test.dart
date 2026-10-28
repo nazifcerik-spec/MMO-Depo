@@ -15,6 +15,7 @@ import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/character/models.dart';
 import 'package:otter/shared/links.dart';
 import 'package:otter/shared/loot_sheet.dart';
+import 'package:otter/shared/widgets.dart' show GoldText;
 
 import 'fake_backend.dart';
 import 'fake_ws.dart';
@@ -699,6 +700,46 @@ void main() {
     expect(find.textContaining('Sold for'), findsOneWidget);
     expect(find.textContaining('selected'), findsNothing, reason: 'selection ends after the sale');
     semantics.dispose();
+  });
+
+  testWidgets('trade: name a player, put items up with the tax, confirm (DD-315)', (tester) async {
+    final (be, _, _) = await _inGame(tester);
+    be.bag.add({
+      'instance_id': 'ore',
+      'template_code': 'copper_ore',
+      'item_class': 'material',
+      'item_subclass': 'ore',
+      'slot': 0,
+      'stack_quantity': 10,
+      'max_stack': 999,
+      'rarity': 'common',
+      'is_bound': false,
+      'is_locked': false,
+      'min_level': 1,
+    });
+    await tester.tap(find.byTooltip('Social'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Trade'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Trade'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Player name'), 'Brak');
+    await tester.tap(find.byKey(const Key('trade-open')));
+    await tester.pumpAndSettle();
+    expect(find.text('Trade with Brak'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('trade-add')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('pick-ore')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add item'));
+    await tester.pumpAndSettle();
+    expect(find.text('Copper Ore × 10'), findsOneWidget);
+    expect(tester.widget<GoldText>(find.byType(GoldText).last).copper, 8000, reason: 'the tax for what I give');
+
+    await tester.tap(find.byKey(const Key('trade-ready')));
+    await tester.pumpAndSettle();
+    expect(find.text('Trade complete.'), findsOneWidget);
   });
 
   testWidgets('bank: deposit part of a stack, take it back (DD-314)', (tester) async {

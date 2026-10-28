@@ -2921,4 +2921,77 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errItemEquipped => '请先卸下该物品。';
+
+  @override
+  String get tabTrade => '交易';
+
+  @override
+  String get tradeHint => '与其他玩家交易物品。双方放入物品并确认；每方按所给物品市场均价的8%（按件）缴税。';
+
+  @override
+  String get tradeWith => '玩家名称';
+
+  @override
+  String get tradeOpen => '发起交易';
+
+  @override
+  String tradeTitle(String name) {
+    return '与$name交易';
+  }
+
+  @override
+  String get tradeYours => '你给出';
+
+  @override
+  String tradeTheirs(String name) {
+    return '$name给出';
+  }
+
+  @override
+  String get tradeNothing => '暂无物品。';
+
+  @override
+  String get tradeAdd => '添加物品';
+
+  @override
+  String get tradeRemove => '撤回';
+
+  @override
+  String get tradeTax => '你的税费';
+
+  @override
+  String get tradeReady => '已确认';
+
+  @override
+  String get tradeWaiting => '未确认';
+
+  @override
+  String get tradeConfirm => '确认交易';
+
+  @override
+  String get tradeWaitingThem => '等待对方确认';
+
+  @override
+  String get tradeCancel => '取消交易';
+
+  @override
+  String get tradeCancelBody => '不会交换任何物品。';
+
+  @override
+  String get tradeDone => '交易完成。';
+
+  @override
+  String get errTradeBusy => '其中一方已在交易中。';
+
+  @override
+  String get errTradeClosed => '该交易已结束。';
+
+  @override
+  String get errTradeItem => '该物品现在无法交易。';
+
+  @override
+  String get errTradeEmpty => '请先放入物品。';
+
+  @override
+  String get errTradeTooMany => '交易物品过多。';
 }
