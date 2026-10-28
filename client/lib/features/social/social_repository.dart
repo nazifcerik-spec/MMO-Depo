@@ -11,6 +11,7 @@ class ChatMessage {
     required this.body,
     required this.sentAt,
     this.targetId,
+    this.system = '',
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> j) => ChatMessage(
@@ -21,7 +22,12 @@ class ChatMessage {
     targetId: j['target_character_id'] as String?,
     body: j['body'] as String? ?? '',
     sentAt: DateTime.tryParse(j['sent_at'] as String? ?? '') ?? DateTime.now(),
+    system: j['system'] as String? ?? '',
   );
+
+  /// A line the game wrote (DD-312): "profanity_mute" = [fromName] was
+  /// muted for swearing.
+  final String system;
 
   final int id;
   final String channel;

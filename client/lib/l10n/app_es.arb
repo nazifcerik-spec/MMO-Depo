@@ -316,5 +316,6 @@
   "dailyClaim": "Reclamar",
   "dailyTomorrow": "Vuelve mañana",
   "dailyDay": "Día {n}",
-  "dailyOpen": "Recompensa diaria"
+  "dailyOpen": "Recompensa diaria",
+  "chatMutedNotice": "{name} fue silenciado {min} minutos por insultar."
 }

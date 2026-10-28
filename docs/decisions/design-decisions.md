@@ -3085,6 +3085,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-312 — Sohbette küfür sansürü ve otomatik susturma
+
+**Context:** Oyuncu küfürlü mesajların `****` ile sansürlenmesini, küfre devam edenin (7 kelime) 5 dakika susturulmasını ve bunun genel sohbette duyurulmasını istedi.
+**Decision:** Yeni `internal/profanity`: TR + EN liste; kelime, küçük harf + Türkçe harf katlama (ı hariç: "sıkıştı" masum kalır) + rakam/simge değişimi (0→o, 1→i, @→a …) + tekrar eden harf sıkıştırma sonrası eşleşir; kökler (Türkçe ekler için önek) ve yalnız tam kelime listesi ("amk", "mk" …), katlanınca İngilizce olan "piç/göt" katlamadan önce. Eşleşen kelime harf sayısınca `*`. `SendChat` gövdeyi sansürler; küfür sayısı hesap başı `social.profanity_strike`'a eklenir (bir gün sessiz kalınca sıfırdan), 7'ye ulaşınca `ops.account_sanction` 5 dk mute (yönetici yok: `created_by_admin_id` artık boş olabilir), sayaç sıfırlanır ve genel sohbete sistem satırı (`chat_message.system_kind = 'profanity_mute'`, gönderen susturulan karakter) yazılıp yayınlanır. Migration 0051. İstemci sistem satırını çevrilmiş uyarı olarak gösterir.
+**Consequences:** Küfür okunmaz; ısrar eden kısa süre susturulur ve herkes görür. Liste kod içinde, gerektikçe genişletilir.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

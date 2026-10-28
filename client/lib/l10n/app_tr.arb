@@ -832,5 +832,6 @@
   "dailyClaim": "Al",
   "dailyTomorrow": "Yarın gel",
   "dailyDay": "{n}. gün",
-  "dailyOpen": "Günlük ödül"
+  "dailyOpen": "Günlük ödül",
+  "chatMutedNotice": "{name} küfürlü konuştuğu için {min} dakika susturuldu."
 }

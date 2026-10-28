@@ -2886,4 +2886,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dailyOpen => 'Günlük ödül';
+
+  @override
+  String chatMutedNotice(String name, int min) {
+    return '$name küfürlü konuştuğu için $min dakika susturuldu.';
+  }
 }

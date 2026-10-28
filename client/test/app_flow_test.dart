@@ -1419,6 +1419,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('live one', findRichText: true), findsOneWidget);
     expect(find.textContaining('spam', findRichText: true), findsNothing, reason: 'blocked sender');
+    // The game's own line: a mute for swearing (DD-312).
+    ws.last.push('chat.message', {...push(97, 'Brak', 'char-9', ''), 'system': 'profanity_mute'});
+    await tester.pumpAndSettle();
+    expect(find.text('Brak was muted for 5 minutes for swearing.'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(ChoiceChip, 'Guild'));
     await tester.pumpAndSettle();

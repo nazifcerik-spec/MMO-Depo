@@ -236,6 +236,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 110. **Günlük giriş ödülü (bitti)** — Sprint 110, DD-311. Migration 0050 (`progression.daily_login`). `internal/dailyreward`: hesap başı günde bir, 7 günlük döngü (kaçırılınca baştan), altın gün çarpanı × 50 × Sv^1,5, 3./6. gün can iksiri. `GET/POST /v1/character/{id}/daily-reward[/claim]`. İstemci `features/daily/daily_reward.dart` (girişte pencere + karakter sayfasında buton).
 
+111. **Küfür sansürü + otomatik susturma (bitti)** — Sprint 111, DD-312. Migration 0051 (`social.profanity_strike`, sistem mute, `chat_message.system_kind`). `internal/profanity.Censor` (TR+EN, katlama/leet/tekrar, kök + tam kelime). Sohbette `*`; günde 7 küfür → 5 dk mute + genel sohbette `profanity_mute` satırı.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

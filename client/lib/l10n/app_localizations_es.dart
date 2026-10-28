@@ -2886,4 +2886,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dailyOpen => 'Recompensa diaria';
+
+  @override
+  String chatMutedNotice(String name, int min) {
+    return '$name fue silenciado $min minutos por insultar.';
+  }
 }

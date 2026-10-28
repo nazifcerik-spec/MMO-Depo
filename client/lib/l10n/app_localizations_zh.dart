@@ -2878,4 +2878,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dailyOpen => '每日奖励';
+
+  @override
+  String chatMutedNotice(String name, int min) {
+    return '$name 因说脏话被禁言 $min 分钟。';
+  }
 }

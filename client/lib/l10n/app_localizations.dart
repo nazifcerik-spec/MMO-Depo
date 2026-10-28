@@ -5091,6 +5091,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Daily reward'**
   String get dailyOpen;
+
+  /// No description provided for @chatMutedNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} was muted for {min} minutes for swearing.'**
+  String chatMutedNotice(String name, int min);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

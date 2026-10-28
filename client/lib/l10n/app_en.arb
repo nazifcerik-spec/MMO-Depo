@@ -2274,5 +2274,16 @@
       }
     }
   },
-  "dailyOpen": "Daily reward"
+  "dailyOpen": "Daily reward",
+  "chatMutedNotice": "{name} was muted for {min} minutes for swearing.",
+  "@chatMutedNotice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  }
 }

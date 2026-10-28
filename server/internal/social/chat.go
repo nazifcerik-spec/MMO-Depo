@@ -3,10 +3,13 @@ package social
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+
+	"github.com/otter/server/internal/profanity"
 )
 
 type ChatMessage struct {
@@ -17,7 +20,17 @@ type ChatMessage struct {
 	TargetID *uuid.UUID `json:"target_character_id,omitempty"`
 	Body     string     `json:"body"`
 	SentAt   time.Time  `json:"sent_at"`
+	// System marks a line the game wrote (DD-312): "profanity_mute" =
+	// FromName was muted for MuteMinutes for swearing.
+	System string `json:"system,omitempty"`
 }
+
+// Profanity (DD-312): MuteAfterWords swear words within a day mute the
+// account for MuteMinutes and the mute is announced in global chat.
+const (
+	MuteAfterWords = 7
+	MuteMinutes    = 5
+)
 
 var chatChannels = map[string]bool{"global": true, "guild": true, "party": true, "whisper": true}
 
@@ -59,6 +72,7 @@ func (s *Service) SendChat(ctx context.Context, actor, account uuid.UUID, channe
 	if err != nil {
 		return nil, err
 	}
+	body, swore := profanity.Censor(body)
 	var muted bool
 	if err := s.pool.QueryRow(ctx, `
 		SELECT EXISTS (SELECT 1 FROM ops.account_sanction
@@ -97,7 +111,53 @@ func (s *Service) SendChat(ctx context.Context, actor, account uuid.UUID, channe
 		return nil, err
 	}
 	s.fanoutChat(ctx, msg, ref, account, target.Account)
+	if swore > 0 {
+		if err := s.strike(ctx, actor, account, swore); err != nil {
+			s.log.WarnContext(ctx, "social: profanity strike failed", "err", err.Error())
+		}
+	}
 	return msg, nil
+}
+
+// strike counts an account's swear words (the count starts over after a
+// quiet day); at MuteAfterWords it mutes the account for MuteMinutes,
+// starts the count over and announces the mute in global chat.
+func (s *Service) strike(ctx context.Context, actor, account uuid.UUID, n int) error {
+	var announce *ChatMessage
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+		var words int
+		if err := tx.QueryRow(ctx, `
+			INSERT INTO social.profanity_strike (account_id, words) VALUES ($1, $2)
+			ON CONFLICT (account_id) DO UPDATE SET
+			  words = CASE WHEN social.profanity_strike.updated_at < now() - interval '1 day'
+			               THEN EXCLUDED.words ELSE social.profanity_strike.words + EXCLUDED.words END,
+			  updated_at = now()
+			RETURNING words`, account, n).Scan(&words); err != nil {
+			return err
+		}
+		if words < MuteAfterWords {
+			return nil
+		}
+		if _, err := tx.Exec(ctx, `
+			INSERT INTO ops.account_sanction (account_id, kind, until, reason)
+			VALUES ($1, 'mute', now() + make_interval(mins => $2), $3)`,
+			account, MuteMinutes, fmt.Sprintf("profanity: %d words", words)); err != nil {
+			return err
+		}
+		if _, err := tx.Exec(ctx, `UPDATE social.profanity_strike SET words = 0 WHERE account_id = $1`, account); err != nil {
+			return err
+		}
+		announce = &ChatMessage{Channel: "global", FromID: actor, System: "profanity_mute"}
+		return tx.QueryRow(ctx, `
+			INSERT INTO social.chat_message (channel_kind, sender_character_id, body, system_kind)
+			VALUES ('global', $1, '', 'profanity_mute')
+			RETURNING id, sent_at, (SELECT name FROM character.character WHERE id = $1)`,
+			actor).Scan(&announce.ID, &announce.SentAt, &announce.FromName)
+	})
+	if err == nil && announce != nil && s.pub != nil {
+		s.pub.BroadcastKind("chat.message", announce)
+	}
+	return err
 }
 
 func (s *Service) fanoutChat(ctx context.Context, msg *ChatMessage, ref *uuid.UUID, sender, target uuid.UUID) {
@@ -147,7 +207,8 @@ func (s *Service) ChatHistory(ctx context.Context, actor, account uuid.UUID, cha
 	if err != nil {
 		return nil, err
 	}
-	const cols = `SELECT m.id, m.channel_kind, m.sender_character_id, c.name, m.target_character_id, m.body, m.sent_at
+	const cols = `SELECT m.id, m.channel_kind, m.sender_character_id, c.name, m.target_character_id, m.body, m.sent_at,
+	                     COALESCE(m.system_kind, '')
 	                FROM social.chat_message m JOIN character.character c ON c.id = m.sender_character_id `
 	const notBlocked = ` AND m.sender_character_id NOT IN
 	      (SELECT target_character_id FROM social.ignore_list WHERE owner_character_id = $1) `
@@ -175,7 +236,7 @@ func (s *Service) ChatHistory(ctx context.Context, actor, account uuid.UUID, cha
 	}
 	msgs, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (ChatMessage, error) {
 		var m ChatMessage
-		err := r.Scan(&m.ID, &m.Channel, &m.FromID, &m.FromName, &m.TargetID, &m.Body, &m.SentAt)
+		err := r.Scan(&m.ID, &m.Channel, &m.FromID, &m.FromName, &m.TargetID, &m.Body, &m.SentAt, &m.System)
 		return m, err
 	})
 	if err != nil {

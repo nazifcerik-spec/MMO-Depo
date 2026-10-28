@@ -250,6 +250,15 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
                   itemBuilder: (_, i) {
                     final m = _messages[_messages.length - 1 - i];
                     final mine = m.fromId == me;
+                    if (m.system == 'profanity_mute') {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text(
+                          l.chatMutedNotice(m.fromName, 5),
+                          style: const TextStyle(color: Palette.warning, fontStyle: FontStyle.italic),
+                        ),
+                      );
+                    }
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 3),
                       child: Text.rich(

@@ -316,5 +316,6 @@
   "dailyClaim": "领取",
   "dailyTomorrow": "明天再来",
   "dailyDay": "第{n}天",
-  "dailyOpen": "每日奖励"
+  "dailyOpen": "每日奖励",
+  "chatMutedNotice": "{name} 因说脏话被禁言 {min} 分钟。"
 }
