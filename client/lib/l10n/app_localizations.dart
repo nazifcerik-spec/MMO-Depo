@@ -5325,6 +5325,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That resource grows on another map.'**
   String get errGatherRegion;
+
+  /// No description provided for @helpersOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Helpers'**
+  String get helpersOpen;
+
+  /// No description provided for @helpersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Helpers'**
+  String get helpersTitle;
+
+  /// No description provided for @helpersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.'**
+  String get helpersHint;
+
+  /// No description provided for @helpersGather.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering'**
+  String get helpersGather;
+
+  /// No description provided for @helpersCraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting'**
+  String get helpersCraft;
+
+  /// No description provided for @helperHire.
+  ///
+  /// In en, this message translates to:
+  /// **'Hire'**
+  String get helperHire;
+
+  /// No description provided for @helperHireBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Hire the {name} for {price}?'**
+  String helperHireBody(String name, String price);
+
+  /// No description provided for @helperSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to work'**
+  String get helperSend;
+
+  /// No description provided for @helperCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Call back'**
+  String get helperCancel;
+
+  /// No description provided for @helperCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A gathering run brings nothing back; a craft returns its materials and gold.'**
+  String get helperCancelBody;
+
+  /// No description provided for @helperDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done — collect it'**
+  String get helperDone;
+
+  /// No description provided for @helperWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Working, {time} left'**
+  String helperWorking(String time);
+
+  /// No description provided for @helperCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'{items} items, +{xp} {profession} XP'**
+  String helperCollected(int items, int xp, String profession);
+
+  /// No description provided for @helperNoRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipe at your level in this profession yet.'**
+  String get helperNoRecipes;
+
+  /// No description provided for @helperPickRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a recipe'**
+  String get helperPickRecipe;
+
+  /// No description provided for @helperBonusYield.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% yield'**
+  String helperBonusYield(int pct);
+
+  /// No description provided for @helperBonusSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% faster'**
+  String helperBonusSpeed(int pct);
+
+  /// No description provided for @helperBonusXp.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% XP'**
+  String helperBonusXp(int pct);
+
+  /// No description provided for @helperBonusGold.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% less gold cost'**
+  String helperBonusGold(int pct);
+
+  /// No description provided for @helperBonusDouble.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% chance of a double output'**
+  String helperBonusDouble(int pct);
+
+  /// No description provided for @helperMiner.
+  ///
+  /// In en, this message translates to:
+  /// **'Miner'**
+  String get helperMiner;
+
+  /// No description provided for @helperWoodsman.
+  ///
+  /// In en, this message translates to:
+  /// **'Woodsman'**
+  String get helperWoodsman;
+
+  /// No description provided for @helperAngler.
+  ///
+  /// In en, this message translates to:
+  /// **'Angler'**
+  String get helperAngler;
+
+  /// No description provided for @helperHerbalist.
+  ///
+  /// In en, this message translates to:
+  /// **'Herbalist'**
+  String get helperHerbalist;
+
+  /// No description provided for @helperTrapper.
+  ///
+  /// In en, this message translates to:
+  /// **'Trapper'**
+  String get helperTrapper;
+
+  /// No description provided for @helperSmith.
+  ///
+  /// In en, this message translates to:
+  /// **'Smith'**
+  String get helperSmith;
+
+  /// No description provided for @helperTanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Tanner'**
+  String get helperTanner;
+
+  /// No description provided for @helperWeaver.
+  ///
+  /// In en, this message translates to:
+  /// **'Weaver'**
+  String get helperWeaver;
+
+  /// No description provided for @helperCarver.
+  ///
+  /// In en, this message translates to:
+  /// **'Carver'**
+  String get helperCarver;
+
+  /// No description provided for @helperApothecary.
+  ///
+  /// In en, this message translates to:
+  /// **'Apothecary'**
+  String get helperApothecary;
+
+  /// No description provided for @helperCook.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook'**
+  String get helperCook;
+
+  /// No description provided for @helperSmelter.
+  ///
+  /// In en, this message translates to:
+  /// **'Smelter'**
+  String get helperSmelter;
+
+  /// No description provided for @helperScribe.
+  ///
+  /// In en, this message translates to:
+  /// **'Scribe'**
+  String get helperScribe;
+
+  /// No description provided for @helperGemcutter.
+  ///
+  /// In en, this message translates to:
+  /// **'Gemcutter'**
+  String get helperGemcutter;
+
+  /// No description provided for @errHelperBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'That helper is already working.'**
+  String get errHelperBusy;
+
+  /// No description provided for @errHelperNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'The helper is not done yet.'**
+  String get errHelperNotReady;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

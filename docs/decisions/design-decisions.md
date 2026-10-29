@@ -3148,6 +3148,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-319 — Kiralık yardımcı NPC'ler
+
+**Context:** Oyuncu toplama ve üretim yapabilen, her meslek/toplama için farklı bonuslu, verimi karakterin yarısı kadar olan, karakter başına alınabilen yardımcılar istedi.
+**Decision:** Yeni `internal/helper` + migration 0055 (`helper.hired`, `helper.job`). 14 tür: 5 toplama (madenci/oduncu verim +%15/+%20, balıkçı/şifacı XP +%25/+%20, tuzakçı verim +%10; 5 altın) + 9 üretim (demirci/oymacı/dökümcü hız +%25/+%20/+%30, tabakçı/kâtip XP +%25/+%30, dokumacı/taşçı altın −%30/−%25, eczacı/aşçı çift ürün %10/%15; 10 altın). Karakter başına kiralanır (defterden `vendor_sink`'e), her yardımcı karakterin tek işlem kuralından bağımsız tek iş yapar. Verim karakterin yarısı (`HalfPct`): toplamada oran ×0,5 (verim bonusu üstüne, `activity.ComputeYield` aynı formül), üretimde süre ×2 (hız bonusu düşer), XP ×0,5 (XP bonusu üstüne) ve karakterin mesleğine gider. Toplama: karakterin toplama seviyesinin açtığı en iyi kaynak, 1/3/6 sa, istendiğinde toplanır (şimdiye kadarki; ganimet `item.Grant` iş id'siyle idempotent, altın ayrı anahtar). Üretim: tarif mesleğe uygun, beceri ve karakter seviyesi şartı (DD-316), malzeme ve altın başta alınır, iş bitince ürün (+ çift ürün zarları), geri çağırınca malzeme + altın iade. İş kapanışı koşullu UPDATE ile tek sefer. Uçlar `/v1/character/{id}/helpers` + `/{tür}/{hire,start,collect,cancel}`. İstemci: karakter sayfasında Yardımcılar → `HelpersScreen`.
+**Consequences:** Oyuncu AFK verimini kendi işinin yanında yardımcılarla artırır; yarım verim karakteri gereksiz kılmaz. Yardımcılar bölge kuralına tabi değil (karakter adına kaynağa gider).
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

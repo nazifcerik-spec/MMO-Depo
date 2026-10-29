@@ -3013,4 +3013,129 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errGatherRegion => 'Bu kaynak başka bir haritada.';
+
+  @override
+  String get helpersOpen => 'Yardımcılar';
+
+  @override
+  String get helpersTitle => 'Yardımcılar';
+
+  @override
+  String get helpersHint =>
+      'Senin yanında toplama ve üretim yapacak yardımcılar kirala. Senin yarı hızında çalışır, XP\'nin yarısını kazanır ve bu XP senin mesleğine gelir; her türün kendine özgü bir bonusu var.';
+
+  @override
+  String get helpersGather => 'Toplama';
+
+  @override
+  String get helpersCraft => 'Üretim';
+
+  @override
+  String get helperHire => 'Kirala';
+
+  @override
+  String helperHireBody(String name, String price) {
+    return '$name $price karşılığında kiralansın mı?';
+  }
+
+  @override
+  String get helperSend => 'İşe gönder';
+
+  @override
+  String get helperCancel => 'Geri çağır';
+
+  @override
+  String get helperCancelBody => 'Toplama işi bir şey getirmez; üretim işi malzemeyi ve altını iade eder.';
+
+  @override
+  String get helperDone => 'Bitti — topla';
+
+  @override
+  String helperWorking(String time) {
+    return 'Çalışıyor, $time kaldı';
+  }
+
+  @override
+  String helperCollected(int items, int xp, String profession) {
+    return '$items eşya, +$xp $profession XP';
+  }
+
+  @override
+  String get helperNoRecipes => 'Bu meslekte seviyene uygun tarif yok.';
+
+  @override
+  String get helperPickRecipe => 'Tarif seç';
+
+  @override
+  String helperBonusYield(int pct) {
+    return '+%$pct verim';
+  }
+
+  @override
+  String helperBonusSpeed(int pct) {
+    return '%$pct daha hızlı';
+  }
+
+  @override
+  String helperBonusXp(int pct) {
+    return '+%$pct XP';
+  }
+
+  @override
+  String helperBonusGold(int pct) {
+    return '%$pct daha az altın maliyeti';
+  }
+
+  @override
+  String helperBonusDouble(int pct) {
+    return '%$pct ihtimalle çift ürün';
+  }
+
+  @override
+  String get helperMiner => 'Madenci';
+
+  @override
+  String get helperWoodsman => 'Oduncu';
+
+  @override
+  String get helperAngler => 'Balıkçı';
+
+  @override
+  String get helperHerbalist => 'Şifacı Otçu';
+
+  @override
+  String get helperTrapper => 'Tuzakçı';
+
+  @override
+  String get helperSmith => 'Demirci';
+
+  @override
+  String get helperTanner => 'Tabakçı';
+
+  @override
+  String get helperWeaver => 'Dokumacı';
+
+  @override
+  String get helperCarver => 'Oymacı';
+
+  @override
+  String get helperApothecary => 'Eczacı';
+
+  @override
+  String get helperCook => 'Aşçı';
+
+  @override
+  String get helperSmelter => 'Dökümcü';
+
+  @override
+  String get helperScribe => 'Kâtip';
+
+  @override
+  String get helperGemcutter => 'Taşçı';
+
+  @override
+  String get errHelperBusy => 'Bu yardımcı zaten çalışıyor.';
+
+  @override
+  String get errHelperNotReady => 'Yardımcı henüz bitirmedi.';
 }

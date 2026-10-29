@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../helpers/helpers_screen.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
 import '../../app/theme.dart';
@@ -188,6 +189,13 @@ class _HomeShellState extends State<HomeShell> {
       ),
       onOpenDaily: _openDaily,
       onOpenStory: () => _push(StoryScreen(api: widget.auth.api, level: _level.value)),
+      onOpenHelpers: () => _push(
+        HelpersScreen(
+          repo: HelperRepository(widget.auth.api, widget.initial.id),
+          workshop: WorkshopRepository(widget.auth.api, widget.initial.id),
+          dataVersion: _dataVersion,
+        ),
+      ),
       onOpenProgress: () => _push(
         ProgressionScreen(repo: ProgressionRepository(widget.auth.api, widget.initial.id), dataVersion: _dataVersion),
       ),

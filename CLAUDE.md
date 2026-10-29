@@ -250,6 +250,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 117. **Seviyeli görev ödülleri (bitti)** — Sprint 117, DD-318. `quest/reward.go` `RewardFor`: günlük %10 / yan %25 seviye XP'si, 5 / 15 canavarlık altın, toplama hedefi başına mesleğin %20'si meslek XP'si; ana zincir aynı. `reward_professions` yanıtı, istemcide meslek XP satırı.
 
+118. **Yardımcı NPC'ler (bitti)** — Sprint 118, DD-319. Migration 0055 (`helper.hired/job`). `internal/helper`: 14 tür (5 toplama + 9 üretim), tür başı bonus (verim/hız/XP/altın/çift), karakter başı kiralama, tek işlem kuralından bağımsız; yarı hız + yarı XP karakterin mesleğine. `/v1/character/{id}/helpers[/{tür}/hire|start|collect|cancel]`. İstemci `features/helpers/helpers_screen.dart`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -769,7 +769,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errInsufficientGold => 'Not enough gold.';
 
   @override
-  String get errInsufficientMaterials => 'You\'re missing materials.';
+  String get errInsufficientMaterials => 'Faltan materiales.';
 
   @override
   String get errSkillTooLow => 'Your skill is too low for this recipe.';
@@ -3014,4 +3014,129 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errGatherRegion => 'Ese recurso crece en otro mapa.';
+
+  @override
+  String get helpersOpen => 'Ayudantes';
+
+  @override
+  String get helpersTitle => 'Ayudantes';
+
+  @override
+  String get helpersHint =>
+      'Contrata ayudantes que recolecten y fabriquen a tu lado. Trabajan a la mitad de tu velocidad y ganan la mitad de la PX, que va a tu profesión; cada tipo tiene su bonificación.';
+
+  @override
+  String get helpersGather => 'Recolección';
+
+  @override
+  String get helpersCraft => 'Fabricación';
+
+  @override
+  String get helperHire => 'Contratar';
+
+  @override
+  String helperHireBody(String name, String price) {
+    return '¿Contratar al $name por $price?';
+  }
+
+  @override
+  String get helperSend => 'Enviar a trabajar';
+
+  @override
+  String get helperCancel => 'Llamar de vuelta';
+
+  @override
+  String get helperCancelBody => 'Una recolección no trae nada; una fabricación devuelve materiales y oro.';
+
+  @override
+  String get helperDone => 'Hecho: recógelo';
+
+  @override
+  String helperWorking(String time) {
+    return 'Trabajando, faltan $time';
+  }
+
+  @override
+  String helperCollected(int items, int xp, String profession) {
+    return '$items objetos, +$xp PX de $profession';
+  }
+
+  @override
+  String get helperNoRecipes => 'Aún no hay recetas a tu nivel en esta profesión.';
+
+  @override
+  String get helperPickRecipe => 'Elige una receta';
+
+  @override
+  String helperBonusYield(int pct) {
+    return '+$pct % de rendimiento';
+  }
+
+  @override
+  String helperBonusSpeed(int pct) {
+    return '$pct % más rápido';
+  }
+
+  @override
+  String helperBonusXp(int pct) {
+    return '+$pct % PX';
+  }
+
+  @override
+  String helperBonusGold(int pct) {
+    return '$pct % menos de coste en oro';
+  }
+
+  @override
+  String helperBonusDouble(int pct) {
+    return '$pct % de probabilidad de doble producción';
+  }
+
+  @override
+  String get helperMiner => 'Minero';
+
+  @override
+  String get helperWoodsman => 'Leñador';
+
+  @override
+  String get helperAngler => 'Pescador';
+
+  @override
+  String get helperHerbalist => 'Herbolario';
+
+  @override
+  String get helperTrapper => 'Trampero';
+
+  @override
+  String get helperSmith => 'Herrero';
+
+  @override
+  String get helperTanner => 'Curtidor';
+
+  @override
+  String get helperWeaver => 'Tejedor';
+
+  @override
+  String get helperCarver => 'Tallador';
+
+  @override
+  String get helperApothecary => 'Boticario';
+
+  @override
+  String get helperCook => 'Cocinero';
+
+  @override
+  String get helperSmelter => 'Fundidor';
+
+  @override
+  String get helperScribe => 'Escriba';
+
+  @override
+  String get helperGemcutter => 'Tallador de gemas';
+
+  @override
+  String get errHelperBusy => 'Ese ayudante ya está trabajando.';
+
+  @override
+  String get errHelperNotReady => 'El ayudante aún no ha terminado.';
 }

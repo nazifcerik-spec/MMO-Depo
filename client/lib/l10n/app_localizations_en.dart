@@ -3014,4 +3014,129 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errGatherRegion => 'That resource grows on another map.';
+
+  @override
+  String get helpersOpen => 'Helpers';
+
+  @override
+  String get helpersTitle => 'Helpers';
+
+  @override
+  String get helpersHint =>
+      'Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.';
+
+  @override
+  String get helpersGather => 'Gathering';
+
+  @override
+  String get helpersCraft => 'Crafting';
+
+  @override
+  String get helperHire => 'Hire';
+
+  @override
+  String helperHireBody(String name, String price) {
+    return 'Hire the $name for $price?';
+  }
+
+  @override
+  String get helperSend => 'Send to work';
+
+  @override
+  String get helperCancel => 'Call back';
+
+  @override
+  String get helperCancelBody => 'A gathering run brings nothing back; a craft returns its materials and gold.';
+
+  @override
+  String get helperDone => 'Done — collect it';
+
+  @override
+  String helperWorking(String time) {
+    return 'Working, $time left';
+  }
+
+  @override
+  String helperCollected(int items, int xp, String profession) {
+    return '$items items, +$xp $profession XP';
+  }
+
+  @override
+  String get helperNoRecipes => 'No recipe at your level in this profession yet.';
+
+  @override
+  String get helperPickRecipe => 'Pick a recipe';
+
+  @override
+  String helperBonusYield(int pct) {
+    return '+$pct% yield';
+  }
+
+  @override
+  String helperBonusSpeed(int pct) {
+    return '$pct% faster';
+  }
+
+  @override
+  String helperBonusXp(int pct) {
+    return '+$pct% XP';
+  }
+
+  @override
+  String helperBonusGold(int pct) {
+    return '$pct% less gold cost';
+  }
+
+  @override
+  String helperBonusDouble(int pct) {
+    return '$pct% chance of a double output';
+  }
+
+  @override
+  String get helperMiner => 'Miner';
+
+  @override
+  String get helperWoodsman => 'Woodsman';
+
+  @override
+  String get helperAngler => 'Angler';
+
+  @override
+  String get helperHerbalist => 'Herbalist';
+
+  @override
+  String get helperTrapper => 'Trapper';
+
+  @override
+  String get helperSmith => 'Smith';
+
+  @override
+  String get helperTanner => 'Tanner';
+
+  @override
+  String get helperWeaver => 'Weaver';
+
+  @override
+  String get helperCarver => 'Carver';
+
+  @override
+  String get helperApothecary => 'Apothecary';
+
+  @override
+  String get helperCook => 'Cook';
+
+  @override
+  String get helperSmelter => 'Smelter';
+
+  @override
+  String get helperScribe => 'Scribe';
+
+  @override
+  String get helperGemcutter => 'Gemcutter';
+
+  @override
+  String get errHelperBusy => 'That helper is already working.';
+
+  @override
+  String get errHelperNotReady => 'The helper is not done yet.';
 }

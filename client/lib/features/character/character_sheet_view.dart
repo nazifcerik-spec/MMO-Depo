@@ -27,6 +27,7 @@ class CharacterSheetView extends StatefulWidget {
     this.onOpenProgress,
     this.onOpenDaily,
     this.onOpenStory,
+    this.onOpenHelpers,
     this.onSheet,
     this.live,
     this.onPartyChat,
@@ -48,6 +49,9 @@ class CharacterSheetView extends StatefulWidget {
 
   /// Opens story mode (DD-313).
   final VoidCallback? onOpenStory;
+
+  /// Opens the hired helpers (DD-319).
+  final VoidCallback? onOpenHelpers;
 
   /// Every fresh sheet (the shell tracks the level from it).
   final ValueChanged<CharacterSheet>? onSheet;
@@ -312,6 +316,14 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               onPressed: widget.onOpenDaily,
               icon: const Icon(Icons.card_giftcard_outlined),
               label: Text(l.dailyOpen),
+            ),
+          ],
+          if (widget.onOpenHelpers != null) ...[
+            const SizedBox(height: Space.sm),
+            OutlinedButton.icon(
+              onPressed: widget.onOpenHelpers,
+              icon: const Icon(Icons.groups_2_outlined),
+              label: Text(l.helpersOpen),
             ),
           ],
           if (widget.onOpenStory != null) ...[

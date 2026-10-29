@@ -71,6 +71,9 @@ var tierXP = [8]int{8, 12, 18, 26, 36, 50, 68, 90}
 
 func tierIndex(t int) int { return min(7, max(0, t)) }
 
+// TierXP is the gathering XP one unit of a tier pays (helpers use it, DD-319).
+func TierXP(tier int) int { return tierXP[tierIndex(tier)] }
+
 // pickNode resolves the requested resource, or the best one the level
 // unlocks when none is named (older clients).
 // pickNode picks the target, or with none the best unlocked resource; in

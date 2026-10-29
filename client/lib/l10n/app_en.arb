@@ -2344,5 +2344,106 @@
   "errTradeTooMany": "Too many items in the trade.",
   "errCraftLevel": "Your character's level is below this item's level.",
   "gatherNoneHere": "Your resources grow on other maps: travel to one shown beside them.",
-  "errGatherRegion": "That resource grows on another map."
+  "errGatherRegion": "That resource grows on another map.",
+  "helpersOpen": "Helpers",
+  "helpersTitle": "Helpers",
+  "helpersHint": "Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.",
+  "helpersGather": "Gathering",
+  "helpersCraft": "Crafting",
+  "helperHire": "Hire",
+  "helperHireBody": "Hire the {name} for {price}?",
+  "@helperHireBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "helperSend": "Send to work",
+  "helperCancel": "Call back",
+  "helperCancelBody": "A gathering run brings nothing back; a craft returns its materials and gold.",
+  "helperDone": "Done — collect it",
+  "helperWorking": "Working, {time} left",
+  "@helperWorking": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "helperCollected": "{items} items, +{xp} {profession} XP",
+  "@helperCollected": {
+    "placeholders": {
+      "items": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      },
+      "profession": {
+        "type": "String"
+      }
+    }
+  },
+  "helperNoRecipes": "No recipe at your level in this profession yet.",
+  "helperPickRecipe": "Pick a recipe",
+  "helperBonusYield": "+{pct}% yield",
+  "@helperBonusYield": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "helperBonusSpeed": "{pct}% faster",
+  "@helperBonusSpeed": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "helperBonusXp": "+{pct}% XP",
+  "@helperBonusXp": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "helperBonusGold": "{pct}% less gold cost",
+  "@helperBonusGold": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "helperBonusDouble": "{pct}% chance of a double output",
+  "@helperBonusDouble": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "helperMiner": "Miner",
+  "helperWoodsman": "Woodsman",
+  "helperAngler": "Angler",
+  "helperHerbalist": "Herbalist",
+  "helperTrapper": "Trapper",
+  "helperSmith": "Smith",
+  "helperTanner": "Tanner",
+  "helperWeaver": "Weaver",
+  "helperCarver": "Carver",
+  "helperApothecary": "Apothecary",
+  "helperCook": "Cook",
+  "helperSmelter": "Smelter",
+  "helperScribe": "Scribe",
+  "helperGemcutter": "Gemcutter",
+  "errHelperBusy": "That helper is already working.",
+  "errHelperNotReady": "The helper is not done yet."
 }

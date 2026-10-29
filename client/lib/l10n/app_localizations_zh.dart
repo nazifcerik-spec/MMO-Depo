@@ -769,7 +769,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errInsufficientGold => 'Not enough gold.';
 
   @override
-  String get errInsufficientMaterials => 'You\'re missing materials.';
+  String get errInsufficientMaterials => '材料不足。';
 
   @override
   String get errSkillTooLow => 'Your skill is too low for this recipe.';
@@ -3003,4 +3003,128 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errGatherRegion => '该资源在其他地图。';
+
+  @override
+  String get helpersOpen => '助手';
+
+  @override
+  String get helpersTitle => '助手';
+
+  @override
+  String get helpersHint => '雇佣助手与你一起采集和制造。他们以你一半的速度工作，获得一半经验并计入你的职业；每种助手有独特加成。';
+
+  @override
+  String get helpersGather => '采集';
+
+  @override
+  String get helpersCraft => '制造';
+
+  @override
+  String get helperHire => '雇佣';
+
+  @override
+  String helperHireBody(String name, String price) {
+    return '以$price雇佣$name？';
+  }
+
+  @override
+  String get helperSend => '派去工作';
+
+  @override
+  String get helperCancel => '召回';
+
+  @override
+  String get helperCancelBody => '采集任务无收获；制造任务退还材料和金币。';
+
+  @override
+  String get helperDone => '已完成，可领取';
+
+  @override
+  String helperWorking(String time) {
+    return '工作中，剩余$time';
+  }
+
+  @override
+  String helperCollected(int items, int xp, String profession) {
+    return '$items件物品，$profession经验+$xp';
+  }
+
+  @override
+  String get helperNoRecipes => '该职业暂无适合你等级的配方。';
+
+  @override
+  String get helperPickRecipe => '选择配方';
+
+  @override
+  String helperBonusYield(int pct) {
+    return '产量+$pct%';
+  }
+
+  @override
+  String helperBonusSpeed(int pct) {
+    return '速度+$pct%';
+  }
+
+  @override
+  String helperBonusXp(int pct) {
+    return '经验+$pct%';
+  }
+
+  @override
+  String helperBonusGold(int pct) {
+    return '金币消耗-$pct%';
+  }
+
+  @override
+  String helperBonusDouble(int pct) {
+    return '$pct%几率双倍产出';
+  }
+
+  @override
+  String get helperMiner => '矿工';
+
+  @override
+  String get helperWoodsman => '伐木工';
+
+  @override
+  String get helperAngler => '渔夫';
+
+  @override
+  String get helperHerbalist => '草药师';
+
+  @override
+  String get helperTrapper => '陷阱猎人';
+
+  @override
+  String get helperSmith => '铁匠';
+
+  @override
+  String get helperTanner => '制革匠';
+
+  @override
+  String get helperWeaver => '织工';
+
+  @override
+  String get helperCarver => '木雕匠';
+
+  @override
+  String get helperApothecary => '药剂师';
+
+  @override
+  String get helperCook => '厨师';
+
+  @override
+  String get helperSmelter => '冶炼工';
+
+  @override
+  String get helperScribe => '抄写员';
+
+  @override
+  String get helperGemcutter => '宝石匠';
+
+  @override
+  String get errHelperBusy => '该助手正在工作。';
+
+  @override
+  String get errHelperNotReady => '助手尚未完成。';
 }

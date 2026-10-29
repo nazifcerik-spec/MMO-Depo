@@ -74,6 +74,8 @@ String errorText(AppLocalizations l, Object error) {
     'E_SKILL_TOO_LOW' => l.errSkillTooLow,
     'E_CRAFT_LEVEL' => l.errCraftLevel,
     'E_GATHER_REGION' => l.errGatherRegion,
+    'E_HELPER_BUSY' => l.errHelperBusy,
+    'E_HELPER_NOT_READY' => l.errHelperNotReady,
     'E_PROFESSION_NOT_LEARNED' => l.errProfessionNotLearned,
     'E_ITEM_BOUND' || 'E_ITEM_NO_SELL' => l.errCannotSell,
     'E_BUYBACK_EXPIRED' || 'E_BUYBACK_CLAIMED' => l.errBuybackExpired,

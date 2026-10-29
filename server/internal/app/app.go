@@ -30,6 +30,7 @@ import (
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/gathering"
 	"github.com/otter/server/internal/guild"
+	"github.com/otter/server/internal/helper"
 	httpapi "github.com/otter/server/internal/http"
 	appmw "github.com/otter/server/internal/http/middleware"
 	"github.com/otter/server/internal/hunt"
@@ -418,9 +419,11 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		ConsumableHandler: consumable.NewHandler(consumableSvc),
 		DailyHandler:      dailyreward.NewHandler(dailyreward.NewService(pool, txnSvc, itemSvc)),
 		TradeHandler:      trade.NewHandler(trade.NewService(pool, txnSvc, invSvc, logger).WithPublisher(wsPub)),
-		AdminHandler:      adminHandler,
-		SupportHandler:    support.NewHandler(supportSvc),
-		ClientErrHandler:  clienterr.NewHandler(clientErrSvc),
+		HelperHandler: helper.NewHandler(helper.NewService(pool, txnSvc, charSvc, gatherSvc, itemSvc, invSvc,
+			craftCatSvc, craftRepo, craftSvc, logger)),
+		AdminHandler:     adminHandler,
+		SupportHandler:   support.NewHandler(supportSvc),
+		ClientErrHandler: clienterr.NewHandler(clientErrSvc),
 		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
 			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,
 		}, logger),

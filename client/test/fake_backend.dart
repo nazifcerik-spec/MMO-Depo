@@ -33,6 +33,19 @@ class FakeBackend {
 
   /// Story mode chapters (DD-313).
   List<Map<String, dynamic>> story = [];
+
+  /// Hired helpers (DD-319): the miner only.
+  final helpers = <Map<String, dynamic>>[
+    {
+      'code': 'miner',
+      'kind': 'gather',
+      'profession': 'mining',
+      'bonus': 'yield',
+      'bonus_pct': 15,
+      'price_copper': 50000,
+      'hired': false,
+    },
+  ];
   int dailyClaims = 0;
   int gatherLevel = 20;
 
@@ -224,6 +237,31 @@ class FakeBackend {
       return json(200, _session());
     }
     if (path == '/v1/story') return json(200, {'chapters': story});
+    if (path.startsWith('/v1/character/char-1/helpers')) {
+      final miner = helpers.first;
+      if (path.endsWith('/hire')) miner['hired'] = true;
+      if (path.endsWith('/start')) {
+        final now = DateTime.now().toUtc();
+        miner['job'] = {
+          'spec': {'target': 'raw_stone', 'duration_seconds': body['duration_seconds']},
+          'started_at': now.toIso8601String(),
+          'ready_at': now.add(Duration(seconds: body['duration_seconds'] as int)).toIso8601String(),
+        };
+      }
+      if (path.endsWith('/collect')) {
+        miner.remove('job');
+        return json(200, {
+          'result': {
+            'items': [
+              {'instance_id': 'x'},
+            ],
+            'xp': 12,
+            'profession': 'mining',
+          },
+        });
+      }
+      return json(200, {'helpers': helpers});
+    }
     if (path.startsWith('/v1/character/char-1/trade')) {
       final rest = path.substring('/v1/character/char-1/trade'.length);
       Map<String, dynamic> side(String name) => {
