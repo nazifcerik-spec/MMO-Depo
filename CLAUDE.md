@@ -260,6 +260,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 122. **Arka plan görselleri + renk temaları (bitti)** — Sprint 122, DD-323. 30 bölge temalı arka plan (`client/assets/backgrounds/bgNN.webp`, `scripts/bg_assets.py`), `BackgroundArt` (koyu katmanlı kaplama, mağazada küçük karo), arka plan başı vurgu/ikincil renk `themedFor` ile tema.
 
+123. **Avatar portreleri (bitti)** — Sprint 123, DD-324. 80 portre (`client/assets/avatars/avNN.webp`, 20 Gemini 2×2 sayfasından `scripts/avatar_assets.py` ile kesilir): ücretsiz 10 sınıf × 4, kredili efsanevi sürümler. `AvatarBadge` daire içinde portre.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

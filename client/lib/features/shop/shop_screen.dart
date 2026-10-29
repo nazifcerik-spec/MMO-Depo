@@ -223,7 +223,7 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
                       count: avatarCount,
                       code: avatarCode,
                       kind: 'avatar',
-                      tile: (c) => AvatarBadge(code: c, size: 48),
+                      tile: (c) => AvatarBadge(code: c, size: 64),
                     ),
                     _grid(
                       count: backgroundCount,

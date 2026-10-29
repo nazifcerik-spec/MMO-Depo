@@ -3193,6 +3193,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-324 — Avatar portreleri
+
+**Context:** Oyuncu, kodla çizilen 80 amblem avatarı yerine oyunun genel çizim tarzına uyan, klasik yüksek fantezi MMO tarzında portreler istedi.
+**Decision:** Gemini ile 20 adet 2×2 portre sayfası üretildi (komutlarda başka bir oyunun adı geçmez; tarz tarifle verilir: el boyaması stilize yüksek fantezi MMORPG portresi, baş-omuz, koyu sade zemin). Sayfa N = avatar 4N+1..4N+4; ücretsizler (av01–av40) 10 sınıf × 4, kredililer (av41–av80) aynı sınıfların efsanevi sürümü (parlayan rünler, aura), ırklar kaydırılmış ve cinsiyet çevrilmiş; 10 ırk eşit dağılır. `client/art_originals/avatars/sheetNN.jpg` (git dışı) → `python scripts/avatar_assets.py` (ızgara çizgisini sayfa başı bulur, kenar karartısını kırpar, kare 256 px WebP %82) → `client/assets/avatars/avNN.webp` (80 dosya ≈ 1,2 MB). `AvatarBadge` portreyi daire içinde gösterilen boyutta çözer (`cacheWidth`); dosya yoksa kişi ikonu. Mağazada avatar karosu 64 px. Kod tablosundaki amblem/renk listeleri kaldırıldı.
+**Consequences:** Avatarlar ırk görselleriyle aynı tarzda; yeni avatar = yeni APK.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

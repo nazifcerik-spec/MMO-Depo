@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 
-/// Cosmetics (DD-321): 30 page backgrounds (art, DD-323) and 80 avatars
-/// (drawn in code). Codes match the server's (bg01..bg30, av01..av80); the
-/// first 10 backgrounds and 40 avatars are free.
+/// Cosmetics (DD-321): 30 page backgrounds (DD-323) and 80 avatar portraits
+/// (DD-324), bundled as art. Codes match the server's (bg01..bg30,
+/// av01..av80); the first 10 backgrounds and 40 avatars are free.
 const backgroundCount = 30, freeBackgrounds = 10, avatarCount = 80, freeAvatars = 40;
 
 String backgroundCode(int n) => 'bg${n.toString().padLeft(2, '0')}';
@@ -107,32 +107,11 @@ class BackgroundArt extends StatelessWidget {
   );
 }
 
-const _avatarIcons = <IconData>[
-  Icons.shield,
-  Icons.auto_awesome,
-  Icons.local_fire_department,
-  Icons.ac_unit,
-  Icons.bolt,
-  Icons.eco,
-  Icons.pets,
-  Icons.castle,
-  Icons.diamond,
-  Icons.star,
-  Icons.nightlight,
-  Icons.wb_sunny,
-  Icons.water_drop,
-  Icons.terrain,
-  Icons.anchor,
-  Icons.catching_pokemon,
-  Icons.psychology,
-  Icons.sports_martial_arts,
-  Icons.music_note,
-  Icons.spa,
-];
+/// Avatar [code]'s portrait, bundled under the same code
+/// (`scripts/avatar_assets.py`).
+String avatarAsset(String code) => 'assets/avatars/${avatarCode(_number(code).clamp(1, avatarCount))}.webp';
 
-const _avatarColors = <Color>[Color(0xFFE4A756), Color(0xFF5DA9E9), Color(0xFF5FB973), Color(0xFFA26BE8)];
-
-/// Avatar n: one of 20 emblems in one of 4 colours.
+/// Avatar [code]: its portrait in a circle, decoded at the size shown.
 class AvatarBadge extends StatelessWidget {
   const AvatarBadge({super.key, required this.code, this.size = 40});
 
@@ -140,13 +119,18 @@ class AvatarBadge extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) {
-    final n = _number(code).clamp(1, avatarCount) - 1;
-    final color = _avatarColors[n ~/ _avatarIcons.length % _avatarColors.length];
-    return CircleAvatar(
-      radius: size / 2,
-      backgroundColor: color.withValues(alpha: 0.18),
-      child: Icon(_avatarIcons[n % _avatarIcons.length], color: color, size: size * 0.55),
-    );
-  }
+  Widget build(BuildContext context) => ClipOval(
+    child: Image.asset(
+      avatarAsset(code),
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+      errorBuilder: (_, _, _) => CircleAvatar(
+        radius: size / 2,
+        backgroundColor: Palette.bgElevated,
+        child: Icon(Icons.person, size: size * 0.55, color: Palette.textSecondary),
+      ),
+    ),
+  );
 }
