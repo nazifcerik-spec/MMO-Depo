@@ -62,7 +62,12 @@ const _backgroundColors = <(Color, Color)>[
 ThemeData themedFor(ThemeData base, String code) {
   final (accent, secondary) = backgroundColors(code);
   return base.copyWith(
-    colorScheme: base.colorScheme.copyWith(primary: accent, secondary: secondary),
+    colorScheme: base.colorScheme.copyWith(
+      primary: accent,
+      secondary: secondary,
+      secondaryContainer: secondary,
+      onSecondaryContainer: Palette.textPrimary,
+    ),
   );
 }
 
@@ -93,7 +98,7 @@ class BackgroundArt extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xB3000000), Color(0x8C000000), Color(0xCC000000)],
+              colors: [Color(0x99000000), Color(0x73000000), Color(0xBF000000)],
             ),
           ),
         ),
