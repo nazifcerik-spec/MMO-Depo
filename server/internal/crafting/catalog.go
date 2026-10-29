@@ -117,11 +117,13 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	}
 
 	recRows, err := pool.Query(ctx, `
-		SELECT code, display_name_key, profession_code, min_skill,
-		       inputs, gold_cost_copper,
-		       output_template_code, output_stack, profession_xp_reward, craft_seconds, version
-		  FROM content.recipe
-		 ORDER BY profession_code, min_skill, code`)
+		SELECT r.code, r.display_name_key, r.profession_code, r.min_skill,
+		       r.inputs, r.gold_cost_copper,
+		       r.output_template_code, r.output_stack, r.profession_xp_reward, r.craft_seconds, r.version,
+		       COALESCE(t.min_level, 1)
+		  FROM content.recipe r
+		  LEFT JOIN content.item_template t ON t.code = r.output_template_code
+		 ORDER BY r.profession_code, r.min_skill, r.code`)
 	if err != nil {
 		return nil, fmt.Errorf("recipe query: %w", err)
 	}
@@ -134,6 +136,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 			&r.Code, &r.DisplayNameKey, &r.ProfessionCode, &r.MinSkill,
 			&inputsJSON, &r.GoldCostCopper,
 			&r.OutputTemplateCode, &r.OutputStack, &r.ProfessionXPReward, &r.CraftSeconds, &r.Version,
+			&r.OutputMinLevel,
 		); err != nil {
 			return nil, fmt.Errorf("recipe scan: %w", err)
 		}

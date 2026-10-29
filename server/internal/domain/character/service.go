@@ -299,6 +299,15 @@ func (s *Service) SetLocation(ctx context.Context, characterID uuid.UUID, region
 
 // Owns returns nil if the account owns the character (regardless of state);
 // used by the CharacterContext middleware.
+// Level is the character's level (crafting gates on it, DD-316).
+func (s *Service) Level(ctx context.Context, characterID uuid.UUID) (int, error) {
+	c, err := s.repo.Get(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	return int(c.Level), nil
+}
+
 func (s *Service) Owns(ctx context.Context, characterID, accountID uuid.UUID) error {
 	c, err := s.repo.Get(ctx, characterID)
 	if err != nil {

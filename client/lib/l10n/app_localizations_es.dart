@@ -3005,4 +3005,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errTradeTooMany => 'Demasiados objetos en el intercambio.';
+
+  @override
+  String get errCraftLevel => 'El nivel de tu personaje es inferior al del objeto.';
 }

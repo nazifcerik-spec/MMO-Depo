@@ -50,6 +50,11 @@ func TestCraftingFailureCostsNothing(t *testing.T) {
 	_, err = w.p.Exec(w.ctx, `
 		UPDATE crafting.character_profession SET level = 5 WHERE character_id = $1 AND profession_code = 'blacksmithing'`, p.ID)
 	require.NoError(t, err)
+	// The sword is used at a higher level: a level-1 smith cannot make it (DD-316).
+	_, err = svc.Start(w.ctx, p.ID, p.Account, "recipe_sword_iron", 1)
+	require.ErrorIs(t, err, crafting.ErrCharLevelTooLow)
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET level = 50 WHERE id = $1`, p.ID)
+	require.NoError(t, err)
 	w.give(p, "aluminium_bar", 4) // metal gear is made of bars (DD-274)
 	_, err = svc.Start(w.ctx, p.ID, p.Account, "recipe_sword_iron", 1)
 	require.ErrorIs(t, err, inventory.ErrInsufficient)

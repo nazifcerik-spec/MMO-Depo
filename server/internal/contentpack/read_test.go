@@ -21,12 +21,12 @@ func TestShippedPackReads(t *testing.T) {
 func TestValidateRefs_Rejects(t *testing.T) {
 	base := func() *Pack {
 		return &Pack{
-			Items:       []Item{{Code: "a"}, {Code: "b"}},
+			Items:       []Item{{Code: "a"}, {Code: "b", MinLevel: 25}},
 			Mobs:        []Mob{{Code: "m", RegionCode: "g"}},
 			Regions:     []Region{{Code: "g"}},
 			Professions: []Profession{{Code: "p"}},
 			Vendors:     []Vendor{{Code: "v", Sells: []VendorSell{{TemplateCode: "a"}}}},
-			Recipes:     []Recipe{{Code: "r", ProfessionCode: "p", OutputTemplateCode: "b", Inputs: []RecipeInput{{TemplateCode: "a"}}}},
+			Recipes:     []Recipe{{Code: "r", ProfessionCode: "p", MinSkill: 3, OutputTemplateCode: "b", Inputs: []RecipeInput{{TemplateCode: "a"}}}},
 			Dungeons:    []Dungeon{{Code: "d", BossMobCode: "m", Waves: []DungeonWave{{MobCode: "m"}}, RegionCode: "g"}},
 		}
 	}
@@ -42,6 +42,7 @@ func TestValidateRefs_Rejects(t *testing.T) {
 		"recipe profession": func(p *Pack) { p.Recipes[0].ProfessionCode = "zz" },
 		"recipe output":     func(p *Pack) { p.Recipes[0].OutputTemplateCode = "zz" },
 		"recipe input":      func(p *Pack) { p.Recipes[0].Inputs[0].TemplateCode = "zz" },
+		"recipe skill":      func(p *Pack) { p.Recipes[0].MinSkill = 2 }, // level 25 needs 3 (DD-316)
 		"dungeon boss":      func(p *Pack) { p.Dungeons[0].BossMobCode = "zz" },
 		"dungeon wave":      func(p *Pack) { p.Dungeons[0].Waves[0].MobCode = "zz" },
 		"mob region":        func(p *Pack) { p.Mobs[0].RegionCode = "zz" },
@@ -54,6 +55,9 @@ func TestValidateRefs_Rejects(t *testing.T) {
 		mut(p)
 		require.Error(t, check(p), name)
 	}
+	require.EqualValues(t, 1, RecipeSkill("jewelcrafting", 25), "jewellers run two ahead")
+	require.EqualValues(t, 100, RecipeSkill("smithing", 1000))
+	require.EqualValues(t, 1, RecipeSkill("cooking", 0))
 	_, err := Read("")
 	require.Error(t, err)
 	_, err = Read("contentpack.go")

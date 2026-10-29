@@ -3005,4 +3005,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errTradeTooMany => 'Too many items in the trade.';
+
+  @override
+  String get errCraftLevel => 'Your character\'s level is below this item\'s level.';
 }

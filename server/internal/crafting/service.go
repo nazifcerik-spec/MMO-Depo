@@ -168,6 +168,18 @@ func (s *Service) Start(ctx context.Context, characterID, accountID uuid.UUID, r
 	if cp.Level < recipe.MinSkill {
 		return nil, ErrSkillTooLow
 	}
+	// Only what the character could use (DD-316).
+	if lv, ok := s.chars.(interface {
+		Level(ctx context.Context, characterID uuid.UUID) (int, error)
+	}); ok && recipe.OutputMinLevel > 1 {
+		level, err := lv.Level(ctx, characterID)
+		if err != nil {
+			return nil, err
+		}
+		if level < int(recipe.OutputMinLevel) {
+			return nil, ErrCharLevelTooLow
+		}
+	}
 	// The XP each unit pays follows the recipe's difficulty for the skill now
 	// (DD-294); the job freezes it with the recipe.
 	_, factor := Difficulty(recipe.MinSkill, cp.Level)

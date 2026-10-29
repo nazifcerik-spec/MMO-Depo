@@ -244,6 +244,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 114. **Oyuncular arası takas (bitti)** — Sprint 114, DD-315. Migration 0053 (`trade.session/offer`). `internal/trade`: iki taraf eşya koyar, değişiklik onayları sıfırlar, ikisi onaylayınca tek seferde el değiştirir; taraf başı vergi = verdiği eşyaların 30 günlük ortalama pazar fiyatı (yoksa taban değer) × adet × %8 → `tax_sink`. WS `trade.changed`. İstemci `social/trade_panel.dart` (Sosyal → Takas).
 
+115. **Üretim seviye şartları (bitti)** — Sprint 115, DD-316. Kural: tarif beceri = ⌈çıktı Sv/10⌉ (kuyumculuk −2), contentpack doğrular (`RecipeSkill`); külçelere kullanım seviyesi, aşçılık şartı kurala çekildi. Üretim için karakter seviyesi ≥ çıktı seviyesi (`E_CRAFT_LEVEL`).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

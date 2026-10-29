@@ -3004,4 +3004,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errTradeTooMany => 'Takasta çok fazla eşya var.';
+
+  @override
+  String get errCraftLevel => 'Karakterinin seviyesi bu eşyanın seviyesinin altında.';
 }

@@ -69,6 +69,9 @@ type Recipe struct {
 	ProfessionXPReward int32
 	CraftSeconds       int32 // per unit (DD-264)
 	Version            int32
+	// OutputMinLevel is the level the output is used at; crafting it needs
+	// that character level too (DD-316).
+	OutputMinLevel int16
 }
 
 // Recipe difficulty (DD-294): how far the character's skill is past a
@@ -186,6 +189,7 @@ var (
 	ErrUnknownRecipe        = errors.New("crafting: unknown recipe_code")
 	ErrProfessionNotLearned = errors.New("crafting: profession not learned")
 	ErrSkillTooLow          = errors.New("crafting: skill level below min_skill")
+	ErrCharLevelTooLow      = errors.New("crafting: character level below the output's level")
 	ErrInsufficientGold     = errors.New("crafting: insufficient gold")
 	ErrValidation           = errors.New("crafting: validation")
 	ErrJobActive            = errors.New("crafting: a crafting job is already running")

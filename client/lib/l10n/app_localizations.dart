@@ -5307,6 +5307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Too many items in the trade.'**
   String get errTradeTooMany;
+
+  /// No description provided for @errCraftLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your character\'s level is below this item\'s level.'**
+  String get errCraftLevel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

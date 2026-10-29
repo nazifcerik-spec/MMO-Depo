@@ -868,5 +868,6 @@
   "errTradeClosed": "Bu takas sona erdi.",
   "errTradeItem": "Bu eşya şu an takas edilemez.",
   "errTradeEmpty": "Önce bir eşya koyun.",
-  "errTradeTooMany": "Takasta çok fazla eşya var."
+  "errTradeTooMany": "Takasta çok fazla eşya var.",
+  "errCraftLevel": "Karakterinin seviyesi bu eşyanın seviyesinin altında."
 }

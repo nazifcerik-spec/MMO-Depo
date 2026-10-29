@@ -553,6 +553,18 @@ func Read(dir string) (*Pack, error) {
 
 // validateRefs checks the references between files: a typo would otherwise
 // load fine and fail only when a player buys, crafts or enters.
+// RecipeSkill is the profession level a recipe needs for an output used at
+// itemLevel (DD-316): professions 1..100 span character levels 1..1000.
+// Jewelcrafting runs two levels ahead so a new jeweller has recipes from
+// level 1 (its pieces start at character level 25).
+func RecipeSkill(profession string, itemLevel int16) int16 {
+	s := (max(itemLevel, 1) + 9) / 10
+	if profession == "jewelcrafting" {
+		s -= 2
+	}
+	return max(s, 1)
+}
+
 func validateRefs(p *Pack, r refs) error {
 	for _, v := range p.Vendors {
 		for _, s := range v.Sells {
@@ -562,12 +574,20 @@ func validateRefs(p *Pack, r refs) error {
 		}
 	}
 	profs := codeSet(p.Professions, func(x Profession) string { return x.Code })
+	levels := map[string]int16{}
+	for _, it := range p.Items {
+		levels[it.Code] = it.MinLevel
+	}
 	for _, rc := range p.Recipes {
 		if !profs[rc.ProfessionCode] {
 			return fmt.Errorf("recipe %s: unknown profession %q", rc.Code, rc.ProfessionCode)
 		}
 		if !r.items[rc.OutputTemplateCode] {
 			return fmt.Errorf("recipe %s: unknown output %q", rc.Code, rc.OutputTemplateCode)
+		}
+		if want := RecipeSkill(rc.ProfessionCode, levels[rc.OutputTemplateCode]); rc.MinSkill != want {
+			return fmt.Errorf("recipe %s: min_skill %d, the output's level %d needs %d (DD-316)",
+				rc.Code, rc.MinSkill, levels[rc.OutputTemplateCode], want)
 		}
 		for _, in := range rc.Inputs {
 			if !r.items[in.TemplateCode] {

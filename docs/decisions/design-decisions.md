@@ -3121,6 +3121,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-316 — Üretilen eşya seviyeleri ve tarif şartları
+
+**Context:** Oyuncu üretilen eşyaların kullanım seviyelerinin belirlenmesini ve tariflerin meslek + eşya seviyesi şartlarının buna göre uyarlanmasını istedi.
+**Decision:** Her üretilen eşyanın kullanım seviyesi (`min_level`) var: ekipman, takı, iksir, parşömen zaten; külçeler artık (beceri−1)×10+1 (ör. demir külçe 21), yemekler balık seviyesi × 10. Kural tüm tariflerde aynı: meslek beceri şartı = ⌈eşya seviyesi / 10⌉ (meslek 1–100 = karakter 1–1000; `contentpack.RecipeSkill`), kuyumculuk yeni kuyumcu ilk tarifleri yapabilsin diye 2 eksik. Contentpack bu kurala uymayan tarifi reddeder; `gen_cooking.py` aşçılık şartını buna çekti. Üretim başlarken karakter seviyesi de çıktının seviyesine ulaşmalı (`E_CRAFT_LEVEL`): yalnız kullanabileceğin eşyayı üretirsin. Katalog tarife `OutputMinLevel` ekler.
+**Consequences:** Meslek ve karakter ilerlemesi birlikte yürür; yüksek meslekli düşük seviyeli karakter üst kademe eşya üretemez.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

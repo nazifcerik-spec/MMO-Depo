@@ -2994,4 +2994,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errTradeTooMany => '交易物品过多。';
+
+  @override
+  String get errCraftLevel => '角色等级低于该物品等级。';
 }

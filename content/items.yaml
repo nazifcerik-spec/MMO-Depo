@@ -88,7 +88,7 @@ items:
     display_name_key: item.adamantite_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 861
     base_value_copper: 5458
     base_weight_g: 500
     stackable: true
@@ -100,7 +100,7 @@ items:
     display_name_key: item.orichalcum_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 811
     base_value_copper: 4082
     base_weight_g: 500
     stackable: true
@@ -112,7 +112,7 @@ items:
     display_name_key: item.mythril_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 761
     base_value_copper: 3058
     base_weight_g: 500
     stackable: true
@@ -124,7 +124,7 @@ items:
     display_name_key: item.starsteel_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 711
     base_value_copper: 1830
     base_weight_g: 500
     stackable: true
@@ -136,7 +136,7 @@ items:
     display_name_key: item.iridium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 661
     base_value_copper: 1376
     base_weight_g: 500
     stackable: true
@@ -148,7 +148,7 @@ items:
     display_name_key: item.osmium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 611
     base_value_copper: 1030
     base_weight_g: 500
     stackable: true
@@ -160,7 +160,7 @@ items:
     display_name_key: item.platinum_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 561
     base_value_copper: 586
     base_weight_g: 500
     stackable: true
@@ -172,7 +172,7 @@ items:
     display_name_key: item.rhodium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 511
     base_value_copper: 442
     base_weight_g: 500
     stackable: true
@@ -184,7 +184,7 @@ items:
     display_name_key: item.palladium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 461
     base_value_copper: 336
     base_weight_g: 500
     stackable: true
@@ -196,7 +196,7 @@ items:
     display_name_key: item.titanium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 411
     base_value_copper: 248
     base_weight_g: 500
     stackable: true
@@ -208,7 +208,7 @@ items:
     display_name_key: item.tungsten_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 361
     base_value_copper: 190
     base_weight_g: 500
     stackable: true
@@ -220,7 +220,7 @@ items:
     display_name_key: item.electrum_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 311
     base_value_copper: 147
     base_weight_g: 500
     stackable: true
@@ -232,7 +232,7 @@ items:
     display_name_key: item.gold_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 281
     base_value_copper: 86
     base_weight_g: 500
     stackable: true
@@ -244,7 +244,7 @@ items:
     display_name_key: item.silver_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 251
     base_value_copper: 74
     base_weight_g: 500
     stackable: true
@@ -256,7 +256,7 @@ items:
     display_name_key: item.cobalt_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 221
     base_value_copper: 64
     base_weight_g: 500
     stackable: true
@@ -268,7 +268,7 @@ items:
     display_name_key: item.chromium_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 191
     base_value_copper: 58
     base_weight_g: 500
     stackable: true
@@ -280,7 +280,7 @@ items:
     display_name_key: item.nickel_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 161
     base_value_copper: 48
     base_weight_g: 500
     stackable: true
@@ -292,7 +292,7 @@ items:
     display_name_key: item.zinc_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 141
     base_value_copper: 38
     base_weight_g: 500
     stackable: true
@@ -304,7 +304,7 @@ items:
     display_name_key: item.bronze_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 81
     base_value_copper: 29
     base_weight_g: 500
     stackable: true
@@ -316,7 +316,7 @@ items:
     display_name_key: item.copper_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 61
     base_value_copper: 26
     base_weight_g: 500
     stackable: true
@@ -328,7 +328,7 @@ items:
     display_name_key: item.tin_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 41
     base_value_copper: 26
     base_weight_g: 500
     stackable: true
@@ -340,7 +340,7 @@ items:
     display_name_key: item.iron_bar
     item_class: material
     item_subclass: bar
-    min_level: 1
+    min_level: 21
     base_value_copper: 22
     base_weight_g: 500
     stackable: true

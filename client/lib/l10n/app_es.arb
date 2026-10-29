@@ -352,5 +352,6 @@
   "errTradeClosed": "Ese intercambio terminó.",
   "errTradeItem": "Ese objeto no se puede intercambiar ahora.",
   "errTradeEmpty": "Primero pon algo.",
-  "errTradeTooMany": "Demasiados objetos en el intercambio."
+  "errTradeTooMany": "Demasiados objetos en el intercambio.",
+  "errCraftLevel": "El nivel de tu personaje es inferior al del objeto."
 }

@@ -127,7 +127,7 @@ def extra_dishes():
 items, recipes, names = [], [], {k: {} for k in ('en', 'tr', 'zh', 'es')}
 for dish, fish, level, tier, herb, log, name in sorted(DISHES + extra_dishes(), key=lambda d: (d[2], d[0])):
     code = 'food_' + dish
-    skill = max(1, round(level * 0.9))
+    skill = max(1, level)  # = ceil(item level / 10), the rule of every recipe (DD-316)
     # Fishing level L stands for character level 10L (DD-274); food heals a
     # share of max HP so one table serves every level.
     char_level = 1 if level == 1 else level * 10

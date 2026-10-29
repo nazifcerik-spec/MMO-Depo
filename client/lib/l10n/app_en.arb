@@ -2341,5 +2341,6 @@
   "errTradeClosed": "That trade is over.",
   "errTradeItem": "That item cannot be traded now.",
   "errTradeEmpty": "Put something up first.",
-  "errTradeTooMany": "Too many items in the trade."
+  "errTradeTooMany": "Too many items in the trade.",
+  "errCraftLevel": "Your character's level is below this item's level."
 }

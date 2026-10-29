@@ -305,6 +305,8 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.Write(w, r, http.StatusConflict, "E_PROFESSION_NOT_LEARNED", "learn the profession first")
 	case errors.Is(err, ErrSkillTooLow):
 		apierr.Write(w, r, http.StatusConflict, "E_SKILL_TOO_LOW", "skill level below recipe min_skill")
+	case errors.Is(err, ErrCharLevelTooLow):
+		apierr.Write(w, r, http.StatusConflict, "E_CRAFT_LEVEL", "character level below the item's level")
 	case errors.Is(err, ErrInsufficientGold):
 		apierr.Write(w, r, http.StatusConflict, "E_INSUFFICIENT_GOLD", "not enough gold")
 	case errors.Is(err, ErrJobActive):
