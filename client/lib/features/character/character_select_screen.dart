@@ -115,6 +115,7 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
         ),
         title: Text(l.characters),
         actions: [
+          const UpdateButton(), // in-app updates (DD-304)
           AccountMenuButton(auth: widget.auth),
           IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
         ],

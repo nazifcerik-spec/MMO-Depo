@@ -120,5 +120,35 @@ void main() {
       expect(perm, findsOneWidget);
       expect(calls, ['dir', 'install']);
     });
+
+    testWidgets('bar button: dot when newer, tap downloads and installs', (tester) async {
+      installResult = 'started';
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            appBar: AppBar(actions: [UpdateButton(updater: updater(server()))]),
+          ),
+        ),
+      );
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+      await tester.pump();
+      final badge = tester.widget<Badge>(
+        find.descendant(of: find.byKey(const Key('update-button')), matching: find.byType(Badge)),
+      );
+      expect(badge.isLabelVisible, isTrue);
+
+      await tester.tap(find.byKey(const Key('update-button')));
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+      await tester.pumpAndSettle();
+      expect(find.text('Download and install version 1.25.0 (1 MB)?'), findsOneWidget);
+      await tester.tap(find.text('Update').last);
+      for (var i = 0; i < 50 && calls.length < 2; i++) {
+        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 20)));
+        await tester.pump();
+      }
+      expect(calls, ['dir', 'install']);
+    });
   });
 }
