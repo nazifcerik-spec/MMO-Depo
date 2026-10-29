@@ -54,6 +54,12 @@ $origin = git -C $repo remote get-url origin
 git -C $pub init -q -b releases
 git -C $pub add -A
 git -C $pub commit -q -m "MeNa World $Version"
-git -C $pub push -q --force $origin releases
-if ($LASTEXITCODE -ne 0) { throw 'push failed' }
+# Large uploads sometimes drop mid-way: try a few times.
+$pushed = $false
+for ($i = 1; $i -le 4 -and -not $pushed; $i++) {
+    git -C $pub push -q --force $origin releases
+    $pushed = $LASTEXITCODE -eq 0
+    if (-not $pushed) { Start-Sleep 20 }
+}
+if (-not $pushed) { throw 'push failed' }
 Write-Host "published $Version -> ${feedBase}latest.json"
