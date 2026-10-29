@@ -32,3 +32,4 @@ flutter:
     - assets/classes/ # class portraits: <class_code>.png (DD-266)
     - assets/races/ # race portraits: <race_code>.png (DD-266)
     - assets/branding/ # MeNa World logo (DD-270)
+    - assets/backgrounds/ # page backgrounds: bg01..bg30.webp (DD-323)

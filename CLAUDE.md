@@ -258,6 +258,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 121. **Günlük ödül 29 gün (bitti)** — Sprint 121, DD-322. `dailyreward.CycleDays` 29 (`dayMult`/`potionQty` fonksiyon: hafta başı artan altın, 7. gün ×3, 29. gün ×10; her hafta 3./6. gün iksir). İstemci penceresi satır başı 5 kutu, kaydırılabilir.
 
+122. **Arka plan görselleri + renk temaları (bitti)** — Sprint 122, DD-323. 30 bölge temalı arka plan (`client/assets/backgrounds/bgNN.webp`, `scripts/bg_assets.py`), `BackgroundArt` (koyu katmanlı kaplama, mağazada küçük karo), arka plan başı vurgu/ikincil renk `themedFor` ile tema.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -156,7 +156,13 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   Future<void> _push(Widget screen) async {
-    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
+    final p = _profile;
+    final theme = Theme.of(context);
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => p == null ? screen : Theme(data: themedFor(theme, p.background), child: screen),
+      ),
+    );
     _refreshUnread();
     _refreshQuests();
   }
@@ -244,77 +250,82 @@ class _HomeShellState extends State<HomeShell> {
       (Icons.explore_outlined, Icons.explore, l.navAdventure),
       (Icons.handyman_outlined, Icons.handyman, l.navWorkshop),
     ];
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          tooltip: l.switchCharacter,
-          icon: const Icon(Icons.people_alt_outlined),
-          onPressed: () => Navigator.of(context).pop(),
+    // The chosen background's art and colours (DD-321, DD-323).
+    final profile = _profile;
+    final theme = profile == null ? Theme.of(context) : themedFor(Theme.of(context), profile.background);
+    final accent = theme.colorScheme.primary;
+    final body = SafeArea(
+      child: PageFrame(
+        child: IndexedStack(
+          index: _tab,
+          children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
         ),
-        title: Row(
-          children: [
-            if (_profile case final p?) ...[AvatarBadge(code: p.avatar, size: 30), const SizedBox(width: Space.sm)],
-            Flexible(child: Text(s.name, overflow: TextOverflow.ellipsis)),
+      ),
+    );
+    return Theme(
+      data: theme,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            tooltip: l.switchCharacter,
+            icon: const Icon(Icons.people_alt_outlined),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Row(
+            children: [
+              if (_profile case final p?) ...[AvatarBadge(code: p.avatar, size: 30), const SizedBox(width: Space.sm)],
+              Flexible(child: Text(s.name, overflow: TextOverflow.ellipsis)),
+            ],
+          ),
+
+          actions: [
+            IconButton(
+              tooltip: l.quests,
+              icon: Badge(
+                isLabelVisible: _questsReady > 0,
+                backgroundColor: Palette.success,
+                label: Text('$_questsReady'),
+                child: const Icon(Icons.assignment_outlined),
+              ),
+              onPressed: () => _push(QuestsScreen(repo: _quests, dataVersion: _dataVersion)),
+            ),
+            IconButton(
+              tooltip: l.notifications,
+              icon: Badge(
+                isLabelVisible: _unread > 0,
+                label: Text(_unread > 99 ? '99+' : '$_unread'),
+                child: const Icon(Icons.notifications_outlined),
+              ),
+              onPressed: () => _push(NotificationsScreen(repo: _notifications)),
+            ),
+            IconButton(
+              tooltip: l.social,
+              icon: const Icon(Icons.forum_outlined),
+              onPressed: () => _push(
+                SocialScreen(repo: SocialRepository(widget.auth.api, s.id), live: _live, dataVersion: _dataVersion),
+              ),
+            ),
+            IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
           ],
         ),
-
-        actions: [
-          IconButton(
-            tooltip: l.quests,
-            icon: Badge(
-              isLabelVisible: _questsReady > 0,
-              backgroundColor: Palette.success,
-              label: Text('$_questsReady'),
-              child: const Icon(Icons.assignment_outlined),
-            ),
-            onPressed: () => _push(QuestsScreen(repo: _quests, dataVersion: _dataVersion)),
-          ),
-          IconButton(
-            tooltip: l.notifications,
-            icon: Badge(
-              isLabelVisible: _unread > 0,
-              label: Text(_unread > 99 ? '99+' : '$_unread'),
-              child: const Icon(Icons.notifications_outlined),
-            ),
-            onPressed: () => _push(NotificationsScreen(repo: _notifications)),
-          ),
-          IconButton(
-            tooltip: l.social,
-            icon: const Icon(Icons.forum_outlined),
-            onPressed: () => _push(
-              SocialScreen(repo: SocialRepository(widget.auth.api, s.id), live: _live, dataVersion: _dataVersion),
-            ),
-          ),
-          IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
-        ],
-      ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(gradient: _profile == null ? null : backgroundGradient(_profile!.background)),
-        child: SafeArea(
-          child: PageFrame(
-            child: IndexedStack(
-              index: _tab,
-              children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
-            ),
-          ),
+        body: profile == null ? body : BackgroundArt(code: profile.background, child: body),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _tab,
+          backgroundColor: Palette.bgSurface,
+          indicatorColor: accent.withValues(alpha: 0.18),
+          onDestinationSelected: (i) => setState(() {
+            _tab = i;
+            _visited.add(i);
+          }),
+          destinations: [
+            for (final (icon, selected, label) in tabs)
+              NavigationDestination(
+                icon: Icon(icon),
+                selectedIcon: Icon(selected, color: accent),
+                label: label,
+              ),
+          ],
         ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _tab,
-        backgroundColor: Palette.bgSurface,
-        indicatorColor: Palette.accent.withValues(alpha: 0.18),
-        onDestinationSelected: (i) => setState(() {
-          _tab = i;
-          _visited.add(i);
-        }),
-        destinations: [
-          for (final (icon, selected, label) in tabs)
-            NavigationDestination(
-              icon: Icon(icon),
-              selectedIcon: Icon(selected, color: Palette.accent),
-              label: label,
-            ),
-        ],
       ),
     );
   }

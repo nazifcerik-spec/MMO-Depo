@@ -518,8 +518,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(huntAnimal('forest_rat_pelt'), 'forest_rat');
     expect(huntAnimal('dragon_scale'), 'dragon');
-    final img = tester.widget<Image>(find.byType(Image).first);
-    expect(((img.image as ResizeImage).imageProvider as AssetImage).assetName, 'assets/animals/forest_rat.png');
+    final animal = tester.widgetList<Image>(find.byType(Image)).where((i) => i.image is ResizeImage).first;
+    expect(((animal.image as ResizeImage).imageProvider as AssetImage).assetName, 'assets/animals/forest_rat.png');
   });
 
   testWidgets('abandon asks first and forfeits', (tester) async {

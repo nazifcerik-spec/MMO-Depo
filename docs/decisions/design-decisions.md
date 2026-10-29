@@ -3184,6 +3184,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-323 — Arka plan görselleri + renk temaları
+
+**Context:** Oyuncu, kodla çizilen 30 gradyan arka plan yerine temaya uygun fotoğraf arka planlar ve onlara uyumlu renkler istedi. Görseller Gemini ile üretildi (bölge temalı, dikey 9:16, 768 × 1376).
+**Decision:** `client/art_originals/backgrounds/bgNN.jpg` (git dışı) → `python scripts/bg_assets.py` → `client/assets/backgrounds/bgNN.webp` (kendi boyutunda, en çok 768 px genişlik, WebP %80; 30 görsel ≈ 1,35 MB). Büyütme yapılmaz (ayrıntı eklemez); ekran `BoxFit.cover` ile kaplanır, telefonun oranının göstermediği kenarlar kırpılır. `BackgroundArt`: görsel + okunabilirlik için üstten alta koyu katman; mağaza karolarında küçük çözülür (`cacheWidth` 160) ve katmansız. Her arka planın vurgu + ikincil rengi (`backgroundColors`, sunucuyla aynı kodlar) `themedFor` ile `colorScheme.primary/secondary`'ye girer: oyun kabuğu, alt menü seçimi ve kabuktan açılan ekranlar bu renkleri alır; `Palette` sabitlerini doğrudan kullanan öğeler değişmez. Gradyanlar kaldırıldı.
+**Consequences:** Seçilen arka plan oyun sayfasının zemini ve renk teması olur; yeni görsel = yeni APK.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

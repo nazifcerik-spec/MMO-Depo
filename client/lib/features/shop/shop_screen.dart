@@ -229,11 +229,11 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
                       count: backgroundCount,
                       code: backgroundCode,
                       kind: 'background',
-                      tile: (c) => Container(
-                        decoration: BoxDecoration(
-                          gradient: backgroundGradient(c),
-                          borderRadius: BorderRadius.circular(Radii.md),
-                        ),
+                      columns: 3,
+                      aspect: 9 / 16,
+                      tile: (c) => ClipRRect(
+                        borderRadius: BorderRadius.circular(Radii.sm),
+                        child: BackgroundArt(code: c, thumbnail: true),
                       ),
                     ),
                   ],
@@ -248,13 +248,16 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
     required String Function(int) code,
     required String kind,
     required Widget Function(String) tile,
+    int columns = 4,
+    double aspect = 1,
   }) {
     final l = AppLocalizations.of(context);
     final p = _profile!;
     final price = _shop!.items.where((i) => i.kind == kind).firstOrNull?.price ?? 0;
     return GridView.count(
       padding: const EdgeInsets.all(Space.screen),
-      crossAxisCount: 4,
+      crossAxisCount: columns,
+      childAspectRatio: aspect,
       mainAxisSpacing: Space.sm,
       crossAxisSpacing: Space.sm,
       children: [
@@ -279,7 +282,10 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
                   if (!p.usable(code(n)))
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Text(l.shopPrice(price), style: const TextStyle(fontSize: 11, color: Palette.warning)),
+                      child: ColoredBox(
+                        color: Palette.bgPrimary.withValues(alpha: 0.7),
+                        child: Text(l.shopPrice(price), style: const TextStyle(fontSize: 11, color: Palette.warning)),
+                      ),
                     ),
                 ],
               ),
