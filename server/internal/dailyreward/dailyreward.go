@@ -1,8 +1,8 @@
 // Package dailyreward is the daily login reward (DD-311): one claim per
 // account and UTC day, paid to the character that claims it, on a
-// seven-day cycle that restarts when a day is missed. Gold grows with the
-// day and the character's level; days 3 and 6 add healing potions of the
-// character's tier.
+// 29-day cycle that restarts when a day is missed (DD-322). Gold grows with
+// the week, the day and the character's level; each week's third and sixth
+// days add healing potions of the character's tier.
 package dailyreward
 
 import (
@@ -21,18 +21,39 @@ import (
 )
 
 // CycleDays is the length of the reward cycle.
-const CycleDays = 7
+const CycleDays = 29
 
 var (
 	ErrClaimed  = errors.New("dailyreward: already claimed today")
 	ErrNotFound = errors.New("dailyreward: character not found")
 )
 
-// dayMult weighs each day's gold; the seventh is the big one.
-var dayMult = [CycleDays + 1]float64{0, 1, 1, 2, 2, 3, 3, 6}
+// dayMult weighs a day's gold: week w (0..3) pays 1 + w/2 a day and three
+// times that on its seventh day; day 29 closes the cycle at ten.
+func dayMult(day int) float64 {
+	if day == CycleDays {
+		return 10
+	}
+	base := 1 + float64((day-1)/7)/2
+	if day%7 == 0 {
+		return 3 * base
+	}
+	return base
+}
 
-// potionQty is the healing potions of each day (0 = none).
-var potionQty = [CycleDays + 1]int32{0, 0, 0, 3, 0, 0, 5, 0}
+// potionQty is a day's healing potions (0 = none): three on each week's
+// third day, five on its sixth.
+func potionQty(day int) int32 {
+	switch {
+	case day == CycleDays:
+		return 0
+	case day%7 == 3:
+		return 3
+	case day%7 == 6:
+		return 5
+	}
+	return 0
+}
 
 // potions are the healing potion tiers by the level they need.
 var potions = []struct {
@@ -55,8 +76,8 @@ type Reward struct {
 // per weight (10 × L^1.5 copper each).
 func RewardFor(day, level int) Reward {
 	level = max(level, 1)
-	r := Reward{Day: day, GoldCopper: int64(math.Round(dayMult[day] * 50 * math.Pow(float64(level), 1.5)))}
-	if n := potionQty[day]; n > 0 {
+	r := Reward{Day: day, GoldCopper: int64(math.Round(dayMult(day) * 50 * math.Pow(float64(level), 1.5)))}
+	if n := potionQty(day); n > 0 {
 		for _, p := range potions {
 			if level >= p.level {
 				r.Potion, r.PotionQty = p.code, n
@@ -70,7 +91,7 @@ func RewardFor(day, level int) Reward {
 // Status is what the reward window shows.
 type Status struct {
 	Claimable bool      `json:"claimable"`
-	Day       int       `json:"day"`    // the day the next claim pays (1..7)
+	Day       int       `json:"day"`    // the day the next claim pays (1..CycleDays)
 	Streak    int       `json:"streak"` // days claimed in a row so far
 	Rewards   []Reward  `json:"rewards"`
 	ResetsAt  time.Time `json:"resets_at"` // next UTC midnight

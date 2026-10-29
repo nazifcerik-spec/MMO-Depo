@@ -344,7 +344,7 @@ class FakeBackend {
         'day': dailyClaimable ? 1 : 2,
         'streak': dailyClaimable ? 0 : 1,
         'rewards': [
-          for (var d = 1; d <= 7; d++)
+          for (var d = 1; d <= 29; d++)
             {'day': d, 'gold_copper': 1000 * d, if (d == 3) 'potion': 'potion_hp_small', if (d == 3) 'potion_qty': 3},
         ],
       };

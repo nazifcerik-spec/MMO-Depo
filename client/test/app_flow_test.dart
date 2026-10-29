@@ -472,8 +472,8 @@ void main() {
     await tester.tap(find.text('Grim'));
     await tester.pumpAndSettle();
     expect(find.text('Daily login reward'), findsOneWidget);
-    expect(find.text('Day 7'), findsOneWidget);
-    expect(find.text('3× Potion Hp Small'), findsOneWidget);
+    expect(find.text('Day 29'), findsOneWidget);
+    expect(find.byTooltip('Potion Hp Small'), findsOneWidget);
     await tester.tap(find.byKey(const Key('daily-claim')));
     await tester.pumpAndSettle();
     expect(be.dailyClaims, 1);

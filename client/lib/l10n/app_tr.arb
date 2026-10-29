@@ -828,7 +828,7 @@
   "restartTitle": "Toplayıp yeniden başlatılsın mı?",
   "restartBody": "Şu ana kadar toplananlar çantana gelir ve aynı iş aynı süreyle yeniden başlar.",
   "dailyTitle": "Günlük giriş ödülü",
-  "dailyBody": "Her gün herhangi bir karakterinle bir kez al. Yedi gün üst üste en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.",
+  "dailyBody": "Her gün herhangi bir karakterinle bir kez al. Üst üste her hafta daha çok, 29. gün en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.",
   "dailyClaim": "Al",
   "dailyTomorrow": "Yarın gel",
   "dailyDay": "{n}. gün",

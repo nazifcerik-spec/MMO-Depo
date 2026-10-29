@@ -2863,7 +2863,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dailyTitle => '每日登录奖励';
 
   @override
-  String get dailyBody => '每天可用任意角色领取一次。连续七天收益最高；中断一天将重新开始。';
+  String get dailyBody => '每天可用任意角色领取一次。连续每周收益递增，第 29 天最高；中断一天将重新开始。';
 
   @override
   String get dailyClaim => '领取';

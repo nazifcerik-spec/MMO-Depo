@@ -5065,7 +5065,7 @@ abstract class AppLocalizations {
   /// No description provided for @dailyBody.
   ///
   /// In en, this message translates to:
-  /// **'Claim once a day on any character. Seven days in a row pay the most; a missed day starts the cycle again.'**
+  /// **'Claim once a day on any character. Each week in a row pays more and day 29 the most; a missed day starts the cycle again.'**
   String get dailyBody;
 
   /// No description provided for @dailyClaim.

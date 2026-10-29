@@ -2871,7 +2871,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dailyBody =>
-      'Her gün herhangi bir karakterinle bir kez al. Yedi gün üst üste en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.';
+      'Her gün herhangi bir karakterinle bir kez al. Üst üste her hafta daha çok, 29. gün en çok kazandırır; bir gün kaçırırsan döngü baştan başlar.';
 
   @override
   String get dailyClaim => 'Al';

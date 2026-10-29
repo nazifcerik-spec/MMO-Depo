@@ -3175,6 +3175,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-322 — Günlük giriş ödülü 29 günlük döngü
+
+**Context:** Oyuncu günlük giriş ödüllerinin satır başı 5 kutucuk, toplam 29 kutucuk olmasını istedi.
+**Decision:** `dailyreward.CycleDays` 7 → 29. Altın ağırlığı: hafta w (0..3) gün başı 1 + w/2, haftanın 7. günü bunun 3 katı, 29. gün 10 (döngü ortalaması ≈ 2,5/gün, eski 7 günlük ≈ 2,6 ile aynı ekonomi). Her haftanın 3. günü 3, 6. günü 5 seviyeye uygun can iksiri. Kaçırılan gün döngüyü baştan başlatır (değişmedi). İstemci penceresi kaydırılabilir, satır başı 5 eşit kutu (son satır aynı genişlikte), kutuda gün + altın + iksir ikonu × adet (ad ipucunda).
+**Consequences:** Uzun seri daha çok ödüllendirilir; ekonomi etkisi eskisiyle aynı düzeyde.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -2872,7 +2872,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dailyBody =>
-      'Claim once a day on any character. Seven days in a row pay the most; a missed day starts the cycle again.';
+      'Claim once a day on any character. Each week in a row pays more and day 29 the most; a missed day starts the cycle again.';
 
   @override
   String get dailyClaim => 'Claim';

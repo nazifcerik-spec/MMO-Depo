@@ -256,6 +256,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 120. **Kredi mağazası + kozmetik + bonus arayüzü (bitti — ödeme bekliyor)** — Sprint 120, DD-321. Migration 0057 (`credit` para birimi, `cosmetic.owned/profile`). `internal/shop`: 3 bonus (20 kr) + premium arka plan/avatar (30/15 kr), ilk 10/40 ücretsiz. İstemci `features/shop/` (mağaza, `AvatarBadge`, `backgroundGradient`, `BoostBar`), üst barda avatar, zeminde arka plan. Engel: ödeme sağlayıcısı + AdMob hesabı.
 
+121. **Günlük ödül 29 gün (bitti)** — Sprint 121, DD-322. `dailyreward.CycleDays` 29 (`dayMult`/`potionQty` fonksiyon: hafta başı artan altın, 7. gün ×3, 29. gün ×10; her hafta 3./6. gün iksir). İstemci penceresi satır başı 5 kutu, kaydırılabilir.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

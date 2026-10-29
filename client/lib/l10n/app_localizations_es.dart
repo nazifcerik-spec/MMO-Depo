@@ -2871,7 +2871,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dailyBody =>
-      'Reclama una vez al día con cualquier personaje. Siete días seguidos dan más; si faltas un día, el ciclo vuelve a empezar.';
+      'Reclama una vez al día con cualquier personaje. Cada semana seguida da más y el día 29 lo máximo; si faltas un día, el ciclo vuelve a empezar.';
 
   @override
   String get dailyClaim => 'Reclamar';

@@ -8,14 +8,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Daily login reward (DD-311): once per account and day, on a 7-day cycle.
+// Daily login reward (DD-311): once per account and day, on a 29-day cycle (DD-322).
 func TestHTTPDailyReward(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "mage")
 	st := p.ok("GET", p.path("/daily-reward"), nil)
 	require.Equal(t, true, st["claimable"])
 	require.EqualValues(t, 1, st["day"])
-	require.Len(t, st["rewards"], 7)
+	require.Len(t, st["rewards"], 29)
 
 	before := p.gold()
 	res := p.ok("POST", p.path("/daily-reward/claim"), map[string]any{})

@@ -6,7 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
 
-/// One day of the seven-day login cycle (DD-311).
+/// One day of the 29-day login cycle (DD-311, DD-322).
 class DailyReward {
   const DailyReward({required this.day, required this.goldCopper, this.potion = '', this.potionQty = 0});
 
@@ -63,8 +63,8 @@ class DailyRepository {
   }
 }
 
-/// The reward window: seven day boxes, today's highlighted, and the claim
-/// button. Returns true when a reward was claimed.
+/// The reward window: the cycle's day boxes five to a row, today's
+/// highlighted, and the claim button. Returns true when a reward was claimed.
 Future<bool> showDailyReward(BuildContext context, DailyRepository repo, DailyStatus status) async =>
     await showDialog<bool>(
       context: context,
@@ -110,8 +110,10 @@ class _DailyDialogState extends State<_DailyDialog> {
     final text = Theme.of(context).textTheme;
     // The day just paid (after a claim) or about to be.
     final current = _st.claimable ? _st.day : (_st.streak == 0 ? 0 : _st.streak);
+    final rewards = _st.rewards;
     return AlertDialog(
       title: Text(l.dailyTitle),
+      scrollable: true,
       content: SizedBox(
         width: 360,
         child: Column(
@@ -120,14 +122,27 @@ class _DailyDialogState extends State<_DailyDialog> {
           children: [
             Text(l.dailyBody, style: text.bodySmall),
             const SizedBox(height: Space.md),
-            Wrap(
-              spacing: Space.sm,
-              runSpacing: Space.sm,
-              children: [
-                for (final r in _st.rewards)
-                  _DayBox(reward: r, done: _st.claimable ? r.day < _st.day : r.day <= current, today: r.day == current),
-              ],
-            ),
+            // Five equal boxes a row; the last row keeps the same width.
+            for (var i = 0; i < rewards.length; i += _perRow)
+              Padding(
+                padding: const EdgeInsets.only(bottom: Space.xs),
+                child: Row(
+                  children: [
+                    for (var j = i; j < i + _perRow; j++) ...[
+                      if (j > i) const SizedBox(width: Space.xs),
+                      Expanded(
+                        child: j < rewards.length
+                            ? _DayBox(
+                                reward: rewards[j],
+                                done: _st.claimable ? rewards[j].day < _st.day : rewards[j].day <= current,
+                                today: rewards[j].day == current,
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
           ],
         ),
       ),
@@ -143,6 +158,8 @@ class _DailyDialogState extends State<_DailyDialog> {
   }
 }
 
+const _perRow = 5;
+
 class _DayBox extends StatelessWidget {
   const _DayBox({required this.reward, required this.done, required this.today});
 
@@ -155,35 +172,41 @@ class _DayBox extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
     return Container(
-      width: 96,
-      padding: const EdgeInsets.all(Space.sm),
+      height: 64,
+      padding: const EdgeInsets.all(Space.xs),
       decoration: BoxDecoration(
         color: today ? Palette.accent.withValues(alpha: 0.12) : Palette.bgElevated,
         borderRadius: BorderRadius.circular(Radii.md),
         border: Border.all(color: today ? Palette.accent : Palette.borderSubtle),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Row(
               children: [
-                Text(l.dailyDay(reward.day), style: text.labelMedium),
+                Text(l.dailyDay(reward.day), style: text.labelSmall),
                 if (done) ...[
-                  const SizedBox(width: 4),
-                  const Icon(Icons.check_circle, size: 14, color: Palette.success),
+                  const SizedBox(width: 2),
+                  const Icon(Icons.check_circle, size: 12, color: Palette.success),
                 ],
               ],
             ),
           ),
-          const SizedBox(height: Space.xs),
-          FittedBox(fit: BoxFit.scaleDown, child: GoldText(reward.goldCopper, size: 12)),
+          FittedBox(fit: BoxFit.scaleDown, child: GoldText(reward.goldCopper, size: 11)),
           if (reward.potion.isNotEmpty)
-            Text(
-              '${reward.potionQty}× ${ContentNames.of('item', reward.potion)}',
-              style: text.bodySmall,
-              textAlign: TextAlign.center,
-              maxLines: 2,
+            Tooltip(
+              message: ContentNames.of('item', reward.potion),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  children: [
+                    const Icon(Icons.local_drink, size: 12, color: Palette.danger),
+                    Text('${reward.potionQty}×', style: text.labelSmall),
+                  ],
+                ),
+              ),
             ),
         ],
       ),
