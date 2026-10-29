@@ -262,7 +262,8 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		WithPublisher(wsPub).WithNotifier(notifSvc)
 	progHandler := progression.NewHandler(progSvc)
 	// Quests tick from the same event stream as mastery/achievements (DD-221).
-	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub)
+	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub).
+		WithGatherXP(gatherSvc) // quest profession XP (DD-318)
 	recorder := progression.Recorders(progSvc, questSvc)
 	activitySvc.WithRecorder(recorder).WithGatherBonus(gatherBonus{progSvc, equipSvc}).WithNotifier(notifSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).

@@ -2158,6 +2158,7 @@ void main() {
     expect(find.text('First Hunt'), findsOneWidget);
     expect(find.text('• Defeat Young Boar ×5'), findsOneWidget);
     expect(find.textContaining('Resets in'), findsOneWidget);
+    expect(find.textContaining('Mining +25 XP'), findsOneWidget, reason: 'profession XP by its level (DD-318)');
 
     await tester.tap(find.widgetWithText(FilledButton, 'Accept').first);
     await tester.pumpAndSettle();

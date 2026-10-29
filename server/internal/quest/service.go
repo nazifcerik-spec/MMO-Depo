@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/otter/server/internal/activity"
 	"log/slog"
 	"sync/atomic"
 	"time"
@@ -52,9 +53,11 @@ type Service struct {
 	char CharacterFetcher
 	txn  economy.TxnService
 	xp   XPGranter
-	pub  EventPublisher
-	now  func() time.Time
-	log  *slog.Logger
+	// gather pays gathering profession XP (DD-318); nil = none.
+	gather GatherXP
+	pub    EventPublisher
+	now    func() time.Time
+	log    *slog.Logger
 }
 
 func NewService(pool *pgxpool.Pool, chars CharacterFetcher, txn economy.TxnService, xp XPGranter, logger *slog.Logger) *Service {
@@ -113,7 +116,9 @@ type View struct {
 	Objectives []ObjectiveView `json:"objectives"`
 	RewardXP   int64           `json:"reward_xp"`
 	RewardGold int64           `json:"reward_gold_copper"`
-	ExpiresAt  *time.Time      `json:"expires_at,omitempty"` // dailies: next UTC midnight
+	// RewardProfessions: gathering profession XP it also pays (DD-318).
+	RewardProfessions []ProfessionReward `json:"reward_professions,omitempty"`
+	ExpiresAt         *time.Time         `json:"expires_at,omitempty"` // dailies: next UTC midnight
 }
 
 type Board struct {
@@ -123,9 +128,10 @@ type Board struct {
 	DailyResetsAt time.Time `json:"daily_resets_at"`
 }
 
-func view(t *Template, state string, progress []int64, today time.Time) View {
+func view(t *Template, state string, progress []int64, today time.Time, rw Reward) View {
 	v := View{Code: t.Code, NameKey: t.NameKey, Category: t.Category, MinLevel: t.MinLevel, State: state,
-		RewardXP: t.RewardXP, RewardGold: t.RewardGold, Objectives: make([]ObjectiveView, len(t.Objectives))}
+		RewardXP: rw.XP, RewardGold: rw.GoldCopper, RewardProfessions: rw.Professions,
+		Objectives: make([]ObjectiveView, len(t.Objectives))}
 	for i, o := range t.Objectives {
 		v.Objectives[i] = ObjectiveView{Event: o.Event, Count: o.Count}
 		if i < len(progress) {
@@ -200,12 +206,16 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) (*Board, er
 	for _, code := range closedList {
 		done[code] = true
 	}
+	prof, err := s.professionLevels(ctx, char)
+	if err != nil {
+		return nil, err
+	}
 	b := &Board{Open: []View{}, Available: []View{}, OpenCap: OpenCap, DailyResetsAt: today.AddDate(0, 0, 1)}
 	taken := map[string]bool{}
 	for _, o := range open {
 		taken[o.code] = true
 		if t, ok := cat.Get(o.code); ok {
-			b.Open = append(b.Open, view(t, o.state, o.progress, today))
+			b.Open = append(b.Open, view(t, o.state, o.progress, today, RewardFor(t, c.Level, prof)))
 		}
 	}
 	offered := map[string]bool{}
@@ -223,7 +233,7 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) (*Board, er
 		if t.Requires != "" && !done[t.Requires] { // prerequisites are never dailies
 			continue
 		}
-		b.Available = append(b.Available, view(t, "available", nil, today))
+		b.Available = append(b.Available, view(t, "available", nil, today, RewardFor(t, c.Level, prof)))
 	}
 	return b, nil
 }
@@ -311,7 +321,11 @@ func (s *Service) Accept(ctx context.Context, char, account uuid.UUID, code stri
 	if err != nil {
 		return nil, err
 	}
-	v := view(t, "active", progress, today)
+	prof, err := s.professionLevels(ctx, char)
+	if err != nil {
+		return nil, err
+	}
+	v := view(t, "active", progress, today, RewardFor(t, c.Level, prof))
 	return &v, nil
 }
 
@@ -335,27 +349,35 @@ func (s *Service) Abandon(ctx context.Context, char, account uuid.UUID, code str
 }
 
 type TurnInResult struct {
-	Code       string                   `json:"code"`
-	RewardXP   int64                    `json:"reward_xp"`
-	RewardGold int64                    `json:"reward_gold_copper"`
-	XP         *character.XPGrantResult `json:"xp,omitempty"`
+	Code              string                   `json:"code"`
+	RewardXP          int64                    `json:"reward_xp"`
+	RewardGold        int64                    `json:"reward_gold_copper"`
+	RewardProfessions []ProfessionReward       `json:"reward_professions,omitempty"`
+	XP                *character.XPGrantResult `json:"xp,omitempty"`
 }
 
 // TurnIn pays a completed quest. Order is chosen so a retry can never pay
 // twice: idempotent ledger write → conditional state flip → XP only for the
 // request that flipped it.
 func (s *Service) TurnIn(ctx context.Context, char, account uuid.UUID, code string) (*TurnInResult, error) {
-	if _, err := s.char.GetOwned(ctx, char, account); err != nil {
+	c, err := s.char.GetOwned(ctx, char, account)
+	if err != nil {
 		return nil, err
 	}
 	t, ok := s.cat.Load().Get(code)
 	if !ok {
 		return nil, ErrNotFound
 	}
+	prof, err := s.professionLevels(ctx, char)
+	if err != nil {
+		return nil, err
+	}
+	// Priced at turn-in (DD-318); the ledger key keeps a retry at the first price.
+	rw := RewardFor(t, c.Level, prof)
 	now := s.now().UTC()
 	var id uuid.UUID
 	var state string
-	err := s.pool.QueryRow(ctx, `
+	err = s.pool.QueryRow(ctx, `
 		SELECT id, state FROM progression.character_quest
 		 WHERE character_id = $1 AND quest_code = $2 AND state IN ('active','completed')
 		   AND (day_key IS NULL OR day_key = $3)`, char, code, DayKey(now)).Scan(&id, &state)
@@ -369,13 +391,13 @@ func (s *Service) TurnIn(ctx context.Context, char, account uuid.UUID, code stri
 		return nil, ErrIncomplete
 	}
 	var txnID *uuid.UUID
-	if t.RewardGold > 0 {
+	if rw.GoldCopper > 0 {
 		res, err := s.txn.Write(ctx, economy.Intent{
 			Kind: "quest_reward", RefKind: "quest", RefID: id,
 			IdempotencyKey: "quest-reward-" + id.String(),
 			Entries: []economy.Entry{
-				{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemRewardSource, Delta: -t.RewardGold},
-				{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: char, Delta: t.RewardGold},
+				{Currency: "gold", AccountKind: economy.AccountSystem, AccountRef: economy.SystemRewardSource, Delta: -rw.GoldCopper},
+				{Currency: "gold", AccountKind: economy.AccountCharacter, AccountRef: char, Delta: rw.GoldCopper},
 			},
 		})
 		if err != nil {
@@ -392,9 +414,17 @@ func (s *Service) TurnIn(ctx context.Context, char, account uuid.UUID, code stri
 	if tag.RowsAffected() == 0 {
 		return nil, ErrNotActive // a concurrent turn-in won
 	}
-	out := &TurnInResult{Code: code, RewardXP: t.RewardXP, RewardGold: t.RewardGold}
-	if t.RewardXP > 0 && s.xp != nil {
-		if out.XP, err = s.xp.GrantXP(ctx, char, t.RewardXP, character.XPSource{Kind: "quest", ID: id.String(),
+	out := &TurnInResult{Code: code, RewardXP: rw.XP, RewardGold: rw.GoldCopper, RewardProfessions: rw.Professions}
+	if s.gather != nil {
+		for _, p := range rw.Professions {
+			if _, err := s.gather.AddXP(ctx, char, activity.Kind(p.Kind), int(p.XP)); err != nil {
+				s.log.ErrorContext(ctx, "quest: profession xp failed after turn-in (not retried)",
+					slog.String("quest_id", id.String()), slog.String("err", err.Error()))
+			}
+		}
+	}
+	if rw.XP > 0 && s.xp != nil {
+		if out.XP, err = s.xp.GrantXP(ctx, char, rw.XP, character.XPSource{Kind: "quest", ID: id.String(),
 			Metadata: map[string]any{"quest": code}}); err != nil {
 			s.log.ErrorContext(ctx, "quest: xp grant failed after turn-in (not retried)",
 				slog.String("quest_id", id.String()), slog.String("err", err.Error()))

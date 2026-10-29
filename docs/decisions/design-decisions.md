@@ -3139,6 +3139,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-318 — Görev ödülleri seviye ve meslek seviyesine göre
+
+**Context:** Oyuncu görevlerin karakter seviyesi ve beceri/meslek seviyelerine göre düzenlenmesini, ödüllerin orantılı olmasını istedi. Günlük ve yan görevlerin ödülleri sabitti (ör. 100 XP), yüksek seviyede anlamsızlaşıyordu.
+**Decision:** `quest.RewardFor(şablon, karakter seviyesi, meslek seviyeleri)`: günlük görev XP'si mevcut seviyenin XP'sinin %10'u, yan görev %25'i; altın seviyeye uygun 5 / 15 canavar değeri (canavar başı 10 × Sv^1,5 bakır). Her toplama hedefi (`gather_<tür>`) ayrıca o toplama mesleğinin mevcut seviyesinin XP'sinin %20'sini meslek XP'si olarak verir (`WithGatherXP`). Ana zincir görevleri içerik ödüllerini korur (zaten seviyeye yerleştirilmiş). Ödüller görünümde ve teslimde o anki seviyelerle hesaplanır; altın defter anahtarı ilk teslim fiyatını korur. Görünüm/teslim yanıtı `reward_professions`. İstemci görev kartında meslek XP'sini gösterir.
+**Consequences:** Günlük ve yan görevler her seviyede değerli; toplama görevleri meslek ilerlemesine katkı verir.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -248,6 +248,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 116. **Bölgesel toplama kaynakları (bitti)** — Sprint 116, DD-317. Migration 0054 (`item_template.gather_region`). `scripts/gather_regions.py` kaynakları (L−1)×10+1 seviyeli en yakın açık bölgeye koyar (22 bölge). Toplama yalnız erişimdeki bölgelerden (`activity.WithRegionGate`, `E_GATHER_REGION`); istemci uzak kaynakları bölge adıyla gösterir.
 
+117. **Seviyeli görev ödülleri (bitti)** — Sprint 117, DD-318. `quest/reward.go` `RewardFor`: günlük %10 / yan %25 seviye XP'si, 5 / 15 canavarlık altın, toplama hedefi başına mesleğin %20'si meslek XP'si; ana zincir aynı. `reward_professions` yanıtı, istemcide meslek XP satırı.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

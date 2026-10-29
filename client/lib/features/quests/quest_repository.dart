@@ -16,6 +16,7 @@ class Quest {
     required this.objectives,
     required this.rewardXp,
     required this.rewardGold,
+    this.rewardProfessions = const [],
     this.expiresAt,
   });
 
@@ -33,6 +34,10 @@ class Quest {
     ],
     rewardXp: (j['reward_xp'] as num?)?.toInt() ?? 0,
     rewardGold: (j['reward_gold_copper'] as num?)?.toInt() ?? 0,
+    rewardProfessions: [
+      for (final p in (j['reward_professions'] as List? ?? const []).cast<Map<String, dynamic>>())
+        (p['kind'] as String, (p['xp'] as num).toInt()),
+    ],
     expiresAt: DateTime.tryParse(j['expires_at'] as String? ?? ''),
   );
 
@@ -42,6 +47,9 @@ class Quest {
   final List<QuestObjective> objectives;
   final int rewardXp;
   final int rewardGold;
+
+  /// Gathering profession XP it also pays (kind, XP), by the levels (DD-318).
+  final List<(String, int)> rewardProfessions;
   final DateTime? expiresAt;
 }
 

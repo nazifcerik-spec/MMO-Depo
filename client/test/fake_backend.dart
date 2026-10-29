@@ -1012,6 +1012,9 @@ class FakeBackend {
       ],
       'reward_xp': 100,
       'reward_gold_copper': 300,
+      'reward_professions': [
+        {'kind': 'mining', 'xp': 25},
+      ],
     },
   ];
   final questCalls = <String>[];

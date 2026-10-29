@@ -207,6 +207,7 @@ class _QuestCard extends StatelessWidget {
                     [
                       if (q.rewardXp > 0) l.xpGain(q.rewardXp),
                       if (q.rewardGold > 0) goldString(q.rewardGold),
+                      for (final (kind, xp) in q.rewardProfessions) l.gatherXpGained(activityName(l, kind), xp),
                     ].join(' · '),
                     style: text.bodySmall,
                   ),
