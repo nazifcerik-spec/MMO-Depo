@@ -264,6 +264,8 @@ func writeActivityErr(w http.ResponseWriter, r *http.Request, err error) {
 		apierr.WriteField(w, r, http.StatusBadRequest, "E_VALIDATION", "unknown gathering resource", "target")
 	case errors.Is(err, ErrBagFull):
 		apierr.Write(w, r, http.StatusConflict, "E_BAG_FULL", "bag is full")
+	case errors.Is(err, ErrGatherRegion):
+		apierr.Write(w, r, http.StatusConflict, "E_GATHER_REGION", "the resource grows on another map")
 	case errors.Is(err, ErrGatherLevelLow):
 		apierr.Write(w, r, http.StatusConflict, "E_GATHER_LEVEL", "gathering level too low for this resource")
 	default:

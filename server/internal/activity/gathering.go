@@ -15,6 +15,8 @@ import (
 var (
 	ErrUnknownTarget  = errors.New("activity: unknown gathering resource")
 	ErrGatherLevelLow = errors.New("activity: gathering level too low for this resource")
+	// ErrGatherRegion: the resource grows on another map (DD-317).
+	ErrGatherRegion = errors.New("activity: the resource grows on another map")
 )
 
 // GatherNode is one resource of a gathering profession.
@@ -22,6 +24,8 @@ type GatherNode struct {
 	Code  string `json:"code"`
 	Level int    `json:"level"`
 	Tier  int    `json:"tier"`
+	// Region is the map it grows on (DD-317); empty = anywhere.
+	Region string `json:"region,omitempty"`
 }
 
 // GatherProgress is a profession's level after a reveal.
@@ -69,15 +73,24 @@ func tierIndex(t int) int { return min(7, max(0, t)) }
 
 // pickNode resolves the requested resource, or the best one the level
 // unlocks when none is named (older clients).
-func pickNode(nodes []GatherNode, level int, target string) (GatherNode, error) {
+// pickNode picks the target, or with none the best unlocked resource; in
+// is the regions the character gathers in (nil = everywhere, DD-317).
+func pickNode(nodes []GatherNode, level int, target string, in func(region string) bool) (GatherNode, error) {
+	here := func(n GatherNode) bool { return in == nil || n.Region == "" || in(n.Region) }
 	if target == "" {
-		best := -1
+		best, unlocked := -1, false
 		for i, n := range nodes {
 			if n.Level <= level {
-				best = i
+				unlocked = true
+				if here(n) {
+					best = i
+				}
 			}
 		}
 		if best < 0 {
+			if unlocked {
+				return GatherNode{}, ErrGatherRegion
+			}
 			return GatherNode{}, ErrUnknownTarget
 		}
 		return nodes[best], nil
@@ -87,8 +100,23 @@ func pickNode(nodes []GatherNode, level int, target string) (GatherNode, error) 
 			if n.Level > level {
 				return GatherNode{}, ErrGatherLevelLow
 			}
+			if !here(n) {
+				return GatherNode{}, ErrGatherRegion
+			}
 			return n, nil
 		}
 	}
 	return GatherNode{}, ErrUnknownTarget
+}
+
+// RegionGate is the regions a character reaches from where it stands
+// (world.Service satisfies, as for hunting, DD-273).
+type RegionGate interface {
+	HuntRegions(ctx context.Context, characterID uuid.UUID) ([]string, error)
+}
+
+// WithRegionGate gathers each resource only in reach of its map (DD-317).
+func (s *Service) WithRegionGate(g RegionGate) *Service {
+	s.regions = g
+	return s
 }

@@ -5313,6 +5313,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your character\'s level is below this item\'s level.'**
   String get errCraftLevel;
+
+  /// No description provided for @gatherNoneHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Your resources grow on other maps: travel to one shown beside them.'**
+  String get gatherNoneHere;
+
+  /// No description provided for @errGatherRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'That resource grows on another map.'**
+  String get errGatherRegion;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

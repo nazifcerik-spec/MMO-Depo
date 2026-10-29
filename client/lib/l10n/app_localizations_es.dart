@@ -3008,4 +3008,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errCraftLevel => 'El nivel de tu personaje es inferior al del objeto.';
+
+  @override
+  String get gatherNoneHere => 'Tus recursos crecen en otros mapas: viaja a la región indicada.';
+
+  @override
+  String get errGatherRegion => 'Ese recurso crece en otro mapa.';
 }

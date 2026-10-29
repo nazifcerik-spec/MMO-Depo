@@ -2342,5 +2342,7 @@
   "errTradeItem": "That item cannot be traded now.",
   "errTradeEmpty": "Put something up first.",
   "errTradeTooMany": "Too many items in the trade.",
-  "errCraftLevel": "Your character's level is below this item's level."
+  "errCraftLevel": "Your character's level is below this item's level.",
+  "gatherNoneHere": "Your resources grow on other maps: travel to one shown beside them.",
+  "errGatherRegion": "That resource grows on another map."
 }

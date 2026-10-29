@@ -58,7 +58,8 @@ func (s *Service) Nodes(kind activity.Kind) []activity.GatherNode {
 	tmpls := s.items.Catalog().Nodes(string(kind))
 	out := make([]activity.GatherNode, len(tmpls))
 	for i, t := range tmpls {
-		out[i] = activity.GatherNode{Code: t.Code, Level: int(t.GatherLevel), Tier: int(t.GatherTier)}
+		out[i] = activity.GatherNode{Code: t.Code, Level: int(t.GatherLevel), Tier: int(t.GatherTier),
+			Region: t.GatherRegion}
 	}
 	return out
 }

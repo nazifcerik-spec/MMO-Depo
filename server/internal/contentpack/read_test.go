@@ -43,6 +43,7 @@ func TestValidateRefs_Rejects(t *testing.T) {
 		"recipe output":     func(p *Pack) { p.Recipes[0].OutputTemplateCode = "zz" },
 		"recipe input":      func(p *Pack) { p.Recipes[0].Inputs[0].TemplateCode = "zz" },
 		"recipe skill":      func(p *Pack) { p.Recipes[0].MinSkill = 2 }, // level 25 needs 3 (DD-316)
+		"gather region":     func(p *Pack) { p.Items[0].Gather = &Gather{Kind: "mining", Level: 1, Region: "zz"} },
 		"dungeon boss":      func(p *Pack) { p.Dungeons[0].BossMobCode = "zz" },
 		"dungeon wave":      func(p *Pack) { p.Dungeons[0].Waves[0].MobCode = "zz" },
 		"mob region":        func(p *Pack) { p.Mobs[0].RegionCode = "zz" },

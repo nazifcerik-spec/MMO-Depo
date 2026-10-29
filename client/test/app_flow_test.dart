@@ -422,6 +422,9 @@ void main() {
     expect(find.text('Fishing · Lvl 20'), findsOneWidget);
     expect(find.text('10 / 64 XP'), findsOneWidget);
     expect(find.text('Unlocks at level 70'), findsOneWidget);
+    // Bass grows on another map (DD-317): listed with its region, not pickable.
+    expect(find.byKey(const Key('away-bass')), findsOneWidget);
+    expect(find.text('Dragon Peaks'), findsWidgets);
     await tester.tap(find.text('Salmon'));
     await _gatherScrollTo(tester, '3h 00m');
     await tester.tap(find.text('3h 00m'));

@@ -80,7 +80,7 @@ func TestHTTPDungeonsUnlimitedAndLevelGated(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
 	p.fail("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"}, 403, "E_LEVEL_REQUIREMENT")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 16 WHERE id = $1`, p.char)
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 25 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 	for run := 0; run < 2; run++ {
 		id := p.ok("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"})["contract"].(map[string]any)["id"].(string)

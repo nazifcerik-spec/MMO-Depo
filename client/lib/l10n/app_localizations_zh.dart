@@ -2997,4 +2997,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errCraftLevel => '角色等级低于该物品等级。';
+
+  @override
+  String get gatherNoneHere => '你的资源在其他地图：前往旁边标注的区域。';
+
+  @override
+  String get errGatherRegion => '该资源在其他地图。';
 }

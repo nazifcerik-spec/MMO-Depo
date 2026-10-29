@@ -65,7 +65,8 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		       base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
 		       no_trade, no_sell, affixable,
 		       equip_slot, class_restriction, stat_bonuses, use_effect,
-		       COALESCE(gather_kind, ''), COALESCE(gather_level, 0), COALESCE(gather_tier, 0), requirements, enchant
+		       COALESCE(gather_kind, ''), COALESCE(gather_level, 0), COALESCE(gather_tier, 0), requirements, enchant,
+		       COALESCE(gather_region, '')
 		  FROM content.item_template`
 	rows, err := pool.Query(ctx, q)
 	if err != nil {
@@ -85,6 +86,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 			&t.NoTrade, &t.NoSell, &t.Affixable,
 			&t.EquipSlot, &t.ClassRestriction, &bonuses, &useEffect,
 			&t.GatherKind, &t.GatherLevel, &t.GatherTier, &reqs, &enchant,
+			&t.GatherRegion,
 		); err != nil {
 			return nil, fmt.Errorf("scan item template: %w", err)
 		}

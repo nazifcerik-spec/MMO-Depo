@@ -22,6 +22,7 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrSlotBusy":       ErrSlotBusy,
 		"ErrUnknownTarget":  ErrUnknownTarget,
 		"ErrGatherLevelLow": ErrGatherLevelLow,
+		"ErrGatherRegion":   ErrGatherRegion,
 		"ErrBagFull":        ErrBagFull,
 	} {
 		t.Run(name, func(t *testing.T) {

@@ -365,7 +365,7 @@ class FakeBackend {
                   ? [
                       {'code': 'tiny_guppy', 'level': 1, 'tier': 0},
                       {'code': 'salmon', 'level': 18, 'tier': 1},
-                      {'code': 'bass', 'level': 20, 'tier': 2},
+                      {'code': 'bass', 'level': 20, 'tier': 2, 'region': 'dragon_peaks'},
                       {'code': 'golden_carp', 'level': 70, 'tier': 5},
                     ]
                   : k == 'hunting'

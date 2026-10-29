@@ -74,6 +74,8 @@ type Gather struct {
 	Kind  string `yaml:"kind"`
 	Level int16  `yaml:"level"`
 	Tier  int16  `yaml:"tier"`
+	// Region is the map it grows on (DD-317), by scripts/gather_regions.py.
+	Region string `yaml:"region"`
 }
 
 // GatherKinds are the gathering professions (activity kinds).
@@ -570,6 +572,17 @@ func validateRefs(p *Pack, r refs) error {
 		for _, s := range v.Sells {
 			if !r.items[s.TemplateCode] {
 				return fmt.Errorf("vendor %s: sells unknown item %q", v.Code, s.TemplateCode)
+			}
+		}
+	}
+	kinds := map[string]string{}
+	for _, rg := range p.Regions {
+		kinds[rg.Code] = rg.Kind
+	}
+	for _, it := range p.Items {
+		if g := it.Gather; g != nil && g.Region != "" {
+			if k := kinds[g.Region]; k != "zone" && k != "wilderness" {
+				return fmt.Errorf("item %s: gathered in %q, not an open region (DD-317)", it.Code, g.Region)
 			}
 		}
 	}
@@ -1278,8 +1291,8 @@ INSERT INTO content.item_template (
   code, display_name_key, item_class, item_subclass, min_level,
   base_value_copper, base_weight_g, stackable, max_stack, bind_kind,
   no_trade, no_sell, affixable, equip_slot, class_restriction, stat_bonuses, use_effect,
-  gather_kind, gather_level, gather_tier, requirements, enchant
-) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
+  gather_kind, gather_level, gather_tier, requirements, enchant, gather_region
+) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)
 ON CONFLICT (code) DO UPDATE SET
   display_name_key   = EXCLUDED.display_name_key,
   item_class         = EXCLUDED.item_class,
@@ -1302,6 +1315,7 @@ ON CONFLICT (code) DO UPDATE SET
   gather_tier        = EXCLUDED.gather_tier,
   requirements       = EXCLUDED.requirements,
   enchant            = EXCLUDED.enchant,
+  gather_region      = EXCLUDED.gather_region,
   version            = content.item_template.version + 1`
 
 	for _, it := range items {
@@ -1335,17 +1349,20 @@ ON CONFLICT (code) DO UPDATE SET
 				return fmt.Errorf("item %s: marshal enchant: %w", it.Code, err)
 			}
 		}
-		var gKind *string // nil → SQL NULL (not a gathering node)
+		var gKind, gRegion *string // nil → SQL NULL (not a gathering node)
 		var gLevel, gTier *int16
 		if g := it.Gather; g != nil {
 			gKind, gLevel, gTier = &g.Kind, &g.Level, &g.Tier
+			if g.Region != "" {
+				gRegion = &g.Region
+			}
 		}
 		_, err = tx.Exec(ctx, q,
 			it.Code, it.DisplayNameKey, it.ItemClass, it.ItemSubclass, it.MinLevel,
 			it.BaseValueCopper, it.BaseWeightG, it.Stackable, maxStack, bindKind,
 			it.NoTrade, it.NoSell, it.Affixable,
 			nullableStr(it.EquipSlot), nullableStr(it.ClassRestriction), bonuses, useEffect,
-			gKind, gLevel, gTier, reqs, enchant,
+			gKind, gLevel, gTier, reqs, enchant, gRegion,
 		)
 		if err != nil {
 			return fmt.Errorf("upsert item %s: %w", it.Code, err)

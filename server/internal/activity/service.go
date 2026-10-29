@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"slices"
 	"time"
 
 	"github.com/google/uuid"
@@ -104,6 +105,7 @@ type Service struct {
 	notifier notification.Notifier // reward history (DD-242); nil = none
 	bonus    GatherBonusSource
 	gather   Gathering       // gathering professions (DD-244); nil = gold only
+	regions  RegionGate      // resources by map (DD-317); nil = everywhere
 	bag      BagRoom         // nil = no room check
 	party    partyxp.Booster // party XP bonus (DD-305); nil = none
 	cfg      ServiceConfig
@@ -219,7 +221,15 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		if err != nil {
 			return nil, fmt.Errorf("activity: gathering level: %w", err)
 		}
-		node, err := pickNode(s.gather.Nodes(req.Kind), level, req.Target)
+		var in func(string) bool
+		if s.regions != nil {
+			reach, err := s.regions.HuntRegions(ctx, req.CharacterID)
+			if err != nil {
+				return nil, err
+			}
+			in = func(r string) bool { return slices.Contains(reach, r) }
+		}
+		node, err := pickNode(s.gather.Nodes(req.Kind), level, req.Target, in)
 		if err != nil {
 			return nil, err
 		}

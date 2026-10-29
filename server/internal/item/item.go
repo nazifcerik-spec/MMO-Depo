@@ -66,6 +66,8 @@ type Template struct {
 	GatherKind  string
 	GatherLevel int16
 	GatherTier  int16
+	// GatherRegion is the map a gathering node grows on (DD-317).
+	GatherRegion string
 }
 
 // UseEffect is what consuming one unit does (content use_effect, DD-218).

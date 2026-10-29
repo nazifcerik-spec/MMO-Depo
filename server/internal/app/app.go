@@ -298,7 +298,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	craftSvc.WithRecorder(recorder).WithSpeed(equipSvc) // crafting-speed enchants (DD-293)
 	// Party XP bonus (DD-305): +3% per member working the same kind alongside.
 	partySvcXP := partyxp.NewService(pool, logger)
-	activitySvc.WithPartyBonus(partySvcXP)
+	activitySvc.WithPartyBonus(partySvcXP).WithRegionGate(worldSvc) // resources by map (DD-317)
 	huntSvc.WithPartyBonus(partySvcXP)
 	dungSvc.WithPartyBonus(partySvcXP)
 	craftSvc.WithPartyBonus(partySvcXP)

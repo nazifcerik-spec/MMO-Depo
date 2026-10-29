@@ -246,6 +246,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 115. **Üretim seviye şartları (bitti)** — Sprint 115, DD-316. Kural: tarif beceri = ⌈çıktı Sv/10⌉ (kuyumculuk −2), contentpack doğrular (`RecipeSkill`); külçelere kullanım seviyesi, aşçılık şartı kurala çekildi. Üretim için karakter seviyesi ≥ çıktı seviyesi (`E_CRAFT_LEVEL`).
 
+116. **Bölgesel toplama kaynakları (bitti)** — Sprint 116, DD-317. Migration 0054 (`item_template.gather_region`). `scripts/gather_regions.py` kaynakları (L−1)×10+1 seviyeli en yakın açık bölgeye koyar (22 bölge). Toplama yalnız erişimdeki bölgelerden (`activity.WithRegionGate`, `E_GATHER_REGION`); istemci uzak kaynakları bölge adıyla gösterir.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -18,6 +18,12 @@ class ActivityRepository {
     );
   }
 
+  /// The regions the character gathers in from where it stands (DD-317).
+  Future<Set<String>> reach(String characterId) async {
+    final j = await api.get('/v1/character/$characterId/location');
+    return {for (final r in (j['hunt_regions'] as List? ?? const [])) r as String};
+  }
+
   /// Every gathering profession's level and resources (DD-244).
   Future<List<GatherSkill>> skills(String characterId) async {
     final j = await api.get('/v1/character/$characterId/gathering');

@@ -87,17 +87,21 @@ String huntAnimal(String nodeCode) => nodeCode.replaceFirst(RegExp(r'_(pelt|hide
 
 /// One resource of a gathering profession (DD-244).
 class GatherNode {
-  const GatherNode({required this.code, required this.level, required this.tier});
+  const GatherNode({required this.code, required this.level, required this.tier, this.region = ''});
 
   factory GatherNode.fromJson(Map<String, dynamic> j) => GatherNode(
     code: j['code'] as String,
     level: (j['level'] as num).toInt(),
     tier: (j['tier'] as num?)?.toInt() ?? 0,
+    region: j['region'] as String? ?? '',
   );
 
   final String code;
   final int level;
   final int tier;
+
+  /// The map it grows on (DD-317); empty = anywhere.
+  final String region;
 
   /// Mirrors item.TierRarity: T0–1 common … T7 mythic.
   String get rarity => switch (tier) {

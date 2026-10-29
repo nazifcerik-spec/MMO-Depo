@@ -353,5 +353,7 @@
   "errTradeItem": "Ese objeto no se puede intercambiar ahora.",
   "errTradeEmpty": "Primero pon algo.",
   "errTradeTooMany": "Demasiados objetos en el intercambio.",
-  "errCraftLevel": "El nivel de tu personaje es inferior al del objeto."
+  "errCraftLevel": "El nivel de tu personaje es inferior al del objeto.",
+  "gatherNoneHere": "Tus recursos crecen en otros mapas: viaja a la región indicada.",
+  "errGatherRegion": "Ese recurso crece en otro mapa."
 }

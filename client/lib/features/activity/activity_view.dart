@@ -52,6 +52,11 @@ class _ActivityViewState extends State<ActivityView> {
   /// kind → chosen resource code.
   final Map<String, String> _target = {};
 
+  /// Regions in reach (DD-317); null until loaded (then everything counts).
+  Set<String>? _reach;
+
+  bool _here(GatherNode n) => n.region.isEmpty || _reach == null || _reach!.contains(n.region);
+
   List<Duration> get _durations => [if (AppConfig.flavor == 'dev') const Duration(minutes: 1), ...activityDurations];
 
   @override
@@ -87,6 +92,8 @@ class _ActivityViewState extends State<ActivityView> {
     try {
       final list = await widget.repo.skills(widget.characterId);
       if (mounted) setState(() => _skills = {for (final g in list) g.kind: g});
+      final reach = await widget.repo.reach(widget.characterId);
+      if (mounted) setState(() => _reach = reach);
     } on ApiError {
       // Optional: the picker works without levels.
     }
@@ -98,9 +105,13 @@ class _ActivityViewState extends State<ActivityView> {
     if (g == null) return null;
     final code = _target[kind];
     for (final n in g.nodes) {
-      if (n.code == code && g.unlocks(n)) return n;
+      if (n.code == code && g.unlocks(n) && _here(n)) return n;
     }
-    return g.best;
+    GatherNode? best;
+    for (final n in g.nodes) {
+      if (g.unlocks(n) && _here(n)) best = n;
+    }
+    return best;
   }
 
   Future<void> _run(Future<void> Function() action) async {
@@ -292,14 +303,28 @@ class _ActivityViewState extends State<ActivityView> {
       const SizedBox(height: Space.lg),
       Text(l.gatherResource, style: text.bodySmall),
       const SizedBox(height: Space.sm),
-      for (final n in unlocked)
-        _NodeTile(
-          node: n,
-          kind: g.kind,
-          trailing: l.levelShort(n.level),
-          selected: n.code == chosen?.code,
-          onTap: _busy ? null : () => setState(() => _target[g.kind] = n.code),
+      if (unlocked.isNotEmpty && chosen == null)
+        Padding(
+          padding: const EdgeInsets.only(bottom: Space.sm),
+          child: Text(l.gatherNoneHere, style: text.bodySmall?.copyWith(color: Palette.warning)),
         ),
+      for (final n in unlocked)
+        if (_here(n))
+          _NodeTile(
+            node: n,
+            kind: g.kind,
+            trailing: l.levelShort(n.level),
+            selected: n.code == chosen?.code,
+            onTap: _busy ? null : () => setState(() => _target[g.kind] = n.code),
+          )
+        else
+          _NodeTile(
+            key: Key('away-${n.code}'),
+            node: n,
+            kind: g.kind,
+            trailing: ContentNames.of('region', n.region),
+            locked: true,
+          ),
       for (final n in locked) _NodeTile(node: n, kind: g.kind, trailing: l.gatherLocked(n.level), locked: true),
     ];
   }
@@ -438,6 +463,7 @@ class _KindTile extends StatelessWidget {
 /// One gathering resource: art, rarity-coloured name, level (or lock).
 class _NodeTile extends StatelessWidget {
   const _NodeTile({
+    super.key,
     required this.node,
     required this.kind,
     required this.trailing,

@@ -3130,6 +3130,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-317 — Toplama kaynakları haritalara dağıtıldı
+
+**Context:** Oyuncu tüm toplama kaynaklarının, onlardan üretilen eşyaların kullanılabileceği seviyeye eşit haritalara dağıtılmasını ve yalnız oradan toplanabilmesini istedi.
+**Decision:** `python scripts/gather_regions.py`: L seviyeli kaynak, (L−1)×10+1 seviyede kullanılan eşyalara gider (DD-316 kuralı), bu yüzden seviyesi o değeri aşmayan en yüksek açık bölgede (zone/wilderness) yetişir; `gathering.yaml` `gather.region`. 150 kaynak 22 bölgede (seviye 1 Yeşilorman, 4 Sisli Bataklıklar … 100 Sonsuzluğun Kıyısı), her bölgede beş toplama türü. Migration 0054 `item_template.gather_region`; contentpack bölgenin açık bölge olduğunu doğrular. Toplama yalnız erişimdeki bölgelerden (avdaki gibi: bulunulan bölge + doğrudan yolu olanlar, `HuntRegions`): seçilen kaynak uzaktaysa `E_GATHER_REGION`, hedefsiz başlatmada erişimdeki en iyi kaynak. `/gathering` düğümleri `region` taşır. İstemci: uzak kaynaklar bölge adıyla soluk, seçilemez; hiçbiri yakında değilse uyarı.
+**Consequences:** Toplama ilerlemesi haritada ilerlemeye bağlanır; yüksek kaynaklar için ilgili bölgeye yolculuk gerekir.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

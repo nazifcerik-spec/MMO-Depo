@@ -353,5 +353,7 @@
   "errTradeItem": "该物品现在无法交易。",
   "errTradeEmpty": "请先放入物品。",
   "errTradeTooMany": "交易物品过多。",
-  "errCraftLevel": "角色等级低于该物品等级。"
+  "errCraftLevel": "角色等级低于该物品等级。",
+  "gatherNoneHere": "你的资源在其他地图：前往旁边标注的区域。",
+  "errGatherRegion": "该资源在其他地图。"
 }

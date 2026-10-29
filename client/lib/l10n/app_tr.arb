@@ -869,5 +869,7 @@
   "errTradeItem": "Bu eşya şu an takas edilemez.",
   "errTradeEmpty": "Önce bir eşya koyun.",
   "errTradeTooMany": "Takasta çok fazla eşya var.",
-  "errCraftLevel": "Karakterinin seviyesi bu eşyanın seviyesinin altında."
+  "errCraftLevel": "Karakterinin seviyesi bu eşyanın seviyesinin altında.",
+  "gatherNoneHere": "Kaynakların başka haritalarda: yanında yazan bölgeye yolculuk et.",
+  "errGatherRegion": "Bu kaynak başka bir haritada."
 }

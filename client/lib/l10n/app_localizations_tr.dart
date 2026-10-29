@@ -3007,4 +3007,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errCraftLevel => 'Karakterinin seviyesi bu eşyanın seviyesinin altında.';
+
+  @override
+  String get gatherNoneHere => 'Kaynakların başka haritalarda: yanında yazan bölgeye yolculuk et.';
+
+  @override
+  String get errGatherRegion => 'Bu kaynak başka bir haritada.';
 }

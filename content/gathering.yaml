@@ -19,7 +19,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 1, tier: 0 }
+    gather: { kind: hunting, level: 1, tier: 0, region: greenwood }
   - code: rabbit_pelt
     display_name_key: item.rabbit_pelt
     item_class: material
@@ -31,7 +31,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 4, tier: 0 }
+    gather: { kind: hunting, level: 4, tier: 0, region: misty_marshes }
   - code: field_mouse_pelt
     display_name_key: item.field_mouse_pelt
     item_class: material
@@ -43,7 +43,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 7, tier: 0 }
+    gather: { kind: hunting, level: 7, tier: 0, region: iron_mountains }
   - code: squirrel_pelt
     display_name_key: item.squirrel_pelt
     item_class: material
@@ -55,7 +55,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 10, tier: 1 }
+    gather: { kind: hunting, level: 10, tier: 1, region: northern_keep_ruins }
   - code: hare_pelt
     display_name_key: item.hare_pelt
     item_class: material
@@ -67,7 +67,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 12, tier: 1 }
+    gather: { kind: hunting, level: 12, tier: 1, region: crown_plains }
   - code: badger_pelt
     display_name_key: item.badger_pelt
     item_class: material
@@ -79,7 +79,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 14, tier: 1 }
+    gather: { kind: hunting, level: 14, tier: 1, region: crown_plains }
   - code: wild_turkey_feather
     display_name_key: item.wild_turkey_feather
     item_class: material
@@ -91,7 +91,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 16, tier: 1 }
+    gather: { kind: hunting, level: 16, tier: 1, region: burnt_forest }
   - code: forest_deer_hide
     display_name_key: item.forest_deer_hide
     item_class: material
@@ -103,7 +103,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 18, tier: 1 }
+    gather: { kind: hunting, level: 18, tier: 1, region: burnt_forest }
   - code: red_fox_pelt
     display_name_key: item.red_fox_pelt
     item_class: material
@@ -115,7 +115,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 20, tier: 2 }
+    gather: { kind: hunting, level: 20, tier: 2, region: burnt_forest }
   - code: boar_hide
     display_name_key: item.boar_hide
     item_class: material
@@ -127,7 +127,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 22, tier: 2 }
+    gather: { kind: hunting, level: 22, tier: 2, region: salt_desert }
   - code: mountain_goat_hide
     display_name_key: item.mountain_goat_hide
     item_class: material
@@ -139,7 +139,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 24, tier: 2 }
+    gather: { kind: hunting, level: 24, tier: 2, region: salt_desert }
   - code: wolf_pelt
     display_name_key: item.wolf_pelt
     item_class: material
@@ -151,7 +151,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 26, tier: 2 }
+    gather: { kind: hunting, level: 26, tier: 2, region: crown_graveyard }
   - code: forest_bear_hide
     display_name_key: item.forest_bear_hide
     item_class: material
@@ -163,7 +163,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 28, tier: 2 }
+    gather: { kind: hunting, level: 28, tier: 2, region: crown_graveyard }
   - code: wild_buffalo_hide
     display_name_key: item.wild_buffalo_hide
     item_class: material
@@ -175,7 +175,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 30, tier: 3 }
+    gather: { kind: hunting, level: 30, tier: 3, region: crown_graveyard }
   - code: giant_elk_hide
     display_name_key: item.giant_elk_hide
     item_class: material
@@ -187,7 +187,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 33, tier: 3 }
+    gather: { kind: hunting, level: 33, tier: 3, region: storm_coast }
   - code: dire_wolf_pelt
     display_name_key: item.dire_wolf_pelt
     item_class: material
@@ -199,7 +199,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 36, tier: 3 }
+    gather: { kind: hunting, level: 36, tier: 3, region: dragon_slopes }
   - code: mountain_lion_pelt
     display_name_key: item.mountain_lion_pelt
     item_class: material
@@ -211,7 +211,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 39, tier: 3 }
+    gather: { kind: hunting, level: 39, tier: 3, region: dragon_slopes }
   - code: black_panther_pelt
     display_name_key: item.black_panther_pelt
     item_class: material
@@ -223,7 +223,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 42, tier: 3 }
+    gather: { kind: hunting, level: 42, tier: 3, region: mist_forest }
   - code: storm_eagle_feather
     display_name_key: item.storm_eagle_feather
     item_class: material
@@ -235,7 +235,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 45, tier: 4 }
+    gather: { kind: hunting, level: 45, tier: 4, region: mist_forest }
   - code: ember_boar_hide
     display_name_key: item.ember_boar_hide
     item_class: material
@@ -247,7 +247,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 50, tier: 4 }
+    gather: { kind: hunting, level: 50, tier: 4, region: crystal_caves }
   - code: frost_wolf_pelt
     display_name_key: item.frost_wolf_pelt
     item_class: material
@@ -259,7 +259,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 55, tier: 4 }
+    gather: { kind: hunting, level: 55, tier: 4, region: volcanic_isle }
   - code: dire_bear_hide
     display_name_key: item.dire_bear_hide
     item_class: material
@@ -271,7 +271,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 60, tier: 5 }
+    gather: { kind: hunting, level: 60, tier: 5, region: throne_peaks }
   - code: spirit_stag_hide
     display_name_key: item.spirit_stag_hide
     item_class: material
@@ -283,7 +283,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 65, tier: 5 }
+    gather: { kind: hunting, level: 65, tier: 5, region: dark_plains }
   - code: ancient_mammoth_hide
     display_name_key: item.ancient_mammoth_hide
     item_class: material
@@ -295,7 +295,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 70, tier: 5 }
+    gather: { kind: hunting, level: 70, tier: 5, region: lost_city }
   - code: shadow_chimera_hide
     display_name_key: item.shadow_chimera_hide
     item_class: material
@@ -307,7 +307,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 75, tier: 6 }
+    gather: { kind: hunting, level: 75, tier: 6, region: floating_isles }
   - code: elder_wyvern_scale
     display_name_key: item.elder_wyvern_scale
     item_class: material
@@ -319,7 +319,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 80, tier: 6 }
+    gather: { kind: hunting, level: 80, tier: 6, region: rift_edge }
   - code: astral_griffin_feather
     display_name_key: item.astral_griffin_feather
     item_class: material
@@ -331,7 +331,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 85, tier: 6 }
+    gather: { kind: hunting, level: 85, tier: 6, region: celestial_temple }
   - code: void_behemoth_hide
     display_name_key: item.void_behemoth_hide
     item_class: material
@@ -343,7 +343,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 90, tier: 7 }
+    gather: { kind: hunting, level: 90, tier: 7, region: ash_sea }
   - code: ancient_phoenix_feather
     display_name_key: item.ancient_phoenix_feather
     item_class: material
@@ -355,7 +355,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 95, tier: 7 }
+    gather: { kind: hunting, level: 95, tier: 7, region: last_bastion }
   - code: dragon_scale
     display_name_key: item.dragon_scale
     item_class: material
@@ -367,7 +367,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: hunting, level: 100, tier: 7 }
+    gather: { kind: hunting, level: 100, tier: 7, region: edge_of_eternity }
 
   # --- Herbalism (Şifacılık) ---
   - code: common_grass
@@ -381,7 +381,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 1, tier: 0 }
+    gather: { kind: herbalism, level: 1, tier: 0, region: greenwood }
   - code: dandelion
     display_name_key: item.dandelion
     item_class: material
@@ -393,7 +393,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 4, tier: 0 }
+    gather: { kind: herbalism, level: 4, tier: 0, region: misty_marshes }
   - code: wild_mint
     display_name_key: item.wild_mint
     item_class: material
@@ -405,7 +405,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 7, tier: 0 }
+    gather: { kind: herbalism, level: 7, tier: 0, region: iron_mountains }
   - code: chamomile
     display_name_key: item.chamomile
     item_class: material
@@ -417,7 +417,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 10, tier: 1 }
+    gather: { kind: herbalism, level: 10, tier: 1, region: northern_keep_ruins }
   - code: lavender
     display_name_key: item.lavender
     item_class: material
@@ -429,7 +429,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 12, tier: 1 }
+    gather: { kind: herbalism, level: 12, tier: 1, region: crown_plains }
   - code: sunflower
     display_name_key: item.sunflower
     item_class: material
@@ -441,7 +441,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 14, tier: 1 }
+    gather: { kind: herbalism, level: 14, tier: 1, region: crown_plains }
   - code: bitterroot
     display_name_key: item.bitterroot
     item_class: material
@@ -453,7 +453,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 16, tier: 1 }
+    gather: { kind: herbalism, level: 16, tier: 1, region: burnt_forest }
   - code: healing_moss
     display_name_key: item.healing_moss
     item_class: material
@@ -465,7 +465,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 18, tier: 1 }
+    gather: { kind: herbalism, level: 18, tier: 1, region: burnt_forest }
   - code: marsh_reed
     display_name_key: item.marsh_reed
     item_class: material
@@ -477,7 +477,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 20, tier: 2 }
+    gather: { kind: herbalism, level: 20, tier: 2, region: burnt_forest }
   - code: blue_thistle
     display_name_key: item.blue_thistle
     item_class: material
@@ -489,7 +489,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 22, tier: 2 }
+    gather: { kind: herbalism, level: 22, tier: 2, region: salt_desert }
   - code: red_sage
     display_name_key: item.red_sage
     item_class: material
@@ -501,7 +501,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 24, tier: 2 }
+    gather: { kind: herbalism, level: 24, tier: 2, region: salt_desert }
   - code: nightshade
     display_name_key: item.nightshade
     item_class: material
@@ -513,7 +513,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 26, tier: 2 }
+    gather: { kind: herbalism, level: 26, tier: 2, region: crown_graveyard }
   - code: wild_ginseng
     display_name_key: item.wild_ginseng
     item_class: material
@@ -525,7 +525,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 28, tier: 2 }
+    gather: { kind: herbalism, level: 28, tier: 2, region: crown_graveyard }
   - code: golden_clover
     display_name_key: item.golden_clover
     item_class: material
@@ -537,7 +537,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 30, tier: 3 }
+    gather: { kind: herbalism, level: 30, tier: 3, region: crown_graveyard }
   - code: dreamroot
     display_name_key: item.dreamroot
     item_class: material
@@ -549,7 +549,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 33, tier: 3 }
+    gather: { kind: herbalism, level: 33, tier: 3, region: storm_coast }
   - code: silverleaf
     display_name_key: item.silverleaf
     item_class: material
@@ -561,7 +561,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 36, tier: 3 }
+    gather: { kind: herbalism, level: 36, tier: 3, region: dragon_slopes }
   - code: bloodthorn
     display_name_key: item.bloodthorn
     item_class: material
@@ -573,7 +573,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 39, tier: 3 }
+    gather: { kind: herbalism, level: 39, tier: 3, region: dragon_slopes }
   - code: ghost_mushroom
     display_name_key: item.ghost_mushroom
     item_class: material
@@ -585,7 +585,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 42, tier: 3 }
+    gather: { kind: herbalism, level: 42, tier: 3, region: mist_forest }
   - code: stormflower
     display_name_key: item.stormflower
     item_class: material
@@ -597,7 +597,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 45, tier: 4 }
+    gather: { kind: herbalism, level: 45, tier: 4, region: mist_forest }
   - code: emberleaf
     display_name_key: item.emberleaf
     item_class: material
@@ -609,7 +609,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 50, tier: 4 }
+    gather: { kind: herbalism, level: 50, tier: 4, region: crystal_caves }
   - code: frostbloom
     display_name_key: item.frostbloom
     item_class: material
@@ -621,7 +621,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 55, tier: 4 }
+    gather: { kind: herbalism, level: 55, tier: 4, region: volcanic_isle }
   - code: moonshade
     display_name_key: item.moonshade
     item_class: material
@@ -633,7 +633,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 60, tier: 5 }
+    gather: { kind: herbalism, level: 60, tier: 5, region: throne_peaks }
   - code: spirit_lotus
     display_name_key: item.spirit_lotus
     item_class: material
@@ -645,7 +645,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 65, tier: 5 }
+    gather: { kind: herbalism, level: 65, tier: 5, region: dark_plains }
   - code: ancient_mandrake
     display_name_key: item.ancient_mandrake
     item_class: material
@@ -657,7 +657,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 70, tier: 5 }
+    gather: { kind: herbalism, level: 70, tier: 5, region: lost_city }
   - code: dragonblood_herb
     display_name_key: item.dragonblood_herb
     item_class: material
@@ -669,7 +669,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 75, tier: 6 }
+    gather: { kind: herbalism, level: 75, tier: 6, region: floating_isles }
   - code: astral_bloom
     display_name_key: item.astral_bloom
     item_class: material
@@ -681,7 +681,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 80, tier: 6 }
+    gather: { kind: herbalism, level: 80, tier: 6, region: rift_edge }
   - code: void_orchid
     display_name_key: item.void_orchid
     item_class: material
@@ -693,7 +693,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 85, tier: 6 }
+    gather: { kind: herbalism, level: 85, tier: 6, region: celestial_temple }
   - code: celestial_lotus
     display_name_key: item.celestial_lotus
     item_class: material
@@ -705,7 +705,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 90, tier: 7 }
+    gather: { kind: herbalism, level: 90, tier: 7, region: ash_sea }
   - code: phoenix_petal
     display_name_key: item.phoenix_petal
     item_class: material
@@ -717,7 +717,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 95, tier: 7 }
+    gather: { kind: herbalism, level: 95, tier: 7, region: last_bastion }
   - code: worldroot
     display_name_key: item.worldroot
     item_class: material
@@ -729,7 +729,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: herbalism, level: 100, tier: 7 }
+    gather: { kind: herbalism, level: 100, tier: 7, region: edge_of_eternity }
 
   # --- Woodcutting (Odunculuk) ---
   - code: young_sapling
@@ -743,7 +743,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 1, tier: 0 }
+    gather: { kind: woodcutting, level: 1, tier: 0, region: greenwood }
   - code: poplar_log
     display_name_key: item.poplar_log
     item_class: material
@@ -755,7 +755,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 4, tier: 0 }
+    gather: { kind: woodcutting, level: 4, tier: 0, region: misty_marshes }
   - code: willow_log
     display_name_key: item.willow_log
     item_class: material
@@ -767,7 +767,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 7, tier: 0 }
+    gather: { kind: woodcutting, level: 7, tier: 0, region: iron_mountains }
   - code: fir_log
     display_name_key: item.fir_log
     item_class: material
@@ -779,7 +779,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 10, tier: 1 }
+    gather: { kind: woodcutting, level: 10, tier: 1, region: northern_keep_ruins }
   - code: pine_log
     display_name_key: item.pine_log
     item_class: material
@@ -791,7 +791,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 12, tier: 1 }
+    gather: { kind: woodcutting, level: 12, tier: 1, region: crown_plains }
   - code: birch_log
     display_name_key: item.birch_log
     item_class: material
@@ -803,7 +803,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 14, tier: 1 }
+    gather: { kind: woodcutting, level: 14, tier: 1, region: crown_plains }
   - code: cedar_log
     display_name_key: item.cedar_log
     item_class: material
@@ -815,7 +815,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 16, tier: 1 }
+    gather: { kind: woodcutting, level: 16, tier: 1, region: burnt_forest }
   - code: oak_log
     display_name_key: item.oak_log
     item_class: material
@@ -827,7 +827,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 18, tier: 1 }
+    gather: { kind: woodcutting, level: 18, tier: 1, region: burnt_forest }
   - code: beech_log
     display_name_key: item.beech_log
     item_class: material
@@ -839,7 +839,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 20, tier: 2 }
+    gather: { kind: woodcutting, level: 20, tier: 2, region: burnt_forest }
   - code: ash_log
     display_name_key: item.ash_log
     item_class: material
@@ -851,7 +851,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 22, tier: 2 }
+    gather: { kind: woodcutting, level: 22, tier: 2, region: salt_desert }
   - code: maple_log
     display_name_key: item.maple_log
     item_class: material
@@ -863,7 +863,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 24, tier: 2 }
+    gather: { kind: woodcutting, level: 24, tier: 2, region: salt_desert }
   - code: walnut_log
     display_name_key: item.walnut_log
     item_class: material
@@ -875,7 +875,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 26, tier: 2 }
+    gather: { kind: woodcutting, level: 26, tier: 2, region: crown_graveyard }
   - code: teak_log
     display_name_key: item.teak_log
     item_class: material
@@ -887,7 +887,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 28, tier: 2 }
+    gather: { kind: woodcutting, level: 28, tier: 2, region: crown_graveyard }
   - code: mahogany_log
     display_name_key: item.mahogany_log
     item_class: material
@@ -899,7 +899,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 30, tier: 3 }
+    gather: { kind: woodcutting, level: 30, tier: 3, region: crown_graveyard }
   - code: ebony_log
     display_name_key: item.ebony_log
     item_class: material
@@ -911,7 +911,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 33, tier: 3 }
+    gather: { kind: woodcutting, level: 33, tier: 3, region: storm_coast }
   - code: silver_willow_log
     display_name_key: item.silver_willow_log
     item_class: material
@@ -923,7 +923,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 36, tier: 3 }
+    gather: { kind: woodcutting, level: 36, tier: 3, region: dragon_slopes }
   - code: golden_oak_log
     display_name_key: item.golden_oak_log
     item_class: material
@@ -935,7 +935,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 39, tier: 3 }
+    gather: { kind: woodcutting, level: 39, tier: 3, region: dragon_slopes }
   - code: blackwood_log
     display_name_key: item.blackwood_log
     item_class: material
@@ -947,7 +947,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 42, tier: 3 }
+    gather: { kind: woodcutting, level: 42, tier: 3, region: mist_forest }
   - code: crystal_birch_log
     display_name_key: item.crystal_birch_log
     item_class: material
@@ -959,7 +959,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 45, tier: 4 }
+    gather: { kind: woodcutting, level: 45, tier: 4, region: mist_forest }
   - code: emberwood_log
     display_name_key: item.emberwood_log
     item_class: material
@@ -971,7 +971,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 50, tier: 4 }
+    gather: { kind: woodcutting, level: 50, tier: 4, region: crystal_caves }
   - code: frostpine_log
     display_name_key: item.frostpine_log
     item_class: material
@@ -983,7 +983,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 55, tier: 4 }
+    gather: { kind: woodcutting, level: 55, tier: 4, region: volcanic_isle }
   - code: bloodwood_log
     display_name_key: item.bloodwood_log
     item_class: material
@@ -995,7 +995,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 60, tier: 5 }
+    gather: { kind: woodcutting, level: 60, tier: 5, region: throne_peaks }
   - code: spiritwood_log
     display_name_key: item.spiritwood_log
     item_class: material
@@ -1007,7 +1007,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 65, tier: 5 }
+    gather: { kind: woodcutting, level: 65, tier: 5, region: dark_plains }
   - code: ironwood_log
     display_name_key: item.ironwood_log
     item_class: material
@@ -1019,7 +1019,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 70, tier: 5 }
+    gather: { kind: woodcutting, level: 70, tier: 5, region: lost_city }
   - code: starbark_log
     display_name_key: item.starbark_log
     item_class: material
@@ -1031,7 +1031,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 75, tier: 6 }
+    gather: { kind: woodcutting, level: 75, tier: 6, region: floating_isles }
   - code: moonwood_log
     display_name_key: item.moonwood_log
     item_class: material
@@ -1043,7 +1043,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 80, tier: 6 }
+    gather: { kind: woodcutting, level: 80, tier: 6, region: rift_edge }
   - code: dragonheart_log
     display_name_key: item.dragonheart_log
     item_class: material
@@ -1055,7 +1055,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 85, tier: 6 }
+    gather: { kind: woodcutting, level: 85, tier: 6, region: celestial_temple }
   - code: voidwood_log
     display_name_key: item.voidwood_log
     item_class: material
@@ -1067,7 +1067,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 90, tier: 7 }
+    gather: { kind: woodcutting, level: 90, tier: 7, region: ash_sea }
   - code: celestial_ash_log
     display_name_key: item.celestial_ash_log
     item_class: material
@@ -1079,7 +1079,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 95, tier: 7 }
+    gather: { kind: woodcutting, level: 95, tier: 7, region: last_bastion }
   - code: worldtree_log
     display_name_key: item.worldtree_log
     item_class: material
@@ -1091,7 +1091,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: woodcutting, level: 100, tier: 7 }
+    gather: { kind: woodcutting, level: 100, tier: 7, region: edge_of_eternity }
 
   # --- Fishing (Balıkçılık) ---
   - code: tiny_guppy
@@ -1105,7 +1105,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 1, tier: 0 }
+    gather: { kind: fishing, level: 1, tier: 0, region: greenwood }
   - code: river_sardine
     display_name_key: item.river_sardine
     item_class: material
@@ -1117,7 +1117,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 4, tier: 0 }
+    gather: { kind: fishing, level: 4, tier: 0, region: misty_marshes }
   - code: minnow
     display_name_key: item.minnow
     item_class: material
@@ -1129,7 +1129,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 7, tier: 0 }
+    gather: { kind: fishing, level: 7, tier: 0, region: iron_mountains }
   - code: small_pike
     display_name_key: item.small_pike
     item_class: material
@@ -1141,7 +1141,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 10, tier: 1 }
+    gather: { kind: fishing, level: 10, tier: 1, region: northern_keep_ruins }
   - code: common_carp
     display_name_key: item.common_carp
     item_class: material
@@ -1153,7 +1153,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 12, tier: 1 }
+    gather: { kind: fishing, level: 12, tier: 1, region: crown_plains }
   - code: silver_herring
     display_name_key: item.silver_herring
     item_class: material
@@ -1165,7 +1165,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 14, tier: 1 }
+    gather: { kind: fishing, level: 14, tier: 1, region: crown_plains }
   - code: river_trout
     display_name_key: item.river_trout
     item_class: material
@@ -1177,7 +1177,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 16, tier: 1 }
+    gather: { kind: fishing, level: 16, tier: 1, region: burnt_forest }
   - code: salmon
     display_name_key: item.salmon
     item_class: material
@@ -1189,7 +1189,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 18, tier: 1 }
+    gather: { kind: fishing, level: 18, tier: 1, region: burnt_forest }
   - code: bass
     display_name_key: item.bass
     item_class: material
@@ -1201,7 +1201,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 20, tier: 2 }
+    gather: { kind: fishing, level: 20, tier: 2, region: burnt_forest }
   - code: lake_perch
     display_name_key: item.lake_perch
     item_class: material
@@ -1213,7 +1213,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 22, tier: 2 }
+    gather: { kind: fishing, level: 22, tier: 2, region: salt_desert }
   - code: red_snapper
     display_name_key: item.red_snapper
     item_class: material
@@ -1225,7 +1225,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 24, tier: 2 }
+    gather: { kind: fishing, level: 24, tier: 2, region: salt_desert }
   - code: river_catfish
     display_name_key: item.river_catfish
     item_class: material
@@ -1237,7 +1237,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 26, tier: 2 }
+    gather: { kind: fishing, level: 26, tier: 2, region: crown_graveyard }
   - code: bluefin_tuna
     display_name_key: item.bluefin_tuna
     item_class: material
@@ -1249,7 +1249,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 28, tier: 2 }
+    gather: { kind: fishing, level: 28, tier: 2, region: crown_graveyard }
   - code: rainbow_trout
     display_name_key: item.rainbow_trout
     item_class: material
@@ -1261,7 +1261,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 30, tier: 3 }
+    gather: { kind: fishing, level: 30, tier: 3, region: crown_graveyard }
   - code: royal_carp
     display_name_key: item.royal_carp
     item_class: material
@@ -1273,7 +1273,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 33, tier: 3 }
+    gather: { kind: fishing, level: 33, tier: 3, region: storm_coast }
   - code: emerald_pike
     display_name_key: item.emerald_pike
     item_class: material
@@ -1285,7 +1285,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 36, tier: 3 }
+    gather: { kind: fishing, level: 36, tier: 3, region: dragon_slopes }
   - code: silver_barracuda
     display_name_key: item.silver_barracuda
     item_class: material
@@ -1297,7 +1297,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 39, tier: 3 }
+    gather: { kind: fishing, level: 39, tier: 3, region: dragon_slopes }
   - code: golden_sturgeon
     display_name_key: item.golden_sturgeon
     item_class: material
@@ -1309,7 +1309,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 42, tier: 3 }
+    gather: { kind: fishing, level: 42, tier: 3, region: mist_forest }
   - code: crimson_swordfish
     display_name_key: item.crimson_swordfish
     item_class: material
@@ -1321,7 +1321,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 45, tier: 4 }
+    gather: { kind: fishing, level: 45, tier: 4, region: mist_forest }
   - code: stormscale_eel
     display_name_key: item.stormscale_eel
     item_class: material
@@ -1333,7 +1333,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 50, tier: 4 }
+    gather: { kind: fishing, level: 50, tier: 4, region: crystal_caves }
   - code: frostfin_salmon
     display_name_key: item.frostfin_salmon
     item_class: material
@@ -1345,7 +1345,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 55, tier: 4 }
+    gather: { kind: fishing, level: 55, tier: 4, region: volcanic_isle }
   - code: obsidian_tuna
     display_name_key: item.obsidian_tuna
     item_class: material
@@ -1357,7 +1357,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 60, tier: 5 }
+    gather: { kind: fishing, level: 60, tier: 5, region: throne_peaks }
   - code: ghost_marlin
     display_name_key: item.ghost_marlin
     item_class: material
@@ -1369,7 +1369,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 65, tier: 5 }
+    gather: { kind: fishing, level: 65, tier: 5, region: dark_plains }
   - code: golden_carp
     display_name_key: item.golden_carp
     item_class: material
@@ -1381,7 +1381,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 70, tier: 5 }
+    gather: { kind: fishing, level: 70, tier: 5, region: lost_city }
   - code: crystal_serpentfish
     display_name_key: item.crystal_serpentfish
     item_class: material
@@ -1393,7 +1393,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 75, tier: 6 }
+    gather: { kind: fishing, level: 75, tier: 6, region: floating_isles }
   - code: void_angler
     display_name_key: item.void_angler
     item_class: material
@@ -1405,7 +1405,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 80, tier: 6 }
+    gather: { kind: fishing, level: 80, tier: 6, region: rift_edge }
   - code: astral_moonfish
     display_name_key: item.astral_moonfish
     item_class: material
@@ -1417,7 +1417,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 85, tier: 6 }
+    gather: { kind: fishing, level: 85, tier: 6, region: celestial_temple }
   - code: phoenix_koi
     display_name_key: item.phoenix_koi
     item_class: material
@@ -1429,7 +1429,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 90, tier: 7 }
+    gather: { kind: fishing, level: 90, tier: 7, region: ash_sea }
   - code: abyssal_dragonfish
     display_name_key: item.abyssal_dragonfish
     item_class: material
@@ -1441,7 +1441,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 95, tier: 7 }
+    gather: { kind: fishing, level: 95, tier: 7, region: last_bastion }
   - code: ancient_leviathan_scale
     display_name_key: item.ancient_leviathan_scale
     item_class: material
@@ -1453,7 +1453,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: fishing, level: 100, tier: 7 }
+    gather: { kind: fishing, level: 100, tier: 7, region: edge_of_eternity }
 
   # --- Mining (Madencilik) ---
   - code: raw_stone
@@ -1467,7 +1467,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 1, tier: 0 }
+    gather: { kind: mining, level: 1, tier: 0, region: greenwood }
   - code: stone_ore
     display_name_key: item.stone_ore
     item_class: material
@@ -1479,7 +1479,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 4, tier: 0 }
+    gather: { kind: mining, level: 4, tier: 0, region: misty_marshes }
   - code: flint
     display_name_key: item.flint
     item_class: material
@@ -1491,7 +1491,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 7, tier: 0 }
+    gather: { kind: mining, level: 7, tier: 0, region: iron_mountains }
   - code: coal
     display_name_key: item.coal
     item_class: material
@@ -1503,7 +1503,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 10, tier: 1 }
+    gather: { kind: mining, level: 10, tier: 1, region: northern_keep_ruins }
   - code: aluminium_ore
     display_name_key: item.aluminium_ore
     item_class: material
@@ -1515,7 +1515,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 12, tier: 1 }
+    gather: { kind: mining, level: 12, tier: 1, region: crown_plains }
   - code: lead_ore
     display_name_key: item.lead_ore
     item_class: material
@@ -1527,7 +1527,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 14, tier: 1 }
+    gather: { kind: mining, level: 14, tier: 1, region: crown_plains }
   - code: iron_ore
     display_name_key: item.iron_ore
     item_class: material
@@ -1539,7 +1539,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 16, tier: 1 }
+    gather: { kind: mining, level: 16, tier: 1, region: burnt_forest }
   - code: tin_ore
     display_name_key: item.tin_ore
     item_class: material
@@ -1551,7 +1551,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 18, tier: 1 }
+    gather: { kind: mining, level: 18, tier: 1, region: burnt_forest }
   - code: copper_ore
     display_name_key: item.copper_ore
     item_class: material
@@ -1563,7 +1563,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 20, tier: 2 }
+    gather: { kind: mining, level: 20, tier: 2, region: burnt_forest }
   - code: bronze_ore
     display_name_key: item.bronze_ore
     item_class: material
@@ -1575,7 +1575,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 22, tier: 2 }
+    gather: { kind: mining, level: 22, tier: 2, region: salt_desert }
   - code: obsidian
     display_name_key: item.obsidian
     item_class: material
@@ -1587,7 +1587,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 24, tier: 2 }
+    gather: { kind: mining, level: 24, tier: 2, region: salt_desert }
   - code: mercury_ore
     display_name_key: item.mercury_ore
     item_class: material
@@ -1599,7 +1599,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 26, tier: 2 }
+    gather: { kind: mining, level: 26, tier: 2, region: crown_graveyard }
   - code: zinc_ore
     display_name_key: item.zinc_ore
     item_class: material
@@ -1611,7 +1611,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 28, tier: 2 }
+    gather: { kind: mining, level: 28, tier: 2, region: crown_graveyard }
   - code: nickel_ore
     display_name_key: item.nickel_ore
     item_class: material
@@ -1623,7 +1623,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 30, tier: 3 }
+    gather: { kind: mining, level: 30, tier: 3, region: crown_graveyard }
   - code: chromium_ore
     display_name_key: item.chromium_ore
     item_class: material
@@ -1635,7 +1635,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 33, tier: 3 }
+    gather: { kind: mining, level: 33, tier: 3, region: storm_coast }
   - code: cobalt_ore
     display_name_key: item.cobalt_ore
     item_class: material
@@ -1647,7 +1647,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 36, tier: 3 }
+    gather: { kind: mining, level: 36, tier: 3, region: dragon_slopes }
   - code: silver_ore
     display_name_key: item.silver_ore
     item_class: material
@@ -1659,7 +1659,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 39, tier: 3 }
+    gather: { kind: mining, level: 39, tier: 3, region: dragon_slopes }
   - code: gold_ore
     display_name_key: item.gold_ore
     item_class: material
@@ -1671,7 +1671,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 42, tier: 3 }
+    gather: { kind: mining, level: 42, tier: 3, region: mist_forest }
   - code: electrum_ore
     display_name_key: item.electrum_ore
     item_class: material
@@ -1683,7 +1683,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 45, tier: 4 }
+    gather: { kind: mining, level: 45, tier: 4, region: mist_forest }
   - code: tungsten_ore
     display_name_key: item.tungsten_ore
     item_class: material
@@ -1695,7 +1695,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 50, tier: 4 }
+    gather: { kind: mining, level: 50, tier: 4, region: crystal_caves }
   - code: titanium_ore
     display_name_key: item.titanium_ore
     item_class: material
@@ -1707,7 +1707,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 55, tier: 4 }
+    gather: { kind: mining, level: 55, tier: 4, region: volcanic_isle }
   - code: palladium_ore
     display_name_key: item.palladium_ore
     item_class: material
@@ -1719,7 +1719,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 60, tier: 5 }
+    gather: { kind: mining, level: 60, tier: 5, region: throne_peaks }
   - code: rhodium_ore
     display_name_key: item.rhodium_ore
     item_class: material
@@ -1731,7 +1731,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 65, tier: 5 }
+    gather: { kind: mining, level: 65, tier: 5, region: dark_plains }
   - code: platinum_ore
     display_name_key: item.platinum_ore
     item_class: material
@@ -1743,7 +1743,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 70, tier: 5 }
+    gather: { kind: mining, level: 70, tier: 5, region: lost_city }
   - code: osmium_ore
     display_name_key: item.osmium_ore
     item_class: material
@@ -1755,7 +1755,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 75, tier: 6 }
+    gather: { kind: mining, level: 75, tier: 6, region: floating_isles }
   - code: iridium_ore
     display_name_key: item.iridium_ore
     item_class: material
@@ -1767,7 +1767,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 80, tier: 6 }
+    gather: { kind: mining, level: 80, tier: 6, region: rift_edge }
   - code: starsteel_ore
     display_name_key: item.starsteel_ore
     item_class: material
@@ -1779,7 +1779,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 85, tier: 6 }
+    gather: { kind: mining, level: 85, tier: 6, region: celestial_temple }
   - code: mythril_ore
     display_name_key: item.mythril_ore
     item_class: material
@@ -1791,7 +1791,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 90, tier: 7 }
+    gather: { kind: mining, level: 90, tier: 7, region: ash_sea }
   - code: orichalcum_ore
     display_name_key: item.orichalcum_ore
     item_class: material
@@ -1803,7 +1803,7 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 95, tier: 7 }
+    gather: { kind: mining, level: 95, tier: 7, region: last_bastion }
   - code: adamantite_ore
     display_name_key: item.adamantite_ore
     item_class: material
@@ -1815,4 +1815,4 @@ items:
     max_stack: 999
     bind_kind: boe
     affixable: false
-    gather: { kind: mining, level: 100, tier: 7 }
+    gather: { kind: mining, level: 100, tier: 7, region: edge_of_eternity }
