@@ -3127,4 +3127,83 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errHelperNotReady => '助手尚未完成。';
+
+  @override
+  String get shopOpen => '商店';
+
+  @override
+  String get shopTitle => '点券商店';
+
+  @override
+  String get shopCredits => '点券';
+
+  @override
+  String get shopAvatars => '头像';
+
+  @override
+  String get shopBackgrounds => '背景';
+
+  @override
+  String shopBalance(int n) {
+    return '$n 点券';
+  }
+
+  @override
+  String get shopBuyCredits => '购买点券以解锁加成和外观。';
+
+  @override
+  String get shopPaymentsSoon => '现金购买点券即将推出。';
+
+  @override
+  String get shopBoosts => '经验加成';
+
+  @override
+  String get shopBuy => '购买';
+
+  @override
+  String shopBuyBody(int n) {
+    return '花费 $n 点券？';
+  }
+
+  @override
+  String shopPrice(int n) {
+    return '$n 点';
+  }
+
+  @override
+  String get boostGather => '采集';
+
+  @override
+  String get boostAdventure => '战斗';
+
+  @override
+  String get boostCraft => '职业';
+
+  @override
+  String get boostDesc => '2小时经验+100%';
+
+  @override
+  String get boostShort => '经验+100%，2小时';
+
+  @override
+  String boostLeft(String time) {
+    return '生效中，剩余$time';
+  }
+
+  @override
+  String boostWatchAd(int n) {
+    return '看广告（剩$n次）';
+  }
+
+  @override
+  String get boostAdsSoon => '广告即将推出';
+
+  @override
+  String get errInsufficientCredits => '点券不足。';
+
+  @override
+  String get errBoostActive => '该加成已生效。';
+
+  @override
+  String get errAdLimit => '今日广告次数已用完。';
 }

@@ -49,6 +49,7 @@ import (
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
+	"github.com/otter/server/internal/shop"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/support"
@@ -427,6 +428,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		DailyHandler:      dailyreward.NewHandler(dailyreward.NewService(pool, txnSvc, itemSvc)),
 		TradeHandler:      trade.NewHandler(trade.NewService(pool, txnSvc, invSvc, logger).WithPublisher(wsPub)),
 		BoostHandler:      boost.NewHandler(boostSvc, &boost.GoogleKeys{}, cfg.Env == "dev"),
+		ShopHandler:       shop.NewHandler(shop.NewService(pool, txnSvc, boostSvc)),
 		HelperHandler: helper.NewHandler(helper.NewService(pool, txnSvc, charSvc, gatherSvc, itemSvc, invSvc,
 			craftCatSvc, craftRepo, craftSvc, logger)),
 		AdminHandler:     adminHandler,

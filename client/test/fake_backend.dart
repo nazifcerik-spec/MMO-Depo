@@ -34,6 +34,12 @@ class FakeBackend {
   /// Story mode chapters (DD-313).
   List<Map<String, dynamic>> story = [];
 
+  /// Credit shop (DD-321) and boosts (DD-320).
+  int credits = 50;
+  final ownedCosmetics = <String>[];
+  String avatar = 'av01';
+  final boostEnds = <String, String>{};
+
   /// Hired helpers (DD-319): the miner only.
   final helpers = <Map<String, dynamic>>[
     {
@@ -237,6 +243,44 @@ class FakeBackend {
       return json(200, _session());
     }
     if (path == '/v1/story') return json(200, {'chapters': story});
+    if (path.startsWith('/v1/character/char-1/shop')) {
+      if (path.endsWith('/buy')) {
+        final code = path.split('/')[5];
+        final price = code.startsWith('boost_') ? 20 : (code.startsWith('av') ? 15 : 30);
+        credits -= price;
+        if (code.startsWith('boost_')) {
+          boostEnds[code.substring(6)] = DateTime.now().toUtc().add(const Duration(hours: 2)).toIso8601String();
+        } else {
+          ownedCosmetics.add(code);
+        }
+      }
+      return json(200, {
+        'credits': credits,
+        'payments_enabled': false,
+        'items': [
+          for (final c in ['gather', 'adventure', 'craft']) {'code': 'boost_$c', 'kind': 'boost', 'price_credits': 20},
+          for (var n = 41; n <= 80; n++)
+            {'code': 'av$n', 'kind': 'avatar', 'price_credits': 15, 'owned': ownedCosmetics.contains('av$n')},
+          for (var n = 11; n <= 30; n++)
+            {'code': 'bg$n', 'kind': 'background', 'price_credits': 30, 'owned': ownedCosmetics.contains('bg$n')},
+        ],
+      });
+    }
+    if (path.startsWith('/v1/character/char-1/cosmetics')) {
+      if (path.endsWith('/select')) avatar = body['code'] as String;
+      return json(200, {'avatar': avatar, 'background': 'bg01', 'owned': ownedCosmetics});
+    }
+    if (path.startsWith('/v1/character/char-1/boosts')) {
+      if (path.endsWith('/dev-ad')) {
+        boostEnds[path.split('/')[5]] = DateTime.now().toUtc().add(const Duration(hours: 2)).toIso8601String();
+      }
+      return json(200, {
+        'ads_enabled': true,
+        'boosts': [
+          for (final c in ['gather', 'adventure', 'craft']) {'category': c, 'ends_at': boostEnds[c], 'ads_left': 3},
+        ],
+      });
+    }
     if (path.startsWith('/v1/character/char-1/helpers')) {
       final miner = helpers.first;
       if (path.endsWith('/hire')) miner['hired'] = true;

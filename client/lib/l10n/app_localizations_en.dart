@@ -3139,4 +3139,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errHelperNotReady => 'The helper is not done yet.';
+
+  @override
+  String get shopOpen => 'Shop';
+
+  @override
+  String get shopTitle => 'Credit shop';
+
+  @override
+  String get shopCredits => 'Credits';
+
+  @override
+  String get shopAvatars => 'Avatars';
+
+  @override
+  String get shopBackgrounds => 'Backgrounds';
+
+  @override
+  String shopBalance(int n) {
+    return '$n credits';
+  }
+
+  @override
+  String get shopBuyCredits => 'Buy credits to unlock boosts and cosmetics.';
+
+  @override
+  String get shopPaymentsSoon => 'Buying credits with money is coming soon.';
+
+  @override
+  String get shopBoosts => 'XP boosts';
+
+  @override
+  String get shopBuy => 'Buy';
+
+  @override
+  String shopBuyBody(int n) {
+    return 'Spend $n credits?';
+  }
+
+  @override
+  String shopPrice(int n) {
+    return '$n cr';
+  }
+
+  @override
+  String get boostGather => 'Gathering';
+
+  @override
+  String get boostAdventure => 'Combat';
+
+  @override
+  String get boostCraft => 'Professions';
+
+  @override
+  String get boostDesc => '+100% XP for 2 hours';
+
+  @override
+  String get boostShort => '+100% XP, 2 h';
+
+  @override
+  String boostLeft(String time) {
+    return 'Active, $time left';
+  }
+
+  @override
+  String boostWatchAd(int n) {
+    return 'Watch ad ($n left)';
+  }
+
+  @override
+  String get boostAdsSoon => 'Ads coming soon';
+
+  @override
+  String get errInsufficientCredits => 'Not enough credits.';
+
+  @override
+  String get errBoostActive => 'That boost is already running.';
+
+  @override
+  String get errAdLimit => 'No more ad boosts today.';
 }

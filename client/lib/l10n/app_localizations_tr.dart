@@ -3138,4 +3138,83 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errHelperNotReady => 'Yardımcı henüz bitirmedi.';
+
+  @override
+  String get shopOpen => 'Mağaza';
+
+  @override
+  String get shopTitle => 'Kredi mağazası';
+
+  @override
+  String get shopCredits => 'Kredi';
+
+  @override
+  String get shopAvatars => 'Avatarlar';
+
+  @override
+  String get shopBackgrounds => 'Arka planlar';
+
+  @override
+  String shopBalance(int n) {
+    return '$n kredi';
+  }
+
+  @override
+  String get shopBuyCredits => 'Bonus ve kozmetikler için kredi satın al.';
+
+  @override
+  String get shopPaymentsSoon => 'Parayla kredi satın alma yakında.';
+
+  @override
+  String get shopBoosts => 'XP bonusları';
+
+  @override
+  String get shopBuy => 'Satın al';
+
+  @override
+  String shopBuyBody(int n) {
+    return '$n kredi harcansın mı?';
+  }
+
+  @override
+  String shopPrice(int n) {
+    return '$n kr';
+  }
+
+  @override
+  String get boostGather => 'Toplama';
+
+  @override
+  String get boostAdventure => 'Av ve zindan';
+
+  @override
+  String get boostCraft => 'Meslek';
+
+  @override
+  String get boostDesc => '2 saat +%100 XP';
+
+  @override
+  String get boostShort => '+%100 XP, 2 sa';
+
+  @override
+  String boostLeft(String time) {
+    return 'Aktif, $time kaldı';
+  }
+
+  @override
+  String boostWatchAd(int n) {
+    return 'Reklam izle ($n hak)';
+  }
+
+  @override
+  String get boostAdsSoon => 'Reklamlar yakında';
+
+  @override
+  String get errInsufficientCredits => 'Kredi yetersiz.';
+
+  @override
+  String get errBoostActive => 'Bu bonus zaten aktif.';
+
+  @override
+  String get errAdLimit => 'Bugünkü reklam hakkın bitti.';
 }

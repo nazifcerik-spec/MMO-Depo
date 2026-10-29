@@ -254,6 +254,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 119. **Süreli XP bonusları (sunucu bitti)** — Sprint 119, DD-320. Migration 0056 (`boost.grant`). `internal/boost` (2 sa +%100, örtüşen paya uygulanır, günde 3 reklam), AdMob SSV doğrulaması `GET /v1/ads/ssv`, `GET /v1/character/{id}/boosts`. Kalan: istemci arayüzü, AdMob SDK.
 
+120. **Kredi mağazası + kozmetik + bonus arayüzü (bitti — ödeme bekliyor)** — Sprint 120, DD-321. Migration 0057 (`credit` para birimi, `cosmetic.owned/profile`). `internal/shop`: 3 bonus (20 kr) + premium arka plan/avatar (30/15 kr), ilk 10/40 ücretsiz. İstemci `features/shop/` (mağaza, `AvatarBadge`, `backgroundGradient`, `BoostBar`), üst barda avatar, zeminde arka plan. Engel: ödeme sağlayıcısı + AdMob hesabı.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

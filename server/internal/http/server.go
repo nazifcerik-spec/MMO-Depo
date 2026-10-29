@@ -49,6 +49,7 @@ import (
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
+	"github.com/otter/server/internal/shop"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/story"
 	"github.com/otter/server/internal/support"
@@ -107,6 +108,7 @@ type Deps struct {
 	TradeHandler      *trade.Handler       // DD-315
 	HelperHandler     *helper.Handler      // DD-319
 	BoostHandler      *boost.Handler       // DD-320
+	ShopHandler       *shop.Handler        // DD-321
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -311,6 +313,9 @@ func NewRouter(d Deps) http.Handler {
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/items/{item_id}/use", h.Use)
 					r.Get("/buff", h.Active) // food buff (DD-269)
+				}
+				if h := d.ShopHandler; h != nil { // credit shop + cosmetics (DD-321)
+					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
 				}
 				if h := d.BoostHandler; h != nil { // timed XP boosts (DD-320)
 					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))

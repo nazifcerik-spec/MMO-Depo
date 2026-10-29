@@ -93,7 +93,7 @@ func (h *Handler) Mint(w http.ResponseWriter, r *http.Request) {
 	// character.
 	kind := AccountCharacter
 	ref := charID
-	if currency == "gem" {
+	if currency == "gem" || currency == "credit" { // account currencies (DD-321)
 		kind = AccountAccount
 		ref = httpctx.AccountID(r.Context())
 	}

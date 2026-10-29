@@ -3139,4 +3139,83 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errHelperNotReady => 'El ayudante aún no ha terminado.';
+
+  @override
+  String get shopOpen => 'Tienda';
+
+  @override
+  String get shopTitle => 'Tienda de créditos';
+
+  @override
+  String get shopCredits => 'Créditos';
+
+  @override
+  String get shopAvatars => 'Avatares';
+
+  @override
+  String get shopBackgrounds => 'Fondos';
+
+  @override
+  String shopBalance(int n) {
+    return '$n créditos';
+  }
+
+  @override
+  String get shopBuyCredits => 'Compra créditos para potenciadores y cosméticos.';
+
+  @override
+  String get shopPaymentsSoon => 'La compra de créditos con dinero llegará pronto.';
+
+  @override
+  String get shopBoosts => 'Potenciadores de PX';
+
+  @override
+  String get shopBuy => 'Comprar';
+
+  @override
+  String shopBuyBody(int n) {
+    return '¿Gastar $n créditos?';
+  }
+
+  @override
+  String shopPrice(int n) {
+    return '$n cr';
+  }
+
+  @override
+  String get boostGather => 'Recolección';
+
+  @override
+  String get boostAdventure => 'Combate';
+
+  @override
+  String get boostCraft => 'Profesiones';
+
+  @override
+  String get boostDesc => '+100 % PX durante 2 horas';
+
+  @override
+  String get boostShort => '+100 % PX, 2 h';
+
+  @override
+  String boostLeft(String time) {
+    return 'Activo, faltan $time';
+  }
+
+  @override
+  String boostWatchAd(int n) {
+    return 'Ver anuncio (quedan $n)';
+  }
+
+  @override
+  String get boostAdsSoon => 'Anuncios pronto';
+
+  @override
+  String get errInsufficientCredits => 'Créditos insuficientes.';
+
+  @override
+  String get errBoostActive => 'Ese potenciador ya está activo.';
+
+  @override
+  String get errAdLimit => 'No quedan anuncios hoy.';
 }

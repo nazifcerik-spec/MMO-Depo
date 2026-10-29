@@ -3166,6 +3166,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-321 — Kredi mağazası + 30 arka plan + 80 avatar
+
+**Context:** Oyuncu gerçek parayla alınan kredilerle eşya alınabilen bir mağaza ile 30 arka plan ve 80 avatar seçeneği istedi.
+**Decision:** Migration 0057: hesap kapsamlı `credit` para birimi (takas edilemez), `cosmetic.owned`, `cosmetic.profile` (avatar + arka plan). Yeni `internal/shop`: ürünler üç 2 saatlik +%100 XP bonusu (20 kredi, DD-320 `boost.Grant` kaynağı `credit`, bonus açılamazsa kredi iadesi) ve premium kozmetikler (arka plan 11–30: 30 kredi, avatar 41–80: 15 kredi; ilk 10 arka plan ve 40 avatar ücretsiz). Satın alma defterden (`shop-<hesap>-<Idempotency-Key>` tek sefer, `vendor_sink`). Uçlar `/v1/character/{id}/shop[/{kod}/buy]`, `/cosmetics[/select]` (hesabın). Para ile kredi satın alma için ödeme sağlayıcısı (Google Play Billing ya da iyzico/Stripe) henüz yok: `payments_enabled: false`; krediler şimdilik dev mint (`currency: credit`) ile. Kozmetikler istemcide kodla çizilir (arka plan: renk çemberinde gradyan, premium üç duraklı; avatar: 20 amblem × 4 renk), kodlar sunucuyla aynı, ileride görselle değiştirilebilir. Seçili arka plan oyun sayfasının zemini, avatar üst barda. İstemci: karakter sayfasında Mağaza (Kredi / Avatarlar / Arka planlar) ve üç kutulu bonus satırı (reklam izle — yalnız reklam açıkken, şimdilik dev ortamı).
+**Consequences:** Kozmetik ve bonus satışı hazır; gerçek ödeme ve reklam ağı hesap açılınca bağlanacak.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

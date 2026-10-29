@@ -28,6 +28,8 @@ class CharacterSheetView extends StatefulWidget {
     this.onOpenDaily,
     this.onOpenStory,
     this.onOpenHelpers,
+    this.onOpenShop,
+    this.boosts,
     this.onSheet,
     this.live,
     this.onPartyChat,
@@ -52,6 +54,12 @@ class CharacterSheetView extends StatefulWidget {
 
   /// Opens the hired helpers (DD-319).
   final VoidCallback? onOpenHelpers;
+
+  /// Opens the credit shop (DD-321).
+  final VoidCallback? onOpenShop;
+
+  /// The XP boost boxes (DD-320), shown under the bars.
+  final Widget? boosts;
 
   /// Every fresh sheet (the shell tracks the level from it).
   final ValueChanged<CharacterSheet>? onSheet;
@@ -260,6 +268,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
                 StatBar(label: l.xp, value: s.xpProgress, color: Palette.epic, valueText: l.xpValue(s.xp, s.xpToNext)),
             ],
           ),
+          if (widget.boosts case final b?) ...[const SizedBox(height: Space.lg), b],
           const SizedBox(height: Space.lg),
           _Section(
             title: l.attributes,
@@ -316,6 +325,14 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               onPressed: widget.onOpenDaily,
               icon: const Icon(Icons.card_giftcard_outlined),
               label: Text(l.dailyOpen),
+            ),
+          ],
+          if (widget.onOpenShop != null) ...[
+            const SizedBox(height: Space.sm),
+            OutlinedButton.icon(
+              onPressed: widget.onOpenShop,
+              icon: const Icon(Icons.storefront_outlined),
+              label: Text(l.shopOpen),
             ),
           ],
           if (widget.onOpenHelpers != null) ...[

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../shop/cosmetics.dart';
+import '../shop/shop_screen.dart';
 import '../helpers/helpers_screen.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
@@ -71,6 +73,7 @@ class _HomeShellState extends State<HomeShell> {
     _refreshUnread();
     _refreshQuests();
     WidgetsBinding.instance.addPostFrameCallback((_) => _openDaily(onlyClaimable: true));
+    _loadProfile();
     _lifecycle = AppLifecycleListener(
       onResume: () {
         _live.start();
@@ -126,6 +129,19 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   late final _daily = DailyRepository(widget.auth.api, widget.initial.id);
+  late final _shop = ShopRepository(widget.auth.api, widget.initial.id);
+
+  /// The account's avatar and page background (DD-321).
+  CosmeticProfile? _profile;
+
+  Future<void> _loadProfile() async {
+    try {
+      final p = await _shop.cosmetics();
+      if (mounted) setState(() => _profile = p);
+    } on ApiError {
+      // the default look stays
+    }
+  }
 
   /// The daily login reward (DD-311): opened on entering the game while
   /// today's is unclaimed, and from the character sheet.
@@ -189,6 +205,8 @@ class _HomeShellState extends State<HomeShell> {
       ),
       onOpenDaily: _openDaily,
       onOpenStory: () => _push(StoryScreen(api: widget.auth.api, level: _level.value)),
+      boosts: BoostBar(repo: _shop),
+      onOpenShop: () => _push(ShopScreen(repo: _shop, onProfile: (p) => setState(() => _profile = p))),
       onOpenHelpers: () => _push(
         HelpersScreen(
           repo: HelperRepository(widget.auth.api, widget.initial.id),
@@ -233,7 +251,12 @@ class _HomeShellState extends State<HomeShell> {
           icon: const Icon(Icons.people_alt_outlined),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(s.name),
+        title: Row(
+          children: [
+            if (_profile case final p?) ...[AvatarBadge(code: p.avatar, size: 30), const SizedBox(width: Space.sm)],
+            Flexible(child: Text(s.name, overflow: TextOverflow.ellipsis)),
+          ],
+        ),
 
         actions: [
           IconButton(
@@ -265,11 +288,14 @@ class _HomeShellState extends State<HomeShell> {
           IconButton(tooltip: l.logout, icon: const Icon(Icons.logout), onPressed: widget.auth.logout),
         ],
       ),
-      body: SafeArea(
-        child: PageFrame(
-          child: IndexedStack(
-            index: _tab,
-            children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
+      body: DecoratedBox(
+        decoration: BoxDecoration(gradient: _profile == null ? null : backgroundGradient(_profile!.background)),
+        child: SafeArea(
+          child: PageFrame(
+            child: IndexedStack(
+              index: _tab,
+              children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
+            ),
           ),
         ),
       ),

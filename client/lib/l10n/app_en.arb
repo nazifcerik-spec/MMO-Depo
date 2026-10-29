@@ -2445,5 +2445,63 @@
   "helperScribe": "Scribe",
   "helperGemcutter": "Gemcutter",
   "errHelperBusy": "That helper is already working.",
-  "errHelperNotReady": "The helper is not done yet."
+  "errHelperNotReady": "The helper is not done yet.",
+  "shopOpen": "Shop",
+  "shopTitle": "Credit shop",
+  "shopCredits": "Credits",
+  "shopAvatars": "Avatars",
+  "shopBackgrounds": "Backgrounds",
+  "shopBalance": "{n} credits",
+  "@shopBalance": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "shopBuyCredits": "Buy credits to unlock boosts and cosmetics.",
+  "shopPaymentsSoon": "Buying credits with money is coming soon.",
+  "shopBoosts": "XP boosts",
+  "shopBuy": "Buy",
+  "shopBuyBody": "Spend {n} credits?",
+  "@shopBuyBody": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "shopPrice": "{n} cr",
+  "@shopPrice": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "boostGather": "Gathering",
+  "boostAdventure": "Combat",
+  "boostCraft": "Professions",
+  "boostDesc": "+100% XP for 2 hours",
+  "boostShort": "+100% XP, 2 h",
+  "boostLeft": "Active, {time} left",
+  "@boostLeft": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "boostWatchAd": "Watch ad ({n} left)",
+  "@boostWatchAd": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "boostAdsSoon": "Ads coming soon",
+  "errInsufficientCredits": "Not enough credits.",
+  "errBoostActive": "That boost is already running.",
+  "errAdLimit": "No more ad boosts today."
 }

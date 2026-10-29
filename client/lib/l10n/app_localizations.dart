@@ -5541,6 +5541,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The helper is not done yet.'**
   String get errHelperNotReady;
+
+  /// No description provided for @shopOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get shopOpen;
+
+  /// No description provided for @shopTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit shop'**
+  String get shopTitle;
+
+  /// No description provided for @shopCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Credits'**
+  String get shopCredits;
+
+  /// No description provided for @shopAvatars.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatars'**
+  String get shopAvatars;
+
+  /// No description provided for @shopBackgrounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Backgrounds'**
+  String get shopBackgrounds;
+
+  /// No description provided for @shopBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} credits'**
+  String shopBalance(int n);
+
+  /// No description provided for @shopBuyCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy credits to unlock boosts and cosmetics.'**
+  String get shopBuyCredits;
+
+  /// No description provided for @shopPaymentsSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Buying credits with money is coming soon.'**
+  String get shopPaymentsSoon;
+
+  /// No description provided for @shopBoosts.
+  ///
+  /// In en, this message translates to:
+  /// **'XP boosts'**
+  String get shopBoosts;
+
+  /// No description provided for @shopBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy'**
+  String get shopBuy;
+
+  /// No description provided for @shopBuyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend {n} credits?'**
+  String shopBuyBody(int n);
+
+  /// No description provided for @shopPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} cr'**
+  String shopPrice(int n);
+
+  /// No description provided for @boostGather.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering'**
+  String get boostGather;
+
+  /// No description provided for @boostAdventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat'**
+  String get boostAdventure;
+
+  /// No description provided for @boostCraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Professions'**
+  String get boostCraft;
+
+  /// No description provided for @boostDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'+100% XP for 2 hours'**
+  String get boostDesc;
+
+  /// No description provided for @boostShort.
+  ///
+  /// In en, this message translates to:
+  /// **'+100% XP, 2 h'**
+  String get boostShort;
+
+  /// No description provided for @boostLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Active, {time} left'**
+  String boostLeft(String time);
+
+  /// No description provided for @boostWatchAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch ad ({n} left)'**
+  String boostWatchAd(int n);
+
+  /// No description provided for @boostAdsSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads coming soon'**
+  String get boostAdsSoon;
+
+  /// No description provided for @errInsufficientCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough credits.'**
+  String get errInsufficientCredits;
+
+  /// No description provided for @errBoostActive.
+  ///
+  /// In en, this message translates to:
+  /// **'That boost is already running.'**
+  String get errBoostActive;
+
+  /// No description provided for @errAdLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No more ad boosts today.'**
+  String get errAdLimit;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

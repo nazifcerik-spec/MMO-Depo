@@ -322,6 +322,7 @@ void main() {
     expect(find.text('FOCUS'), findsOneWidget, reason: 'the class resource replaces the MP bar');
     expect(find.text('40 / 100'), findsOneWidget); // XP
     expect(find.text('Attributes'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('90%'), 200, scrollable: _list); // below the boost boxes
     expect(find.text('90%'), findsOneWidget); // hit
     expect(find.textContaining('12', findRichText: true), findsWidgets); // 12g 34s 56c
     expect(be.requests.last.headers['X-Character-Id'], 'char-1');
