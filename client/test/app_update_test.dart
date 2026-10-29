@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:otter/core/app_update.dart';
-import 'package:otter/features/character/update_tile.dart';
+import 'package:otter/features/character/update_button.dart';
 import 'package:otter/l10n/app_localizations.dart';
 
 const feed = 'https://example.org/repo/releases/latest.json';
@@ -92,35 +92,6 @@ void main() {
       expect(calls, ['dir']);
     });
 
-    testWidgets('tile: update found, confirm, permission needed', (tester) async {
-      installResult = 'permission';
-      await tester.pumpWidget(
-        MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(body: UpdateTile(updater: updater(server()))),
-        ),
-      );
-      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
-      await tester.pump();
-      expect(find.text('New version ready: 1.25.0'), findsOneWidget);
-
-      await tester.tap(find.text('Update'));
-      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
-      await tester.pumpAndSettle();
-      expect(find.text('Download and install version 1.25.0 (1 MB)?'), findsOneWidget);
-
-      await tester.tap(find.text('Update').last);
-      final perm = find.text('Allow installs from MeNa World, then tap Update again.');
-      // The download is real file I/O: let it run between frames.
-      for (var i = 0; i < 50 && perm.evaluate().isEmpty; i++) {
-        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 20)));
-        await tester.pump();
-      }
-      expect(perm, findsOneWidget);
-      expect(calls, ['dir', 'install']);
-    });
-
     testWidgets('bar button: dot when newer, tap downloads and installs', (tester) async {
       installResult = 'started';
       await tester.pumpWidget(
@@ -149,6 +120,30 @@ void main() {
         await tester.pump();
       }
       expect(calls, ['dir', 'install']);
+    });
+
+    testWidgets('bar button: installs from unknown sources not allowed yet', (tester) async {
+      installResult = 'permission';
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            appBar: AppBar(actions: [UpdateButton(updater: updater(server()))]),
+          ),
+        ),
+      );
+      await tester.tap(find.byKey(const Key('update-button')));
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Update').last);
+      final perm = find.text('Allow installs from MeNa World, then tap Update again.');
+      // The download is real file I/O: let it run between frames.
+      for (var i = 0; i < 50 && perm.evaluate().isEmpty; i++) {
+        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 20)));
+        await tester.pump();
+      }
+      expect(perm, findsOneWidget);
     });
   });
 }

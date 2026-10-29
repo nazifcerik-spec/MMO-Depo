@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
+import '../../core/config.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/links.dart';
 import '../../shared/widgets.dart';
@@ -220,6 +221,13 @@ class AccountMenuButton extends StatelessWidget {
         _ => openExternal(context, legalUrl(context, 'privacy')),
       },
       itemBuilder: (_) => [
+        if (AppConfig.appVersion.isNotEmpty) ...[
+          PopupMenuItem(
+            enabled: false,
+            child: Text(l.appVersionLine(AppConfig.appVersion), style: const TextStyle(color: Palette.textMuted)),
+          ),
+          const PopupMenuDivider(),
+        ],
         PopupMenuItem(value: 'password', child: Text(l.changePassword)),
         PopupMenuItem(value: 'export', child: Text(l.downloadMyData)),
         PopupMenuItem(value: 'support', child: Text(l.support)),
