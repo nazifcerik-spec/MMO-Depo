@@ -3157,6 +3157,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-320 — Süreli XP bonusları + ödüllü reklam doğrulaması (sunucu)
+
+**Context:** Oyuncu reklam izleyerek 2 saat %100 XP bonusu (Toplama / Macera-zindan-baskın / Meslek) istedi.
+**Decision:** Yeni `internal/boost` + migration 0056 (`boost.grant`): kategori başı 2 sa +%100 XP; aynı anda tek bonus, reklamla günde 3; `ref` ile tek sefer. XP, işin bonusla örtüşen payı kadar artar (`Apply`): toplama, av, zindan, baskın, üretim reveal/collect'lerine bağlı. Reklam: AdMob SSV geri çağrısı `GET /v1/ads/ssv` (Google anahtarlarıyla ECDSA imza doğrulaması, user_id = karakter, custom_data = kategori). `GET /v1/character/{id}/boosts`; dev ortamında `POST .../boosts/{kategori}/dev-ad` sahte reklam. Kalan: istemci 3 kutu arayüzü + AdMob SDK/hesabı, kredi pazarından bonus satın alma.
+**Consequences:** Reklam bonusu sunucu tarafında güvenli; istemci kendi başına bonus alamaz.
+**Tarih:** 2026-10-29
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

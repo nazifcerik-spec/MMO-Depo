@@ -15,6 +15,7 @@ import (
 
 	"github.com/otter/server/internal/action"
 	"github.com/otter/server/internal/activity"
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/dungeon"
@@ -35,6 +36,7 @@ type Publisher interface {
 // Service runs raids. Templates and mobs come from the dungeon and combat
 // catalogs; the ports are the dungeon service's.
 type Service struct {
+	boost    boost.Applier // timed XP boosts (DD-320); nil = none
 	pool     *pgxpool.Pool
 	raids    dungeon.DungeonLookup
 	mobs     dungeon.MobsLookup
@@ -321,6 +323,9 @@ type stored struct {
 	Reward Reward  `json:"reward"`
 }
 
+// WithBoost applies timed XP boosts (DD-320).
+func (s *Service) WithBoost(b boost.Applier) *Service { s.boost = b; return s }
+
 // Reveal collects the actor's rewards once the raid has ended. Idempotent:
 // a second call returns the stored result.
 func (s *Service) Reveal(ctx context.Context, actor, account, runID uuid.UUID) (*RevealResult, error) {
@@ -370,6 +375,7 @@ func (s *Service) Reveal(ctx context.Context, actor, account, runID uuid.UUID) (
 	rw := MemberReward(res, int16(pos+1), level, run.Members[pos].ClassCode, run.Seed, tmpl, mobs, s.rngNew)
 	// The whole party runs it together: +3% XP per member (DD-305).
 	rw.XP = int64(float64(rw.XP)*partyxp.Factor(len(run.Members)) + 0.5)
+	rw.XP = boost.ApplyIf(ctx, s.boost, actor, boost.CatAdventure, *run.StartedAt, *run.ExpiresAt, rw.XP) // DD-320
 	memberID := run.Members[pos].ID
 
 	var granted []activity.GrantedItem

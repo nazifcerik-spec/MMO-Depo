@@ -11,6 +11,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
@@ -64,7 +65,11 @@ type Service struct {
 	progress progression.Recorder
 	speed    SpeedSource     // worn enchants' crafting speed (DD-293); nil = none
 	party    partyxp.Booster // party XP bonus (DD-305); nil = none
+	boost    boost.Applier   // timed XP boosts (DD-320); nil = none
 }
+
+// WithBoost applies timed XP boosts (DD-320).
+func (s *Service) WithBoost(b boost.Applier) *Service { s.boost = b; return s }
 
 // WithPartyBonus adds the party bonus for members crafting in the same
 // profession alongside (DD-305).
@@ -347,6 +352,8 @@ func (s *Service) Collect(ctx context.Context, characterID, accountID, jobID uui
 		}); len(shared.Partners) > 0 {
 			res.Party, res.XPGained = &shared, int32(shared.Kept)
 		}
+		res.XPGained = int32(boost.ApplyIf(ctx, s.boost, characterID, boost.CatCraft, job.StartedAt, end,
+			int64(res.XPGained))) // DD-320
 		updated, leveled, err := s.repo.AddXP(ctx, characterID, rec.ProfessionCode, res.XPGained, maxLevel)
 		if err != nil {
 			s.log.WarnContext(ctx, "crafting: xp grant failed after a collected job",

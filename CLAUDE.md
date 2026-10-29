@@ -252,6 +252,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 118. **Yardımcı NPC'ler (bitti)** — Sprint 118, DD-319. Migration 0055 (`helper.hired/job`). `internal/helper`: 14 tür (5 toplama + 9 üretim), tür başı bonus (verim/hız/XP/altın/çift), karakter başı kiralama, tek işlem kuralından bağımsız; yarı hız + yarı XP karakterin mesleğine. `/v1/character/{id}/helpers[/{tür}/hire|start|collect|cancel]`. İstemci `features/helpers/helpers_screen.dart`.
 
+119. **Süreli XP bonusları (sunucu bitti)** — Sprint 119, DD-320. Migration 0056 (`boost.grant`). `internal/boost` (2 sa +%100, örtüşen paya uygulanır, günde 3 reklam), AdMob SSV doğrulaması `GET /v1/ads/ssv`, `GET /v1/character/{id}/boosts`. Kalan: istemci arayüzü, AdMob SDK.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

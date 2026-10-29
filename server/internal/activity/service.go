@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/notification"
@@ -106,6 +107,7 @@ type Service struct {
 	bonus    GatherBonusSource
 	gather   Gathering       // gathering professions (DD-244); nil = gold only
 	regions  RegionGate      // resources by map (DD-317); nil = everywhere
+	boost    boost.Applier   // timed XP boosts (DD-320); nil = none
 	bag      BagRoom         // nil = no room check
 	party    partyxp.Booster // party XP bonus (DD-305); nil = none
 	cfg      ServiceConfig
@@ -277,6 +279,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 
 // --- Reveal -----------------------------------------------------------------
 
+// WithBoost applies timed XP boosts (DD-320).
+func (s *Service) WithBoost(b boost.Applier) *Service { s.boost = b; return s }
+
 // Restart collects an active activity so far and starts the same one again
 // (DD-310): kind, gathering resource, params and planned duration. The
 // collection stands even when the new start fails.
@@ -418,6 +423,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		if len(shared.Partners) > 0 {
 			party, xp = &shared, int(shared.Kept)
 		}
+		xp = int(boost.ApplyIf(ctx, s.boost, contract.CharacterID, boost.CatGather, contract.StartedAt,
+			contract.StartedAt.Add(time.Duration(elapsed)*time.Second), int64(xp)))
 		p, err := s.gather.AddXP(ctx, contract.CharacterID, contract.Kind, xp)
 		if err != nil {
 			s.log.WarnContext(ctx, "activity: gathering xp failed", "contract", contract.ID.String(), "err", err.Error())

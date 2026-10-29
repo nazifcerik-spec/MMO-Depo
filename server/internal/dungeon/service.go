@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/activity"
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
@@ -78,8 +79,12 @@ type Service struct {
 	skills   SkillSource
 	bag      BagRoom         // nil = no room check (DD-246)
 	party    partyxp.Booster // party XP bonus (DD-305); nil = none
+	boost    boost.Applier   // timed XP boosts (DD-320); nil = none
 	regions  RegionGate      // nil = every dungeon in reach (DD-302)
 }
+
+// WithBoost applies timed XP boosts (DD-320).
+func (s *Service) WithBoost(b boost.Applier) *Service { s.boost = b; return s }
 
 // WithPartyBonus adds the party bonus for members running dungeons
 // alongside (DD-305).
@@ -456,6 +461,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}); len(shared.Partners) > 0 {
 		party, xp = &shared, shared.Kept
 	}
+	xp = boost.ApplyIf(ctx, s.boost, c.CharacterID, boost.CatAdventure, c.StartedAt,
+		c.StartedAt.Add(time.Duration(c.DurationSecs)*time.Second), xp)
 	if s.xp != nil && xp > 0 {
 		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, xp, character.XPSource{
 			Kind: "dungeon", ID: c.ID.String(), Metadata: map[string]any{"dungeon": c.DungeonCode, "cleared": run.Cleared}})

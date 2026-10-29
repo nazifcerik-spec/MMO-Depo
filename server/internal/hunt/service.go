@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/otter/server/internal/activity"
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/consumable"
 	"github.com/otter/server/internal/domain/character"
@@ -78,6 +79,7 @@ type Service struct {
 	templates Templates       // supply effects (DD-288); nil = no supplies
 	food      FoodBuffs       // a dish eaten before the hunt (DD-288); nil = in the sheet
 	party     partyxp.Booster // party XP bonus (DD-305); nil = none
+	boost     boost.Applier   // timed XP boosts (DD-320); nil = none
 }
 
 // WithPartyBonus adds the party bonus for members hunting alongside (DD-305).
@@ -348,6 +350,9 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	return &StartResult{Contract: c, MobDisplayKey: mob.DisplayNameKey}, nil
 }
 
+// WithBoost applies timed XP boosts (DD-320).
+func (s *Service) WithBoost(b boost.Applier) *Service { s.boost = b; return s }
+
 // --- Restart ----------------------------------------------------------------
 
 // Restart collects an active hunt so far and starts the same hunt again
@@ -548,6 +553,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 	}); len(shared.Partners) > 0 {
 		party, xp = &shared, shared.Kept
 	}
+	xp = boost.ApplyIf(ctx, s.boost, c.CharacterID, boost.CatAdventure, c.StartedAt,
+		c.StartedAt.Add(time.Duration(elapsed)*time.Second), xp)
 	if s.xp != nil && xp > 0 {
 		xpResult, err = s.xp.GrantXP(ctx, c.CharacterID, xp, character.XPSource{
 			Kind: "hunt", ID: c.ID.String(), Metadata: map[string]any{"mob": c.MobCode, "victories": hr.Victories}})

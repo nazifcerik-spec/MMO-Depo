@@ -17,6 +17,7 @@ import (
 
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/clienterr"
 	"github.com/otter/server/internal/combat"
@@ -105,6 +106,7 @@ type Deps struct {
 	DailyHandler      *dailyreward.Handler // DD-311
 	TradeHandler      *trade.Handler       // DD-315
 	HelperHandler     *helper.Handler      // DD-319
+	BoostHandler      *boost.Handler       // DD-320
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -309,6 +311,9 @@ func NewRouter(d Deps) http.Handler {
 					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 						Post("/items/{item_id}/use", h.Use)
 					r.Get("/buff", h.Active) // food buff (DD-269)
+				}
+				if h := d.BoostHandler; h != nil { // timed XP boosts (DD-320)
+					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
 				}
 				if h := d.HelperHandler; h != nil { // hired helpers (DD-319)
 					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
@@ -528,6 +533,9 @@ func NewRouter(d Deps) http.Handler {
 			// --- Public item set catalog (DD-277) ---
 			r.Get("/item-sets", itemset.CatalogHandler)
 			r.Get("/story", story.CatalogHandler) // story mode chapters (DD-313)
+			if h := d.BoostHandler; h != nil {
+				r.Get("/ads/ssv", h.SSV) // AdMob rewarded-ad callback, trusted by its signature (DD-320)
+			}
 
 			// --- Public mob catalog (client hunt picker) ---
 			if d.CombatHandler != nil {

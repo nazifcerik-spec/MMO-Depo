@@ -16,6 +16,7 @@ import (
 
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/admin"
+	"github.com/otter/server/internal/boost"
 	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/clienterr"
 	"github.com/otter/server/internal/combat"
@@ -301,6 +302,12 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Party XP bonus (DD-305): +3% per member working the same kind alongside.
 	partySvcXP := partyxp.NewService(pool, logger)
 	activitySvc.WithPartyBonus(partySvcXP).WithRegionGate(worldSvc) // resources by map (DD-317)
+	// Timed XP boosts (DD-320): ads and the credit shop.
+	boostSvc := boost.NewService(pool)
+	activitySvc.WithBoost(boostSvc)
+	huntSvc.WithBoost(boostSvc)
+	dungSvc.WithBoost(boostSvc)
+	craftSvc.WithBoost(boostSvc)
 	huntSvc.WithPartyBonus(partySvcXP)
 	dungSvc.WithPartyBonus(partySvcXP)
 	craftSvc.WithPartyBonus(partySvcXP)
@@ -308,7 +315,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	raidSvc := raid.NewService(pool, dungCatSvc, combatSvc, charSvc, charSvc, itemSvc, txnSvc, logger,
 		func(seed int64) combat.RNG { return activity.NewRNG(seed) }).
 		WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithBagRoom(invSvc).
-		WithRecorder(recorder).WithNotifier(notifSvc).WithPublisher(wsPub)
+		WithRecorder(recorder).WithNotifier(notifSvc).WithPublisher(wsPub).WithBoost(boostSvc)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
 	worldEventHandler := worldevent.NewHandler(worldevent.NewService(pool, charSvc, txnSvc,
@@ -419,6 +426,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		ConsumableHandler: consumable.NewHandler(consumableSvc),
 		DailyHandler:      dailyreward.NewHandler(dailyreward.NewService(pool, txnSvc, itemSvc)),
 		TradeHandler:      trade.NewHandler(trade.NewService(pool, txnSvc, invSvc, logger).WithPublisher(wsPub)),
+		BoostHandler:      boost.NewHandler(boostSvc, &boost.GoogleKeys{}, cfg.Env == "dev"),
 		HelperHandler: helper.NewHandler(helper.NewService(pool, txnSvc, charSvc, gatherSvc, itemSvc, invSvc,
 			craftCatSvc, craftRepo, craftSvc, logger)),
 		AdminHandler:     adminHandler,
