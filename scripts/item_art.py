@@ -40,6 +40,22 @@ KIND = {
 }
 SLOT = {'helm': 'helmet', 'chest': 'chest armor', 'legs': 'leg armor', 'gloves': 'gloves', 'boots': 'boots'}
 ARMOR = {'cloth_armor': 'cloth', 'leather_armor': 'leather', 'plate_armor': 'plate'}
+# What each armor type is made of, slot by slot: the material in a name
+# only trims and colours cloth and leather.
+ARMOR_KIND = {
+    'cloth_armor': {
+        'helm': 'soft cloth hood or cowl, draped fabric, no metal', 'chest': 'flowing cloth robe (fabric only)',
+        'legs': 'pair of loose cloth trousers, soft fabric, no metal', 'gloves': 'pair of empty cloth hand wraps shaped like fingerless gloves, wound fabric bands, no hands inside, no metal',
+        'boots': 'cloth sandals / soft slippers (fabric only)'},
+    'leather_armor': {
+        'helm': 'leather cowl (stitched leather, no metal plates)', 'chest': 'leather jerkin (stitched leather, no metal plates)',
+        'legs': 'pair of leather leggings (stitched leather, no metal plates)',
+        'gloves': 'pair of empty leather gloves (stitched leather, no metal plates)',
+        'boots': 'pair of leather boots (stitched leather, no metal plates)'},
+    'plate_armor': {
+        'helm': 'metal plate helmet', 'chest': 'metal plate breastplate', 'legs': 'metal plate leg guards',
+        'gloves': 'metal plate gauntlets', 'boots': 'metal plate sabatons'},
+}
 
 
 def items():
@@ -63,7 +79,7 @@ def names():
 def kind(i):
     sub = i['item_subclass']
     if sub in ARMOR:
-        return '%s %s' % (ARMOR[sub], SLOT[i['equip_slot']])
+        return ARMOR_KIND[sub][i['equip_slot']]
     return KIND.get(sub, sub)
 
 
@@ -124,6 +140,8 @@ def motif(i, word):
     (which third depends on the material) so an emblem does not repeat on
     every weapon."""
     look, figure = MOTIF.get(word, (word.lower(), ''))
+    if i['item_subclass'] in ('cloth_armor', 'leather_armor'):
+        look = 'colours and trims taken from ' + look  # soft pieces stay fabric or leather
     family = i['code'].split('_')[0]
     if figure and (sum(map(ord, family)) + sum(map(ord, word))) % 3 == 0:
         return '%s, featuring %s' % (look, figure)
@@ -147,7 +165,8 @@ def prompt(sheet):
         'rim light, ornate trims, glowing gems or runes on the stronger ones. Every item must look unique: a '
         'different silhouette, shape, ornament and colour palette from every other cell, never a recolour; even the plain early ones differ in head or blade shape, size, handle and wraps. '
         'Each item must stay clearly recognisable as the kind named first in its cell (a sickle is always a '
-        'sickle, boots are always boots); the shape note only varies that kind. '
+        'sickle, boots are always boots); the shape note only varies that kind. For cloth and leather pieces the material only sets '
+        'colours, trims, embroidery and gems; they stay soft fabric or leather. '
                 'Cells, in reading order: %s. '
         'IMPORTANT: no captions, no labels, no item names, no text or letters of any kind anywhere in the '
         'image; each cell holds only the painted item on its backdrop, its lower edge empty backdrop. No logos, '
