@@ -31,6 +31,7 @@ flutter:
     - assets/animals/ # hunting animals: <animal>.png (wolf_pelt → wolf.png)
     - assets/classes/ # class portraits: <class_code>.png (DD-266)
     - assets/class_icons/ # class emblems: <base_class>.webp (DD-325)
+    - assets/boosts/ # XP boost emblems: gather/adventure/craft.webp (DD-326)
     - assets/races/ # race portraits: <race_code>.png (DD-266)
     - assets/branding/ # MeNa World logo (DD-270)
     - assets/backgrounds/ # page backgrounds: bg01..bg30.webp (DD-323)

@@ -3211,6 +3211,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-326 — XP bonusu amblemleri
+
+**Context:** Reklam izleyerek ya da krediyle alınan XP bonusu kutularında (Toplama, Av ve zindan, Meslek) yalnız yazı vardı; oyuncu kutulara uygun görseller istedi.
+**Decision:** Gemini ile tek 2×2 amblem sayfası (sınıf amblemleriyle aynı madalyon tarzı + yükselen altın ışık, deneyim bonusu hissi): Toplama = kazma, olta, ot ve yeşil cevher; Av ve zindan = kılıç, boynuzlu kafatası, zindan kapısı; Meslek = örs, çekiç, iksir şişesi (dördüncü kum saati kullanılmadı). Kesme betiği genelleşti: `scripts/class_icon_assets.py` → `scripts/emblem_assets.py` (`<klasör>/<sayfa>` → kodlar; sınıf ikonları birebir aynı çıkar) → `client/assets/boosts/{gather,adventure,craft}.webp`. Ortak `CircleArt` (shared/widgets) avatar, sınıf ve bonus amblemlerini daire içinde gösterilen boyutta çözer (üç kopya yerine tek). Karakter sayfasındaki bonus kutularının üstünde 48 dp, mağazadaki bonus satırlarının başında 44 dp; görsel yoksa şimşek ikonu.
+**Consequences:** Bonus kutuları görselli; yeni amblem = yeni APK.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

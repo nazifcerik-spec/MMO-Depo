@@ -262,7 +262,9 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 123. **Avatar portreleri (bitti)** — Sprint 123, DD-324. 80 portre (`client/assets/avatars/avNN.webp`, 20 Gemini 2×2 sayfasından `scripts/avatar_assets.py` ile kesilir): ücretsiz 10 sınıf × 4, kredili efsanevi sürümler. `AvatarBadge` daire içinde portre.
 
-124. **Sınıf amblemleri (bitti)** — Sprint 124, DD-325. 10 temel sınıf amblemi (`client/assets/class_icons/<sınıf>.webp`, Gemini 2×2 sayfalarından `scripts/class_icon_assets.py` ile kesilir). `ClassEmblem` (daire, yedek `classIcon`): oluşturma şeridi, portre yedeği, düğüm penceresi.
+124. **Sınıf amblemleri (bitti)** — Sprint 124, DD-325. 10 temel sınıf amblemi (`client/assets/class_icons/<sınıf>.webp`, Gemini 2×2 sayfalarından `scripts/emblem_assets.py` ile kesilir). `ClassEmblem` (daire, yedek `classIcon`): oluşturma şeridi, portre yedeği, düğüm penceresi.
+
+125. **XP bonusu amblemleri (bitti)** — Sprint 125, DD-326. Toplama / Av ve zindan / Meslek bonus kutularına madalyon amblemleri (`client/assets/boosts/`), mağaza satırlarında da. `scripts/emblem_assets.py` (sınıf + bonus amblemleri), ortak `CircleArt`.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 

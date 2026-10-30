@@ -6,6 +6,28 @@ import '../features/character/models.dart';
 import '../l10n/app_localizations.dart';
 import 'content_names.dart';
 
+/// Bundled art [asset] in a circle of [size], decoded at the size shown;
+/// [fallback] when the file is missing.
+class CircleArt extends StatelessWidget {
+  const CircleArt({super.key, required this.asset, required this.size, required this.fallback});
+
+  final String asset;
+  final double size;
+  final Widget fallback;
+
+  @override
+  Widget build(BuildContext context) => ClipOval(
+    child: Image.asset(
+      asset,
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+      errorBuilder: (_, _, _) => SizedBox.square(dimension: size, child: fallback),
+    ),
+  );
+}
+
 /// Maps a server/transport error to player-facing copy.
 String errorText(AppLocalizations l, Object error) {
   if (error is! ApiError) return l.errGeneric('E_CLIENT');

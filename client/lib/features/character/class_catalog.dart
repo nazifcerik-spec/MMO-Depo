@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/api_client.dart';
+import '../../shared/widgets.dart';
 
 /// One node of the class tree (DD-253): a base class (tier 0), a promotion
 /// (tier 1, level 100) or a final specialization (tier 2, level 300).
@@ -138,7 +139,7 @@ IconData classIcon(String root) => switch (root) {
   _ => Icons.person_outline,
 };
 
-/// Base class [root]'s emblem art (`scripts/class_icon_assets.py`).
+/// Base class [root]'s emblem art (`scripts/emblem_assets.py`).
 String classEmblemAsset(String root) => 'assets/class_icons/$root.webp';
 
 /// Base class [root]'s emblem in a circle, decoded at the size shown; its
@@ -150,18 +151,10 @@ class ClassEmblem extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) => ClipOval(
-    child: Image.asset(
-      classEmblemAsset(root),
-      width: size,
-      height: size,
-      fit: BoxFit.cover,
-      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
-      errorBuilder: (_, _, _) => SizedBox.square(
-        dimension: size,
-        child: Icon(classIcon(root), size: size * 0.6, color: classColor(root)),
-      ),
-    ),
+  Widget build(BuildContext context) => CircleArt(
+    asset: classEmblemAsset(root),
+    size: size,
+    fallback: Icon(classIcon(root), size: size * 0.6, color: classColor(root)),
   );
 }
 

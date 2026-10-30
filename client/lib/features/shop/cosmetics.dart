@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
+import '../../shared/widgets.dart';
 
 /// Cosmetics (DD-321): 30 page backgrounds (DD-323) and 80 avatar portraits
 /// (DD-324), bundled as art. Codes match the server's (bg01..bg30,
@@ -119,18 +120,13 @@ class AvatarBadge extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) => ClipOval(
-    child: Image.asset(
-      avatarAsset(code),
-      width: size,
-      height: size,
-      fit: BoxFit.cover,
-      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
-      errorBuilder: (_, _, _) => CircleAvatar(
-        radius: size / 2,
-        backgroundColor: Palette.bgElevated,
-        child: Icon(Icons.person, size: size * 0.55, color: Palette.textSecondary),
-      ),
+  Widget build(BuildContext context) => CircleArt(
+    asset: avatarAsset(code),
+    size: size,
+    fallback: CircleAvatar(
+      radius: size / 2,
+      backgroundColor: Palette.bgElevated,
+      child: Icon(Icons.person, size: size * 0.55, color: Palette.textSecondary),
     ),
   );
 }

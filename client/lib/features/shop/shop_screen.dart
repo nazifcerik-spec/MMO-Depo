@@ -102,6 +102,16 @@ String boostName(AppLocalizations l, String category) => switch (category) {
   _ => l.boostCraft,
 };
 
+/// Boost [category]'s emblem art (`scripts/emblem_assets.py`, DD-326).
+String boostAsset(String category) => 'assets/boosts/$category.webp';
+
+/// Boost [category]'s emblem in a circle; a bolt when the art is missing.
+Widget boostEmblem(String category, double size) => CircleArt(
+  asset: boostAsset(category),
+  size: size,
+  fallback: Icon(Icons.bolt, size: size * 0.6, color: Palette.warning),
+);
+
 /// The credit shop (DD-321): credits, boosts and cosmetics.
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key, required this.repo, this.onProfile});
@@ -209,6 +219,7 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
                           if (it.kind == 'boost')
                             ListTile(
                               contentPadding: EdgeInsets.zero,
+                              leading: boostEmblem(it.code.replaceFirst('boost_', ''), 44),
                               title: Text(boostName(l, it.code.replaceFirst('boost_', ''))),
                               subtitle: Text(l.boostDesc),
                               trailing: FilledButton(
@@ -364,6 +375,8 @@ class _BoostBarState extends State<BoostBar> {
               ),
               child: Column(
                 children: [
+                  boostEmblem(b.category, 48),
+                  const SizedBox(height: Space.xs),
                   Text(boostName(l, b.category), style: text.labelMedium, textAlign: TextAlign.center),
                   const SizedBox(height: 2),
                   Text(
