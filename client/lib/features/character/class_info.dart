@@ -316,7 +316,7 @@ Future<void> showClassNodeSkills(BuildContext context, ClassCatalog catalog, Cla
             children: [
               Row(
                 children: [
-                  Icon(classIcon(root), color: classColor(root)),
+                  ClassEmblem(root: root, size: 28),
                   const SizedBox(width: Space.sm),
                   Expanded(
                     child: Text(

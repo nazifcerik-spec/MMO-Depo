@@ -211,11 +211,7 @@ class _ClassStrip extends StatelessWidget {
                             width: _border,
                           ),
                         ),
-                        child: Icon(
-                          classIcon(c),
-                          size: 22,
-                          color: c == selected ? classColor(c) : Palette.textSecondary,
-                        ),
+                        child: ClassEmblem(root: c, size: 44 - 2 * _border),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -309,7 +305,7 @@ class _Portrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fallback = Center(child: Icon(classIcon(code), size: 56, color: color));
+    final fallback = Center(child: ClassEmblem(root: code, size: 88));
     final path = ItemImages.classPath(code);
     return Container(
       width: 120,

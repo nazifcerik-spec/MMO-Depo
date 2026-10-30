@@ -3202,6 +3202,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-325 — Sınıf amblemleri
+
+**Context:** Sınıf seçiminde ve sınıf bilgisinde geçici Material ikonları duruyordu; oyuncu avatarlarla aynı tarzda sınıf ikonları istedi.
+**Decision:** Gemini ile 3 adet 2×2 amblem sayfası üretildi (altın çerçeveli yuvarlak madalyon, sınıf başı tek sembol, koyu zemin; komutlarda başka oyunun adı geçmez). `client/art_originals/class_icons/sheetNN.jpg` (git dışı) → `python scripts/class_icon_assets.py` (çeyrek başı parlak madalyonun sınırlayıcı kutusu, kare 192 px WebP %85) → `client/assets/class_icons/<temel_sınıf>.webp` (10 dosya ≈ 133 KB). `ClassEmblem` amblemi daire içinde gösterilen boyutta çözer; dosya yoksa eski ikon (`classIcon`). Kullanım: oluşturma ekranı sınıf şeridi, sınıf portresi yokken portre kutusu, sınıf yolu düğüm penceresi başlığı.
+**Consequences:** Sınıf ikonları avatar ve ırk görselleriyle aynı tarzda; yeni amblem = yeni APK.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

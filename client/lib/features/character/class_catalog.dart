@@ -123,7 +123,7 @@ class ClassCatalog {
   }
 }
 
-/// Stand-in class icons until the class artwork ships.
+/// Material icon for a base class: the stand-in when its emblem is missing.
 IconData classIcon(String root) => switch (root) {
   'warrior' => Icons.shield_outlined,
   'rogue' => Icons.content_cut,
@@ -137,6 +137,33 @@ IconData classIcon(String root) => switch (root) {
   'shaman' => Icons.local_fire_department_outlined,
   _ => Icons.person_outline,
 };
+
+/// Base class [root]'s emblem art (`scripts/class_icon_assets.py`).
+String classEmblemAsset(String root) => 'assets/class_icons/$root.webp';
+
+/// Base class [root]'s emblem in a circle, decoded at the size shown; its
+/// icon when the art is missing.
+class ClassEmblem extends StatelessWidget {
+  const ClassEmblem({super.key, required this.root, this.size = 24});
+
+  final String root;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => ClipOval(
+    child: Image.asset(
+      classEmblemAsset(root),
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+      errorBuilder: (_, _, _) => SizedBox.square(
+        dimension: size,
+        child: Icon(classIcon(root), size: size * 0.6, color: classColor(root)),
+      ),
+    ),
+  );
+}
 
 /// How forgiving a base class is to play (1 easy, 2 medium, 3 hard), from
 /// the balance simulations' AFK safety (DD-266).
