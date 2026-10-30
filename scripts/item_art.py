@@ -31,7 +31,7 @@ SIZE = 128  # the bag shows icons at most ~64 dp
 # What each kind is, for the prompt (the item name carries the material).
 KIND = {
     'axe': 'one-handed battle axe', 'bow': 'longbow', 'crossbow': 'crossbow', 'dagger': 'dagger',
-    'fist_weapon': 'clawed fist weapon', 'holy_tome': 'holy spell tome', 'lute': 'magical lute',
+    'fist_weapon': 'clawed gauntlet fist weapon worn over the hand (never a blade on a handle)', 'holy_tome': 'holy spell tome', 'lute': 'magical lute',
     'mace': 'one-handed mace', 'nature_focus': 'druidic nature focus', 'rapier': 'rapier',
     'ritual_axe': 'shamanic ritual axe', 'short_sword': 'short sword', 'sickle': 'sickle',
     'staff': 'mage staff', 'sword': 'sword', 'tonfa': 'pair of tonfas (straight batons with a short side handle)', 'totem_focus': 'shaman totem',

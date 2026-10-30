@@ -3241,8 +3241,17 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 ## DD-329 — Boyanmış ekipman ikonları
 
 **Context:** Oyuncu silah, zırh ve takıların oyunun temasına uygun, birbirini anımsatmayan, kendine has biçim ve renkte görseller istedi (Pinterest'teki zırh / fantastik eşya panoları referans).
-**Decision:** Her kuşanılabilir eşya (1916) kendi ikonunu alır. `scripts/item_art.py` eşyaları aile + seviye sırasıyla 5×5 sayfalara dizer; Gemini komutu hücre başı tanım verir (ad değil — adlar resme yazı olarak işleniyordu): tür + biçim kuralı (ailedeki sırasına ve aileye göre kayan 20 siluet: kıvrık, dalgalı, çatallı, iğne ince…) + malzeme görünümü (`scripts/item_motifs.py`: 104 malzeme kelimesi → renk/doku ve figür; figür yalnız ailelerin üçte birinde, aynı amblem her silahta tekrarlanmasın). Ortak stil: koyu arduvaz zemin, el boyaması stilize MMO ikonu, temiz siluet, yumuşak gölge. `art_originals/items/sheetNNN.jpg` (git dışı) → `python scripts/item_art.py cut` → `client/assets/items/<kod>.webp` (128 px, ~4 KB). İstemci: `ItemImages` .png ve .webp okur; çanta hücresinde boyanmış ikon hücreyi doldurur (kendi zemini var), malzeme png'leri eskisi gibi. İlk parti: 850 eşya (silahlar); zırh, kalkan, takı ve baskın setleri Gemini günlük sınırı nedeniyle sonraki partilerde.
+**Decision:** Her kuşanılabilir eşya (1916) kendi ikonunu alır. `scripts/item_art.py` eşyaları aile + seviye sırasıyla 5×5 sayfalara dizer; Gemini komutu hücre başı tanım verir (ad değil — adlar resme yazı olarak işleniyordu): tür + biçim kuralı (ailedeki sırasına ve aileye göre kayan 20 siluet: kıvrık, dalgalı, çatallı, iğne ince…) + malzeme görünümü (`scripts/item_motifs.py`: 104 malzeme kelimesi → renk/doku ve figür; figür yalnız ailelerin üçte birinde, aynı amblem her silahta tekrarlanmasın). Ortak stil: koyu arduvaz zemin, el boyaması stilize MMO ikonu, temiz siluet, yumuşak gölge. `art_originals/items/sheetNNN.jpg` (git dışı) → `python scripts/item_art.py cut` → `client/assets/items/<kod>.webp` (128 px, ~4 KB). İstemci: `ItemImages` .png ve .webp okur; çanta hücresinde boyanmış ikon hücreyi doldurur (kendi zemini var), malzeme png'leri eskisi gibi. Tamamı: 1916 eşya. Zırh komutu türü yuvaya göre adlandırır (kumaş sandalet/cübbe/sargı, deri yelek/eldiven, çelik göğüslük/sabaton); kumaş ve deride malzeme yalnız renk, süs ve işleme verir.
 **Consequences:** Her ekipman kendine has ikonla görünür; yeni eşya = sayfa üret + kes + yeni APK.
+**Tarih:** 2026-10-30
+
+---
+
+## DD-330 — Avatar portreleri yeniden: her biri ayrı kişi
+
+**Context:** Oyuncu 80 avatarın birbirinin kopyası gibi göründüğünü söyledi (DD-324 portreleri aynı poz, aynı zemin, benzer yüzler).
+**Decision:** `scripts/avatar_art.py`: avatar k için sınıf (k/4 mod 10) ve ırk/cinsiyet eşlemesi DD-324 ile aynı; üstüne her portreye ayrı yaş, ifade, bakış açısı, saç, yüz izi, başlık, ışık rengi ve düz zemin rengi (farklı adımlı listelerden). 3×3 Gemini sayfası (9 sayfa) → `art_originals/avatars/gridNN.jpg` → `python scripts/avatar_art.py cut` (ızgara çizgisi `item_art.gutters`) → `client/assets/avatars/avNN.webp` 256 px (≈1,3 MB). Kredili 40 avatar efsanevi: parlayan rün halkalı zemin, mücevherli zırh. İstemci değişmedi (`AvatarBadge`).
+**Consequences:** Avatarlar birbirinden ayırt edilir; yenisi = sayfa üret + kes + yeni APK.
 **Tarih:** 2026-10-30
 
 ---

@@ -270,7 +270,9 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 127. **Pet sistemi (bitti)** — Sprint 127, DD-328. Migration 0058 `pet.pet`. 20 tür (`scripts/gen_pets.py` → `content/pets.yaml`), yumurta Sv 430..1000 baskın boss'undan %50 → %2 (en üstünden zarlanır, üye başı tek), kuluçka 1–24 sa, pet avı (`pet.Roll` = `hunt.Roll`, güç = 10 × seviye, erişim +5), seviye 1–100, aktif pet bonusu sheet'te. `internal/pet` uçları, istemci `features/pets/pets_screen.dart`.
 
-128. **Boyanmış ekipman ikonları (sürüyor)** — Sprint 128, DD-329. `scripts/item_art.py` + `item_motifs.py`: 1916 kuşanılabilir eşyaya tek tek ikon (5×5 Gemini sayfaları, eşya başı biçim + malzeme tarifi), `client/assets/items/<kod>.webp`; çanta hücresini doldurur. İlk parti 850 (silahlar).
+128. **Boyanmış ekipman ikonları (bitti)** — Sprint 128, DD-329. `scripts/item_art.py` + `item_motifs.py`: 1916 kuşanılabilir eşyaya tek tek ikon (5×5 Gemini sayfaları, eşya başı biçim + malzeme tarifi), `client/assets/items/<kod>.webp`; çanta hücresini doldurur. 1916 eşyanın tamamı; kumaş/deri zırhta malzeme yalnız renk/süs.
+
+129. **Avatarlar yeniden (bitti)** — Sprint 129, DD-330. 80 portre her biri ayrı yaş/ifade/açı/saç/iz/başlık/ışık/zemin (`scripts/avatar_art.py`, 3×3 sayfalar), kredili efsanevi rün halkalı.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
