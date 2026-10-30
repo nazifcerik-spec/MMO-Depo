@@ -46,7 +46,7 @@ class ItemCell extends StatelessWidget {
   final String? rarity;
   final IconData? icon;
 
-  /// Template code: shows `assets/items/<code>.png` when it ships.
+  /// Template code: shows `assets/items/<code>.png` / `.webp` when it ships.
   final String? code;
   final int stack;
   final bool locked;
@@ -69,6 +69,12 @@ class ItemCell extends StatelessWidget {
     final c = filled ? rarityColor(rarity ?? 'common') : Palette.borderSubtle;
     final cell = _cell(filled, c);
     return wear == 'class' ? Opacity(opacity: 0.4, child: cell) : cell;
+  }
+
+  /// The cell-filling painted icon of [code], when one ships.
+  String? get _painted {
+    final p = code == null ? null : ItemImages.path(code!);
+    return p != null && p.endsWith('.webp') ? p : null;
   }
 
   Widget _cell(bool filled, Color c) {
@@ -94,28 +100,48 @@ class ItemCell extends StatelessWidget {
           onTap: onTap,
           child: Stack(
             children: [
-              Center(
-                child: filled
-                    ? LayoutBuilder(
-                        // Art scales with the cell (bag rows of 5, equipment rows of 6, detail headers).
-                        builder: (_, box) {
-                          final size = (box.maxWidth * 0.42).clamp(18.0, 48.0);
-                          return code == null
-                              ? Icon(icon, color: c, size: size)
-                              : ItemArt(code: code!, icon: icon!, color: c, size: size);
-                        },
-                      )
-                    : (label == null
-                          ? null
-                          : Padding(
-                              padding: const EdgeInsets.all(2),
-                              child: Text(
-                                label!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 9, color: Palette.textMuted),
-                              ),
-                            )),
-              ),
+              if ((filled ? _painted : null) case final art?)
+                // Painted gear icons carry their own backdrop: they fill the cell (DD-329).
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Radii.sm - 1),
+                      child: LayoutBuilder(
+                        builder: (context, box) => Image.asset(
+                          art,
+                          fit: BoxFit.cover,
+                          cacheWidth: (box.maxWidth * MediaQuery.devicePixelRatioOf(context)).round(),
+                          filterQuality: FilterQuality.medium,
+                          errorBuilder: (_, _, _) => Icon(icon, color: c),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Center(
+                  child: filled
+                      ? LayoutBuilder(
+                          // Art scales with the cell (bag rows of 5, equipment rows of 6, detail headers).
+                          builder: (_, box) {
+                            final size = (box.maxWidth * 0.42).clamp(18.0, 48.0);
+                            return code == null
+                                ? Icon(icon, color: c, size: size)
+                                : ItemArt(code: code!, icon: icon!, color: c, size: size);
+                          },
+                        )
+                      : (label == null
+                            ? null
+                            : Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: Text(
+                                  label!,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 9, color: Palette.textMuted),
+                                ),
+                              )),
+                ),
               if (stack > 1)
                 Positioned(
                   right: 3,

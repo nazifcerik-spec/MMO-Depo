@@ -33,5 +33,7 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     await ItemImages.load();
     expect(ItemImages.path('definitely_not_an_item'), isNull);
+    // Painted gear icons ship as WebP (DD-329).
+    expect(ItemImages.path('axe_novice'), 'assets/items/axe_novice.webp');
   });
 }

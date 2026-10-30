@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Item art bundled as `assets/items/<template_code>.png` (optional per item),
+/// Item art bundled as `assets/items/<template_code>.png` or `.webp` (painted
+/// gear icons, DD-329; optional per item),
 /// hunting animals as `assets/animals/<animal>.png`, class and race portraits
 /// as `assets/classes/<class>.png` and `assets/races/<race>.png` (DD-266).
 /// The lists are read
 /// once from the asset manifest, so a missing picture costs no failed load —
 /// the item keeps its class icon.
 class ItemImages {
-  static Set<String> _codes = const {};
+  static Map<String, String> _codes = const {}; // template code → asset
   static Set<String> _animals = const {};
   static Set<String> _classes = const {};
   static Set<String> _races = const {};
@@ -25,7 +26,11 @@ class ItemImages {
         for (final a in manifest.listAssets())
           if (a.startsWith(dir) && a.endsWith('.png')) a.substring(dir.length, a.length - 4),
       };
-      _codes = under(_dir);
+      _codes = {
+        for (final a in manifest.listAssets())
+          if (a.startsWith(_dir) && (a.endsWith('.png') || a.endsWith('.webp')))
+            a.substring(_dir.length, a.lastIndexOf('.')): a,
+      };
       _animals = under(_animalDir);
       _classes = under(_classDir);
       _races = under(_raceDir);
@@ -37,7 +42,7 @@ class ItemImages {
     }
   }
 
-  static String? path(String code) => _codes.contains(code) ? '$_dir$code.png' : null;
+  static String? path(String code) => _codes[code];
 
   static String? animalPath(String animal) => _animals.contains(animal) ? '$_animalDir$animal.png' : null;
 
@@ -49,7 +54,7 @@ class ItemImages {
   static set animals(Set<String> a) => _animals = a;
 
   @visibleForTesting
-  static set codes(Set<String> c) => _codes = c;
+  static set codes(Set<String> c) => _codes = {for (final code in c) code: '$_dir$code.png'};
 }
 
 /// The item's picture when one ships, else its class icon.
