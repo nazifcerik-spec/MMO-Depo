@@ -3228,4 +3228,102 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get helperCraftHint => 'Malzeme ve altın şimdi alınır; sen bu sırada oynamaya devam edersin.';
+
+  @override
+  String get petsOpen => 'Petler';
+
+  @override
+  String get petsHint =>
+      'Pet yumurtaları Sv 400 üstü baskınları temizlediğinde düşer. Yumurta kuluçkada açılır; pet kendi avına çıkarak seviye atlar, aktif petin bonusu sana gelir.';
+
+  @override
+  String get petsEggs => 'Yumurtalar';
+
+  @override
+  String get petsNoEggs => 'Yumurtan yok. Sv 400 üstü baskınları temizle.';
+
+  @override
+  String petsMine(int n, int max) {
+    return 'Petlerim ($n/$max)';
+  }
+
+  @override
+  String get petHatch => 'Kuluçkaya koy';
+
+  @override
+  String petHatchBody(String egg, String time) {
+    return '$egg kuluçkaya konsun mu? $time sonra açılır.';
+  }
+
+  @override
+  String get petHatching => 'Yumurtada';
+
+  @override
+  String get petHatched => 'Yumurtadan çıktı!';
+
+  @override
+  String petPower(int n) {
+    return 'Sv $n canavar gücünde';
+  }
+
+  @override
+  String get petActive => 'Aktif';
+
+  @override
+  String get petActivate => 'Aktif et';
+
+  @override
+  String get petDeactivate => 'Dinlendir';
+
+  @override
+  String get petHunt => 'Ava gönder';
+
+  @override
+  String petHunting(String mob) {
+    return '$mob avında';
+  }
+
+  @override
+  String get petHuntDone => 'Av bitti';
+
+  @override
+  String get petCollectEarly => 'Avı şimdi bitirirsen şimdiye kadarki savaşların XP\'si gelir.';
+
+  @override
+  String petCollected(int wins, int xp) {
+    return '$wins zafer, +$xp pet XP';
+  }
+
+  @override
+  String petLevelUp(String name, int level) {
+    return '$name Sv $level oldu!';
+  }
+
+  @override
+  String get petDied => 'Petin yenildi, av erken bitti.';
+
+  @override
+  String get petPickMob => 'Avlanacak canavar';
+
+  @override
+  String petXpPerWin(int n) {
+    return 'Zafer başı +$n XP';
+  }
+
+  @override
+  String get petGuide => 'Tüm petler';
+
+  @override
+  String petGuideLine(String pct, int level, String time) {
+    return 'Sv $level+ baskında %$pct · kuluçka $time';
+  }
+
+  @override
+  String get errPetCap => 'Tutabileceğin kadar petin var.';
+
+  @override
+  String get errPetHatching => 'Pet henüz yumurtadan çıkmadı.';
+
+  @override
+  String get errPetHunting => 'Pet zaten avda.';
 }

@@ -1781,6 +1781,8 @@ void main() {
     expect(find.text('Create party'), findsNothing);
     await tester.ensureVisible(find.widgetWithText(FilledButton, 'Invite'));
     await tester.enterText(find.byType(TextField), 'Brak');
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Invite'));
     await tester.tap(find.widgetWithText(FilledButton, 'Invite'));
     await tester.pumpAndSettle();
     expect(be.groupCalls, contains('party/invite {"target_name":"Brak"}'));

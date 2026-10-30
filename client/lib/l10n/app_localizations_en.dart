@@ -3229,4 +3229,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helperCraftHint => 'Materials and gold are taken now; you keep playing meanwhile.';
+
+  @override
+  String get petsOpen => 'Pets';
+
+  @override
+  String get petsHint =>
+      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.';
+
+  @override
+  String get petsEggs => 'Eggs';
+
+  @override
+  String get petsNoEggs => 'No eggs. Clear raids past level 400 to find some.';
+
+  @override
+  String petsMine(int n, int max) {
+    return 'My pets ($n/$max)';
+  }
+
+  @override
+  String get petHatch => 'Incubate';
+
+  @override
+  String petHatchBody(String egg, String time) {
+    return 'Put a $egg in the incubator? It hatches in $time.';
+  }
+
+  @override
+  String get petHatching => 'In its egg';
+
+  @override
+  String get petHatched => 'Hatched!';
+
+  @override
+  String petPower(int n) {
+    return 'Fights like a level $n monster';
+  }
+
+  @override
+  String get petActive => 'Active';
+
+  @override
+  String get petActivate => 'Make active';
+
+  @override
+  String get petDeactivate => 'Rest';
+
+  @override
+  String get petHunt => 'Send hunting';
+
+  @override
+  String petHunting(String mob) {
+    return 'Hunting $mob';
+  }
+
+  @override
+  String get petHuntDone => 'Hunt over';
+
+  @override
+  String get petCollectEarly => 'Ending the hunt now pays the fights so far.';
+
+  @override
+  String petCollected(int wins, int xp) {
+    return '$wins wins, +$xp pet XP';
+  }
+
+  @override
+  String petLevelUp(String name, int level) {
+    return '$name reached level $level!';
+  }
+
+  @override
+  String get petDied => 'Your pet was beaten; the hunt ended early.';
+
+  @override
+  String get petPickMob => 'Monster to hunt';
+
+  @override
+  String petXpPerWin(int n) {
+    return '+$n XP a win';
+  }
+
+  @override
+  String get petGuide => 'All pets';
+
+  @override
+  String petGuideLine(String pct, int level, String time) {
+    return '$pct% from level $level+ raids · hatches in $time';
+  }
+
+  @override
+  String get errPetCap => 'You have as many pets as you can keep.';
+
+  @override
+  String get errPetHatching => 'The pet has not hatched yet.';
+
+  @override
+  String get errPetHunting => 'The pet is already hunting.';
 }

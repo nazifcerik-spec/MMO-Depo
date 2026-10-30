@@ -3229,4 +3229,102 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helperCraftHint => 'Los materiales y el oro se cobran ahora; mientras tanto sigues jugando.';
+
+  @override
+  String get petsOpen => 'Mascotas';
+
+  @override
+  String get petsHint =>
+      'Los huevos de mascota caen al superar bandas de nivel 400 o más. El huevo eclosiona en la incubadora; la mascota sube de nivel con sus propias cacerías y tu mascota activa te da su bonificación.';
+
+  @override
+  String get petsEggs => 'Huevos';
+
+  @override
+  String get petsNoEggs => 'No tienes huevos. Supera bandas de nivel 400 o más.';
+
+  @override
+  String petsMine(int n, int max) {
+    return 'Mis mascotas ($n/$max)';
+  }
+
+  @override
+  String get petHatch => 'Incubar';
+
+  @override
+  String petHatchBody(String egg, String time) {
+    return '¿Incubar un $egg? Eclosiona en $time.';
+  }
+
+  @override
+  String get petHatching => 'En su huevo';
+
+  @override
+  String get petHatched => '¡Ha eclosionado!';
+
+  @override
+  String petPower(int n) {
+    return 'Lucha como un monstruo de nivel $n';
+  }
+
+  @override
+  String get petActive => 'Activa';
+
+  @override
+  String get petActivate => 'Activar';
+
+  @override
+  String get petDeactivate => 'Descansar';
+
+  @override
+  String get petHunt => 'Enviar a cazar';
+
+  @override
+  String petHunting(String mob) {
+    return 'Cazando $mob';
+  }
+
+  @override
+  String get petHuntDone => 'Cacería terminada';
+
+  @override
+  String get petCollectEarly => 'Terminar ahora paga los combates hasta el momento.';
+
+  @override
+  String petCollected(int wins, int xp) {
+    return '$wins victorias, +$xp PX de mascota';
+  }
+
+  @override
+  String petLevelUp(String name, int level) {
+    return '¡$name alcanzó el nivel $level!';
+  }
+
+  @override
+  String get petDied => 'Tu mascota fue derrotada; la cacería terminó antes.';
+
+  @override
+  String get petPickMob => 'Monstruo a cazar';
+
+  @override
+  String petXpPerWin(int n) {
+    return '+$n PX por victoria';
+  }
+
+  @override
+  String get petGuide => 'Todas las mascotas';
+
+  @override
+  String petGuideLine(String pct, int level, String time) {
+    return '$pct % en bandas de nivel $level+ · eclosiona en $time';
+  }
+
+  @override
+  String get errPetCap => 'Ya tienes el máximo de mascotas.';
+
+  @override
+  String get errPetHatching => 'La mascota aún no ha eclosionado.';
+
+  @override
+  String get errPetHunting => 'La mascota ya está cazando.';
 }

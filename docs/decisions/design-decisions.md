@@ -3229,6 +3229,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-328 — Pet sistemi
+
+**Context:** Oyuncu baskınlardan yumurtayla elde edilen, kendi avıyla seviye atlayan 20 pet istedi: düşüş Sv 400 üstü canavarlarda başlar, oran %50'den başlayıp azalır, en üstün pet %2, kuluçka 1–24 sa.
+**Decision:** `python scripts/gen_pets.py` → `content/pets.yaml` (20 tür + 20 yumurta eşyası `pet_egg_<tür>`, misc/pet_egg, takas edilebilir, 4 dil). Tür sırası 1..20: `min_mob_level` 430..1000 (baskın boss'u ≥ bu seviyedeyse düşebilir: Sv 600 baskını 6, 700'ü 10, 850'si 15, 1000'i 20 tür), `egg_pct` 50 → 2 geometrik, kuluçka 1 → 24 sa, güç %200 → %257, bonus %3 → %12 (saldırı/savunma/can sırayla; Sv 1'de dörtte biri). Düşüş (`pet.Catalog.RollEgg`): temizlenen baskında üye başı, uygun türler en üstünden başlayarak kendi oranıyla zarlanır, ilk tutan düşer — en üstün pet tam %2, üye başı en fazla bir yumurta; `raid.Reward.PetEgg`, toplama işlendikten sonra bir kez basılır (`raid.WithEggs`). Migration 0058 `pet.pet` (seviye 1–100, XP, kuluçka bitişi, aktif — karakter başı tek, av alanları satırda). Yeni `internal/pet`: `GET /v1/pets` (türler), `/v1/character/{id}/pets` (petler + çantadaki yumurtalar), `POST .../pets/hatch` (yumurta tek tx'te düşer, pet tavanı 50), `.../{pet_id}/active`, `.../hunt` (canavar + 1/3/6 sa), `.../collect` (her an; geçen sürenin savaşları). Pet avı karakter avının temposuyla (`hunt.Roll`): pet Sv L, Sv 10L canavar eğrisi × tür gücü olarak savaşır, en çok güç + 5 seviye canavar avlar (savaş seviye farkı muafiyeti), zafer başı canavar seviyesi kadar XP; eğri 1000·L·1,025^(L−1) (`TestPetPace`: başta ~1 sa/seviye, Sv 100'e doğru 11–17 sa). Tek işlem kuralından bağımsız. Aktif petin bonusu sheet modifier kaynağı. İstemci: karakter sayfası → Petler (yumurtalar + kuluçkaya koy, pet kartları: seviye/XP, bonus, güç, kuluçka/av süresi, aktif et, ava gönder → canavar seçimi, topla), tüm petler rehberi (oran, baskın seviyesi, kuluçka, bonus).
+**Consequences:** Sv 400+ baskınlar pet yumurtası düşürür; petler kendi avlarıyla 100. seviyeye kadar gelişir, aktif pet karaktere bonus verir.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

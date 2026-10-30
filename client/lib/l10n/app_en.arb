@@ -2513,5 +2513,106 @@
     }
   },
   "helperPickResource": "What to gather",
-  "helperCraftHint": "Materials and gold are taken now; you keep playing meanwhile."
+  "helperCraftHint": "Materials and gold are taken now; you keep playing meanwhile.",
+  "petsOpen": "Pets",
+  "petsHint": "Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.",
+  "petsEggs": "Eggs",
+  "petsNoEggs": "No eggs. Clear raids past level 400 to find some.",
+  "petsMine": "My pets ({n}/{max})",
+  "@petsMine": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "petHatch": "Incubate",
+  "petHatchBody": "Put a {egg} in the incubator? It hatches in {time}.",
+  "@petHatchBody": {
+    "placeholders": {
+      "egg": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "petHatching": "In its egg",
+  "petHatched": "Hatched!",
+  "petPower": "Fights like a level {n} monster",
+  "@petPower": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "petActive": "Active",
+  "petActivate": "Make active",
+  "petDeactivate": "Rest",
+  "petHunt": "Send hunting",
+  "petHunting": "Hunting {mob}",
+  "@petHunting": {
+    "placeholders": {
+      "mob": {
+        "type": "String"
+      }
+    }
+  },
+  "petHuntDone": "Hunt over",
+  "petCollectEarly": "Ending the hunt now pays the fights so far.",
+  "petCollected": "{wins} wins, +{xp} pet XP",
+  "@petCollected": {
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "petLevelUp": "{name} reached level {level}!",
+  "@petLevelUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "petDied": "Your pet was beaten; the hunt ended early.",
+  "petPickMob": "Monster to hunt",
+  "petXpPerWin": "+{n} XP a win",
+  "@petXpPerWin": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "petGuide": "All pets",
+  "petGuideLine": "{pct}% from level {level}+ raids · hatches in {time}",
+  "@petGuideLine": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "errPetCap": "You have as many pets as you can keep.",
+  "errPetHatching": "The pet has not hatched yet.",
+  "errPetHunting": "The pet is already hunting."
 }

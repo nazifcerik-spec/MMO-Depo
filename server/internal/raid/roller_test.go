@@ -9,6 +9,7 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/leveling"
+	"github.com/otter/server/internal/pet"
 )
 
 type mobs map[string]combat.Mob
@@ -98,4 +99,28 @@ func TestMemberReward(t *testing.T) {
 	wiped := Roll(7, []combat.Combatant{hero(50, 5)}, testRaid, testMobs, rng)
 	require.Equal(t, Reward{}, MemberReward(wiped, 1, 10, "warrior", 7, testRaid, testMobs, rng))
 	require.Zero(t, afkXPPerKill(dungeon.Template{}))
+}
+
+// A cleared raid past level 400 may drop one pet egg per member (DD-328);
+// below that, none.
+func TestMemberRewardPetEgg(t *testing.T) {
+	require.NoError(t, pet.Install([]pet.Species{{Code: "fox", Rank: 1, MinMobLevel: 430, EggPct: 50, HatchSeconds: 3600,
+		PowerPct: 200, Bonus: pet.Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03}}}))
+	t.Cleanup(func() { _ = pet.Install(nil) })
+	res := Roll(42, []combat.Combatant{hero(800, 60), hero(600, 70), hero(500, 80)}, testRaid, testMobs, rng)
+	require.True(t, res.BossKilled)
+	require.Empty(t, MemberReward(res, 1, 10, "warrior", 42, testRaid, testMobs, rng).PetEgg, "boss level 12")
+
+	high := mobs{"add": testMobs["add"], "boss": testMobs["boss"]}
+	boss := high["boss"]
+	boss.Level = 600
+	high["boss"] = boss
+	eggs := 0
+	for seed := int64(1); seed <= 400; seed++ {
+		if egg := MemberReward(res, 1, 600, "warrior", seed, testRaid, high, rng).PetEgg; egg != "" {
+			require.Equal(t, "pet_egg_fox", egg)
+			eggs++
+		}
+	}
+	require.InDelta(t, 200, eggs, 40, "about half the clears")
 }

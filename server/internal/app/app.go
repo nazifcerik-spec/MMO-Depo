@@ -44,6 +44,7 @@ import (
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
 	"github.com/otter/server/internal/partyxp"
+	"github.com/otter/server/internal/pet"
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
@@ -316,7 +317,11 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	raidSvc := raid.NewService(pool, dungCatSvc, combatSvc, charSvc, charSvc, itemSvc, txnSvc, logger,
 		func(seed int64) combat.RNG { return activity.NewRNG(seed) }).
 		WithHPWriter(charSvc).WithSkills(classSkills.ActiveSkills).WithBagRoom(invSvc).
-		WithRecorder(recorder).WithNotifier(notifSvc).WithPublisher(wsPub).WithBoost(boostSvc)
+		WithRecorder(recorder).WithNotifier(notifSvc).WithPublisher(wsPub).WithBoost(boostSvc).
+		WithEggs(itemSvc) // pet eggs (DD-328)
+	// Pets (DD-328): the active pet's bonus joins the sheet's modifier stack.
+	petSvc := pet.NewService(pool, charSvc, combatSvc)
+	sheetAdapter.WithModifierSource(petSvc.Modifiers)
 
 	// --- World Events (Sprint 25) — worker schedules/closes; API enlists ---
 	worldEventHandler := worldevent.NewHandler(worldevent.NewService(pool, charSvc, txnSvc,
@@ -429,6 +434,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		TradeHandler:      trade.NewHandler(trade.NewService(pool, txnSvc, invSvc, logger).WithPublisher(wsPub)),
 		BoostHandler:      boost.NewHandler(boostSvc, &boost.GoogleKeys{}, cfg.Env == "dev"),
 		ShopHandler:       shop.NewHandler(shop.NewService(pool, txnSvc, boostSvc)),
+		PetHandler:        pet.NewHandler(petSvc),
 		HelperHandler: helper.NewHandler(helper.NewService(pool, txnSvc, charSvc, gatherSvc, itemSvc, invSvc,
 			craftCatSvc, craftRepo, craftSvc, logger)),
 		AdminHandler:     adminHandler,

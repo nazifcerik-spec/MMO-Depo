@@ -3217,4 +3217,101 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get helperCraftHint => '材料和金币现在扣除；期间你可以继续游戏。';
+
+  @override
+  String get petsOpen => '宠物';
+
+  @override
+  String get petsHint => '通关400级以上的团队副本时会掉落宠物蛋。蛋在孵化器中孵化；宠物通过自己的狩猎升级，出战宠物为你提供加成。';
+
+  @override
+  String get petsEggs => '宠物蛋';
+
+  @override
+  String get petsNoEggs => '没有宠物蛋。通关400级以上的团队副本来获取。';
+
+  @override
+  String petsMine(int n, int max) {
+    return '我的宠物（$n/$max）';
+  }
+
+  @override
+  String get petHatch => '孵化';
+
+  @override
+  String petHatchBody(String egg, String time) {
+    return '将$egg放入孵化器？$time后孵化。';
+  }
+
+  @override
+  String get petHatching => '孵化中';
+
+  @override
+  String get petHatched => '已孵化！';
+
+  @override
+  String petPower(int n) {
+    return '战斗力相当于$n级怪物';
+  }
+
+  @override
+  String get petActive => '出战中';
+
+  @override
+  String get petActivate => '设为出战';
+
+  @override
+  String get petDeactivate => '休息';
+
+  @override
+  String get petHunt => '派去狩猎';
+
+  @override
+  String petHunting(String mob) {
+    return '正在狩猎$mob';
+  }
+
+  @override
+  String get petHuntDone => '狩猎结束';
+
+  @override
+  String get petCollectEarly => '现在结束只结算已完成的战斗。';
+
+  @override
+  String petCollected(int wins, int xp) {
+    return '$wins场胜利，宠物经验+$xp';
+  }
+
+  @override
+  String petLevelUp(String name, int level) {
+    return '$name升到了$level级！';
+  }
+
+  @override
+  String get petDied => '宠物战败，狩猎提前结束。';
+
+  @override
+  String get petPickMob => '狩猎目标';
+
+  @override
+  String petXpPerWin(int n) {
+    return '每场胜利+$n经验';
+  }
+
+  @override
+  String get petGuide => '全部宠物';
+
+  @override
+  String petGuideLine(String pct, int level, String time) {
+    return '$level级以上团本$pct% · 孵化$time';
+  }
+
+  @override
+  String get errPetCap => '宠物数量已达上限。';
+
+  @override
+  String get errPetHatching => '宠物尚未孵化。';
+
+  @override
+  String get errPetHunting => '宠物已在狩猎中。';
 }

@@ -30,6 +30,7 @@ import (
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/itemset"
 	"github.com/otter/server/internal/leveling"
+	"github.com/otter/server/internal/pet"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/story"
 )
@@ -374,6 +375,9 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	if err := story.Install(p.Story); err != nil {
 		return res, fmt.Errorf("contentpack: story: %w", err)
 	}
+	if err := pet.Install(p.Pets); err != nil {
+		return res, fmt.Errorf("contentpack: pets: %w", err)
+	}
 	for _, r := range l.reloaders {
 		if err := r.Reload(ctx); err != nil {
 			return res, fmt.Errorf("contentpack: reloader: %w", err)
@@ -411,6 +415,7 @@ type Pack struct {
 	Skills      []ClassSkill
 	Progression *leveling.Config // nil = engine defaults (no progression.yaml)
 	ItemSets    []itemset.Set    // raid sets (DD-277)
+	Pets        []pet.Species    // pet species (DD-328)
 	Story       []story.Chapter  // story mode chapters (DD-313)
 	Strings     *Strings
 }
@@ -454,6 +459,15 @@ func Read(dir string) (*Pack, error) {
 	}
 	p.Items = append(p.Items, setItems...)
 	if p.ItemSets, err = loadSetsFile(f("sets.yaml")); err != nil {
+		return nil, err
+	}
+	// Pets: their eggs and the species (DD-328).
+	eggs, err := loadItemsFile(f("pets.yaml"))
+	if err != nil {
+		return nil, err
+	}
+	p.Items = append(p.Items, eggs...)
+	if p.Pets, err = loadPetsFile(f("pets.yaml")); err != nil {
 		return nil, err
 	}
 	if p.Story, err = loadStoryFile(f("story.yaml")); err != nil {
@@ -541,6 +555,9 @@ func Read(dir string) (*Pack, error) {
 		return nil, err
 	}
 	if err := validateSets(p); err != nil {
+		return nil, err
+	}
+	if err := validatePets(p); err != nil {
 		return nil, err
 	}
 	if p.Strings, err = loadStrings(f("i18n")); err != nil {
@@ -704,6 +721,46 @@ func loadSetsFile(path string) ([]itemset.Set, error) {
 		return nil, fmt.Errorf("validate %s: %w", path, err)
 	}
 	return f.Sets, nil
+}
+
+// loadPetsFile reads the `pets` list of pets.yaml (DD-328); the file's
+// `items` (the eggs) are loaded with the other item files.
+func loadPetsFile(path string) ([]pet.Species, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read %s: %w", path, err)
+	}
+	var f struct {
+		Pets []pet.Species `yaml:"pets"`
+	}
+	if err := yaml.Unmarshal(raw, &f); err != nil {
+		return nil, fmt.Errorf("parse %s: %w", path, err)
+	}
+	if _, err := pet.New(f.Pets); err != nil {
+		return nil, fmt.Errorf("validate %s: %w", path, err)
+	}
+	return f.Pets, nil
+}
+
+// validatePets checks what pet.New cannot: every species has its egg item
+// and a known bonus modifier.
+func validatePets(p *Pack) error {
+	items := map[string]Item{}
+	for _, it := range p.Items {
+		items[it.Code] = it
+	}
+	for _, s := range p.Pets {
+		if egg, ok := items[s.EggCode()]; !ok || egg.ItemSubclass != "pet_egg" {
+			return fmt.Errorf("pet %s: no pet_egg item %s", s.Code, s.EggCode())
+		}
+		if !validModifierKinds(s.Bonus.Kind) || !validStatTargets(s.Bonus.Target) {
+			return fmt.Errorf("pet %s: bonus modifier %s/%s", s.Code, s.Bonus.Kind, s.Bonus.Target)
+		}
+	}
+	return nil
 }
 
 // validateSets checks what itemset.New cannot: pieces are equippable

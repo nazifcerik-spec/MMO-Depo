@@ -20,6 +20,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/progression"
@@ -27,6 +28,15 @@ import (
 
 // Progression events of a clear (also "raid_cleared:<code>").
 const EventRaidCleared = "raid_cleared"
+
+// EggMinter puts a pet egg in the bag (item.Service).
+type EggMinter interface {
+	MintExact(ctx context.Context, characterID uuid.UUID, templateCode string, qty int32, sourceKind string,
+		sourceRefID uuid.UUID) (*item.Instance, error)
+}
+
+// WithEggs mints the pet eggs cleared raids drop (DD-328).
+func (s *Service) WithEggs(m EggMinter) *Service { s.eggs = m; return s }
 
 // Publisher fans raid lobby changes out to live sessions (wsgateway adapter).
 type Publisher interface {
@@ -51,6 +61,7 @@ type Service struct {
 	notifier notification.Notifier
 	pub      Publisher
 	parties  Parties            // raid finding (DD-299); nil = no queue or board
+	eggs     EggMinter          // pet eggs (DD-328); nil = none
 	regions  dungeon.RegionGate // nil = every raid in reach (DD-302)
 	now      func() time.Time
 	log      *slog.Logger
@@ -460,6 +471,17 @@ func (s *Service) Reveal(ctx context.Context, actor, account, runID uuid.UUID) (
 			progression.Event{Kind: EventRaidCleared + ":" + run.RaidCode, Amount: 1})
 	}
 	progression.RecordIf(ctx, s.progress, actor, events...)
+	// The egg is minted once, after the collection commits (DD-328).
+	if rw.PetEgg != "" && s.eggs != nil {
+		inst, err := s.eggs.MintExact(ctx, actor, rw.PetEgg, 1, "raid_egg", memberID)
+		if err != nil {
+			s.log.ErrorContext(ctx, "raid: pet egg mint failed", slog.String("member", memberID.String()),
+				slog.String("egg", rw.PetEgg), slog.String("err", err.Error()))
+		} else {
+			granted = append(granted, activity.GrantedItem{InstanceID: inst.ID, TemplateCode: inst.TemplateCode,
+				Rarity: string(inst.Rarity)})
+		}
+	}
 	newLevel := 0
 	if xp != nil && xp.LeveledUp && xp.Character != nil {
 		newLevel = int(xp.Character.Level)

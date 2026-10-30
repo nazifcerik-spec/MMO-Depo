@@ -44,6 +44,7 @@ import (
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
+	"github.com/otter/server/internal/pet"
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
@@ -109,6 +110,7 @@ type Deps struct {
 	HelperHandler     *helper.Handler      // DD-319
 	BoostHandler      *boost.Handler       // DD-320
 	ShopHandler       *shop.Handler        // DD-321
+	PetHandler        *pet.Handler         // DD-328
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -321,6 +323,9 @@ func NewRouter(d Deps) http.Handler {
 					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
 				}
 				if h := d.HelperHandler; h != nil { // hired helpers (DD-319)
+					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
+				}
+				if h := d.PetHandler; h != nil { // pets (DD-328)
 					h.Routes(r, appmw.Idempotency(d.IdempotencyStore, d.Logger))
 				}
 				if h := d.TradeHandler; h != nil { // player trading (DD-315)
@@ -538,6 +543,9 @@ func NewRouter(d Deps) http.Handler {
 			// --- Public item set catalog (DD-277) ---
 			r.Get("/item-sets", itemset.CatalogHandler)
 			r.Get("/story", story.CatalogHandler) // story mode chapters (DD-313)
+			if h := d.PetHandler; h != nil {
+				r.Get("/pets", h.Species) // pet species (DD-328)
+			}
 			if h := d.BoostHandler; h != nil {
 				r.Get("/ads/ssv", h.SSV) // AdMob rewarded-ad callback, trusted by its signature (DD-320)
 			}

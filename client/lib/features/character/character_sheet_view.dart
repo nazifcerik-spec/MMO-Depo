@@ -28,6 +28,7 @@ class CharacterSheetView extends StatefulWidget {
     this.onOpenDaily,
     this.onOpenStory,
     this.onOpenHelpers,
+    this.onOpenPets,
     this.onOpenShop,
     this.boosts,
     this.onSheet,
@@ -54,6 +55,9 @@ class CharacterSheetView extends StatefulWidget {
 
   /// Opens the hired helpers (DD-319).
   final VoidCallback? onOpenHelpers;
+
+  /// Opens the pets (DD-328).
+  final VoidCallback? onOpenPets;
 
   /// Opens the credit shop (DD-321).
   final VoidCallback? onOpenShop;
@@ -342,6 +346,10 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               icon: const Icon(Icons.groups_2_outlined),
               label: Text(l.helpersOpen),
             ),
+          ],
+          if (widget.onOpenPets != null) ...[
+            const SizedBox(height: Space.sm),
+            OutlinedButton.icon(onPressed: widget.onOpenPets, icon: const Icon(Icons.pets), label: Text(l.petsOpen)),
           ],
           if (widget.onOpenStory != null) ...[
             const SizedBox(height: Space.sm),

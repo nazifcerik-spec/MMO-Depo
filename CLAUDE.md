@@ -268,6 +268,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 126. **Yardımcı iş seçimi (bitti)** — Sprint 126, DD-327. Üretim yardımcısı tarif sayfası (görsel + özellikler + "Üretilebilir: N", max = N), toplama yardımcısı kaynak seçimi (görselli, `target`). `RecipeTile`/`GroupHeader`/`CraftCountDialog`/`GatherNodeTile` paylaşılır.
 
+127. **Pet sistemi (bitti)** — Sprint 127, DD-328. Migration 0058 `pet.pet`. 20 tür (`scripts/gen_pets.py` → `content/pets.yaml`), yumurta Sv 430..1000 baskın boss'undan %50 → %2 (en üstünden zarlanır, üye başı tek), kuluçka 1–24 sa, pet avı (`pet.Roll` = `hunt.Roll`, güç = 10 × seviye, erişim +5), seviye 1–100, aktif pet bonusu sheet'te. `internal/pet` uçları, istemci `features/pets/pets_screen.dart`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

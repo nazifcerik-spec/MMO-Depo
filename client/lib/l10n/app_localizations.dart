@@ -5697,6 +5697,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Materials and gold are taken now; you keep playing meanwhile.'**
   String get helperCraftHint;
+
+  /// No description provided for @petsOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Pets'**
+  String get petsOpen;
+
+  /// No description provided for @petsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.'**
+  String get petsHint;
+
+  /// No description provided for @petsEggs.
+  ///
+  /// In en, this message translates to:
+  /// **'Eggs'**
+  String get petsEggs;
+
+  /// No description provided for @petsNoEggs.
+  ///
+  /// In en, this message translates to:
+  /// **'No eggs. Clear raids past level 400 to find some.'**
+  String get petsNoEggs;
+
+  /// No description provided for @petsMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My pets ({n}/{max})'**
+  String petsMine(int n, int max);
+
+  /// No description provided for @petHatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Incubate'**
+  String get petHatch;
+
+  /// No description provided for @petHatchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Put a {egg} in the incubator? It hatches in {time}.'**
+  String petHatchBody(String egg, String time);
+
+  /// No description provided for @petHatching.
+  ///
+  /// In en, this message translates to:
+  /// **'In its egg'**
+  String get petHatching;
+
+  /// No description provided for @petHatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Hatched!'**
+  String get petHatched;
+
+  /// No description provided for @petPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Fights like a level {n} monster'**
+  String petPower(int n);
+
+  /// No description provided for @petActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get petActive;
+
+  /// No description provided for @petActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Make active'**
+  String get petActivate;
+
+  /// No description provided for @petDeactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get petDeactivate;
+
+  /// No description provided for @petHunt.
+  ///
+  /// In en, this message translates to:
+  /// **'Send hunting'**
+  String get petHunt;
+
+  /// No description provided for @petHunting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunting {mob}'**
+  String petHunting(String mob);
+
+  /// No description provided for @petHuntDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunt over'**
+  String get petHuntDone;
+
+  /// No description provided for @petCollectEarly.
+  ///
+  /// In en, this message translates to:
+  /// **'Ending the hunt now pays the fights so far.'**
+  String get petCollectEarly;
+
+  /// No description provided for @petCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'{wins} wins, +{xp} pet XP'**
+  String petCollected(int wins, int xp);
+
+  /// No description provided for @petLevelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} reached level {level}!'**
+  String petLevelUp(String name, int level);
+
+  /// No description provided for @petDied.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pet was beaten; the hunt ended early.'**
+  String get petDied;
+
+  /// No description provided for @petPickMob.
+  ///
+  /// In en, this message translates to:
+  /// **'Monster to hunt'**
+  String get petPickMob;
+
+  /// No description provided for @petXpPerWin.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} XP a win'**
+  String petXpPerWin(int n);
+
+  /// No description provided for @petGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'All pets'**
+  String get petGuide;
+
+  /// No description provided for @petGuideLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% from level {level}+ raids · hatches in {time}'**
+  String petGuideLine(String pct, int level, String time);
+
+  /// No description provided for @errPetCap.
+  ///
+  /// In en, this message translates to:
+  /// **'You have as many pets as you can keep.'**
+  String get errPetCap;
+
+  /// No description provided for @errPetHatching.
+  ///
+  /// In en, this message translates to:
+  /// **'The pet has not hatched yet.'**
+  String get errPetHatching;
+
+  /// No description provided for @errPetHunting.
+  ///
+  /// In en, this message translates to:
+  /// **'The pet is already hunting.'**
+  String get errPetHunting;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

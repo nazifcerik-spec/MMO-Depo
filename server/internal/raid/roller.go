@@ -7,6 +7,7 @@ import (
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/dungeon"
 	"github.com/otter/server/internal/leveling"
+	"github.com/otter/server/internal/pet"
 )
 
 // Fight tuning (DD-261).
@@ -176,6 +177,7 @@ type Reward struct {
 	Rare       int               `json:"rare_drops"`
 	Legendary  int               `json:"legendary_drops"`
 	Gear       activity.GearDrop `json:"-"`
+	PetEgg     string            `json:"pet_egg,omitempty"` // egg item code (DD-328)
 }
 
 // MemberReward is what the member in slot (1-based) at level earns: every
@@ -219,6 +221,8 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 		if res.BossKilled {
 			rw.Gear.Guaranteed, rw.Gear.Boss = BossGear, true
 			rw.Gear.SetSource = tmpl.Code // and a piece of the raid's set (DD-277)
+			// A cleared raid past level 400 may drop a pet egg (DD-328).
+			rw.PetEgg = pet.Current().RollEgg(int(boss.Level), rngNew(seed+int64(slot)*7919+9001))
 		}
 	}
 	return rw

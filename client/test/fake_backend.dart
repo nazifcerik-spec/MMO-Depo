@@ -52,6 +52,10 @@ class FakeBackend {
       'hired': false,
     },
   ];
+
+  /// Pets and eggs (DD-328).
+  final pets = <Map<String, dynamic>>[];
+  final petEggs = <Map<String, dynamic>>[];
   int dailyClaims = 0;
   int gatherLevel = 20;
 
@@ -280,6 +284,67 @@ class FakeBackend {
           for (final c in ['gather', 'adventure', 'craft']) {'category': c, 'ends_at': boostEnds[c], 'ads_left': 3},
         ],
       });
+    }
+    if (path == '/v1/pets') {
+      return json(200, {
+        'species': [
+          {
+            'code': 'eternal_kirin',
+            'rank': 20,
+            'min_mob_level': 1000,
+            'egg_pct': 2,
+            'hatch_seconds': 86400,
+            'bonus': {'kind': 'mult_add', 'target': 'defense', 'amount': 0.12},
+          },
+          {
+            'code': 'ember_fox',
+            'rank': 1,
+            'min_mob_level': 430,
+            'egg_pct': 50,
+            'hatch_seconds': 3600,
+            'bonus': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.03},
+          },
+        ],
+        'max_level': 100,
+        'mob_reach': 5,
+      });
+    }
+    if (path.startsWith('/v1/character/char-1/pets')) {
+      final rest = path.substring('/v1/character/char-1/pets'.length);
+      final now = DateTime.now().toUtc();
+      Map<String, dynamic> pet() => pets.firstWhere((p) => rest.startsWith('/${p['id']}'));
+      if (rest == '/hatch') {
+        petEggs.clear();
+        pets.add({
+          'id': 'pet-1',
+          'species': 'ember_fox',
+          'rank': 1,
+          'level': 1,
+          'xp': 0,
+          'xp_to_next': 1000,
+          'power': 10,
+          'hatch_ready_at': now.add(const Duration(hours: 1)).toIso8601String(),
+          'active': false,
+          'bonus': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.0075},
+        });
+        return json(200, {'pet': pets.last});
+      }
+      if (rest.endsWith('/active')) pet()['active'] = body['active'];
+      if (rest.endsWith('/hunt')) {
+        pet()['hunt'] = {
+          'mob_code': body['mob_code'],
+          'started_at': now.toIso8601String(),
+          'ready_at': now.add(Duration(seconds: body['duration_seconds'] as int)).toIso8601String(),
+        };
+        return json(200, {'pet': pet()});
+      }
+      if (rest.endsWith('/collect')) {
+        final p = pet()
+          ..remove('hunt')
+          ..['level'] = 2;
+        return json(200, {'victories': 80, 'xp': 1200, 'died': false, 'leveled_up': true, 'pet': p});
+      }
+      return json(200, {'pets': pets, 'eggs': petEggs, 'max_pets': 50});
     }
     if (path.startsWith('/v1/character/char-1/helpers')) {
       final code = path.split('/').reversed.elementAt(1);

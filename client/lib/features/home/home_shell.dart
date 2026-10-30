@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../shop/cosmetics.dart';
 import '../shop/shop_screen.dart';
 import '../helpers/helpers_screen.dart';
+import '../pets/pets_screen.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
 import '../../app/theme.dart';
@@ -217,6 +218,13 @@ class _HomeShellState extends State<HomeShell> {
         HelpersScreen(
           repo: HelperRepository(widget.auth.api, widget.initial.id),
           workshop: WorkshopRepository(widget.auth.api, widget.initial.id),
+          dataVersion: _dataVersion,
+        ),
+      ),
+      onOpenPets: () => _push(
+        PetsScreen(
+          repo: PetRepository(widget.auth.api, widget.initial.id),
+          adventure: AdventureRepository(widget.auth.api, widget.initial.id),
           dataVersion: _dataVersion,
         ),
       ),
