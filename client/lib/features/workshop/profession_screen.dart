@@ -296,7 +296,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
     final count = max > 1
         ? await showDialog<int>(
             context: context,
-            builder: (_) => _CraftCountDialog(name: itemName(rec.output), max: max, unitSeconds: rec.craftSeconds),
+            builder: (_) => CraftCountDialog(name: itemName(rec.output), max: max, unitSeconds: rec.craftSeconds),
           )
         : 1;
     if (count == null || count < 1 || !mounted) return;
@@ -339,7 +339,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
               for (final (key, recipes) in _groups) ...[
                 // One heading alone says nothing; they show from two up.
                 if (_groups.length > 1)
-                  _GroupHeader(
+                  GroupHeader(
                     key: Key('group-$key'),
                     name: recipeGroupName(l, key),
                     count: recipes.length,
@@ -348,7 +348,7 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
                   ),
                 if (_groups.length == 1 || !_closed.contains(key))
                   for (final rec in recipes)
-                    _RecipeTile(
+                    RecipeTile(
                       key: ValueKey(rec.code),
                       recipe: rec,
                       have: _have,
@@ -367,8 +367,8 @@ class _ProfessionScreenState extends State<ProfessionScreen> with PanelState {
 }
 
 /// A recipe heading: name, recipe count, fold arrow (DD-295).
-class _GroupHeader extends StatelessWidget {
-  const _GroupHeader({super.key, required this.name, required this.count, required this.open, required this.onTap});
+class GroupHeader extends StatelessWidget {
+  const GroupHeader({super.key, required this.name, required this.count, required this.open, required this.onTap});
 
   final String name;
   final int count;
@@ -398,30 +398,40 @@ class _GroupHeader extends StatelessWidget {
 }
 
 /// A recipe: output name (tap to unfold its properties), inputs with
-/// have/need, gold cost, skill gate, and the Craft button.
-class _RecipeTile extends StatefulWidget {
-  const _RecipeTile({
+/// have/need, gold cost, skill gate, and the Craft button. A helper's page
+/// (DD-327) passes its own unit time and gold, the count it can make and
+/// its button label.
+class RecipeTile extends StatefulWidget {
+  const RecipeTile({
     super.key,
     required this.recipe,
     required this.have,
     required this.skill,
     required this.onCraft,
     this.difficulty = ('orange', 1),
+    this.unitSeconds,
+    this.goldCost,
+    this.canMake,
+    this.action,
   });
 
   final Recipe recipe;
   final Map<String, int> have;
   final int skill;
+  final int? unitSeconds;
+  final int? goldCost;
+  final int? canMake;
+  final String? action;
 
   /// Color and XP share at the character's skill (DD-294).
   final (String, double) difficulty;
   final VoidCallback? onCraft;
 
   @override
-  State<_RecipeTile> createState() => _RecipeTileState();
+  State<RecipeTile> createState() => _RecipeTileState();
 }
 
-class _RecipeTileState extends State<_RecipeTile> {
+class _RecipeTileState extends State<RecipeTile> {
   bool _open = false;
 
   @override
@@ -471,7 +481,11 @@ class _RecipeTileState extends State<_RecipeTile> {
                   ),
                 ),
                 const SizedBox(width: Space.sm),
-                FilledButton.tonal(style: compactButton, onPressed: widget.onCraft, child: Text(l.craft)),
+                FilledButton.tonal(
+                  style: compactButton,
+                  onPressed: widget.onCraft,
+                  child: Text(widget.action ?? l.craft),
+                ),
               ],
             ),
             // What a scroll adds, without unfolding (DD-295).
@@ -502,8 +516,20 @@ class _RecipeTileState extends State<_RecipeTile> {
               spacing: Space.sm,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Text(l.craftEach(shortDuration(l, Duration(seconds: r.craftSeconds))), style: small),
-                if (r.goldCost > 0) GoldText(r.goldCost, size: 12),
+                Text(
+                  l.craftEach(shortDuration(l, Duration(seconds: widget.unitSeconds ?? r.craftSeconds))),
+                  style: small,
+                ),
+                if ((widget.goldCost ?? r.goldCost) > 0) GoldText(widget.goldCost ?? r.goldCost, size: 12),
+                if (widget.canMake case final n?)
+                  Text(
+                    l.helperCanMake(n),
+                    key: Key('can-make-${r.code}'),
+                    style: small?.copyWith(
+                      color: n > 0 ? Palette.success : Palette.danger,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 if (r.minSkill > widget.skill)
                   Text(l.requiresSkill(r.minSkill), style: small?.copyWith(color: Palette.danger))
                 else
@@ -591,18 +617,21 @@ class _Details extends StatelessWidget {
 }
 
 /// Quantity picker: a number box, a slider and a "max" shortcut.
-class _CraftCountDialog extends StatefulWidget {
-  const _CraftCountDialog({required this.name, required this.max, required this.unitSeconds});
+class CraftCountDialog extends StatefulWidget {
+  const CraftCountDialog({super.key, required this.name, required this.max, required this.unitSeconds, this.hint});
 
   final String name;
   final int max;
   final int unitSeconds;
 
+  /// The line under the total; the character-busy note by default.
+  final String? hint;
+
   @override
-  State<_CraftCountDialog> createState() => _CraftCountDialogState();
+  State<CraftCountDialog> createState() => _CraftCountDialogState();
 }
 
-class _CraftCountDialogState extends State<_CraftCountDialog> {
+class _CraftCountDialogState extends State<CraftCountDialog> {
   int _n = 1;
 
   void _set(int v) => setState(() => _n = v.clamp(1, widget.max));
@@ -639,7 +668,11 @@ class _CraftCountDialogState extends State<_CraftCountDialog> {
           ),
           Text(l.craftTotal(shortDuration(l, Duration(seconds: widget.unitSeconds * _n)))),
           const SizedBox(height: Space.xs),
-          Text(l.craftBusyHint, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            widget.hint ?? l.craftBusyHint,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ],
       ),
       actions: [

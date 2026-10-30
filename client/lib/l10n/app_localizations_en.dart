@@ -3218,4 +3218,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errAdLimit => 'No more ad boosts today.';
+
+  @override
+  String helperCanMake(int n) {
+    return 'Can make: $n';
+  }
+
+  @override
+  String get helperPickResource => 'What to gather';
+
+  @override
+  String get helperCraftHint => 'Materials and gold are taken now; you keep playing meanwhile.';
 }

@@ -3206,4 +3206,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errAdLimit => '今日广告次数已用完。';
+
+  @override
+  String helperCanMake(int n) {
+    return '可制作：$n';
+  }
+
+  @override
+  String get helperPickResource => '采集目标';
+
+  @override
+  String get helperCraftHint => '材料和金币现在扣除；期间你可以继续游戏。';
 }

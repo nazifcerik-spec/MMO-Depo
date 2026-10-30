@@ -2503,5 +2503,15 @@
   "boostAdsSoon": "Ads coming soon",
   "errInsufficientCredits": "Not enough credits.",
   "errBoostActive": "That boost is already running.",
-  "errAdLimit": "No more ad boosts today."
+  "errAdLimit": "No more ad boosts today.",
+  "helperCanMake": "Can make: {n}",
+  "@helperCanMake": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "helperPickResource": "What to gather",
+  "helperCraftHint": "Materials and gold are taken now; you keep playing meanwhile."
 }

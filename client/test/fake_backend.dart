@@ -282,12 +282,20 @@ class FakeBackend {
       });
     }
     if (path.startsWith('/v1/character/char-1/helpers')) {
-      final miner = helpers.first;
+      final code = path.split('/').reversed.elementAt(1);
+      final miner = helpers.firstWhere((h) => h['code'] == code, orElse: () => helpers.first);
       if (path.endsWith('/hire')) miner['hired'] = true;
-      if (path.endsWith('/start')) {
+      if (path.endsWith('/start') && body['recipe_code'] != null) {
         final now = DateTime.now().toUtc();
         miner['job'] = {
-          'spec': {'target': 'raw_stone', 'duration_seconds': body['duration_seconds']},
+          'spec': {'recipe': body['recipe_code'], 'count': body['count']},
+          'started_at': now.toIso8601String(),
+          'ready_at': now.add(const Duration(minutes: 5)).toIso8601String(),
+        };
+      } else if (path.endsWith('/start')) {
+        final now = DateTime.now().toUtc();
+        miner['job'] = {
+          'spec': {'target': body['target'], 'duration_seconds': body['duration_seconds']},
           'started_at': now.toIso8601String(),
           'ready_at': now.add(Duration(seconds: body['duration_seconds'] as int)).toIso8601String(),
         };

@@ -930,5 +930,8 @@
   "boostAdsSoon": "Reklamlar yakında",
   "errInsufficientCredits": "Kredi yetersiz.",
   "errBoostActive": "Bu bonus zaten aktif.",
-  "errAdLimit": "Bugünkü reklam hakkın bitti."
+  "errAdLimit": "Bugünkü reklam hakkın bitti.",
+  "helperCanMake": "Üretilebilir: {n}",
+  "helperPickResource": "Toplanacak kaynak",
+  "helperCraftHint": "Malzeme ve altın şimdi alınır; sen bu sırada oynamaya devam edersin."
 }

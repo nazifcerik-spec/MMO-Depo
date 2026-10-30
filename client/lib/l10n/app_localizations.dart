@@ -5679,6 +5679,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No more ad boosts today.'**
   String get errAdLimit;
+
+  /// No description provided for @helperCanMake.
+  ///
+  /// In en, this message translates to:
+  /// **'Can make: {n}'**
+  String helperCanMake(int n);
+
+  /// No description provided for @helperPickResource.
+  ///
+  /// In en, this message translates to:
+  /// **'What to gather'**
+  String get helperPickResource;
+
+  /// No description provided for @helperCraftHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Materials and gold are taken now; you keep playing meanwhile.'**
+  String get helperCraftHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

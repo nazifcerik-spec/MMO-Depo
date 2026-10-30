@@ -310,7 +310,7 @@ class _ActivityViewState extends State<ActivityView> {
         ),
       for (final n in unlocked)
         if (_here(n))
-          _NodeTile(
+          GatherNodeTile(
             node: n,
             kind: g.kind,
             trailing: l.levelShort(n.level),
@@ -318,14 +318,14 @@ class _ActivityViewState extends State<ActivityView> {
             onTap: _busy ? null : () => setState(() => _target[g.kind] = n.code),
           )
         else
-          _NodeTile(
+          GatherNodeTile(
             key: Key('away-${n.code}'),
             node: n,
             kind: g.kind,
             trailing: ContentNames.of('region', n.region),
             locked: true,
           ),
-      for (final n in locked) _NodeTile(node: n, kind: g.kind, trailing: l.gatherLocked(n.level), locked: true),
+      for (final n in locked) GatherNodeTile(node: n, kind: g.kind, trailing: l.gatherLocked(n.level), locked: true),
     ];
   }
 
@@ -461,8 +461,8 @@ class _KindTile extends StatelessWidget {
 }
 
 /// One gathering resource: art, rarity-coloured name, level (or lock).
-class _NodeTile extends StatelessWidget {
-  const _NodeTile({
+class GatherNodeTile extends StatelessWidget {
+  const GatherNodeTile({
     super.key,
     required this.node,
     required this.kind,

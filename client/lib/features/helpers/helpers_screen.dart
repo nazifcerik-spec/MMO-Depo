@@ -6,8 +6,12 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart' show confirmAction;
 import '../../shared/panel.dart';
-import '../../shared/quantity_field.dart';
 import '../../shared/widgets.dart';
+import '../activity/activity_models.dart';
+import '../activity/activity_repository.dart';
+import '../activity/activity_view.dart' show GatherNodeTile, activityIcon;
+import '../inventory/item_images.dart';
+import '../workshop/profession_screen.dart';
 import '../workshop/workshop_repository.dart';
 import '../workshop/workshop_view.dart' show professionName;
 
@@ -44,6 +48,32 @@ class HelperInfo {
   final HelperJob? job;
 
   bool get gathers => kind == 'gather';
+
+  /// helper.Type.pct: the bonus applied to [v] when the helper has it.
+  double _pct(String b, double v) {
+    if (bonus != b) return v;
+    return b == 'speed' || b == 'gold_save' ? v * (100 - bonusPct) / 100 : v * (100 + bonusPct) / 100;
+  }
+
+  /// One unit's time: twice the character's, less a speed bonus.
+  int unitSeconds(int craftSeconds) => _pct('speed', craftSeconds * 2.0).ceil();
+
+  /// What [count] crafts cost in gold (helper.Type.GoldCost).
+  int goldCost(int perUnit, int count) => _pct('gold_save', (perUnit * count).toDouble()).round();
+
+  /// How many of [r] the bag and purse pay for now, capped like the
+  /// server (crafting.MaxCraftCount).
+  int canMake(Recipe r, Map<String, int> have, int gold) {
+    var n = maxCraftCount;
+    for (final e in r.inputs.entries) {
+      final can = (have[e.key] ?? 0) ~/ e.value;
+      if (can < n) n = can;
+    }
+    while (n > 0 && goldCost(r.goldCost, n) > gold) {
+      n--;
+    }
+    return n;
+  }
 }
 
 class HelperJob {
@@ -79,8 +109,8 @@ class HelperRepository {
 
   Future<List<HelperInfo>> list() async => _parse(await api.get(_base));
   Future<List<HelperInfo>> hire(String code) async => _parse(await api.post('$_base/$code/hire', const {}));
-  Future<List<HelperInfo>> startGather(String code, Duration d) async =>
-      _parse(await api.post('$_base/$code/start', {'duration_seconds': d.inSeconds}));
+  Future<List<HelperInfo>> startGather(String code, String target, Duration d) async =>
+      _parse(await api.post('$_base/$code/start', {'target': target, 'duration_seconds': d.inSeconds}));
   Future<List<HelperInfo>> startCraft(String code, String recipe, int count) async =>
       _parse(await api.post('$_base/$code/start', {'recipe_code': recipe, 'count': count}));
   Future<List<HelperInfo>> cancel(String code) async => _parse(await api.post('$_base/$code/cancel', const {}));
@@ -148,32 +178,19 @@ class _HelpersScreenState extends State<HelpersScreen> with PanelState {
 
   Future<void> _start(HelperInfo h) async {
     if (h.gathers) {
-      final d = await showDialog<Duration>(
-        context: context,
-        builder: (c) => SimpleDialog(
-          title: Text(AppLocalizations.of(context).helperSend),
-          children: [
-            for (final d in const [Duration(hours: 1), Duration(hours: 3), Duration(hours: 6)])
-              SimpleDialogOption(
-                onPressed: () => Navigator.of(c).pop(d),
-                child: Text(shortDuration(AppLocalizations.of(context), d)),
-              ),
-          ],
+      final pick = await Navigator.of(context).push<(String, Duration)>(
+        MaterialPageRoute(
+          builder: (_) =>
+              _GatherPickScreen(helper: h, activity: ActivityRepository(widget.repo.api), repo: widget.repo),
         ),
       );
-      if (d != null) await _set(() => widget.repo.startGather(h.code, d));
+      if (pick != null) await _set(() => widget.repo.startGather(h.code, pick.$1, pick.$2));
       return;
     }
-    final skills = await widget.workshop.skills();
-    final level = skills[h.profession]?.level ?? 0;
-    final recipes = [
-      for (final r in await widget.workshop.recipes(h.profession))
-        if (r.minSkill <= level) r,
-    ];
-    if (!mounted) return;
-    final pick = await showDialog<(Recipe, int)>(
-      context: context,
-      builder: (_) => _CraftDialog(recipes: recipes),
+    final pick = await Navigator.of(context).push<(Recipe, int)>(
+      MaterialPageRoute(
+        builder: (_) => _HelperCraftScreen(helper: h, workshop: widget.workshop),
+      ),
     );
     if (pick != null) await _set(() => widget.repo.startCraft(h.code, pick.$1.code, pick.$2));
   }
@@ -232,11 +249,23 @@ class _HelpersScreenState extends State<HelpersScreen> with PanelState {
             Text(helperBonus(l, h), style: text.bodySmall?.copyWith(color: Palette.success)),
             if (job != null) ...[
               const SizedBox(height: Space.xs),
-              Text(
-                job.recipe.isNotEmpty
-                    ? '${ContentNames.item(job.recipe.replaceFirst('recipe_', ''))} ×${job.count}'
-                    : ContentNames.item(job.target),
-                style: text.bodySmall,
+              Row(
+                children: [
+                  ItemArt(
+                    code: job.recipe.isNotEmpty ? job.recipe.replaceFirst('recipe_', '') : job.target,
+                    icon: h.gathers ? activityIcon(h.profession) : Icons.handyman_outlined,
+                    color: Palette.textSecondary,
+                  ),
+                  const SizedBox(width: Space.sm),
+                  Expanded(
+                    child: Text(
+                      job.recipe.isNotEmpty
+                          ? '${ContentNames.item(job.recipe.replaceFirst('recipe_', ''))} ×${job.count}'
+                          : ContentNames.item(job.target),
+                      style: text.bodySmall,
+                    ),
+                  ),
+                ],
               ),
               Text(
                 done ? l.helperDone : l.helperWorking(shortDuration(l, job.readyAt.difference(DateTime.now()))),
@@ -288,54 +317,194 @@ String helperName(AppLocalizations l, String code) => switch (code) {
   _ => code,
 };
 
-class _CraftDialog extends StatefulWidget {
-  const _CraftDialog({required this.recipes});
+/// A gathering helper's run (DD-327): the resources the character's level
+/// unlocks, best first, with their pictures, and the length.
+class _GatherPickScreen extends StatefulWidget {
+  const _GatherPickScreen({required this.helper, required this.activity, required this.repo});
 
-  final List<Recipe> recipes;
+  final HelperInfo helper;
+  final ActivityRepository activity;
+  final HelperRepository repo;
 
   @override
-  State<_CraftDialog> createState() => _CraftDialogState();
+  State<_GatherPickScreen> createState() => _GatherPickScreenState();
 }
 
-class _CraftDialogState extends State<_CraftDialog> {
-  Recipe? _recipe;
-  int _count = 1;
+class _GatherPickScreenState extends State<_GatherPickScreen> with PanelState {
+  List<GatherNode> _nodes = const [];
+  String? _target;
+  Duration _duration = const Duration(hours: 1);
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
+  @override
+  Future<void> fetch() async {
+    final skills = await widget.activity.skills(widget.repo.characterId);
+    final g = skills.where((s) => s.kind == widget.helper.profession).firstOrNull;
+    _nodes = g == null ? const [] : g.nodes.where(g.unlocks).toList().reversed.toList();
+    _target ??= _nodes.firstOrNull?.code;
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(l.helperSend),
-      content: widget.recipes.isEmpty
-          ? Text(l.helperNoRecipes)
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButton<Recipe>(
-                  key: const Key('helper-recipe'),
-                  isExpanded: true,
-                  value: _recipe,
-                  hint: Text(l.helperPickRecipe),
-                  items: [
-                    for (final r in widget.recipes)
-                      DropdownMenuItem(
-                        value: r,
-                        child: Text(ContentNames.item(r.output), overflow: TextOverflow.ellipsis),
-                      ),
-                  ],
-                  onChanged: (r) => setState(() => _recipe = r),
+    final text = Theme.of(context).textTheme;
+    final kind = widget.helper.profession;
+    return Scaffold(
+      appBar: AppBar(title: Text('${helperName(l, widget.helper.code)} · ${professionLabel(l, kind)}')),
+      body: SafeArea(
+        child: PageFrame(
+          child: frame(
+            () => [
+              Text(l.durationLabel, style: text.titleSmall),
+              const SizedBox(height: Space.xs),
+              Wrap(
+                spacing: Space.sm,
+                children: [
+                  for (final d in const [Duration(hours: 1), Duration(hours: 3), Duration(hours: 6)])
+                    ChoiceChip(
+                      label: Text(shortDuration(l, d)),
+                      selected: d == _duration,
+                      onSelected: (_) => setState(() => _duration = d),
+                    ),
+                ],
+              ),
+              const SizedBox(height: Space.md),
+              FilledButton(
+                key: const Key('helper-gather-send'),
+                onPressed: _target == null ? null : () => Navigator.of(context).pop((_target!, _duration)),
+                child: Text(l.helperSend),
+              ),
+              const SizedBox(height: Space.lg),
+              Text(l.helperPickResource, style: text.titleSmall),
+              const SizedBox(height: Space.xs),
+              for (final n in _nodes)
+                GatherNodeTile(
+                  key: Key('helper-node-${n.code}'),
+                  node: n,
+                  kind: kind,
+                  trailing: l.levelShort(n.level),
+                  selected: n.code == _target,
+                  onTap: () => setState(() => _target = n.code),
                 ),
-                const SizedBox(height: Space.sm),
-                QuantityField(value: _count, min: 1, max: 100, onChanged: (v) => setState(() => _count = v)),
-              ],
-            ),
-      actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l.cancel)),
-        FilledButton(
-          onPressed: _recipe == null ? null : () => Navigator.of(context).pop((_recipe!, _count)),
-          child: Text(l.helperSend),
+            ],
+          ),
         ),
-      ],
+      ),
+    );
+  }
+}
+
+/// A crafting helper's batch (DD-327): the recipes the character knows,
+/// grouped like the profession page, each with its picture, properties
+/// (tap the name) and how many the bag and purse pay for at the helper's
+/// time and gold; the count picker's max is that number.
+class _HelperCraftScreen extends StatefulWidget {
+  const _HelperCraftScreen({required this.helper, required this.workshop});
+
+  final HelperInfo helper;
+  final WorkshopRepository workshop;
+
+  @override
+  State<_HelperCraftScreen> createState() => _HelperCraftScreenState();
+}
+
+class _HelperCraftScreenState extends State<_HelperCraftScreen> with PanelState {
+  List<(String, List<Recipe>)> _groups = const [];
+  final _closed = <String>{};
+  Map<String, int> _have = const {};
+  int _gold = 0;
+  int _skill = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
+  @override
+  Future<void> fetch() async {
+    final profession = widget.helper.profession;
+    final r = await Future.wait<Object>([
+      widget.workshop.recipes(profession),
+      widget.workshop.skills(),
+      widget.workshop.materials(),
+      widget.workshop.gold(),
+      widget.workshop.professions(), // the difficulty bands (DD-294)
+    ]);
+    _skill = (r[1] as Map<String, Skill>)[profession]?.level ?? 0;
+    final open = [
+      for (final rec in r[0] as List<Recipe>)
+        if (rec.minSkill <= _skill) rec,
+    ]..sort((a, b) => b.minSkill.compareTo(a.minSkill));
+    _groups = groupRecipes(open);
+    _have = r[2] as Map<String, int>;
+    _gold = r[3] as int;
+  }
+
+  Future<void> _pick(Recipe rec, int max) async {
+    final l = AppLocalizations.of(context);
+    final count = await showDialog<int>(
+      context: context,
+      builder: (_) => CraftCountDialog(
+        name: itemName(rec.output),
+        max: max,
+        unitSeconds: widget.helper.unitSeconds(rec.craftSeconds),
+        hint: l.helperCraftHint,
+      ),
+    );
+    if (count != null && count > 0 && mounted) Navigator.of(context).pop((rec, count));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final h = widget.helper;
+    return Scaffold(
+      appBar: AppBar(title: Text('${helperName(l, h.code)} · ${professionLabel(l, h.profession)}')),
+      body: SafeArea(
+        child: PageFrame(
+          child: frame(
+            () => [
+              Text(helperBonus(l, h), style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Palette.success)),
+              const SizedBox(height: Space.sm),
+              if (_groups.isEmpty) Text(l.helperNoRecipes),
+              for (final (key, recipes) in _groups) ...[
+                if (_groups.length > 1)
+                  GroupHeader(
+                    name: recipeGroupName(l, key),
+                    count: recipes.length,
+                    open: !_closed.contains(key),
+                    onTap: () => setState(() => _closed.contains(key) ? _closed.remove(key) : _closed.add(key)),
+                  ),
+                if (_groups.length == 1 || !_closed.contains(key))
+                  for (final rec in recipes) _tile(l, rec),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _tile(AppLocalizations l, Recipe rec) {
+    final h = widget.helper;
+    final n = h.canMake(rec, _have, _gold);
+    return RecipeTile(
+      key: ValueKey(rec.code),
+      recipe: rec,
+      have: _have,
+      skill: _skill,
+      difficulty: recipeDifficulty(widget.workshop.difficulty, rec.minSkill, _skill),
+      unitSeconds: h.unitSeconds(rec.craftSeconds),
+      goldCost: h.goldCost(rec.goldCost, 1),
+      canMake: n,
+      action: l.helperSend,
+      onCraft: n > 0 ? () => _pick(rec, n) : null,
     );
   }
 }

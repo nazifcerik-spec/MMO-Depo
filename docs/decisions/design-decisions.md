@@ -3220,6 +3220,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-327 — Yardımcı iş seçimi: tarif sayfası + kaynak seçimi
+
+**Context:** Üretim yardımcısı açılır listeden tarif ve 1–100 adet seçtiriyordu: kaç tane üretilebileceği, eşyanın görseli ve özellikleri görünmüyordu, en çok seçimi 100'dü. Toplama yardımcısı yalnız süre soruyordu; sunucu hedef kaynak alabildiği halde hep en iyi açık kaynağa gidiyordu.
+**Decision:** Üretim yardımcısı → tam sayfa: meslek sayfasının `RecipeTile`/`GroupHeader`'ı (görsel, ada dokununca özellik paneli, malzeme var/gerek, zorluk) yardımcının birim süresi (2× − hız bonusu), birim altını (altın tasarrufu bonusu) ve "Üretilebilir: N" ile; N = min(100, malzeme, altın) — `HelperInfo.canMake` sunucunun `helper.Type.GoldCost`/`CraftSeconds` formüllerinin aynası. İşe gönder → `CraftCountDialog` (max = N, "max N" kısayolu N'i seçer, yardımcı notu). Toplama yardımcısı → kaynak sayfası: toplama seviyesinin açtığı kaynaklar en iyisi başta (`GatherNodeTile`: eşya görseli, avcılıkta hayvan), süre 1/3/6 sa, `target` sunucuya gider (sunucu kuralı aynı: seviye ≥ kaynak). İş kartında hedef/çıktı görseli. Sunucu değişmedi.
+**Consequences:** Yardımcıya iş verirken ne üretileceği/toplanacağı görselleriyle seçilir, üretimde sayı sınırı baştan görünür.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

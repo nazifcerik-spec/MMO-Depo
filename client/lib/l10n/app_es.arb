@@ -415,5 +415,8 @@
   "boostAdsSoon": "Anuncios pronto",
   "errInsufficientCredits": "Créditos insuficientes.",
   "errBoostActive": "Ese potenciador ya está activo.",
-  "errAdLimit": "No quedan anuncios hoy."
+  "errAdLimit": "No quedan anuncios hoy.",
+  "helperCanMake": "Puede fabricar: {n}",
+  "helperPickResource": "Qué recolectar",
+  "helperCraftHint": "Los materiales y el oro se cobran ahora; mientras tanto sigues jugando."
 }

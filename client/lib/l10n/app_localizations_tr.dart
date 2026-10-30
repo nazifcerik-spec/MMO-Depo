@@ -3217,4 +3217,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errAdLimit => 'Bugünkü reklam hakkın bitti.';
+
+  @override
+  String helperCanMake(int n) {
+    return 'Üretilebilir: $n';
+  }
+
+  @override
+  String get helperPickResource => 'Toplanacak kaynak';
+
+  @override
+  String get helperCraftHint => 'Malzeme ve altın şimdi alınır; sen bu sırada oynamaya devam edersin.';
 }

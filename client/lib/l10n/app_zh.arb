@@ -415,5 +415,8 @@
   "boostAdsSoon": "广告即将推出",
   "errInsufficientCredits": "点券不足。",
   "errBoostActive": "该加成已生效。",
-  "errAdLimit": "今日广告次数已用完。"
+  "errAdLimit": "今日广告次数已用完。",
+  "helperCanMake": "可制作：{n}",
+  "helperPickResource": "采集目标",
+  "helperCraftHint": "材料和金币现在扣除；期间你可以继续游戏。"
 }

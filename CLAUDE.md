@@ -266,6 +266,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 125. **XP bonusu amblemleri (bitti)** — Sprint 125, DD-326. Toplama / Av ve zindan / Meslek bonus kutularına madalyon amblemleri (`client/assets/boosts/`), mağaza satırlarında da. `scripts/emblem_assets.py` (sınıf + bonus amblemleri), ortak `CircleArt`.
 
+126. **Yardımcı iş seçimi (bitti)** — Sprint 126, DD-327. Üretim yardımcısı tarif sayfası (görsel + özellikler + "Üretilebilir: N", max = N), toplama yardımcısı kaynak seçimi (görselli, `target`). `RecipeTile`/`GroupHeader`/`CraftCountDialog`/`GatherNodeTile` paylaşılır.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
