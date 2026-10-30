@@ -43,19 +43,20 @@ def medallion(part):
     return part.crop((x0, y0, x0 + side, y0 + side))
 
 
-total = 0
-for name, codes in SHEETS.items():
-    folder = name.split('/')[0]
-    os.makedirs(os.path.join(ASSETS, folder), exist_ok=True)
-    im = Image.open(os.path.join(ART, name + '.jpg')).convert('RGB')
-    w, h = im.size
-    for k, code in enumerate(codes):
-        if code is None:
-            continue
-        x, y = (k % 2) * w // 2, (k // 2) * h // 2
-        icon = medallion(im.crop((x, y, x + w // 2, y + h // 2))).resize((SIZE, SIZE), Image.LANCZOS)
-        out = os.path.join(ASSETS, folder, code + '.webp')
-        icon.save(out, 'WEBP', quality=85, method=6)
-        total += os.path.getsize(out)
-        print(folder, code)
-print('total', total // 1024, 'KB')
+if __name__ == '__main__':
+    total = 0
+    for name, codes in SHEETS.items():
+        folder = name.split('/')[0]
+        os.makedirs(os.path.join(ASSETS, folder), exist_ok=True)
+        im = Image.open(os.path.join(ART, name + '.jpg')).convert('RGB')
+        w, h = im.size
+        for k, code in enumerate(codes):
+            if code is None:
+                continue
+            x, y = (k % 2) * w // 2, (k // 2) * h // 2
+            icon = medallion(im.crop((x, y, x + w // 2, y + h // 2))).resize((SIZE, SIZE), Image.LANCZOS)
+            out = os.path.join(ASSETS, folder, code + '.webp')
+            icon.save(out, 'WEBP', quality=85, method=6)
+            total += os.path.getsize(out)
+            print(folder, code)
+    print('total', total // 1024, 'KB')

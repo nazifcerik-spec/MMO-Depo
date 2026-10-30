@@ -245,8 +245,21 @@ class _HelpersScreenState extends State<HelpersScreen> with PanelState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${helperName(l, h.code)} · ${professionLabel(l, h.profession)}', style: text.titleSmall),
-            Text(helperBonus(l, h), style: text.bodySmall?.copyWith(color: Palette.success)),
+            Row(
+              children: [
+                CircleArt(asset: 'assets/helpers/${h.code}.webp', size: 48, fallback: const SizedBox()),
+                const SizedBox(width: Space.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${helperName(l, h.code)} · ${professionLabel(l, h.profession)}', style: text.titleSmall),
+                      Text(helperBonus(l, h), style: text.bodySmall?.copyWith(color: Palette.success)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             if (job != null) ...[
               const SizedBox(height: Space.xs),
               Row(

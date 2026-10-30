@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
+import '../../shared/widgets.dart';
 import 'adventure_models.dart';
 
 /// The travel map (DD-279): every region at its content position with its
@@ -180,10 +181,17 @@ class _MapNode extends StatelessWidget {
                   border: Border.all(color: ring, width: here ? 3 : 2),
                   boxShadow: [if (here) BoxShadow(color: Palette.accent.withValues(alpha: 0.5), blurRadius: 12)],
                 ),
-                child: Icon(
-                  locked ? Icons.lock_outline : icon,
-                  size: size * 0.5,
-                  color: here ? Palette.accent : Palette.textPrimary,
+                // The region's medallion art (DD-332), its kind's icon without.
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CircleArt(
+                      asset: 'assets/regions/${region.code}.webp',
+                      size: size - 2 * (here ? 3 : 2),
+                      fallback: Icon(icon, size: size * 0.5, color: here ? Palette.accent : Palette.textPrimary),
+                    ),
+                    if (locked) Icon(Icons.lock_outline, size: size * 0.4, color: Palette.textPrimary),
+                  ],
                 ),
               ),
               const SizedBox(height: 2),

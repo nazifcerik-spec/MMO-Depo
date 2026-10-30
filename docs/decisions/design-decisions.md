@@ -3256,6 +3256,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-332 — Sınıf yolu, bölge, meslek, yardımcı ve eksik malzeme görselleri
+
+**Context:** Sınıf yolu piramidinin terfi/uzmanlık düğümleri, yolculuk haritasının bölgeleri, Atölye meslek listesi ve yardımcı NPC kartları yalnız yazı ya da genel ikon gösteriyordu; altı malzemenin (Karaağaç/Porsuk kütüğü, Keten tohumu, Adamotu, Kral Çiçeği, Cıva cevheri) görseli yoktu.
+**Decision:** Yeni `scripts/art_sets.py` (plan / prompt <set> <n> / cut <set>): Gemini 3×3 sayfaları, set başı tarif listesi. Madalyon setleri sınıf amblemleriyle (DD-325) aynı tarz, `emblem_assets.medallion` ile kesilir: 60 sınıf düğümü (temel sınıfın renkleri, düğüm başı tek sembol) → `client/assets/class_nodes/`, 54 bölge (madalyon içinde manzara) → `assets/regions/`, 9 üretim mesleği (aletler) → `assets/professions/`; 14 yardımcı portresi (avatar tarzı, DD-324) → `assets/helpers/`; 6 malzeme ekipman ikonlarıyla aynı arduvaz zeminli (DD-329) → `assets/items/<kod>.webp`. 17 sayfa, ~1,1 MB. `emblem_assets.py` içe aktarılabilir oldu (`__main__`). Keşiş Disciple amblemi ilk üretimde dini bir figüre benzediği için son sayfanın boş hücresinde nilüfer + inci olarak yeniden çizildi (`NODE_FIXES`). İstemci: piramit düğümünün üstünde amblem (`classNodeAsset`; temel sınıf kendi amblemi), harita düğümü madalyon resmi (kilitli: üstte kilit; resim yoksa tür ikonu), meslek kartında 40 dp amblem, yardımcı kartında 48 dp portre (ortak `CircleArt`). `art_sets_test.dart` içerikteki her terfi/uzmanlık ve bölgenin görselini arar.
+**Consequences:** Sınıf yolu, harita, Atölye ve yardımcılar görselli; yeni düğüm/bölge = yeni görsel + yeni APK.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

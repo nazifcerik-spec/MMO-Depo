@@ -274,6 +274,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 129. **Avatarlar yeniden (bitti)** — Sprint 129, DD-330. 80 portre her biri ayrı yaş/ifade/açı/saç/iz/başlık/ışık/zemin (`scripts/avatar_art.py`, 3×3 sayfalar), kredili efsanevi rün halkalı.
 
+130. **Sınıf yolu + harita + meslek + yardımcı görselleri (bitti)** — Sprint 130, DD-332. `scripts/art_sets.py` (3×3 Gemini sayfaları): 60 terfi/uzmanlık amblemi, 54 bölge madalyonu, 9 meslek amblemi, 14 yardımcı portresi, 6 eksik malzeme ikonu. İstemci piramit/harita/Atölye/yardımcı kartlarında gösterir; `art_sets_test.dart`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

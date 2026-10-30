@@ -167,6 +167,8 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
                   children: [
                     Row(
                       children: [
+                        CircleArt(asset: 'assets/professions/$p.webp', size: 40, fallback: const SizedBox()),
+                        const SizedBox(width: Space.md),
                         Expanded(child: Text(professionName(l, p), style: text.titleMedium)),
                         if (_skills[p] == null)
                           FilledButton.tonal(style: compactButton, onPressed: () => _learn(p), child: Text(l.learn))

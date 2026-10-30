@@ -142,6 +142,10 @@ IconData classIcon(String root) => switch (root) {
 /// Base class [root]'s emblem art (`scripts/emblem_assets.py`).
 String classEmblemAsset(String root) => 'assets/class_icons/$root.webp';
 
+/// A class tree node's emblem: the base class's own, promotions' and
+/// specializations' under assets/class_nodes (`scripts/art_sets.py`).
+String classNodeAsset(ClassNode n) => n.tier == 0 ? classEmblemAsset(n.code) : 'assets/class_nodes/${n.code}.webp';
+
 /// Base class [root]'s emblem in a circle, decoded at the size shown; its
 /// icon when the art is missing.
 class ClassEmblem extends StatelessWidget {

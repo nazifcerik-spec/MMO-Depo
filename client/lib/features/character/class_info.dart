@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
+import '../../shared/widgets.dart';
 import 'character_repository.dart';
 import 'character_sheet_view.dart' show skillDescription;
 import 'class_catalog.dart';
@@ -266,6 +267,8 @@ class _PathNode extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              CircleArt(asset: classNodeAsset(node), size: node.tier == 2 ? 30 : 36, fallback: const SizedBox()),
+              const SizedBox(height: 2),
               Text(l.levelShort(level), style: text.labelSmall?.copyWith(color: Palette.textMuted)),
               Text(
                 ContentNames.of('class', node.code),
