@@ -156,8 +156,8 @@ def prompt(sheet):
     )
 
 
-def gutters(gray, axis):
-    """The GRID-1 dark lines across axis 0 (x) or 1 (y), each as (start, end)."""
+def gutters(gray, axis, grid=GRID):
+    """The grid-1 dark lines across axis 0 (x) or 1 (y), each as (start, end)."""
     from PIL import ImageStat
     w, h = gray.size
     n = w if axis == 0 else h
@@ -166,9 +166,9 @@ def gutters(gray, axis):
         box = (i, 0, i + 1, h) if axis == 0 else (0, i, w, i + 1)
         return ImageStat.Stat(gray.crop(box)).mean[0]
     out = []
-    for g in range(1, GRID):
-        c = n * g // GRID
-        lo, hi = c - n // (GRID * 6), c + n // (GRID * 6)
+    for g in range(1, grid):
+        c = n * g // grid
+        lo, hi = c - n // (grid * 6), c + n // (grid * 6)
         best = min(range(lo, hi), key=mean)
         floor, a, b = mean(best), best, best
         while a > lo and mean(a - 1) < floor + 14:

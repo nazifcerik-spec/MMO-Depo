@@ -3238,6 +3238,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-329 — Boyanmış ekipman ikonları
+
+**Context:** Oyuncu silah, zırh ve takıların oyunun temasına uygun, birbirini anımsatmayan, kendine has biçim ve renkte görseller istedi (Pinterest'teki zırh / fantastik eşya panoları referans).
+**Decision:** Her kuşanılabilir eşya (1916) kendi ikonunu alır. `scripts/item_art.py` eşyaları aile + seviye sırasıyla 5×5 sayfalara dizer; Gemini komutu hücre başı tanım verir (ad değil — adlar resme yazı olarak işleniyordu): tür + biçim kuralı (ailedeki sırasına ve aileye göre kayan 20 siluet: kıvrık, dalgalı, çatallı, iğne ince…) + malzeme görünümü (`scripts/item_motifs.py`: 104 malzeme kelimesi → renk/doku ve figür; figür yalnız ailelerin üçte birinde, aynı amblem her silahta tekrarlanmasın). Ortak stil: koyu arduvaz zemin, el boyaması stilize MMO ikonu, temiz siluet, yumuşak gölge. `art_originals/items/sheetNNN.jpg` (git dışı) → `python scripts/item_art.py cut` → `client/assets/items/<kod>.webp` (128 px, ~4 KB). İstemci: `ItemImages` .png ve .webp okur; çanta hücresinde boyanmış ikon hücreyi doldurur (kendi zemini var), malzeme png'leri eskisi gibi. İlk parti: 850 eşya (silahlar); zırh, kalkan, takı ve baskın setleri Gemini günlük sınırı nedeniyle sonraki partilerde.
+**Consequences:** Her ekipman kendine has ikonla görünür; yeni eşya = sayfa üret + kes + yeni APK.
+**Tarih:** 2026-10-30
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
