@@ -447,7 +447,8 @@ void main() {
 
     expect(find.text('Copper Ore'), findsOneWidget);
     expect(find.text('Flawless Raw Sapphire'), findsOneWidget);
-    expect(find.text('Fishing +36 XP · Fishing reached level 21!'), findsOneWidget);
+    expect(find.text('Fishing +36 XP'), findsOneWidget);
+    expect(find.text('Fishing reached level 21!'), findsOneWidget); // level-up badge
     await tester.tap(find.text('Nice!'));
     await tester.pumpAndSettle();
     expect(find.text('Choose an activity'), findsOneWidget);
@@ -1050,7 +1051,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Collect').last);
     await tester.pumpAndSettle();
-    expect(find.text('7 won · 1 lost · Used: 2× Potion Hp Small · Level up! Now level 4'), findsOneWidget);
+    expect(find.text('7 won · 1 lost · Used: 2× Potion Hp Small'), findsOneWidget);
+    expect(find.text('Level up! Now level 4'), findsOneWidget); // level-up badge
     expect(find.text('+160 XP'), findsOneWidget);
     expect(find.text('Rare × 1'), findsOneWidget);
     // The fight report (DD-308): why it ended and how the sides measured up.

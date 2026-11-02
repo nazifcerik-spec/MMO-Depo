@@ -5,6 +5,7 @@ import '../core/api_client.dart';
 import '../features/character/models.dart';
 import '../l10n/app_localizations.dart';
 import 'content_names.dart';
+import 'motion.dart';
 
 /// Bundled art [asset] in a circle of [size], decoded at the size shown;
 /// [fallback] when the file is missing.
@@ -343,11 +344,13 @@ class StatBar extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(Radii.sm),
-              child: LinearProgressIndicator(
-                value: value.isNaN ? 0 : value.clamp(0, 1),
-                minHeight: 10,
-                color: color,
-                backgroundColor: Palette.bgElevated,
+              // Fills from the old value to the new one (first build: no motion).
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(end: value.isNaN ? 0 : value.clamp(0, 1).toDouble()),
+                duration: motion(context, const Duration(milliseconds: 400)),
+                curve: Curves.easeOut,
+                builder: (_, v, _) =>
+                    LinearProgressIndicator(value: v, minHeight: 10, color: color, backgroundColor: Palette.bgElevated),
               ),
             ),
           ),

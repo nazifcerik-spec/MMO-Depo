@@ -204,8 +204,10 @@ String _resultSubtitle(AppLocalizations l, CombatResult r) => [
   if (r.suppliesUsed.isNotEmpty)
     l.suppliesUsed([for (final (code, n) in r.suppliesUsed) '$n× ${ContentNames.of('item', code)}'].join(', ')),
   if (r.party != null) r.party!.text(l),
-  if (r.leveledUp && r.newLevel != null) l.levelUp(r.newLevel!),
 ].join(' · ');
+
+String? _levelUp(AppLocalizations l, CombatResult r) =>
+    r.leveledUp && r.newLevel != null ? l.levelUp(r.newLevel!) : null;
 
 // --- Hunt ---------------------------------------------------------------------
 
@@ -337,6 +339,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
     context,
     title: ContentNames.of('mob', c.target),
     subtitle: _resultSubtitle(AppLocalizations.of(context), r),
+    levelUp: _levelUp(AppLocalizations.of(context), r),
     loot: r.loot,
     footer: r.report == null ? null : FightReportCard(report: r.report!, hunt: true),
   );
@@ -688,6 +691,7 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
       context,
       title: ContentNames.of('dungeon', c.target),
       subtitle: _resultSubtitle(l, r),
+      levelUp: _levelUp(l, r),
       loot: r.loot,
       footer: r.report == null ? null : FightReportCard(report: r.report!),
     );

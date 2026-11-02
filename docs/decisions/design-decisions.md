@@ -3301,6 +3301,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-337 — Tek seferlik durum animasyonları
+
+**Context:** İstemcide durum değişimleri (evre, seviye, ödül, efsun, hazır iş, rota) animasyonsuzdu; `docs/animation-proposals.md` kararlılık ve pil önceliğiyle tek seferlik, yerleşik araçlı animasyonlar önermişti.
+**Decision:** Ortak `client/lib/shared/motion.dart`: `motion()` (platform azaltılmış hareket isterse süre 0), `GlowPulse` (tetik değişince bir kez parlar; ağaç yapısı sabit, çocuk durumu korunur), `SwapIn` (çapraz geçiş + hafif büyüme), `PopIn` (0,8 → 1, hafif taşma), `CountUp`. Bağlananlar: pet kartı yumurta → pet ve evre değişimi, `StatBar` dolumu, ganimet sayfasında seviye rozeti (alt başlıktan ayrıldı) + altın/XP sayımı + efsanevi/mitik satır parıltısı, pet/görev seviye toast'ı, efsunlanan hücre, `ContractProgress` hazır nabzı, görev kartı anahtarı, harita rotasının çizilmesi (ayrı `_RoutePainter` katmanı). Sürekli döngü yok; yumurta sallanması (öneri 2) kuluçka bitiş geçişine çevrildi; Hero (öneri 6) eşya detayı alt sayfa olduğu için ertelendi.
+**Consequences:** Yeni bağımlılık yok, zamanlayıcı yok. `client/test/motion_test.dart` araçları ve azaltılmış hareketi denetler; iki akış testi seviye satırını rozette arar.
+**Tarih:** 2026-11-02
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

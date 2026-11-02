@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
+import '../../shared/motion.dart';
 import '../../shared/widgets.dart';
 import 'adventure_models.dart';
 
@@ -81,8 +82,16 @@ class _WorldMapViewState extends State<WorldMapView> {
               height: height,
               child: Stack(
                 children: [
+                  Positioned.fill(child: CustomPaint(painter: _MapPainter(widget.map))),
+                  // A new journey's route draws itself from start to end once.
                   Positioned.fill(
-                    child: CustomPaint(painter: _MapPainter(widget.map, route: widget.route)),
+                    child: TweenAnimationBuilder<double>(
+                      key: ValueKey(widget.route.join('>')),
+                      tween: Tween(begin: 0, end: 1),
+                      duration: motion(context, const Duration(milliseconds: 800)),
+                      curve: Curves.easeInOut,
+                      builder: (_, t, _) => CustomPaint(painter: _RoutePainter(widget.map, widget.route, t)),
+                    ),
                   ),
                   for (final r in regions) _node(context, r),
                 ],
@@ -214,13 +223,11 @@ class _MapNode extends StatelessWidget {
   }
 }
 
-/// Continent bands, roads (links and zone–dungeon paths) and the route of a
-/// journey under way.
+/// Continent bands and roads (links and zone–dungeon paths).
 class _MapPainter extends CustomPainter {
-  _MapPainter(this.map, {this.route = const []});
+  _MapPainter(this.map);
 
   final WorldMap map;
-  final List<String> route;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -266,7 +273,23 @@ class _MapPainter extends CustomPainter {
       final p = r.kind == 'dungeon' ? map.regions[r.parent] : null;
       if (p != null) canvas.drawLine(Offset(p.mapX, p.mapY), Offset(r.mapX, r.mapY), path);
     }
+  }
 
+  @override
+  bool shouldRepaint(_MapPainter old) => old.map != map;
+}
+
+/// The dashed route of a journey under way, drawn up to [drawn] (0..1) of
+/// its length.
+class _RoutePainter extends CustomPainter {
+  _RoutePainter(this.map, this.route, this.drawn);
+
+  final WorldMap map;
+  final List<String> route;
+  final double drawn;
+
+  @override
+  void paint(Canvas canvas, Size size) {
     final stops = [
       for (final code in route)
         if (map.regions[code] case final r?) Offset(r.mapX, r.mapY),
@@ -276,14 +299,19 @@ class _MapPainter extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round;
     const dash = 14.0;
-    for (var i = 0; i + 1 < stops.length; i++) {
+    var left =
+        drawn *
+        [for (var i = 0; i + 1 < stops.length; i++) (stops[i + 1] - stops[i]).distance].fold(0.0, (a, b) => a + b);
+    for (var i = 0; i + 1 < stops.length && left > 0; i++) {
       final a = stops[i], b = stops[i + 1], total = (b - a).distance;
-      for (var d = 0.0; d < total; d += dash * 2) {
-        canvas.drawLine(a + (b - a) * (d / total), a + (b - a) * ((d + dash).clamp(0, total) / total), ink);
+      final end = left < total ? left : total;
+      for (var d = 0.0; d < end; d += dash * 2) {
+        canvas.drawLine(a + (b - a) * (d / total), a + (b - a) * ((d + dash).clamp(0, end) / total), ink);
       }
+      left -= total;
     }
   }
 
   @override
-  bool shouldRepaint(_MapPainter old) => old.map != map || old.route != route;
+  bool shouldRepaint(_RoutePainter old) => old.drawn != drawn || old.map != map || old.route != route;
 }

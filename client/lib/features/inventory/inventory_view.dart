@@ -6,6 +6,7 @@ import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
+import '../../shared/motion.dart';
 import '../../shared/widgets.dart';
 import '../market/market_repository.dart';
 import '../market/market_view.dart';
@@ -41,6 +42,21 @@ class _InventoryViewState extends State<InventoryView> {
 
   /// Selected instance ids; non-empty = selection mode.
   final Set<String> _selected = {};
+
+  /// The piece just enchanted and a counter, so its cell flares once.
+  (String, int)? _shine;
+
+  /// [cell] with a one-time glow when it holds the piece just enchanted.
+  Widget _shining(String id, Widget cell) => _shine?.$1 == id
+      ? GlowPulse(
+          key: ValueKey(_shine),
+          trigger: _shine,
+          color: Palette.epic,
+          radius: Radii.sm,
+          playOnStart: true,
+          child: cell,
+        )
+      : cell;
 
   /// While a long-press drag runs: true adds the cells it crosses, false
   /// removes them (decided by the first cell).
@@ -272,6 +288,7 @@ class _InventoryViewState extends State<InventoryView> {
     }
     await _run(() async {
       await widget.repo.enchant(t.$1, scroll.instanceId);
+      _shine = (t.$1, (_shine?.$2 ?? 0) + 1);
       if (mounted) toast(context, Text(l.enchantDone(t.$2)));
     });
   }
@@ -455,12 +472,15 @@ class _InventoryViewState extends State<InventoryView> {
               children: [
                 for (final slot in equipSlots)
                   if (_equipped[slot] case final e?)
-                    ItemCell(
-                      rarity: e.rarity,
-                      icon: itemIcon(e.itemClass),
-                      code: e.templateCode,
-                      semantic: '${slotName(l, slot)}: ${itemName(e.templateCode, e.prefix, e.suffix)}',
-                      onTap: () => _openEquipped(slot, e),
+                    _shining(
+                      e.instanceId,
+                      ItemCell(
+                        rarity: e.rarity,
+                        icon: itemIcon(e.itemClass),
+                        code: e.templateCode,
+                        semantic: '${slotName(l, slot)}: ${itemName(e.templateCode, e.prefix, e.suffix)}',
+                        onTap: () => _openEquipped(slot, e),
+                      ),
                     )
                   else
                     ItemCell(label: slotName(l, slot)),
@@ -553,19 +573,22 @@ class _InventoryViewState extends State<InventoryView> {
                     itemBuilder: (_, i) {
                       final item = cells[i];
                       if (item == null) return const ItemCell();
-                      return ItemCell(
-                        rarity: item.rarity,
-                        icon: itemIcon(item.itemClass, item.itemSubclass),
-                        code: item.templateCode,
-                        stack: item.stack,
-                        locked: item.isLocked,
-                        selected: _selected.contains(item.instanceId),
-                        wear: item.wear,
-                        semantic: [
-                          '${displayName(item)} ×${item.stack}',
-                          if (!item.wearable) ?wearLine(l, item)?.$1,
-                        ].join(' · '),
-                        onTap: () => selecting ? _toggle(item) : _openBagItem(item),
+                      return _shining(
+                        item.instanceId,
+                        ItemCell(
+                          rarity: item.rarity,
+                          icon: itemIcon(item.itemClass, item.itemSubclass),
+                          code: item.templateCode,
+                          stack: item.stack,
+                          locked: item.isLocked,
+                          selected: _selected.contains(item.instanceId),
+                          wear: item.wear,
+                          semantic: [
+                            '${displayName(item)} ×${item.stack}',
+                            if (!item.wearable) ?wearLine(l, item)?.$1,
+                          ].join(' · '),
+                          onTap: () => selecting ? _toggle(item) : _openBagItem(item),
+                        ),
                       );
                     },
                   ),

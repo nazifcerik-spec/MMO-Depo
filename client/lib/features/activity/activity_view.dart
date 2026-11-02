@@ -182,11 +182,8 @@ class _ActivityViewState extends State<ActivityView> {
       loot: y.toLoot(),
       subtitle: g == null || g.gained == 0
           ? null
-          : [
-              l.gatherXpGained(name, g.gained),
-              if (g.leveledUp) l.gatherLevelUp(name, g.level),
-              if (share != null) share.text(l),
-            ].join(' · '),
+          : [l.gatherXpGained(name, g.gained), if (share != null) share.text(l)].join(' · '),
+      levelUp: g != null && g.leveledUp ? l.gatherLevelUp(name, g.level) : null,
     );
   }
 

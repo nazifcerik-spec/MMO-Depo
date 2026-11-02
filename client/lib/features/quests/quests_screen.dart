@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
+import '../../shared/motion.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import 'quest_repository.dart';
@@ -76,10 +77,8 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
     if (!mounted) return;
     final l = AppLocalizations.of(context);
     final parts = [if (r.xp > 0) l.xpGain(r.xp), if (r.gold > 0) '+${goldString(r.gold)}'];
-    toast(
-      context,
-      Text([l.questRewarded(parts.join(' · ')), if (r.newLevel != null) l.levelUp(r.newLevel!)].join('\n')),
-    );
+    final msg = Text([l.questRewarded(parts.join(' · ')), if (r.newLevel != null) l.levelUp(r.newLevel!)].join('\n'));
+    toast(context, r.newLevel != null ? PopIn(child: msg) : msg);
   });
 
   @override
@@ -114,6 +113,8 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
               if (open.isEmpty) Text(l.questsNoneOpen, style: text.bodySmall),
               for (final q in open)
                 _QuestCard(
+                  // keyed so a card keeps its element and its border turns green in place
+                  key: ValueKey('open-${q.code}'),
                   q: q,
                   onPrimary: q.state == 'completed' ? () => _turnIn(q) : null,
                   primaryLabel: l.turnIn,
@@ -143,7 +144,7 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
 }
 
 class _QuestCard extends StatelessWidget {
-  const _QuestCard({required this.q, required this.primaryLabel, this.onPrimary, this.onAbandon});
+  const _QuestCard({super.key, required this.q, required this.primaryLabel, this.onPrimary, this.onAbandon});
 
   final Quest q;
   final String primaryLabel;

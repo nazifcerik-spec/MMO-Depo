@@ -7,6 +7,7 @@ import '../../core/api_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart' show confirmAction;
+import '../../shared/motion.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import '../adventure/adventure_models.dart';
@@ -297,16 +298,15 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
       final r = await widget.repo.collect(p.id);
       await fetch();
       if (!mounted) return;
-      toast(
-        context,
-        Text(
-          [
-            l.petCollected(r.wins, r.xp),
-            if (r.pet.level > p.level) l.petLevelUp(petName(p.species), r.pet.level),
-            if (r.died) l.petDied,
-          ].join(' · '),
-        ),
+      final up = r.pet.level > p.level;
+      final msg = Text(
+        [
+          l.petCollected(r.wins, r.xp),
+          if (up) l.petLevelUp(petName(p.species), r.pet.level),
+          if (r.died) l.petDied,
+        ].join(' · '),
       );
+      toast(context, up ? PopIn(child: msg) : msg);
     });
   }
 
@@ -448,10 +448,18 @@ class _PetCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                if (hatched)
-                  PetArt(species: pet.species, stage: petStage(pet.level), size: 64, color: color)
-                else
-                  ItemArt(code: 'pet_egg_${pet.species}', icon: Icons.egg_outlined, color: color, size: 64),
+                // Hatching and each new stage swap the art with a glow.
+                GlowPulse(
+                  trigger: hatched ? petStage(pet.level) : 0,
+                  color: color,
+                  radius: Radii.md,
+                  child: SwapIn(
+                    swapKey: hatched ? petStage(pet.level) : 0,
+                    child: hatched
+                        ? PetArt(species: pet.species, stage: petStage(pet.level), size: 64, color: color)
+                        : ItemArt(code: 'pet_egg_${pet.species}', icon: Icons.egg_outlined, color: color, size: 64),
+                  ),
+                ),
                 const SizedBox(width: Space.md),
                 Expanded(
                   child: Text(

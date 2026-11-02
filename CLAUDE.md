@@ -284,6 +284,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 134. **Canavar + yetenek görselleri (bitti)** — Sprint 134, DD-336. 146 canavar madalyonu (`client/assets/mobs/`, av listesi `mobArt`) ve 471 sınıf yeteneği ikonu (`client/assets/skills/`, `SkillArt`: karakter sayfası, sınıf penceresi, oluşturma). `art_sets.py` `mobs` / `skills` setleri; yetenekler ad yerine adın kelimelerinden motifle tarif edilir (`SKILL_MOTIF`, Gemini adı yazmasın diye). `art_audit` tüm bağlı alanlarda 0 eksik.
 
+135. **Durum animasyonları (bitti)** — Sprint 135, DD-337. `shared/motion.dart` (`GlowPulse`, `SwapIn`, `PopIn`, `CountUp`, `motion()` azaltılmış hareket). Pet evre/kuluçka geçişi, `StatBar` dolumu, ganimet sayfası seviye rozeti + sayım + efsanevi parıltı, efsun parıltısı, hazır iş nabzı, görev kartı, harita rotası çizimi. Öneri listesi `docs/animation-proposals.md` durum sütunlu.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

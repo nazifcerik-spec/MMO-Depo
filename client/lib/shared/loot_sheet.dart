@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../app/theme.dart';
 import '../features/activity/activity_models.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// Shows a reveal result (activity / hunt / dungeon) as a bottom sheet.
@@ -13,6 +14,7 @@ Future<void> showLootSheet(
   required String title,
   required Loot loot,
   String? subtitle,
+  String? levelUp,
   Widget? footer,
 }) {
   return showModalBottomSheet<void>(
@@ -20,18 +22,21 @@ Future<void> showLootSheet(
     isScrollControlled: true,
     showDragHandle: true,
     backgroundColor: Palette.bgSurface,
-    builder: (_) => LootSheet(title: title, subtitle: subtitle, loot: loot, footer: footer),
+    builder: (_) => LootSheet(title: title, subtitle: subtitle, levelUp: levelUp, loot: loot, footer: footer),
   );
 }
 
 /// Loot reveal (docs/ui/design-system.md §10): rows scale 0.8→1.0 with a
 /// rarity aura, staggered; one controller drives the whole list.
 class LootSheet extends StatefulWidget {
-  const LootSheet({super.key, required this.title, required this.loot, this.subtitle, this.footer});
+  const LootSheet({super.key, required this.title, required this.loot, this.subtitle, this.levelUp, this.footer});
 
   final String title;
   final String? subtitle;
   final Loot loot;
+
+  /// "Level 12!" as a badge that pops in above the title.
+  final String? levelUp;
 
   /// Shown under the loot, e.g. a fight report (DD-308).
   final Widget? footer;
@@ -51,6 +56,12 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
       vsync: this,
       duration: Duration(milliseconds: 400 + 60 * min(rows, 10)),
     )..forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (motion(context, _anim.duration!) == Duration.zero) _anim.value = 1;
   }
 
   @override
@@ -95,6 +106,10 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
             shrinkWrap: true,
             padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
             children: [
+              if (widget.levelUp case final up?) ...[
+                Center(child: PopIn(child: _LevelBadge(up))),
+                const SizedBox(height: Space.sm),
+              ],
               Text(widget.title, style: text.titleLarge, textAlign: TextAlign.center),
               if (widget.subtitle != null) ...[
                 const SizedBox(height: Space.xs),
@@ -109,11 +124,14 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
                   spacing: Space.xl,
                   runSpacing: Space.xs,
                   children: [
-                    if (loot.goldCopper > 0) GoldText(loot.goldCopper, size: 20),
+                    if (loot.goldCopper > 0) CountUp(value: loot.goldCopper, builder: (v) => GoldText(v, size: 20)),
                     if (loot.xp > 0)
-                      Text(
-                        l.xpGain(loot.xp),
-                        style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w700, fontSize: 18),
+                      CountUp(
+                        value: loot.xp,
+                        builder: (v) => Text(
+                          l.xpGain(v),
+                          style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w700, fontSize: 18),
+                        ),
                       ),
                   ],
                 ),
@@ -145,6 +163,35 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
   }
 }
 
+class _LevelBadge extends StatelessWidget {
+  const _LevelBadge(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: Space.lg, vertical: Space.sm),
+    decoration: BoxDecoration(
+      color: Palette.accent.withValues(alpha: 0.15),
+      borderRadius: BorderRadius.circular(Radii.lg),
+      border: Border.all(color: Palette.accent),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.arrow_upward, size: 18, color: Palette.accent),
+        const SizedBox(width: Space.xs),
+        Flexible(
+          child: Text(
+            label,
+            style: const TextStyle(color: Palette.accent, fontWeight: FontWeight.w700),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 class _LootRow extends StatelessWidget {
   const _LootRow({required this.label, required this.rarity});
 
@@ -156,7 +203,7 @@ class _LootRow extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final c = rarityColor(rarity);
     final glow = rarity == 'legendary' || rarity == 'mythic' || rarity == 'epic';
-    return Container(
+    final row = Container(
       padding: const EdgeInsets.symmetric(horizontal: Space.lg, vertical: Space.md),
       decoration: BoxDecoration(
         color: Palette.bgElevated,
@@ -178,5 +225,8 @@ class _LootRow extends StatelessWidget {
         ],
       ),
     );
+    // The rarest drops flare once as they land.
+    if (rarity != 'legendary' && rarity != 'mythic') return row;
+    return GlowPulse(trigger: rarity, color: c, radius: Radii.md, playOnStart: true, child: row);
   }
 }

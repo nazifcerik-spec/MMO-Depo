@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app/theme.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// Progress of any timed contract (gathering, hunt, dungeon, travel).
@@ -68,13 +69,21 @@ class _ContractProgressState extends State<ContractProgress> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(Radii.sm),
-          child: LinearProgressIndicator(
-            value: value,
-            minHeight: 10,
-            color: done ? Palette.success : Palette.accent,
-            backgroundColor: Palette.bgElevated,
+        // Pulses once when the contract is ready to collect.
+        GlowPulse(
+          trigger: done,
+          playOnStart: done,
+          color: Palette.success,
+          radius: Radii.sm,
+          duration: const Duration(milliseconds: 800),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Radii.sm),
+            child: LinearProgressIndicator(
+              value: value,
+              minHeight: 10,
+              color: done ? Palette.success : Palette.accent,
+              backgroundColor: Palette.bgElevated,
+            ),
           ),
         ),
         const SizedBox(height: Space.sm),
