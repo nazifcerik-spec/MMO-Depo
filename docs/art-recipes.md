@@ -25,8 +25,8 @@ basar, `cut` sayfayı keser ve `client/assets/<klasör>/<kod>.webp` yazar. Her k
 | İksirler | 6 | `potions` | İksir şişesi | 1 | Kırmızı = can, mavi = mana; Supreme en büyük, kanatlı altın süslü kristal. |
 | Yemekler | 30 | `foods` | Eşya ikonu | 2 | Tabaklanmış balık yemeği; Sv 1'de tahta tabak, merdiven yükseldikçe gümüş → altın tabak, son kademelerde hafif parıltı. |
 | Görevler | 62 | `quests` | Madalyon | 7 | Madalyon içinde görevin konusu: bölge yolu + canavar ya da ödül avının hedefi. |
-| Canavarlar | 146 | (yeni, `mobs`) | Madalyon | 17 | Önce arayüz yeri gerekir (av listesi + savaş raporu). Canavarın baş/gövde portresi, arketip renkleri. |
-| Yetenekler | 471 | (yeni, `skills`) | Madalyon, küçük | 19 (5×5) | Önce arayüz yeri gerekir (yetenek listesi). Sınıf paleti + yetenek etkisinin sembolü. |
+| Canavarlar | 146 | `mobs` | Madalyon | 17 | Canavarın baş/gövde portresi, kendi arazisinde. |
+| Yetenekler | 471 | `skills` | Eşya ikonu | 19 (5×5) | Adın kelimelerinden nesne motifi + etki görünümü + sınıf paleti; ad isteme girmez (Gemini yazıyor). |
 
 ## Üretim sırası
 
@@ -35,6 +35,6 @@ En az eksikten başlanır; bir sayfa ~1 Gemini üretimi, günlük kota ~35–40.
 1. ~~Pet 39 yumurtası + pet 40–50~~ (bitti, 150 evre + 50 yumurta)
 2. ~~Toplama meslekleri → iksirler → sınıf portreleri~~ (bitti)
 3. ~~Zindanlar → yemekler → görevler~~ (bitti)
-4. Arayüz yeri eklendikten sonra canavarlar (17) → yetenekler (19)
+4. ~~Canavarlar (17) → yetenekler (19)~~ (bitti; yetenekler ad yerine adın kelimelerinden motifle — `SKILL_MOTIF`)
 
 Her sayfa kesildikten sonra `python scripts/art_audit.py` listeyi günceller; `client/test/art_sets_test.dart` bitmiş setleri denetler.

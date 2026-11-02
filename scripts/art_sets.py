@@ -13,6 +13,7 @@ medallion. Portraits match the avatars (DD-324); items match the gear icons
 """
 import io
 import os
+import re
 import sys
 
 from PIL import Image
@@ -548,6 +549,138 @@ SKILL_LOOK = {
 }
 
 
+# Gemini writes a skill's name under its icon whenever the name is in the
+# prompt, so each skill is described by objects taken from the words of its
+# name instead (DD-336).
+SKILL_MOTIF = {
+    'aegis': 'a radiant round shield', 'aim': 'a crosshair over a target', 'aimed': 'a crosshair over a target',
+    'ancestor': 'ghostly ancestor faces', 'ancestors': 'ghostly ancestor faces', 'ancestral': 'ghostly ancestor faces',
+    'ancients': 'ghostly ancestor faces', 'ancient': 'weathered ancient stone', 'angel': 'white angel wings',
+    'anthem': 'a war horn', 'arcane': 'a swirling violet arcane vortex', 'armor': 'a breastplate',
+    'arsenal': 'a rack of crossed weapons', 'astral': 'a starry astral figure', 'aura': 'a glowing aura',
+    'avatar': 'a towering glowing figure', 'backstab': 'a dagger in a back', 'banner': 'a tattered war banner',
+    'barrage': 'a hail of blows', 'barrier': 'a shimmering wall of energy', 'bastion': 'a fortified tower',
+    'beacon': 'a shining beacon fire', 'bear': 'a roaring bear head', 'beast': 'a wolf companion',
+    'bestial': 'a roaring beast head', 'blade': 'a gleaming blade', 'blades': 'spinning blades',
+    'blood': 'dripping blood', 'bloodthirst': 'dripping blood', 'bloom': 'a blooming flower',
+    'bolt': 'a bolt of energy', 'bolts': 'heavy crossbow bolts', 'bomb': 'a smoking bomb',
+    'bond': 'two linked glowing hands', 'bramble': 'thorny brambles', 'breath': 'a last breath of mist',
+    'bullseye': 'an arrow in a bullseye', 'bulwark': 'a tower shield', 'burst': 'a bursting orb',
+    'camouflage': 'a figure fading into leaves', 'celestial': 'stars and planets', 'chain': 'glowing chains',
+    'charge': 'a charging figure', 'chi': 'a swirling chi orb', 'chorus': 'singing ghostly voices',
+    'citadel': 'a shining citadel', 'cleanse': 'pure flowing water', 'cloud': 'a green toxic cloud',
+    'combo': 'a chain of fist strikes', 'conduit': 'a crackling lightning rod', 'counter': 'a parrying blade',
+    'counterguard': 'a parrying blade', 'crusader': 'a crusader sword', 'curse': 'a cursed skull sigil',
+    'cuts': 'many slash marks', 'cutting': 'a sharp slash',
+    'dance': 'a whirling dancer with blades', 'death': 'a grinning skull', 'deadeye': 'a glowing eye',
+    'deflect': 'an arrow bouncing off a shield', 'deflecting': 'a palm deflecting a blow',
+    'detonation': 'an explosion', 'diamond': 'a diamond', 'dirge': 'a mournful harp',
+    'discord': 'jagged broken notes', 'discordant': 'jagged broken notes', 'dissonant': 'jagged broken notes',
+    'drum': 'a war drum', 'drums': 'war drums', 'duelist': 'a rapier', 'earth': 'cracked earth',
+    'earthbind': 'roots binding feet', 'earthen': 'rock armour', 'echo': 'echoing rings',
+    'eclipse': 'a solar eclipse', 'elemental': 'fire, ice and lightning orbs', 'evasion': 'a dodging blur',
+    'execute': 'an executioner axe', 'execution': 'an executioner axe', 'executioner': 'an executioner axe',
+    'exorcism': 'a fleeing ghost', 'explosive': 'an exploding trap', 'eye': 'a hunter eye',
+    'faith': 'a holy symbol', 'feint': 'a fake-out blade', 'fireball': 'a fireball',
+    'fist': 'a clenched fist', 'fists': 'flurrying fists', 'flame': 'flames', 'fortress': 'a stone fortress',
+    'flurry': 'a flurry of strikes', 'footwork': 'quick footprints', 'foresight': 'an all-seeing eye',
+    'freeze': 'frozen ice', 'frost': 'frost crystals', 'frozen': 'frozen ice', 'fur': 'thick fur',
+    'fury': 'raging flames', 'grace': 'a falling feather of light', 'hammer': 'a war hammer',
+    'hand': 'a steady hand', 'hands': 'glowing hands', 'heal': 'a healing glow', 'healing': 'a healing glow',
+    'heaven': 'parting clouds with sunbeams', 'heavenly': 'parting clouds with sunbeams', 'hex': 'a cursed doll stuck with pins',
+    'hide': 'a thick hide', 'holy': 'a holy sunburst', 'hope': 'a lantern of hope',
+    'ice': 'ice shards', 'ignition': 'a spark igniting', 'illusion': 'mirror images', 'inferno': 'a fire storm',
+    'iron': 'iron plates', 'judgment': 'a glowing gavel of light', 'justice': 'balanced scales',
+    'kick': 'a flying kick', 'kindling': 'kindling sparks', 'lance': 'a spear of ice', 'lash': 'a thorn whip',
+    'life': 'a sprouting seedling', 'lifebloom': 'a glowing flower', 'light': 'a beam of light',
+    'lightning': 'a lightning bolt', 'lunar': 'a crescent moon', 'mana': 'a blue mana crystal',
+    'mark': 'a red target mark', 'marked': 'a red target mark', 'maul': 'claws mauling',
+    'meditation': 'a meditating monk', 'melody': 'flowing music notes', 'melodic': 'flowing music notes',
+    'meteor': 'falling meteors', 'missile': 'magic missiles', 'moon': 'a full moon', 'moonfire': 'a moonbeam',
+    'moonlit': 'moonlight', 'mountain': 'a mountain', 'nature': 'green leaves', 'nightfall': 'a dark night sky',
+    'nova': 'a ring of frost', 'palm': 'an open palm strike', 'piercing': 'a piercing arrow',
+    'pillar': 'a stone pillar', 'plaguebringer': 'a plague mask', 'poisoned': 'dripping poison',
+    'prayer': 'praying hands', 'prison': 'a cage of glowing light bars', 'prophecy': 'a glowing scroll of fate',
+    'purification': 'purifying light', 'purify': 'purifying light', 'purging': 'purifying light',
+    'rage': 'a raging face', 'rain': 'a rain of bolts', 'reload': 'a crossbow being reloaded',
+    'rend': 'claw slashes', 'rewind': 'an hourglass with sand flowing upward', 'riposte': 'a parry and thrust',
+    'roar': 'a roaring mouth', 'roots': 'grasping roots', 'rune': 'a glowing carved stone sigil of interlocking lines', 'runic': 'a glowing knotwork crystal',
+    'seal': 'a holy seal', 'shadow': 'dark shadows', 'shadowstep': 'a figure stepping out of shadow',
+    'shield': 'a shield', 'shot': 'an arrow in flight', 'siege': 'a siege bolt', 'skin': 'stone skin',
+    'slam': 'a shield slam', 'slash': 'a sword slash', 'smite': 'a holy hammer strike', 'smoke': 'smoke',
+    'snare': 'a snare trap', 'song': 'a lute and notes', 'songweaving': 'woven music notes',
+    'stab': 'a quick dagger stab', 'stance': 'a fighting stance', 'starfall': 'falling stars',
+    'static': 'static sparks', 'steel': 'steel bolts', 'stone': 'solid stone', 'stoneheart': 'a stone heart',
+    'storm': 'a storm cloud', 'strike': 'a weapon strike', 'symphony': 'an orchestra of notes',
+    'taunt': 'a shouting face', 'tempest': 'a whirling tempest', 'templar': 'a templar cross shield',
+    'temporal': 'a glowing hourglass', 'thorn': 'thorns', 'thorns': 'thorns', 'thunder': 'thunder', 'time': 'a golden hourglass',
+    'totem': 'a carved totem pole', 'totemic': 'carved totems', 'toxic': 'green toxin', 'toxin': 'green toxin',
+    'trap': 'a steel trap', 'tree': 'a great tree', 'trick': 'a thrown handful of sand',
+    'triple': 'three strikes', 'twin': 'twin blades', 'veil': 'a dark veil', 'venom': 'a venom drop',
+    'venomous': 'a venom-dripping blade', 'verse': 'a singing bard', 'vines': 'healing vines',
+    'volley': 'a volley of arrows', 'wall': 'a shield wall', 'war': 'a war horn', 'ward': 'a protective ward',
+    'wave': 'a wave of fire', 'weakness': 'a cracked weapon', 'whirling': 'a whirling blade',
+    'wild': 'wild claws', 'wisdom': 'an open book of light', 'world': 'a world tree', 'worldroot': 'world roots',
+    'wrath': 'a furious storm',
+    'guard': 'a raised kite shield', 'hardened': 'a scarred iron gauntlet', 'unyielding': 'a planted greatsword',
+    'last': 'a lone battered knight', 'finishing': 'a downward killing blow', 'retaliation': 'a spiked shield',
+    'unbreakable': 'an unbroken glowing shield', 'commanding': 'a commander helmet', 'rallying': 'a raised sword',
+    'tactical': 'a battle map with markers', 'command': 'a pointing gauntlet', 'challenge': 'a thrown gauntlet',
+    'frontline': 'a line of shields', 'march': 'marching boots', 'conquest': 'a planted flag on a hill',
+    'frenzy': 'a berserker with twin axes', 'pain': 'a bleeding wound turning to fire', 'reckless': 'a wild swing',
+    'onslaught': 'a flurry of axes', 'weapon': 'swapping weapons', 'flow': 'flowing water ribbons',
+    'sequence': 'a chain of glowing strikes', 'opportunist': 'a dagger in an open guard',
+    'lethal': 'a poisoned dagger tip', 'opening': 'a crack of light in armour', 'ambush': 'eyes in the bushes',
+    'silent': 'a hooded assassin', 'killer': 'a hooded assassin', 'predator': 'a stalking panther',
+    'patience': 'a coiled snake', 'catalyst': 'a bubbling flask', 'rhythm': 'pulsing beat rings',
+    'relentless': 'a running blur', 'infinite': 'an infinity loop of blades', 'misdirection': 'a cloak decoy',
+    'untouchable': 'a ghostly dodging figure', 'disengage': 'a backwards leap', 'critical': 'a red critical spark',
+    'focus': 'a focused eye', 'deadly': 'a deadly arrowhead', 'precision': 'a needle-thin arrow',
+    'range': 'a distant target', 'mechanism': 'crossbow gears', 'ballistic': 'a crossbow firing',
+    'survival': 'a campfire and a knife', 'instinct': 'a wolf eye', 'tracking': 'paw tracks',
+    'hunter': 'a hunter hood', 'preparation': 'laid out arrows and traps', 'attack': 'a lunging hawk',
+    'pack': 'a wolf pack', 'primal': 'primal claw marks', 'connection': 'a glowing bond thread',
+    'prepared': 'hidden trap triggers', 'ground': 'marked ground', 'rapid': 'speed lines', 'reset': 'a reset trap spring',
+    'killing': 'a field of spikes', 'spell': 'a spell circle', 'surge': 'a surge of energy',
+    'accelerated': 'a spinning hourglass', 'casting': 'casting hands', 'combustion': 'an exploding fire orb',
+    'permafrost': 'frozen ground', 'zero': 'a snowflake', 'inner': 'a glowing inner core', 'balanced': 'a yin-yang',
+    'spirit': 'a glowing spirit wisp', 'unshaken': 'a calm stone monk', 'adamant': 'an adamant body of stone',
+    'body': 'a muscular body', 'balance': 'a yin-yang', 'step': 'a gliding step', 'harmony': 'harmonious rings',
+    'flowing': 'flowing ribbons', 'transcendent': 'a rising lotus', 'ascension': 'a figure rising into light',
+    'martial': 'a martial arts pose', 'combination': 'linked strike trails', 'finisher': 'a final palm strike',
+    'endless': 'an endless loop', 'technique': 'a perfect form silhouette', 'blessing': 'a blessing hand',
+    'divine': 'a divine halo', 'favor': 'a golden coin of light', 'renew': 'a renewing sprout of light',
+    'intervention': 'a hand from the heavens', 'mercy': 'a dove', 'miracle': 'a miracle burst of light',
+    'reinforced': 'riveted plates', 'insight': 'a third eye', 'sanctified': 'a glowing holy circle',
+    'revelation': 'an opening sky', 'strength': 'a flexed arm', 'inspiration': 'a rising golden spark of faith',
+    'enduring': 'an eternal flame', 'banish': 'a portal swallowing a demon', 'uncorrupted': 'a pure white lily',
+    'consecration': 'consecrated glowing ground', 'sacred': 'a sacred chalice', 'defense': 'a raised shield',
+    'block': 'a blocking shield', 'protection': 'a protective dome', 'guardian': 'a guardian statue',
+    'recovery': 'a rising heart', 'radiant': 'a radiant sun', 'zeal': 'a burning heart', 'assault': 'a charging knight',
+    'condemn': 'a pointing judge hand', 'sentence': 'a falling verdict sword', 'rejuvenation': 'a glowing sprout',
+    'regrowth': 'regrowing leaves', 'network': 'a web of roots', 'natural': 'a leaf circle', 'evergreen': 'a pine tree',
+    'form': 'a shapeshifting silhouette', 'endurance': 'a tough tortoise shell', 'savage': 'savage fangs',
+    'quick': 'swift wings', 'harmonic': 'tuning fork waves', 'resonance': 'resonating sound waves',
+    'pitch': 'a tuning fork', 'performance': 'a bard bowing on a candlelit stage', 'marching': 'a marching drum',
+    'warrior': 'a warrior helmet', 'link': 'linked spirit chains', 'mend': 'stitched glowing light',
+    'power': 'a power fist', 'presence': 'a towering silhouette', 'cry': 'a battle cry',
+    'leader': 'a leader banner', 'shift': 'swapping weapons', 'motion': 'motion trails', 'tempo': 'a metronome',
+}
+CLASS_MOTIF = {
+    'warrior': 'a sword', 'rogue': 'a dagger', 'ranger': 'a bow', 'mage': 'a staff with an orb', 'monk': 'a fist',
+    'cleric': 'a holy symbol', 'paladin': 'a hammer', 'druid': 'a leaf', 'bard': 'a lute', 'shaman': 'a totem',
+}
+
+
+def skill_motif(cls, name):
+    found = []
+    for w in re.findall(r'[a-z]+', name.lower()):
+        m = SKILL_MOTIF.get(w)
+        if m and m not in found:
+            found.append(m)
+    return ' with '.join(found[:2]) or CLASS_MOTIF[cls]
+
+
 def skills():
     """Class skill icons in class order, so a sheet keeps one palette."""
     import yaml
@@ -562,8 +695,8 @@ def skills():
             if s['class'] != cls:
                 continue
             epic = ', epic and radiant' if s.get('category') in ('ultimate', 'awakening') else ''
-            out.append((s['code'], 'the %s skill %s: %s, %s colours%s' % (
-                cls, en['skill.' + s['code']], SKILL_LOOK[s.get('effect')], PAL[cls], epic)))
+            out.append((s['code'], '%s, as %s, in %s%s' % (
+                skill_motif(cls, en['skill.' + s['code']]), SKILL_LOOK[s.get('effect')], PAL[cls], epic)))
     return out
 
 
@@ -662,7 +795,9 @@ SETS = {
                         'edge to edge with a thin bevelled dark frame: one dramatic painted symbol of the skill, '
                         'centered, on a dark background tinted with the class colours. Stylized hand-painted '
                         'high-fantasy MMORPG spell icon art, bold readable shapes that stay clear when tiny, vivid '
-                        'glow, every icon clearly different:'),
+                        'glow, every icon clearly different. The icons are pure pictures with nothing written on '
+                        'them and no caption bars under them; sigils are abstract shapes, never letters or '
+                        'numerals:'),
     'scrolls': dict(dir='items', mode='item', size=128, grid=5, entries=lambda: SCROLLS,
                     head='fantasy enchanting scroll icons. Each cell shows exactly one open scroll, whole and '
                          'centered, at a slight diagonal, on the same plain dark slate-blue backdrop with a soft '

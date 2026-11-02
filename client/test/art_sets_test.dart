@@ -93,4 +93,13 @@ void main() {
     expect(consumables, isNotEmpty);
     expectArt('items', consumables);
   });
+
+  test('every monster and class skill has art (DD-336)', () {
+    final mobs = codes('mobs.yaml', RegExp(r'^  - code: (\w+)', multiLine: true)).toList();
+    expect(mobs, hasLength(146));
+    expectArt('mobs', mobs);
+    final skills = codes('skills.yaml', RegExp(r'^  - code: (\w+)', multiLine: true)).toList();
+    expect(skills, hasLength(471));
+    expectArt('skills', skills);
+  });
 }

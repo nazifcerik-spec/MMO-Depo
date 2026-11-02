@@ -282,6 +282,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 133. **Eksik görseller tamamlandı (bitti)** — Sprint 133, DD-335. Pet 39–50, zindan, görev, sınıf portresi, toplama amblemi, iksir ve yemek görselleri; `art_sets.py` `fit` kesimi, `ItemImages` webp portre, `art_sets_test` genişledi. Arayüzlü alanlarda eksik 0 (`docs/art-missing.md`).
 
+134. **Canavar + yetenek görselleri (bitti)** — Sprint 134, DD-336. 146 canavar madalyonu (`client/assets/mobs/`, av listesi `mobArt`) ve 471 sınıf yeteneği ikonu (`client/assets/skills/`, `SkillArt`: karakter sayfası, sınıf penceresi, oluşturma). `art_sets.py` `mobs` / `skills` setleri; yetenekler ad yerine adın kelimelerinden motifle tarif edilir (`SKILL_MOTIF`, Gemini adı yazmasın diye). `art_audit` tüm bağlı alanlarda 0 eksik.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

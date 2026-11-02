@@ -3292,6 +3292,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-336 — Canavar madalyonları + sınıf yetenek ikonları
+
+**Context:** Av listesi canavarları ve 471 sınıf yeteneği yalnız genel ikonla gösteriliyordu; görsel denetimi (art_audit) bu iki alanı en büyük eksik olarak listeliyordu.
+**Decision:** `scripts/art_sets.py` `mobs` (146 canavar, madalyon çapası, 3×3, 160 px) ve `skills` (471 yetenek, eşya ikonu çapası, 5×5, 128 px) setleri. Gemini, istemde yetenek adı geçtiğinde adı ikonun altına yazıyor; bu yüzden her yetenek adının kelimelerinden türetilen nesne motifleriyle (`SKILL_MOTIF`, eşleşme yoksa sınıf motifi `CLASS_MOTIF`) + etki görünümü (`SKILL_LOOK`) + sınıf paletiyle tarif edilir, ad isteme girmez. Harf/rakam ya da dinî simgeye dönüşen motifler (rün → harf, saat → rakam, hex/runic → altıgen yıldız) kum saati, düğüm kristali, lanet bebeği gibi nesnelerle değiştirildi. İstemci: `mobArt` (av listesi), `SkillArt` (karakter sayfası, sınıf düğüm penceresi, oluşturma ekranı); görsel yoksa eski ikon.
+**Consequences:** `client/assets/mobs/` 1,3 MB, `client/assets/skills/` 2,6 MB. `art_sets_test` her canavar ve yeteneğin görselini denetler; yeni canavar/yetenek görsel ister (`python scripts/art_sets.py prompt mobs|skills N`, `cut`). Yeni yetenek adı kelimesi `SKILL_MOTIF`'te yoksa sınıf motifine düşer.
+**Tarih:** 2026-11-02
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
