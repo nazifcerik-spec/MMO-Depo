@@ -5,6 +5,7 @@ sheets in the game's style and cut into client/assets/<dir>/<code>.webp.
     python scripts/art_sets.py plan
     python scripts/art_sets.py prompt <set> <sheet>   # Gemini prompt
     python scripts/art_sets.py cut <set> [sheet ...]  # client/art_originals/<set>/sheetNN.jpg
+    python scripts/art_sets.py todo [set ...]         # sheets whose pictures are still missing
 
 Medallion sets (nodes, regions, professions) match the class emblems
 (DD-325): one round medallion with an ornate gold rim per cell, cut to the
@@ -522,6 +523,18 @@ def cut(name, numbers):
         print(name, 'sheet%02d' % n, sum(1 for c, _ in cells if c))
 
 
+def todo(names):
+    """Sheets with at least one picture not yet in client/assets."""
+    for name in names or SETS:
+        dst = os.path.join(ROOT, 'client', 'assets', SETS[name]['dir'])
+        for n, cells in enumerate(sheets(name)):
+            missing = [c for c, _ in cells if c and not any(
+                os.path.exists(os.path.join(dst, c + ext)) for ext in ('.webp', '.png'))]
+            if missing:
+                print('%-16s sheet%02d  %d/%d missing  -> python scripts/art_sets.py prompt %s %d'
+                      % (name, n, len(missing), len(cells), name, n))
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else 'plan'
     if cmd == 'plan':
@@ -531,3 +544,5 @@ if __name__ == '__main__':
         print(prompt(sys.argv[2], int(sys.argv[3])))
     elif cmd == 'cut':
         cut(sys.argv[2], [int(x) for x in sys.argv[3:]])
+    elif cmd == 'todo':
+        todo(sys.argv[2:])
