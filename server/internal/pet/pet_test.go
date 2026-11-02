@@ -1,6 +1,7 @@
 package pet
 
 import (
+	"fmt"
 	"math"
 	"os"
 	"testing"
@@ -13,14 +14,14 @@ import (
 
 func rng(seed int64) combat.RNG { return activity.NewRNG(seed) }
 
-// species is the shipped ladder's shape: 20 ranks, 50% → 2%.
+// species is the shipped ladder's shape: 50 ranks, 50% → 2% (gen_pets.py).
 func species() []Species {
-	out := make([]Species, 20)
+	out := make([]Species, 50)
 	for i := range out {
-		t := float64(i) / 19
+		t := float64(i) / 49
 		out[i] = Species{
-			Code: string(rune('a' + i)), Rank: i + 1, MinMobLevel: 400 + 30*(i+1),
-			EggPct: 50 * math.Pow(2.0/50, t), HatchSeconds: 3600, PowerPct: 200 + 3*i,
+			Code: fmt.Sprintf("s%02d", i+1), Rank: i + 1, MinMobLevel: 400 + 12*(i+1),
+			EggPct: 50 * math.Pow(2.0/50, t), HatchSeconds: 3600, PowerPct: 200 + i,
 			Bonus: Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03 + 0.09*t},
 		}
 	}
@@ -38,8 +39,8 @@ func curveMob(level int) combat.Mob {
 func TestCatalogValidation(t *testing.T) {
 	c, err := New(species())
 	require.NoError(t, err)
-	require.Equal(t, 20, c.All()[0].Rank, "best first")
-	s, ok := c.ByEgg("pet_egg_a")
+	require.Equal(t, 50, c.All()[0].Rank, "best first")
+	s, ok := c.ByEgg("pet_egg_s01")
 	require.True(t, ok)
 	require.Equal(t, 1, s.Rank)
 
@@ -67,14 +68,14 @@ func TestRollEggOdds(t *testing.T) {
 		}
 		return got
 	}
-	require.Equal(t, n, count(400)[""], "nothing below level 430")
-	low := count(430)
-	require.InDelta(t, 0.50, float64(low["pet_egg_a"])/n, 0.01)
+	require.Equal(t, n, count(400)[""], "nothing below level 412")
+	low := count(412)
+	require.InDelta(t, 0.50, float64(low["pet_egg_s01"])/n, 0.01)
 	top := count(1000)
-	require.InDelta(t, 0.02, float64(top["pet_egg_t"])/n, 0.002)
-	mid := count(602) // the level 600 raid: ranks 1..6
-	require.Zero(t, mid["pet_egg_g"])
-	require.Positive(t, mid["pet_egg_f"])
+	require.InDelta(t, 0.02, float64(top["pet_egg_s50"])/n, 0.002)
+	mid := count(602) // the level 600 raid: ranks 1..16
+	require.Zero(t, mid["pet_egg_s17"])
+	require.Positive(t, mid["pet_egg_s16"])
 }
 
 func TestXPAndLevels(t *testing.T) {
@@ -87,7 +88,7 @@ func TestXPAndLevels(t *testing.T) {
 	require.Equal(t, MaxLevel, l)
 	require.Zero(t, xp)
 
-	s := species()[19]
+	s := species()[49]
 	require.InDelta(t, 0.03, s.BonusAt(1).Amount, 0.0001)
 	require.InDelta(t, 0.12, s.BonusAt(MaxLevel).Amount, 0.0001)
 	require.True(t, CanHunt(1, curveMob(15)))
@@ -99,7 +100,7 @@ func TestXPAndLevels(t *testing.T) {
 // start of the curve, for the weakest and the best species (PET_PACE=1 -v
 // prints the table).
 func TestPetPace(t *testing.T) {
-	for _, s := range []Species{species()[0], species()[19]} {
+	for _, s := range []Species{species()[0], species()[49]} {
 		for _, level := range []int{1, 10, 50, 100} {
 			mob := curveMob(Power(level))
 			res := Roll(int64(level), s, level, mob, 3600, rng)

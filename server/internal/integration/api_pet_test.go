@@ -17,22 +17,22 @@ func TestHTTPPets(t *testing.T) {
 	me := player{ID: uuid.MustParse(p.char)}
 
 	species := p.ok("GET", "/v1/pets", nil)["species"].([]any)
-	require.Len(t, species, 20)
-	require.Equal(t, "eternal_kirin", species[0].(map[string]any)["code"], "best first")
+	require.Len(t, species, 50)
+	require.Equal(t, "chaos_hydra", species[0].(map[string]any)["code"], "best first")
 
-	w.give(me, "pet_egg_eternal_kirin", 2)
+	w.give(me, "pet_egg_chaos_hydra", 2)
 	got := p.ok("GET", p.path("/pets"), nil)
 	require.Empty(t, got["pets"])
 	eggs := got["eggs"].([]any)
 	require.Len(t, eggs, 1)
 	egg := eggs[0].(map[string]any)
-	require.Equal(t, "eternal_kirin", egg["species"])
+	require.Equal(t, "chaos_hydra", egg["species"])
 	require.EqualValues(t, 2, egg["quantity"])
 
 	// Hatching takes one egg; the pet is in it for a day.
 	pt := p.ok("POST", p.path("/pets/hatch"), map[string]any{"item_id": egg["item_id"]})["pet"].(map[string]any)
 	require.Equal(t, false, pt["hatched"])
-	require.Equal(t, 1, w.count(me, "pet_egg_eternal_kirin"))
+	require.Equal(t, 1, w.count(me, "pet_egg_chaos_hydra"))
 	id := pt["id"].(string)
 	p.fail("POST", p.path("/pets/"+id+"/active"), map[string]any{"active": true}, 409, "E_PET_HATCHING")
 	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "marsh_lurker", "duration_seconds": 3600},

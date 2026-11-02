@@ -9,6 +9,8 @@ client/assets/items/<code>.webp.
     python scripts/item_art.py plan          # sheets and their items
     python scripts/item_art.py prompt N      # the prompt for sheet N
     python scripts/item_art.py cut [N ...]   # cut the saved sheets (all by default)
+    python scripts/item_art.py eggs-prompt   # pet eggs (DD-331): one sheet, eggs000.jpg
+    python scripts/item_art.py eggs-cut
 """
 import glob
 import io
@@ -175,6 +177,52 @@ def prompt(sheet):
     )
 
 
+# Pet eggs (DD-331), weakest to best: each its creature's look, the glow and
+# ornament rising with the rank. The sheet's last row is filler, not cut.
+EGGS = [
+    ('ember_fox', 'smooth oval egg of warm russet orange with glowing ember-red cracks and a curling fox-tail flame wisp'),
+    ('moss_turtle', 'round squat egg with a hexagonal turtle-shell pattern in mossy green and bark brown, tufts of moss'),
+    ('frost_owl', 'pale icy blue egg with white feather-shaped frost patterns and a few small ice crystals'),
+    ('thunder_hare', 'tall narrow egg of stormy grey-violet with crackling yellow lightning zigzags'),
+    ('shadow_cat', 'sleek glossy black egg with faint purple smoke wisps and two glowing amber cat-eye slits'),
+    ('crystal_beetle', 'faceted egg of translucent teal crystal with an iridescent green-purple beetle-wing sheen'),
+    ('storm_hawk', 'slate-blue egg streaked with white wind swirls, a single silver hawk feather beside it'),
+    ('iron_boar', 'heavy dark iron-grey egg bound with riveted metal bands and two small ivory tusks'),
+    ('spirit_wolf', 'softly glowing ghostly cyan egg, half transparent, a faint wolf-head rune inside'),
+    ('sand_wyrmling', 'sandy gold egg with dune-ripple bands and tiny ridged dragon scales'),
+    ('coral_serpent', 'coral pink and red egg encrusted with branching coral and small shells, a sea-serpent coil around it'),
+    ('lava_salamander', 'black basalt egg with bright molten orange lava veins and rising smoke'),
+    ('moon_stag', 'pearly silver-white egg with a crescent moon emblem and silver antler-shaped filigree'),
+    ('void_raven', 'deep indigo egg that swallows light, purple starry void specks, black raven feathers around its base'),
+    ('griffin_cub', 'cream and golden-brown egg, eagle-feather pattern above and tawny lion-fur texture below, gold trim'),
+    ('frost_drake', 'large white-blue egg with dragon scales and jagged ice spikes, cold mist, bright glow'),
+    ('celestial_lynx', 'midnight blue egg with glowing golden constellation lines and starlight tufts like lynx ears'),
+    ('phoenix_chick', 'radiant gold and crimson egg wreathed in living flames with a phoenix-feather crest, strong glow'),
+    ('star_dragon', 'majestic egg of deep violet dragon scales studded with glowing star gems and a nebula swirl, '
+                    'held in an ornate gold claw cradle'),
+    ('eternal_kirin', 'legendary jade and gold egg with flowing cloud patterns, a kirin horn crest and a rainbow aura, '
+                      'resting on an ornate golden lotus cradle'),
+]
+EGG_FILLER = ['plain brown speckled egg', 'small white egg in straw', 'grey stone egg', 'blue robin egg',
+              'cracked empty eggshell']
+
+
+def eggs_prompt():
+    parts = ['%s: %s' % (POS(k), d) for k, d in enumerate([d for _, d in EGGS] + EGG_FILLER)]
+    return (
+        'Generate a square image: a %dx%d grid of %d separate square fantasy RPG creature egg icons of equal size, '
+        'divided by thin solid black lines. Each cell shows exactly one whole egg, centered, upright, on the same '
+        'plain dark slate-blue backdrop with a soft vignette. Stylized hand-painted game icon art like polished '
+        'mobile MMORPG inventory icons: clean bold silhouettes, soft cel shading, crisp rim light, ornate details, '
+        'magical glow growing stronger from the first cell to the twentieth. Every egg must look unique: a '
+        'different shape, size, shell texture, ornament and colour palette from every other cell, never a recolour. '
+        'Each cell is always an egg (no hatched creature, no creature outside the shell). '
+        'Cells, in reading order: %s. '
+        'IMPORTANT: no captions, no labels, no names, no text or letters of any kind anywhere in the image; each '
+        'cell holds only the painted egg on its backdrop, its lower edge empty backdrop. No logos, no watermark, '
+        'no outer frame.' % (GRID, GRID, GRID * GRID, '; '.join(parts)))
+
+
 def gutters(gray, axis, grid=GRID):
     """The grid-1 dark lines across axis 0 (x) or 1 (y), each as (start, end)."""
     from PIL import ImageStat
@@ -198,28 +246,33 @@ def gutters(gray, axis, grid=GRID):
     return out
 
 
-def cut(numbers):
+def cut_sheet(path, codes):
+    """Cuts one saved sheet into <code>.webp, cells in reading order."""
     from PIL import Image
-    sheets = plan()
     os.makedirs(DST, exist_ok=True)
+    im = Image.open(path).convert('RGB')
+    gray = im.convert('L')
+    w, h = im.size
+    xs = [0] + [p for a, b in gutters(gray, 0) for p in (a, b + 1)] + [w]
+    ys = [0] + [p for a, b in gutters(gray, 1) for p in (a, b + 1)] + [h]
+    inset = max(2, w // 200)
+    for k, code in enumerate(codes):
+        r, c = divmod(k, GRID)
+        box = (xs[2 * c] + inset, ys[2 * r] + inset, xs[2 * c + 1] - inset, ys[2 * r + 1] - inset)
+        cell = im.crop(box)
+        side = min(cell.size)
+        x0, y0 = (cell.width - side) // 2, (cell.height - side) // 2
+        cell = cell.crop((x0, y0, x0 + side, y0 + side)).resize((SIZE, SIZE), Image.LANCZOS)
+        cell.save(os.path.join(DST, code + '.webp'), 'WEBP', quality=82, method=6)
+
+
+def cut(numbers):
+    sheets = plan()
     for path in sorted(glob.glob(os.path.join(SRC, 'sheet[0-9][0-9][0-9].*'))):
         no = int(os.path.basename(path)[5:8])
         if numbers and no not in numbers:
             continue
-        im = Image.open(path).convert('RGB')
-        gray = im.convert('L')
-        w, h = im.size
-        xs = [0] + [p for a, b in gutters(gray, 0) for p in (a, b + 1)] + [w]
-        ys = [0] + [p for a, b in gutters(gray, 1) for p in (a, b + 1)] + [h]
-        inset = max(2, w // 200)
-        for k, item in enumerate(sheets[no]):
-            r, c = divmod(k, GRID)
-            box = (xs[2 * c] + inset, ys[2 * r] + inset, xs[2 * c + 1] - inset, ys[2 * r + 1] - inset)
-            cell = im.crop(box)
-            side = min(cell.size)
-            x0, y0 = (cell.width - side) // 2, (cell.height - side) // 2
-            cell = cell.crop((x0, y0, x0 + side, y0 + side)).resize((SIZE, SIZE), Image.LANCZOS)
-            cell.save(os.path.join(DST, item['code'] + '.webp'), 'WEBP', quality=82, method=6)
+        cut_sheet(path, [i['code'] for i in sheets[no]])
         print('sheet%03d' % no, len(sheets[no]), 'items')
 
 
@@ -232,3 +285,8 @@ if __name__ == '__main__':
         print(prompt(plan()[int(sys.argv[2])]))
     elif cmd == 'cut':
         cut({int(a) for a in sys.argv[2:]})
+    elif cmd == 'eggs-prompt':
+        print(eggs_prompt())
+    elif cmd == 'eggs-cut':
+        cut_sheet(os.path.join(SRC, 'eggs000.jpg'), ['pet_egg_' + c for c, _ in EGGS])
+        print('eggs000', len(EGGS), 'eggs')
