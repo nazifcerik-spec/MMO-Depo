@@ -389,6 +389,62 @@ def nodes():
         (code, '%s, in %s' % (d, PAL[root])) for root, code, d in NODE_FIXES]
 
 
+# Gathering professions (DD-334): the Gather tab's kind tiles, beside the
+# crafting emblems.
+GATHER_PROFESSIONS = [
+    ('mining', 'a steel pickaxe over a chunk of glittering ore'),
+    ('herbalism', 'a curved sickle and a bundle of fresh green herbs with small flowers'),
+    ('woodcutting', 'a woodcutter axe sunk into a cut log with wood chips'),
+    ('fishing', 'a fishing rod with a silver fish leaping on the line over blue water'),
+    ('hunting', 'a hunting bow and arrow above a paw print in the grass'),
+]
+
+# Cooking (DD-268, DD-274): plated fish dishes, humble at level 1 and richer
+# up the ladder, ending on gold-trimmed feasts with a faint glow.
+FOODS = [
+    ('food_grilled_guppy', 'a tiny grilled fish on a plain wooden plank with a pinch of herbs'),
+    ('food_sardine_skewer', 'three grilled sardines on a wooden skewer'),
+    ('food_minnow_soup', 'a small clay bowl of clear soup with little fish and greens'),
+    ('food_pike_fillet', 'a seared pike fillet on a wooden board with a lemon wedge'),
+    ('food_lavender_carp', 'a whole roasted carp garnished with purple lavender sprigs'),
+    ('food_grilled_silver_herring', 'two grilled silvery herrings with char marks on a tin plate'),
+    ('food_herb_trout', 'a whole trout stuffed with green herbs on a wooden plate'),
+    ('food_smoked_salmon', 'thick slices of pink smoked salmon on a slate board'),
+    ('food_bass_stew', 'a hearty iron pot of bass stew with carrots and steam'),
+    ('food_grilled_lake_perch', 'a grilled striped perch on a bed of reeds'),
+    ('food_grilled_red_snapper', 'a grilled red snapper with chili slices on a ceramic plate'),
+    ('food_grilled_river_catfish', 'a grilled whiskered catfish on a wooden platter'),
+    ('food_tuna_steak', 'a thick seared tuna steak with pepper crust on a plate'),
+    ('food_grilled_rainbow_trout', 'a grilled rainbow trout with shimmering pink and green skin'),
+    ('food_royal_carp_feast', 'a golden carp on a silver platter with fruit and herbs'),
+    ('food_grilled_emerald_pike', 'a grilled pike with glossy emerald-green scales on a silver plate'),
+    ('food_grilled_silver_barracuda', 'a long grilled silver barracuda on a fine platter'),
+    ('food_sturgeon_pie', 'a golden-crusted fish pie with a fish-shaped pastry top'),
+    ('food_swordfish_grill', 'a swordfish steak with its long bill beside it on a grill plate'),
+    ('food_grilled_stormscale_eel', 'a grilled dark blue eel crackling with tiny sparks on a platter'),
+    ('food_frostfin_chowder', 'a bowl of creamy chowder with icy blue fish fins and frost on the rim'),
+    ('food_grilled_obsidian_tuna', 'a black glossy tuna steak with glowing ember cracks on a dark plate'),
+    ('food_marlin_platter', 'a grand marlin platter with sliced fish, lemons and greens'),
+    ('food_grilled_golden_carp', 'a gleaming golden grilled carp on an ornate gold plate'),
+    ('food_dragonblood_serpentfish', 'a crimson serpent-shaped fish in a dark red sauce on a gold platter'),
+    ('food_grilled_void_angler', 'a grilled dark purple anglerfish with a softly glowing lure on a black plate'),
+    ('food_moonfish_delicacy', 'a pale silver moonfish delicacy with a faint moonlight glow on fine porcelain'),
+    ('food_phoenix_koi_feast', 'an orange-gold koi feast wreathed in gentle flames on a gold platter'),
+    ('food_grilled_abyssal_dragonfish', 'a fearsome grilled deep-sea dragonfish with glowing teal spots on a dark platter'),
+    ('food_leviathan_banquet', 'a lavish banquet platter of giant sea-beast cuts, gold trim and a radiant glow'),
+]
+
+# Potions (DD-241, DD-288): the missing rungs of the flask ladder; the same
+# gold-framed flasks as the existing ones, red for health, blue for mana.
+POTIONS = [
+    ('potion_hp_supreme', 'the largest and most ornate crimson crystal flask with gold filigree wings and a radiant red glow'),
+    ('potion_mp_medium', 'a round blue flask with a gold neck band and a cork'),
+    ('potion_mp_large', 'a larger blue flask in a gold cage frame with a cork'),
+    ('potion_mp_xlarge', 'a tall faceted blue crystal flask with a spiky gold frame'),
+    ('potion_mp_huge', 'a big faceted blue crystal flask with many gold spikes and swirling mana inside'),
+    ('potion_mp_supreme', 'the largest and most ornate sapphire crystal flask with gold filigree wings and a radiant blue glow'),
+]
+
 MEDALLION = ('Each cell is one round medallion that fills its square, with an ornate gold rim, on a near-black '
              'background. Stylized hand-painted high-fantasy MMORPG icon art, bold readable shapes that stay clear '
              'when tiny, vivid colours, dramatic glow and rim lighting.')
@@ -422,6 +478,20 @@ SETS = {
                          'clean bold silhouettes, soft cel shading, crisp rim light. The symbol is the main feature: '
                          'big, bold, high contrast, filling most of the scroll face, readable even when the icon is '
                          'tiny; the scroll face shows only that symbol, never any writing:'),
+    'gather_professions': dict(dir='professions', mode='medallion', size=160, entries=lambda: GATHER_PROFESSIONS,
+                               head='fantasy gathering profession emblem icons. ' + MEDALLION + ' Each emblem shows '
+                                    'the tools of one gathering trade, warm outdoor light:'),
+    'foods': dict(dir='items', mode='item', size=128, grid=5, entries=lambda: FOODS,
+                  head='fantasy RPG cooked food icons. Each cell shows exactly one dish, whole and centered, seen '
+                       'from a slight high angle, on the same plain dark slate-blue backdrop with a soft vignette. '
+                       'Stylized hand-painted game icon art like polished mobile MMORPG inventory icons: clean bold '
+                       'silhouettes, soft cel shading, crisp rim light, appetizing warm colours. Every dish looks '
+                       'unique:'),
+    'potions': dict(dir='items', mode='item', size=128, entries=lambda: POTIONS,
+                    head='fantasy RPG potion icons. Each cell shows exactly one corked potion flask, whole and '
+                         'centered, on the same plain pure black background. Stylized hand-painted game icon art '
+                         'like polished mobile MMORPG inventory icons: glossy glass, gold metal frames, glowing liquid, '
+                         'bold silhouettes, crisp rim light:'),
     'class_portraits': dict(dir='classes', mode='single', size=(480, 640), entries=lambda: CLASS_PORTRAITS),
     'materials': dict(dir='items', mode='item', size=128, entries=lambda: MATERIALS,
                       head='fantasy RPG crafting material icons. Each cell shows exactly one item, whole and '

@@ -341,10 +341,14 @@ class _ActivityViewState extends State<ActivityView> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: Palette.accent.withValues(alpha: 0.15),
-                    child: Icon(activityIcon(a.contract.kind), color: Palette.accent),
+                  CircleArt(
+                    asset: 'assets/professions/${a.contract.kind}.webp',
+                    size: 44,
+                    fallback: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: Palette.accent.withValues(alpha: 0.15),
+                      child: Icon(activityIcon(a.contract.kind), color: Palette.accent),
+                    ),
                   ),
                   const SizedBox(width: Space.md),
                   Expanded(
@@ -448,7 +452,11 @@ class _KindTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(activityIcon(kind), color: selected ? Palette.accent : Palette.textSecondary, size: 28),
+              CircleArt(
+                asset: 'assets/professions/$kind.webp',
+                size: 36,
+                fallback: Icon(activityIcon(kind), color: selected ? Palette.accent : Palette.textSecondary, size: 28),
+              ),
               const SizedBox(height: Space.sm),
               Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
               if (level != null) Text(level!, style: const TextStyle(fontSize: 11, color: Palette.textSecondary)),
