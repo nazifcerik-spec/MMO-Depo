@@ -3283,6 +3283,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-335 — Yemek ve iksir görselleri: beyaz zeminden şeffaf ikon
+
+**Context:** 30 yemeğin ve 6 iksirin (Yüce Can, Orta..Yüce Mana) görseli yoktu. Mevcut iksir ve malzeme ikonları şeffaf zeminli PNG; ekipman sayfaları ise koyu zeminli WebP.
+**Decision:** `scripts/item_art.py` `food-prompt` 36 eşyayı tek 6×6 Gemini sayfasında ister (yemekler kamp yemeğinden efsanevi şölene her biri farklı tabak/balık/süs; iksirler mevcut can iksiri ailesinin üslubu: yüzeyli cam, mantar tıpa, altın işçilik, kademeyle süslenir). Zemin düz beyaz istenir; `food-cut` hücreyi keser, beyaz zemini hücre kenarından taşma doldurmayla siler (eşyanın içindeki beyazlar kalır), eşyayı sınırına kırpıp ortalar ve `assets/items/<kod>.png` (128×128, şeffaf) yazar. Kaynak `client/art_originals/items/food000.jpg` (git dışı).
+**Consequences:** Yeni yemek/iksir = listeye bir satır + sayfanın yeniden üretimi. Çantada yemek ve iksirler malzemelerle aynı şeffaf görünümde.
+**Tarih:** 2026-11-02
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

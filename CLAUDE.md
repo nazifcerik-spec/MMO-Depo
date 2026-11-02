@@ -280,6 +280,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 132. **50 pet türü (bitti)** — Sprint 132, DD-334. `scripts/pet_data.py` (50 tür, 4 dil) → `gen_pets.py` → `content/pets.yaml`; `min_mob_level` 412..1000, yumurta %50 → %2. Migration 0059 eski 20 türün petlerini/yumurtalarını (eşya, pazar, fiyat geçmişi, geri alım) aynı konumdaki yeni türe taşır.
 
+133. **Yemek + iksir görsel tarifi (araç hazır — görsel bekliyor)** — DD-335. `python scripts/item_art.py food-prompt` (30 yemek + 6 iksir, tek 6×6 sayfa, beyaz zemin) → `client/art_originals/items/food000.jpg` → `food-cut` → şeffaf `assets/items/<kod>.png`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

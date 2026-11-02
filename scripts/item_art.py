@@ -11,6 +11,8 @@ client/assets/items/<code>.webp.
     python scripts/item_art.py cut [N ...]   # cut the saved sheets (all by default)
     python scripts/item_art.py eggs-prompt   # pet eggs (DD-331): one sheet, eggs000.jpg
     python scripts/item_art.py eggs-cut
+    python scripts/item_art.py food-prompt   # foods + potions: one 6x6 sheet, food000.jpg
+    python scripts/item_art.py food-cut      # -> <code>.png, transparent like the older potions
 """
 import glob
 import io
@@ -223,6 +225,121 @@ def eggs_prompt():
         'no outer frame.' % (GRID, GRID, GRID * GRID, '; '.join(parts)))
 
 
+# Foods and potions (DD-335), one 6x6 sheet in reading order. They stand on
+# a flat white backdrop that the cut clears, so they match the transparent
+# potion and material icons already in the bag.
+FOOD_GRID = 6
+FOODS = [
+    ('food_grilled_guppy', 'two tiny grilled guppies on a plain wooden plank with a sprig of green grass'),
+    ('food_sardine_skewer', 'a wooden skewer of four grilled sardines with yellow dandelion petals'),
+    ('food_minnow_soup', 'a small clay bowl of clear soup with little minnows and fresh mint leaves, light steam'),
+    ('food_pike_fillet', 'a seared pike fillet on a round wooden board with chamomile flowers'),
+    ('food_lavender_carp', 'a whole baked carp on an oval clay dish scattered with purple lavender sprigs'),
+    ('food_grilled_silver_herring', 'three shiny grilled silver herrings fanned on a slate tile with sunflower petals'),
+    ('food_herb_trout', 'a whole trout with a green herb crust on a long wooden platter, lemon-like root slices'),
+    ('food_smoked_salmon', 'thick orange smoked salmon slices on a cedar plank with soft green moss garnish, wisps of smoke'),
+    ('food_bass_stew', 'a cast-iron pot of hearty brown fish stew with bass chunks and reeds, rising steam'),
+    ('food_grilled_lake_perch', 'a striped grilled lake perch on a blue glazed plate with blue thistle flowers'),
+    ('food_grilled_red_snapper', 'a bright red grilled snapper on a copper platter with red sage leaves'),
+    ('food_grilled_river_catfish', 'a big whiskered grilled catfish on a dark wooden tray with dark purple berries'),
+    ('food_tuna_steak', 'a thick seared tuna steak with grill marks and ginseng root slices on a white porcelain plate'),
+    ('food_grilled_rainbow_trout', 'a grilled trout with iridescent rainbow skin on a polished mahogany board with golden clovers'),
+    ('food_royal_carp_feast', 'a large ornate golden-rimmed platter with a glazed whole carp, dark roots and small dishes, a little crown motif'),
+    ('food_grilled_emerald_pike', 'a grilled pike with glittering emerald-green scales on a silver plate with silver leaves'),
+    ('food_grilled_silver_barracuda', 'a long sleek grilled silver barracuda on a gilded oak board with blood-red thorny herbs'),
+    ('food_sturgeon_pie', 'a golden-crusted round pie with a sturgeon fin pattern and pale glowing ghost mushrooms on top'),
+    ('food_swordfish_grill', 'a crimson swordfish steak with crackling blue lightning grill marks on a crystal-white plate, stormflowers'),
+    ('food_grilled_stormscale_eel', 'a coiled grilled eel with blue-grey storm scales on a smouldering ember-wood plank, tiny sparks'),
+    ('food_frostfin_chowder', 'a frosty pale blue bowl of creamy chowder with salmon chunks, icy frostbloom flowers, cold mist'),
+    ('food_grilled_obsidian_tuna', 'a glossy black-skinned grilled tuna on a dark red bloodwood tray with violet moonshade petals'),
+    ('food_marlin_platter', 'a translucent ghostly spirit marlin on a pale jade platter with glowing white spirit lotus, faint aura'),
+    ('food_grilled_golden_carp', 'an imperial golden koi grilled to shining gold on an ironwood tray with ancient mandrake root, warm glow'),
+    ('food_dragonblood_serpentfish', 'a crystal-scaled serpentfish coiled on a star-studded dark plate with red dragonblood herbs, red glow'),
+    ('food_grilled_void_angler', 'a deep purple void anglerfish with a glowing lure on a moonwood platter, astral flowers, starry specks'),
+    ('food_moonfish_delicacy', 'an elegant silver moonfish delicacy on a crescent-shaped dish with glowing void orchids, soft moonlight'),
+    ('food_phoenix_koi_feast', 'a lavish feast tray with a fiery orange phoenix koi, flaming feather garnish and celestial lotus, radiant'),
+    ('food_grilled_abyssal_dragonfish', 'a fearsome dark-blue abyssal dragonfish grilled on an ornate ash-wood platter with glowing phoenix petals'),
+    ('food_leviathan_banquet', 'a grand royal banquet platter with huge leviathan scale steaks, world-tree leaves and gold goblets, '
+                               'legendary golden glow'),
+]
+_FLASK = 'glass potion flask with a cork stopper and polished gold metalwork, filled with glowing swirling '
+POTIONS = [
+    ('potion_hp_supreme', 'the most splendid ' + _FLASK + 'crimson red liquid: a big many-faceted crystal flask '
+                          'in a gold frame with spikes, small wings and red gems, strong red radiance'),
+    ('potion_mp_medium', 'round ' + _FLASK + 'deep blue mana liquid, a gold collar and a simple gold frame with small spikes'),
+    ('potion_mp_large', 'faceted gem-cut ' + _FLASK + 'deep blue mana liquid, gold caps on its corners'),
+    ('potion_mp_xlarge', 'larger faceted ' + _FLASK + 'bright blue mana liquid, gold spikes and one blue gem'),
+    ('potion_mp_huge', 'big faceted ' + _FLASK + 'bright blue mana liquid, many gold spikes and several blue gems'),
+    ('potion_mp_supreme', 'the most splendid ' + _FLASK + 'brilliant blue mana liquid: a big many-faceted crystal '
+                          'flask in a gold frame with spikes, small wings and blue gems, strong blue radiance'),
+]
+CONSUMABLES = FOODS + POTIONS
+
+
+def food_prompt():
+    pos = lambda k: 'row %d col %d' % (k // FOOD_GRID + 1, k % FOOD_GRID + 1)
+    parts = ['%s: %s' % (pos(k), d) for k, (_, d) in enumerate(CONSUMABLES)]
+    n = FOOD_GRID * FOOD_GRID
+    return (
+        'Generate a square image: a %dx%d grid of %d separate square fantasy RPG consumable item icons of equal '
+        'size, divided by thin solid black lines. Each cell shows exactly one item, whole, centered and seen from '
+        'a slight three-quarter angle, filling most of the cell, on a flat solid pure white background with no '
+        'shadow, no vignette, no gradient and no glow spilling onto the background. Stylized hand-painted game '
+        'icon art like polished mobile MMORPG inventory icons: clean bold silhouettes with a thin dark outline, '
+        'soft cel shading, crisp rim light, rich saturated colours. The first %d cells are cooked fish dishes that '
+        'grow from humble camp food to legendary feasts, each on a different plate, board, bowl or tray, with a '
+        'different fish, garnish and colour palette, never a recolour. The last %d cells are potion flasks in one '
+        'family style (faceted glass, cork, gold metalwork), growing more ornate along the row. '
+        'Cells, in reading order: %s. '
+        'IMPORTANT: no captions, no labels, no item names, no text or letters of any kind anywhere in the image; '
+        'each cell holds only the painted item on white, with white margins all around it. No logos, no '
+        'watermark, no outer frame.'
+        % (FOOD_GRID, FOOD_GRID, n, len(FOODS), len(POTIONS), '; '.join(parts)))
+
+
+def clear_backdrop(cell, tol=48):
+    """Makes the white backdrop around the item transparent: flood fill from
+    the cell's border, so whites inside the item stay."""
+    from PIL import Image, ImageChops, ImageDraw, ImageFilter
+    rgb = cell.convert('RGB')
+    w, h = rgb.size
+    key = (255, 0, 255)
+    border = [(x, y) for x in range(0, w, 4) for y in (0, h - 1)] + \
+             [(x, y) for y in range(0, h, 4) for x in (0, w - 1)]
+    for x, y in border:
+        px = rgb.getpixel((x, y))
+        if px != key and min(px) > 200:
+            ImageDraw.floodfill(rgb, (x, y), key, thresh=tol)
+    keyed = ImageChops.difference(rgb, Image.new('RGB', rgb.size, key)).convert('L')
+    alpha = keyed.point(lambda v: 255 if v else 0).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.7))
+    out = cell.convert('RGBA')
+    out.putalpha(alpha)
+    return out
+
+
+def cut_transparent(path, codes, grid):
+    """Cuts a white-backdrop sheet into transparent <code>.png, each item
+    trimmed to its outline and centered with a small margin."""
+    from PIL import Image
+    os.makedirs(DST, exist_ok=True)
+    im = Image.open(path).convert('RGB')
+    gray = im.convert('L')
+    w, h = im.size
+    xs = [0] + [p for a, b in gutters(gray, 0, grid) for p in (a, b + 1)] + [w]
+    ys = [0] + [p for a, b in gutters(gray, 1, grid) for p in (a, b + 1)] + [h]
+    inset = max(2, w // 200)
+    for k, code in enumerate(codes):
+        r, c = divmod(k, grid)
+        cell = im.crop((xs[2 * c] + inset, ys[2 * r] + inset, xs[2 * c + 1] - inset, ys[2 * r + 1] - inset))
+        item = clear_backdrop(cell)
+        box = item.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox() or (0, 0) + item.size
+        item = item.crop(box)
+        side = round(max(item.size) * 1.06)
+        sq = Image.new('RGBA', (side, side), (0, 0, 0, 0))
+        sq.alpha_composite(item, ((side - item.width) // 2, (side - item.height) // 2))
+        sq.resize((SIZE, SIZE), Image.LANCZOS).save(os.path.join(DST, code + '.png'), optimize=True)
+
+
 def gutters(gray, axis, grid=GRID):
     """The grid-1 dark lines across axis 0 (x) or 1 (y), each as (start, end)."""
     from PIL import ImageStat
@@ -290,3 +407,11 @@ if __name__ == '__main__':
     elif cmd == 'eggs-cut':
         cut_sheet(os.path.join(SRC, 'eggs000.jpg'), ['pet_egg_' + c for c, _ in EGGS])
         print('eggs000', len(EGGS), 'eggs')
+    elif cmd == 'food-prompt':
+        print(food_prompt())
+    elif cmd == 'food-cut':
+        src = sorted(glob.glob(os.path.join(SRC, 'food000.*')))
+        if not src:
+            sys.exit('no %s' % os.path.join(SRC, 'food000.jpg'))
+        cut_transparent(src[0], [c for c, _ in CONSUMABLES], FOOD_GRID)
+        print('food000', len(CONSUMABLES), 'items')
