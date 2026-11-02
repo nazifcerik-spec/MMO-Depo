@@ -5865,6 +5865,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lvl {from}–{to}'**
   String petStageLevels(int from, int to);
+
+  /// No description provided for @regionMobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Monsters'**
+  String get regionMobs;
+
+  /// No description provided for @regionDungeons.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeons and raids'**
+  String get regionDungeons;
+
+  /// No description provided for @regionGather.
+  ///
+  /// In en, this message translates to:
+  /// **'Resources'**
+  String get regionGather;
+
+  /// No description provided for @regionPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Places here'**
+  String get regionPlaces;
+
+  /// No description provided for @regionRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid'**
+  String get regionRaid;
+
+  /// No description provided for @regionEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No monsters, dungeons, resources or quests belong to this region.'**
+  String get regionEmpty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

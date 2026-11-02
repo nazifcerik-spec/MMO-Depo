@@ -821,6 +821,26 @@ class FakeBackend {
       activeHunt = null;
       return json(200, {'state': 'cancelled'});
     }
+    if (path == '/v1/world/content') {
+      return json(200, {
+        'regions': {
+          'whisperwood': {
+            'mobs': [
+              {'code': 'grey_wolf', 'level': 2},
+            ],
+            'dungeons': [
+              {'code': 'old_keep', 'min_level': 40, 'raid': true},
+            ],
+            'gather': [
+              {'code': 'copper_ore', 'kind': 'mining', 'level': 1},
+            ],
+            'quests': [
+              {'code': 'side_wolf_cull', 'category': 'side', 'min_level': 1},
+            ],
+          },
+        },
+      });
+    }
     if (path == '/v1/world/regions') {
       Map<String, Object> r(String code, String kind, int lvl, int x, int y, [String? parent]) => {
         'code': code,

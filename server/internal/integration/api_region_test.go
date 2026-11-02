@@ -60,6 +60,18 @@ func TestHTTPWorldMap(t *testing.T) {
 	require.Contains(t, links, map[string]any{"a": "greenwood", "b": "ironhold_city", "travel_seconds": 120.0})
 }
 
+// The map's region cards (DD-338): Greenwood lists its own monsters.
+func TestHTTPRegionContent(t *testing.T) {
+	p := newHTTPPlayer(t, "warrior")
+	regions := p.ok("GET", "/v1/world/content", nil)["regions"].(map[string]any)
+	require.Len(t, regions, 54)
+	green := regions["greenwood"].(map[string]any)
+	require.NotEmpty(t, green["mobs"])
+	for _, k := range []string{"dungeons", "gather", "quests"} {
+		require.Contains(t, green, k)
+	}
+}
+
 // Any region is one journey away at the shortest route's time (DD-280):
 // from the city, Emberpeak via the Sundermere hub (60 + 360 s).
 func TestHTTPTravelAnywhere(t *testing.T) {

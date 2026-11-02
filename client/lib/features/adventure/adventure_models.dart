@@ -314,6 +314,38 @@ class WorldMap {
   }
 }
 
+/// What one region holds (DD-338): its monsters, dungeons and raids,
+/// gathering resources and the quests sent there.
+class RegionContent {
+  const RegionContent({this.mobs = const [], this.dungeons = const [], this.gather = const [], this.quests = const []});
+
+  factory RegionContent.fromJson(Map<String, dynamic> j) {
+    List<Map<String, dynamic>> rows(String k) => (j[k] as List? ?? const []).cast<Map<String, dynamic>>();
+    int n(Map<String, dynamic> r, String k) => (r[k] as num?)?.toInt() ?? 0;
+    return RegionContent(
+      mobs: [for (final r in rows('mobs')) (code: r['code'] as String, level: n(r, 'level'))],
+      dungeons: [
+        for (final r in rows('dungeons'))
+          (code: r['code'] as String, level: n(r, 'min_level'), raid: r['raid'] as bool? ?? false),
+      ],
+      gather: [
+        for (final r in rows('gather')) (code: r['code'] as String, kind: r['kind'] as String, level: n(r, 'level')),
+      ],
+      quests: [
+        for (final r in rows('quests'))
+          (code: r['code'] as String, category: r['category'] as String, level: n(r, 'min_level')),
+      ],
+    );
+  }
+
+  final List<({String code, int level})> mobs;
+  final List<({String code, int level, bool raid})> dungeons;
+  final List<({String code, String kind, int level})> gather;
+  final List<({String code, String category, int level})> quests;
+
+  bool get isEmpty => mobs.isEmpty && dungeons.isEmpty && gather.isEmpty && quests.isEmpty;
+}
+
 class Neighbor {
   const Neighbor(this.region, this.travel);
 

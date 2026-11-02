@@ -446,5 +446,11 @@
   "errPetCap": "Ya tienes el máximo de mascotas.",
   "errPetHatching": "La mascota aún no ha eclosionado.",
   "errPetHunting": "La mascota ya está cazando.",
-  "petStageLevels": "Nv {from}–{to}"
+  "petStageLevels": "Nv {from}–{to}",
+  "regionMobs": "Monstruos",
+  "regionDungeons": "Mazmorras e incursiones",
+  "regionGather": "Recursos",
+  "regionPlaces": "Lugares aquí",
+  "regionRaid": "Incursión",
+  "regionEmpty": "Ningún monstruo, mazmorra, recurso ni misión pertenece a esta región."
 }

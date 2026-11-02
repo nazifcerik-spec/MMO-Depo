@@ -961,5 +961,11 @@
   "errPetCap": "Tutabileceğin kadar petin var.",
   "errPetHatching": "Pet henüz yumurtadan çıkmadı.",
   "errPetHunting": "Pet zaten avda.",
-  "petStageLevels": "Sv {from}–{to}"
+  "petStageLevels": "Sv {from}–{to}",
+  "regionMobs": "Canavarlar",
+  "regionDungeons": "Zindanlar ve baskınlar",
+  "regionGather": "Toplama kaynakları",
+  "regionPlaces": "Buradaki yerler",
+  "regionRaid": "Baskın",
+  "regionEmpty": "Bu bölgeye ait canavar, zindan, kaynak ya da görev yok."
 }

@@ -3332,4 +3332,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String petStageLevels(int from, int to) {
     return 'Lvl $from–$to';
   }
+
+  @override
+  String get regionMobs => 'Monsters';
+
+  @override
+  String get regionDungeons => 'Dungeons and raids';
+
+  @override
+  String get regionGather => 'Resources';
+
+  @override
+  String get regionPlaces => 'Places here';
+
+  @override
+  String get regionRaid => 'Raid';
+
+  @override
+  String get regionEmpty => 'No monsters, dungeons, resources or quests belong to this region.';
 }

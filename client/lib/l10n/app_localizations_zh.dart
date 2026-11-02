@@ -3319,4 +3319,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String petStageLevels(int from, int to) {
     return '$from–$to级';
   }
+
+  @override
+  String get regionMobs => '怪物';
+
+  @override
+  String get regionDungeons => '地下城与团队副本';
+
+  @override
+  String get regionGather => '采集资源';
+
+  @override
+  String get regionPlaces => '此处地点';
+
+  @override
+  String get regionRaid => '团队副本';
+
+  @override
+  String get regionEmpty => '此区域没有专属的怪物、地下城、资源或任务。';
 }

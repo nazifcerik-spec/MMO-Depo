@@ -1245,11 +1245,19 @@ void main() {
     // Far regions are one journey away too (DD-280): the shortest road's time.
     await openRegion('void_coast');
     expect(find.text('Travel time: 25m'), findsOneWidget);
+    expect(find.text('No monsters, dungeons, resources or quests belong to this region.'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byKey(const Key('map-go'))).onPressed, isNull, reason: 'needs level 90');
     await closeSheet();
 
     await openRegion('whisperwood');
     expect(find.text('Travel time: 5m'), findsOneWidget);
+    // Its card lists everything found there (DD-338); out-of-reach levels are dimmed.
+    expect(find.text('Monsters (1)'), findsOneWidget);
+    expect(find.text('Grey Wolf'), findsOneWidget);
+    expect(find.text('Dungeons and raids (1)'), findsOneWidget);
+    expect(find.text('Raid'), findsOneWidget);
+    expect(find.text('Resources (1)'), findsOneWidget);
+    expect(find.text('Quests (1)'), findsOneWidget);
     await tester.tap(find.byKey(const Key('map-go')));
     await tester.pumpAndSettle();
     expect(be.travel!['to_region_code'], 'whisperwood');

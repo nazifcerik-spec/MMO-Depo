@@ -94,6 +94,17 @@ void main() {
     expectArt('items', consumables);
   });
 
+  // Art in a folder pubspec does not list never reaches the app (the quest
+  // medallions shipped that way until DD-338).
+  test('every asset folder is bundled', () {
+    final pubspec = File('pubspec.yaml').readAsStringSync();
+    final missing = [
+      for (final d in Directory('assets').listSync().whereType<Directory>())
+        if (!pubspec.contains('- assets/${d.uri.pathSegments.where((s) => s.isNotEmpty).last}/')) d.path,
+    ];
+    expect(missing, isEmpty);
+  });
+
   test('every monster and class skill has art (DD-336)', () {
     final mobs = codes('mobs.yaml', RegExp(r'^  - code: (\w+)', multiLine: true)).toList();
     expect(mobs, hasLength(146));

@@ -17,6 +17,7 @@ import '../events/events_panel.dart';
 import 'adventure_models.dart';
 import 'adventure_repository.dart';
 import 'fight_report.dart';
+import 'region_card.dart';
 import 'world_map.dart';
 import '../../shared/content_names.dart';
 import '../../shared/quantity_field.dart';
@@ -890,6 +891,9 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
   Location? _loc;
   WorldMap? _map;
 
+  /// Region cards (DD-338); empty when the server has none, so travel still works.
+  Map<String, RegionContent> _content = const {};
+
   @override
   void initState() {
     super.initState();
@@ -902,6 +906,11 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
     final r = await Future.wait<Object>([widget.repo.location(), widget.repo.worldMap()]);
     _loc = r[0] as Location;
     _map = r[1] as WorldMap;
+    try {
+      _content = await widget.repo.regionContent();
+    } on ApiError {
+      _content = const {};
+    }
     if (before != null && before != _loc!.region.code) widget.moved.value++;
   }
 
@@ -924,24 +933,30 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
     await fetch();
   });
 
-  /// A region tapped on the map: its details, and Go for a direct destination.
+  /// A region tapped on the map: its details, Go for a direct destination,
+  /// and everything found there (DD-338).
   Future<void> _details(RegionInfo r) async {
     final l = AppLocalizations.of(context);
     final loc = _loc!;
     final travel = loc.routes[r.code];
     final locked = r.minLevel > widget.level;
+    final places = [
+      for (final x in _map!.regions.values)
+        if (x.parent == r.code) x.code,
+    ];
     final go = await showModalBottomSheet<bool>(
       context: context,
       showDragHandle: true,
+      isScrollControlled: true,
       backgroundColor: Palette.bgSurface,
       builder: (c) {
         final text = Theme.of(c).textTheme;
         return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(c).height * 0.85),
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
               children: [
                 Row(
                   children: [
@@ -964,6 +979,12 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
                   ),
                 ] else
                   Text(l.mapNoRoad, style: text.bodyMedium),
+                const Divider(height: Space.xl),
+                RegionContentList(
+                  content: _content[r.code] ?? const RegionContent(),
+                  places: places,
+                  level: widget.level,
+                ),
               ],
             ),
           ),

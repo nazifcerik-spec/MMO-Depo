@@ -12,6 +12,7 @@ class AdventureRepository {
   List<MobInfo>? _mobs;
   List<DungeonInfo>? _dungeons;
   WorldMap? _map;
+  Map<String, RegionContent>? _regionContent;
 
   String get _char => '/v1/character/$characterId';
 
@@ -146,6 +147,12 @@ class AdventureRepository {
 
   /// Regions with map positions and roads (DD-279); cached.
   Future<WorldMap> worldMap() async => _map ??= WorldMap.fromJson(await api.get('/v1/world/regions'));
+
+  /// Every region's contents for the map's region card (DD-338); cached.
+  Future<Map<String, RegionContent>> regionContent() async => _regionContent ??= {
+    for (final e in ((await api.get('/v1/world/content'))['regions'] as Map<String, dynamic>? ?? const {}).entries)
+      e.key: RegionContent.fromJson(e.value as Map<String, dynamic>),
+  };
 
   Future<void> travel(String toRegion) => api.post('$_char/travel', {'to_region_code': toRegion});
 

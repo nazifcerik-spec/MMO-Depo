@@ -446,5 +446,11 @@
   "errPetCap": "宠物数量已达上限。",
   "errPetHatching": "宠物尚未孵化。",
   "errPetHunting": "宠物已在狩猎中。",
-  "petStageLevels": "{from}–{to}级"
+  "petStageLevels": "{from}–{to}级",
+  "regionMobs": "怪物",
+  "regionDungeons": "地下城与团队副本",
+  "regionGather": "采集资源",
+  "regionPlaces": "此处地点",
+  "regionRaid": "团队副本",
+  "regionEmpty": "此区域没有专属的怪物、地下城、资源或任务。"
 }

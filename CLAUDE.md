@@ -286,6 +286,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 135. **Durum animasyonları (bitti)** — Sprint 135, DD-337. `shared/motion.dart` (`GlowPulse`, `SwapIn`, `PopIn`, `CountUp`, `motion()` azaltılmış hareket). Pet evre/kuluçka geçişi, `StatBar` dolumu, ganimet sayfası seviye rozeti + sayım + efsanevi parıltı, efsun parıltısı, hazır iş nabzı, görev kartı, harita rotası çizimi. Öneri listesi `docs/animation-proposals.md` durum sütunlu.
 
+136. **Harita bölge kartı (bitti)** — Sprint 136, DD-338. `GET /v1/world/content` (`contentpack.BuildRegionContent`): bölge başı canavar, zindan/baskın, toplama kaynağı, görev. Haritada bölgeye dokununca kaydırılabilir kart (`region_card.dart`), görselli ve seviyeli. Fix: görev madalyonları pubspec'te tanımlı değildi; her asset klasörü test ediliyor.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

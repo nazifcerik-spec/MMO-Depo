@@ -3310,6 +3310,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-338 — Haritada bölge içerik kartı
+
+**Context:** Haritada bölgeye dokununca yalnız ad, seviye ve yolculuk süresi görünüyordu; oyuncu bir bölgede ne avlayacağını, hangi zindana gireceğini, ne toplayacağını ve hangi görevin oraya gönderdiğini bilemiyordu.
+**Decision:** Sunucu: `contentpack.BuildRegionContent` içerik paketinden bölge başı dizin kurar (canavarlar `region_code`, zindan ve baskınlar `region_code` + `raid`, toplama kaynakları `gather.region`, görevler hedefindeki ilk canavar ya da zindanın bölgesi; baskın boss'u kendi baskınıyla görünür; zindan türü bölge = giriş, üst bölgesinin zindanlarını gösterir). `Loader.RegionContent()` her yüklemede yenilenir; `GET /v1/world/content` (oturumlu, 5 dk önbellek). İstemci: `AdventureRepository.regionContent()` (önbellek; uç yoksa kart boş kalır, yolculuk bozulmaz), harita detayı kaydırılabilir alt sayfa + `RegionContentList` (buradaki yerler, canavarlar, zindan ve baskınlar, toplama kaynakları, görevler; görselli, seviye, ulaşılmamış seviye soluk/kırmızı). Fix: `assets/quests/` pubspec'te yoktu, görev madalyonları uygulamaya hiç girmiyordu; `art_sets_test` her `assets/` klasörünün tanımlı olduğunu denetler.
+**Consequences:** Yalnız bölgenin kendi içeriği listelenir (komşudan avlanabilen canavarlar kendi bölgesinde). Şehir/kıtalarda yalnız buradaki yerler görünür. Testler: `TestRegionContentShipped`, `TestRegionContentQuestFollowsItsTarget`, entegrasyon `TestHTTPRegionContent`, istemci yolculuk akışı.
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

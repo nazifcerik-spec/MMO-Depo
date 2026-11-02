@@ -278,10 +278,20 @@ type Loader struct {
 	Log       *slog.Logger
 	reloaders []Reloader
 	strings   atomic.Pointer[Strings]
+	regions   atomic.Pointer[map[string]*RegionContent]
 }
 
 // Strings returns the content names of the last successful Load (nil before).
 func (l *Loader) Strings() *Strings { return l.strings.Load() }
+
+// RegionContent returns what each region holds as of the last successful
+// Load (nil before), DD-338.
+func (l *Loader) RegionContent() map[string]*RegionContent {
+	if m := l.regions.Load(); m != nil {
+		return *m
+	}
+	return nil
+}
 
 func New(dir string, pool *pgxpool.Pool, logger *slog.Logger) *Loader {
 	if logger == nil {
@@ -384,6 +394,8 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 		}
 	}
 	l.strings.Store(p.Strings)
+	rc := BuildRegionContent(p)
+	l.regions.Store(&rc)
 
 	l.Log.InfoContext(ctx, "content pack loaded",
 		slog.String("dir", l.Dir),

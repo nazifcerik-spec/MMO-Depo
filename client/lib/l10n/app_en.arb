@@ -2625,5 +2625,11 @@
         "type": "int"
       }
     }
-  }
+  },
+  "regionMobs": "Monsters",
+  "regionDungeons": "Dungeons and raids",
+  "regionGather": "Resources",
+  "regionPlaces": "Places here",
+  "regionRaid": "Raid",
+  "regionEmpty": "No monsters, dungeons, resources or quests belong to this region."
 }

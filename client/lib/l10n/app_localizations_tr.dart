@@ -3331,4 +3331,22 @@ class AppLocalizationsTr extends AppLocalizations {
   String petStageLevels(int from, int to) {
     return 'Sv $from–$to';
   }
+
+  @override
+  String get regionMobs => 'Canavarlar';
+
+  @override
+  String get regionDungeons => 'Zindanlar ve baskınlar';
+
+  @override
+  String get regionGather => 'Toplama kaynakları';
+
+  @override
+  String get regionPlaces => 'Buradaki yerler';
+
+  @override
+  String get regionRaid => 'Baskın';
+
+  @override
+  String get regionEmpty => 'Bu bölgeye ait canavar, zindan, kaynak ya da görev yok.';
 }

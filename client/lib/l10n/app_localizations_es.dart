@@ -3332,4 +3332,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String petStageLevels(int from, int to) {
     return 'Nv $from–$to';
   }
+
+  @override
+  String get regionMobs => 'Monstruos';
+
+  @override
+  String get regionDungeons => 'Mazmorras e incursiones';
+
+  @override
+  String get regionGather => 'Recursos';
+
+  @override
+  String get regionPlaces => 'Lugares aquí';
+
+  @override
+  String get regionRaid => 'Incursión';
+
+  @override
+  String get regionEmpty => 'Ningún monstruo, mazmorra, recurso ni misión pertenece a esta región.';
 }
