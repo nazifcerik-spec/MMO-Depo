@@ -3328,6 +3328,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-340 — Titan Siperi tarifi + her ekipmanın bir kaynağı
+
+**Context:** Eşya etiketleri (DD-339) Sv 600 Koruyucu kalkanı `titan_bulwark_shield`'in hiçbir kaynaktan gelmediğini gösterdi: dal + nitelik şartlı olduğu için rastgele düşmüyor, `gen_crafting.py` de nitelik şartlı 'vitrin' parçaları tarif dışı bırakıyordu.
+**Decision:** `gen_crafting.py` artık şartlı ekipmanın tamamına tarif üretir (tek kaynağı tarif). Yeni `recipe_titan_bulwark_shield`: Demircilik beceri 60, 3 paladyum külçesi + 1 titanyum külçesi + 1 vahşi ayı postu, 250 gümüş, 160 sn. Nitelik şartları (Güç 220, Dayanıklılık 300) kuşanmada geçerli kalır.
+**Consequences:** `TestItemInfoShipped` artık her ekipmanın (set parçaları hariç) en az bir kaynağı olduğunu denetler; yeni kaynaksız ekipman CI'da yakalanır.
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

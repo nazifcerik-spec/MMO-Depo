@@ -46,6 +46,9 @@ func TestItemInfoShipped(t *testing.T) {
 		}
 		if info.Slot != "" && info.Set == "" {
 			require.True(t, info.AnyClass || len(info.Classes) > 0, "%s has users", code)
+			// Every piece of equipment can be obtained somehow (DD-340).
+			require.True(t, len(info.Mobs)+len(info.Dungeons)+len(info.Crafted)+len(info.Vendors) > 0,
+				"%s has no source", code)
 		}
 	}
 }

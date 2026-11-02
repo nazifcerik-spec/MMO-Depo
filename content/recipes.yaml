@@ -16726,6 +16726,20 @@ recipes:
     profession_xp_reward: 747
     craft_seconds: 185
 
+  - code: recipe_titan_bulwark_shield
+    display_name_key: recipe.titan_bulwark_shield
+    profession_code: blacksmithing
+    min_skill: 60
+    inputs:
+      - { template_code: palladium_bar, quantity: 3 }
+      - { template_code: titanium_bar, quantity: 1 }
+      - { template_code: dire_bear_hide, quantity: 1 }
+    gold_cost_copper: 25000
+    output_template_code: titan_bulwark_shield
+    output_stack: 1
+    profession_xp_reward: 693
+    craft_seconds: 160
+
   - code: recipe_axe_starless
     display_name_key: recipe.axe_starless
     profession_code: blacksmithing

@@ -290,6 +290,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 137. **Eşya etiketleri + harita kartı sadeleşti (bitti)** — Sprint 137, DD-339. `GET /v1/items/{code}/info` (`contentpack.BuildItemInfo`): kullanabilen sınıflar, seviye, düşüren canavar/zindan/baskın, üreten meslek, satıcı, toplama, malzeme olduğu meslekler; eşya detayında gruplu etiketler (`item_tags.dart`). Harita kartında zindan/baskın ayrı, 'Buradaki yerler' ve sayılar yok.
 
+138. **Titan Siperi tarifi (bitti)** — Sprint 138, DD-340. `gen_crafting.py` şartlı ekipmanın tamamına tarif üretir; `titan_bulwark_shield` Demircilik 60. Test: her ekipmanın kaynağı var.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

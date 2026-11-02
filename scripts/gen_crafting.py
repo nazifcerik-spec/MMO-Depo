@@ -152,9 +152,9 @@ def merged(inputs):
 
 gear_recipes = []
 STONES = ladder('stone')
-# Branch-gated gear (guardian shields) is crafted too; attribute-gated
-# showpieces (the Titan Bulwark) are not.
-gear = [g for g in load('gear.yaml')['items'] if not set(g.get('requirements') or {}) - {'spec'}]
+# Branch- and attribute-gated gear (guardian shields, the Titan Bulwark) is
+# crafted too: it never drops, so a recipe is its only source (DD-340).
+gear = load('gear.yaml')['items']
 for g in sorted(gear, key=lambda g: (g['min_level'], g['item_subclass'], g['code'])):
     sub, slot, lvl = g['item_subclass'], g['equip_slot'], g['min_level']
     skill = skill_for(lvl)
