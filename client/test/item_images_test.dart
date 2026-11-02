@@ -4,7 +4,10 @@ import 'package:otter/features/inventory/item_images.dart';
 import 'package:otter/features/inventory/item_widgets.dart';
 
 void main() {
-  tearDown(() => ItemImages.codes = const {});
+  tearDown(() {
+    ItemImages.codes = const {};
+    ItemImages.classes = const {};
+  });
 
   testWidgets('an item without shipped art keeps its class icon', (tester) async {
     await tester.pumpWidget(
@@ -35,5 +38,11 @@ void main() {
     expect(ItemImages.path('definitely_not_an_item'), isNull);
     // Painted gear icons ship as WebP (DD-329).
     expect(ItemImages.path('axe_novice'), 'assets/items/axe_novice.webp');
+  });
+
+  test('class portraits cut by art_sets.py ship as WebP (DD-336)', () {
+    ItemImages.classes = {'warrior'};
+    expect(ItemImages.classPath('warrior'), 'assets/classes/warrior.webp');
+    expect(ItemImages.classPath('mage'), isNull);
   });
 }

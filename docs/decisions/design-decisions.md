@@ -3292,6 +3292,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-336 — Sınıf portreleri WebP olarak da okunur
+
+**Context:** `scripts/art_sets.py` `class_portraits` seti (DD-333) 10 temel sınıfın portresini `assets/classes/<sınıf>.webp` olarak kesiyor; istemci (`ItemImages`) sınıf, ırk ve av hayvanı klasörlerinde yalnız `.png` arıyordu, üretilen portreler hiç görünmeyecekti.
+**Decision:** `ItemImages` her görsel klasöründe `.png` ve `.webp`'yi aynı şekilde kabul eder (kod → asset yolu haritası). Sınıf portresi akışı: `art_sets.py prompt class_portraits <0..9>` → `client/art_originals/class_portraits/sheetNN.jpg` → `cut class_portraits` (480×640, 3:4).
+**Consequences:** Görsel biçimi klasöre göre değil dosyaya göre seçilir; aynı kodun iki biçimi varsa manifest sırasındaki son kazanır (tek biçim bırakılmalı).
+**Tarih:** 2026-11-02
+
+---
+
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
 
 Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:

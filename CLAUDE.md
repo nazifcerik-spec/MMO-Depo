@@ -282,6 +282,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 133. **Yemek + iksir görsel tarifi (araç hazır — görsel bekliyor)** — DD-335. `python scripts/item_art.py food-prompt` (30 yemek + 6 iksir, tek 6×6 sayfa, beyaz zemin) → `client/art_originals/items/food000.jpg` → `food-cut` → şeffaf `assets/items/<kod>.png`.
 
+134. **Sınıf portreleri WebP (bitti — görsel bekliyor)** — DD-336. `ItemImages` sınıf/ırk/hayvan klasörlerinde `.webp`'yi de okur (önceden yalnız `.png`; `art_sets.py class_portraits` WebP kesiyordu). `python scripts/art_sets.py todo` eksik sayfaları listeler.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
