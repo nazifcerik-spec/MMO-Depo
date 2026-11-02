@@ -279,10 +279,20 @@ type Loader struct {
 	reloaders []Reloader
 	strings   atomic.Pointer[Strings]
 	regions   atomic.Pointer[map[string]*RegionContent]
+	items     atomic.Pointer[map[string]*ItemInfo]
 }
 
 // Strings returns the content names of the last successful Load (nil before).
 func (l *Loader) Strings() *Strings { return l.strings.Load() }
+
+// ItemInfo returns one item's tags as of the last successful Load (nil
+// when unknown or before the first Load), DD-339.
+func (l *Loader) ItemInfo(code string) *ItemInfo {
+	if m := l.items.Load(); m != nil {
+		return (*m)[code]
+	}
+	return nil
+}
 
 // RegionContent returns what each region holds as of the last successful
 // Load (nil before), DD-338.
@@ -396,6 +406,8 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	l.strings.Store(p.Strings)
 	rc := BuildRegionContent(p)
 	l.regions.Store(&rc)
+	ii := BuildItemInfo(p, leveling.Current())
+	l.items.Store(&ii)
 
 	l.Log.InfoContext(ctx, "content pack loaded",
 		slog.String("dir", l.Dir),

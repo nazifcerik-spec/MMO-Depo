@@ -448,9 +448,18 @@
   "errPetHunting": "La mascota ya está cazando.",
   "petStageLevels": "Nv {from}–{to}",
   "regionMobs": "Monstruos",
-  "regionDungeons": "Mazmorras e incursiones",
+  "regionDungeons": "Mazmorras",
   "regionGather": "Recursos",
-  "regionPlaces": "Lugares aquí",
-  "regionRaid": "Incursión",
-  "regionEmpty": "Ningún monstruo, mazmorra, recurso ni misión pertenece a esta región."
+  "regionEmpty": "Ningún monstruo, mazmorra, recurso ni misión pertenece a esta región.",
+  "regionRaids": "Incursiones",
+  "tagUse": "Uso",
+  "tagAllClasses": "Todas las clases",
+  "tagDrops": "Lo sueltan",
+  "tagRaid": "Incursión",
+  "tagDungeon": "Mazmorra",
+  "tagCrafted": "Lo fabrica",
+  "tagSkill": "habilidad {n}",
+  "tagSold": "Lo vende",
+  "tagGathered": "Se recolecta con",
+  "tagUsedIn": "Material para"
 }

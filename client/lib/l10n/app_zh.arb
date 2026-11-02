@@ -448,9 +448,18 @@
   "errPetHunting": "宠物已在狩猎中。",
   "petStageLevels": "{from}–{to}级",
   "regionMobs": "怪物",
-  "regionDungeons": "地下城与团队副本",
+  "regionDungeons": "地下城",
   "regionGather": "采集资源",
-  "regionPlaces": "此处地点",
-  "regionRaid": "团队副本",
-  "regionEmpty": "此区域没有专属的怪物、地下城、资源或任务。"
+  "regionEmpty": "此区域没有专属的怪物、地下城、资源或任务。",
+  "regionRaids": "团队副本",
+  "tagUse": "使用",
+  "tagAllClasses": "所有职业",
+  "tagDrops": "掉落来源",
+  "tagRaid": "团队副本",
+  "tagDungeon": "地下城",
+  "tagCrafted": "制作",
+  "tagSkill": "技能 {n}",
+  "tagSold": "出售",
+  "tagGathered": "采集",
+  "tagUsedIn": "作为材料用于"
 }

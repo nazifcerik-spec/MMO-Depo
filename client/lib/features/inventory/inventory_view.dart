@@ -13,6 +13,7 @@ import '../market/market_view.dart';
 import 'bank_screen.dart';
 import 'inventory_models.dart';
 import 'inventory_repository.dart';
+import 'item_tags.dart';
 import 'item_widgets.dart';
 
 enum _ItemAction { use, equip, unequip, sell, list, destroy, enchant }
@@ -137,6 +138,7 @@ class _InventoryViewState extends State<InventoryView> {
       showDragHandle: true,
       backgroundColor: Palette.bgSurface,
       builder: (_) => _ItemDetail(
+        api: widget.repo.api,
         item: item,
         sellMult: _sellMult,
         set: set,
@@ -299,10 +301,11 @@ class _InventoryViewState extends State<InventoryView> {
     final l = AppLocalizations.of(context);
     final action = await showModalBottomSheet<_ItemAction>(
       context: context,
+      isScrollControlled: true,
       showDragHandle: true,
       backgroundColor: Palette.bgSurface,
       builder: (c) => SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -328,6 +331,7 @@ class _InventoryViewState extends State<InventoryView> {
                   style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
                 ),
               if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
+              ItemTags(api: widget.repo.api, code: item.templateCode, equipment: true),
               const SizedBox(height: Space.xl),
               FilledButton(onPressed: () => Navigator.pop(c, _ItemAction.unequip), child: Text(l.unequip)),
             ],
@@ -807,8 +811,16 @@ class _WearLegend extends StatelessWidget {
 }
 
 class _ItemDetail extends StatelessWidget {
-  const _ItemDetail({required this.item, required this.sellMult, this.set, this.worn = const [], this.replacing});
+  const _ItemDetail({
+    required this.api,
+    required this.item,
+    required this.sellMult,
+    this.set,
+    this.worn = const [],
+    this.replacing,
+  });
 
+  final ApiClient api;
   final BagItem item;
   final double? sellMult;
 
@@ -838,7 +850,7 @@ class _ItemDetail extends StatelessWidget {
 
     return SafeArea(
       child: PageFrame(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -918,11 +930,10 @@ class _ItemDetail extends StatelessWidget {
               if (item.equippable) ...[_Comparison(item: item, worn: replacing), const SizedBox(height: Space.md)],
               if (set case final s?) ...[SetSection(set: s, worn: worn), const SizedBox(height: Space.md)],
               if (item.stack > 1) row(l.quantity, Text('${item.stack} / ${item.maxStack}')),
-              if (item.minLevel > 1) row(l.requiresLevel, Text('${item.minLevel}')),
-              if (item.classRestriction != null) row(l.characterClass, Text(className(l, item.classRestriction!))),
               row(l.weight, Text(l.weightGrams(item.weightGramsPer * item.stack))),
               if (price != null) row(l.sellValue, GoldText(price, size: 14)),
               if (item.isBound) row(l.bound, const Icon(Icons.link, size: 16, color: Palette.textSecondary)),
+              ItemTags(api: api, code: item.templateCode, equipment: item.equippable),
               const SizedBox(height: Space.xl),
               if (item.isLocked)
                 Text(

@@ -3319,6 +3319,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-339 — Eşya etiketleri + harita kartında zindan/baskın ayrımı
+
+**Context:** Oyuncu bir eşyanın kimin işine yaradığını, hangi seviyede kullanılacağını ve nereden geldiğini (düşüren canavar, üreten meslek, satıcı, toplama) göremiyordu. Harita kartında zindanlar ve baskınlar tek listedeydi; 'Buradaki yerler' ve başlık sayıları kalabalık yapıyordu.
+**Decision:** Sunucu: `contentpack.BuildItemInfo` her eşya için etiket dizini kurar, düşüş kurallarının aynası: rastgele ekipman kaynağın seviyesindeki en yüksek kademeden (`item.GearPool`; set ve şartlı parçalar hariç) → o kademeye düşen avlanabilir canavarlar (en çok 8) + boss'u o kademede olan zindan/baskınlar; deri ganimeti canavarın yüzme erişiminden (`item.CombatHides`); set parçaları kendi baskınından; pet yumurtaları seviyesi yeten baskın boss'larından. Ayrıca kullanabilen sınıflar (ekipman izinleri; ağacın o aileyi kazandığı en üst düğüm, şartlı parçada dal, sınıf kısıtında sınıf, takıda herkes), gereken seviye, üreten meslek + beceri, satıcılar, toplama türü/seviye/bölge, malzeme olarak kullanan meslekler. `Loader.ItemInfo(code)`; `GET /v1/items/{code}/info` (404 bilinmeyen). İstemci: `ItemTags` (çanta ve giyili eşya detayı; gruplu çipler: Kullanım, Düşürenler, Üretim, Satıcı, Toplama, Malzeme olarak kullanan meslekler; eşya başı tek istek önbelleği; detay sayfası kaydırılır), 'Gereken seviye' ve 'Sınıf' satırları etikete taşındı. Harita kartı: Zindanlar ve Baskınlar ayrı başlık, 'Buradaki yerler' ve başlık sayıları kaldırıldı.
+**Consequences:** Düşüş listesi kademe başına yaklaşık (oyuncu seviyesi düşük olunca yüksek canavar düşük kademe düşürür; listelenmez). İçerik açığı: `titan_bulwark_shield` (Sv 600) hiçbir kaynaktan gelmiyor. Testler `TestItemInfoShipped`, entegrasyon `TestHTTPItemInfo`, istemci çanta akışı etiketleri denetler.
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

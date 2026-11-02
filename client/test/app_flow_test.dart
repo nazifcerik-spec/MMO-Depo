@@ -623,6 +623,18 @@ void main() {
     expect(find.text('+10 Attack'), findsOneWidget);
     expect(find.text('+10% STR'), findsOneWidget);
     expect(find.text('That slot is empty: equipping adds all of these.'), findsOneWidget);
+    // Tags (DD-339): who uses it from what level, and where it comes from.
+    expect(find.byKey(const Key('item-tags')), findsOneWidget);
+    for (final t in [
+      'Lvl 5',
+      'Warrior',
+      'Grey Wolf · Lvl 6',
+      'Raid: Old Keep',
+      'Blacksmithing · skill 3',
+      'Smelting',
+    ]) {
+      expect(find.text(t), findsOneWidget, reason: t);
+    }
     final sheets = be.sheetGets;
     await tester.tap(find.text('Equip'));
     await tester.pumpAndSettle();
@@ -1252,12 +1264,12 @@ void main() {
     await openRegion('whisperwood');
     expect(find.text('Travel time: 5m'), findsOneWidget);
     // Its card lists everything found there (DD-338); out-of-reach levels are dimmed.
-    expect(find.text('Monsters (1)'), findsOneWidget);
+    expect(find.text('Monsters'), findsOneWidget);
     expect(find.text('Grey Wolf'), findsOneWidget);
-    expect(find.text('Dungeons and raids (1)'), findsOneWidget);
-    expect(find.text('Raid'), findsOneWidget);
-    expect(find.text('Resources (1)'), findsOneWidget);
-    expect(find.text('Quests (1)'), findsOneWidget);
+    expect(find.text('Raids'), findsOneWidget, reason: 'raids apart from dungeons');
+    expect(find.text('Dungeons'), findsNothing);
+    expect(find.text('Resources'), findsOneWidget);
+    expect(find.text('Quests'), findsOneWidget);
     await tester.tap(find.byKey(const Key('map-go')));
     await tester.pumpAndSettle();
     expect(be.travel!['to_region_code'], 'whisperwood');

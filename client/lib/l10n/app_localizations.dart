@@ -5875,7 +5875,7 @@ abstract class AppLocalizations {
   /// No description provided for @regionDungeons.
   ///
   /// In en, this message translates to:
-  /// **'Dungeons and raids'**
+  /// **'Dungeons'**
   String get regionDungeons;
 
   /// No description provided for @regionGather.
@@ -5884,23 +5884,77 @@ abstract class AppLocalizations {
   /// **'Resources'**
   String get regionGather;
 
-  /// No description provided for @regionPlaces.
-  ///
-  /// In en, this message translates to:
-  /// **'Places here'**
-  String get regionPlaces;
-
-  /// No description provided for @regionRaid.
-  ///
-  /// In en, this message translates to:
-  /// **'Raid'**
-  String get regionRaid;
-
   /// No description provided for @regionEmpty.
   ///
   /// In en, this message translates to:
   /// **'No monsters, dungeons, resources or quests belong to this region.'**
   String get regionEmpty;
+
+  /// No description provided for @regionRaids.
+  ///
+  /// In en, this message translates to:
+  /// **'Raids'**
+  String get regionRaids;
+
+  /// No description provided for @tagUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get tagUse;
+
+  /// No description provided for @tagAllClasses.
+  ///
+  /// In en, this message translates to:
+  /// **'All classes'**
+  String get tagAllClasses;
+
+  /// No description provided for @tagDrops.
+  ///
+  /// In en, this message translates to:
+  /// **'Dropped by'**
+  String get tagDrops;
+
+  /// No description provided for @tagRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid'**
+  String get tagRaid;
+
+  /// No description provided for @tagDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeon'**
+  String get tagDungeon;
+
+  /// No description provided for @tagCrafted.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafted by'**
+  String get tagCrafted;
+
+  /// No description provided for @tagSkill.
+  ///
+  /// In en, this message translates to:
+  /// **'skill {n}'**
+  String tagSkill(int n);
+
+  /// No description provided for @tagSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold by'**
+  String get tagSold;
+
+  /// No description provided for @tagGathered.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathered by'**
+  String get tagGathered;
+
+  /// No description provided for @tagUsedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Material for'**
+  String get tagUsedIn;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -10,27 +10,24 @@ import '../quests/quests_screen.dart' show questName;
 import 'adventure_models.dart';
 
 /// Everything found in a region (DD-338), under the map's region details:
-/// the places inside it, its monsters, dungeons and raids, gathering
-/// resources and quests. Levels the character has not reached are dimmed.
+/// its monsters, dungeons, raids, gathering resources and quests. Levels the
+/// character has not reached are dimmed.
 class RegionContentList extends StatelessWidget {
-  const RegionContentList({super.key, required this.content, required this.places, required this.level});
+  const RegionContentList({super.key, required this.content, required this.level});
 
   final RegionContent content;
-
-  /// Regions inside this one (a continent's zones, a zone's dungeon area).
-  final List<String> places;
   final int level;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
-    if (content.isEmpty && places.isEmpty) {
+    if (content.isEmpty) {
       return Text(l.regionEmpty, style: text.bodySmall);
     }
-    Widget header(String title, int count) => Padding(
+    Widget header(String title) => Padding(
       padding: const EdgeInsets.only(top: Space.md, bottom: Space.xs),
-      child: Text('$title ($count)', style: text.titleSmall?.copyWith(color: Palette.accent)),
+      child: Text(title, style: text.titleSmall?.copyWith(color: Palette.accent)),
     );
     Widget row(Widget art, String name, int lvl, {String? tag}) {
       final locked = lvl > level;
@@ -77,25 +74,17 @@ class RegionContentList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (places.isNotEmpty) ...[
-          header(l.regionPlaces, places.length),
-          Wrap(
-            spacing: Space.xs,
-            runSpacing: Space.xs,
-            children: [for (final p in places) Chip(label: Text(ContentNames.of('region', p)))],
-          ),
-        ],
         if (content.mobs.isNotEmpty) ...[
-          header(l.regionMobs, content.mobs.length),
+          header(l.regionMobs),
           for (final m in content.mobs) row(mobArt(m.code, 32), ContentNames.of('mob', m.code), m.level),
         ],
-        if (content.dungeons.isNotEmpty) ...[
-          header(l.regionDungeons, content.dungeons.length),
-          for (final d in content.dungeons)
-            row(dungeonArt(d.code, 32), ContentNames.of('dungeon', d.code), d.level, tag: d.raid ? l.regionRaid : null),
-        ],
+        for (final (raid, title) in [(false, l.regionDungeons), (true, l.regionRaids)])
+          if (content.dungeons.where((d) => d.raid == raid).toList() case final list when list.isNotEmpty) ...[
+            header(title),
+            for (final d in list) row(dungeonArt(d.code, 32), ContentNames.of('dungeon', d.code), d.level),
+          ],
         if (content.gather.isNotEmpty) ...[
-          header(l.regionGather, content.gather.length),
+          header(l.regionGather),
           for (final g in content.gather)
             row(
               ItemArt(code: g.code, icon: activityIcon(g.kind), color: Palette.textSecondary, size: 28),
@@ -105,7 +94,7 @@ class RegionContentList extends StatelessWidget {
             ),
         ],
         if (content.quests.isNotEmpty) ...[
-          header(l.quests, content.quests.length),
+          header(l.quests),
           for (final q in content.quests)
             row(
               CircleArt(

@@ -963,9 +963,18 @@
   "errPetHunting": "Pet zaten avda.",
   "petStageLevels": "Sv {from}–{to}",
   "regionMobs": "Canavarlar",
-  "regionDungeons": "Zindanlar ve baskınlar",
+  "regionDungeons": "Zindanlar",
   "regionGather": "Toplama kaynakları",
-  "regionPlaces": "Buradaki yerler",
-  "regionRaid": "Baskın",
-  "regionEmpty": "Bu bölgeye ait canavar, zindan, kaynak ya da görev yok."
+  "regionEmpty": "Bu bölgeye ait canavar, zindan, kaynak ya da görev yok.",
+  "regionRaids": "Baskınlar",
+  "tagUse": "Kullanım",
+  "tagAllClasses": "Tüm sınıflar",
+  "tagDrops": "Düşürenler",
+  "tagRaid": "Baskın",
+  "tagDungeon": "Zindan",
+  "tagCrafted": "Üretim",
+  "tagSkill": "beceri {n}",
+  "tagSold": "Satıcı",
+  "tagGathered": "Toplama",
+  "tagUsedIn": "Malzeme olarak kullanan meslekler"
 }

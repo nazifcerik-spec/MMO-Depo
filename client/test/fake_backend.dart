@@ -821,6 +821,24 @@ class FakeBackend {
       activeHunt = null;
       return json(200, {'state': 'cancelled'});
     }
+    if (path.startsWith('/v1/items/') && path.endsWith('/info')) {
+      return json(200, {
+        'level': 5,
+        'slot': 'mainhand',
+        'classes': ['warrior'],
+        'mobs': [
+          {'code': 'grey_wolf', 'level': 6},
+        ],
+        'dungeons': [
+          {'code': 'old_keep', 'raid': true},
+        ],
+        'crafted': [
+          {'profession': 'blacksmithing', 'skill': 3},
+        ],
+        'vendors': ['general_ironhold'],
+        'used_by': ['smelting'],
+      });
+    }
     if (path == '/v1/world/content') {
       return json(200, {
         'regions': {

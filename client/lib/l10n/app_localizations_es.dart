@@ -3337,17 +3337,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get regionMobs => 'Monstruos';
 
   @override
-  String get regionDungeons => 'Mazmorras e incursiones';
+  String get regionDungeons => 'Mazmorras';
 
   @override
   String get regionGather => 'Recursos';
 
   @override
-  String get regionPlaces => 'Lugares aquí';
-
-  @override
-  String get regionRaid => 'Incursión';
-
-  @override
   String get regionEmpty => 'Ningún monstruo, mazmorra, recurso ni misión pertenece a esta región.';
+
+  @override
+  String get regionRaids => 'Incursiones';
+
+  @override
+  String get tagUse => 'Uso';
+
+  @override
+  String get tagAllClasses => 'Todas las clases';
+
+  @override
+  String get tagDrops => 'Lo sueltan';
+
+  @override
+  String get tagRaid => 'Incursión';
+
+  @override
+  String get tagDungeon => 'Mazmorra';
+
+  @override
+  String get tagCrafted => 'Lo fabrica';
+
+  @override
+  String tagSkill(int n) {
+    return 'habilidad $n';
+  }
+
+  @override
+  String get tagSold => 'Lo vende';
+
+  @override
+  String get tagGathered => 'Se recolecta con';
+
+  @override
+  String get tagUsedIn => 'Material para';
 }

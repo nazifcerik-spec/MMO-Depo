@@ -580,6 +580,7 @@ func NewRouter(d Deps) http.Handler {
 				r.Get("/world/regions", d.WorldHandler.Catalog)
 				if d.ContentLoader != nil {
 					r.Get("/world/content", regionContentHandler(d.ContentLoader)) // region cards (DD-338)
+					r.Get("/items/{code}/info", itemInfoHandler(d.ContentLoader))  // item tags (DD-339)
 				}
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/travel/{travel_id}/complete", d.WorldHandler.Complete)
@@ -739,6 +740,20 @@ func contentReloadHandler(loader *contentpack.Loader) http.HandlerFunc {
 
 // contentStringsHandler serves the content names for ?lang= (default and
 // unknown languages: English). The version doubles as ETag.
+// itemInfoHandler serves GET /v1/items/{code}/info: who can use an item and
+// every way to get or use it (DD-339).
+func itemInfoHandler(loader *contentpack.Loader) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		info := loader.ItemInfo(chi.URLParam(r, "code"))
+		if info == nil {
+			apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "unknown item")
+			return
+		}
+		w.Header().Set("Cache-Control", "public, max-age=300")
+		apierr.WriteJSON(w, http.StatusOK, info)
+	}
+}
+
 // regionContentHandler serves GET /v1/world/content: every region's
 // monsters, dungeons and raids, gathering resources and quests (DD-338).
 func regionContentHandler(loader *contentpack.Loader) http.HandlerFunc {

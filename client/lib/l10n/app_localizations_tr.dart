@@ -3336,17 +3336,46 @@ class AppLocalizationsTr extends AppLocalizations {
   String get regionMobs => 'Canavarlar';
 
   @override
-  String get regionDungeons => 'Zindanlar ve baskınlar';
+  String get regionDungeons => 'Zindanlar';
 
   @override
   String get regionGather => 'Toplama kaynakları';
 
   @override
-  String get regionPlaces => 'Buradaki yerler';
-
-  @override
-  String get regionRaid => 'Baskın';
-
-  @override
   String get regionEmpty => 'Bu bölgeye ait canavar, zindan, kaynak ya da görev yok.';
+
+  @override
+  String get regionRaids => 'Baskınlar';
+
+  @override
+  String get tagUse => 'Kullanım';
+
+  @override
+  String get tagAllClasses => 'Tüm sınıflar';
+
+  @override
+  String get tagDrops => 'Düşürenler';
+
+  @override
+  String get tagRaid => 'Baskın';
+
+  @override
+  String get tagDungeon => 'Zindan';
+
+  @override
+  String get tagCrafted => 'Üretim';
+
+  @override
+  String tagSkill(int n) {
+    return 'beceri $n';
+  }
+
+  @override
+  String get tagSold => 'Satıcı';
+
+  @override
+  String get tagGathered => 'Toplama';
+
+  @override
+  String get tagUsedIn => 'Malzeme olarak kullanan meslekler';
 }

@@ -3337,17 +3337,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get regionMobs => 'Monsters';
 
   @override
-  String get regionDungeons => 'Dungeons and raids';
+  String get regionDungeons => 'Dungeons';
 
   @override
   String get regionGather => 'Resources';
 
   @override
-  String get regionPlaces => 'Places here';
-
-  @override
-  String get regionRaid => 'Raid';
-
-  @override
   String get regionEmpty => 'No monsters, dungeons, resources or quests belong to this region.';
+
+  @override
+  String get regionRaids => 'Raids';
+
+  @override
+  String get tagUse => 'Use';
+
+  @override
+  String get tagAllClasses => 'All classes';
+
+  @override
+  String get tagDrops => 'Dropped by';
+
+  @override
+  String get tagRaid => 'Raid';
+
+  @override
+  String get tagDungeon => 'Dungeon';
+
+  @override
+  String get tagCrafted => 'Crafted by';
+
+  @override
+  String tagSkill(int n) {
+    return 'skill $n';
+  }
+
+  @override
+  String get tagSold => 'Sold by';
+
+  @override
+  String get tagGathered => 'Gathered by';
+
+  @override
+  String get tagUsedIn => 'Material for';
 }

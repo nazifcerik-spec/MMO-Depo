@@ -2627,9 +2627,25 @@
     }
   },
   "regionMobs": "Monsters",
-  "regionDungeons": "Dungeons and raids",
+  "regionDungeons": "Dungeons",
   "regionGather": "Resources",
-  "regionPlaces": "Places here",
-  "regionRaid": "Raid",
-  "regionEmpty": "No monsters, dungeons, resources or quests belong to this region."
+  "regionEmpty": "No monsters, dungeons, resources or quests belong to this region.",
+  "regionRaids": "Raids",
+  "tagUse": "Use",
+  "tagAllClasses": "All classes",
+  "tagDrops": "Dropped by",
+  "tagRaid": "Raid",
+  "tagDungeon": "Dungeon",
+  "tagCrafted": "Crafted by",
+  "tagSkill": "skill {n}",
+  "tagSold": "Sold by",
+  "tagGathered": "Gathered by",
+  "tagUsedIn": "Material for",
+  "@tagSkill": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

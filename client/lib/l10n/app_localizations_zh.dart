@@ -3324,17 +3324,46 @@ class AppLocalizationsZh extends AppLocalizations {
   String get regionMobs => '怪物';
 
   @override
-  String get regionDungeons => '地下城与团队副本';
+  String get regionDungeons => '地下城';
 
   @override
   String get regionGather => '采集资源';
 
   @override
-  String get regionPlaces => '此处地点';
-
-  @override
-  String get regionRaid => '团队副本';
-
-  @override
   String get regionEmpty => '此区域没有专属的怪物、地下城、资源或任务。';
+
+  @override
+  String get regionRaids => '团队副本';
+
+  @override
+  String get tagUse => '使用';
+
+  @override
+  String get tagAllClasses => '所有职业';
+
+  @override
+  String get tagDrops => '掉落来源';
+
+  @override
+  String get tagRaid => '团队副本';
+
+  @override
+  String get tagDungeon => '地下城';
+
+  @override
+  String get tagCrafted => '制作';
+
+  @override
+  String tagSkill(int n) {
+    return '技能 $n';
+  }
+
+  @override
+  String get tagSold => '出售';
+
+  @override
+  String get tagGathered => '采集';
+
+  @override
+  String get tagUsedIn => '作为材料用于';
 }

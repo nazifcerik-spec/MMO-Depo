@@ -940,10 +940,6 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
     final loc = _loc!;
     final travel = loc.routes[r.code];
     final locked = r.minLevel > widget.level;
-    final places = [
-      for (final x in _map!.regions.values)
-        if (x.parent == r.code) x.code,
-    ];
     final go = await showModalBottomSheet<bool>(
       context: context,
       showDragHandle: true,
@@ -980,11 +976,7 @@ class _TravelPanelState extends State<_TravelPanel> with PanelState {
                 ] else
                   Text(l.mapNoRoad, style: text.bodyMedium),
                 const Divider(height: Space.xl),
-                RegionContentList(
-                  content: _content[r.code] ?? const RegionContent(),
-                  places: places,
-                  level: widget.level,
-                ),
+                RegionContentList(content: _content[r.code] ?? const RegionContent(), level: widget.level),
               ],
             ),
           ),

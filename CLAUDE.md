@@ -288,6 +288,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 136. **Harita bölge kartı (bitti)** — Sprint 136, DD-338. `GET /v1/world/content` (`contentpack.BuildRegionContent`): bölge başı canavar, zindan/baskın, toplama kaynağı, görev. Haritada bölgeye dokununca kaydırılabilir kart (`region_card.dart`), görselli ve seviyeli. Fix: görev madalyonları pubspec'te tanımlı değildi; her asset klasörü test ediliyor.
 
+137. **Eşya etiketleri + harita kartı sadeleşti (bitti)** — Sprint 137, DD-339. `GET /v1/items/{code}/info` (`contentpack.BuildItemInfo`): kullanabilen sınıflar, seviye, düşüren canavar/zindan/baskın, üreten meslek, satıcı, toplama, malzeme olduğu meslekler; eşya detayında gruplu etiketler (`item_tags.dart`). Harita kartında zindan/baskın ayrı, 'Buradaki yerler' ve sayılar yok.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

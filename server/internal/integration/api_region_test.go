@@ -72,6 +72,16 @@ func TestHTTPRegionContent(t *testing.T) {
 	}
 }
 
+// Item tags (DD-339): who uses an item and where it comes from.
+func TestHTTPItemInfo(t *testing.T) {
+	p := newHTTPPlayer(t, "warrior")
+	info := p.ok("GET", "/v1/items/sword_iron/info", nil)
+	require.EqualValues(t, 5, info["level"])
+	require.Contains(t, info["classes"], "warrior")
+	require.NotEmpty(t, info["mobs"])
+	p.fail("GET", "/v1/items/no_such_item/info", nil, 404, "E_NOT_FOUND")
+}
+
 // Any region is one journey away at the shortest route's time (DD-280):
 // from the city, Emberpeak via the Sundermere hub (60 + 360 s).
 func TestHTTPTravelAnywhere(t *testing.T) {
