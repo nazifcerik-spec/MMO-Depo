@@ -543,7 +543,7 @@ class _Skills extends StatelessWidget {
                                   width: _border,
                                 ),
                               ),
-                              child: Icon(skillIcon(s), size: 20, color: s.active ? color : Palette.epic),
+                              child: SkillArt(skill: s, size: 37, color: s.active ? color : Palette.epic),
                             ),
                             const SizedBox(height: 4),
                             _Lines(ContentNames.of('skill', s.code), lines: 2, style: const TextStyle(fontSize: 11)),

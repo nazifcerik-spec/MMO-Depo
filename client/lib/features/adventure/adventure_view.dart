@@ -578,6 +578,7 @@ class _MobTile extends StatelessWidget {
             padding: const EdgeInsets.all(Space.md),
             child: Row(
               children: [
+                mobArt(mob.code, 40),
                 Container(
                   width: 40,
                   alignment: Alignment.center,

@@ -93,6 +93,8 @@ class SkillLine extends StatelessWidget {
             width: 52,
             child: Text(l.levelShort(skill.unlockLevel), style: text.bodySmall?.copyWith(color: Palette.textMuted)),
           ),
+          SkillArt(skill: skill, size: 32, color: skill.active ? Palette.accent : Palette.epic),
+          const SizedBox(width: Space.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +132,33 @@ class SkillLine extends StatelessWidget {
   }
 }
 
-/// Stand-in skill icon by effect until skill artwork ships.
+/// A skill's painted icon (`assets/skills/<code>.webp`, `scripts/art_sets.py`
+/// `skills`, DD-336); its effect icon while the art is missing.
+class SkillArt extends StatelessWidget {
+  const SkillArt({super.key, required this.skill, required this.size, required this.color});
+
+  final ClassSkill skill;
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(Radii.sm),
+    child: Image.asset(
+      'assets/skills/${skill.code}.webp',
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+      errorBuilder: (_, _, _) => SizedBox.square(
+        dimension: size,
+        child: Icon(skillIcon(skill), size: size * 0.55, color: color),
+      ),
+    ),
+  );
+}
+
+/// Stand-in skill icon by effect, shown until a skill's artwork ships.
 IconData skillIcon(ClassSkill s) {
   if (s.category == 'ultimate') return Icons.whatshot;
   if (!s.active) return Icons.auto_awesome_outlined;

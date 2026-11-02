@@ -72,8 +72,8 @@ add('Üretim meslekleri', prof[:9], have('professions'))
 add('Toplama meslekleri (Toplama sekmesi)', prof[9:], have('professions'))
 add('Yardımcı NPC portreleri', ['miner', 'woodsman', 'angler', 'herbalist', 'trapper', 'smith', 'tanner', 'weaver',
                                  'carver', 'apothecary', 'cook', 'smelter', 'scribe', 'gemcutter'], have('helpers'))
-add('Canavarlar (av listesi)', codes('mobs.yaml'), have('mobs'), hooked=False)
-add('Sınıf yetenekleri', codes('skills.yaml'), have('skills'), hooked=False)
+add('Canavarlar (av listesi)', codes('mobs.yaml'), have('mobs'))
+add('Sınıf yetenekleri', codes('skills.yaml'), have('skills'))
 
 out = ['# Eksik görsel listesi', '',
        '`python scripts/art_audit.py` üretir (DD-334). "Arayüzde" sütunu: istemci bu görseli zaten gösteriyor mu '

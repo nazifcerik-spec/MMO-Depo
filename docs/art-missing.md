@@ -19,8 +19,8 @@
 | Üretim meslekleri | 9 | 9 | 0 | evet |
 | Toplama meslekleri (Toplama sekmesi) | 5 | 5 | 0 | evet |
 | Yardımcı NPC portreleri | 14 | 14 | 0 | evet |
-| Canavarlar (av listesi) | 146 | 0 | 146 | hayır |
-| Sınıf yetenekleri | 471 | 0 | 471 | hayır |
+| Canavarlar (av listesi) | 146 | 0 | 146 | evet |
+| Sınıf yetenekleri | 471 | 0 | 471 | evet |
 
 ## Eksik kodlar
 

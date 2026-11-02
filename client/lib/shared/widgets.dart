@@ -36,6 +36,14 @@ Widget dungeonArt(String code, double size) => CircleArt(
   fallback: Icon(Icons.castle_outlined, size: size * 0.55, color: Palette.textSecondary),
 );
 
+/// A mob's medallion portrait (`scripts/art_sets.py` `mobs`, DD-336); a paw
+/// icon while its art is missing.
+Widget mobArt(String code, double size) => CircleArt(
+  asset: 'assets/mobs/$code.webp',
+  size: size,
+  fallback: Icon(Icons.pets, size: size * 0.55, color: Palette.textSecondary),
+);
+
 /// Maps a server/transport error to player-facing copy.
 String errorText(AppLocalizations l, Object error) {
   if (error is! ApiError) return l.errGeneric('E_CLIENT');

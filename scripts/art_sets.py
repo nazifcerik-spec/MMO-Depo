@@ -11,6 +11,7 @@ Medallion sets (nodes, regions, professions) match the class emblems
 medallion. Portraits match the avatars (DD-324); items match the gear icons
 (DD-329) and land among them in assets/items.
 """
+import io
 import os
 import sys
 
@@ -384,6 +385,188 @@ CLASS_PORTRAITS = [
     ('shaman', 'a green-skinned orc man shaman in tribal mail with a totem staff and crackling lightning'),
 ]
 
+MOBS = [  # content/mobs.yaml order; the scene is the mob's home region
+    ('young_boar', 'a young brown boar with small tusks in a sunny green forest'),
+    ('grey_wolf', 'a grey wolf baring its teeth in a green forest'),
+    ('bandit_scout', 'a masked bandit scout with a short bow in a forest'),
+    ('cave_bat', 'a big-eared cave bat with spread wings in a dark cave mouth'),
+    ('goblin_raider', 'a snarling green goblin raider with a crude axe on a misty shore'),
+    ('forest_troll', 'a hulking mossy forest troll with a club among dark trees'),
+    ('dire_wolf', 'a huge black dire wolf with red eyes in the mist'),
+    ('cultist_acolyte', 'a hooded cultist acolyte with a glowing red ritual dagger'),
+    ('rock_ogre', 'a grey rock-skinned ogre with a boulder on a volcanic ridge'),
+    ('shadow_stalker', 'a lean shadow stalker of black smoke with glowing eyes'),
+    ('elder_wyrm', 'an old scaly wyrm with long horns coiled on a volcanic peak'),
+    ('ashen_lich', 'a skeletal ashen lich with a burning staff and a tattered crown'),
+    ('marsh_lurker', 'a slimy green marsh lurker rising from reeds and murky water'),
+    ('frost_giant', 'a blue-skinned frost giant with an icy beard and a stone club'),
+    ('mist_leech', 'a giant pale leech with a round toothy mouth in swamp mist'),
+    ('mud_golem', 'a hulking golem of dripping swamp mud with glowing eyes'),
+    ('bog_witch', 'a hunched bog witch with a gnarled staff and green swamp light'),
+    ('marsh_queen', 'a regal marsh queen of vines and lilies with a reed crown'),
+    ('venom_lizard', 'a green venom lizard dripping glowing poison in a swamp'),
+    ('drowned_knight', 'a drowned knight in rusted armour draped with seaweed'),
+    ('mountain_troll', 'a huge grey mountain troll with tusks in a rocky pass'),
+    ('dwarf_ghost', 'a translucent blue dwarf ghost with a pickaxe in a mine'),
+    ('rock_eagle', 'a great brown eagle with stone-grey wings on a cliff'),
+    ('iron_king', 'a stern dwarf king in heavy iron armour with an iron crown'),
+    ('iron_spider', 'a mechanical spider of black iron plates in a mine shaft'),
+    ('mine_warden', 'an armoured mine warden with a lantern and a heavy pick'),
+    ('ghost_guard', 'a pale ghost soldier with a spectral spear in ruined walls'),
+    ('cursed_archer', 'an undead archer with a green cursed glow drawing a bow'),
+    ('bone_rider', 'a skeleton knight riding a skeletal horse'),
+    ('fallen_lord_varn', 'a fallen undead lord in black plate with a cold blue crown'),
+    ('keep_gargoyle', 'a winged stone gargoyle crouched on a ruined tower'),
+    ('fallen_commander', 'an undead commander in dented plate raising a broken sword'),
+    ('rebel_rider', 'a rebel rider with a red scarf on a brown warhorse in golden plains'),
+    ('plains_lion', 'a golden maned lion roaring in tall golden grass'),
+    ('raider_mage', 'a raider battle mage in a red cloak casting fire in the plains'),
+    ('rebel_king_orrin', 'a proud rebel king with a red cloak and a scarred face'),
+    ('war_bear', 'a huge brown bear wearing spiked war armour'),
+    ('black_lancer', 'a black-armoured lancer knight with a long lance'),
+    ('ash_wolf', 'a wolf with ember-glowing fur in a burnt forest'),
+    ('flame_spirit', 'a dancing spirit of orange flame among charred trees'),
+    ('cinder_treant', 'a smouldering tree giant with glowing cinder cracks'),
+    ('burnt_mother_tree', 'a vast burnt mother tree with an angry face and burning branches'),
+    ('crimson_harpy', 'a crimson-feathered harpy with sharp talons over burnt trees'),
+    ('scorched_shaman', 'a scorched shaman with a burning staff and ash-grey skin'),
+    ('sand_scorpion', 'a giant tan sand scorpion with raised stinger on white salt dunes'),
+    ('desert_viper', 'a striped desert viper with open fangs on salt flats'),
+    ('salt_elemental', 'a jagged elemental made of white salt crystals in a desert'),
+    ('pharaoh_seth_ka', 'a mummified pharaoh with a golden mask and a crook staff'),
+    ('mummy_priest', 'a bandaged mummy priest with a glowing staff'),
+    ('sand_worm', 'a giant sand worm bursting from the dunes with a ring of teeth'),
+    ('royal_skeleton', 'a crowned royal skeleton in a torn purple robe in a graveyard'),
+    ('tomb_keeper', 'a hulking tomb keeper in stone armour with a lantern in a crypt'),
+    ('soul_drinker', 'a gaunt soul drinker wraith pulling glowing souls'),
+    ('crypt_lord_malachar', 'a crowned crypt lord wraith with gold armour and green flame eyes'),
+    ('black_knight', 'a black knight with a horned helm and a greatsword among graves'),
+    ('crownless_king', 'an undead king with a broken crown on a dark throne'),
+    ('sea_raider', 'a sea raider with a cutlass and a tricorn hat on a stormy shore'),
+    ('storm_bird', 'a great blue storm bird with crackling feathers over waves'),
+    ('coral_golem', 'a hulking golem of pink and orange coral on a beach'),
+    ('admiral_drask', 'a drowned pirate admiral with a long coat and cutlass'),
+    ('siren', 'an eerie siren with a fish tail on a sea rock'),
+    ('kraken_spawn', 'a young kraken with curling tentacles in stormy water'),
+    ('young_dragon', 'a young red dragon with small wings on a rocky slope'),
+    ('dragon_cultist', 'a dragon cultist in red robes with a dragon-skull mask'),
+    ('lava_lizard', 'a lizard with glowing lava cracks on its black scales'),
+    ('mother_dragon_vyrna', 'a great mother dragon guarding a nest of eggs'),
+    ('winged_wyvern', 'a green winged wyvern with a barbed tail in flight'),
+    ('dragon_guard', 'a scaled dragonkin guard with a halberd'),
+    ('fey_wolf', 'a glowing pale-green fey wolf in a misty enchanted forest'),
+    ('mist_stalker', 'a long-limbed grey mist stalker half hidden in fog'),
+    ('ancient_treant', 'an ancient mossy treant with a wise bark face'),
+    ('spirit_queen_sylwen', 'a spirit queen made of glowing leaves and light'),
+    ('shadow_elf', 'a shadow elf assassin with dark skin and twin curved blades'),
+    ('forest_spirit', 'a gentle glowing forest spirit with an antlered head'),
+    ('crystal_spider', 'a spider made of blue crystal in a glittering cave'),
+    ('stone_eater', 'a rock-chewing beast with a huge stony jaw in a crystal cave'),
+    ('light_elemental', 'a radiant elemental of white-gold light in a crystal cave'),
+    ('crystal_titan', 'a giant titan made of blue crystals'),
+    ('crystal_dragon', 'a dragon with clear crystal scales and glowing blue eyes'),
+    ('cave_titan', 'a huge stone cave titan with mossy shoulders'),
+    ('magma_golem', 'a golem of black rock and flowing magma on a volcanic island'),
+    ('fire_giant', 'a fire giant with a flaming beard and a molten hammer'),
+    ('ash_dragon', 'a grey ash dragon breathing smoke over a volcano'),
+    ('fire_lord_ignar', 'a fire lord made of roaring flames and molten armour'),
+    ('volcano_shaman', 'a volcano shaman with an obsidian mask and a lava staff'),
+    ('volcano_warden', 'a warden of obsidian and lava with a great shield'),
+    ('dragon_knight', 'a knight in red dragon-scale armour on a mountain peak'),
+    ('ancient_wyvern', 'an ancient scarred wyvern with tattered wings on high peaks'),
+    ('dragon_sorcerer', 'a horned dragonkin sorcerer casting purple fire'),
+    ('dragon_king_azhorath', 'a crowned dragon king on a throne of bones'),
+    ('throne_guardian', 'a giant armoured throne guardian with a tower shield'),
+    ('elder_dragon', 'an enormous elder dragon with golden horns among peaks'),
+    ('shadow_rider', 'a shadow rider on a dark steed under a starless sky'),
+    ('void_wolf', 'a wolf of black void with star-speckled fur'),
+    ('star_gnawer', 'a ravenous void beast gnawing on a glowing fallen star'),
+    ('star_eater_omh', 'a cosmic horror swallowing stars with a huge maw'),
+    ('dark_angel', 'a dark angel with black feathered wings and a dark sword'),
+    ('night_giant', 'a night giant with deep blue starry skin'),
+    ('ghost_noble', 'a ghost noble in old lace finery in a lost city'),
+    ('time_thief', 'a sly hooded thief holding a glowing hourglass'),
+    ('cursed_sorcerer', 'a cursed sorcerer with cracked skin and glowing purple marks'),
+    ('time_lord_kaedrin', 'a time lord with floating clock gears around him'),
+    ('stone_gargoyle', 'a hunched stone gargoyle with cracked wings in ancient ruins'),
+    ('city_guardian', 'a giant stone guardian statue come alive in a lost city'),
+    ('cloud_giant', 'a cloud giant with a white beard among floating islands'),
+    ('storm_dragon', 'a blue storm dragon wreathed in lightning above clouds'),
+    ('sky_knight', 'a winged sky knight in silver armour with a lance'),
+    ('storm_king_zephyros', 'a storm king with a lightning crown and a trident'),
+    ('wind_elemental', 'a swirling wind elemental with a face in the vortex'),
+    ('thunderbird', 'a thunderbird with blazing lightning wings'),
+    ('void_creature', 'a tentacled void creature by a purple sky rift'),
+    ('rift_warden', 'an armoured rift warden with a glowing purple shield'),
+    ('chaos_elemental', 'a shifting chaos elemental of purple and red energy'),
+    ('chaos_mother', 'a many-eyed chaos mother in a swirling purple vortex'),
+    ('rift_dragon', 'a dragon with torn purple void wings'),
+    ('chaos_lord', 'a chaos lord in shifting purple spiked armour'),
+    ('fallen_angel', 'a fallen angel with ash-grey wings and a broken halo'),
+    ('temple_guardian', 'a golden temple guardian statue with a glaive above the clouds'),
+    ('celestial_dragon', 'a white and gold celestial dragon with star patterns'),
+    ('archangel_uriel', 'a radiant archangel with a flaming sword and gold armour'),
+    ('light_hunter', 'a light hunter with a glowing white bow above the clouds'),
+    ('seraph', 'a six-winged radiant seraph warrior'),
+    ('ash_leviathan', 'a grey ash leviathan rising from an ash sea'),
+    ('null_hunter', 'a faceless null hunter in grey cloth with a hooked blade'),
+    ('undying_soldier', 'an undying soldier in ash-covered armour'),
+    ('leviathan_king', 'a crowned leviathan king roaring from grey ash waves'),
+    ('ash_wyrm_lord', 'a long ash wyrm lord coiled in smoke'),
+    ('eternal_sentinel', 'an eternal sentinel construct of gold and starlight'),
+    ('doom_rider', 'a doom rider in black armour on a burning horse'),
+    ('void_titan', 'a towering void titan with a body of black stars'),
+    ('soul_reaper', 'a hooded soul reaper with a great glowing scythe'),
+    ('doom_commander_morvath', 'a doom commander in black spiked armour on bastion walls'),
+    ('ancient_golem', 'an ancient stone golem with glowing blue cracks'),
+    ('last_commander', 'the last commander in battered silver armour'),
+    ('void_dragon', 'a void dragon with star-filled wings'),
+    ('throne_sentinel', 'a golden throne sentinel with a long spear at the edge of the cosmos'),
+    ('eternal_mage', 'an ageless mage with a robe of starlight and a crystal orb'),
+    ('fallen_god_aethon', 'a fallen god on a throne of stars'),
+    ('god_shadow', 'a huge dark shadow of a god with burning white eyes'),
+    ('avatar_of_ruin', 'an avatar of ruin, a burning colossus of cracked stone'),
+    ('varn_undying', 'a giant undying undead warlord in a cold blue crown'),
+    ('crownless_tyrant', 'a colossal tyrant king with a broken crown'),
+    ('azhorath_ascended', 'a huge ascended golden dragon king'),
+    ('kaedrin_timeless', 'a titanic timeless lord among floating clocks'),
+    ('fallen_archangels', 'dark winged archangels falling from a shattered golden sky'),
+    ('aethon_unbound', 'a titanic god of void and stars breaking his chains'),
+]
+
+SKILL_LOOK = {
+    'strike': 'a powerful weapon or spell attack in motion',
+    'heal': 'soft golden healing light in open hands',
+    'empower': 'a rising surge of power and a bright aura',
+    'guard': 'a braced defensive stance behind a shield',
+    'barrier': 'a glowing protective dome of energy',
+    'dot': 'lingering poison, bleeding or flames eating at a target',
+    'hot': 'gentle renewing light with leaves and sparkles',
+    'weaken': 'a cursed mark draining a cracked enemy weapon',
+    'stun': 'a crushing impact with dazed stars',
+    None: 'a calm emblem of inner strength and mastery',
+}
+
+
+def skills():
+    """Class skill icons in class order, so a sheet keeps one palette."""
+    import yaml
+    with io.open(os.path.join(ROOT, 'content', 'skills.yaml'), encoding='utf-8') as f:
+        sk = yaml.safe_load(f)['skills']
+    with io.open(os.path.join(ROOT, 'content', 'i18n', 'en.yaml'), encoding='utf-8') as f:
+        en = yaml.safe_load(f)
+    en = en.get('strings', en)
+    out = []
+    for cls in PAL:
+        for s in sk:
+            if s['class'] != cls:
+                continue
+            epic = ', epic and radiant' if s.get('category') in ('ultimate', 'awakening') else ''
+            out.append((s['code'], 'the %s skill %s: %s, %s colours%s' % (
+                cls, en['skill.' + s['code']], SKILL_LOOK[s.get('effect')], PAL[cls], epic)))
+    return out
+
+
 def nodes():
     return [(code, '%s, in %s' % (d, PAL[root])) for root, ns in NODES for code, d in ns] + [
         (code, '%s, in %s' % (d, PAL[root])) for root, code, d in NODE_FIXES]
@@ -471,6 +654,15 @@ SETS = {
     'quests': dict(dir='quests', mode='medallion', size=160, entries=lambda: QUESTS,
                    head='fantasy quest icons. ' + MEDALLION + ' Inside each medallion is a small painted scene of '
                         'what the quest is about:'),
+    'mobs': dict(dir='mobs', mode='medallion', size=160, entries=lambda: MOBS,
+                 head='fantasy monster bestiary icons. ' + MEDALLION + ' Inside each medallion is a painted portrait '
+                      'of one monster, head and upper body facing the viewer, in its home terrain:'),
+    'skills': dict(dir='skills', mode='item', size=128, grid=5, entries=skills,
+                   head='fantasy RPG class ability icons. Each cell is one square ability icon that fills its cell '
+                        'edge to edge with a thin bevelled dark frame: one dramatic painted symbol of the skill, '
+                        'centered, on a dark background tinted with the class colours. Stylized hand-painted '
+                        'high-fantasy MMORPG spell icon art, bold readable shapes that stay clear when tiny, vivid '
+                        'glow, every icon clearly different:'),
     'scrolls': dict(dir='items', mode='item', size=128, grid=5, entries=lambda: SCROLLS,
                     head='fantasy enchanting scroll icons. Each cell shows exactly one open scroll, whole and '
                          'centered, at a slight diagonal, on the same plain dark slate-blue backdrop with a soft '

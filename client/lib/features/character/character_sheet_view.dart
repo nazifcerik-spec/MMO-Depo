@@ -11,6 +11,7 @@ import '../progression/progression_screen.dart' show bonusText;
 import '../social/group_panels.dart';
 import '../social/group_repository.dart';
 import 'character_repository.dart';
+import 'class_info.dart' show SkillArt;
 import 'leveling.dart';
 import 'models.dart';
 import '../../shared/content_names.dart';
@@ -406,11 +407,7 @@ class _SkillRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              locked ? Icons.lock_outline : (skill.active ? Icons.flash_on : Icons.shield_moon_outlined),
-              size: 18,
-              color: locked ? Palette.textMuted : Palette.accent,
-            ),
+            SkillArt(skill: skill, size: 32, color: locked ? Palette.textMuted : Palette.accent),
             const SizedBox(width: Space.sm),
             Expanded(
               child: Column(
