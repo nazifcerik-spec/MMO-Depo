@@ -741,6 +741,8 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
                 children: [
                   Row(
                     children: [
+                      dungeonArt(d.code, 44),
+                      const SizedBox(width: Space.md),
                       Expanded(child: Text(ContentNames.of('dungeon', d.code), style: text.titleMedium)),
                       Text(
                         l.levelReq(d.minLevel),

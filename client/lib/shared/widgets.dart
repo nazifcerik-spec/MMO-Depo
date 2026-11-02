@@ -28,6 +28,14 @@ class CircleArt extends StatelessWidget {
   );
 }
 
+/// A dungeon or raid's medallion (`scripts/art_sets.py`, DD-333); a castle
+/// icon while its art is missing.
+Widget dungeonArt(String code, double size) => CircleArt(
+  asset: 'assets/dungeons/$code.webp',
+  size: size,
+  fallback: Icon(Icons.castle_outlined, size: size * 0.55, color: Palette.textSecondary),
+);
+
 /// Maps a server/transport error to player-facing copy.
 String errorText(AppLocalizations l, Object error) {
   if (error is! ApiError) return l.errGeneric('E_CLIENT');

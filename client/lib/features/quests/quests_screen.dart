@@ -171,10 +171,14 @@ class _QuestCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
-                  ready ? Icons.task_alt : Icons.assignment_outlined,
-                  size: 20,
-                  color: ready ? Palette.success : Palette.textMuted,
+                CircleArt(
+                  asset: 'assets/quests/${q.code}.webp',
+                  size: 40,
+                  fallback: Icon(
+                    ready ? Icons.task_alt : Icons.assignment_outlined,
+                    size: 20,
+                    color: ready ? Palette.success : Palette.textMuted,
+                  ),
                 ),
                 const SizedBox(width: Space.sm),
                 Expanded(child: Text(questName(q.code), style: text.titleMedium)),

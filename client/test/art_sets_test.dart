@@ -52,4 +52,10 @@ void main() {
     ]);
     expectArt('items', ['elm_log', 'yew_log', 'linseed', 'mandrake', 'king_bloom', 'mercury_ore']);
   });
+
+  test('every enchanting scroll has art (DD-333)', () {
+    final scrolls = codes('items.yaml', RegExp(r'code: (enchant_\w+)')).toSet();
+    expect(scrolls, hasLength(210));
+    expectArt('items', scrolls);
+  });
 }

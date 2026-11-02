@@ -1,5 +1,5 @@
-"""Picture sets beyond gear (DD-332): class path nodes, map regions, crafting
-professions, helper NPCs and a few materials, each painted by Gemini in 3x3
+"""Picture sets beyond gear (DD-332, DD-333): class path nodes, map regions, crafting
+professions, helper NPCs, a few materials, dungeons, quests and class portraits, each painted by Gemini in 3x3
 sheets in the game's style and cut into client/assets/<dir>/<code>.webp.
 
     python scripts/art_sets.py plan
@@ -226,6 +226,164 @@ NODE_FIXES = [
 ]
 
 
+# Dungeons and raids (DD-333): each boss in its lair inside a medallion.
+DUNGEONS = [
+    ('crypt_of_ashes', 'a goblin raider chieftain with a torch in an ashen crypt'),
+    ('forest_hollow', 'a huge snarling dire wolf in a dark forest hollow'),
+    ('shadowfen_ruins', 'a shadow stalker with glowing eyes among swamp ruins'),
+    ('obsidian_spire', 'an ashen lich with a staff atop a black obsidian spire'),
+    ('sunken_temple', 'a marsh queen made of vines and water in a sunken temple'),
+    ('forgotten_mine', 'an iron king in heavy armour in a mine cavern'),
+    ('northern_keep', 'a fallen lord in frosted armour on a frozen throne'),
+    ('rebel_camp', 'a rebel king with a torn cape among war tents'),
+    ('fire_root', 'a burning mother tree with a face and roots of fire'),
+    ('buried_palace', 'a mummified pharaoh with a golden mask in a sandy palace hall'),
+    ('royal_crypt', 'a crowned crypt lord wraith in a golden crypt'),
+    ('sunken_fleet', 'a drowned admiral with a cutlass among shipwrecks'),
+    ('brood_cavern', 'a mother dragon guarding her eggs in a cavern'),
+    ('lost_grove', 'a spirit queen of glowing leaves in a stone circle grove'),
+    ('crystal_heart', 'a titan made of blue crystals in a crystal cave'),
+    ('volcano_heart', 'a fire lord of molten lava in a volcano'),
+    ('dragon_throne', 'a dragon king on a throne of bones'),
+    ('darkened_observatory', 'a cosmic horror swallowing stars under a ruined observatory dome'),
+    ('clock_tower', 'a time lord with clock gears floating around him in a clock tower'),
+    ('storm_fortress', 'a storm king with a lightning crown above a fortress in the clouds'),
+    ('rift_core', 'a many-eyed void being in a swirling purple vortex'),
+    ('celestial_dome', 'a radiant winged warrior with a flaming sword under a starry dome'),
+    ('sunken_throne', 'a leviathan king rising from grey ash waves'),
+    ('bastion_keep', 'a doom commander in black spiked armour on bastion walls'),
+    ('eternal_throne', 'a fallen god on a throne of stars'),
+    ('north_keep_siege', 'a giant undying undead warlord besieging a snowy keep, epic raid scale'),
+    ('crownless_palace', 'a colossal tyrant king with a broken crown in a ruined palace, epic raid scale'),
+    ('dragon_king_lair', 'a huge ascended golden dragon king on a hoard of treasure, epic raid scale'),
+    ('time_lord_tower', 'a titanic timeless lord in a tower of floating clocks, epic raid scale'),
+    ('archangels_fall', 'dark winged warriors falling from a shattered golden sky, epic raid scale'),
+    ('fallen_god_throne', 'a titanic god of void and stars breaking his chains, epic raid scale'),
+]
+
+# Quests (DD-333): what each one is about. Main roads show the road's
+# monster before the dungeon; bounties the hunted monster in a red bounty ring.
+ROADS = [
+    ('shadowfen_ruins', 'a hooded cultist acolyte', 'swamp ruins'),
+    ('obsidian_spire', 'a frost giant', 'a black obsidian spire'),
+    ('sunken_temple', 'a giant mist leech', 'a temple sunk in a swamp'),
+    ('forgotten_mine', 'a mountain troll', 'an old mine entrance'),
+    ('northern_keep', 'a ghostly guard', 'a frozen keep'),
+    ('rebel_camp', 'a rebel rider on horseback', 'a camp of war tents'),
+    ('fire_root', 'an ash wolf with ember fur', 'a burning tree'),
+    ('buried_palace', 'a giant sand scorpion', 'a palace buried in dunes'),
+    ('royal_crypt', 'a crowned royal skeleton', 'a royal crypt'),
+    ('sunken_fleet', 'a sea raider with a cutlass', 'wrecked ships in a bay'),
+    ('brood_cavern', 'a young red dragon', 'a dragon cavern'),
+    ('lost_grove', 'a glowing fey wolf', 'a hidden grove'),
+    ('crystal_heart', 'a crystal spider', 'a crystal cave'),
+    ('volcano_heart', 'a magma golem', 'an erupting volcano'),
+    ('dragon_throne', 'a dragon knight in scaled armour', 'a mountain throne'),
+    ('darkened_observatory', 'a shadow rider on a dark steed', 'a ruined observatory'),
+    ('clock_tower', 'a ghost noble in old finery', 'a crooked clock tower'),
+    ('storm_fortress', 'a cloud giant', 'a fortress in storm clouds'),
+    ('rift_core', 'a void creature with tentacles', 'a purple sky rift'),
+    ('celestial_dome', 'a fallen angel with dark wings', 'a temple above the clouds'),
+    ('sunken_throne', 'an ash leviathan', 'a throne in an ash sea'),
+    ('bastion_keep', 'a doom rider in black armour', 'towering bastion walls'),
+    ('eternal_throne', 'a void dragon', 'a stairway into the stars'),
+]
+BOUNTIES = [
+    ('drowned_knight', 'a drowned knight in rusted armour'), ('mine_warden', 'an armoured mine warden with a lantern'),
+    ('fallen_commander', 'a fallen undead commander'), ('black_lancer', 'a black lancer knight with a long lance'),
+    ('scorched_shaman', 'a scorched shaman with a burning staff'), ('sand_worm', 'a giant sand worm bursting from dunes'),
+    ('crownless_king', 'a crownless undead king'), ('kraken_spawn', 'a young kraken with curling tentacles'),
+    ('dragon_guard', 'a dragon guard warrior with a halberd'), ('forest_spirit', 'a forest spirit of leaves and light'),
+    ('cave_titan', 'a stone cave titan'), ('volcano_warden', 'a volcano warden of obsidian and lava'),
+    ('elder_dragon', 'an ancient elder dragon'), ('night_giant', 'a night giant with starry skin'),
+    ('city_guardian', 'a stone city guardian statue come alive'), ('thunderbird', 'a thunderbird with lightning wings'),
+    ('chaos_lord', 'a chaos lord in shifting purple armour'), ('seraph', 'a six-winged radiant seraph warrior'),
+    ('eternal_sentinel', 'an eternal sentinel construct of gold and starlight'),
+    ('last_commander', 'the last commander in battered silver armour'), ('avatar_of_ruin', 'an avatar of ruin, a burning colossus'),
+]
+QUESTS = [
+    ('main_01_first_hunt', 'a young boar charging through tall grass'),
+    ('main_02_supplies', 'a pickaxe and a hatchet over a pile of ore and logs'),
+    ('main_03_forge', 'a glowing forge with a hammer on an anvil'),
+    ('main_04_wolves', 'grey wolves before a wooden village gate'),
+    ('main_05_crypt', 'a torch lighting stone stairs down into a crypt'),
+    ('main_06_hollow', 'a hulking forest troll in a dark hollow'),
+    ('side_bandit_trouble', 'a masked bandit scout with a short bow'),
+    ('side_healers_stock', 'a red healing potion beside fresh herbs'),
+    ('side_fishmonger', 'fresh fish on a market stall with a hanging scale'),
+    ('side_goblin_menace', 'a snarling goblin raider with a crude axe'),
+    ('daily_hunter', 'two crossed hunting spears in front of a rising sun'),
+    ('daily_miner', 'a pickaxe in a rock in front of a rising sun'),
+    ('daily_angler', 'a fishing rod and a leaping fish in front of a rising sun'),
+    ('daily_lumberjack', 'an axe in a tree stump in front of a rising sun'),
+    ('daily_herbalist', 'a sickle with a bundle of herbs in front of a rising sun'),
+    ('daily_artisan', 'a hammer and a chisel in front of a rising sun'),
+    ('daily_delver', 'a lantern at a dungeon door in front of a rising sun'),
+    ('daily_slayer', 'a sword over a horned skull in front of a rising sun'),
+] + [('main_%02d_%s' % (7 + i, code), '%s blocking a road that leads to %s' % (mob, place))
+     for i, (code, mob, place) in enumerate(ROADS)] + [
+    ('side_bounty_' + code, '%s inside a red hunter bounty ring' % d) for code, d in BOUNTIES]
+
+# Enchanting scrolls (DD-333): one bold symbol per stat in its colour, painted
+# large on the open scroll; the scroll itself grows richer with the tier.
+SCROLL_SYMBOLS = [
+    ('weapon_attack', 'two crossed red swords'),
+    ('weapon_crit', 'a jagged yellow lightning bolt'),
+    ('weapon_strength', 'a clenched orange fist'),
+    ('weapon_agility', 'a green winged boot'),
+    ('weapon_intellect', 'a glowing blue crystal orb'),
+    ('weapon_wisdom', 'a purple owl head'),
+    ('weapon_lifesteal', 'a crimson blood drop with two fangs'),
+    ('armor_defense', 'a steel-blue shield'),
+    ('armor_health', 'a red heart'),
+    ('armor_vitality', 'a green oak tree'),
+    ('armor_evasion', 'a teal swirl of wind'),
+    ('jewelry_crit', 'a golden four-pointed burst star'),
+    ('jewelry_hit', 'a bullseye target with an arrow in its centre'),
+    ('jewelry_luck', 'a bright green four-leaf clover'),
+    ('jewelry_crit_damage', 'a cracked skull with an orange impact burst'),
+    ('jewelry_mining', 'a grey pickaxe'),
+    ('jewelry_herbalism', 'a green herb sprig with flowers'),
+    ('jewelry_woodcutting', 'an axe stuck in a log'),
+    ('jewelry_fishing', 'a blue fish on a hook'),
+    ('jewelry_hunting', 'a brown bear paw print'),
+    ('jewelry_craft_speed', 'a golden hourglass with a small hammer'),
+]
+SCROLL_TIERS = [
+    'plain tan parchment scroll held wide open, a twine tassel and a red wax seal on its edge',
+    'cream parchment scroll with a leather tie and a red wax seal',
+    'parchment scroll with a blue ribbon and a silver seal',
+    'fine vellum scroll with a green ribbon and a silver seal',
+    'vellum scroll with gold edging and a gold seal',
+    'deep blue scroll with gold rollers',
+    'purple scroll with gem-studded rollers',
+    'crimson scroll with ornate gold rollers and a soft glow',
+    'black scroll with silver filigree and a glowing aura',
+    'radiant golden-white scroll with a divine glow and floating sparks',
+]
+SCROLLS = [('enchant_%s_%d' % (code, t + 1),
+            'unrolled %s, its face one big bold symbol: %s' % (SCROLL_TIERS[t], sym))
+           for code, sym in SCROLL_SYMBOLS for t in range(10)]
+# Redraws in the last sheet's free cells (a later sheet's cut wins): first
+# tiers that came out as closed bundles without their symbol.
+SCROLL_FIXES = ['enchant_weapon_attack_1', 'enchant_weapon_crit_1']
+SCROLLS += [(c, d) for c, d in SCROLLS if c in SCROLL_FIXES]
+
+# Class portraits (DD-333): one vertical picture per base class, painted like
+# the race cards (DD-266) and shown 3:4 on the creation screen.
+CLASS_PORTRAITS = [
+    ('warrior', 'a human man warrior in battle-worn steel and crimson plate armour with a sword and shield'),
+    ('rogue', 'a dark elf woman rogue in a black hooded leather outfit with twin daggers and green poison glow'),
+    ('ranger', 'a high elf man ranger in green and brown leather with a longbow and a feathered quiver'),
+    ('mage', 'a human woman mage in blue and violet arcane robes casting glowing blue magic'),
+    ('monk', 'a bull-headed minotaur monk in orange and gold martial wraps with prayer beads, fists raised'),
+    ('cleric', 'a dwarf woman cleric in white and gold vestments with a mace and soft holy light'),
+    ('paladin', 'a dragon-kin man paladin in gleaming gold and royal blue plate with a warhammer'),
+    ('druid', 'a high elf woman druid in leafy robes with an antler headdress and a glowing nature staff'),
+    ('bard', 'a gnome woman bard in a colourful magenta and gold doublet playing a lute'),
+    ('shaman', 'a green-skinned orc man shaman in tribal mail with a totem staff and crackling lightning'),
+]
+
 def nodes():
     return [(code, '%s, in %s' % (d, PAL[root])) for root, ns in NODES for code, d in ns] + [
         (code, '%s, in %s' % (d, PAL[root])) for root, code, d in NODE_FIXES]
@@ -251,6 +409,20 @@ SETS = {
                          'shoulders, face centered, looking at the viewer, on a dark simple vignette background. '
                          'Stylized hand-painted high-fantasy MMORPG art, bold readable shapes, warm lighting, '
                          'every person clearly different in age, race, face and clothes:'),
+    'dungeons': dict(dir='dungeons', mode='medallion', size=160, entries=lambda: DUNGEONS,
+                     head='fantasy dungeon boss icons. ' + MEDALLION + ' Inside each medallion is a dramatic '
+                          'painted scene of one boss in its lair:'),
+    'quests': dict(dir='quests', mode='medallion', size=160, entries=lambda: QUESTS,
+                   head='fantasy quest icons. ' + MEDALLION + ' Inside each medallion is a small painted scene of '
+                        'what the quest is about:'),
+    'scrolls': dict(dir='items', mode='item', size=128, grid=5, entries=lambda: SCROLLS,
+                    head='fantasy enchanting scroll icons. Each cell shows exactly one open scroll, whole and '
+                         'centered, at a slight diagonal, on the same plain dark slate-blue backdrop with a soft '
+                         'vignette. Stylized hand-painted game icon art like polished mobile MMORPG inventory icons: '
+                         'clean bold silhouettes, soft cel shading, crisp rim light. The symbol is the main feature: '
+                         'big, bold, high contrast, filling most of the scroll face, readable even when the icon is '
+                         'tiny; the scroll face shows only that symbol, never any writing:'),
+    'class_portraits': dict(dir='classes', mode='single', size=(480, 640), entries=lambda: CLASS_PORTRAITS),
     'materials': dict(dir='items', mode='item', size=128, entries=lambda: MATERIALS,
                       head='fantasy RPG crafting material icons. Each cell shows exactly one item, whole and '
                            'centered, at a slight diagonal, on the same plain dark slate-blue backdrop with a soft '
@@ -260,18 +432,34 @@ SETS = {
 }
 
 
+def grid(name):
+    return SETS[name].get('grid', GRID)
+
+
+def pos(g, k):
+    r, c = divmod(k, g)
+    return POS[k] if g == GRID else 'row %d column %d' % (r + 1, c + 1)
+
+
 def sheets(name):
     e = SETS[name]['entries']()
-    return [e[i:i + GRID * GRID] for i in range(0, len(e), GRID * GRID)]
+    per = 1 if SETS[name]['mode'] == 'single' else grid(name) ** 2
+    return [e[i:i + per] for i in range(0, len(e), per)]
 
 
 def prompt(name, n):
     cells = sheets(name)[n]
-    parts = ['%s: %s' % (POS[k], d) for k, (_, d) in enumerate(cells)]
-    empty = '' if len(cells) == GRID * GRID else ' The remaining cells show only the empty background.'
+    if SETS[name]['mode'] == 'single':
+        return ('Generate a VERTICAL PORTRAIT image (9:16): a full-figure heroic character illustration of %s, '
+                'standing in a dynamic pose, seen from head to knees, filling the frame, in front of a matching '
+                'painted fantasy background. Highly detailed stylized hand-painted high-fantasy MMORPG key art, '
+                'vivid colours, dramatic rim lighting, ornate gear. One single character only. %s'
+                % (cells[0][1], NO_TEXT))
+    g = grid(name)
+    parts = ['%s: %s' % (pos(g, k), d) for k, (_, d) in enumerate(cells)]
+    empty = '' if len(cells) == g * g else ' The remaining cells show only the empty background.'
     return ('Generate a square image: a %dx%d grid of %d separate square %s %s.%s Divided by thin solid black '
-            'lines, cells of equal size. %s' % (GRID, GRID, GRID * GRID, SETS[name]['head'], '; '.join(parts),
-                                                empty, NO_TEXT))
+            'lines, cells of equal size. %s' % (g, g, g * g, SETS[name]['head'], '; '.join(parts), empty, NO_TEXT))
 
 
 def trim(im, dark=14):
@@ -309,15 +497,24 @@ def cut(name, numbers):
         if (numbers and n not in numbers) or not os.path.exists(path):
             continue
         im = Image.open(path).convert('RGB')
+        if s['mode'] == 'single':  # the upper 3:4 of the picture, head to knees
+            w, h = im.size
+            ch = min(h, w * 4 // 3)
+            y0 = max(0, min(h - ch, (h - ch) // 4))
+            im.crop((0, y0, w, y0 + ch)).resize(s['size'], Image.LANCZOS).save(
+                os.path.join(dst, cells[0][0] + '.webp'), 'WEBP', quality=84, method=6)
+            print(name, 'sheet%02d' % n, cells[0][0])
+            continue
         gray = im.convert('L')
         w, h = im.size
-        xs = [0] + [p for a, b in gutters(gray, 0, GRID) for p in (a, b + 1)] + [w]
-        ys = [0] + [p for a, b in gutters(gray, 1, GRID) for p in (a, b + 1)] + [h]
+        g = grid(name)
+        xs = [0] + [p for a, b in gutters(gray, 0, g) for p in (a, b + 1)] + [w]
+        ys = [0] + [p for a, b in gutters(gray, 1, g) for p in (a, b + 1)] + [h]
         inset = max(2, w // 200)
         for k, (code, _) in enumerate(cells):
             if code is None:
                 continue
-            r, c = divmod(k, GRID)
+            r, c = divmod(k, g)
             cell = im.crop((xs[2 * c] + inset, ys[2 * r] + inset, xs[2 * c + 1] - inset, ys[2 * r + 1] - inset))
             cell = medallion(cell) if s['mode'] == 'medallion' else square(trim(cell))
             cell.resize((s['size'], s['size']), Image.LANCZOS).save(

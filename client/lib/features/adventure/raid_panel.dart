@@ -288,6 +288,8 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
           children: [
             Row(
               children: [
+                dungeonArt(r.code, 44),
+                const SizedBox(width: Space.md),
                 Expanded(child: Text(ContentNames.of('dungeon', r.code), style: text.titleMedium)),
                 Text(
                   l.levelReq(d.minLevel),
@@ -355,11 +357,7 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 22,
-                      backgroundColor: Palette.danger.withValues(alpha: 0.15),
-                      child: const Icon(Icons.groups, color: Palette.danger),
-                    ),
+                    dungeonArt(r.code, 44),
                     const SizedBox(width: Space.md),
                     Expanded(
                       child: Column(

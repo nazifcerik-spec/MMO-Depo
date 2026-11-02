@@ -276,6 +276,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 130. **Sınıf yolu + harita + meslek + yardımcı görselleri (bitti)** — Sprint 130, DD-332. `scripts/art_sets.py` (3×3 Gemini sayfaları): 60 terfi/uzmanlık amblemi, 54 bölge madalyonu, 9 meslek amblemi, 14 yardımcı portresi, 6 eksik malzeme ikonu. İstemci piramit/harita/Atölye/yardımcı kartlarında gösterir; `art_sets_test.dart`.
 
+131. **Efsun parşömeni + zindan/görev görselleri (bitti — kısmi)** — Sprint 131, DD-333. `scripts/art_sets.py` `scrolls` (210 parşömen, nitelik sembolü × kademe), `dungeons`, `quests`, `class_portraits` setleri. İstemci `dungeonArt` (zindan/baskın kartları), görev kartı madalyonu; eksik görselde ikon. `art_sets_test` parşömenleri denetler.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -3265,6 +3265,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-333 — Efsun parşömeni + zindan/baskın + görev görselleri
+
+**Context:** 210 efsun parşömeni, 31 zindan/baskın ve 62 görev görselsizdi (genel ikon); parşömenler birbirinden ayırt edilemiyordu.
+**Decision:** `scripts/art_sets.py` yeni setler: `scrolls` (5×5 sayfa, 21 nitelik sembolü × 10 kademe parşömen; sembol büyük ve nitelik renginde, parşömen kademeyle zenginleşir) → `assets/items/enchant_*.webp`; `dungeons` ve `quests` madalyonları (3×3) → `assets/dungeons/<kod>.webp`, `assets/quests/<kod>.webp`; `class_portraits` (tek görsel, 3:4). İstemci: `dungeonArt` (zindan + baskın kartları), görev kartında `CircleArt`; görsel yoksa eski ikon.
+**Consequences:** Yeni parşömen/zindan/görev = yeni görsel (art_sets_test parşömenleri denetler). Zindan ve görev görselleri parça parça gelir; eksikler ikonla görünür.
+**Tarih:** 2026-11-02
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
