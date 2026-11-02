@@ -3326,4 +3326,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errPetHunting => 'Pet zaten avda.';
+
+  @override
+  String petStageLevels(int from, int to) {
+    return 'Sv $from–$to';
+  }
 }

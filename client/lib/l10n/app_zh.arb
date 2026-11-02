@@ -445,5 +445,6 @@
   "petGuideLine": "{level}级以上团本{pct}% · 孵化{time}",
   "errPetCap": "宠物数量已达上限。",
   "errPetHatching": "宠物尚未孵化。",
-  "errPetHunting": "宠物已在狩猎中。"
+  "errPetHunting": "宠物已在狩猎中。",
+  "petStageLevels": "{from}–{to}级"
 }

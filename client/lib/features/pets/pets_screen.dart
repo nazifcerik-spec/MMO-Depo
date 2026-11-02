@@ -46,12 +46,43 @@ StatBonus _bonus(Map<String, dynamic> b) =>
 
 /// A pet's rank as an item rarity: its colour.
 String petRarity(int rank) => switch (rank) {
-  20 => 'mythic',
-  >= 16 => 'legendary',
-  >= 11 => 'epic',
-  >= 6 => 'rare',
+  50 => 'mythic',
+  >= 40 => 'legendary',
+  >= 27 => 'epic',
+  >= 14 => 'rare',
   _ => 'uncommon',
 };
+
+/// A pet's evolution stage by level (DD-334): 1–33, 34–66, 67–100.
+int petStage(int level) => level <= 33 ? 1 : (level <= 66 ? 2 : 3);
+
+/// The species' art at [stage] (`scripts/pet_assets.py`), framed on its own
+/// backdrop; a paw icon while it is missing.
+class PetArt extends StatelessWidget {
+  const PetArt({super.key, required this.species, required this.stage, required this.size, required this.color});
+
+  final String species;
+  final int stage;
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(Radii.md),
+      border: Border.all(color: color.withValues(alpha: 0.6)),
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: Image.asset(
+      'assets/pets/${species}_$stage.webp',
+      fit: BoxFit.cover,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+      errorBuilder: (_, _, _) => Icon(Icons.pets, size: size * 0.5, color: color),
+    ),
+  );
+}
 
 class Pet {
   const Pet({
@@ -339,13 +370,45 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
     );
   }
 
+  /// The species' egg and its three stages with their level bands.
+  void _showStages(AppLocalizations l, PetSpecies s) {
+    final color = rarityColor(petRarity(s.rank));
+    Widget cell(Widget art, String label) => Column(
+      children: [
+        art,
+        const SizedBox(height: Space.xs),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(petName(s.code), style: TextStyle(color: color)),
+        content: Wrap(
+          spacing: Space.sm,
+          runSpacing: Space.sm,
+          alignment: WrapAlignment.center,
+          children: [
+            cell(ItemArt(code: 'pet_egg_${s.code}', icon: Icons.egg_outlined, color: color, size: 72), l.petHatching),
+            for (final (stage, from, to) in [(1, 1, 33), (2, 34, 66), (3, 67, 100)])
+              cell(PetArt(species: s.code, stage: stage, size: 72, color: color), l.petStageLevels(from, to)),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(MaterialLocalizations.of(ctx).closeButtonLabel)),
+        ],
+      ),
+    );
+  }
+
   Widget _guideTile(AppLocalizations l, TextTheme text, PetSpecies s) {
     final pct = s.eggPct == s.eggPct.roundToDouble() ? '${s.eggPct.toInt()}' : s.eggPct.toStringAsFixed(2);
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.zero,
-      leading: Icon(Icons.pets, color: rarityColor(petRarity(s.rank))),
+      leading: PetArt(species: s.code, stage: 3, size: 44, color: rarityColor(petRarity(s.rank))),
       title: Text(petName(s.code), style: TextStyle(color: rarityColor(petRarity(s.rank)))),
+      onTap: () => _showStages(l, s),
       subtitle: Text(
         [
           l.petGuideLine(pct, s.minMobLevel, shortDuration(l, Duration(seconds: s.hatchSeconds))),
@@ -385,8 +448,11 @@ class _PetCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(hatched ? Icons.pets : Icons.egg_outlined, color: color),
-                const SizedBox(width: Space.sm),
+                if (hatched)
+                  PetArt(species: pet.species, stage: petStage(pet.level), size: 64, color: color)
+                else
+                  ItemArt(code: 'pet_egg_${pet.species}', icon: Icons.egg_outlined, color: color, size: 64),
+                const SizedBox(width: Space.md),
                 Expanded(
                   child: Text(
                     petName(pet.species),

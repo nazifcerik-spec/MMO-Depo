@@ -5859,6 +5859,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The pet is already hunting.'**
   String get errPetHunting;
+
+  /// No description provided for @petStageLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Lvl {from}–{to}'**
+  String petStageLevels(int from, int to);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

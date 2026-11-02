@@ -2614,5 +2614,16 @@
   },
   "errPetCap": "You have as many pets as you can keep.",
   "errPetHatching": "The pet has not hatched yet.",
-  "errPetHunting": "The pet is already hunting."
+  "errPetHunting": "The pet is already hunting.",
+  "petStageLevels": "Lvl {from}–{to}",
+  "@petStageLevels": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  }
 }

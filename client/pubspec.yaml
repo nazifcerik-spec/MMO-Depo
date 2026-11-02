@@ -36,6 +36,7 @@ flutter:
     - assets/regions/ # map region medallions: <region>.webp (DD-332)
     - assets/professions/ # crafting profession emblems: <profession>.webp (DD-332)
     - assets/helpers/ # helper NPC portraits: <helper>.webp (DD-332)
+    - assets/pets/ # pet evolution stages: <species>_<1|2|3>.webp (DD-334)
     - assets/dungeons/ # dungeon + raid medallions: <dungeon>.webp (DD-333)
     - assets/races/ # race portraits: <race_code>.png (DD-266)
     - assets/branding/ # MeNa World logo (DD-270)

@@ -960,5 +960,6 @@
   "petGuideLine": "Sv {level}+ baskında %{pct} · kuluçka {time}",
   "errPetCap": "Tutabileceğin kadar petin var.",
   "errPetHatching": "Pet henüz yumurtadan çıkmadı.",
-  "errPetHunting": "Pet zaten avda."
+  "errPetHunting": "Pet zaten avda.",
+  "petStageLevels": "Sv {from}–{to}"
 }

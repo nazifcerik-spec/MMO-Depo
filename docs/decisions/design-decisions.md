@@ -3274,6 +3274,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-334 — Pet türleri 50 (pet tasarım listesi) + 3 evre görseli + eksik görsel denetimi
+
+**Context:** Kullanıcı pet tasarım Excel'indeki 50 yaratığın (3 evre + yumurta) hepsinin oyuna alınmasını seçti; oyunda 20 tür vardı.
+**Decision:** `scripts/pet_data.py` 50 tür (4 dil), `gen_pets.py` ölçeği 50'ye (Sv 412..1000, %50 → %2, 1–24 sa). Migration 0059 eski 20 türün pet ve yumurtalarını aynı sıradaki yeni türe taşır (r → 1 + (r−1)·49/19). `scripts/pet_assets.py` → `assets/pets/<tür>_<1|2|3>.webp` + yumurta ikonu. İstemci: evre Sv 1–33 / 34–66 / 67–100 (`petStage`, `PetArt`), rehberde tür başına evre penceresi. `scripts/art_audit.py` → `docs/art-missing.md`; animasyon önerileri `docs/animation-proposals.md`.
+**Consequences:** Görseli henüz olmayan türler ikonla görünür. Eski tür kodları kalktı.
+**Tarih:** 2026-11-02
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

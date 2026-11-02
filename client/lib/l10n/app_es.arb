@@ -445,5 +445,6 @@
   "petGuideLine": "{pct} % en bandas de nivel {level}+ · eclosiona en {time}",
   "errPetCap": "Ya tienes el máximo de mascotas.",
   "errPetHatching": "La mascota aún no ha eclosionado.",
-  "errPetHunting": "La mascota ya está cazando."
+  "errPetHunting": "La mascota ya está cazando.",
+  "petStageLevels": "Nv {from}–{to}"
 }

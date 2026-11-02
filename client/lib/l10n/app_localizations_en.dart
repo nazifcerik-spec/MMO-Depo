@@ -3327,4 +3327,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errPetHunting => 'The pet is already hunting.';
+
+  @override
+  String petStageLevels(int from, int to) {
+    return 'Lvl $from–$to';
+  }
 }

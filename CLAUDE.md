@@ -278,6 +278,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 131. **Efsun parşömeni + zindan/görev görselleri (bitti — kısmi)** — Sprint 131, DD-333. `scripts/art_sets.py` `scrolls` (210 parşömen, nitelik sembolü × kademe), `dungeons`, `quests`, `class_portraits` setleri. İstemci `dungeonArt` (zindan/baskın kartları), görev kartı madalyonu; eksik görselde ikon. `art_sets_test` parşömenleri denetler.
 
+132. **50 pet türü + evre görselleri + görsel denetimi (bitti — görseller kısmi)** — Sprint 132, DD-334. Migration 0059 (eski türler taşınır). `pet_data.py`/`gen_pets.py` 50 tür, `pet_assets.py`, istemci `PetArt` (seviyeye göre evre). `art_audit.py` → `docs/art-missing.md`, `docs/animation-proposals.md`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

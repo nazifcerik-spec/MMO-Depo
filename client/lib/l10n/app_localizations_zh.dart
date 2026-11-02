@@ -3314,4 +3314,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errPetHunting => '宠物已在狩猎中。';
+
+  @override
+  String petStageLevels(int from, int to) {
+    return '$from–$to级';
+  }
 }
