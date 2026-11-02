@@ -5,52 +5,24 @@
 | Alan | Toplam | Var | Eksik | Arayüzde |
 |---|---:|---:|---:|---|
 | Ekipman (silah, zırh, takı, set) | 1916 | 1916 | 0 | evet |
+| İksirler + yemekler (tüketilebilir) | 252 | 252 | 0 | evet |
 | Malzemeler (cevher, kütük, ot, deri, külçe) | 179 | 179 | 0 | evet |
 | Efsun parşömenleri | 210 | 210 | 0 | evet |
+| Pet yumurtaları | 50 | 50 | 0 | evet |
+| Pet evreleri (tür × 3 evre) | 150 | 150 | 0 | evet |
+| Zindanlar + baskınlar | 31 | 31 | 0 | evet |
+| Görevler | 62 | 62 | 0 | evet |
 | Bölgeler (harita madalyonu) | 54 | 54 | 0 | evet |
 | Sınıf amblemleri | 10 | 10 | 0 | evet |
+| Sınıf portreleri (oluşturma ekranı, 3:4) | 10 | 10 | 0 | evet |
 | Terfi + uzmanlık amblemleri | 60 | 60 | 0 | evet |
 | Üretim meslekleri | 9 | 9 | 0 | evet |
+| Toplama meslekleri (Toplama sekmesi) | 5 | 5 | 0 | evet |
 | Yardımcı NPC portreleri | 14 | 14 | 0 | evet |
-| Toplama meslekleri (Toplama sekmesi) | 5 | 0 | 5 | hayır |
-| Sınıf portreleri (oluşturma ekranı, 3:4) | 10 | 0 | 10 | evet |
-| Pet yumurtaları | 50 | 38 | 12 | evet |
-| Zindanlar + baskınlar | 31 | 9 | 22 | evet |
-| Pet evreleri (tür × 3 evre) | 150 | 117 | 33 | evet |
-| İksirler + yemekler (tüketilebilir) | 252 | 216 | 36 | evet |
-| Görevler | 62 | 0 | 62 | evet |
 | Canavarlar (av listesi) | 146 | 0 | 146 | hayır |
 | Sınıf yetenekleri | 471 | 0 | 471 | hayır |
 
 ## Eksik kodlar
-
-### Toplama meslekleri (Toplama sekmesi) (5)
-
-`hunting`, `herbalism`, `woodcutting`, `fishing`, `mining`
-
-### Sınıf portreleri (oluşturma ekranı, 3:4) (10)
-
-`warrior`, `paladin`, `ranger`, `rogue`, `mage`, `cleric`, `druid`, `shaman`, `monk`, `bard`
-
-### Pet yumurtaları (12)
-
-`pet_egg_cloud_sheep`, `pet_egg_obsidian_frog`, `pet_egg_fairy_firefly`, `pet_egg_seal_dragon`, `pet_egg_venom_spider`, `pet_egg_deluge_shark`, `pet_egg_autumn_stag`, `pet_egg_spark_hamster`, `pet_egg_graveyard_owl`, `pet_egg_sun_scorpion`, `pet_egg_time_caterpillar`, `pet_egg_chaos_hydra`
-
-### Zindanlar + baskınlar (22)
-
-`buried_palace`, `royal_crypt`, `sunken_fleet`, `brood_cavern`, `lost_grove`, `crystal_heart`, `volcano_heart`, `dragon_throne`, `darkened_observatory`, `clock_tower`, `storm_fortress`, `rift_core`, `celestial_dome`, `sunken_throne`, `bastion_keep`, `eternal_throne`, `north_keep_siege`, `crownless_palace`, `dragon_king_lair`, `time_lord_tower`, `archangels_fall`, `fallen_god_throne`
-
-### Pet evreleri (tür × 3 evre) (33)
-
-`obsidian_frog_1`, `obsidian_frog_2`, `obsidian_frog_3`, `fairy_firefly_1`, `fairy_firefly_2`, `fairy_firefly_3`, `seal_dragon_1`, `seal_dragon_2`, `seal_dragon_3`, `venom_spider_1`, `venom_spider_2`, `venom_spider_3`, `deluge_shark_1`, `deluge_shark_2`, `deluge_shark_3`, `autumn_stag_1`, `autumn_stag_2`, `autumn_stag_3`, `spark_hamster_1`, `spark_hamster_2`, `spark_hamster_3`, `graveyard_owl_1`, `graveyard_owl_2`, `graveyard_owl_3`, `sun_scorpion_1`, `sun_scorpion_2`, `sun_scorpion_3`, `time_caterpillar_1`, `time_caterpillar_2`, `time_caterpillar_3`, `chaos_hydra_1`, `chaos_hydra_2`, `chaos_hydra_3`
-
-### İksirler + yemekler (tüketilebilir) (36)
-
-`food_grilled_guppy`, `food_sardine_skewer`, `food_minnow_soup`, `food_pike_fillet`, `food_lavender_carp`, `food_grilled_silver_herring`, `food_herb_trout`, `food_smoked_salmon`, `food_bass_stew`, `food_grilled_lake_perch`, `food_grilled_red_snapper`, `food_grilled_river_catfish`, `food_tuna_steak`, `food_grilled_rainbow_trout`, `food_royal_carp_feast`, `food_grilled_emerald_pike`, `food_grilled_silver_barracuda`, `food_sturgeon_pie`, `food_swordfish_grill`, `food_grilled_stormscale_eel`, `food_frostfin_chowder`, `food_grilled_obsidian_tuna`, `food_marlin_platter`, `food_grilled_golden_carp`, `food_dragonblood_serpentfish`, `food_grilled_void_angler`, `food_moonfish_delicacy`, `food_phoenix_koi_feast`, `food_grilled_abyssal_dragonfish`, `food_leviathan_banquet`, `potion_hp_supreme`, `potion_mp_medium`, `potion_mp_large`, `potion_mp_xlarge`, `potion_mp_huge`, `potion_mp_supreme`
-
-### Görevler (62)
-
-`main_01_first_hunt`, `main_02_supplies`, `main_03_forge`, `main_04_wolves`, `main_05_crypt`, `main_06_hollow`, `side_bandit_trouble`, `side_healers_stock`, `side_fishmonger`, `side_goblin_menace`, `daily_hunter`, `daily_miner`, `daily_angler`, `daily_lumberjack`, `daily_herbalist`, `daily_artisan`, `daily_delver`, `daily_slayer`, `main_07_shadowfen_ruins`, `main_08_obsidian_spire`, `main_09_sunken_temple`, `main_10_forgotten_mine`, `main_11_northern_keep`, `main_12_rebel_camp`, `main_13_fire_root`, `main_14_buried_palace`, `main_15_royal_crypt`, `main_16_sunken_fleet`, `main_17_brood_cavern`, `main_18_lost_grove`, `main_19_crystal_heart`, `main_20_volcano_heart`, `main_21_dragon_throne`, `main_22_darkened_observatory`, `main_23_clock_tower`, `main_24_storm_fortress`, `main_25_rift_core`, `main_26_celestial_dome`, `main_27_sunken_throne`, `main_28_bastion_keep`, `main_29_eternal_throne`, `side_bounty_drowned_knight`, `side_bounty_mine_warden`, `side_bounty_fallen_commander`, `side_bounty_black_lancer`, `side_bounty_scorched_shaman`, `side_bounty_sand_worm`, `side_bounty_crownless_king`, `side_bounty_kraken_spawn`, `side_bounty_dragon_guard`, `side_bounty_forest_spirit`, `side_bounty_cave_titan`, `side_bounty_volcano_warden`, `side_bounty_elder_dragon`, `side_bounty_night_giant`, `side_bounty_city_guardian`, `side_bounty_thunderbird`, `side_bounty_chaos_lord`, `side_bounty_seraph`, `side_bounty_eternal_sentinel`, `side_bounty_last_commander`, `side_bounty_avatar_of_ruin`
 
 ### Canavarlar (av listesi) (146)
 

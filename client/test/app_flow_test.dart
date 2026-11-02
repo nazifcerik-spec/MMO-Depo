@@ -518,8 +518,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(huntAnimal('forest_rat_pelt'), 'forest_rat');
     expect(huntAnimal('dragon_scale'), 'dragon');
-    final animal = tester.widgetList<Image>(find.byType(Image)).where((i) => i.image is ResizeImage).first;
-    expect(((animal.image as ResizeImage).imageProvider as AssetImage).assetName, 'assets/animals/forest_rat.png');
+    // Profession emblems are also resized assets; pick the animal art.
+    final animals = [
+      for (final i in tester.widgetList<Image>(find.byType(Image)))
+        if (i.image case ResizeImage(imageProvider: AssetImage(:final assetName)))
+          if (assetName.startsWith('assets/animals/')) assetName,
+    ];
+    expect(animals.first, 'assets/animals/forest_rat.png');
   });
 
   testWidgets('abandon asks first and forfeits', (tester) async {

@@ -487,7 +487,7 @@ SETS = {
                        'Stylized hand-painted game icon art like polished mobile MMORPG inventory icons: clean bold '
                        'silhouettes, soft cel shading, crisp rim light, appetizing warm colours. Every dish looks '
                        'unique:'),
-    'potions': dict(dir='items', mode='item', size=128, entries=lambda: POTIONS,
+    'potions': dict(dir='items', mode='item', size=128, fit=True, entries=lambda: POTIONS,
                     head='fantasy RPG potion icons. Each cell shows exactly one corked potion flask, whole and '
                          'centered, on the same plain pure black background. Stylized hand-painted game icon art '
                          'like polished mobile MMORPG inventory icons: glossy glass, gold metal frames, glowing liquid, '
@@ -551,6 +551,20 @@ def trim(im, dark=14):
     return im.crop((l, t, r + 1, b + 1))
 
 
+def fit(im, light=200):
+    """Whole object on a square: light grid lines are cleared from the edges,
+    the art is cropped to its bounding box and padded on the backdrop."""
+    m = max(4, im.width // 40)
+    im = im.crop((m, m, im.width - m, im.height - m))
+    gray = im.convert('L')
+    box = gray.point(lambda v: 255 if 24 < v < light else 0).getbbox() or (0, 0, im.width, im.height)
+    im = im.crop(box)
+    side = int(max(im.size) * 1.08)
+    out = Image.new('RGB', (side, side), (0, 0, 0))
+    out.paste(im, ((side - im.width) // 2, (side - im.height) // 2))
+    return out
+
+
 def square(im):
     side = min(im.size)
     x0, y0 = (im.width - side) // 2, (im.height - side) // 2
@@ -586,7 +600,10 @@ def cut(name, numbers):
                 continue
             r, c = divmod(k, g)
             cell = im.crop((xs[2 * c] + inset, ys[2 * r] + inset, xs[2 * c + 1] - inset, ys[2 * r + 1] - inset))
-            cell = medallion(cell) if s['mode'] == 'medallion' else square(trim(cell))
+            if s['mode'] == 'medallion':
+                cell = medallion(cell)
+            else:
+                cell = fit(cell) if s.get('fit') else square(trim(cell))
             cell.resize((s['size'], s['size']), Image.LANCZOS).save(
                 os.path.join(dst, code + '.webp'), 'WEBP', quality=84, method=6)
         print(name, 'sheet%02d' % n, sum(1 for c, _ in cells if c))

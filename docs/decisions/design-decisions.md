@@ -3283,6 +3283,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-335 — Arayüzü olan tüm içerik görselli (pet, zindan, görev, sınıf portresi, toplama amblemi, iksir, yemek)
+
+**Context:** DD-334 denetimi bağlı alanlarda 180 eksik görsel listeledi (pet 33 evre + 12 yumurta, zindan 22, görev 62, sınıf portresi 10, toplama 5, tüketilebilir 36).
+**Decision:** Hepsi `docs/art-recipes.md` tariflerine göre Gemini'de üretildi: pet 39–50 (poster + yumurta), `art_sets.py` setleri `gather_professions`, `potions` (yeni `fit` kesimi: açık ızgara çizgisi temizlenir, şişe kırpılmadan kareye oturur), `class_portraits` (480×640 webp), `dungeons` 1–3, `foods`, `quests`. `ItemImages` sınıf/ırk/hayvan görsellerini `.webp` de okur. `pet_assets.py` varsayılan kaynak masaüstü klasörü (kopya yalnız yedek). `art_sets_test` tüm bu setleri denetler; `art_audit.py` arayüzü olan alanlarda eksik 0.
+**Consequences:** Arayüzü olmayan canavar (146) ve yetenek (471) görselleri gösterim yeri eklenince üretilecek.
+**Tarih:** 2026-11-02
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -69,7 +69,7 @@ nodes = codes('progression.yaml', r'^\s+- code: (\w+)\s+parent:')
 add('Terfi + uzmanlık amblemleri', nodes, have('class_nodes'))
 prof = codes('professions.yaml')
 add('Üretim meslekleri', prof[:9], have('professions'))
-add('Toplama meslekleri (Toplama sekmesi)', prof[9:], have('professions'), hooked=False)
+add('Toplama meslekleri (Toplama sekmesi)', prof[9:], have('professions'))
 add('Yardımcı NPC portreleri', ['miner', 'woodsman', 'angler', 'herbalist', 'trapper', 'smith', 'tanner', 'weaver',
                                  'carver', 'apothecary', 'cook', 'smelter', 'scribe', 'gemcutter'], have('helpers'))
 add('Canavarlar (av listesi)', codes('mobs.yaml'), have('mobs'), hooked=False)

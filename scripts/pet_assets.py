@@ -3,9 +3,9 @@
 The source folder holds one folder per pet, "NN_Name" in the order of
 scripts/pet_data.py, each with 1_baslangic.png / 2_orta.png / 3_ust.png (the
 three evolution stages, cut from a Gemini poster), yumurta.png (the egg) and
-evrim_poster.png. It defaults to client/art_originals/pets (git-ignored; the
-originals are copied there on every run) and is read from
-~/Desktop/Pet_Evrim while that copy does not exist. Writes
+evrim_poster.png. It defaults to ~/Desktop/Pet_Evrim (copied on every run
+to client/art_originals/pets, git-ignored) and falls back to that copy when
+the desktop folder is gone. Writes
   client/assets/pets/<species>_<stage>.webp   stage art, 256 x 256
   client/assets/items/pet_egg_<species>.webp  egg icon, 128 x 128
 A missing image is skipped (its art falls back to an icon in the game).
@@ -26,7 +26,7 @@ CLIENT = os.path.join(os.path.dirname(__file__), '..', 'client')
 ROOT = os.path.join(CLIENT, 'assets')
 KEEP = os.path.join(CLIENT, 'art_originals', 'pets')
 DESKTOP = os.path.join(os.path.expanduser('~'), 'Desktop', 'Pet_Evrim')
-SRC = sys.argv[1] if len(sys.argv) > 1 else (KEEP if os.path.isdir(KEEP) else DESKTOP)
+SRC = sys.argv[1] if len(sys.argv) > 1 else (DESKTOP if os.path.isdir(DESKTOP) else KEEP)
 STAGES = ['1_baslangic.png', '2_orta.png', '3_ust.png']
 PAD = 0.08  # margin added around art that touches its edges
 

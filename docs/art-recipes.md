@@ -32,9 +32,9 @@ basar, `cut` sayfayı keser ve `client/assets/<klasör>/<kod>.webp` yazar. Her k
 
 En az eksikten başlanır; bir sayfa ~1 Gemini üretimi, günlük kota ~35–40.
 
-1. Pet 39 yumurtası + pet 40–50 (yarım kalan iş, 23 üretim)
-2. Toplama meslekleri (1) → iksirler (1) → sınıf portreleri (10)
-3. Zindanlar (3) → yemekler (2) → görevler (7)
+1. ~~Pet 39 yumurtası + pet 40–50~~ (bitti, 150 evre + 50 yumurta)
+2. ~~Toplama meslekleri → iksirler → sınıf portreleri~~ (bitti)
+3. ~~Zindanlar → yemekler → görevler~~ (bitti)
 4. Arayüz yeri eklendikten sonra canavarlar (17) → yetenekler (19)
 
 Her sayfa kesildikten sonra `python scripts/art_audit.py` listeyi günceller; `client/test/art_sets_test.dart` bitmiş setleri denetler.

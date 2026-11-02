@@ -280,6 +280,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 132. **50 pet türü + evre görselleri + görsel denetimi (bitti — görseller kısmi)** — Sprint 132, DD-334. Migration 0059 (eski türler taşınır). `pet_data.py`/`gen_pets.py` 50 tür, `pet_assets.py`, istemci `PetArt` (seviyeye göre evre). `art_audit.py` → `docs/art-missing.md`, `docs/animation-proposals.md`.
 
+133. **Eksik görseller tamamlandı (bitti)** — Sprint 133, DD-335. Pet 39–50, zindan, görev, sınıf portresi, toplama amblemi, iksir ve yemek görselleri; `art_sets.py` `fit` kesimi, `ItemImages` webp portre, `art_sets_test` genişledi. Arayüzlü alanlarda eksik 0 (`docs/art-missing.md`).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
