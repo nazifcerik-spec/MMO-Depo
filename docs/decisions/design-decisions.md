@@ -3274,6 +3274,13 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-334 — Pet türleri 20 → 50
+
+**Context:** Pet tasarım sayfası 50 yaratık (her biri 3 evrim aşaması + yumurta) içeriyor; oyunda DD-328'in 20 türü vardı.
+**Decision:** Türler `scripts/pet_data.py` (50 tür, en zayıftan en iyiye, en/tr/zh-CN/es adları) → `scripts/gen_pets.py` → `content/pets.yaml`. Merdiven aynı uçlara yayıldı: `min_mob_level` 400 + 600·rank/50 (412..1000), `egg_pct` %50 → %2 geometrik, kuluçka 1–24 sa, `power_pct` 200..257, bonus 0,03..0,12, yumurta değeri eski eğrinin aynı uçları. Migration 0059: eski 20 türün sahip olunan petleri ve yumurtaları aynı konumdaki yeni türe taşınır (eski sıra r → yeni sıra 1 + (r−1)·49/19); yumurta eşyası, pazar ilanı, fiyat geçmişi, dükkân geri alım anlık görüntüsü ve `pet.pet.species_code` güncellenir, eski yumurta şablonları silinir. Yeni şablonlar eskisinden kopyalanır, içerik yüklemesi gerçek değerleri yazar. Geri alınamaz (down boş).
+**Consequences:** Bir baskın artık 20 yerine 50 türden zar atar (en iyisinden başlayarak, üye başı en çok bir yumurta). Pet ve yumurta görselleri tasarım sayfasından ayrıca gelir; `item_art.py`'deki DD-331 yumurta sayfası eski 20 türü anlatıyor.
+**Tarih:** 2026-11-02
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

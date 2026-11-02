@@ -278,6 +278,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 131. **Efsun parşömeni + zindan/görev görselleri (bitti — kısmi)** — Sprint 131, DD-333. `scripts/art_sets.py` `scrolls` (210 parşömen, nitelik sembolü × kademe), `dungeons`, `quests`, `class_portraits` setleri. İstemci `dungeonArt` (zindan/baskın kartları), görev kartı madalyonu; eksik görselde ikon. `art_sets_test` parşömenleri denetler.
 
+132. **50 pet türü (bitti)** — Sprint 132, DD-334. `scripts/pet_data.py` (50 tür, 4 dil) → `gen_pets.py` → `content/pets.yaml`; `min_mob_level` 412..1000, yumurta %50 → %2. Migration 0059 eski 20 türün petlerini/yumurtalarını (eşya, pazar, fiyat geçmişi, geri alım) aynı konumdaki yeni türe taşır.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -9,7 +9,7 @@ import 'fake_backend.dart';
 void main() {
   testWidgets('pets: incubate an egg, make it active, hunt, collect (DD-328)', (tester) async {
     final be = FakeBackend();
-    be.petEggs.add({'item_id': 'egg-1', 'template_code': 'pet_egg_ember_fox', 'species': 'ember_fox', 'quantity': 1});
+    be.petEggs.add({'item_id': 'egg-1', 'template_code': 'pet_egg_flamewing', 'species': 'flamewing', 'quantity': 1});
     final api = be.api();
     await tester.runAsync(() => api.login('grim', 'correct-horse'));
     await tester.pumpWidget(
@@ -24,7 +24,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('egg-pet_egg_ember_fox')), findsOneWidget);
+    expect(find.byKey(const Key('egg-pet_egg_flamewing')), findsOneWidget);
 
     await tester.tap(find.text('Incubate'));
     await tester.pumpAndSettle();

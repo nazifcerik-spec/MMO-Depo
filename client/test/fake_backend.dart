@@ -289,17 +289,17 @@ class FakeBackend {
       return json(200, {
         'species': [
           {
-            'code': 'eternal_kirin',
-            'rank': 20,
+            'code': 'chaos_hydra',
+            'rank': 50,
             'min_mob_level': 1000,
             'egg_pct': 2,
             'hatch_seconds': 86400,
             'bonus': {'kind': 'mult_add', 'target': 'defense', 'amount': 0.12},
           },
           {
-            'code': 'ember_fox',
+            'code': 'flamewing',
             'rank': 1,
-            'min_mob_level': 430,
+            'min_mob_level': 412,
             'egg_pct': 50,
             'hatch_seconds': 3600,
             'bonus': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.03},
@@ -317,7 +317,7 @@ class FakeBackend {
         petEggs.clear();
         pets.add({
           'id': 'pet-1',
-          'species': 'ember_fox',
+          'species': 'flamewing',
           'rank': 1,
           'level': 1,
           'xp': 0,

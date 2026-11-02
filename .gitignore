@@ -46,3 +46,4 @@ tmp/
 
 # Full-size item art originals; the app ships 128px copies (DD-240)
 art-src/
+__pycache__/
