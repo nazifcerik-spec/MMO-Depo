@@ -78,6 +78,19 @@ func TestRollEggOdds(t *testing.T) {
 	require.Positive(t, mid["pet_egg_s16"])
 }
 
+// A pet helps more as it grows and the better species help most (DD-341).
+func TestAssistPct(t *testing.T) {
+	sp := species()
+	weak, best := sp[0], sp[49]
+	require.Equal(t, 3, weak.AssistPct(1))
+	require.Equal(t, 12, weak.AssistPct(MaxLevel))
+	require.Equal(t, 12, weak.AssistPct(MaxLevel+5), "capped at MaxLevel")
+	require.Greater(t, best.AssistPct(MaxLevel), weak.AssistPct(MaxLevel))
+	for l := 2; l <= MaxLevel; l++ {
+		require.GreaterOrEqual(t, best.AssistPct(l), best.AssistPct(l-1))
+	}
+}
+
 func TestXPAndLevels(t *testing.T) {
 	require.EqualValues(t, 1000, XPToNext(1))
 	require.Zero(t, XPToNext(MaxLevel))

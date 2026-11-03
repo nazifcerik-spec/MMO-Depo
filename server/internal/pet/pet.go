@@ -182,6 +182,15 @@ func (s Species) BonusAt(level int) Modifier {
 	return m
 }
 
+// AssistPct is the damage share an active pet adds to every hit its owner
+// lands (DD-341): 3% at level 1 growing to 12% at MaxLevel, times the
+// species' strength (power_pct / 200), so the best species reach ~15%.
+func (s Species) AssistPct(level int) int {
+	level = max(1, min(level, MaxLevel))
+	base := 3 + 9*float64(level-1)/float64(MaxLevel-1)
+	return int(math.Round(base * float64(s.PowerPct) / 200))
+}
+
 // CanHunt says whether a pet of the level may hunt the mob.
 func CanHunt(level int, mob combat.Mob) bool {
 	return !mob.RaidBoss && int(mob.Level) <= Power(level)+MobReach

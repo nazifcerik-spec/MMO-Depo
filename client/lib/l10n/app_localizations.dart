@@ -5707,7 +5707,7 @@ abstract class AppLocalizations {
   /// No description provided for @petsHint.
   ///
   /// In en, this message translates to:
-  /// **'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.'**
+  /// **'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.'**
   String get petsHint;
 
   /// No description provided for @petsEggs.
@@ -5955,6 +5955,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Material for'**
   String get tagUsedIn;
+
+  /// No description provided for @petEvolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Evolution'**
+  String get petEvolution;
+
+  /// No description provided for @petStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength'**
+  String get petStrength;
+
+  /// No description provided for @petAssistRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat assist: +{min}% – +{max}% damage on every hit'**
+  String petAssistRange(int min, int max);
+
+  /// No description provided for @petBonusRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Bonus: {min} – {max}'**
+  String petBonusRange(String min, String max);
+
+  /// No description provided for @petFightsRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunts like a level {min} – {max} monster'**
+  String petFightsRange(int min, int max);
+
+  /// No description provided for @petFind.
+  ///
+  /// In en, this message translates to:
+  /// **'How to get'**
+  String get petFind;
+
+  /// No description provided for @petFindLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid bosses of level {level}+ · {pct}% chance'**
+  String petFindLine(int level, String pct);
+
+  /// No description provided for @petHatchTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Hatches in {time}'**
+  String petHatchTime(String time);
+
+  /// No description provided for @petAssist.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat assist: +{pct}% damage'**
+  String petAssist(int pct);
+
+  /// No description provided for @petLevelNote.
+  ///
+  /// In en, this message translates to:
+  /// **'From level 1 to 100'**
+  String get petLevelNote;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

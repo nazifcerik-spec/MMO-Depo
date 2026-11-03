@@ -3234,7 +3234,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get petsHint =>
-      'Pet yumurtaları Sv 400 üstü baskınları temizlediğinde düşer. Yumurta kuluçkada açılır; pet kendi avına çıkarak seviye atlar, aktif petin bonusu sana gelir.';
+      'Pet yumurtaları Sv 400 üstü baskınları temizlediğinde düşer. Yumurta kuluçkada açılır; pet kendi avına çıkarak seviye atlar, aktif petin bonusu sana gelir. Aktif pet savaşlarında da yanında vuruşa katılır, her vuruşuna hasar ekler.';
 
   @override
   String get petsEggs => 'Yumurtalar';
@@ -3378,4 +3378,46 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tagUsedIn => 'Malzeme olarak kullanan meslekler';
+
+  @override
+  String get petEvolution => 'Evrim';
+
+  @override
+  String get petStrength => 'Güç';
+
+  @override
+  String petAssistRange(int min, int max) {
+    return 'Savaş desteği: her vuruşa +%$min – +%$max hasar';
+  }
+
+  @override
+  String petBonusRange(String min, String max) {
+    return 'Bonus: $min – $max';
+  }
+
+  @override
+  String petFightsRange(int min, int max) {
+    return 'Sv $min – $max canavar gücünde avlanır';
+  }
+
+  @override
+  String get petFind => 'Nasıl bulunur';
+
+  @override
+  String petFindLine(int level, String pct) {
+    return 'Sv $level+ baskın boss\'ları · %$pct şans';
+  }
+
+  @override
+  String petHatchTime(String time) {
+    return 'Kuluçka: $time';
+  }
+
+  @override
+  String petAssist(int pct) {
+    return 'Savaş desteği: +%$pct hasar';
+  }
+
+  @override
+  String get petLevelNote => 'Seviye 1 – 100';
 }

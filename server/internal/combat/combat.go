@@ -72,6 +72,9 @@ type Combatant struct {
 	MissingHPDmgPct int32 `json:",omitempty"` // up to this extra damage % as own HP drops
 	LifestealPct    int32 `json:",omitempty"` // heal this % of damage dealt
 	DmgReductionPct int32 `json:",omitempty"` // incoming damage reduced by this %
+	// PetAssistPct: the active pet strikes alongside, adding this % to every
+	// hit (DD-341). Zero in older snapshots and for mobs.
+	PetAssistPct int32 `json:",omitempty"`
 
 	// Barrier absorbs incoming damage while up (runtime state of an
 	// encounter, never part of a snapshot).

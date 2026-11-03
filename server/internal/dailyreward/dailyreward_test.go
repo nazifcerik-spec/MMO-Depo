@@ -22,7 +22,7 @@ func TestRewardFor(t *testing.T) {
 	require.Equal(t, Reward{Day: 3, GoldCopper: 50, Potion: "potion_hp_small", PotionQty: 3}, RewardFor(3, 0),
 		"level 0 counts as 1")
 	require.Equal(t, "potion_hp_medium", RewardFor(6, 249).Potion)
-	require.Equal(t, "potion_hp_supreme", RewardFor(6, 1000).Potion)
+	require.Equal(t, "potion_hp_huge", RewardFor(6, 1000).Potion, "the supreme tier is retired (DD-341)")
 	require.EqualValues(t, 5, RewardFor(6, 1000).PotionQty)
 }
 

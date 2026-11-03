@@ -3235,7 +3235,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get petsHint =>
-      'Los huevos de mascota caen al superar bandas de nivel 400 o más. El huevo eclosiona en la incubadora; la mascota sube de nivel con sus propias cacerías y tu mascota activa te da su bonificación.';
+      'Los huevos de mascota caen al superar bandas de nivel 400 o más. El huevo eclosiona en la incubadora; la mascota sube de nivel con sus propias cacerías y tu mascota activa te da su bonificación. Mientras está activa también lucha a tu lado y añade daño a cada golpe.';
 
   @override
   String get petsEggs => 'Huevos';
@@ -3379,4 +3379,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tagUsedIn => 'Material para';
+
+  @override
+  String get petEvolution => 'Evolución';
+
+  @override
+  String get petStrength => 'Fuerza';
+
+  @override
+  String petAssistRange(int min, int max) {
+    return 'Apoyo en combate: +$min% – +$max% de daño en cada golpe';
+  }
+
+  @override
+  String petBonusRange(String min, String max) {
+    return 'Bonificación: $min – $max';
+  }
+
+  @override
+  String petFightsRange(int min, int max) {
+    return 'Caza como un monstruo de nivel $min – $max';
+  }
+
+  @override
+  String get petFind => 'Cómo conseguirlo';
+
+  @override
+  String petFindLine(int level, String pct) {
+    return 'Jefes de incursión de nivel $level+ · $pct% de probabilidad';
+  }
+
+  @override
+  String petHatchTime(String time) {
+    return 'Eclosiona en $time';
+  }
+
+  @override
+  String petAssist(int pct) {
+    return 'Apoyo en combate: +$pct% de daño';
+  }
+
+  @override
+  String get petLevelNote => 'Del nivel 1 al 100';
 }

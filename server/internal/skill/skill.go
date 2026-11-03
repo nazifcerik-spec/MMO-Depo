@@ -63,6 +63,9 @@ const (
 	TargetMissingHPDmgPct Target = "missing_hp_dmg_pct"
 	TargetLifestealPct    Target = "lifesteal_pct"
 	TargetDmgReductionPct Target = "dmg_reduction_pct"
+	// TargetPetAssistPct: the active pet's extra damage share on every hit
+	// (DD-341); only the pet service grants it.
+	TargetPetAssistPct Target = "pet_assist_pct"
 )
 
 // KnownKinds / KnownTargets are what ComputeSheet understands; content
@@ -77,6 +80,7 @@ var (
 		TargetHPMax: true, TargetMPMax: true, TargetEnMax: true, TargetStaMax: true,
 		TargetEvasionPct: true, TargetBlockPct: true, TargetCritDmgPct: true, TargetExecutePct: true,
 		TargetMissingHPDmgPct: true, TargetLifestealPct: true, TargetDmgReductionPct: true,
+		TargetPetAssistPct: true,
 	}
 )
 
@@ -142,6 +146,7 @@ type Derived struct {
 	MissingHPDmgPct int `json:"missing_hp_dmg_pct"`
 	LifestealPct    int `json:"lifesteal_pct"`
 	DmgReductionPct int `json:"dmg_reduction_pct"`
+	PetAssistPct    int `json:"pet_assist_pct"`
 }
 
 // Resources are the runtime pools (max only — current is game-state).
@@ -261,6 +266,7 @@ func ComputeSheetWith(base Primary, main Target, mods []Modifier, f *Formula) Sh
 		MissingHPDmgPct: intClamp(applyStack(0, filterTarget(mods, TargetMissingHPDmgPct)), 0, 1000),
 		LifestealPct:    pct(TargetLifestealPct, 0),
 		DmgReductionPct: pct(TargetDmgReductionPct, 0),
+		PetAssistPct:    intClamp(applyStack(0, filterTarget(mods, TargetPetAssistPct)), 0, 100),
 	}
 
 	// 3. Resources — HP from the class formula, MP from INT unless the

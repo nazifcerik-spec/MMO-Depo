@@ -420,7 +420,7 @@
   "helperPickResource": "采集目标",
   "helperCraftHint": "材料和金币现在扣除；期间你可以继续游戏。",
   "petsOpen": "宠物",
-  "petsHint": "通关400级以上的团队副本时会掉落宠物蛋。蛋在孵化器中孵化；宠物通过自己的狩猎升级，出战宠物为你提供加成。",
+  "petsHint": "通关400级以上的团队副本时会掉落宠物蛋。蛋在孵化器中孵化；宠物通过自己的狩猎升级，出战宠物为你提供加成。 出战时它还会在战斗中协助你，为每次命中增加伤害。",
   "petsEggs": "宠物蛋",
   "petsNoEggs": "没有宠物蛋。通关400级以上的团队副本来获取。",
   "petsMine": "我的宠物（{n}/{max}）",
@@ -461,5 +461,15 @@
   "tagSkill": "技能 {n}",
   "tagSold": "出售",
   "tagGathered": "采集",
-  "tagUsedIn": "作为材料用于"
+  "tagUsedIn": "作为材料用于",
+  "petEvolution": "进化",
+  "petStrength": "实力",
+  "petAssistRange": "战斗援助：每次命中伤害 +{min}% – +{max}%",
+  "petBonusRange": "加成：{min} – {max}",
+  "petFightsRange": "狩猎实力相当于 {min} – {max} 级怪物",
+  "petFind": "获取方式",
+  "petFindLine": "{level} 级以上团队副本首领 · {pct}% 几率",
+  "petHatchTime": "孵化：{time}",
+  "petAssist": "战斗援助：伤害 +{pct}%",
+  "petLevelNote": "1 级至 100 级"
 }

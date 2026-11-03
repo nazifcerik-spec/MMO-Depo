@@ -147,6 +147,7 @@ func FromSheet(s *character.Sheet) Combatant {
 		MissingHPDmgPct: int32(s.Derived.MissingHPDmgPct),
 		LifestealPct:    int32(s.Derived.LifestealPct),
 		DmgReductionPct: int32(s.Derived.DmgReductionPct),
+		PetAssistPct:    int32(s.Derived.PetAssistPct),
 	}
 	ApplyResource(&c, s.Class)
 	return c

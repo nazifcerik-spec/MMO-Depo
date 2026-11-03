@@ -753,12 +753,10 @@ FOODS = [
 # Potions (DD-241, DD-288): the missing rungs of the flask ladder; the same
 # gold-framed flasks as the existing ones, red for health, blue for mana.
 POTIONS = [
-    ('potion_hp_supreme', 'the largest and most ornate crimson crystal flask with gold filigree wings and a radiant red glow'),
     ('potion_mp_medium', 'a round blue flask with a gold neck band and a cork'),
     ('potion_mp_large', 'a larger blue flask in a gold cage frame with a cork'),
     ('potion_mp_xlarge', 'a tall faceted blue crystal flask with a spiky gold frame'),
     ('potion_mp_huge', 'a big faceted blue crystal flask with many gold spikes and swirling mana inside'),
-    ('potion_mp_supreme', 'the largest and most ornate sapphire crystal flask with gold filigree wings and a radiant blue glow'),
 ]
 
 MEDALLION = ('Each cell is one round medallion that fills its square, with an ornate gold rim, on a near-black '

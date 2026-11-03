@@ -2515,7 +2515,7 @@
   "helperPickResource": "What to gather",
   "helperCraftHint": "Materials and gold are taken now; you keep playing meanwhile.",
   "petsOpen": "Pets",
-  "petsHint": "Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.",
+  "petsHint": "Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.",
   "petsEggs": "Eggs",
   "petsNoEggs": "No eggs. Clear raids past level 400 to find some.",
   "petsMine": "My pets ({n}/{max})",
@@ -2644,6 +2644,70 @@
   "@tagSkill": {
     "placeholders": {
       "n": {
+        "type": "int"
+      }
+    }
+  },
+  "petEvolution": "Evolution",
+  "petStrength": "Strength",
+  "petAssistRange": "Combat assist: +{min}% – +{max}% damage on every hit",
+  "petBonusRange": "Bonus: {min} – {max}",
+  "petFightsRange": "Hunts like a level {min} – {max} monster",
+  "petFind": "How to get",
+  "petFindLine": "Raid bosses of level {level}+ · {pct}% chance",
+  "petHatchTime": "Hatches in {time}",
+  "petAssist": "Combat assist: +{pct}% damage",
+  "petLevelNote": "From level 1 to 100",
+  "@petAssistRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "@petBonusRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "@petFightsRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "@petFindLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "@petHatchTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@petAssist": {
+    "placeholders": {
+      "pct": {
         "type": "int"
       }
     }

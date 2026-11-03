@@ -753,7 +753,7 @@ items:
     display_name_key: item.potion_hp_medium
     item_class: consumable
     item_subclass: potion
-    min_level: 100
+    min_level: 210
     base_value_copper: 60
     base_weight_g: 250
     stackable: true
@@ -765,7 +765,7 @@ items:
     display_name_key: item.potion_hp_large
     item_class: consumable
     item_subclass: potion
-    min_level: 250
+    min_level: 410
     base_value_copper: 150
     base_weight_g: 250
     stackable: true
@@ -777,7 +777,7 @@ items:
     display_name_key: item.potion_hp_xlarge
     item_class: consumable
     item_subclass: potion
-    min_level: 450
+    min_level: 610
     base_value_copper: 320
     base_weight_g: 250
     stackable: true
@@ -789,25 +789,13 @@ items:
     display_name_key: item.potion_hp_huge
     item_class: consumable
     item_subclass: potion
-    min_level: 650
+    min_level: 810
     base_value_copper: 600
     base_weight_g: 250
     stackable: true
     max_stack: 20
     bind_kind: boe
     use_effect: { kind: heal_pct, amount: 70 }
-
-  - code: potion_hp_supreme
-    display_name_key: item.potion_hp_supreme
-    item_class: consumable
-    item_subclass: potion
-    min_level: 850
-    base_value_copper: 1000
-    base_weight_g: 250
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: heal_pct, amount: 85 }
 
   - code: potion_mp_small
     display_name_key: item.potion_mp_small
@@ -825,7 +813,7 @@ items:
     display_name_key: item.potion_mp_medium
     item_class: consumable
     item_subclass: potion
-    min_level: 100
+    min_level: 210
     base_value_copper: 60
     base_weight_g: 250
     stackable: true
@@ -837,7 +825,7 @@ items:
     display_name_key: item.potion_mp_large
     item_class: consumable
     item_subclass: potion
-    min_level: 250
+    min_level: 410
     base_value_copper: 150
     base_weight_g: 250
     stackable: true
@@ -849,7 +837,7 @@ items:
     display_name_key: item.potion_mp_xlarge
     item_class: consumable
     item_subclass: potion
-    min_level: 450
+    min_level: 610
     base_value_copper: 320
     base_weight_g: 250
     stackable: true
@@ -861,25 +849,13 @@ items:
     display_name_key: item.potion_mp_huge
     item_class: consumable
     item_subclass: potion
-    min_level: 650
+    min_level: 810
     base_value_copper: 600
     base_weight_g: 250
     stackable: true
     max_stack: 20
     bind_kind: boe
     use_effect: { kind: mana_pct, amount: 70 }
-
-  - code: potion_mp_supreme
-    display_name_key: item.potion_mp_supreme
-    item_class: consumable
-    item_subclass: potion
-    min_level: 850
-    base_value_copper: 1000
-    base_weight_g: 250
-    stackable: true
-    max_stack: 20
-    bind_kind: boe
-    use_effect: { kind: mana_pct, amount: 85 }
   # <<< generated: potions
 
   # >>> generated: enchanting (scripts/gen_crafting.py)

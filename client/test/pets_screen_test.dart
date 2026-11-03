@@ -52,6 +52,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(be.pets.first['active'], isTrue);
     expect(find.text('Active'), findsOneWidget);
+    expect(find.text('Combat assist: +3% damage'), findsOneWidget, reason: 'the active pet fights alongside (DD-341)');
+
+    // The guide opens a species card: evolution, strength, where to find it.
+    await tester.tap(find.text('All pets'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('pet-guide-ember_fox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('pet-guide-ember_fox')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('pet-species-sheet')), findsOneWidget);
+    for (final t in [
+      'Evolution',
+      'Lvl 34–66',
+      'Combat assist: +3% – +12% damage on every hit',
+      'Hunts like a level 10 – 1000 monster',
+      'Raid bosses of level 430+ · 50% chance',
+    ]) {
+      expect(find.text(t), findsOneWidget, reason: t);
+    }
+    Navigator.of(tester.element(find.byKey(const Key('pet-species-sheet')))).pop();
+    await tester.pumpAndSettle();
 
     // Only monsters within its power (level 10 + 5) are offered.
     await tester.tap(find.text('Send hunting'));

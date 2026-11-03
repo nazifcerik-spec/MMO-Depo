@@ -292,6 +292,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 138. **Titan Siperi tarifi (bitti)** — Sprint 138, DD-340. `gen_crafting.py` şartlı ekipmanın tamamına tarif üretir; `titan_bulwark_shield` Demircilik 60. Test: her ekipmanın kaynağı var.
 
+139. **Yüce iksirler kalktı + pet savaş desteği (bitti)** — Sprint 139, DD-341. Migration 0060 (yüce tarifler silinir, eldekiler dev kademeye döner); iksir kademeleri Sv 1/210/410/610/810. Aktif pet her vuruşa %3–15 hasar ekler (`pet_assist_pct` sheet → combatant). Tüm petler → `PetSpeciesSheet` (evrim, güç, nasıl bulunur).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

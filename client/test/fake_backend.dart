@@ -303,10 +303,14 @@ class FakeBackend {
             'egg_pct': 50,
             'hatch_seconds': 3600,
             'bonus': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.03},
+            'bonus_min': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.0075},
+            'assist_min': 3,
+            'assist_max': 12,
           },
         ],
         'max_level': 100,
         'mob_reach': 5,
+        'power_per_level': 10,
       });
     }
     if (path.startsWith('/v1/character/char-1/pets')) {
@@ -326,6 +330,7 @@ class FakeBackend {
           'hatch_ready_at': now.add(const Duration(hours: 1)).toIso8601String(),
           'active': false,
           'bonus': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.0075},
+          'assist_pct': 3,
         });
         return json(200, {'pet': pets.last});
       }

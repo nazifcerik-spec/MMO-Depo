@@ -3222,7 +3222,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get petsOpen => '宠物';
 
   @override
-  String get petsHint => '通关400级以上的团队副本时会掉落宠物蛋。蛋在孵化器中孵化；宠物通过自己的狩猎升级，出战宠物为你提供加成。';
+  String get petsHint => '通关400级以上的团队副本时会掉落宠物蛋。蛋在孵化器中孵化；宠物通过自己的狩猎升级，出战宠物为你提供加成。 出战时它还会在战斗中协助你，为每次命中增加伤害。';
 
   @override
   String get petsEggs => '宠物蛋';
@@ -3366,4 +3366,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tagUsedIn => '作为材料用于';
+
+  @override
+  String get petEvolution => '进化';
+
+  @override
+  String get petStrength => '实力';
+
+  @override
+  String petAssistRange(int min, int max) {
+    return '战斗援助：每次命中伤害 +$min% – +$max%';
+  }
+
+  @override
+  String petBonusRange(String min, String max) {
+    return '加成：$min – $max';
+  }
+
+  @override
+  String petFightsRange(int min, int max) {
+    return '狩猎实力相当于 $min – $max 级怪物';
+  }
+
+  @override
+  String get petFind => '获取方式';
+
+  @override
+  String petFindLine(int level, String pct) {
+    return '$level 级以上团队副本首领 · $pct% 几率';
+  }
+
+  @override
+  String petHatchTime(String time) {
+    return '孵化：$time';
+  }
+
+  @override
+  String petAssist(int pct) {
+    return '战斗援助：伤害 +$pct%';
+  }
+
+  @override
+  String get petLevelNote => '1 级至 100 级';
 }

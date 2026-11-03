@@ -50,23 +50,21 @@ PIECE = {'chest': (5, 1.6), 'legs': (4, 1.4), 'helm': (3, 1.0), 'boots': (3, 1.0
 # Healing potions (heal_pct): code, level, percent of max HP, value, names.
 POTIONS = [
     ('potion_hp_small', 1, 20, 20, None),
-    ('potion_hp_medium', 100, 30, 60, None),
-    ('potion_hp_large', 250, 40, 150, None),
-    ('potion_hp_xlarge', 450, 55, 320, None),
-    ('potion_hp_huge', 650, 70, 600, None),
-    ('potion_hp_supreme', 850, 85, 1000,
-     L('Supreme Healing Potion', 'Yüce Can İksiri', '至高治疗药水', 'Poción de curación suprema')),
-]
+    ('potion_hp_medium', 210, 30, 60, None),
+    ('potion_hp_large', 410, 40, 150, None),
+    ('potion_hp_xlarge', 610, 55, 320, None),
+    ('potion_hp_huge', 810, 70, 600, None),
+]  # the supreme tier was retired (DD-341); the five tiers sit 20 alchemy
+# skill apart (1/21/41/61/81) so every skill to 100 has a recipe to learn from.
 # Mana potions (mana_pct): code, level, percent of the pool, value, names.
 MANA_POTIONS = [
     ('potion_mp_small', 1, 30, 20, L('Small Mana Potion', 'Küçük Mana İksiri', '小型法力药水', 'Poción de maná pequeña')),
-    ('potion_mp_medium', 100, 40, 60, L('Medium Mana Potion', 'Orta Boy Mana İksiri', '中型法力药水', 'Poción de maná mediana')),
-    ('potion_mp_large', 250, 50, 150, L('Large Mana Potion', 'Büyük Boy Mana İksiri', '大型法力药水', 'Poción de maná grande')),
-    ('potion_mp_xlarge', 450, 60, 320,
+    ('potion_mp_medium', 210, 40, 60, L('Medium Mana Potion', 'Orta Boy Mana İksiri', '中型法力药水', 'Poción de maná mediana')),
+    ('potion_mp_large', 410, 50, 150, L('Large Mana Potion', 'Büyük Boy Mana İksiri', '大型法力药水', 'Poción de maná grande')),
+    ('potion_mp_xlarge', 610, 60, 320,
      L('Extra Large Mana Potion', 'Ekstra Büyük Mana İksiri', '特大法力药水', 'Poción de maná extragrande')),
-    ('potion_mp_huge', 650, 70, 600, L('Huge Mana Potion', 'Dev Mana İksiri', '巨型法力药水', 'Poción de maná enorme')),
-    ('potion_mp_supreme', 850, 85, 1000, L('Supreme Mana Potion', 'Yüce Mana İksiri', '至高法力药水', 'Poción de maná suprema')),
-]
+    ('potion_mp_huge', 810, 70, 600, L('Huge Mana Potion', 'Dev Mana İksiri', '巨型法力药水', 'Poción de maná enorme')),
+]  # the supreme tier was retired (DD-341)
 
 
 def skill_for(level):

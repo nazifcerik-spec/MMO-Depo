@@ -423,7 +423,7 @@ func (s *Session) validate() error {
 // all of them zero it returns dmg untouched and draws no RNG.
 func progressionDamage(r RNG, dmg int32, crit bool, a, d *Combatant) int32 {
 	if a.CritDmgPct == 0 && a.ExecutePct == 0 && a.MissingHPDmgPct == 0 && a.LifestealPct == 0 &&
-		d.DmgReductionPct == 0 && d.BlockPct == 0 {
+		a.PetAssistPct == 0 && d.DmgReductionPct == 0 && d.BlockPct == 0 {
 		return dmg
 	}
 	bonus := int64(100)
@@ -433,6 +433,7 @@ func progressionDamage(r RNG, dmg int32, crit bool, a, d *Combatant) int32 {
 	if a.ExecutePct > 0 && pctAtOrBelow(d.HPCurrent, d.HPMax, ExecuteThresholdPct) {
 		bonus += int64(a.ExecutePct)
 	}
+	bonus += int64(a.PetAssistPct) // the pet's strike lands with the hit (DD-341)
 	if a.MissingHPDmgPct > 0 && a.HPMax > 0 {
 		bonus += int64(a.MissingHPDmgPct) * int64(a.HPMax-a.HPCurrent) / int64(a.HPMax)
 	}

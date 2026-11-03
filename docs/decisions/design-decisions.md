@@ -3337,6 +3337,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-341 — Yüce iksirler kalktı + pet savaş desteği + pet tür kartı
+
+**Context:** Yüce Can/Mana İksiri (Sv 850) istenmiyordu. Petler yalnız bir stat bonusu veriyordu; kahramanın savaşlarına katılmıyorlardı ve 'Tüm petler' penceresi yalnız evre görsellerini gösteriyordu.
+**Decision:** İksir: `gen_crafting.py` yüce kademeyi çıkardı; simya 100'e kadar öğretebilsin diye beş kademe 20 beceri arayla yayıldı (Sv 1/210/410/610/810 = beceri 1/21/41/61/81, can/mana yüzdeleri aynı), günlük ödül eşikleri de aynı seviyelere çekildi. Migration 0060 yüce tarifleri siler, oyuncudaki yüce iksirleri dev kademeye çevirir (şablon satırları geçmiş kayıtlar için kalır); görselleri ve adları silindi. Pet gücü: aktif, yumurtadan çıkmış pet sahibinin her vuruşuna `pet.Species.AssistPct(level)` kadar hasar ekler: Sv 1'de %3, Sv 100'de %12, tür gücüyle (power_pct/200) en iyi türlerde %15'e kadar. Pet servisi bunu sheet modifier'ı olarak verir (`skill.TargetPetAssistPct` → `Derived.PetAssistPct` → `combat.Combatant.PetAssistPct`), hasar `progressionDamage`'da kritik/infaz bonuslarıyla toplanır, RNG çekmez; av/zindan/baskın başlangıç anlık görüntüsüne donar. `/v1/pets` tür başı `bonus_min`, `assist_min/max`, `power_per_level`; pet yanıtında `assist_pct`. İstemci: 'Tüm petler' satırı `PetSpeciesSheet` açar (ad + nadirlik, evrim: yumurta → 3 evre seviye bantlı, güç: savaş desteği / bonus / av gücü Sv 1–100 aralığı, nasıl bulunur: baskın boss seviyesi + şans + kuluçka); pet kartında 'Savaş desteği: +%N hasar' (aktifken yeşil).
+**Consequences:** Eski anlık görüntülerde alan sıfır (davranış aynı). Denge simülasyonları petsiz; pet gücü Sv 430+ baskın yumurtalarıyla gelir. Testler: `TestPetAssistDamage`, `TestAssistPct`, entegrasyon pet akışı sheet `pet_assist_pct`, istemci pet ekranı tür kartı.
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

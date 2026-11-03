@@ -935,7 +935,7 @@
   "helperPickResource": "Toplanacak kaynak",
   "helperCraftHint": "Malzeme ve altın şimdi alınır; sen bu sırada oynamaya devam edersin.",
   "petsOpen": "Petler",
-  "petsHint": "Pet yumurtaları Sv 400 üstü baskınları temizlediğinde düşer. Yumurta kuluçkada açılır; pet kendi avına çıkarak seviye atlar, aktif petin bonusu sana gelir.",
+  "petsHint": "Pet yumurtaları Sv 400 üstü baskınları temizlediğinde düşer. Yumurta kuluçkada açılır; pet kendi avına çıkarak seviye atlar, aktif petin bonusu sana gelir. Aktif pet savaşlarında da yanında vuruşa katılır, her vuruşuna hasar ekler.",
   "petsEggs": "Yumurtalar",
   "petsNoEggs": "Yumurtan yok. Sv 400 üstü baskınları temizle.",
   "petsMine": "Petlerim ({n}/{max})",
@@ -976,5 +976,15 @@
   "tagSkill": "beceri {n}",
   "tagSold": "Satıcı",
   "tagGathered": "Toplama",
-  "tagUsedIn": "Malzeme olarak kullanan meslekler"
+  "tagUsedIn": "Malzeme olarak kullanan meslekler",
+  "petEvolution": "Evrim",
+  "petStrength": "Güç",
+  "petAssistRange": "Savaş desteği: her vuruşa +%{min} – +%{max} hasar",
+  "petBonusRange": "Bonus: {min} – {max}",
+  "petFightsRange": "Sv {min} – {max} canavar gücünde avlanır",
+  "petFind": "Nasıl bulunur",
+  "petFindLine": "Sv {level}+ baskın boss'ları · %{pct} şans",
+  "petHatchTime": "Kuluçka: {time}",
+  "petAssist": "Savaş desteği: +%{pct} hasar",
+  "petLevelNote": "Seviye 1 – 100"
 }

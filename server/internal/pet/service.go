@@ -73,7 +73,8 @@ type Pet struct {
 	HatchReadyAt time.Time `json:"hatch_ready_at"`
 	Hatched      bool      `json:"hatched"`
 	Active       bool      `json:"active"`
-	Bonus        Modifier  `json:"bonus"` // at its level
+	Bonus        Modifier  `json:"bonus"`      // at its level
+	AssistPct    int       `json:"assist_pct"` // extra damage share while active (DD-341)
 	Hunt         *Hunt     `json:"hunt,omitempty"`
 }
 
@@ -115,6 +116,7 @@ func (s *Service) fill(p *Pet) {
 	if sp, ok := Current().Get(p.Species); ok {
 		p.Rank = sp.Rank
 		p.Bonus = sp.BonusAt(p.Level)
+		p.AssistPct = sp.AssistPct(p.Level)
 	}
 }
 
@@ -318,7 +320,8 @@ func (s *Service) CollectHunt(ctx context.Context, char, account, id uuid.UUID) 
 	return out, err
 }
 
-// Modifiers is the active, hatched pet's bonus on the character's sheet.
+// Modifiers is the active, hatched pet's bonus on the character's sheet,
+// plus its strike in its owner's fights (DD-341).
 func (s *Service) Modifiers(ctx context.Context, id uuid.UUID, _ character.Sheet) ([]skill.Modifier, error) {
 	var code string
 	var level int16
@@ -335,5 +338,8 @@ func (s *Service) Modifiers(ctx context.Context, id uuid.UUID, _ character.Sheet
 		return nil, nil
 	}
 	b := sp.BonusAt(int(level))
-	return []skill.Modifier{{Kind: skill.ModifierKind(b.Kind), Target: skill.Target(b.Target), Amount: b.Amount}}, nil
+	return []skill.Modifier{
+		{Kind: skill.ModifierKind(b.Kind), Target: skill.Target(b.Target), Amount: b.Amount},
+		{Kind: skill.KindFlat, Target: skill.TargetPetAssistPct, Amount: float64(sp.AssistPct(int(level)))},
+	}, nil
 }

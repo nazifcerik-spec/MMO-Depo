@@ -50,6 +50,10 @@ func TestHTTPPets(t *testing.T) {
 	before := defense()
 	p.ok("POST", p.path("/pets/"+id+"/active"), map[string]any{"active": true})
 	require.Greater(t, defense(), before)
+	// ... and it fights alongside (DD-341): its assist share is on the sheet.
+	assist := p.ok("GET", p.path("/sheet"), nil)["derived"].(map[string]any)["pet_assist_pct"]
+	require.Positive(t, assist)
+	require.EqualValues(t, assist, items(p.ok("GET", p.path("/pets"), nil), "pets")[0]["assist_pct"])
 	p.ok("POST", p.path("/pets/"+id+"/active"), map[string]any{"active": false})
 	require.Equal(t, before, defense())
 	_, err = w.p.Exec(w.ctx, `UPDATE pet.pet SET level = 1 WHERE id = $1`, id)

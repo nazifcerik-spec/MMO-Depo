@@ -3235,7 +3235,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get petsHint =>
-      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus.';
+      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.';
 
   @override
   String get petsEggs => 'Eggs';
@@ -3379,4 +3379,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tagUsedIn => 'Material for';
+
+  @override
+  String get petEvolution => 'Evolution';
+
+  @override
+  String get petStrength => 'Strength';
+
+  @override
+  String petAssistRange(int min, int max) {
+    return 'Combat assist: +$min% – +$max% damage on every hit';
+  }
+
+  @override
+  String petBonusRange(String min, String max) {
+    return 'Bonus: $min – $max';
+  }
+
+  @override
+  String petFightsRange(int min, int max) {
+    return 'Hunts like a level $min – $max monster';
+  }
+
+  @override
+  String get petFind => 'How to get';
+
+  @override
+  String petFindLine(int level, String pct) {
+    return 'Raid bosses of level $level+ · $pct% chance';
+  }
+
+  @override
+  String petHatchTime(String time) {
+    return 'Hatches in $time';
+  }
+
+  @override
+  String petAssist(int pct) {
+    return 'Combat assist: +$pct% damage';
+  }
+
+  @override
+  String get petLevelNote => 'From level 1 to 100';
 }

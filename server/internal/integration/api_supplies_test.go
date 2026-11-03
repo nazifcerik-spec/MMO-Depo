@@ -49,7 +49,7 @@ func TestHTTPHuntSupplies(t *testing.T) {
 	p.fail("POST", p.path("/hunt"), hunt(s("common_grass", 1)), 400, "E_BAD_SUPPLY") // not a consumable effect
 	p.fail("POST", p.path("/hunt"), hunt(s("potion_hp_small", 0)), 400, "E_BAD_SUPPLY")
 	p.fail("POST", p.path("/hunt"), hunt(s("potion_hp_small", 1), s("potion_hp_small", 1)), 400, "E_BAD_SUPPLY")
-	p.fail("POST", p.path("/hunt"), hunt(s("potion_hp_huge", 1)), 400, "E_BAD_SUPPLY") // level 650
+	p.fail("POST", p.path("/hunt"), hunt(s("potion_hp_huge", 1)), 400, "E_BAD_SUPPLY") // level 810
 	p.fail("POST", p.path("/hunt"), hunt(s("potion_hp_small", 23)), 409, "E_NOT_ENOUGH_SUPPLIES")
 	require.Equal(t, 22, units("potion_hp_small", false))
 

@@ -46,6 +46,7 @@ type DerivedStats struct {
 	MissingHPDmgPct int `json:"missing_hp_dmg_pct,omitempty"`
 	LifestealPct    int `json:"lifesteal_pct,omitempty"`
 	DmgReductionPct int `json:"dmg_reduction_pct,omitempty"`
+	PetAssistPct    int `json:"pet_assist_pct,omitempty"` // the active pet's extra damage share (DD-341)
 }
 
 // Sheet is the compound "read one screen" response for the character sheet UI.

@@ -75,3 +75,13 @@ func TestProgressionDamage(t *testing.T) {
 	require.Equal(t, int32(80), progressionDamage(fixedRNG(60), 100, false, a, d), "not blocked (roll 60)")
 	require.Equal(t, int32(1), progressionDamage(fixedRNG(0), 1, false, a, d), "never below 1")
 }
+
+// The active pet's strike adds its share to every hit (DD-341) without a
+// random draw, so a pet never changes the fight's RNG stream.
+func TestPetAssistDamage(t *testing.T) {
+	a := &Combatant{HPMax: 100, HPCurrent: 100, PetAssistPct: 12}
+	d := &Combatant{HPMax: 100, HPCurrent: 100}
+	require.Equal(t, int32(112), progressionDamage(fixedRNG(0), 100, false, a, d))
+	a.CritDmgPct = 50
+	require.Equal(t, int32(162), progressionDamage(fixedRNG(0), 100, true, a, d), "stacks with crit damage")
+}

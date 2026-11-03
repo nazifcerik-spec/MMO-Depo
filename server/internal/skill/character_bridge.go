@@ -120,6 +120,7 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		MissingHPDmgPct: computed.Derived.MissingHPDmgPct,
 		LifestealPct:    computed.Derived.LifestealPct,
 		DmgReductionPct: computed.Derived.DmgReductionPct,
+		PetAssistPct:    computed.Derived.PetAssistPct,
 	}
 	base.Resources = character.Resources{
 		HPCurrent: computed.Resources.HPMax, HPMax: computed.Resources.HPMax,

@@ -420,7 +420,7 @@
   "helperPickResource": "Qué recolectar",
   "helperCraftHint": "Los materiales y el oro se cobran ahora; mientras tanto sigues jugando.",
   "petsOpen": "Mascotas",
-  "petsHint": "Los huevos de mascota caen al superar bandas de nivel 400 o más. El huevo eclosiona en la incubadora; la mascota sube de nivel con sus propias cacerías y tu mascota activa te da su bonificación.",
+  "petsHint": "Los huevos de mascota caen al superar bandas de nivel 400 o más. El huevo eclosiona en la incubadora; la mascota sube de nivel con sus propias cacerías y tu mascota activa te da su bonificación. Mientras está activa también lucha a tu lado y añade daño a cada golpe.",
   "petsEggs": "Huevos",
   "petsNoEggs": "No tienes huevos. Supera bandas de nivel 400 o más.",
   "petsMine": "Mis mascotas ({n}/{max})",
@@ -461,5 +461,15 @@
   "tagSkill": "habilidad {n}",
   "tagSold": "Lo vende",
   "tagGathered": "Se recolecta con",
-  "tagUsedIn": "Material para"
+  "tagUsedIn": "Material para",
+  "petEvolution": "Evolución",
+  "petStrength": "Fuerza",
+  "petAssistRange": "Apoyo en combate: +{min}% – +{max}% de daño en cada golpe",
+  "petBonusRange": "Bonificación: {min} – {max}",
+  "petFightsRange": "Caza como un monstruo de nivel {min} – {max}",
+  "petFind": "Cómo conseguirlo",
+  "petFindLine": "Jefes de incursión de nivel {level}+ · {pct}% de probabilidad",
+  "petHatchTime": "Eclosiona en {time}",
+  "petAssist": "Apoyo en combate: +{pct}% de daño",
+  "petLevelNote": "Del nivel 1 al 100"
 }

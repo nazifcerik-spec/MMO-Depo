@@ -15,6 +15,7 @@ import '../adventure/adventure_repository.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
 import '../inventory/item_widgets.dart';
+import 'pet_species_sheet.dart';
 
 /// One pet species (DD-328), best first in the catalog.
 class PetSpecies {
@@ -25,6 +26,9 @@ class PetSpecies {
     required this.eggPct,
     required this.hatchSeconds,
     required this.bonus,
+    this.bonusMin,
+    this.assistMin = 0,
+    this.assistMax = 0,
   });
 
   factory PetSpecies.fromJson(Map<String, dynamic> j) => PetSpecies(
@@ -34,12 +38,25 @@ class PetSpecies {
     eggPct: (j['egg_pct'] as num).toDouble(),
     hatchSeconds: (j['hatch_seconds'] as num).toInt(),
     bonus: _bonus(j['bonus'] as Map<String, dynamic>),
+    bonusMin: j['bonus_min'] == null ? null : _bonus(j['bonus_min'] as Map<String, dynamic>),
+    assistMin: (j['assist_min'] as num?)?.toInt() ?? 0,
+    assistMax: (j['assist_max'] as num?)?.toInt() ?? 0,
   );
 
   final String code;
   final int rank, minMobLevel, hatchSeconds;
   final double eggPct;
+
+  /// The bonus at level 100 ([bonus]) and at level 1 ([bonusMin]).
   final StatBonus bonus;
+  final StatBonus? bonusMin;
+
+  /// The damage share it adds to its owner's hits while active, at level 1
+  /// and level 100 (DD-341).
+  final int assistMin, assistMax;
+
+  /// The egg odds as shown: whole percents without decimals.
+  String get eggPctText => eggPct == eggPct.roundToDouble() ? '${eggPct.toInt()}' : eggPct.toStringAsFixed(2);
 }
 
 StatBonus _bonus(Map<String, dynamic> b) =>
@@ -97,6 +114,7 @@ class Pet {
     required this.hatchReadyAt,
     required this.active,
     required this.bonus,
+    this.assistPct = 0,
     this.huntMob,
     this.huntStartedAt,
     this.huntReadyAt,
@@ -115,6 +133,7 @@ class Pet {
       hatchReadyAt: DateTime.parse(j['hatch_ready_at'] as String),
       active: j['active'] as bool? ?? false,
       bonus: _bonus(j['bonus'] as Map<String, dynamic>),
+      assistPct: (j['assist_pct'] as num?)?.toInt() ?? 0,
       huntMob: hunt?['mob_code'] as String?,
       huntStartedAt: hunt == null ? null : DateTime.parse(hunt['started_at'] as String),
       huntReadyAt: hunt == null ? null : DateTime.parse(hunt['ready_at'] as String),
@@ -126,6 +145,9 @@ class Pet {
   final DateTime hatchReadyAt;
   final bool active;
   final StatBonus bonus;
+
+  /// Extra damage share on its owner's hits while active (DD-341).
+  final int assistPct;
   final String? huntMob;
   final DateTime? huntStartedAt, huntReadyAt;
 
@@ -165,13 +187,17 @@ class PetRepository {
 
   List<PetSpecies>? _species;
 
-  /// Pet levels × this = the monster level a pet fights like.
+  /// How far above its power a pet may hunt.
   int mobReach = 5;
+
+  /// Pet levels × this = the monster level a pet fights like.
+  int powerPerLevel = 10;
 
   Future<List<PetSpecies>> species() async {
     if (_species case final s?) return s;
     final j = await api.get('/v1/pets');
     mobReach = (j['mob_reach'] as num?)?.toInt() ?? mobReach;
+    powerPerLevel = (j['power_per_level'] as num?)?.toInt() ?? powerPerLevel;
     return _species = [
       for (final s in (j['species'] as List? ?? const []).cast<Map<String, dynamic>>()) PetSpecies.fromJson(s),
     ];
@@ -370,45 +396,15 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
     );
   }
 
-  /// The species' egg and its three stages with their level bands.
-  void _showStages(AppLocalizations l, PetSpecies s) {
-    final color = rarityColor(petRarity(s.rank));
-    Widget cell(Widget art, String label) => Column(
-      children: [
-        art,
-        const SizedBox(height: Space.xs),
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
-      ],
-    );
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(petName(s.code), style: TextStyle(color: color)),
-        content: Wrap(
-          spacing: Space.sm,
-          runSpacing: Space.sm,
-          alignment: WrapAlignment.center,
-          children: [
-            cell(ItemArt(code: 'pet_egg_${s.code}', icon: Icons.egg_outlined, color: color, size: 72), l.petHatching),
-            for (final (stage, from, to) in [(1, 1, 33), (2, 34, 66), (3, 67, 100)])
-              cell(PetArt(species: s.code, stage: stage, size: 72, color: color), l.petStageLevels(from, to)),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(MaterialLocalizations.of(ctx).closeButtonLabel)),
-        ],
-      ),
-    );
-  }
-
   Widget _guideTile(AppLocalizations l, TextTheme text, PetSpecies s) {
-    final pct = s.eggPct == s.eggPct.roundToDouble() ? '${s.eggPct.toInt()}' : s.eggPct.toStringAsFixed(2);
+    final pct = s.eggPctText;
     return ListTile(
+      key: Key('pet-guide-${s.code}'),
       dense: true,
       contentPadding: EdgeInsets.zero,
       leading: PetArt(species: s.code, stage: 3, size: 44, color: rarityColor(petRarity(s.rank))),
       title: Text(petName(s.code), style: TextStyle(color: rarityColor(petRarity(s.rank)))),
-      onTap: () => _showStages(l, s),
+      onTap: () => showPetSpecies(context, s, powerPerLevel: widget.repo.powerPerLevel),
       subtitle: Text(
         [
           l.petGuideLine(pct, s.minMobLevel, shortDuration(l, Duration(seconds: s.hatchSeconds))),
@@ -488,6 +484,14 @@ class _PetCard extends StatelessWidget {
                 Text(
                   b,
                   style: text.bodySmall?.copyWith(color: Palette.success, fontWeight: FontWeight.w600),
+                ),
+              if (pet.assistPct > 0)
+                Text(
+                  l.petAssist(pet.assistPct),
+                  style: text.bodySmall?.copyWith(
+                    color: pet.active ? Palette.success : Palette.textSecondary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               Text(l.petPower(pet.power), style: text.bodySmall),
               if (hunting)

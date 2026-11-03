@@ -60,8 +60,8 @@ var potions = []struct {
 	level int
 	code  string
 }{
-	{850, "potion_hp_supreme"}, {650, "potion_hp_huge"}, {450, "potion_hp_xlarge"},
-	{250, "potion_hp_large"}, {100, "potion_hp_medium"}, {1, "potion_hp_small"},
+	{810, "potion_hp_huge"}, {610, "potion_hp_xlarge"},
+	{410, "potion_hp_large"}, {210, "potion_hp_medium"}, {1, "potion_hp_small"},
 }
 
 // Reward is one day's reward for a character level.

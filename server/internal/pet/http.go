@@ -29,7 +29,18 @@ func (h *Handler) Routes(r chi.Router, idem func(http.Handler) http.Handler) {
 // Species is the public species list (GET /v1/pets).
 func (h *Handler) Species(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Cache-Control", "public, max-age=300")
-	apierr.WriteJSON(w, http.StatusOK, map[string]any{"species": Current().All(), "max_level": MaxLevel,
+	type view struct {
+		Species
+		BonusMin  Modifier `json:"bonus_min"`  // at level 1; Bonus is at MaxLevel
+		AssistMin int      `json:"assist_min"` // combat assist % at level 1 (DD-341)
+		AssistMax int      `json:"assist_max"` // ... and at MaxLevel
+	}
+	all := Current().All()
+	out := make([]view, len(all))
+	for i, s := range all {
+		out[i] = view{Species: s, BonusMin: s.BonusAt(1), AssistMin: s.AssistPct(1), AssistMax: s.AssistPct(MaxLevel)}
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"species": out, "max_level": MaxLevel,
 		"power_per_level": PowerPerLevel, "mob_reach": MobReach})
 }
 
