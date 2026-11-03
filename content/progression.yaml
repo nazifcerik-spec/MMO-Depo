@@ -10,12 +10,14 @@ level_cap: 1000
 xp_curve:
   kind: formula
   baseline_xp_per_minute: 1000
+  rate_growth: 0.05   # XP a minute × (1 + 0.05·(L−1)): stronger mobs pay more (DD-343)
   a: 3.75006670
   b: 0.00121846427
   c: 1.69337967
 
 xp_multiplier: 1.0            # global XP modifier (events can raise it later)
 afk_combat_xp_per_minute: 1000 # AFK hunts/dungeons pay this per minute of fighting
+solo_dungeon_xp: 0.8           # solo dungeons pay 80% of it and of the boss bonus (DD-343); raids all
 
 # 3 points per level gained (DD-284) + milestones: 999 × 3 + 25 = 3022.
 attribute_points:
@@ -67,9 +69,9 @@ mob_level_xp:
   - { max_below: 0,  factor: 0.1 }
 
 # Hunting XP (DD-281): a mob's own XP, in full within 5% of the character's
-# level either way (at least one level); past it × (1 - extra gap / level)^4,
+# level either way, at least the hunting ladder's 20-level step (DD-343); past it × (1 - extra gap / level)^4,
 # never under 10%. Farming far weaker mobs must not beat hunting at level.
-hunt_level_xp: { free_pct: 0.05, power: 4, floor: 0.10 }
+hunt_level_xp: { free_pct: 0.05, free_levels: 20, power: 4, floor: 0.10 }
 
 # Dungeon and raid XP (DD-303) follows each member's level: below the
 # character a mob pays as in hunting (down), above it up to 50% more, growing

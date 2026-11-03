@@ -296,6 +296,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 140. **Pet çantaları + Pet İndeksi (bitti)** — Sprint 140, DD-342. Migration 0061 `pet.discovery`. `scripts/pet_lore.py` (element, canlı, habitat, hikâye × 4 dil). Petler ekranı: 20'lik yumurta + 50'lik pet çantası, pet kartı alt pencerede, Pet İndeksi (keşfedilmeyen '???') → detay sayfası (Hakkında, güç, evrim, nereden elde edilir).
 
+141. **Av merdiveni + seviyeyle büyüyen XP + zindan XP'si %80 + çıkış/altın (bitti)** — Sprint 141, DD-343. Migration 0062 (`mob_template.dungeon_only`, emekli ödül avları). Av listesi Sv 1 + her 20 seviye (51 canavar), diğerleri yalnız zindan dalgası; ganimet ve pet XP'si canavarın bandına kadar. `hunt_level_xp.free_levels: 20`, `xp_curve.rate_growth: 0.05` (XP tablosu, av, AFK zindan/baskın aynı çarpan), `hunt_xp.yaml` bant + eğilim çizgisiyle (Sv 1: 212 → Sv 1000: 10 729). `solo_dungeon_xp: 0.8`. İstemci: üst bardaki çıkış Karakter sekmesinin altında, çantada altın.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

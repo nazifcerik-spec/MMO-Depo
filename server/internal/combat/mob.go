@@ -26,8 +26,18 @@ type Mob struct {
 	GoldCopperMin  int64
 	GoldCopperMax  int64
 	RaidBoss       bool   // fought only in raids (DD-261)
+	DungeonOnly    bool   // a dungeon/raid wave, off the hunting ladder (DD-343)
 	RegionCode     string // where it is hunted (DD-273); empty for raid bosses
 }
+
+// LadderStep is the level gap between hunted mobs (DD-343): a hunted mob's
+// band runs from its level to the next one's, and its loot reaches the
+// band's levels (capped at the hunter's).
+const LadderStep = 20
+
+// Hunted reports whether the mob can be hunted (alone or by a pet): not a
+// raid boss and on the hunting ladder (DD-261, DD-343).
+func (m Mob) Hunted() bool { return !m.RaidBoss && !m.DungeonOnly }
 
 // MobPowerPct scales every mob's HP, attack and defense over its content
 // values (DD-306).
@@ -136,7 +146,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	rows, err := pool.Query(ctx, `
 		SELECT code, display_name_key, level,
 		       hp_max, attack, defense, crit_pct, hit_pct, evasion_pct,
-		       xp_reward, gold_copper_min, gold_copper_max, raid_boss, COALESCE(region_code, '')
+		       xp_reward, gold_copper_min, gold_copper_max, raid_boss, dungeon_only, COALESCE(region_code, '')
 		FROM content.mob_template
 		ORDER BY level, code`)
 	if err != nil {
@@ -150,7 +160,7 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 		if err := rows.Scan(
 			&m.Code, &m.DisplayNameKey, &m.Level,
 			&m.HPMax, &m.Attack, &m.Defense, &m.CritPct, &m.HitPct, &m.EvasionPct,
-			&m.XPReward, &m.GoldCopperMin, &m.GoldCopperMax, &m.RaidBoss, &m.RegionCode,
+			&m.XPReward, &m.GoldCopperMin, &m.GoldCopperMax, &m.RaidBoss, &m.DungeonOnly, &m.RegionCode,
 		); err != nil {
 			return nil, fmt.Errorf("mob scan: %w", err)
 		}

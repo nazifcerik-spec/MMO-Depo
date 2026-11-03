@@ -3355,6 +3355,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-343 — Av merdiveni (20 seviye) + seviyeyle büyüyen XP + bireysel zindan XP'si %80
+
+**Context:** Av listesinde 146 canavar vardı, çoğu 2–10 seviye arayla; kullanıcı 20 seviyelik aralık ve daha az canavar istedi. Canavar başı XP her seviyede ~130–260'tı (Sv 1000 canavarı Sv 1 domuzu kadar XP veriyordu), çünkü XP/dk sabit 1000'di. Bireysel zindanlar avdan çok daha fazla XP veriyordu.
+**Decision:** Av merdiveni: avlanan canavarlar Sv 1 ve her 20'nin katı (51 canavar); diğerleri `dungeon_only: true` (migration 0062 `content.mob_template.dungeon_only`), yalnız zindan/baskın dalgası — av, pet avı, `/v1/mobs`, harita kartı ve eşya etiketleri onları göstermez/kabul etmez (`combat.Mob.Hunted()`, `E_UNKNOWN_MOB`). `gen_world.py` kuralı yazar (`LADDER = 20`), erken el yazımı canavarlar elle işaretlendi. Görev kill hedefleri yalnız avlanan canavar olabilir (contentpack doğrular): erken hikâye görevleri herhangi canavar sayar, bölge ana görevi bölgenin ilk merdiven canavarını, ödül avı son merdiven canavarını hedefler; merdivenden çıkan 11 ödül avı emekli (migration siler), yenilerinin madalyonu canavar madalyonundan `scripts/bounty_art.py`. Bant: bir canavar kendi seviyesinden bir sonrakinin seviyesine kadar avlanır; ganimet (ekipman + deri) bandın seviyesine kadar çıkar (karakter seviyesiyle sınırlı, `combat.LadderStep`), pet XP'si de bandda petin gücüne kadar. Seviye farkı: `hunt_level_xp.free_levels: 20` — 20 seviye farka kadar tam XP. XP dağılımı: `xp_curve.rate_growth: 0.05` — XP/dk seviyeyle büyür (× (1 + 0.05·(L−1))), XP tablosu, AFK zindan/baskın dakika XP'si ve boss bonusu aynı çarpanla; seviye süreleri değişmez. `hunt_xp.yaml` bant temposundan (bant boyunca XP'ye göre ağırlıklı) ve öldürme süresinin doğrusal eğilim çizgisinden üretilir → canavar XP'si seviyeyle düzenli artar (Sv 1: 212 … Sv 1000: 10 729). Bireysel zindan: `solo_dungeon_xp: 0.8` dakika XP'si ve boss bonusuna (baskınlar hariç).
+**Consequences:** Mevcut karakterlerin seviye içi XP'si aynı kalır ama yeni tablo daha büyük olduğundan çubuktaki oranı düşer (seviye kaybı yok). Ana görev ödülleri yeni eğriyle yeniden üretildi. Bandın son seviyeleri ilk seviyelerinden hızlı geçer; mobu eğilimden hızlı/yavaş ölen bantlar ±%40 içinde. Testler: `TestHuntPace` bant ortalaması, `TestTuneHuntXP` XP'nin seviyeyle arttığını doğrular; contentpack zindan dalgası görev hedefini reddeder; entegrasyon av listesi merdivende, dalga canavarı reddedilir.
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

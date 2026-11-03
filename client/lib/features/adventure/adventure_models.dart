@@ -12,30 +12,35 @@ import '../activity/activity_models.dart';
 const huntDurations = activityDurations;
 
 /// How a hunted mob's own XP falls off with the level gap either way,
-/// against the character's level (DD-281): a gap of [freePct] of the level
-/// (at least one) pays in full, past it × (1 - extra gap / level)^[power],
+/// against the character's level (DD-281): a gap of [freePct] of the level,
+/// at least [freeLevels] (DD-343) and at least one, pays in full, past it × (1 - extra gap / level)^[power],
 /// never under [floor]. Mirrors leveling.HuntXPFalloff; display only.
 class HuntXPFalloff {
-  const HuntXPFalloff({this.freePct = 0, this.power = 0, this.floor = 0});
+  const HuntXPFalloff({this.freePct = 0, this.freeLevels = 0, this.power = 0, this.floor = 0});
 
   factory HuntXPFalloff.fromJson(Map<String, dynamic>? j) => HuntXPFalloff(
     freePct: (j?['free_pct'] as num?)?.toDouble() ?? 0,
+    freeLevels: (j?['free_levels'] as num?)?.toInt() ?? 0,
     power: (j?['power'] as num?)?.toDouble() ?? 0,
     floor: (j?['floor'] as num?)?.toDouble() ?? 0,
   );
 
   final double freePct;
+  final int freeLevels;
   final double power;
   final double floor;
 
   double factor(int playerLevel, int mobLevel) {
     if (power <= 0 || playerLevel <= 0 || mobLevel <= 0) return 1;
     final gap = (playerLevel - mobLevel).abs();
-    final free = math.max(1, (freePct * playerLevel).round());
+    final free = this.free(playerLevel);
     if (gap <= free) return 1;
     final rel = math.min(1.0, (gap - free) / playerLevel);
     return math.max(floor, math.pow(1 - rel, power).toDouble());
   }
+
+  /// The level gap that still pays in full.
+  int free(int playerLevel) => math.max(math.max(1, freeLevels), (freePct * playerLevel).round());
 
   /// One kill's XP for a character of [playerLevel].
   int xp(int mobXP, int playerLevel, int mobLevel) => (mobXP * factor(playerLevel, mobLevel)).round();
@@ -58,7 +63,7 @@ class DungeonXPScale {
   double factor(int playerLevel, int mobLevel) {
     if (playerLevel <= 0 || mobLevel <= 0) return 1;
     if (mobLevel <= playerLevel) return down.factor(playerLevel, mobLevel);
-    final free = math.max(1, (down.freePct * playerLevel).round());
+    final free = down.free(playerLevel);
     final gap = mobLevel - playerLevel;
     if (gap <= free || upCap <= 1) return 1;
     return math.min(upCap, 1 + (gap - free) / playerLevel);

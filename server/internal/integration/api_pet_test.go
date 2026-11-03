@@ -39,7 +39,7 @@ func TestHTTPPets(t *testing.T) {
 	require.Equal(t, 1, w.count(me, "pet_egg_chaos_hydra"))
 	id := pt["id"].(string)
 	p.fail("POST", p.path("/pets/"+id+"/active"), map[string]any{"active": true}, 409, "E_PET_HATCHING")
-	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "marsh_lurker", "duration_seconds": 3600},
+	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600},
 		409, "E_PET_HATCHING")
 	p.fail("POST", p.path("/pets/hatch"), map[string]any{"item_id": uuid.NewString()}, 409, "E_NOT_EGG")
 
@@ -67,8 +67,8 @@ func TestHTTPPets(t *testing.T) {
 	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "aethon_unbound", "duration_seconds": 3600},
 		400, "E_VALIDATION")
 	p.fail("POST", p.path("/pets/"+id+"/collect"), map[string]any{}, 409, "E_PET_IDLE")
-	p.ok("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "marsh_lurker", "duration_seconds": 3600})
-	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "marsh_lurker", "duration_seconds": 3600},
+	p.ok("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600})
+	p.fail("POST", p.path("/pets/"+id+"/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600},
 		409, "E_PET_HUNTING")
 	_, err = w.p.Exec(w.ctx, `UPDATE pet.pet SET hunt_started_at = now() - interval '61 minutes',
 		hunt_ready_at = now() - interval '1 minute' WHERE id = $1`, id)
@@ -76,7 +76,7 @@ func TestHTTPPets(t *testing.T) {
 	res := p.ok("POST", p.path("/pets/"+id+"/collect"), map[string]any{})
 	require.Positive(t, res["victories"])
 	require.Positive(t, res["xp"])
-	require.Equal(t, true, res["leveled_up"], "an hour on level 10 mobs lifts a level 1 pet")
+	require.Equal(t, true, res["leveled_up"], "an hour of hunting lifts a level 1 pet")
 	require.Greater(t, res["pet"].(map[string]any)["level"].(float64), 1.0)
 	require.Nil(t, res["pet"].(map[string]any)["hunt"])
 }

@@ -11,6 +11,9 @@ class InventoryRepository {
 
   Future<Bag> bag() async => Bag.fromJson(await api.get('$_base/inventory'));
 
+  /// The character's gold in copper.
+  Future<int> gold() async => ((await api.get('$_base/wallet'))['gold_copper'] as num?)?.toInt() ?? 0;
+
   /// The account bank (DD-314); deposit/withdraw answer with the new bank.
   Future<Bank> bank() async => Bank.fromJson(await api.get('$_base/bank'));
 

@@ -23,11 +23,24 @@ import (
 type Curve struct {
 	Kind                string  `yaml:"kind" json:"kind"` // formula | table
 	BaselineXPPerMinute float64 `yaml:"baseline_xp_per_minute" json:"baseline_xp_per_minute"`
-	A                   float64 `yaml:"a" json:"a"`
-	B                   float64 `yaml:"b" json:"b"`
-	C                   float64 `yaml:"c" json:"c"`
-	Table               []int64 `yaml:"table" json:"table,omitempty"`
+	// RateGrowth raises the XP a minute with the level (DD-343): at level L
+	// it is the baseline × (1 + RateGrowth·(L−1)), and so are the formula's
+	// XP to next and every time-based reward, so stronger mobs pay more XP
+	// while a level still takes the curve's minutes. 0 = flat.
+	RateGrowth float64 `yaml:"rate_growth" json:"rate_growth"`
+	A          float64 `yaml:"a" json:"a"`
+	B          float64 `yaml:"b" json:"b"`
+	C          float64 `yaml:"c" json:"c"`
+	Table      []int64 `yaml:"table" json:"table,omitempty"`
 }
+
+// Growth is the level's XP rate over level 1 (DD-343).
+func (c Curve) Growth(level int) float64 {
+	return 1 + c.RateGrowth*float64(max(level, 1)-1)
+}
+
+// Rate is the baseline XP a minute at a level (DD-250, DD-343).
+func (c Curve) Rate(level int) float64 { return c.BaselineXPPerMinute * c.Growth(level) }
 
 // AttributeRule: Amount points every Every levels, plus milestone bonuses.
 type AttributeRule struct {
@@ -292,18 +305,21 @@ type LevelReward struct {
 
 // Config is the whole progression definition.
 type Config struct {
-	LevelCap             int                `yaml:"level_cap" json:"level_cap"`
-	Curve                Curve              `yaml:"xp_curve" json:"xp_curve"`
-	XPMultiplier         float64            `yaml:"xp_multiplier" json:"xp_multiplier"`
-	AFKCombatXPPerMinute float64            `yaml:"afk_combat_xp_per_minute" json:"afk_combat_xp_per_minute"`
-	AttributePoints      AttributeRule      `yaml:"attribute_points" json:"attribute_points"`
-	TalentPoints         TalentRule         `yaml:"talent_points" json:"talent_points"`
-	TalentTreePoints     int                `yaml:"talent_tree_points" json:"talent_tree_points"`
-	Titles               map[int]string     `yaml:"titles" json:"titles"`
-	Milestones           Milestones         `yaml:"milestones" json:"milestones"`
-	Scaling              []Bracket          `yaml:"attribute_scaling" json:"attribute_scaling"`
-	Caps                 map[string]float64 `yaml:"caps" json:"caps"`
-	LevelRewards         []LevelReward      `yaml:"level_rewards" json:"level_rewards,omitempty"`
+	LevelCap             int     `yaml:"level_cap" json:"level_cap"`
+	Curve                Curve   `yaml:"xp_curve" json:"xp_curve"`
+	XPMultiplier         float64 `yaml:"xp_multiplier" json:"xp_multiplier"`
+	AFKCombatXPPerMinute float64 `yaml:"afk_combat_xp_per_minute" json:"afk_combat_xp_per_minute"`
+	// SoloDungeonXP is the share of that XP (and the boss bonus) a solo
+	// dungeon pays (DD-343); 0 = all of it. Raids are not affected.
+	SoloDungeonXP    float64            `yaml:"solo_dungeon_xp" json:"solo_dungeon_xp"`
+	AttributePoints  AttributeRule      `yaml:"attribute_points" json:"attribute_points"`
+	TalentPoints     TalentRule         `yaml:"talent_points" json:"talent_points"`
+	TalentTreePoints int                `yaml:"talent_tree_points" json:"talent_tree_points"`
+	Titles           map[int]string     `yaml:"titles" json:"titles"`
+	Milestones       Milestones         `yaml:"milestones" json:"milestones"`
+	Scaling          []Bracket          `yaml:"attribute_scaling" json:"attribute_scaling"`
+	Caps             map[string]float64 `yaml:"caps" json:"caps"`
+	LevelRewards     []LevelReward      `yaml:"level_rewards" json:"level_rewards,omitempty"`
 	// Weapon/offhand families (item subclasses) and armor types that
 	// equipment permissions may name (DD-252).
 	EquipmentFamilies []string `yaml:"equipment_families" json:"equipment_families"`
@@ -341,14 +357,21 @@ type MobXPBand struct {
 
 // HuntXPFalloff scales a hunted mob's XP by the level gap either way,
 // measured against the character's level (DD-281): a gap of FreePct of the
-// level (at least one level) pays in full; past it the XP is
+// level, at least FreeLevels (the hunting ladder's step, DD-343) and at
+// least one level, pays in full; past it the XP is
 // (1 - extra gap / level)^Power, never under Floor. Relative, because a
 // character's power grows with its level: five levels matter at level 10,
 // not at 500.
 type HuntXPFalloff struct {
-	FreePct float64 `yaml:"free_pct" json:"free_pct"`
-	Power   float64 `yaml:"power"    json:"power"`
-	Floor   float64 `yaml:"floor"    json:"floor"`
+	FreePct    float64 `yaml:"free_pct"    json:"free_pct"`
+	FreeLevels int     `yaml:"free_levels" json:"free_levels"`
+	Power      float64 `yaml:"power"       json:"power"`
+	Floor      float64 `yaml:"floor"       json:"floor"`
+}
+
+// free is the level gap that still pays in full.
+func (f HuntXPFalloff) free(playerLevel int) int {
+	return max(1, f.FreeLevels, int(math.Round(f.FreePct*float64(playerLevel))))
 }
 
 // DungeonXPScale scales dungeon and raid XP by the level gap (DD-303): a mob
@@ -367,12 +390,20 @@ func (d DungeonXPScale) Factor(playerLevel, mobLevel int) float64 {
 	if mobLevel <= playerLevel {
 		return d.Down.Factor(playerLevel, mobLevel)
 	}
-	free := max(1, int(math.Round(d.Down.FreePct*float64(playerLevel))))
+	free := d.Down.free(playerLevel)
 	gap := mobLevel - playerLevel
 	if gap <= free || d.UpCap <= 1 {
 		return 1
 	}
 	return math.Min(d.UpCap, 1+float64(gap-free)/float64(playerLevel))
+}
+
+// SoloDungeonXPFactor is the share of XP a solo dungeon pays (DD-343).
+func (c *Config) SoloDungeonXPFactor() float64 {
+	if c.SoloDungeonXP <= 0 {
+		return 1
+	}
+	return c.SoloDungeonXP
 }
 
 // ScaleDungeonXP applies DungeonLevelXP to an XP amount (rounded).
@@ -389,7 +420,7 @@ func (f HuntXPFalloff) Factor(playerLevel, mobLevel int) float64 {
 	if gap < 0 {
 		gap = -gap
 	}
-	free := max(1, int(math.Round(f.FreePct*float64(playerLevel))))
+	free := f.free(playerLevel)
 	if gap <= free {
 		return 1
 	}
@@ -514,7 +545,10 @@ func (c *Config) Prepare() error {
 			return err
 		}
 	}
-	if h := c.HuntLevelXP; h.FreePct < 0 || h.FreePct > 1 || h.Power < 0 || h.Floor < 0 || h.Floor > 1 {
+	if c.SoloDungeonXP < 0 || c.SoloDungeonXP > 1 {
+		return errors.New("leveling: solo_dungeon_xp must be in 0..1")
+	}
+	if h := c.HuntLevelXP; h.FreePct < 0 || h.FreePct > 1 || h.FreeLevels < 0 || h.Power < 0 || h.Floor < 0 || h.Floor > 1 {
 		return errors.New("leveling: hunt_level_xp needs free_pct and floor in 0..1 and power >= 0")
 	}
 	if d := c.DungeonLevelXP; d.Down.FreePct < 0 || d.Down.FreePct > 1 || d.Down.Power < 0 || d.Down.Floor < 0 ||
@@ -575,12 +609,12 @@ func (c *Config) buildTable() error {
 		}
 		copy(c.table, c.Curve.Table)
 	case "formula", "":
-		if c.Curve.BaselineXPPerMinute <= 0 {
-			return errors.New("leveling: baseline_xp_per_minute must be > 0")
+		if c.Curve.BaselineXPPerMinute <= 0 || c.Curve.RateGrowth < 0 {
+			return errors.New("leveling: baseline_xp_per_minute must be > 0 and rate_growth >= 0")
 		}
 		for l := 1; l < c.LevelCap; l++ {
 			minutes := c.Curve.A + c.Curve.B*math.Pow(float64(l), c.Curve.C)
-			c.table[l-1] = int64(math.Ceil(minutes * c.Curve.BaselineXPPerMinute))
+			c.table[l-1] = int64(math.Ceil(minutes * c.Curve.Rate(l)))
 		}
 	default:
 		return fmt.Errorf("leveling: unknown xp_curve kind %q", c.Curve.Kind)
@@ -907,16 +941,19 @@ func codes(list []*Class) []string {
 
 // EstimateMinutes is the baseline time from (level, xp) to target level.
 func (c *Config) EstimateMinutes(level int, xp int64, target int) float64 {
-	rate := c.Curve.BaselineXPPerMinute
-	if rate <= 0 || target <= level {
+	if c.Curve.BaselineXPPerMinute <= 0 || target <= level {
 		return 0
 	}
-	total := -float64(xp)
+	total := -float64(xp) / c.Curve.Rate(level)
 	for l := level; l < target && l < c.LevelCap; l++ {
-		total += float64(c.XPToNext(l))
+		total += float64(c.XPToNext(l)) / c.Curve.Rate(l)
 	}
-	return math.Max(0, total/rate)
+	return math.Max(0, total)
 }
+
+// AFKRate is the AFK combat XP a minute at a level: afk_combat_xp_per_minute
+// grown like the curve's rate (DD-250, DD-343).
+func (c *Config) AFKRate(level int) float64 { return c.AFKCombatXPPerMinute * c.Curve.Growth(level) }
 
 // PromotionPending reports a reached, unchosen promotion gate.
 func (c *Config) PromotionPending(spec string, level int) bool {

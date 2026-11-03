@@ -341,7 +341,8 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 
 	if boss, ok := s.mobs.Catalog().Get(tmpl.BossMobCode); ok { // boss bonus follows the same level rule (DD-254, DD-262)
 		cfg := leveling.Current()
-		tmpl.BonusXP = cfg.ScaleDungeonXP(tmpl.BonusXP, int(snapshot.Level), int(boss.Level)) // DD-303
+		bonus := float64(tmpl.BonusXP) * cfg.Curve.Growth(int(tmpl.MinLevel)) * cfg.SoloDungeonXPFactor() // DD-343
+		tmpl.BonusXP = cfg.ScaleDungeonXP(int32(math.Round(bonus)), int(snapshot.Level), int(boss.Level)) // DD-303
 		tmpl.BonusGoldCopper = int64(math.Round(float64(tmpl.BonusGoldCopper) * cfg.MobXPFactor(int(snapshot.Level), int(boss.Level))))
 	}
 	run := Roll(c.Seed, snapshot, tmpl, afkXPMobs{s.mobs.Catalog(), afkXPPerKill(c.DurationSecs, tmpl), int(snapshot.Level)},
@@ -584,12 +585,13 @@ func (m afkXPMobs) Get(code string) (combat.Mob, bool) {
 	return mob, ok
 }
 
-// afkXPPerKill spreads the run's minutes × afk_combat_xp_per_minute over its
-// encounters.
+// afkXPPerKill spreads the run's minutes × the AFK combat rate at the
+// dungeon's level, the solo share of it (DD-343), over its encounters.
 func afkXPPerKill(durationSecs int32, tmpl Template) int32 {
 	n := tmpl.TotalEncounters()
 	if n <= 0 {
 		return 0
 	}
-	return int32(math.Round(leveling.Current().AFKCombatXPPerMinute * float64(durationSecs) / 60 / float64(n)))
+	cfg := leveling.Current()
+	return int32(math.Round(cfg.AFKRate(int(tmpl.MinLevel)) * cfg.SoloDungeonXPFactor() * float64(durationSecs) / 60 / float64(n)))
 }

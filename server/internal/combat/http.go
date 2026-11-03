@@ -197,7 +197,7 @@ func (h *Handler) Mobs(w http.ResponseWriter, r *http.Request) {
 	})
 	out := make([]map[string]any, 0, len(all))
 	for _, m := range all {
-		if m.RaidBoss { // not huntable (DD-261)
+		if !m.Hunted() { // raid bosses and dungeon waves (DD-261, DD-343)
 			continue
 		}
 		m = m.Effective() // as it fights (DD-306)

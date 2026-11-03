@@ -55,7 +55,7 @@ func loadQuestsFile(path string) ([]Quest, error) {
 }
 
 // refs are the content codes quest objectives may point at.
-type refs struct{ mobs, dungeons, items map[string]bool }
+type refs struct{ mobs, hunted, dungeons, items map[string]bool }
 
 // validateQuests checks shape, the chain (requires_quest) and that every
 // `<event>:<code>` objective names content that exists in this pack.
@@ -136,7 +136,7 @@ func validateQuestEvent(ev string, r refs) error {
 	}
 	switch kind {
 	case "mob_killed":
-		return check(r.mobs, "mob")
+		return check(r.hunted, "hunted mob") // only hunts count kills per mob (DD-343)
 	case "dungeon_cleared":
 		return check(r.dungeons, "dungeon")
 	case "item_crafted":

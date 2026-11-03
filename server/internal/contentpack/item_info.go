@@ -4,6 +4,7 @@ import (
 	"slices"
 	"sort"
 
+	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/leveling"
 )
 
@@ -138,14 +139,18 @@ func BuildItemInfo(p *Pack, cfg *leveling.Config) map[string]*ItemInfo {
 	mobs := append([]Mob(nil), p.Mobs...)
 	sort.SliceStable(mobs, func(i, j int) bool { return mobs[i].Level < mobs[j].Level })
 	for _, m := range mobs {
-		if m.RaidBoss {
+		if !m.Hunted() {
 			continue
 		}
-		for _, code := range gearOfTier[tierAt(m.Level)] {
-			addMob(code, m)
-		}
-		for _, code := range skinned(m.Level) {
-			addMob(code, m)
+		// A hunted mob's loot spans its ladder band (DD-343).
+		seen := map[string]bool{}
+		for lv := m.Level; lv < m.Level+combat.LadderStep; lv++ {
+			for _, code := range append(gearOfTier[tierAt(lv)], skinned(lv)...) {
+				if !seen[code] {
+					seen[code] = true
+					addMob(code, m)
+				}
+			}
 		}
 	}
 

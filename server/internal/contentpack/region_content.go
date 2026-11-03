@@ -57,7 +57,7 @@ func BuildRegionContent(p *Pack) map[string]*RegionContent {
 	mobRegion := make(map[string]string, len(p.Mobs))
 	for _, m := range p.Mobs {
 		mobRegion[m.Code] = m.RegionCode
-		if m.RegionCode != "" && !m.RaidBoss { // raid bosses show as their raid
+		if m.RegionCode != "" && m.Hunted() { // raid bosses and waves show as their raid/dungeon
 			c := at(m.RegionCode)
 			c.Mobs = append(c.Mobs, RegionMob{Code: m.Code, Level: m.Level})
 		}

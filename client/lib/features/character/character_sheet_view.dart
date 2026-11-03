@@ -35,7 +35,11 @@ class CharacterSheetView extends StatefulWidget {
     this.onSheet,
     this.live,
     this.onPartyChat,
+    this.onLogout,
   });
+
+  /// Signs out (the button at the bottom of the sheet).
+  final VoidCallback? onLogout;
 
   /// Pushes for the party section (DD-301); null = no party section.
   final LiveEvents? live;
@@ -366,6 +370,16 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               onPressed: widget.onOpenProgress,
               icon: const Icon(Icons.emoji_events_outlined),
               label: Text(l.progress),
+            ),
+          ],
+          if (widget.onLogout != null) ...[
+            const SizedBox(height: Space.lg),
+            OutlinedButton.icon(
+              key: const Key('sheet-logout'),
+              onPressed: widget.onLogout,
+              style: OutlinedButton.styleFrom(foregroundColor: Palette.danger),
+              icon: const Icon(Icons.logout),
+              label: Text(l.logout),
             ),
           ],
         ],

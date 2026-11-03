@@ -14,6 +14,7 @@ import (
 	"github.com/otter/server/internal/activity"
 	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/contentpack"
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/hunt"
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/leveling"
@@ -40,9 +41,8 @@ func (w *world) midKit(build string, level int) []contentpack.Item {
 }
 
 // killSeconds is the hunting time per kill (fights back to back plus
-// camping) of a build in mid-quality gear at the mob's level, over n hours.
-func (w *world) killSeconds(build string, m combat.Mob, n int) (secs float64, ok bool) {
-	lv := int(m.Level)
+// camping) of a build in mid-quality gear at level lv, over n hours.
+func (w *world) killSeconds(build string, m combat.Mob, lv, n int) (secs float64, ok bool) {
 	p := w.player(build, lv, w.midKit(build, lv))
 	var wins, elapsed float64
 	for s := int64(1); s <= int64(n); s++ {
@@ -56,28 +56,58 @@ func (w *world) killSeconds(build string, m combat.Mob, n int) (secs float64, ok
 	return elapsed / wins, true
 }
 
-// paceXP is the XP a kill of m should pay so that the average build, at the
-// mob's level in mid-quality gear, earns the curve's baseline XP a minute
-// (DD-281): the curve is timed at that rate (DD-250).
-func (w *world) paceXP(m combat.Mob, n int) (xp int32, secs float64) {
-	var sum float64
-	var count int
-	for _, b := range builds(int(m.Level)) {
-		if s, ok := w.killSeconds(b, m, n); ok {
-			sum += s
-			count++
+// band is the levels a mob is hunted at on the ladder (DD-343): from its
+// own level up to the next hunted mob's (the client suggests the strongest
+// mob at or below the level), sampled every five levels.
+func (w *world) band(m combat.Mob) []int {
+	end := leveling.Current().LevelCap
+	for _, c := range w.mobs {
+		if c.Level > m.Level {
+			end = int(c.Level) - 1
+			break
 		}
 	}
-	if count == 0 {
+	var out []int
+	for lv := int(m.Level); lv <= end; lv += 5 {
+		out = append(out, lv)
+	}
+	return out
+}
+
+// bandPace is how a mob's band (DD-343) is crossed by the average build in
+// mid-quality gear: rate is the curve's XP a minute over the band (Σ need /
+// Σ need/rate, DD-250) and secs the kill time weighted by XP to next. A kill
+// paying rate × secs / 60 crosses the band in the curve's time (DD-281).
+func (w *world) bandPace(m combat.Mob, n int) (rate, secs float64) {
+	var need, curveMin float64
+	for _, lv := range w.band(m) {
+		var at float64
+		var count int
+		for _, b := range builds(lv) {
+			if s, ok := w.killSeconds(b, m, lv, n); ok {
+				at += s
+				count++
+			}
+		}
+		if count == 0 {
+			continue
+		}
+		x := math.Max(1, float64(character.XPToNext(lv))) // none at the cap
+		need += x
+		curveMin += x / leveling.Current().Curve.Rate(lv)
+		secs += x * at / float64(count)
+	}
+	if need == 0 {
 		return 0, 0
 	}
-	secs = sum / float64(count)
-	return int32(math.Max(1, math.Round(leveling.Current().Curve.BaselineXPPerMinute*secs/60))), secs
+	return need / curveMin, secs / need
 }
 
 // TestTuneHuntXP writes content/hunt_xp.yaml: every hunted mob's own XP
-// from how long it takes to kill in mid-quality gear at its level.
-// Heavy; runs only with HUNT_XP_TUNE=1.
+// (DD-343): its band's XP rate × the kill time of the ladder's trend line
+// (least squares over the mobs' band kill times), so XP rises with the
+// level; a mob quicker or slower to kill than the trend makes its band
+// faster or slower. Heavy; runs only with HUNT_XP_TUNE=1.
 func TestTuneHuntXP(t *testing.T) {
 	if os.Getenv("HUNT_XP_TUNE") == "" {
 		t.Skip("set HUNT_XP_TUNE=1 to write content/hunt_xp.yaml")
@@ -86,14 +116,25 @@ func TestTuneHuntXP(t *testing.T) {
 	type row struct {
 		code  string
 		level int16
-		xp    int32
+		rate  float64
 		secs  float64
+		xp    int32
 	}
 	var rows []row
+	var sx, sy, sxx, sxy float64
 	for _, m := range w.mobs {
-		xp, secs := w.paceXP(m, 4)
-		require.Positive(t, xp, "%s: no build at its level kills it", m.Code)
-		rows = append(rows, row{m.Code, m.Level, xp, secs})
+		rate, secs := w.bandPace(m, 4)
+		require.Positive(t, secs, "%s: no build at its level kills it", m.Code)
+		rows = append(rows, row{code: m.Code, level: m.Level, rate: rate, secs: secs})
+		x := float64(m.Level)
+		sx, sy, sxx, sxy = sx+x, sy+secs, sxx+x*x, sxy+x*secs
+	}
+	n := float64(len(rows))
+	slope := (n*sxy - sx*sy) / (n*sxx - sx*sx)
+	icept := (sy - slope*sx) / n
+	for i := range rows {
+		trend := icept + slope*float64(rows[i].level)
+		rows[i].xp = int32(math.Max(1, math.Round(rows[i].rate*trend/60)))
 	}
 	sort.Slice(rows, func(i, j int) bool {
 		if rows[i].level != rows[j].level {
@@ -101,11 +142,16 @@ func TestTuneHuntXP(t *testing.T) {
 		}
 		return rows[i].code < rows[j].code
 	})
+	for i := 1; i < len(rows); i++ {
+		require.Greater(t, rows[i].xp, rows[i-1].xp, "%s: XP rises with the level", rows[i].code)
+	}
 	var b strings.Builder
 	b.WriteString("# Hunted mobs' own XP per kill (DD-281). Generated by the balance\n")
 	b.WriteString("# simulation: HUNT_XP_TUNE=1 go test ./internal/balance -run TestTuneHuntXP\n")
-	b.WriteString("# A kill pays baseline XP/min × the hunting time (fight + camp) the average\n")
-	b.WriteString("# build needs at the mob's level in mid-quality gear (level tier, rare).\n")
+	b.WriteString("# A kill pays the curve's XP/min over the mob's ladder band (its level up to\n")
+	b.WriteString("# the next hunted mob; DD-343) × the trend line of the kill time (fight +\n")
+	b.WriteString("# camp) the average build needs there in mid-quality gear (level tier, rare).\n")
+	b.WriteString("# The comment shows the mob's own band kill time.\n")
 	b.WriteString("xp:\n")
 	for _, r := range rows {
 		fmt.Fprintf(&b, "  %s: %d # Sv %d, %.1f s/kill\n", r.code, r.xp, r.level, r.secs)
@@ -113,31 +159,37 @@ func TestTuneHuntXP(t *testing.T) {
 	require.NoError(t, os.WriteFile(filepath.Join("..", "..", "..", "content", "hunt_xp.yaml"), []byte(b.String()), 0o644))
 }
 
-// TestHuntPace pins DD-281: at the mob's level in mid-quality gear the
-// average build earns the curve's baseline XP a minute (so levels take the
-// curve's time) and hunting is safe. Builds differ by how fast they kill:
-// that spread is the point, only extremes fail.
+// TestHuntPace pins DD-281 on the ladder (DD-343): across a mob's band, in
+// mid-quality gear, the average build earns the curve's XP a minute (so
+// levels take the curve's time) and hunting is safe. Builds differ by how
+// fast they kill, and a band's first levels are slower than its last: that
+// spread is the point, only extremes fail.
 func TestHuntPace(t *testing.T) {
 	if raceDetector {
 		t.Skip("pure simulation: runs in the coverage job (no -race)")
 	}
 	w := load(t)
-	baseline := leveling.Current().Curve.BaselineXPPerMinute
-	for _, lv := range []int{1, 10, 25, 50, 100, 200, 300, 500, 700, 990} {
-		m := w.mobFor(lv)
-		var sum float64
-		bs := builds(lv)
-		for _, b := range bs {
-			p := w.player(b, lv, w.midKit(b, lv))
-			o := simulate(p, m, lv)
-			require.LessOrEqual(t, o.deathRate, 0.10, "%s L%d vs %s: mid gear hunts safely", b, lv, m.Code)
-			perMin := o.xpPerHour / 60 * float64(hunt.HuntXP(m.XPReward, int(m.Level), int(m.Level))) / math.Max(1, float64(hunt.HuntXP(m.XPReward, lv, int(m.Level))))
-			require.Greater(t, perMin, 0.3*baseline, "%s L%d vs %s: XP/min", b, lv, m.Code)
-			require.Less(t, perMin, 4*baseline, "%s L%d vs %s: XP/min", b, lv, m.Code)
-			sum += perMin
+	curve := leveling.Current().Curve
+	for _, at := range []int{1, 25, 50, 100, 200, 300, 500, 700, 990} {
+		m := w.mobFor(at)
+		var sum, weight float64
+		for _, lv := range w.band(m) {
+			bs := builds(lv)
+			for _, b := range bs {
+				p := w.player(b, lv, w.midKit(b, lv))
+				o := simulate(p, m, lv)
+				require.LessOrEqual(t, o.deathRate, 0.10, "%s L%d vs %s: mid gear hunts safely", b, lv, m.Code)
+				pace := o.xpPerHour / 60 / curve.Rate(lv)
+				require.Greater(t, pace, 0.3, "%s L%d vs %s: XP/min vs the curve's", b, lv, m.Code)
+				require.Less(t, pace, 4.0, "%s L%d vs %s: XP/min vs the curve's", b, lv, m.Code)
+				curveMin := math.Max(1, float64(character.XPToNext(lv))) / curve.Rate(lv)
+				sum += curveMin / pace // the minutes this level takes
+				weight += curveMin
+			}
 		}
-		avg := sum / float64(len(bs))
-		require.InDelta(t, baseline, avg, 0.35*baseline, "L%d vs %s: the average build earns the baseline", lv, m.Code)
+		// XP follows the ladder's trend line (DD-343): a band whose mob dies
+		// quicker or slower than the trend is crossed faster or slower.
+		require.InDelta(t, 1, weight/sum, 0.4, "%s: the average build crosses its band near the curve's time", m.Code)
 	}
 }
 

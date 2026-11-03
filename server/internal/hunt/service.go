@@ -264,7 +264,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 	}
 
 	mob, ok := s.mobs.Catalog().Get(req.MobCode)
-	if !ok || mob.RaidBoss { // raid bosses are fought by a party (DD-261)
+	if !ok || !mob.Hunted() { // raid bosses and dungeon waves are not hunted (DD-261, DD-343)
 		return nil, ErrUnknownMob
 	}
 	if s.regions != nil && mob.RegionCode != "" {
@@ -473,13 +473,12 @@ func (s *Service) Reveal(ctx context.Context, contractID, accountID uuid.UUID) (
 		if err != nil {
 			return nil, err
 		}
-		gear = activity.GearDrop{Class: sheet.Class, Level: activity.DropLevel(int(mob.Level), int(snapshot.Level)),
-			Rolls: hr.LootRolls, Pct: GearDropPct}
+		gear = activity.GearDrop{Class: sheet.Class, Level: dropLevel(mob, snapshot), Rolls: hr.LootRolls, Pct: GearDropPct}
 	}
 	var granted []activity.GrantedItem
 	if s.items != nil && (hr.CommonDrops+hr.RareDrops+hr.LegendaryDrops+gear.Rolls) > 0 {
 		granted, err = s.items.Grant(ctx, c.CharacterID, c.ID, c.Seed, activity.Drops{
-			Kind: activity.KindHunting, MobLevel: activity.DropLevel(int(mob.Level), int(snapshot.Level)),
+			Kind: activity.KindHunting, MobLevel: dropLevel(mob, snapshot),
 			Common: hr.CommonDrops, Rare: hr.RareDrops, Legendary: hr.LegendaryDrops, Gear: gear,
 		})
 		if err != nil {
@@ -657,6 +656,13 @@ func newLevel(x *character.XPGrantResult) int {
 		return 0
 	}
 	return int(x.Character.Level)
+}
+
+// dropLevel is the level a hunt's gear and hides come from: anywhere in the
+// mob's ladder band, capped at the character's level (DD-255, DD-343), so
+// every gear tier between two hunted mobs still drops.
+func dropLevel(mob combat.Mob, snapshot combat.Combatant) int {
+	return activity.DropLevel(int(mob.Level)+combat.LadderStep-1, int(snapshot.Level))
 }
 
 // HuntXP is what one kill of a mob pays a character: the mob's own XP

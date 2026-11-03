@@ -21,7 +21,7 @@ func TestRegionContentShipped(t *testing.T) {
 	}
 	mobs, nodes := 0, 0
 	for _, m := range p.Mobs {
-		if m.RegionCode != "" && !m.RaidBoss {
+		if m.RegionCode != "" && m.Hunted() {
 			mobs++
 		}
 	}

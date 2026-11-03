@@ -127,7 +127,7 @@ func TestHTTPGrayMobPaysLess(t *testing.T) {
 	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 40 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 	mobs := p.ok("GET", "/v1/mobs", nil)
-	require.Equal(t, map[string]any{"free_pct": 0.05, "power": 4.0, "floor": 0.1}, mobs["hunt_level_xp"])
+	require.Equal(t, map[string]any{"free_pct": 0.05, "free_levels": 20.0, "power": 4.0, "floor": 0.1}, mobs["hunt_level_xp"])
 	h := p.ok("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 3600})
 	hid := h["contract"].(map[string]any)["id"].(string)
 	_, err = w.p.Exec(w.ctx, `

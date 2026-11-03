@@ -207,7 +207,8 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 			rw.Legendary++
 		}
 		if e.IsBoss {
-			rw.XP += int64(cfg.ScaleDungeonXP(tmpl.BonusXP, level, int(mob.Level)))
+			bonus := int32(math.Round(float64(tmpl.BonusXP) * cfg.Curve.Growth(int(tmpl.MinLevel)))) // DD-343
+			rw.XP += int64(cfg.ScaleDungeonXP(bonus, level, int(mob.Level)))
 			rw.GoldCopper += tmpl.BonusGoldCopper
 			rw.Rare++
 		} else {
@@ -228,12 +229,12 @@ func MemberReward(res *Result, slot int16, level int, class string, seed int64, 
 	return rw
 }
 
-// afkXPPerKill spreads the raid's minutes × afk_combat_xp_per_minute over
-// its encounters (as dungeons do).
+// afkXPPerKill spreads the raid's minutes × the AFK combat rate at its level
+// over its encounters (as dungeons do).
 func afkXPPerKill(tmpl dungeon.Template) int32 {
 	n := tmpl.TotalEncounters()
 	if n <= 0 {
 		return 0
 	}
-	return int32(math.Round(leveling.Current().AFKCombatXPPerMinute * float64(tmpl.DurationSecs) / 60 / float64(n)))
+	return int32(math.Round(leveling.Current().AFKRate(int(tmpl.MinLevel)) * float64(tmpl.DurationSecs) / 60 / float64(n)))
 }

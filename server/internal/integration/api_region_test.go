@@ -21,12 +21,15 @@ func TestHTTPHuntRegionGate(t *testing.T) {
 	mobs := items(p.ok("GET", "/v1/mobs", nil), "mobs")
 	for _, m := range mobs {
 		require.NotEmpty(t, m["region_code"], "%s has a region", m["code"])
+		require.Zero(t, int(m["level"].(float64))%20*min(1, int(m["level"].(float64))-1), "%s is on the 20-level ladder (DD-343)", m["code"])
 	}
+	// Dungeon waves off the ladder are not hunted.
+	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "grey_wolf", "duration_seconds": 600}, 400, "E_UNKNOWN_MOB")
 
 	hunt := func(mob string) (int, map[string]any) {
 		return p.call("POST", p.path("/hunt"), map[string]any{"mob_code": mob, "duration_seconds": 600})
 	}
-	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "rock_ogre", "duration_seconds": 600}, 409, "E_MOB_REGION")
+	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "shadow_stalker", "duration_seconds": 600}, 409, "E_MOB_REGION")
 	code, out := hunt("young_boar")
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
@@ -34,14 +37,14 @@ func TestHTTPHuntRegionGate(t *testing.T) {
 	// Whispering Reach is linked to Emberpeak by road.
 	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET location_region_code = 'whispering_reach' WHERE id = $1`, p.char)
 	require.NoError(t, err)
-	code, out = hunt("rock_ogre")
+	code, out = hunt("shadow_stalker")
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
 	// Greenwood is linked too; the Misty Marshes are two roads away.
 	code, out = hunt("young_boar")
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
-	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "mist_leech", "duration_seconds": 600}, 409, "E_MOB_REGION")
+	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "bog_witch", "duration_seconds": 600}, 409, "E_MOB_REGION")
 }
 
 // The world catalog carries what the travel map draws (DD-279): every

@@ -327,7 +327,10 @@ void main() {
     expect(find.textContaining('12', findRichText: true), findsWidgets); // 12g 34s 56c
     expect(be.requests.last.headers['X-Character-Id'], 'char-1');
 
-    await tester.tap(find.byTooltip('Log out'));
+    // Logging out lives at the bottom of the character tab, not the top bar.
+    expect(find.byTooltip('Log out'), findsNothing);
+    await tester.scrollUntilVisible(find.byKey(const Key('sheet-logout')), 300, scrollable: _list);
+    await tester.tap(find.byKey(const Key('sheet-logout')));
     await tester.pumpAndSettle();
     expect(find.text('Log in'), findsOneWidget);
     expect(store.token, isNull);
@@ -563,7 +566,10 @@ void main() {
     expect(find.text('Achievement unlocked!'), findsOneWidget);
     expect(be.sheetGets, greaterThan(before));
 
-    await tester.tap(find.byTooltip('Log out'));
+    await tester.pump(const Duration(seconds: 6)); // the toast leaves the bottom of the screen
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const Key('sheet-logout')), 300, scrollable: _list);
+    await tester.tap(find.byKey(const Key('sheet-logout')));
     await tester.pumpAndSettle();
     expect(socket.closed, isTrue);
   });
@@ -616,6 +622,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.backpack_outlined));
     await tester.pumpAndSettle();
     expect(find.text('Equipment'), findsOneWidget);
+    expect(find.byKey(const Key('bag-gold')), findsOneWidget, reason: 'the bag shows the gold');
 
     // Detail → equip.
     await tester.tap(find.bySemanticsLabel('Sharp Sword Iron ×1'));
@@ -2396,6 +2403,12 @@ void main() {
       HuntXPFalloff.fromJson({'free_pct': 0.05, 'power': 4, 'floor': 0.1}).factor(500, 460),
       closeTo(0.88529281, 1e-9),
     );
+    // The ladder's 20-level step pays in full (DD-343).
+    const ladder = HuntXPFalloff(freePct: 0.05, freeLevels: 20, power: 4, floor: 0.1);
+    expect(ladder.xp(200, 39, 20), 200, reason: '19 levels over the band mob');
+    expect(ladder.xp(200, 50, 20), 82, reason: 'ten past free: (1 - 10/50)^4');
+    expect(ladder.free(600), 30, reason: '5% of 600 is wider than the step');
+    expect(HuntXPFalloff.fromJson({'free_levels': 20}).freeLevels, 20);
   });
 
   test('splitCopper', () {

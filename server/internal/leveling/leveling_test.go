@@ -21,8 +21,9 @@ func shipped(t *testing.T) *leveling.Config {
 
 func TestXPFormula(t *testing.T) {
 	c := shipped(t)
-	for level, want := range map[int]int64{1: 3752, 50: 4669, 100: 6719, 200: 13352, 300: 22828, 500: 49061,
-		800: 104177, 900: 126344, 999: 150041} {
+	// Minutes × the rate grown with the level (DD-343).
+	for level, want := range map[int]int64{1: 3752, 50: 16105, 100: 39977, 200: 146198, 300: 364099, 500: 1273108,
+		800: 4266012, 900: 5805482, 999: 7637063} {
 		require.Equal(t, want, c.XPToNext(level), "level %d", level)
 	}
 	require.Zero(t, c.XPToNext(1000), "no next level at the cap")
@@ -37,11 +38,10 @@ func TestProgressionSimulator(t *testing.T) {
 	c := shipped(t)
 	targets := map[int]float64{50: 3, 100: 8, 200: 24.5, 300: 54, 400: 102, 500: 171, 600: 266, 700: 390,
 		800: 546, 900: 738, 1000: 968}
-	rate := c.Curve.BaselineXPPerMinute
 	st, minutes := leveling.State{Spec: "warrior", Level: 1}, 0.0
 	for st.Level < c.LevelCap {
 		need := c.XPToNext(st.Level) - st.XP
-		minutes += float64(need) / rate
+		minutes += float64(need) / c.Curve.Rate(st.Level)
 		var gained []int
 		st, gained = c.Advance(st, need)
 		require.Equal(t, []int{st.Level}, gained)
@@ -71,21 +71,24 @@ func TestAdvance_SingleMultipleOverflowCap(t *testing.T) {
 
 	// One big grant crosses several levels; nothing is lost.
 	start := leveling.State{Spec: "warrior", Level: 24, XP: c.XPToNext(24) * 9 / 10}
-	amount := int64(40_000)
-	st, gained = c.Advance(start, amount)
+	amount := c.XPToNext(24) / 10
+	for l := 25; l < 35; l++ {
+		amount += c.XPToNext(l)
+	}
+	st, gained = c.Advance(start, amount+10)
 	require.Equal(t, []int{25, 26, 27, 28, 29, 30, 31, 32, 33, 34}, gained[:10])
-	total := start.XP + amount
+	total := start.XP + amount + 10
 	for l := 24; l < st.Level; l++ {
 		total -= c.XPToNext(l)
 	}
 	require.Equal(t, total, st.XP, "overflow XP carried into the new level")
 
 	// Promotion gate: stops at 100, the rest is held — even across calls.
-	st, gained = c.Advance(leveling.State{Spec: "warrior", Level: 99}, 50_000)
+	st, gained = c.Advance(leveling.State{Spec: "warrior", Level: 99}, c.XPToNext(99)+12_000)
 	require.Equal(t, []int{100}, gained)
 	require.Equal(t, 100, st.Level)
 	require.Zero(t, st.XP)
-	require.Equal(t, int64(50_000-c.XPToNext(99)), st.Overflow)
+	require.Equal(t, int64(12_000), st.Overflow)
 	st2, gained := c.Advance(st, 1234)
 	require.Empty(t, gained)
 	require.Equal(t, st.Overflow+1234, st2.Overflow)

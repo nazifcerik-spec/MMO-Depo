@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/otter/server/internal/combat"
 	"github.com/otter/server/internal/leveling"
 )
 
@@ -22,9 +23,9 @@ func TestItemInfoShipped(t *testing.T) {
 	sword := ii["sword_iron"]
 	require.Equal(t, int16(5), sword.Level)
 	require.Contains(t, sword.Classes, "warrior")
-	require.NotEmpty(t, sword.Mobs, "random gear drops from monsters of its tier")
+	require.NotEmpty(t, sword.Mobs, "random gear drops from monsters whose ladder band reaches its tier")
 	for _, m := range sword.Mobs {
-		require.GreaterOrEqual(t, m.Level, sword.Level)
+		require.Greater(t, m.Level+combat.LadderStep, sword.Level)
 	}
 	require.Contains(t, sword.Crafted, ItemCraft{Profession: "blacksmithing", Skill: 1})
 

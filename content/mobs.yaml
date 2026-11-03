@@ -46,6 +46,7 @@ mobs:
     gold_copper_min: 24
     gold_copper_max: 60
     region_code: greenwood
+    dungeon_only: true
 
   - code: bandit_scout
     display_name_key: mob.bandit_scout
@@ -60,6 +61,7 @@ mobs:
     gold_copper_min: 48
     gold_copper_max: 120
     region_code: greenwood
+    dungeon_only: true
 
   - code: cave_bat
     display_name_key: mob.cave_bat
@@ -74,6 +76,7 @@ mobs:
     gold_copper_min: 62
     gold_copper_max: 155
     region_code: greenwood
+    dungeon_only: true
 
   - code: goblin_raider
     display_name_key: mob.goblin_raider
@@ -88,6 +91,7 @@ mobs:
     gold_copper_min: 94
     gold_copper_max: 235
     region_code: whispering_reach
+    dungeon_only: true
 
   - code: forest_troll
     display_name_key: mob.forest_troll
@@ -102,6 +106,7 @@ mobs:
     gold_copper_min: 169
     gold_copper_max: 422
     region_code: whispering_reach
+    dungeon_only: true
 
   - code: dire_wolf
     display_name_key: mob.dire_wolf
@@ -116,6 +121,7 @@ mobs:
     gold_copper_min: 213
     gold_copper_max: 532
     region_code: whispering_reach
+    dungeon_only: true
 
   - code: cultist_acolyte
     display_name_key: mob.cultist_acolyte
@@ -130,6 +136,7 @@ mobs:
     gold_copper_min: 235
     gold_copper_max: 588
     region_code: whispering_reach
+    dungeon_only: true
 
   - code: rock_ogre
     display_name_key: mob.rock_ogre
@@ -144,6 +151,7 @@ mobs:
     gold_copper_min: 308
     gold_copper_max: 770
     region_code: emberpeak
+    dungeon_only: true
 
   - code: shadow_stalker
     display_name_key: mob.shadow_stalker
@@ -172,6 +180,7 @@ mobs:
     gold_copper_min: 473
     gold_copper_max: 1182
     region_code: emberpeak
+    dungeon_only: true
 
   - code: ashen_lich
     display_name_key: mob.ashen_lich
@@ -186,6 +195,7 @@ mobs:
     gold_copper_min: 503
     gold_copper_max: 1258
     region_code: emberpeak
+    dungeon_only: true
   - code: marsh_lurker
     display_name_key: mob.marsh_lurker
     level: 10
@@ -199,6 +209,7 @@ mobs:
     gold_copper_min: 129
     gold_copper_max: 322
     region_code: whispering_reach
+    dungeon_only: true
 
   - code: frost_giant
     display_name_key: mob.frost_giant
@@ -213,6 +224,7 @@ mobs:
     gold_copper_min: 416
     gold_copper_max: 1040
     region_code: emberpeak
+    dungeon_only: true
 
   # >>> generated: mobs (scripts/gen_world.py)
   - code: mist_leech
@@ -227,6 +239,7 @@ mobs:
     xp_reward: 2309
     gold_copper_min: 661
     gold_copper_max: 1652
+    dungeon_only: true
     region_code: misty_marshes
 
   - code: mud_golem
@@ -241,6 +254,7 @@ mobs:
     xp_reward: 2955
     gold_copper_min: 833
     gold_copper_max: 2082
+    dungeon_only: true
     region_code: misty_marshes
 
   - code: bog_witch
@@ -269,6 +283,7 @@ mobs:
     xp_reward: 3955
     gold_copper_min: 1095
     gold_copper_max: 2738
+    dungeon_only: true
     region_code: misty_marshes
 
   - code: venom_lizard
@@ -283,6 +298,7 @@ mobs:
     xp_reward: 4417
     gold_copper_min: 1215
     gold_copper_max: 3038
+    dungeon_only: true
     region_code: misty_marshes
 
   - code: drowned_knight
@@ -297,6 +313,7 @@ mobs:
     xp_reward: 5228
     gold_copper_min: 1423
     gold_copper_max: 3558
+    dungeon_only: true
     region_code: misty_marshes
 
   - code: mountain_troll
@@ -311,6 +328,7 @@ mobs:
     xp_reward: 6089
     gold_copper_min: 1641
     gold_copper_max: 4102
+    dungeon_only: true
     region_code: iron_mountains
 
   - code: dwarf_ghost
@@ -339,6 +357,7 @@ mobs:
     xp_reward: 7955
     gold_copper_min: 2109
     gold_copper_max: 5272
+    dungeon_only: true
     region_code: iron_mountains
 
   - code: iron_king
@@ -353,6 +372,7 @@ mobs:
     xp_reward: 8351
     gold_copper_min: 2207
     gold_copper_max: 5518
+    dungeon_only: true
     region_code: iron_mountains
 
   - code: iron_spider
@@ -367,6 +387,7 @@ mobs:
     xp_reward: 8957
     gold_copper_min: 2357
     gold_copper_max: 5892
+    dungeon_only: true
     region_code: iron_mountains
 
   - code: mine_warden
@@ -381,6 +402,7 @@ mobs:
     xp_reward: 10002
     gold_copper_min: 2614
     gold_copper_max: 6535
+    dungeon_only: true
     region_code: iron_mountains
 
   - code: ghost_guard
@@ -409,6 +431,7 @@ mobs:
     xp_reward: 12220
     gold_copper_min: 3153
     gold_copper_max: 7882
+    dungeon_only: true
     region_code: northern_keep_ruins
 
   - code: bone_rider
@@ -423,6 +446,7 @@ mobs:
     xp_reward: 13390
     gold_copper_min: 3436
     gold_copper_max: 8590
+    dungeon_only: true
     region_code: northern_keep_ruins
 
   - code: fallen_lord_varn
@@ -437,6 +461,7 @@ mobs:
     xp_reward: 13869
     gold_copper_min: 3551
     gold_copper_max: 8878
+    dungeon_only: true
     region_code: northern_keep_ruins
 
   - code: keep_gargoyle
@@ -451,6 +476,7 @@ mobs:
     xp_reward: 14600
     gold_copper_min: 3726
     gold_copper_max: 9315
+    dungeon_only: true
     region_code: northern_keep_ruins
 
   - code: fallen_commander
@@ -479,6 +505,7 @@ mobs:
     xp_reward: 18460
     gold_copper_min: 4642
     gold_copper_max: 11605
+    dungeon_only: true
     region_code: crown_plains
 
   - code: plains_lion
@@ -507,6 +534,7 @@ mobs:
     xp_reward: 24116
     gold_copper_min: 5964
     gold_copper_max: 14910
+    dungeon_only: true
     region_code: crown_plains
 
   - code: rebel_king_orrin
@@ -521,6 +549,7 @@ mobs:
     xp_reward: 24713
     gold_copper_min: 6103
     gold_copper_max: 15258
+    dungeon_only: true
     region_code: crown_plains
 
   - code: war_bear
@@ -549,6 +578,7 @@ mobs:
     xp_reward: 30321
     gold_copper_min: 7393
     gold_copper_max: 18482
+    dungeon_only: true
     region_code: crown_plains
 
   - code: ash_wolf
@@ -577,6 +607,7 @@ mobs:
     xp_reward: 37044
     gold_copper_min: 8919
     gold_copper_max: 22298
+    dungeon_only: true
     region_code: burnt_forest
 
   - code: cinder_treant
@@ -605,6 +636,7 @@ mobs:
     xp_reward: 41316
     gold_copper_min: 9880
     gold_copper_max: 24700
+    dungeon_only: true
     region_code: burnt_forest
 
   - code: crimson_harpy
@@ -619,6 +651,7 @@ mobs:
     xp_reward: 44259
     gold_copper_min: 10539
     gold_copper_max: 26348
+    dungeon_only: true
     region_code: burnt_forest
 
   - code: scorched_shaman
@@ -647,6 +680,7 @@ mobs:
     xp_reward: 51946
     gold_copper_min: 12246
     gold_copper_max: 30615
+    dungeon_only: true
     region_code: salt_desert
 
   - code: desert_viper
@@ -675,6 +709,7 @@ mobs:
     xp_reward: 60085
     gold_copper_min: 14036
     gold_copper_max: 35090
+    dungeon_only: true
     region_code: salt_desert
 
   - code: pharaoh_seth_ka
@@ -689,6 +724,7 @@ mobs:
     xp_reward: 60923
     gold_copper_min: 14220
     gold_copper_max: 35550
+    dungeon_only: true
     region_code: salt_desert
 
   - code: mummy_priest
@@ -717,6 +753,7 @@ mobs:
     xp_reward: 68660
     gold_copper_min: 15906
     gold_copper_max: 39765
+    dungeon_only: true
     region_code: salt_desert
 
   - code: royal_skeleton
@@ -745,6 +782,7 @@ mobs:
     xp_reward: 77657
     gold_copper_min: 17853
     gold_copper_max: 44632
+    dungeon_only: true
     region_code: crown_graveyard
 
   - code: soul_drinker
@@ -773,6 +811,7 @@ mobs:
     xp_reward: 83253
     gold_copper_min: 19056
     gold_copper_max: 47640
+    dungeon_only: true
     region_code: crown_graveyard
 
   - code: black_knight
@@ -787,6 +826,7 @@ mobs:
     xp_reward: 87064
     gold_copper_min: 19873
     gold_copper_max: 49682
+    dungeon_only: true
     region_code: crown_graveyard
 
   - code: crownless_king
@@ -815,6 +855,7 @@ mobs:
     xp_reward: 96868
     gold_copper_min: 21963
     gold_copper_max: 54908
+    dungeon_only: true
     region_code: storm_coast
 
   - code: storm_bird
@@ -843,6 +884,7 @@ mobs:
     xp_reward: 107059
     gold_copper_min: 24123
     gold_copper_max: 60308
+    dungeon_only: true
     region_code: storm_coast
 
   - code: admiral_drask
@@ -857,6 +899,7 @@ mobs:
     xp_reward: 108099
     gold_copper_min: 24342
     gold_copper_max: 60855
+    dungeon_only: true
     region_code: storm_coast
 
   - code: siren
@@ -885,6 +928,7 @@ mobs:
     xp_reward: 117628
     gold_copper_min: 26349
     gold_copper_max: 65872
+    dungeon_only: true
     region_code: storm_coast
 
   - code: young_dragon
@@ -913,6 +957,7 @@ mobs:
     xp_reward: 128565
     gold_copper_min: 28639
     gold_copper_max: 71598
+    dungeon_only: true
     region_code: dragon_slopes
 
   - code: lava_lizard
@@ -941,6 +986,7 @@ mobs:
     xp_reward: 135301
     gold_copper_min: 30044
     gold_copper_max: 75110
+    dungeon_only: true
     region_code: dragon_slopes
 
   - code: winged_wyvern
@@ -955,6 +1001,7 @@ mobs:
     xp_reward: 139863
     gold_copper_min: 30992
     gold_copper_max: 77480
+    dungeon_only: true
     region_code: dragon_slopes
 
   - code: dragon_guard
@@ -983,6 +1030,7 @@ mobs:
     xp_reward: 151514
     gold_copper_min: 33407
     gold_copper_max: 83518
+    dungeon_only: true
     region_code: mist_forest
 
   - code: mist_stalker
@@ -1011,6 +1059,7 @@ mobs:
     xp_reward: 163512
     gold_copper_min: 35881
     gold_copper_max: 89702
+    dungeon_only: true
     region_code: mist_forest
 
   - code: spirit_queen_sylwen
@@ -1025,6 +1074,7 @@ mobs:
     xp_reward: 164730
     gold_copper_min: 36131
     gold_copper_max: 90328
+    dungeon_only: true
     region_code: mist_forest
 
   - code: shadow_elf
@@ -1053,6 +1103,7 @@ mobs:
     xp_reward: 175849
     gold_copper_min: 38413
     gold_copper_max: 96032
+    dungeon_only: true
     region_code: mist_forest
 
   - code: crystal_spider
@@ -1081,6 +1132,7 @@ mobs:
     xp_reward: 188520
     gold_copper_min: 41002
     gold_copper_max: 102505
+    dungeon_only: true
     region_code: crystal_caves
 
   - code: light_elemental
@@ -1109,6 +1161,7 @@ mobs:
     xp_reward: 196280
     gold_copper_min: 42582
     gold_copper_max: 106455
+    dungeon_only: true
     region_code: crystal_caves
 
   - code: crystal_dragon
@@ -1123,6 +1176,7 @@ mobs:
     xp_reward: 201518
     gold_copper_min: 43647
     gold_copper_max: 109118
+    dungeon_only: true
     region_code: crystal_caves
 
   - code: cave_titan
@@ -1151,6 +1205,7 @@ mobs:
     xp_reward: 214839
     gold_copper_min: 46346
     gold_copper_max: 115865
+    dungeon_only: true
     region_code: volcanic_isle
 
   - code: fire_giant
@@ -1179,6 +1234,7 @@ mobs:
     xp_reward: 228476
     gold_copper_min: 49099
     gold_copper_max: 122748
+    dungeon_only: true
     region_code: volcanic_isle
 
   - code: fire_lord_ignar
@@ -1193,6 +1249,7 @@ mobs:
     xp_reward: 229857
     gold_copper_min: 49377
     gold_copper_max: 123442
+    dungeon_only: true
     region_code: volcanic_isle
 
   - code: volcano_shaman
@@ -1221,6 +1278,7 @@ mobs:
     xp_reward: 242427
     gold_copper_min: 51904
     gold_copper_max: 129760
+    dungeon_only: true
     region_code: volcanic_isle
 
   - code: dragon_knight
@@ -1249,6 +1307,7 @@ mobs:
     xp_reward: 256685
     gold_copper_min: 54761
     gold_copper_max: 136902
+    dungeon_only: true
     region_code: throne_peaks
 
   - code: dragon_sorcerer
@@ -1277,6 +1336,7 @@ mobs:
     xp_reward: 265385
     gold_copper_min: 56499
     gold_copper_max: 141248
+    dungeon_only: true
     region_code: throne_peaks
 
   - code: throne_guardian
@@ -1291,6 +1351,7 @@ mobs:
     xp_reward: 271246
     gold_copper_min: 57668
     gold_copper_max: 144170
+    dungeon_only: true
     region_code: throne_peaks
 
   - code: elder_dragon
@@ -1319,6 +1380,7 @@ mobs:
     xp_reward: 286107
     gold_copper_min: 60625
     gold_copper_max: 151562
+    dungeon_only: true
     region_code: dark_plains
 
   - code: void_wolf
@@ -1347,6 +1409,7 @@ mobs:
     xp_reward: 301262
     gold_copper_min: 63631
     gold_copper_max: 159078
+    dungeon_only: true
     region_code: dark_plains
 
   - code: star_eater_omh
@@ -1361,6 +1424,7 @@ mobs:
     xp_reward: 302794
     gold_copper_min: 63934
     gold_copper_max: 159835
+    dungeon_only: true
     region_code: dark_plains
 
   - code: dark_angel
@@ -1389,6 +1453,7 @@ mobs:
     xp_reward: 316710
     gold_copper_min: 66685
     gold_copper_max: 166712
+    dungeon_only: true
     region_code: dark_plains
 
   - code: ghost_noble
@@ -1417,6 +1482,7 @@ mobs:
     xp_reward: 332445
     gold_copper_min: 69786
     gold_copper_max: 174465
+    dungeon_only: true
     region_code: lost_city
 
   - code: cursed_sorcerer
@@ -1445,6 +1511,7 @@ mobs:
     xp_reward: 342023
     gold_copper_min: 71670
     gold_copper_max: 179175
+    dungeon_only: true
     region_code: lost_city
 
   - code: stone_gargoyle
@@ -1459,6 +1526,7 @@ mobs:
     xp_reward: 348465
     gold_copper_min: 72934
     gold_copper_max: 182335
+    dungeon_only: true
     region_code: lost_city
 
   - code: city_guardian
@@ -1487,6 +1555,7 @@ mobs:
     xp_reward: 364765
     gold_copper_min: 76128
     gold_copper_max: 190320
+    dungeon_only: true
     region_code: floating_isles
 
   - code: storm_dragon
@@ -1515,6 +1584,7 @@ mobs:
     xp_reward: 381344
     gold_copper_min: 79367
     gold_copper_max: 198418
+    dungeon_only: true
     region_code: floating_isles
 
   - code: storm_king_zephyros
@@ -1529,6 +1599,7 @@ mobs:
     xp_reward: 383017
     gold_copper_min: 79694
     gold_copper_max: 199235
+    dungeon_only: true
     region_code: floating_isles
 
   - code: wind_elemental
@@ -1557,6 +1628,7 @@ mobs:
     xp_reward: 398197
     gold_copper_min: 82651
     gold_copper_max: 206628
+    dungeon_only: true
     region_code: floating_isles
 
   - code: void_creature
@@ -1585,6 +1657,7 @@ mobs:
     xp_reward: 415322
     gold_copper_min: 85979
     gold_copper_max: 214948
+    dungeon_only: true
     region_code: rift_edge
 
   - code: chaos_elemental
@@ -1613,6 +1686,7 @@ mobs:
     xp_reward: 425727
     gold_copper_min: 87997
     gold_copper_max: 219992
+    dungeon_only: true
     region_code: rift_edge
 
   - code: rift_dragon
@@ -1627,6 +1701,7 @@ mobs:
     xp_reward: 432716
     gold_copper_min: 89351
     gold_copper_max: 223378
+    dungeon_only: true
     region_code: rift_edge
 
   - code: chaos_lord
@@ -1655,6 +1730,7 @@ mobs:
     xp_reward: 450377
     gold_copper_min: 92765
     gold_copper_max: 231912
+    dungeon_only: true
     region_code: celestial_temple
 
   - code: temple_guardian
@@ -1683,6 +1759,7 @@ mobs:
     xp_reward: 468301
     gold_copper_min: 96222
     gold_copper_max: 240555
+    dungeon_only: true
     region_code: celestial_temple
 
   - code: archangel_uriel
@@ -1697,6 +1774,7 @@ mobs:
     xp_reward: 470108
     gold_copper_min: 96570
     gold_copper_max: 241425
+    dungeon_only: true
     region_code: celestial_temple
 
   - code: light_hunter
@@ -1725,6 +1803,7 @@ mobs:
     xp_reward: 486486
     gold_copper_min: 99721
     gold_copper_max: 249302
+    dungeon_only: true
     region_code: celestial_temple
 
   - code: ash_leviathan
@@ -1753,6 +1832,7 @@ mobs:
     xp_reward: 504930
     gold_copper_min: 103261
     gold_copper_max: 258152
+    dungeon_only: true
     region_code: ash_sea
 
   - code: undying_soldier
@@ -1781,6 +1861,7 @@ mobs:
     xp_reward: 516119
     gold_copper_min: 105405
     gold_copper_max: 263512
+    dungeon_only: true
     region_code: ash_sea
 
   - code: ash_wyrm_lord
@@ -1795,6 +1876,7 @@ mobs:
     xp_reward: 523629
     gold_copper_min: 106842
     gold_copper_max: 267105
+    dungeon_only: true
     region_code: ash_sea
 
   - code: eternal_sentinel
@@ -1823,6 +1905,7 @@ mobs:
     xp_reward: 542583
     gold_copper_min: 110464
     gold_copper_max: 276160
+    dungeon_only: true
     region_code: last_bastion
 
   - code: void_titan
@@ -1851,6 +1934,7 @@ mobs:
     xp_reward: 561788
     gold_copper_min: 114125
     gold_copper_max: 285312
+    dungeon_only: true
     region_code: last_bastion
 
   - code: doom_commander_morvath
@@ -1865,6 +1949,7 @@ mobs:
     xp_reward: 563723
     gold_copper_min: 114494
     gold_copper_max: 286235
+    dungeon_only: true
     region_code: last_bastion
 
   - code: ancient_golem
@@ -1893,6 +1978,7 @@ mobs:
     xp_reward: 581243
     gold_copper_min: 117827
     gold_copper_max: 294568
+    dungeon_only: true
     region_code: last_bastion
 
   - code: void_dragon
@@ -1921,6 +2007,7 @@ mobs:
     xp_reward: 600945
     gold_copper_min: 121567
     gold_copper_max: 303918
+    dungeon_only: true
     region_code: edge_of_eternity
 
   - code: eternal_mage
@@ -1949,6 +2036,7 @@ mobs:
     xp_reward: 612884
     gold_copper_min: 123830
     gold_copper_max: 309575
+    dungeon_only: true
     region_code: edge_of_eternity
 
   - code: god_shadow
@@ -1963,6 +2051,7 @@ mobs:
     xp_reward: 620892
     gold_copper_min: 125346
     gold_copper_max: 313365
+    dungeon_only: true
     region_code: edge_of_eternity
 
   - code: avatar_of_ruin

@@ -20,6 +20,7 @@ func TestShippedQuestsValidate(t *testing.T) {
 	require.NotEmpty(t, quests)
 	require.NoError(t, validateQuests(quests, refs{
 		mobs:     codeSet(mobs, func(m Mob) string { return m.Code }),
+		hunted:   huntedSet(mobs),
 		dungeons: codeSet(dungeons, func(d Dungeon) string { return d.Code }),
 		items:    codeSet(items, func(i Item) string { return i.Code }),
 	}))
@@ -33,7 +34,7 @@ func TestShippedQuestsValidate(t *testing.T) {
 }
 
 func TestValidateQuests_Rejects(t *testing.T) {
-	r := refs{mobs: map[string]bool{"grey_wolf": true}, dungeons: map[string]bool{"crypt": true}, items: map[string]bool{}}
+	r := refs{mobs: map[string]bool{"grey_wolf": true, "wave_rat": true}, hunted: map[string]bool{"grey_wolf": true}, dungeons: map[string]bool{"crypt": true}, items: map[string]bool{}}
 	ok := func() Quest {
 		return Quest{Code: "q", DisplayNameKey: "k", Category: "main", MinLevel: 1,
 			Objectives: []QuestObjective{{Event: "mob_killed:grey_wolf", Count: 3}}}
@@ -46,6 +47,7 @@ func TestValidateQuests_Rejects(t *testing.T) {
 		"no objectives": func(q *Quest) { q.Objectives = nil },
 		"count":         func(q *Quest) { q.Objectives[0].Count = 0 },
 		"unknown mob":   func(q *Quest) { q.Objectives[0].Event = "mob_killed:dragon" },
+		"dungeon wave":  func(q *Quest) { q.Objectives[0].Event = "mob_killed:wave_rat" },
 		"unknown kind":  func(q *Quest) { q.Objectives[0].Event = "player_killed" },
 		"bad gather":    func(q *Quest) { q.Objectives[0].Event = "gather_farming" },
 		"scoped gather": func(q *Quest) { q.Objectives[0].Event = "gather_mining:iron" },

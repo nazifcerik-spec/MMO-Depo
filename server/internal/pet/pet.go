@@ -202,7 +202,7 @@ func (s Species) AssistPct(level int) int {
 
 // CanHunt says whether a pet of the level may hunt the mob.
 func CanHunt(level int, mob combat.Mob) bool {
-	return !mob.RaidBoss && int(mob.Level) <= Power(level)+MobReach
+	return mob.Hunted() && int(mob.Level) <= Power(level)+MobReach
 }
 
 // AddXP adds xp to a pet at level/xp, rolling levels over; at the cap the
@@ -222,9 +222,10 @@ func AddXP(level int, xp, gain int64) (int, int64) {
 
 // Roll is a pet's hunt (the character hunt's pacing, DD-281): mob fought
 // back to back for budgetSecs, camping when wounded; each win is worth the
-// mob's level in pet XP (Result.TotalXP). Deterministic given its inputs.
+// mob's level in pet XP, up to the pet's power within the mob's ladder band
+// (DD-343) (Result.TotalXP). Deterministic given its inputs.
 func Roll(seed int64, s Species, level int, mob combat.Mob, budgetSecs int32,
 	rngNew func(int64) combat.RNG) *hunt.HuntResult {
-	mob.XPReward = int32(mob.Level)
+	mob.XPReward = int32(max(int(mob.Level), min(int(mob.Level)+combat.LadderStep-1, Power(level))))
 	return hunt.Roll(seed, s.Combatant(level), mob, budgetSecs, combat.DefaultMaxTurns, rngNew)
 }

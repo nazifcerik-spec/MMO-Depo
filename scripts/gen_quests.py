@@ -34,10 +34,15 @@ def world():
     return ns['ZONES']
 
 
-def xp_to_next(level):  # leveling: ceil((a + b·L^c) × baseline)
+def hunted(level):  # on the 20-level hunting ladder (gen_world, DD-343)
+    return level % 20 == 0
+
+
+def xp_to_next(level):  # leveling: ceil((a + b·L^c) × baseline × (1 + growth·(L−1)))
     with io.open(os.path.join(ROOT, 'progression.yaml'), encoding='utf-8') as f:
         c = yaml.safe_load(f)['xp_curve']
-    return math.ceil((c['a'] + c['b'] * level ** c['c']) * c['baseline_xp_per_minute'])
+    rate = c['baseline_xp_per_minute'] * (1 + c.get('rate_growth', 0) * (level - 1))
+    return math.ceil((c['a'] + c['b'] * level ** c['c']) * rate)
 
 
 def gold(level):  # ~25 kills' worth of mob gold (gen_world: 503·(L/25)^1.5 a mob)
@@ -56,11 +61,14 @@ def name_of(key):
 
 
 # (hunt mob, dungeon, level) links before the generated zones: levels 10-25
-# live in hand-written regions.
-LINKS = [('cultist_acolyte', 'shadowfen_ruins', 17), ('frost_giant', 'obsidian_spire', 23)]
+# live in hand-written regions. Kill objectives name hunted mobs only: the
+# 20-level ladder (DD-343); the zone's first one leads to its dungeon, its
+# last one carries the bounty.
+LINKS = [('shadow_stalker', 'shadowfen_ruins', 17), ('shadow_stalker', 'obsidian_spire', 23)]
 for z in sorted(world(), key=lambda z: z['dungeon']['level']):
-    LINKS.append((z['mobs'][0][0], z['dungeon']['code'], z['dungeon']['level']))
-BOUNTIES = [(z['mobs'][5][0], z['mobs'][5][1]) for z in world()]
+    ladder = [m for m in z['mobs'] if hunted(m[1])]
+    LINKS.append((ladder[0][0], z['dungeon']['code'], z['dungeon']['level']))
+BOUNTIES = [([m for m in z['mobs'] if hunted(m[1])][-1][:2]) for z in world()]
 
 out, names, prev, order = [], {lang: {} for lang in LANGS}, 'main_06_hollow', 70
 for i, (mob, dungeon, level) in enumerate(LINKS, start=7):

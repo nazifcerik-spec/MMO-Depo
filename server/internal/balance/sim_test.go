@@ -26,8 +26,8 @@ type world struct {
 	items    []contentpack.Item
 	mobs     []combat.Mob
 	dungeons []dungeon.Template
-	raids    []dungeon.Template // group dungeons (DD-261)
-	raidMobs map[string]combat.Mob
+	raids    []dungeon.Template    // group dungeons (DD-261)
+	raidMobs map[string]combat.Mob // not hunted: raid bosses and dungeon waves
 	skills   *classskill.Catalog
 }
 
@@ -68,11 +68,11 @@ func load(t *testing.T) *world {
 	for _, m := range p.Mobs {
 		w.mobs = append(w.mobs, combat.Mob{Code: m.Code, Level: m.Level, HPMax: m.HPMax, Attack: m.Attack,
 			Defense: m.Defense, CritPct: int32(m.CritPct), HitPct: int32(m.HitPct), EvasionPct: int32(m.EvasionPct),
-			XPReward: m.XPReward, GoldCopperMin: m.GoldCopperMin, GoldCopperMax: m.GoldCopperMax, RaidBoss: m.RaidBoss})
+			XPReward: m.XPReward, GoldCopperMin: m.GoldCopperMin, GoldCopperMax: m.GoldCopperMax, RaidBoss: m.RaidBoss, DungeonOnly: m.DungeonOnly})
 	}
 	w.raidMobs = map[string]combat.Mob{}
-	for i := 0; i < len(w.mobs); i++ { // raid bosses are not hunted (DD-261)
-		if w.mobs[i].RaidBoss {
+	for i := 0; i < len(w.mobs); i++ { // raid bosses and dungeon waves are not hunted (DD-261, DD-343)
+		if !w.mobs[i].Hunted() {
 			w.raidMobs[w.mobs[i].Code] = w.mobs[i]
 			w.mobs = append(w.mobs[:i], w.mobs[i+1:]...)
 			i--
@@ -374,7 +374,7 @@ func TestBalanceTargets(t *testing.T) {
 			require.LessOrEqual(t, kit.deathRate, 0.10, "%s L%d: an hour at %s with level gear must be safe", c, lv, m.Code)
 			// Common level gear levels within three times the curve's time;
 			// the mid-quality pace itself is TestHuntPace's (DD-281).
-			baseline := float64(character.XPToNext(lv)) / leveling.Current().Curve.BaselineXPPerMinute
+			baseline := float64(character.XPToNext(lv)) / leveling.Current().Curve.Rate(lv)
 			require.Greater(t, kit.minPerLevel, 0.0)
 			require.LessOrEqual(t, kit.minPerLevel, baseline*3, "%s L%d: minutes per level vs baseline", c, lv)
 			// Out-levelled mobs must be dangerous in the starting content.

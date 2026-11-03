@@ -366,10 +366,19 @@ RAIDS = [
 ]
 
 
+LADDER = 20  # hunted mobs stand this many levels apart (DD-343)
+
+
+def hunted(level):
+    return level % LADDER == 0
+
+
 def mob_yaml(code, level, arch, region=None):
     hm, am, dm, crit, eva = ARCH[arch]
     gold = round(503 * (level / 25) ** 1.5)
     raid = ['    raid_boss: true'] if arch.endswith('titan') else []
+    if not raid and not hunted(level):  # off the hunting ladder: a dungeon/raid wave (DD-343)
+        raid = ['    dungeon_only: true']
     return '\n'.join([
         '  - code: ' + code, '    display_name_key: mob.' + code, '    level: %d' % level,
         '    hp_max: %d' % round((150 + 25 * level) * hm), '    attack: %d' % round((28 + 2.1 * level) * am),

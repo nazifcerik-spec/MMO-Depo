@@ -107,9 +107,15 @@ type Template struct {
 }
 
 // BaseXP is what a full run pays at the dungeon's own level: the minutes of
-// fighting plus the boss bonus (DD-303). Each member's level scales it.
+// fighting plus the boss bonus (DD-303), both grown with the level's XP rate,
+// a solo dungeon's share of it (DD-343). Each member's level scales it.
 func (t *Template) BaseXP() int64 {
-	return int64(math.Round(leveling.Current().AFKCombatXPPerMinute*float64(t.DurationSecs)/60)) + int64(t.BonusXP)
+	cfg := leveling.Current()
+	xp := cfg.AFKRate(int(t.MinLevel))*float64(t.DurationSecs)/60 + float64(t.BonusXP)*cfg.Curve.Growth(int(t.MinLevel))
+	if !t.IsRaid() {
+		xp *= cfg.SoloDungeonXPFactor()
+	}
+	return int64(math.Round(xp))
 }
 
 // IsRaid reports whether the template is a raid (a group run, DD-261).

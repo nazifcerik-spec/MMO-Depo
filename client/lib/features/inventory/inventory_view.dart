@@ -86,13 +86,16 @@ class _InventoryViewState extends State<InventoryView> {
     await _load();
   }
 
+  int _gold = 0;
+
   Future<void> _load() async {
     try {
-      final r = await Future.wait<Object>([widget.repo.bag(), widget.repo.equipment()]);
+      final r = await Future.wait<Object>([widget.repo.bag(), widget.repo.equipment(), widget.repo.gold()]);
       if (mounted) {
         setState(() {
           _bag = r[0] as Bag;
           _equipped = r[1] as Map<String, EquippedItem>;
+          _gold = r[2] as int;
           _error = null;
           final ids = {for (final i in _bag!.items) i.instanceId};
           _selected.retainWhere(ids.contains);
@@ -537,13 +540,25 @@ class _InventoryViewState extends State<InventoryView> {
                       ],
                     ),
             ),
-            Text(
-              '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
-              style: text.bodySmall?.copyWith(
-                // Full bag (DD-246): buying, crafting and new runs are refused.
-                color: bag.weightGrams > bag.weightCapGrams || bag.slotsUsed >= bag.slotCap ? Palette.warning : null,
-                fontFeatures: numeric,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
+                    style: text.bodySmall?.copyWith(
+                      // Full bag (DD-246): buying, crafting and new runs are refused.
+                      color: bag.weightGrams > bag.weightCapGrams || bag.slotsUsed >= bag.slotCap
+                          ? Palette.warning
+                          : null,
+                      fontFeatures: numeric,
+                    ),
+                  ),
+                ),
+                Semantics(
+                  label: l.gold,
+                  child: GoldText(_gold, size: 14, key: const Key('bag-gold')),
+                ),
+              ],
             ),
             if (bag.items.any((i) => !i.wearable)) _WearLegend(),
             const SizedBox(height: Space.md),
