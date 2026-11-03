@@ -1,8 +1,8 @@
-"""Cut held items (weapons, shields) out of their icon's painted background
-for the full-body portrait (DD-344): region-grow the smooth blue-grey
+"""Cut equipment sprites out of their icon's painted background for the paper
+doll (DD-344, DD-347): region-grow the smooth blue-grey
 background from the border (the icons have a dark outline), then feather.
 
-    python scripts/held_cutout.py            # every mainhand/offhand icon
+    python scripts/held_cutout.py            # every icon of SLOTS
     python scripts/held_cutout.py CODE ...   # only these
 Writes client/assets/held/<code>.webp (RGBA).
 """
@@ -18,11 +18,55 @@ from PIL import Image, ImageFilter
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 ITEMS = os.path.join(ROOT, 'client', 'assets', 'items')
 OUT = os.path.join(ROOT, 'client', 'assets', 'held')
+SLOTS = ('mainhand', 'offhand', 'helm', 'gloves', 'necklace')  # the slots the paper doll draws
 STEP = 14  # largest colour step between neighbouring background pixels
 HOLE = 90  # brightness band (r+g+b) around the background's mean
 HOLE_TINT = 25  # blue over red that marks the background
 SIZE = 96  # shown at most this big in the portrait
+HOOD_STEP = 26  # colour step inside a hood's dark opening
+HOOD_LIGHTER = 40  # how much lighter than its middle the opening may get
 HOLE_MIN = 25  # pixels in a hole (smaller patches are shading on the item)
+
+
+def hood_codes():
+    """Cloth and leather headgear: hoods, whose opening must show the face."""
+    out = set()
+    with io.open(os.path.join(ROOT, 'content', 'gear.yaml'), encoding='utf-8') as fh:
+        for it in (yaml.safe_load(fh) or {}).get('items') or []:
+            if it.get('equip_slot') == 'helm' and it.get('item_subclass') in ('cloth_armor', 'leather_armor'):
+                out.add(it['code'])
+    return out
+
+
+def open_hood(im):
+    """Cuts the opening out: the region around the middle, stopped by the
+    hood's lighter rim and kept inside the frame's centre."""
+    w, h = im.size
+    px = im.convert('RGB').load()
+    start = (w // 2, int(h * 0.5))
+    limit = max(px[start]) + HOOD_LIGHTER
+    seen = {start}
+    q = collections.deque([start])
+    while q:
+        x, y = q.popleft()
+        c = px[x, y]
+        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if (nx, ny) in seen or abs(nx - w / 2) > w * 0.3 or not h * 0.2 < ny < h * 0.8:
+                continue
+            n = px[nx, ny]
+            if max(n) <= limit and sum(abs(c[i] - n[i]) for i in range(3)) <= HOOD_STEP:
+                seen.add((nx, ny))
+                q.append((nx, ny))
+    if not w * h * 0.03 <= len(seen) <= w * h * 0.2:  # not what an opening looks like
+        return im
+    mask = Image.new('L', (w, h), 255)
+    m = mask.load()
+    for x, y in seen:
+        m[x, y] = 0
+    mask = mask.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
+    out = im.copy()
+    out.putalpha(Image.composite(im.getchannel('A'), Image.new('L', (w, h), 0), mask))
+    return out
 
 
 def held_codes():
@@ -30,7 +74,7 @@ def held_codes():
     for f in ('items.yaml', 'gear.yaml', 'sets.yaml'):
         with io.open(os.path.join(ROOT, 'content', f), encoding='utf-8') as fh:
             for it in (yaml.safe_load(fh) or {}).get('items') or []:
-                if it.get('equip_slot') in ('mainhand', 'offhand'):
+                if it.get('equip_slot') in SLOTS:
                     out.append(it['code'])
     return out
 
@@ -99,11 +143,15 @@ def cutout(src):
 def main(codes):
     os.makedirs(OUT, exist_ok=True)
     done = 0
+    hoods = hood_codes()
     for code in codes:
         src = os.path.join(ITEMS, code + '.webp')
         if not os.path.exists(src):
             continue
-        cutout(src).resize((SIZE, SIZE), Image.LANCZOS).save(os.path.join(OUT, code + '.webp'), 'WEBP', quality=82)
+        im = cutout(src)
+        if code in hoods:
+            im = open_hood(im)
+        im.resize((SIZE, SIZE), Image.LANCZOS).save(os.path.join(OUT, code + '.webp'), 'WEBP', quality=82)
         done += 1
     print('held', done)
 

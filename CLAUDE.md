@@ -306,6 +306,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 144. **Karakter kişiselleştirme (bitti — yalnız insan)** — Sprint 144, DD-346. Migration 0064 (`face_id`, `hair_style_id`, `hair_color_id`, `eye_color_id`). `scripts/head_art.py` (krom yeşil/macenta anahtarlama, göz hizası) → `assets/heads/` (40 katman, 25 + 25 kombinasyon, 258 KB). `HeadLayers` + `AppearancePicker` (oluşturma + portre düğmesi), `POST /character/{id}/appearance` kısmi güncelleme; cinsiyet değişince yüz/saç sıfırlanır.
 
+145. **Paper doll + konum editörü (bitti — yalnız insan)** — Sprint 145, DD-347. `assets/paperdoll.json` (çapa + yuva < `<yuva>.<alt sınıf>` < eşya kuralları), `PaperDoll.layerOf`, `BodyPortrait` katman sırası. Editör: `python scripts/paperdoll_editor.py` → http://127.0.0.1:5175, JSON'a kaydeder. `scripts/held_cutout.py` silah, kalkan, miğfer/başlık (açıklık kesilir), eldiven, kolye (1355 sprite). Bacak, çizme, kumaş/deri eldiven için ayrı sprite bekleniyor.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

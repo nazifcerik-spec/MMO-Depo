@@ -8,6 +8,10 @@ import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
 import 'appearance_picker.dart';
 import 'models.dart';
+import 'paper_doll.dart';
+
+/// The head's place among the front layers: necklaces go under it, helms over.
+const headZ = 10;
 
 /// Level bands of the chest piece, one outfit each (scripts/body_art.py BANDS).
 const bodyBands = [1, 100, 300, 500, 700, 850];
@@ -31,8 +35,8 @@ String bodyOutfit(EquippedItem? chest) {
 
 /// The character drawn full-body (DD-344): race and body figure in the
 /// chest piece's outfit with the chosen head on it (DD-346), framed in its
-/// rarity, holding its own main-hand weapon and off-hand item. Races without
-/// figures yet show their portrait.
+/// rarity, wearing its equipment's sprites as paper doll layers (DD-347). Races
+/// without figures yet show their portrait.
 class BodyPortrait extends StatelessWidget {
   const BodyPortrait({
     super.key,
@@ -51,9 +55,6 @@ class BodyPortrait extends StatelessWidget {
   /// Opens the look editor; null hides the button.
   final VoidCallback? onEdit;
 
-  // Where the figure's hands are in the frame (scripts/body_art.py W x H).
-  static const _hand = Offset(0.24, 0.55);
-
   // Where the figure's eyes are in the frame, and how wide a head frame must
   // be to fit its head.
   static const _eyes = Offset(0.505, 0.122);
@@ -70,25 +71,48 @@ class BodyPortrait extends StatelessWidget {
     final frame = chest == null ? Palette.borderStrong : rarityColor(chest.rarity);
     final dpr = MediaQuery.devicePixelRatioOf(context);
 
-    Widget held(String? code, {required bool offhand}) {
-      final p = code == null ? null : ItemImages.heldPath(code);
-      if (p == null) return const SizedBox.shrink();
-      final size = width * (offhand ? 0.36 : 0.5);
-      final hand = Offset((offhand ? 1 - _hand.dx : _hand.dx) * width, _hand.dy * height);
-      // Icons lie diagonally, grip low-left: turned 45° the weapon stands
-      // upright with its grip at the bottom, held at the figure's right
-      // hand (the viewer's left). Off-hand items (shields) sit on the other.
+    // Equipment layers from the paper doll metadata (DD-347), under or over
+    // the figure, in z order. A missing sprite simply draws nothing.
+    final layers = [
+      if (figure != null)
+        for (final MapEntry(key: slot, value: item) in equipped.entries)
+          ?PaperDoll.current.layerOf(
+            equipmentId: item.templateCode,
+            slot: slot,
+            subclass: item.itemSubclass,
+            race: race,
+            body: body,
+          ),
+    ]..sort((a, b) => a.zIndex.compareTo(b.zIndex));
+    Widget sprite(DollLayer d, {bool mirror = false}) {
+      final size = d.scale * width;
+      final anchor = mirror ? d.mirrorAnchor! : d.anchor;
+      final side = mirror ? -1.0 : 1.0;
+      final pivotX = mirror ? 1 - d.pivot.dx : d.pivot.dx;
       return Positioned(
-        left: hand.dx - size / 2,
-        top: offhand ? hand.dy - size / 2 : hand.dy - size * 0.9,
+        key: ValueKey('doll-${d.slot}${mirror ? '-mirror' : ''}'),
+        left: (anchor.dx + side * d.offsetX) * width - pivotX * size,
+        top: (anchor.dy + d.offsetY) * height - d.pivot.dy * size,
         width: size,
         height: size,
         child: Transform.rotate(
-          angle: offhand ? 0 : -math.pi / 4,
-          child: Image.asset(p, cacheWidth: (size * dpr).round(), filterQuality: FilterQuality.medium),
+          angle: side * d.rotation * math.pi / 180,
+          alignment: Alignment(pivotX * 2 - 1, d.pivot.dy * 2 - 1),
+          child: Transform.flip(
+            flipX: d.flipX != mirror,
+            child: Image.asset(
+              d.avatarAsset,
+              cacheWidth: (size * dpr).round(),
+              filterQuality: FilterQuality.medium,
+              gaplessPlayback: true,
+              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            ),
+          ),
         ),
       );
     }
+
+    List<Widget> sprites(DollLayer d) => [sprite(d), if (d.mirrorAnchor != null) sprite(d, mirror: true)];
 
     final raceArt = ItemImages.racePath(race);
     return Semantics(
@@ -110,6 +134,8 @@ class BodyPortrait extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
+            for (final d in layers)
+              if (d.behind) ...sprites(d),
             if (figure != null)
               Positioned.fill(
                 child: Image.asset(
@@ -126,16 +152,21 @@ class BodyPortrait extends StatelessWidget {
               )
             else
               const Center(child: Icon(Icons.person, color: Palette.textMuted, size: 48)),
-            if (figure != null) ...[
-              if (customizableRaces.contains(race))
-                Positioned(
-                  left: _eyes.dx * width - width * _head / 2,
-                  top: _eyes.dy * height - width * _head / 2,
-                  child: HeadLayers(look: look, size: width * _head, onFigure: true),
+            for (final d in layers)
+              if (!d.behind && d.zIndex < headZ) ...sprites(d),
+            if (figure != null && customizableRaces.contains(race))
+              Positioned(
+                left: _eyes.dx * width - width * _head / 2,
+                top: _eyes.dy * height - width * _head / 2,
+                child: HeadLayers(
+                  look: look,
+                  size: width * _head,
+                  onFigure: true,
+                  hideHair: layers.any((d) => d.hidesHair),
                 ),
-              held(equipped['mainhand']?.templateCode, offhand: false),
-              held(equipped['offhand']?.templateCode, offhand: true),
-            ],
+              ),
+            for (final d in layers)
+              if (!d.behind && d.zIndex >= headZ) ...sprites(d),
             if (onEdit != null)
               Positioned(
                 right: 2,

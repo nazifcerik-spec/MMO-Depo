@@ -3400,6 +3400,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-347 — Paper doll: veriyle yönetilen ekipman katmanları + konum editörü
+
+**Context:** Kullanıcı taktığı ekipmanın gerçek görselinin avatarda doğru konum, ölçek, açı ve katmanda görünmesini, konumların koda gömülmemesini ve geliştirme ortamında bir editörle ayarlanmasını istedi. DD-344'te yalnız silah/kalkan vardı ve yerleşimleri koddaydı. İstenen 'Altın Savaş Baltası' adlı eşya içerikte yok; altın görünümlü en yakın eşya `axe_sunforged` (Güneş Dövme Balta).
+**Decision:** `client/assets/paperdoll.json`: `anchors` (çapa noktaları), `anchorOverrides` (`<ırk>_<vücut>` / `<vücut>`), kurallar `slots` < `subclasses` (`<yuva>.<alt sınıf>`) < `items`; alanlar `avatarAsset` (`{id}`), `anchorPoint`, `pivot`, `offsetX/Y`, `scale`, `rotation`, `zIndex`, `renderingLayer` (front/back/none), `flipX`, `hidesHair`, `mirrorAt`. `PaperDoll.layerOf` kuralı çözer; kuralsız, `none` ya da bilinmeyen çapada katman yok; bozuk dosya yalnız katmanları gizler, eksik görsel `errorBuilder` ile çizilmez. `BodyPortrait` katmanları z sırasıyla çizer (arka < figür < z<10 < kafa < z≥10). Görsel bulma envanter ikonuna düşmez; sprite'lar ikonlardan arka planı silinerek üretilir (`scripts/held_cutout.py`, 1355 dosya), başlıklıların açıklığı da kesilir ki yüz görünsün. Editör `python scripts/paperdoll_editor.py` (yalnız 127.0.0.1, stdlib + yaml, kayıt öncesi doğrulama, atomik yazım): figür + yuva başına eşya seçimi, canlı önizleme, sürükleme, X/Y/ölçek/açı/tutma noktası/z/katman/çift, kapsam eşya/tür/yuva. İlk entegrasyon `axe_sunforged` sağ elde; ardından silah türleri, kalkan, miğfer + başlık (saçı gizler), kolye, plaka eldiven (iki ele aynalı). Göğüs zırhı figür kıyafetini değiştirmeye devam eder (DD-344).
+**Consequences:** Çizilmeyenler: bacak ve çizme (ikon iki parçayı önden gösteriyor, vücuda oturmuyor, `renderingLayer: none`), kumaş/deri eldiven (ikonda çift eldiven), yüzük ve tılsım (figürde görünmez). Bunlar için önden, tek parça, şeffaf sprite gerekir; `avatarAsset` ile kod değişmeden bağlanır. Metadata bir asset olduğundan oyuna sonraki derlemeyle girer. Yalnız insan figürü var. APK sprite'larla yaklaşık 3 MB büyür. Testler: `paper_doll_test.dart` (öncelik, çapa, eksik görsel, bozuk dosya, tak/çıkar, çoklu katman, tüm içerik sprite'lı ya da bilerek çizilmiyor).
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

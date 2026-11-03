@@ -1,0 +1,205 @@
+{
+  "anchors": {
+    "right_hand": [
+      0.24,
+      0.55
+    ],
+    "left_hand": [
+      0.76,
+      0.55
+    ],
+    "head": [
+      0.505,
+      0.11
+    ],
+    "neck": [
+      0.505,
+      0.195
+    ]
+  },
+  "anchorOverrides": {},
+  "slots": {
+    "mainhand": {
+      "avatarAsset": "assets/held/{id}.webp",
+      "anchorPoint": "right_hand",
+      "pivot": [
+        0.22,
+        0.78
+      ],
+      "scale": 0.5,
+      "rotation": -45,
+      "zIndex": 30,
+      "renderingLayer": "front"
+    },
+    "offhand": {
+      "avatarAsset": "assets/held/{id}.webp",
+      "anchorPoint": "left_hand",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": 0.36,
+      "rotation": 0,
+      "zIndex": 31,
+      "renderingLayer": "front"
+    },
+    "helm": {
+      "avatarAsset": "assets/held/{id}.webp",
+      "anchorPoint": "head",
+      "pivot": [
+        0.5,
+        0.56
+      ],
+      "scale": 0.25,
+      "rotation": 0,
+      "zIndex": 20,
+      "renderingLayer": "front",
+      "hidesHair": true
+    },
+    "necklace": {
+      "avatarAsset": "assets/held/{id}.webp",
+      "anchorPoint": "neck",
+      "pivot": [
+        0.5,
+        0.3
+      ],
+      "scale": 0.16,
+      "rotation": 0,
+      "zIndex": 5,
+      "renderingLayer": "front"
+    },
+    "gloves": {
+      "avatarAsset": "assets/held/{id}.webp",
+      "anchorPoint": "left_hand",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": 0.16,
+      "rotation": 0,
+      "zIndex": 15,
+      "renderingLayer": "front",
+      "mirrorAt": "right_hand"
+    },
+    "legs": {
+      "renderingLayer": "none"
+    },
+    "boots": {
+      "renderingLayer": "none"
+    }
+  },
+  "subclasses": {
+    "mainhand.dagger": {
+      "scale": 0.34
+    },
+    "mainhand.short_sword": {
+      "scale": 0.4
+    },
+    "mainhand.wand": {
+      "scale": 0.42
+    },
+    "mainhand.sickle": {
+      "scale": 0.36,
+      "pivot": [
+        0.15,
+        0.85
+      ]
+    },
+    "mainhand.two_handed_mace": {
+      "scale": 0.6,
+      "pivot": [
+        0.25,
+        0.75
+      ]
+    },
+    "mainhand.staff": {
+      "scale": 0.78,
+      "pivot": [
+        0.35,
+        0.65
+      ]
+    },
+    "mainhand.nature_focus": {
+      "scale": 0.5,
+      "pivot": [
+        0.25,
+        0.8
+      ]
+    },
+    "mainhand.bow": {
+      "scale": 0.62,
+      "pivot": [
+        0.55,
+        0.45
+      ]
+    },
+    "mainhand.crossbow": {
+      "scale": 0.46,
+      "pivot": [
+        0.4,
+        0.65
+      ]
+    },
+    "mainhand.holy_tome": {
+      "scale": 0.26,
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotation": 0
+    },
+    "mainhand.lute": {
+      "scale": 0.42,
+      "pivot": [
+        0.35,
+        0.65
+      ],
+      "rotation": -20
+    },
+    "mainhand.totem_focus": {
+      "scale": 0.34,
+      "pivot": [
+        0.5,
+        0.85
+      ],
+      "rotation": 0
+    },
+    "mainhand.fist_weapon": {
+      "scale": 0.2,
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotation": 0,
+      "mirrorAt": "left_hand"
+    },
+    "mainhand.tonfa": {
+      "scale": 0.36,
+      "pivot": [
+        0.35,
+        0.65
+      ]
+    },
+    "helm.cloth_armor": {
+      "scale": 0.44,
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    "helm.leather_armor": {
+      "scale": 0.44,
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    "gloves.cloth_armor": {
+      "renderingLayer": "none"
+    },
+    "gloves.leather_armor": {
+      "renderingLayer": "none"
+    }
+  },
+  "items": {}
+}

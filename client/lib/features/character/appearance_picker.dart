@@ -19,11 +19,14 @@ const customizableRaces = {'human'};
 /// A character's head from its separate layers: face, brows, irises, hair.
 /// [onFigure] hides the bust's neck and clothes for the full-body portrait.
 class HeadLayers extends StatelessWidget {
-  const HeadLayers({super.key, required this.look, required this.size, this.onFigure = false});
+  const HeadLayers({super.key, required this.look, required this.size, this.onFigure = false, this.hideHair = false});
 
   final Appearance look;
   final double size;
   final bool onFigure;
+
+  /// A helm or hood is worn instead of the hair (DD-347).
+  final bool hideHair;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +69,8 @@ class HeadLayers extends StatelessWidget {
           if (onFigure) fading(base, 0.76, 0.84) else base,
           layer('${face}_brows', tint: hair),
           layer('${face}_eyes', tint: eyes),
-          if (onFigure) fading(top, 0.9, 1) else top,
+          if (!hideHair)
+            if (onFigure) fading(top, 0.9, 1) else top,
         ],
       ),
     );

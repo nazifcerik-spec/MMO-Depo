@@ -15,14 +15,12 @@ class ItemImages {
   static Map<String, String> _classes = const {};
   static Map<String, String> _races = const {};
   static Map<String, String> _bodies = const {};
-  static Map<String, String> _held = const {};
 
   static const _dir = 'assets/items/';
   static const _animalDir = 'assets/animals/';
   static const _classDir = 'assets/classes/';
   static const _raceDir = 'assets/races/';
   static const _bodyDir = 'assets/bodies/';
-  static const _heldDir = 'assets/held/';
 
   static Future<void> load([AssetBundle? bundle]) async {
     try {
@@ -37,14 +35,12 @@ class ItemImages {
       _classes = under(_classDir);
       _races = under(_raceDir);
       _bodies = under(_bodyDir);
-      _held = under(_heldDir);
     } catch (_) {
       _codes = const {}; // no art is a valid state: icons everywhere
       _animals = const {};
       _classes = const {};
       _races = const {};
       _bodies = const {};
-      _held = const {};
     }
   }
 
@@ -58,9 +54,6 @@ class ItemImages {
 
   /// Full-body portrait `<race>_<body>_<outfit>` (DD-344).
   static String? bodyPath(String key) => _bodies[key];
-
-  /// A weapon or shield cut out for the portrait's hands (DD-344).
-  static String? heldPath(String code) => _held[code];
 
   @visibleForTesting
   static set bodies(Set<String> b) => _bodies = {for (final x in b) x: '$_bodyDir$x.webp'};
