@@ -19,6 +19,8 @@ func TestHTTPPets(t *testing.T) {
 	species := p.ok("GET", "/v1/pets", nil)["species"].([]any)
 	require.Len(t, species, 50)
 	require.Equal(t, "chaos_hydra", species[0].(map[string]any)["code"], "best first")
+	require.Equal(t, "chaos", species[0].(map[string]any)["element"], "the pet index's element (DD-342)")
+	require.Empty(t, p.ok("GET", p.path("/pets"), nil)["discovered"], "nothing discovered yet")
 
 	w.give(me, "pet_egg_chaos_hydra", 2)
 	got := p.ok("GET", p.path("/pets"), nil)
@@ -28,6 +30,8 @@ func TestHTTPPets(t *testing.T) {
 	egg := eggs[0].(map[string]any)
 	require.Equal(t, "chaos_hydra", egg["species"])
 	require.EqualValues(t, 2, egg["quantity"])
+	require.Equal(t, []any{"chaos_hydra"}, got["discovered"], "holding its egg discovers the species")
+	require.EqualValues(t, 20, got["max_eggs"])
 
 	// Hatching takes one egg; the pet is in it for a day.
 	pt := p.ok("POST", p.path("/pets/hatch"), map[string]any{"item_id": egg["item_id"]})["pet"].(map[string]any)

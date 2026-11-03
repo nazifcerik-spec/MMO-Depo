@@ -166,6 +166,39 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) ([]Pet, []E
 	return pets, eggs, rows.Err()
 }
 
+// Discovered records the species of the pets and eggs a character holds as
+// seen and returns every species it has ever held (the pet index, DD-342).
+func (s *Service) Discovered(ctx context.Context, char uuid.UUID, pets []Pet, eggs []Egg) ([]string, error) {
+	seen := make([]string, 0, len(pets)+len(eggs))
+	for _, p := range pets {
+		seen = append(seen, p.Species)
+	}
+	for _, e := range eggs {
+		seen = append(seen, e.Species)
+	}
+	if len(seen) > 0 {
+		if _, err := s.pool.Exec(ctx, `INSERT INTO pet.discovery (character_id, species_code)
+			SELECT $1, unnest($2::text[]) ON CONFLICT DO NOTHING`, char, seen); err != nil {
+			return nil, err
+		}
+	}
+	rows, err := s.pool.Query(ctx, `SELECT species_code FROM pet.discovery WHERE character_id = $1
+		ORDER BY species_code`, char)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	out := []string{}
+	for rows.Next() {
+		var code string
+		if err := rows.Scan(&code); err != nil {
+			return nil, err
+		}
+		out = append(out, code)
+	}
+	return out, rows.Err()
+}
+
 // Hatch puts one egg of the bag stack in the incubator: the egg is used and
 // the pet comes out after its species' hatch time.
 func (s *Service) Hatch(ctx context.Context, char, account, itemID uuid.UUID) (*Pet, error) {

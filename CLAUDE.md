@@ -294,6 +294,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 139. **Yüce iksirler kalktı + pet savaş desteği (bitti)** — Sprint 139, DD-341. Migration 0060 (yüce tarifler silinir, eldekiler dev kademeye döner); iksir kademeleri Sv 1/210/410/610/810. Aktif pet her vuruşa %3–15 hasar ekler (`pet_assist_pct` sheet → combatant). Tüm petler → `PetSpeciesSheet` (evrim, güç, nasıl bulunur).
 
+140. **Pet çantaları + Pet İndeksi (bitti)** — Sprint 140, DD-342. Migration 0061 `pet.discovery`. `scripts/pet_lore.py` (element, canlı, habitat, hikâye × 4 dil). Petler ekranı: 20'lik yumurta + 50'lik pet çantası, pet kartı alt pencerede, Pet İndeksi (keşfedilmeyen '???') → detay sayfası (Hakkında, güç, evrim, nereden elde edilir).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

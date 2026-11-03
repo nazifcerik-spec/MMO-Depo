@@ -22,7 +22,7 @@ func species() []Species {
 		out[i] = Species{
 			Code: fmt.Sprintf("s%02d", i+1), Rank: i + 1, MinMobLevel: 400 + 12*(i+1),
 			EggPct: 50 * math.Pow(2.0/50, t), HatchSeconds: 3600, PowerPct: 200 + i,
-			Bonus: Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03 + 0.09*t},
+			Bonus: Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03 + 0.09*t}, Element: "fire",
 		}
 	}
 	return out

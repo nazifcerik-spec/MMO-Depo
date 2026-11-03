@@ -105,7 +105,7 @@ func TestMemberReward(t *testing.T) {
 // below that, none.
 func TestMemberRewardPetEgg(t *testing.T) {
 	require.NoError(t, pet.Install([]pet.Species{{Code: "fox", Rank: 1, MinMobLevel: 430, EggPct: 50, HatchSeconds: 3600,
-		PowerPct: 200, Bonus: pet.Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03}}}))
+		PowerPct: 200, Bonus: pet.Modifier{Kind: "mult_add", Target: "attack", Amount: 0.03}, Element: "fire"}}))
 	t.Cleanup(func() { _ = pet.Install(nil) })
 	res := Roll(42, []combat.Combatant{hero(800, 60), hero(600, 70), hero(500, 80)}, testRaid, testMobs, rng)
 	require.True(t, res.BossKilled)

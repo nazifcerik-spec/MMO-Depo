@@ -3371,7 +3371,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get petEvolution => '进化';
 
   @override
-  String get petStrength => '实力';
+  String get petStrength => '实力详情';
 
   @override
   String petAssistRange(int min, int max) {
@@ -3389,7 +3389,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get petFind => '获取方式';
+  String get petFind => '获取途径';
 
   @override
   String petFindLine(int level, String pct) {
@@ -3408,4 +3408,74 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get petLevelNote => '1 级至 100 级';
+
+  @override
+  String get petIndex => '宠物图鉴';
+
+  @override
+  String petIndexCount(int n, int max) {
+    return '已发现 $n / $max';
+  }
+
+  @override
+  String slotCount(int n, int max) {
+    return '$n / $max';
+  }
+
+  @override
+  String get petEggTapHint => '点击蛋即可孵化。';
+
+  @override
+  String get petTapHint => '点击宠物查看详情 · 绿点表示出战宠物。';
+
+  @override
+  String get petIndexHint => '点击宠物打开其页面。';
+
+  @override
+  String get petUnknown => '尚未发现';
+
+  @override
+  String get petAbout => '简介';
+
+  @override
+  String get petHabitat => '栖息地';
+
+  @override
+  String petElement(String name) {
+    return '元素：$name';
+  }
+
+  @override
+  String get petStage1 => '幼年';
+
+  @override
+  String get petStage2 => '成长';
+
+  @override
+  String get petStage3 => '成年';
+
+  @override
+  String petSourceRaid(String name) {
+    return '团队副本：$name';
+  }
+
+  @override
+  String petSourceBoss(String name, int level) {
+    return '首领：$name · $level级';
+  }
+
+  @override
+  String petSourceRegion(String name) {
+    return '区域：$name';
+  }
+
+  @override
+  String petSourceChance(String pct) {
+    return '几率：$pct%';
+  }
+
+  @override
+  String petSourceHatch(String time) {
+    return '孵化：$time';
+  }
 }

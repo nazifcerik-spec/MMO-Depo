@@ -56,6 +56,7 @@ class FakeBackend {
   /// Pets and eggs (DD-328).
   final pets = <Map<String, dynamic>>[];
   final petEggs = <Map<String, dynamic>>[];
+  final petsSeen = <String>{}; // the pet index's discovered species (DD-342)
   int dailyClaims = 0;
   int gatherLevel = 20;
 
@@ -295,6 +296,7 @@ class FakeBackend {
             'egg_pct': 2,
             'hatch_seconds': 86400,
             'bonus': {'kind': 'mult_add', 'target': 'defense', 'amount': 0.12},
+            'element': 'chaos',
           },
           {
             'code': 'ember_fox',
@@ -306,6 +308,7 @@ class FakeBackend {
             'bonus_min': {'kind': 'mult_add', 'target': 'attack', 'amount': 0.0075},
             'assist_min': 3,
             'assist_max': 12,
+            'element': 'fire',
           },
         ],
         'max_level': 100,
@@ -349,7 +352,14 @@ class FakeBackend {
           ..['level'] = 2;
         return json(200, {'victories': 80, 'xp': 1200, 'died': false, 'leveled_up': true, 'pet': p});
       }
-      return json(200, {'pets': pets, 'eggs': petEggs, 'max_pets': 50});
+      petsSeen.addAll([for (final p in pets) p['species'] as String, for (final e in petEggs) e['species'] as String]);
+      return json(200, {
+        'pets': pets,
+        'eggs': petEggs,
+        'max_pets': 50,
+        'max_eggs': 20,
+        'discovered': petsSeen.toList(),
+      });
     }
     if (path.startsWith('/v1/character/char-1/helpers')) {
       final code = path.split('/').reversed.elementAt(1);

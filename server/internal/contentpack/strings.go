@@ -159,7 +159,8 @@ func validateStrings(s *Strings, p *Pack) error {
 		add("itemset", x.Code)
 	}
 	for _, x := range p.Pets {
-		add("pet", x.Code)
+		add("pet", x.Code, x.Code+".creature", x.Code+".habitat", x.Code+".story") // pet index (DD-342)
+		add("element", x.Element)
 	}
 	for _, x := range p.Story {
 		add("story", x.Code, x.Code+".body") // title and text (DD-313)

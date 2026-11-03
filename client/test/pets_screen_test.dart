@@ -26,12 +26,35 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('egg-pet_egg_ember_fox')), findsOneWidget);
 
-    await tester.tap(find.text('Incubate'));
+    expect(find.text('1 / 20'), findsOneWidget, reason: 'a 20-slot egg bag (DD-342)');
+    await tester.tap(find.byKey(const Key('egg-pet_egg_ember_fox')));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Incubate').last);
     await tester.pumpAndSettle();
+    // A bag cell opens the pet's card.
+    Future<void> openPet() async {
+      // Back to the top, then down to the pet bag.
+      await tester.drag(find.byType(ListView).first, const Offset(0, 5000));
+      await tester.pumpAndSettle();
+      await tester.dragUntilVisible(
+        find.byKey(const Key('pet-cell-pet-1')),
+        find.byType(ListView).first,
+        const Offset(0, -150),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('pet-cell-pet-1')));
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> closeSheet() async {
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+    }
+
+    await openPet();
     expect(find.textContaining('In its egg'), findsOneWidget);
     expect(find.text('Send hunting'), findsNothing, reason: 'not hatched yet');
+    await closeSheet();
 
     be.pets.first['hatch_ready_at'] = DateTime.now().toUtc().subtract(const Duration(seconds: 1)).toIso8601String();
     // Hatched: open the screen again.
@@ -48,20 +71,26 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await openPet();
     await tester.tap(find.text('Make active'));
     await tester.pumpAndSettle();
     expect(be.pets.first['active'], isTrue);
+    await openPet();
     expect(find.text('Active'), findsOneWidget);
     expect(find.text('Combat assist: +3% damage'), findsOneWidget, reason: 'the active pet fights alongside (DD-341)');
+    await closeSheet();
 
-    // The guide opens a species card: evolution, strength, where to find it.
-    await tester.tap(find.text('All pets'));
-    await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
+    // The pet index (DD-342): discovered species by name, the rest hidden;
+    // a tile opens the species page.
+    await tester.dragUntilVisible(
       find.byKey(const Key('pet-guide-ember_fox')),
-      200,
-      scrollable: find.byType(Scrollable).first,
+      find.byType(ListView).first,
+      const Offset(0, -300),
     );
+    await tester.pumpAndSettle();
+    expect(find.text('Pet Index'), findsOneWidget);
+    expect(find.text('1 / 2 discovered'), findsOneWidget);
+    expect(find.text('???'), findsOneWidget, reason: 'the kirin is not discovered');
     await tester.tap(find.byKey(const Key('pet-guide-ember_fox')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('pet-species-sheet')), findsOneWidget);
@@ -71,6 +100,9 @@ void main() {
       'Combat assist: +3% – +12% damage on every hit',
       'Hunts like a level 10 – 1000 monster',
       'Raid bosses of level 430+ · 50% chance',
+      'Hatchling',
+      'Chance: 50%',
+      'Where to get it',
     ]) {
       expect(find.text(t), findsOneWidget, reason: t);
     }
@@ -78,6 +110,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Only monsters within its power (level 10 + 5) are offered.
+    await openPet();
     await tester.tap(find.text('Send hunting'));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('pet-mob-giant_rat')), findsOneWidget);
@@ -86,6 +119,7 @@ void main() {
     await tester.pumpAndSettle();
     expect((be.pets.first['hunt'] as Map)['mob_code'], 'giant_rat');
 
+    await openPet();
     await tester.tap(find.widgetWithText(FilledButton, 'Collect'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Collect').last); // early: confirm

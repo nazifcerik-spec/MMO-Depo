@@ -3384,7 +3384,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get petEvolution => 'Evolución';
 
   @override
-  String get petStrength => 'Fuerza';
+  String get petStrength => 'Detalles de fuerza';
 
   @override
   String petAssistRange(int min, int max) {
@@ -3402,7 +3402,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get petFind => 'Cómo conseguirlo';
+  String get petFind => 'Dónde conseguirla';
 
   @override
   String petFindLine(int level, String pct) {
@@ -3421,4 +3421,74 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get petLevelNote => 'Del nivel 1 al 100';
+
+  @override
+  String get petIndex => 'Índice de mascotas';
+
+  @override
+  String petIndexCount(int n, int max) {
+    return '$n / $max descubiertas';
+  }
+
+  @override
+  String slotCount(int n, int max) {
+    return '$n / $max';
+  }
+
+  @override
+  String get petEggTapHint => 'Toca un huevo para incubarlo.';
+
+  @override
+  String get petTapHint => 'Toca una mascota para verla · el punto verde marca la activa.';
+
+  @override
+  String get petIndexHint => 'Toca una mascota para abrir su página.';
+
+  @override
+  String get petUnknown => 'Aún no descubierta';
+
+  @override
+  String get petAbout => 'Acerca de';
+
+  @override
+  String get petHabitat => 'Hábitat';
+
+  @override
+  String petElement(String name) {
+    return 'Elemento: $name';
+  }
+
+  @override
+  String get petStage1 => 'Cría';
+
+  @override
+  String get petStage2 => 'Joven';
+
+  @override
+  String get petStage3 => 'Adulta';
+
+  @override
+  String petSourceRaid(String name) {
+    return 'Incursión: $name';
+  }
+
+  @override
+  String petSourceBoss(String name, int level) {
+    return 'Jefe: $name · Nv $level';
+  }
+
+  @override
+  String petSourceRegion(String name) {
+    return 'Región: $name';
+  }
+
+  @override
+  String petSourceChance(String pct) {
+    return 'Probabilidad: $pct%';
+  }
+
+  @override
+  String petSourceHatch(String time) {
+    return 'Eclosión: $time';
+  }
 }

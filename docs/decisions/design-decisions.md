@@ -3346,6 +3346,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-342 — Pet çantaları + Pet İndeksi
+
+**Context:** Petler ekranı yumurtaları ve petleri uzun kart listeleri olarak gösteriyordu; 'Tüm petler' yalnız sınırlı bir pencere açıyordu, petlerin element/habitat/hikâyesi yoktu ve oyuncunun hangi türleri gördüğü tutulmuyordu. Onaylanan taslak (çanta ızgaraları + indeks + detay sayfası) uygulandı.
+**Decision:** İçerik: `scripts/pet_lore.py` (21 element adı, 50 tür için canlı türü, habitat ve kısa hikâye; en/tr/zh-CN/es; element ve canlı türü pet tasarım Excel'inden) → `gen_pets.py` türlere `element` yazar, i18n `element.<kod>`, `pet.<kod>.{creature,habitat,story}`; contentpack bunları zorunlu tutar, `pet.New` elementi doğrular. Sunucu: migration 0061 `pet.discovery` (karakter + tür, mevcut petlerden tohumlanır); `pet.Service.Discovered` pet ekranı listelenirken eldeki pet ve yumurta türlerini kaydeder (sonradan satılan yumurta keşifli kalır); `/character/{id}/pets` `discovered` + `max_eggs` (20). İstemci: açıklama iki yana yaslı; Yumurtalar 20, Petlerim 50 hücrelik 5 sütunlu çanta (nadirlik çerçevesi, adet/seviye rozeti, aktif yeşil nokta, kuluçka/av durumu ikonu); yumurtaya dokun → kuluçka, pete dokun → alt pencerede pet kartı; Pet İndeksi 4 sütun, rank sırasıyla #01–#50, keşfedilmeyen tür '?' + '???'; dokun → `PetSpeciesSheet`: büyük görsel, ad, nadirlik/element/canlı çipleri, Hakkında (iki yana yaslı hikâye + habitat), güç detayları (Sv 1–100), evrim (Yumurta/Yavru/Genç/Usta + seviye bantları), Nereden elde edilir etiketleri (yumurta eşya etiketlerinden baskın + boss + bölge, şans, kuluçka). Keşfedilmeyen türde ad, hikâye ve görseller gizli; nereden bulunacağı görünür.
+**Consequences:** Yumurta çantası 20 hücre gösterir, sert sınır değildir (her tür tek yığın; taşarsa satır eklenir). Testler: entegrasyon pet akışı (`element`, `discovered`, `max_eggs`), istemci pet ekranı (çanta, kart, indeks, detay).
+**Tarih:** 2026-11-03
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

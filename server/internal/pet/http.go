@@ -66,7 +66,13 @@ func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, r, err)
 		return
 	}
-	apierr.WriteJSON(w, http.StatusOK, map[string]any{"pets": pets, "eggs": eggs, "max_pets": MaxPets})
+	discovered, err := h.svc.Discovered(r.Context(), char, pets, eggs)
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"pets": pets, "eggs": eggs, "max_pets": MaxPets,
+		"max_eggs": MaxEggSlots, "discovered": discovered})
 }
 
 func (h *Handler) hatch(w http.ResponseWriter, r *http.Request) {

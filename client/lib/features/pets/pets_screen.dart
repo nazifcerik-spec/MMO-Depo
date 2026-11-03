@@ -14,6 +14,7 @@ import '../adventure/adventure_models.dart';
 import '../adventure/adventure_repository.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
+import '../inventory/item_tags.dart';
 import '../inventory/item_widgets.dart';
 import 'pet_species_sheet.dart';
 
@@ -29,6 +30,7 @@ class PetSpecies {
     this.bonusMin,
     this.assistMin = 0,
     this.assistMax = 0,
+    this.element = '',
   });
 
   factory PetSpecies.fromJson(Map<String, dynamic> j) => PetSpecies(
@@ -41,6 +43,7 @@ class PetSpecies {
     bonusMin: j['bonus_min'] == null ? null : _bonus(j['bonus_min'] as Map<String, dynamic>),
     assistMin: (j['assist_min'] as num?)?.toInt() ?? 0,
     assistMax: (j['assist_max'] as num?)?.toInt() ?? 0,
+    element: j['element'] as String? ?? '',
   );
 
   final String code;
@@ -54,6 +57,9 @@ class PetSpecies {
   /// The damage share it adds to its owner's hits while active, at level 1
   /// and level 100 (DD-341).
   final int assistMin, assistMax;
+
+  /// The pet index's element code (DD-342); named by element.<code>.
+  final String element;
 
   /// The egg odds as shown: whole percents without decimals.
   String get eggPctText => eggPct == eggPct.roundToDouble() ? '${eggPct.toInt()}' : eggPct.toStringAsFixed(2);
@@ -177,6 +183,10 @@ class PetHuntResult {
   final Pet pet;
 }
 
+/// The character's pets and eggs, the bag sizes and the species it has
+/// discovered (DD-342).
+typedef PetList = ({List<Pet> pets, List<PetEgg> eggs, int maxPets, int maxEggs, Set<String> discovered});
+
 class PetRepository {
   PetRepository(this.api, this.characterId);
 
@@ -203,12 +213,14 @@ class PetRepository {
     ];
   }
 
-  Future<(List<Pet>, List<PetEgg>, int)> list() async {
+  Future<PetList> list() async {
     final j = await api.get(_base);
     return (
-      [for (final p in (j['pets'] as List? ?? const []).cast<Map<String, dynamic>>()) Pet.fromJson(p)],
-      [for (final e in (j['eggs'] as List? ?? const []).cast<Map<String, dynamic>>()) PetEgg.fromJson(e)],
-      (j['max_pets'] as num?)?.toInt() ?? 50,
+      pets: [for (final p in (j['pets'] as List? ?? const []).cast<Map<String, dynamic>>()) Pet.fromJson(p)],
+      eggs: [for (final e in (j['eggs'] as List? ?? const []).cast<Map<String, dynamic>>()) PetEgg.fromJson(e)],
+      maxPets: (j['max_pets'] as num?)?.toInt() ?? 50,
+      maxEggs: (j['max_eggs'] as num?)?.toInt() ?? 20,
+      discovered: {for (final c in (j['discovered'] as List? ?? const [])) c as String},
     );
   }
 
@@ -247,8 +259,8 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
   List<PetSpecies> _species = const [];
   List<Pet> _pets = const [];
   List<PetEgg> _eggs = const [];
-  int _max = 50;
-  bool _guide = false;
+  int _max = 50, _maxEggs = 20;
+  Set<String> _discovered = const {};
 
   /// Refreshes the time-left lines; hatches and hunts run for hours.
   Timer? _clock;
@@ -269,11 +281,54 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
   @override
   Future<void> fetch() async {
     _species = await widget.repo.species();
-    final (pets, eggs, max) = await widget.repo.list();
-    _pets = pets;
-    _eggs = eggs;
-    _max = max;
+    final got = await widget.repo.list();
+    _pets = got.pets;
+    _eggs = got.eggs;
+    _max = got.maxPets;
+    _maxEggs = got.maxEggs;
+    _discovered = got.discovered;
   }
+
+  /// A pet's card in a bottom sheet; its buttons close the sheet, then act.
+  Future<void> _openPet(Pet p) async {
+    final action = await showModalBottomSheet<Future<void> Function()>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: Palette.bgSurface,
+      builder: (c) => SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(Space.screen, 0, Space.screen, Space.screen),
+          child: _PetCard(
+            key: Key('pet-${p.id}'),
+            pet: p,
+            onActive: () => Navigator.pop(c, () => _act(() => widget.repo.setActive(p.id, !p.active))),
+            onHunt: () => Navigator.pop(c, () => _hunt(p)),
+            onCollect: () => Navigator.pop(c, () => _collect(p)),
+          ),
+        ),
+      ),
+    );
+    if (action != null && mounted) await action();
+  }
+
+  /// The raids whose boss can drop the species' egg, from its item tags.
+  Future<List<PetEggSource>> _sources(PetSpecies s) async {
+    final info = await ItemInfo.load(widget.repo.api, 'pet_egg_${s.code}');
+    final raids = {for (final r in await widget.adventure.raids()) r.dungeon.code: r.dungeon};
+    return [
+      for (final d in info?.dungeons ?? const <({String code, bool raid})>[])
+        if (raids[d.code] case final r?) (raid: r.code, boss: r.bossMobCode, level: r.minLevel, region: r.regionCode),
+    ];
+  }
+
+  void _openSpecies(PetSpecies s) => showPetSpecies(
+    context,
+    s,
+    powerPerLevel: widget.repo.powerPerLevel,
+    discovered: _discovered.contains(s.code),
+    sources: _sources(s),
+  );
 
   PetSpecies? _of(String code) => _species.where((s) => s.code == code).firstOrNull;
 
@@ -344,76 +399,220 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
       appBar: AppBar(title: Text(l.petsOpen)),
       body: SafeArea(
         child: PageFrame(
-          child: frame(
-            () => [
-              Text(l.petsHint, style: text.bodySmall),
-              const SizedBox(height: Space.lg),
-              Text(l.petsEggs, style: text.titleMedium),
-              const SizedBox(height: Space.xs),
-              if (_eggs.isEmpty) Text(l.petsNoEggs, style: text.bodySmall),
-              for (final e in _eggs) _eggTile(l, e),
-              const SizedBox(height: Space.lg),
-              Text(l.petsMine(_pets.length, _max), style: text.titleMedium),
-              const SizedBox(height: Space.xs),
-              for (final p in _pets)
-                _PetCard(
-                  key: Key('pet-${p.id}'),
-                  pet: p,
-                  onActive: () => _act(() => widget.repo.setActive(p.id, !p.active)),
-                  onHunt: () => _hunt(p),
-                  onCollect: () => _collect(p),
-                ),
-              const SizedBox(height: Space.lg),
-              InkWell(
-                onTap: () => setState(() => _guide = !_guide),
-                child: Row(
-                  children: [
-                    Expanded(child: Text(l.petGuide, style: text.titleMedium)),
-                    Icon(_guide ? Icons.expand_less : Icons.expand_more, color: Palette.textSecondary),
-                  ],
-                ),
+          child: frame(() {
+            final index = [..._species]..sort((a, b) => a.rank.compareTo(b.rank));
+            Widget header(String title, String count) => Padding(
+              padding: const EdgeInsets.only(top: Space.lg, bottom: Space.sm),
+              child: Row(
+                children: [
+                  Expanded(child: Text(title, style: text.titleMedium)),
+                  Text(count, style: text.bodySmall),
+                ],
               ),
-              if (_guide)
-                for (final s in _species) _guideTile(l, text, s),
-            ],
-          ),
+            );
+            Widget hint(String s) => Padding(
+              padding: const EdgeInsets.only(top: Space.xs),
+              child: Text(s, style: text.bodySmall?.copyWith(color: Palette.textMuted)),
+            );
+            return [
+              Text(l.petsHint, style: text.bodySmall, textAlign: TextAlign.justify),
+              header(l.petsEggs, l.slotCount(_eggs.length, _maxEggs)),
+              _BagGrid(slots: _slots(_eggs.length, _maxEggs), children: [for (final e in _eggs) _eggCell(e)]),
+              hint(_eggs.isEmpty ? l.petsNoEggs : l.petEggTapHint),
+              header(l.petsMine(_pets.length, _max), ''),
+              _BagGrid(slots: _slots(_pets.length, _max), children: [for (final p in _pets) _petCell(p)]),
+              if (_pets.isNotEmpty) hint(l.petTapHint),
+              header(l.petIndex, l.petIndexCount(_discovered.length, index.length)),
+              GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: Space.sm,
+                crossAxisSpacing: Space.sm,
+                childAspectRatio: 0.78,
+                children: [for (final s in index) _indexTile(s)],
+              ),
+              hint(l.petIndexHint),
+            ];
+          }),
         ),
       ),
     );
   }
 
-  Widget _eggTile(AppLocalizations l, PetEgg e) {
-    final s = _of(e.species);
-    final color = rarityColor(petRarity(s?.rank ?? 1));
-    return Card(
+  /// Bag size shown: at least [cap] slots, more rows if it ever overflows.
+  static int _slots(int used, int cap) => used <= cap ? cap : (used + 4) ~/ 5 * 5;
+
+  Widget _eggCell(PetEgg e) {
+    final color = rarityColor(petRarity(_of(e.species)?.rank ?? 1));
+    return _Slot(
       key: Key('egg-${e.template}'),
-      child: ListTile(
-        leading: ItemArt(code: e.template, icon: Icons.egg_outlined, color: color, size: 28),
-        title: Text('${itemName(e.template)} ×${e.quantity}', style: TextStyle(color: color)),
-        subtitle: Text(shortDuration(l, Duration(seconds: s?.hatchSeconds ?? 0))),
-        trailing: FilledButton.tonal(style: compactButton, onPressed: () => _hatch(e), child: Text(l.petHatch)),
-      ),
+      color: color,
+      onTap: () => _hatch(e),
+      badge: '×${e.quantity}',
+      child: ItemArt(code: e.template, icon: Icons.egg_outlined, color: color, size: 40),
     );
   }
 
-  Widget _guideTile(AppLocalizations l, TextTheme text, PetSpecies s) {
-    final pct = s.eggPctText;
-    return ListTile(
+  Widget _petCell(Pet p) {
+    final color = rarityColor(petRarity(p.rank));
+    final now = DateTime.now();
+    final hatched = p.hatched(now);
+    final ready = p.huntReadyAt != null && !now.isBefore(p.huntReadyAt!);
+    return _Slot(
+      key: Key('pet-cell-${p.id}'),
+      color: color,
+      onTap: () => _openPet(p),
+      label: hatched ? AppLocalizations.of(context).levelShort(p.level) : null,
+      dot: p.active ? Palette.success : null,
+      corner: !hatched
+          ? Icons.hourglass_bottom
+          : p.huntMob == null
+          ? null
+          : (ready ? Icons.check_circle : Icons.directions_run),
+      child: hatched
+          ? PetArt(species: p.species, stage: petStage(p.level), size: 64, color: color)
+          : ItemArt(code: 'pet_egg_${p.species}', icon: Icons.egg_outlined, color: color, size: 40),
+    );
+  }
+
+  Widget _indexTile(PetSpecies s) {
+    final known = _discovered.contains(s.code);
+    final color = rarityColor(petRarity(s.rank));
+    final text = Theme.of(context).textTheme;
+    return InkWell(
       key: Key('pet-guide-${s.code}'),
-      dense: true,
-      contentPadding: EdgeInsets.zero,
-      leading: PetArt(species: s.code, stage: 3, size: 44, color: rarityColor(petRarity(s.rank))),
-      title: Text(petName(s.code), style: TextStyle(color: rarityColor(petRarity(s.rank)))),
-      onTap: () => showPetSpecies(context, s, powerPerLevel: widget.repo.powerPerLevel),
-      subtitle: Text(
-        [
-          l.petGuideLine(pct, s.minMobLevel, shortDuration(l, Duration(seconds: s.hatchSeconds))),
-          ?bonusText(l, s.bonus),
-        ].join('\n'),
-        style: text.bodySmall,
+      borderRadius: BorderRadius.circular(Radii.md),
+      onTap: () => _openSpecies(s),
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Palette.bgSurface,
+          borderRadius: BorderRadius.circular(Radii.md),
+          border: Border.all(color: known ? color.withValues(alpha: 0.6) : Palette.borderSubtle),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: LayoutBuilder(
+                builder: (_, box) => known
+                    ? PetArt(species: s.code, stage: 3, size: box.maxWidth, color: color)
+                    : Container(
+                        width: box.maxWidth,
+                        decoration: BoxDecoration(
+                          color: Palette.bgPrimary,
+                          borderRadius: BorderRadius.circular(Radii.sm),
+                        ),
+                        child: const Icon(Icons.help_outline, color: Palette.textMuted),
+                      ),
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text('#${s.rank.toString().padLeft(2, '0')}', style: text.bodySmall?.copyWith(fontSize: 10)),
+            Text(
+              known ? petName(s.code) : '???',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 11, color: known ? color : Palette.textMuted),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+/// A five-column bag grid: the filled slots first, then empty ones up to [slots].
+class _BagGrid extends StatelessWidget {
+  const _BagGrid({required this.slots, required this.children});
+
+  final int slots;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => GridView.count(
+    crossAxisCount: 5,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    mainAxisSpacing: Space.xs,
+    crossAxisSpacing: Space.xs,
+    children: [...children, for (var i = children.length; i < slots; i++) const _Slot()],
+  );
+}
+
+/// One bag slot: art in a rarity frame with an optional count, level label,
+/// active dot and status icon; empty when [child] is null.
+class _Slot extends StatelessWidget {
+  const _Slot({
+    super.key,
+    this.child,
+    this.color = Palette.borderSubtle,
+    this.onTap,
+    this.badge,
+    this.label,
+    this.dot,
+    this.corner,
+  });
+
+  final Widget? child;
+  final Color color;
+  final VoidCallback? onTap;
+  final String? badge, label;
+  final Color? dot;
+  final IconData? corner;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: child == null ? Palette.bgSurface : Palette.bgElevated,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(Radii.sm),
+      side: BorderSide(
+        color: child == null ? Palette.borderSubtle : color.withValues(alpha: 0.85),
+        width: child == null ? 1 : 1.5,
+      ),
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: onTap,
+      child: child == null
+          ? null
+          : Stack(
+              children: [
+                Positioned.fill(
+                  child: FittedBox(fit: BoxFit.cover, child: child),
+                ),
+                if (label case final t?)
+                  Positioned(
+                    left: 2,
+                    top: 2,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(3)),
+                      child: Text(t, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+                if (dot case final c?)
+                  Positioned(
+                    right: 3,
+                    top: 3,
+                    child: Container(
+                      width: 9,
+                      height: 9,
+                      decoration: BoxDecoration(color: c, shape: BoxShape.circle),
+                    ),
+                  ),
+                if (corner case final ic?)
+                  Positioned(left: 2, bottom: 2, child: Icon(ic, size: 13, color: Palette.warning)),
+                if (badge case final b?)
+                  Positioned(
+                    right: 3,
+                    bottom: 1,
+                    child: Text(b, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700)),
+                  ),
+              ],
+            ),
+    ),
+  );
 }
 
 class _PetCard extends StatelessWidget {

@@ -5965,7 +5965,7 @@ abstract class AppLocalizations {
   /// No description provided for @petStrength.
   ///
   /// In en, this message translates to:
-  /// **'Strength'**
+  /// **'Strength details'**
   String get petStrength;
 
   /// No description provided for @petAssistRange.
@@ -5989,7 +5989,7 @@ abstract class AppLocalizations {
   /// No description provided for @petFind.
   ///
   /// In en, this message translates to:
-  /// **'How to get'**
+  /// **'Where to get it'**
   String get petFind;
 
   /// No description provided for @petFindLine.
@@ -6015,6 +6015,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From level 1 to 100'**
   String get petLevelNote;
+
+  /// No description provided for @petIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Index'**
+  String get petIndex;
+
+  /// No description provided for @petIndexCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} / {max} discovered'**
+  String petIndexCount(int n, int max);
+
+  /// No description provided for @slotCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} / {max}'**
+  String slotCount(int n, int max);
+
+  /// No description provided for @petEggTapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an egg to incubate it.'**
+  String get petEggTapHint;
+
+  /// No description provided for @petTapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a pet to see it · the green dot marks the active pet.'**
+  String get petTapHint;
+
+  /// No description provided for @petIndexHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a pet to open its page.'**
+  String get petIndexHint;
+
+  /// No description provided for @petUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Not discovered yet'**
+  String get petUnknown;
+
+  /// No description provided for @petAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get petAbout;
+
+  /// No description provided for @petHabitat.
+  ///
+  /// In en, this message translates to:
+  /// **'Habitat'**
+  String get petHabitat;
+
+  /// No description provided for @petElement.
+  ///
+  /// In en, this message translates to:
+  /// **'Element: {name}'**
+  String petElement(String name);
+
+  /// No description provided for @petStage1.
+  ///
+  /// In en, this message translates to:
+  /// **'Hatchling'**
+  String get petStage1;
+
+  /// No description provided for @petStage2.
+  ///
+  /// In en, this message translates to:
+  /// **'Young'**
+  String get petStage2;
+
+  /// No description provided for @petStage3.
+  ///
+  /// In en, this message translates to:
+  /// **'Adult'**
+  String get petStage3;
+
+  /// No description provided for @petSourceRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Raid: {name}'**
+  String petSourceRaid(String name);
+
+  /// No description provided for @petSourceBoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Boss: {name} · Lvl {level}'**
+  String petSourceBoss(String name, int level);
+
+  /// No description provided for @petSourceRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region: {name}'**
+  String petSourceRegion(String name);
+
+  /// No description provided for @petSourceChance.
+  ///
+  /// In en, this message translates to:
+  /// **'Chance: {pct}%'**
+  String petSourceChance(String pct);
+
+  /// No description provided for @petSourceHatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Hatching: {time}'**
+  String petSourceHatch(String time);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

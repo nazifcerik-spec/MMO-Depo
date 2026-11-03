@@ -2649,11 +2649,11 @@
     }
   },
   "petEvolution": "Evolution",
-  "petStrength": "Strength",
+  "petStrength": "Strength details",
   "petAssistRange": "Combat assist: +{min}% – +{max}% damage on every hit",
   "petBonusRange": "Bonus: {min} – {max}",
   "petFightsRange": "Hunts like a level {min} – {max} monster",
-  "petFind": "How to get",
+  "petFind": "Where to get it",
   "petFindLine": "Raid bosses of level {level}+ · {pct}% chance",
   "petHatchTime": "Hatches in {time}",
   "petAssist": "Combat assist: +{pct}% damage",
@@ -2709,6 +2709,89 @@
     "placeholders": {
       "pct": {
         "type": "int"
+      }
+    }
+  },
+  "petIndex": "Pet Index",
+  "petIndexCount": "{n} / {max} discovered",
+  "slotCount": "{n} / {max}",
+  "petEggTapHint": "Tap an egg to incubate it.",
+  "petTapHint": "Tap a pet to see it · the green dot marks the active pet.",
+  "petIndexHint": "Tap a pet to open its page.",
+  "petUnknown": "Not discovered yet",
+  "petAbout": "About",
+  "petHabitat": "Habitat",
+  "petElement": "Element: {name}",
+  "petStage1": "Hatchling",
+  "petStage2": "Young",
+  "petStage3": "Adult",
+  "petSourceRaid": "Raid: {name}",
+  "petSourceBoss": "Boss: {name} · Lvl {level}",
+  "petSourceRegion": "Region: {name}",
+  "petSourceChance": "Chance: {pct}%",
+  "petSourceHatch": "Hatching: {time}",
+  "@petIndexCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "@slotCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "@petElement": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@petSourceRaid": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@petSourceBoss": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@petSourceRegion": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@petSourceChance": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "@petSourceHatch": {
+    "placeholders": {
+      "time": {
+        "type": "String"
       }
     }
   }

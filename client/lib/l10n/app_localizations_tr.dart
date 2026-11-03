@@ -3383,7 +3383,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get petEvolution => 'Evrim';
 
   @override
-  String get petStrength => 'Güç';
+  String get petStrength => 'Güç detayları';
 
   @override
   String petAssistRange(int min, int max) {
@@ -3401,7 +3401,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get petFind => 'Nasıl bulunur';
+  String get petFind => 'Nereden elde edilir';
 
   @override
   String petFindLine(int level, String pct) {
@@ -3420,4 +3420,74 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get petLevelNote => 'Seviye 1 – 100';
+
+  @override
+  String get petIndex => 'Pet İndeksi';
+
+  @override
+  String petIndexCount(int n, int max) {
+    return '$n / $max keşfedildi';
+  }
+
+  @override
+  String slotCount(int n, int max) {
+    return '$n / $max';
+  }
+
+  @override
+  String get petEggTapHint => 'Yumurtaya dokun → kuluçkaya koy.';
+
+  @override
+  String get petTapHint => 'Pete dokun → ayrıntı · yeşil nokta aktif pet.';
+
+  @override
+  String get petIndexHint => 'Bir pete dokun → bilgi ekranı.';
+
+  @override
+  String get petUnknown => 'Henüz keşfedilmedi';
+
+  @override
+  String get petAbout => 'Hakkında';
+
+  @override
+  String get petHabitat => 'Habitat';
+
+  @override
+  String petElement(String name) {
+    return 'Element: $name';
+  }
+
+  @override
+  String get petStage1 => 'Yavru';
+
+  @override
+  String get petStage2 => 'Genç';
+
+  @override
+  String get petStage3 => 'Usta';
+
+  @override
+  String petSourceRaid(String name) {
+    return 'Baskın: $name';
+  }
+
+  @override
+  String petSourceBoss(String name, int level) {
+    return 'Boss: $name · Sv $level';
+  }
+
+  @override
+  String petSourceRegion(String name) {
+    return 'Bölge: $name';
+  }
+
+  @override
+  String petSourceChance(String pct) {
+    return 'Şans: %$pct';
+  }
+
+  @override
+  String petSourceHatch(String time) {
+    return 'Kuluçka: $time';
+  }
 }

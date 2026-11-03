@@ -15,6 +15,10 @@ import (
 	"github.com/otter/server/internal/hunt"
 )
 
+// MaxEggSlots is the size of the pet screen's egg bag (DD-342); one slot
+// holds a species' stack, so it only shows how full it is.
+const MaxEggSlots = 20
+
 // MaxLevel is a pet's level cap.
 const MaxLevel = 100
 
@@ -42,6 +46,8 @@ type Species struct {
 	HatchSeconds   int      `yaml:"hatch_seconds"    json:"hatch_seconds"`
 	PowerPct       int      `yaml:"power_pct"        json:"power_pct"`
 	Bonus          Modifier `yaml:"bonus"            json:"bonus"` // at MaxLevel
+	// Element is the pet index's element (DD-342); its name is element.<code>.
+	Element string `yaml:"element" json:"element"`
 }
 
 // EggCode is the item template of the species' egg.
@@ -82,6 +88,9 @@ func New(species []Species) (*Catalog, error) {
 		}
 		if s.EggPct <= 0 || s.EggPct > 100 || s.HatchSeconds <= 0 || s.PowerPct <= 0 || s.Bonus.Amount <= 0 {
 			return nil, fmt.Errorf("pet %s: odds, hatch time, power and bonus must be positive", s.Code)
+		}
+		if s.Element == "" {
+			return nil, fmt.Errorf("pet %s: no element", s.Code)
 		}
 		ranks[s.Rank] = true
 		c.byCode[s.Code] = i

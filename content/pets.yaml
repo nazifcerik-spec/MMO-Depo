@@ -11,6 +11,7 @@ pets:
     hatch_seconds: 3600
     power_pct: 200
     bonus: { kind: mult_add, target: attack, amount: 0.03 }
+    element: fire
 
   - code: frostwolf
     display_name_key: pet.frostwolf
@@ -20,6 +21,7 @@ pets:
     hatch_seconds: 5290
     power_pct: 201
     bonus: { kind: mult_add, target: defense, amount: 0.0318 }
+    element: ice
 
   - code: mossback
     display_name_key: pet.mossback
@@ -29,6 +31,7 @@ pets:
     hatch_seconds: 6980
     power_pct: 202
     bonus: { kind: mult_add, target: hp_max, amount: 0.0337 }
+    element: nature
 
   - code: stormbird
     display_name_key: pet.stormbird
@@ -38,6 +41,7 @@ pets:
     hatch_seconds: 8669
     power_pct: 203
     bonus: { kind: mult_add, target: attack, amount: 0.0355 }
+    element: lightning
 
   - code: shadefox
     display_name_key: pet.shadefox
@@ -47,6 +51,7 @@ pets:
     hatch_seconds: 10359
     power_pct: 205
     bonus: { kind: mult_add, target: defense, amount: 0.0373 }
+    element: dark
 
   - code: sand_drake
     display_name_key: pet.sand_drake
@@ -56,6 +61,7 @@ pets:
     hatch_seconds: 12049
     power_pct: 206
     bonus: { kind: mult_add, target: hp_max, amount: 0.0392 }
+    element: earth
 
   - code: sea_horn
     display_name_key: pet.sea_horn
@@ -65,6 +71,7 @@ pets:
     hatch_seconds: 13739
     power_pct: 207
     bonus: { kind: mult_add, target: attack, amount: 0.041 }
+    element: water
 
   - code: light_stag
     display_name_key: pet.light_stag
@@ -74,6 +81,7 @@ pets:
     hatch_seconds: 15429
     power_pct: 208
     bonus: { kind: mult_add, target: defense, amount: 0.0429 }
+    element: light
 
   - code: venom_moth
     display_name_key: pet.venom_moth
@@ -83,6 +91,7 @@ pets:
     hatch_seconds: 17118
     power_pct: 209
     bonus: { kind: mult_add, target: hp_max, amount: 0.0447 }
+    element: poison
 
   - code: iron_bull
     display_name_key: pet.iron_bull
@@ -92,6 +101,7 @@ pets:
     hatch_seconds: 18808
     power_pct: 210
     bonus: { kind: mult_add, target: attack, amount: 0.0465 }
+    element: metal
 
   - code: gale_owl
     display_name_key: pet.gale_owl
@@ -101,6 +111,7 @@ pets:
     hatch_seconds: 20498
     power_pct: 212
     bonus: { kind: mult_add, target: defense, amount: 0.0484 }
+    element: air
 
   - code: lava_crab
     display_name_key: pet.lava_crab
@@ -110,6 +121,7 @@ pets:
     hatch_seconds: 22188
     power_pct: 213
     bonus: { kind: mult_add, target: hp_max, amount: 0.0502 }
+    element: fire
 
   - code: crystal_cat
     display_name_key: pet.crystal_cat
@@ -119,6 +131,7 @@ pets:
     hatch_seconds: 23878
     power_pct: 214
     bonus: { kind: mult_add, target: attack, amount: 0.052 }
+    element: crystal
 
   - code: coral_snake
     display_name_key: pet.coral_snake
@@ -128,6 +141,7 @@ pets:
     hatch_seconds: 25567
     power_pct: 215
     bonus: { kind: mult_add, target: defense, amount: 0.0539 }
+    element: water
 
   - code: spirit_monkey
     display_name_key: pet.spirit_monkey
@@ -137,6 +151,7 @@ pets:
     hatch_seconds: 27257
     power_pct: 216
     bonus: { kind: mult_add, target: hp_max, amount: 0.0557 }
+    element: spirit
 
   - code: cosmic_whale
     display_name_key: pet.cosmic_whale
@@ -146,6 +161,7 @@ pets:
     hatch_seconds: 28947
     power_pct: 217
     bonus: { kind: mult_add, target: attack, amount: 0.0576 }
+    element: cosmic
 
   - code: thorn_hedgehog
     display_name_key: pet.thorn_hedgehog
@@ -155,6 +171,7 @@ pets:
     hatch_seconds: 30637
     power_pct: 219
     bonus: { kind: mult_add, target: defense, amount: 0.0594 }
+    element: earth
 
   - code: aurora_reindeer
     display_name_key: pet.aurora_reindeer
@@ -164,6 +181,7 @@ pets:
     hatch_seconds: 32327
     power_pct: 220
     bonus: { kind: mult_add, target: hp_max, amount: 0.0612 }
+    element: ice
 
   - code: silvermoon_hare
     display_name_key: pet.silvermoon_hare
@@ -173,6 +191,7 @@ pets:
     hatch_seconds: 34016
     power_pct: 221
     bonus: { kind: mult_add, target: attack, amount: 0.0631 }
+    element: moon
 
   - code: crimson_lion
     display_name_key: pet.crimson_lion
@@ -182,6 +201,7 @@ pets:
     hatch_seconds: 35706
     power_pct: 222
     bonus: { kind: mult_add, target: defense, amount: 0.0649 }
+    element: sun
 
   - code: swamp_frog
     display_name_key: pet.swamp_frog
@@ -191,6 +211,7 @@ pets:
     hatch_seconds: 37396
     power_pct: 223
     bonus: { kind: mult_add, target: hp_max, amount: 0.0667 }
+    element: poison
 
   - code: ember_hyena
     display_name_key: pet.ember_hyena
@@ -200,6 +221,7 @@ pets:
     hatch_seconds: 39086
     power_pct: 224
     bonus: { kind: mult_add, target: attack, amount: 0.0686 }
+    element: fire
 
   - code: steel_scorpion
     display_name_key: pet.steel_scorpion
@@ -209,6 +231,7 @@ pets:
     hatch_seconds: 40776
     power_pct: 226
     bonus: { kind: mult_add, target: defense, amount: 0.0704 }
+    element: metal
 
   - code: mushroom_squirrel
     display_name_key: pet.mushroom_squirrel
@@ -218,6 +241,7 @@ pets:
     hatch_seconds: 42465
     power_pct: 227
     bonus: { kind: mult_add, target: hp_max, amount: 0.0722 }
+    element: nature
 
   - code: storm_eel
     display_name_key: pet.storm_eel
@@ -227,6 +251,7 @@ pets:
     hatch_seconds: 44155
     power_pct: 228
     bonus: { kind: mult_add, target: attack, amount: 0.0741 }
+    element: lightning
 
   - code: bone_dragon
     display_name_key: pet.bone_dragon
@@ -236,6 +261,7 @@ pets:
     hatch_seconds: 45845
     power_pct: 229
     bonus: { kind: mult_add, target: defense, amount: 0.0759 }
+    element: death
 
   - code: rainbow_parrot
     display_name_key: pet.rainbow_parrot
@@ -245,6 +271,7 @@ pets:
     hatch_seconds: 47535
     power_pct: 230
     bonus: { kind: mult_add, target: hp_max, amount: 0.0778 }
+    element: air
 
   - code: sand_tiger
     display_name_key: pet.sand_tiger
@@ -254,6 +281,7 @@ pets:
     hatch_seconds: 49224
     power_pct: 231
     bonus: { kind: mult_add, target: attack, amount: 0.0796 }
+    element: earth
 
   - code: emerald_peacock
     display_name_key: pet.emerald_peacock
@@ -263,6 +291,7 @@ pets:
     hatch_seconds: 50914
     power_pct: 233
     bonus: { kind: mult_add, target: defense, amount: 0.0814 }
+    element: nature
 
   - code: night_bat
     display_name_key: pet.night_bat
@@ -272,6 +301,7 @@ pets:
     hatch_seconds: 52604
     power_pct: 234
     bonus: { kind: mult_add, target: hp_max, amount: 0.0833 }
+    element: dark
 
   - code: glass_jellyfish
     display_name_key: pet.glass_jellyfish
@@ -281,6 +311,7 @@ pets:
     hatch_seconds: 54294
     power_pct: 235
     bonus: { kind: mult_add, target: attack, amount: 0.0851 }
+    element: water
 
   - code: rune_golem
     display_name_key: pet.rune_golem
@@ -290,6 +321,7 @@ pets:
     hatch_seconds: 55984
     power_pct: 236
     bonus: { kind: mult_add, target: defense, amount: 0.0869 }
+    element: arcane
 
   - code: flame_salamander
     display_name_key: pet.flame_salamander
@@ -299,6 +331,7 @@ pets:
     hatch_seconds: 57673
     power_pct: 237
     bonus: { kind: mult_add, target: hp_max, amount: 0.0888 }
+    element: fire
 
   - code: snow_panda
     display_name_key: pet.snow_panda
@@ -308,6 +341,7 @@ pets:
     hatch_seconds: 59363
     power_pct: 238
     bonus: { kind: mult_add, target: attack, amount: 0.0906 }
+    element: ice
 
   - code: wheat_boar
     display_name_key: pet.wheat_boar
@@ -317,6 +351,7 @@ pets:
     hatch_seconds: 61053
     power_pct: 240
     bonus: { kind: mult_add, target: defense, amount: 0.0924 }
+    element: nature
 
   - code: diamond_beetle
     display_name_key: pet.diamond_beetle
@@ -326,6 +361,7 @@ pets:
     hatch_seconds: 62743
     power_pct: 241
     bonus: { kind: mult_add, target: hp_max, amount: 0.0943 }
+    element: crystal
 
   - code: star_octopus
     display_name_key: pet.star_octopus
@@ -335,6 +371,7 @@ pets:
     hatch_seconds: 64433
     power_pct: 242
     bonus: { kind: mult_add, target: attack, amount: 0.0961 }
+    element: cosmic
 
   - code: rust_wolf
     display_name_key: pet.rust_wolf
@@ -344,6 +381,7 @@ pets:
     hatch_seconds: 66122
     power_pct: 243
     bonus: { kind: mult_add, target: defense, amount: 0.098 }
+    element: metal
 
   - code: cloud_sheep
     display_name_key: pet.cloud_sheep
@@ -353,6 +391,7 @@ pets:
     hatch_seconds: 67812
     power_pct: 244
     bonus: { kind: mult_add, target: hp_max, amount: 0.0998 }
+    element: air
 
   - code: obsidian_frog
     display_name_key: pet.obsidian_frog
@@ -362,6 +401,7 @@ pets:
     hatch_seconds: 69502
     power_pct: 245
     bonus: { kind: mult_add, target: attack, amount: 0.1016 }
+    element: lava
 
   - code: fairy_firefly
     display_name_key: pet.fairy_firefly
@@ -371,6 +411,7 @@ pets:
     hatch_seconds: 71192
     power_pct: 247
     bonus: { kind: mult_add, target: defense, amount: 0.1035 }
+    element: light
 
   - code: seal_dragon
     display_name_key: pet.seal_dragon
@@ -380,6 +421,7 @@ pets:
     hatch_seconds: 72882
     power_pct: 248
     bonus: { kind: mult_add, target: hp_max, amount: 0.1053 }
+    element: arcane
 
   - code: venom_spider
     display_name_key: pet.venom_spider
@@ -389,6 +431,7 @@ pets:
     hatch_seconds: 74571
     power_pct: 249
     bonus: { kind: mult_add, target: attack, amount: 0.1071 }
+    element: poison
 
   - code: deluge_shark
     display_name_key: pet.deluge_shark
@@ -398,6 +441,7 @@ pets:
     hatch_seconds: 76261
     power_pct: 250
     bonus: { kind: mult_add, target: defense, amount: 0.109 }
+    element: water
 
   - code: autumn_stag
     display_name_key: pet.autumn_stag
@@ -407,6 +451,7 @@ pets:
     hatch_seconds: 77951
     power_pct: 251
     bonus: { kind: mult_add, target: hp_max, amount: 0.1108 }
+    element: nature
 
   - code: spark_hamster
     display_name_key: pet.spark_hamster
@@ -416,6 +461,7 @@ pets:
     hatch_seconds: 79641
     power_pct: 252
     bonus: { kind: mult_add, target: attack, amount: 0.1127 }
+    element: lightning
 
   - code: graveyard_owl
     display_name_key: pet.graveyard_owl
@@ -425,6 +471,7 @@ pets:
     hatch_seconds: 81331
     power_pct: 254
     bonus: { kind: mult_add, target: defense, amount: 0.1145 }
+    element: death
 
   - code: sun_scorpion
     display_name_key: pet.sun_scorpion
@@ -434,6 +481,7 @@ pets:
     hatch_seconds: 83020
     power_pct: 255
     bonus: { kind: mult_add, target: hp_max, amount: 0.1163 }
+    element: sun
 
   - code: time_caterpillar
     display_name_key: pet.time_caterpillar
@@ -443,6 +491,7 @@ pets:
     hatch_seconds: 84710
     power_pct: 256
     bonus: { kind: mult_add, target: attack, amount: 0.1182 }
+    element: time
 
   - code: chaos_hydra
     display_name_key: pet.chaos_hydra
@@ -452,6 +501,7 @@ pets:
     hatch_seconds: 86400
     power_pct: 257
     bonus: { kind: mult_add, target: defense, amount: 0.12 }
+    element: chaos
 
 items:
   - code: pet_egg_flamewing

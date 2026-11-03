@@ -3384,7 +3384,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get petEvolution => 'Evolution';
 
   @override
-  String get petStrength => 'Strength';
+  String get petStrength => 'Strength details';
 
   @override
   String petAssistRange(int min, int max) {
@@ -3402,7 +3402,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get petFind => 'How to get';
+  String get petFind => 'Where to get it';
 
   @override
   String petFindLine(int level, String pct) {
@@ -3421,4 +3421,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get petLevelNote => 'From level 1 to 100';
+
+  @override
+  String get petIndex => 'Pet Index';
+
+  @override
+  String petIndexCount(int n, int max) {
+    return '$n / $max discovered';
+  }
+
+  @override
+  String slotCount(int n, int max) {
+    return '$n / $max';
+  }
+
+  @override
+  String get petEggTapHint => 'Tap an egg to incubate it.';
+
+  @override
+  String get petTapHint => 'Tap a pet to see it · the green dot marks the active pet.';
+
+  @override
+  String get petIndexHint => 'Tap a pet to open its page.';
+
+  @override
+  String get petUnknown => 'Not discovered yet';
+
+  @override
+  String get petAbout => 'About';
+
+  @override
+  String get petHabitat => 'Habitat';
+
+  @override
+  String petElement(String name) {
+    return 'Element: $name';
+  }
+
+  @override
+  String get petStage1 => 'Hatchling';
+
+  @override
+  String get petStage2 => 'Young';
+
+  @override
+  String get petStage3 => 'Adult';
+
+  @override
+  String petSourceRaid(String name) {
+    return 'Raid: $name';
+  }
+
+  @override
+  String petSourceBoss(String name, int level) {
+    return 'Boss: $name · Lvl $level';
+  }
+
+  @override
+  String petSourceRegion(String name) {
+    return 'Region: $name';
+  }
+
+  @override
+  String petSourceChance(String pct) {
+    return 'Chance: $pct%';
+  }
+
+  @override
+  String petSourceHatch(String time) {
+    return 'Hatching: $time';
+  }
 }
