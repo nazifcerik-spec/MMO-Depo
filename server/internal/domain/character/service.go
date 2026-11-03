@@ -17,7 +17,7 @@ type ServiceConfig struct {
 // DefaultServiceConfig returns Faz 00 baseline.
 func DefaultServiceConfig() ServiceConfig {
 	return ServiceConfig{
-		SlotCap: 5, // DD-251
+		SlotCap: 6, // DD-345
 		Now:     time.Now,
 	}
 }
@@ -43,7 +43,7 @@ func NewService(repo Repository, cfg ServiceConfig, logger *slog.Logger) *Servic
 		cfg.Now = time.Now
 	}
 	if cfg.SlotCap <= 0 {
-		cfg.SlotCap = 5
+		cfg.SlotCap = 6
 	}
 	if logger == nil {
 		logger = slog.Default()

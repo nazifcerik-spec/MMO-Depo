@@ -300,6 +300,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 142. **Tam boy portre + Savaş alanı (bitti — yalnız insan)** — Sprint 142, DD-344. Migration 0063 `character.body`; oluşturmada Erkek/Kadın, `POST /character/{id}/appearance`. `BodyPortrait`: `scripts/body_art.py` figürleri (`assets/bodies/`, göğüs zırhı türü × 6 seviye bandı + zırhsız = 19 görsel, nadirlik çerçevesi), silah/kalkan eşyanın kendi görseli elde (`scripts/held_cutout.py` → `assets/held/`, 977). Figürü olmayan ırkta ırk portresi. `CombatStats`: savaş gücü, tüm savaş değerleri, tavan çubuğu, dokununca açıklama.
 
+143. **Karakter slotu 6 (bitti)** — Sprint 143, DD-345. `CHARACTER_SLOT_CAP` varsayılanı 6.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

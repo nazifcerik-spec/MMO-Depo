@@ -3373,6 +3373,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-345 — Karakter Slotu 6
+
+**Context:** Kullanıcı hesap başına karakter slotunu 6'ya çıkarmak istedi (DD-251'de 5).
+**Decision:** `CHARACTER_SLOT_CAP` ve servis varsayılanı 6. İstemci sınırı sunucunun `slot_cap` alanından okur, istemci kodu değişmedi.
+**Consequences:** Render'da `CHARACTER_SLOT_CAP` ortam değişkeni panelde tanımlıysa varsayılanı ezer, orada da 6 olmalı. Yeni sınır sunucu güncellenince görünür.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
@@ -3386,7 +3395,7 @@ Aşağıdakiler GDD §19'da işaretli, Phase 01 balance pass'ine bağlı:
 - **DD-OPEN-5**: Ascension frequency final tune (60-100h aktif oyun/ascension).
 - **DD-OPEN-6**: Guild max size progression Phase 02'de nerede kapsar (100 mi 150 mi).
 - **DD-OPEN-7**: RNG algoritma final seçimi (xoshiro256++ vs ChaCha8).
-- ~~**DD-OPEN-8**: Character slot sayısı başlangıç~~ → DD-251 (5).
+- ~~**DD-OPEN-8**: Character slot sayısı başlangıç~~ → DD-251 (5), DD-345 (6).
 - **DD-OPEN-9**: Orchestrator seçimi (Kubernetes vs Nomad vs systemd) — v1 ölçeğine göre.
 - **DD-OPEN-10**: Job queue (Postgres SKIP LOCKED vs Redis stream vs NATS) — reveal batch throughput'una göre.
 - **DD-OPEN-11**: Log aggregation (Loki vs ELK vs cloud provider).

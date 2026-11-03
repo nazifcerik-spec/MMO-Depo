@@ -48,7 +48,7 @@ type Config struct {
 	AuthHashConcurrency int `envconfig:"AUTH_HASH_CONCURRENCY" default:"0"`
 
 	// --- Character (DD-OPEN-8 slot cap; DD-134 pattern for delete grace) ---
-	CharacterSlotCap int `envconfig:"CHARACTER_SLOT_CAP" default:"5"`
+	CharacterSlotCap int `envconfig:"CHARACTER_SLOT_CAP" default:"6"`
 
 	// --- Worker (Sprint 19) ---
 	// Freeze characters whose wallet projection drifts from the ledger
