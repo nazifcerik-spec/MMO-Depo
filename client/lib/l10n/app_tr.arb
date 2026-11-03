@@ -956,8 +956,6 @@
   "petDied": "Petin yenildi, av erken bitti.",
   "petPickMob": "Avlanacak canavar",
   "petXpPerWin": "Zafer başı +{n} XP",
-  "petGuide": "Tüm petler",
-  "petGuideLine": "Sv {level}+ baskında %{pct} · kuluçka {time}",
   "errPetCap": "Tutabileceğin kadar petin var.",
   "errPetHatching": "Pet henüz yumurtadan çıkmadı.",
   "errPetHunting": "Pet zaten avda.",
@@ -983,8 +981,6 @@
   "petBonusRange": "Bonus: {min} – {max}",
   "petFightsRange": "Sv {min} – {max} canavar gücünde avlanır",
   "petFind": "Nereden elde edilir",
-  "petFindLine": "Sv {level}+ baskın boss'ları · %{pct} şans",
-  "petHatchTime": "Kuluçka: {time}",
   "petAssist": "Savaş desteği: +%{pct} hasar",
   "petLevelNote": "Seviye 1 – 100",
   "petIndex": "Pet İndeksi",
@@ -999,10 +995,5 @@
   "petElement": "Element: {name}",
   "petStage1": "Yavru",
   "petStage2": "Genç",
-  "petStage3": "Usta",
-  "petSourceRaid": "Baskın: {name}",
-  "petSourceBoss": "Boss: {name} · Sv {level}",
-  "petSourceRegion": "Bölge: {name}",
-  "petSourceChance": "Şans: %{pct}",
-  "petSourceHatch": "Kuluçka: {time}"
+  "petStage3": "Usta"
 }

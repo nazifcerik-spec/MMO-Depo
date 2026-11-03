@@ -441,8 +441,6 @@
   "petDied": "Tu mascota fue derrotada; la cacería terminó antes.",
   "petPickMob": "Monstruo a cazar",
   "petXpPerWin": "+{n} PX por victoria",
-  "petGuide": "Todas las mascotas",
-  "petGuideLine": "{pct} % en bandas de nivel {level}+ · eclosiona en {time}",
   "errPetCap": "Ya tienes el máximo de mascotas.",
   "errPetHatching": "La mascota aún no ha eclosionado.",
   "errPetHunting": "La mascota ya está cazando.",
@@ -468,8 +466,6 @@
   "petBonusRange": "Bonificación: {min} – {max}",
   "petFightsRange": "Caza como un monstruo de nivel {min} – {max}",
   "petFind": "Dónde conseguirla",
-  "petFindLine": "Jefes de incursión de nivel {level}+ · {pct}% de probabilidad",
-  "petHatchTime": "Eclosiona en {time}",
   "petAssist": "Apoyo en combate: +{pct}% de daño",
   "petLevelNote": "Del nivel 1 al 100",
   "petIndex": "Índice de mascotas",
@@ -484,10 +480,5 @@
   "petElement": "Elemento: {name}",
   "petStage1": "Cría",
   "petStage2": "Joven",
-  "petStage3": "Adulta",
-  "petSourceRaid": "Incursión: {name}",
-  "petSourceBoss": "Jefe: {name} · Nv {level}",
-  "petSourceRegion": "Región: {name}",
-  "petSourceChance": "Probabilidad: {pct}%",
-  "petSourceHatch": "Eclosión: {time}"
+  "petStage3": "Adulta"
 }

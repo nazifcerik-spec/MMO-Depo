@@ -3312,14 +3312,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get petGuide => 'All pets';
-
-  @override
-  String petGuideLine(String pct, int level, String time) {
-    return '$pct% from level $level+ raids · hatches in $time';
-  }
-
-  @override
   String get errPetCap => 'You have as many pets as you can keep.';
 
   @override
@@ -3405,16 +3397,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get petFind => 'Where to get it';
 
   @override
-  String petFindLine(int level, String pct) {
-    return 'Raid bosses of level $level+ · $pct% chance';
-  }
-
-  @override
-  String petHatchTime(String time) {
-    return 'Hatches in $time';
-  }
-
-  @override
   String petAssist(int pct) {
     return 'Combat assist: +$pct% damage';
   }
@@ -3466,29 +3448,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get petStage3 => 'Adult';
-
-  @override
-  String petSourceRaid(String name) {
-    return 'Raid: $name';
-  }
-
-  @override
-  String petSourceBoss(String name, int level) {
-    return 'Boss: $name · Lvl $level';
-  }
-
-  @override
-  String petSourceRegion(String name) {
-    return 'Region: $name';
-  }
-
-  @override
-  String petSourceChance(String pct) {
-    return 'Chance: $pct%';
-  }
-
-  @override
-  String petSourceHatch(String time) {
-    return 'Hatching: $time';
-  }
 }

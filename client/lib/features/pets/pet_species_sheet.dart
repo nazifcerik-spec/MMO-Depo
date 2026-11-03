@@ -8,8 +8,8 @@ import '../inventory/item_images.dart';
 import '../inventory/item_widgets.dart';
 import 'pets_screen.dart';
 
-/// A raid whose boss can drop the species' egg: where the egg comes from.
-typedef PetEggSource = ({String raid, String boss, int level, String region});
+/// Where the species' egg comes from: a raid boss and the map it is on.
+typedef PetEggSource = ({String boss, String region});
 
 /// The pet index page of a species (DD-342): its art, rarity, element and
 /// creature, story and habitat, strength from level 1 to 100, evolution, and
@@ -79,7 +79,7 @@ class PetSpeciesSheet extends StatelessWidget {
         ],
       ),
     );
-    Widget chip(String label, {IconData? icon, Color? tint}) => Container(
+    Widget chip(String label, {IconData? icon, Color? tint, Color? iconColor}) => Container(
       padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 4),
       decoration: BoxDecoration(
         color: Palette.bgElevated,
@@ -89,7 +89,10 @@ class PetSpeciesSheet extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[Icon(icon, size: 14, color: tint ?? Palette.accent), const SizedBox(width: 4)],
+          if (icon != null) ...[
+            Icon(icon, size: 14, color: iconColor ?? tint ?? Palette.accent),
+            const SizedBox(width: 4),
+          ],
           Flexible(
             child: Text(label, style: TextStyle(fontSize: 12, color: tint ?? Palette.textPrimary)),
           ),
@@ -126,7 +129,6 @@ class PetSpeciesSheet extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 34),
       child: Icon(Icons.chevron_right, size: 18, color: Palette.textMuted),
     );
-    final hatch = shortDuration(l, Duration(seconds: s.hatchSeconds));
 
     return SafeArea(
       child: PageFrame(
@@ -193,7 +195,7 @@ class PetSpeciesSheet extends StatelessWidget {
                       stage(
                         ItemArt(code: 'pet_egg_${s.code}', icon: Icons.egg_outlined, color: color, size: 52),
                         l.petHatching,
-                        hatch,
+                        '',
                       ),
                       for (final (n, name, from, to) in [
                         (1, l.petStage1, 1, 33),
@@ -214,21 +216,33 @@ class PetSpeciesSheet extends StatelessWidget {
                   FutureBuilder<List<PetEggSource>>(
                     future: sources,
                     builder: (context, snap) {
+                      // One line per raid boss that drops the egg: the map and the monster.
                       final raids = snap.data ?? const <PetEggSource>[];
-                      return Wrap(
-                        spacing: Space.xs,
-                        runSpacing: Space.xs,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          for (final r in raids) ...[
-                            chip(l.petSourceRaid(ContentNames.of('dungeon', r.raid)), icon: Icons.castle_outlined),
-                            if (r.boss.isNotEmpty)
-                              chip(l.petSourceBoss(ContentNames.of('mob', r.boss), r.level), icon: Icons.whatshot),
-                            if (r.region.isNotEmpty)
-                              chip(l.petSourceRegion(ContentNames.of('region', r.region)), icon: Icons.place_outlined),
-                          ],
-                          if (raids.isEmpty) chip(l.petFindLine(s.minMobLevel, s.eggPctText), icon: Icons.groups_3),
-                          chip(l.petSourceChance(s.eggPctText), icon: Icons.casino_outlined),
-                          chip(l.petSourceHatch(hatch), icon: Icons.egg_outlined),
+                          for (final r in raids)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: Space.xs),
+                              child: Wrap(
+                                spacing: Space.xs,
+                                runSpacing: Space.xs,
+                                children: [
+                                  if (r.region.isNotEmpty)
+                                    chip(
+                                      ContentNames.of('region', r.region),
+                                      icon: Icons.place_outlined,
+                                      iconColor: Palette.info,
+                                    ),
+                                  if (r.boss.isNotEmpty)
+                                    chip(
+                                      ContentNames.of('mob', r.boss),
+                                      icon: Icons.whatshot,
+                                      iconColor: Palette.danger,
+                                    ),
+                                ],
+                              ),
+                            ),
                         ],
                       );
                     },

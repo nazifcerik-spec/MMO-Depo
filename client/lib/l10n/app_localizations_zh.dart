@@ -3299,14 +3299,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get petGuide => '全部宠物';
-
-  @override
-  String petGuideLine(String pct, int level, String time) {
-    return '$level级以上团本$pct% · 孵化$time';
-  }
-
-  @override
   String get errPetCap => '宠物数量已达上限。';
 
   @override
@@ -3392,16 +3384,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get petFind => '获取途径';
 
   @override
-  String petFindLine(int level, String pct) {
-    return '$level 级以上团队副本首领 · $pct% 几率';
-  }
-
-  @override
-  String petHatchTime(String time) {
-    return '孵化：$time';
-  }
-
-  @override
   String petAssist(int pct) {
     return '战斗援助：伤害 +$pct%';
   }
@@ -3453,29 +3435,4 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get petStage3 => '成年';
-
-  @override
-  String petSourceRaid(String name) {
-    return '团队副本：$name';
-  }
-
-  @override
-  String petSourceBoss(String name, int level) {
-    return '首领：$name · $level级';
-  }
-
-  @override
-  String petSourceRegion(String name) {
-    return '区域：$name';
-  }
-
-  @override
-  String petSourceChance(String pct) {
-    return '几率：$pct%';
-  }
-
-  @override
-  String petSourceHatch(String time) {
-    return '孵化：$time';
-  }
 }

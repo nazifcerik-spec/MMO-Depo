@@ -836,6 +836,14 @@ class FakeBackend {
       activeHunt = null;
       return json(200, {'state': 'cancelled'});
     }
+    if (path.startsWith('/v1/items/pet_egg_') && path.endsWith('/info')) {
+      return json(200, {
+        'level': 1,
+        'dungeons': [
+          {'code': 'north_keep_siege', 'raid': true},
+        ],
+      });
+    }
     if (path.startsWith('/v1/items/') && path.endsWith('/info')) {
       return json(200, {
         'level': 5,

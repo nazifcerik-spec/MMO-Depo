@@ -2597,21 +2597,6 @@
       }
     }
   },
-  "petGuide": "All pets",
-  "petGuideLine": "{pct}% from level {level}+ raids · hatches in {time}",
-  "@petGuideLine": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      },
-      "level": {
-        "type": "int"
-      },
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "errPetCap": "You have as many pets as you can keep.",
   "errPetHatching": "The pet has not hatched yet.",
   "errPetHunting": "The pet is already hunting.",
@@ -2654,8 +2639,6 @@
   "petBonusRange": "Bonus: {min} – {max}",
   "petFightsRange": "Hunts like a level {min} – {max} monster",
   "petFind": "Where to get it",
-  "petFindLine": "Raid bosses of level {level}+ · {pct}% chance",
-  "petHatchTime": "Hatches in {time}",
   "petAssist": "Combat assist: +{pct}% damage",
   "petLevelNote": "From level 1 to 100",
   "@petAssistRange": {
@@ -2688,23 +2671,6 @@
       }
     }
   },
-  "@petFindLine": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      },
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
-  "@petHatchTime": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "@petAssist": {
     "placeholders": {
       "pct": {
@@ -2725,11 +2691,6 @@
   "petStage1": "Hatchling",
   "petStage2": "Young",
   "petStage3": "Adult",
-  "petSourceRaid": "Raid: {name}",
-  "petSourceBoss": "Boss: {name} · Lvl {level}",
-  "petSourceRegion": "Region: {name}",
-  "petSourceChance": "Chance: {pct}%",
-  "petSourceHatch": "Hatching: {time}",
   "@petIndexCount": {
     "placeholders": {
       "n": {
@@ -2753,44 +2714,6 @@
   "@petElement": {
     "placeholders": {
       "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@petSourceRaid": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@petSourceBoss": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
-  "@petSourceRegion": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@petSourceChance": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
-  "@petSourceHatch": {
-    "placeholders": {
-      "time": {
         "type": "String"
       }
     }

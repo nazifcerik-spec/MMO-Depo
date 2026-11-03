@@ -5830,18 +5830,6 @@ abstract class AppLocalizations {
   /// **'+{n} XP a win'**
   String petXpPerWin(int n);
 
-  /// No description provided for @petGuide.
-  ///
-  /// In en, this message translates to:
-  /// **'All pets'**
-  String get petGuide;
-
-  /// No description provided for @petGuideLine.
-  ///
-  /// In en, this message translates to:
-  /// **'{pct}% from level {level}+ raids · hatches in {time}'**
-  String petGuideLine(String pct, int level, String time);
-
   /// No description provided for @errPetCap.
   ///
   /// In en, this message translates to:
@@ -5992,18 +5980,6 @@ abstract class AppLocalizations {
   /// **'Where to get it'**
   String get petFind;
 
-  /// No description provided for @petFindLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Raid bosses of level {level}+ · {pct}% chance'**
-  String petFindLine(int level, String pct);
-
-  /// No description provided for @petHatchTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Hatches in {time}'**
-  String petHatchTime(String time);
-
   /// No description provided for @petAssist.
   ///
   /// In en, this message translates to:
@@ -6093,36 +6069,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adult'**
   String get petStage3;
-
-  /// No description provided for @petSourceRaid.
-  ///
-  /// In en, this message translates to:
-  /// **'Raid: {name}'**
-  String petSourceRaid(String name);
-
-  /// No description provided for @petSourceBoss.
-  ///
-  /// In en, this message translates to:
-  /// **'Boss: {name} · Lvl {level}'**
-  String petSourceBoss(String name, int level);
-
-  /// No description provided for @petSourceRegion.
-  ///
-  /// In en, this message translates to:
-  /// **'Region: {name}'**
-  String petSourceRegion(String name);
-
-  /// No description provided for @petSourceChance.
-  ///
-  /// In en, this message translates to:
-  /// **'Chance: {pct}%'**
-  String petSourceChance(String pct);
-
-  /// No description provided for @petSourceHatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Hatching: {time}'**
-  String petSourceHatch(String time);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

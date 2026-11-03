@@ -441,8 +441,6 @@
   "petDied": "宠物战败，狩猎提前结束。",
   "petPickMob": "狩猎目标",
   "petXpPerWin": "每场胜利+{n}经验",
-  "petGuide": "全部宠物",
-  "petGuideLine": "{level}级以上团本{pct}% · 孵化{time}",
   "errPetCap": "宠物数量已达上限。",
   "errPetHatching": "宠物尚未孵化。",
   "errPetHunting": "宠物已在狩猎中。",
@@ -468,8 +466,6 @@
   "petBonusRange": "加成：{min} – {max}",
   "petFightsRange": "狩猎实力相当于 {min} – {max} 级怪物",
   "petFind": "获取途径",
-  "petFindLine": "{level} 级以上团队副本首领 · {pct}% 几率",
-  "petHatchTime": "孵化：{time}",
   "petAssist": "战斗援助：伤害 +{pct}%",
   "petLevelNote": "1 级至 100 级",
   "petIndex": "宠物图鉴",
@@ -484,10 +480,5 @@
   "petElement": "元素：{name}",
   "petStage1": "幼年",
   "petStage2": "成长",
-  "petStage3": "成年",
-  "petSourceRaid": "团队副本：{name}",
-  "petSourceBoss": "首领：{name} · {level}级",
-  "petSourceRegion": "区域：{name}",
-  "petSourceChance": "几率：{pct}%",
-  "petSourceHatch": "孵化：{time}"
+  "petStage3": "成年"
 }

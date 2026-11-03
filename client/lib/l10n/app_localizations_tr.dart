@@ -3311,14 +3311,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get petGuide => 'Tüm petler';
-
-  @override
-  String petGuideLine(String pct, int level, String time) {
-    return 'Sv $level+ baskında %$pct · kuluçka $time';
-  }
-
-  @override
   String get errPetCap => 'Tutabileceğin kadar petin var.';
 
   @override
@@ -3404,16 +3396,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get petFind => 'Nereden elde edilir';
 
   @override
-  String petFindLine(int level, String pct) {
-    return 'Sv $level+ baskın boss\'ları · %$pct şans';
-  }
-
-  @override
-  String petHatchTime(String time) {
-    return 'Kuluçka: $time';
-  }
-
-  @override
   String petAssist(int pct) {
     return 'Savaş desteği: +%$pct hasar';
   }
@@ -3465,29 +3447,4 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get petStage3 => 'Usta';
-
-  @override
-  String petSourceRaid(String name) {
-    return 'Baskın: $name';
-  }
-
-  @override
-  String petSourceBoss(String name, int level) {
-    return 'Boss: $name · Sv $level';
-  }
-
-  @override
-  String petSourceRegion(String name) {
-    return 'Bölge: $name';
-  }
-
-  @override
-  String petSourceChance(String pct) {
-    return 'Şans: %$pct';
-  }
-
-  @override
-  String petSourceHatch(String time) {
-    return 'Kuluçka: $time';
-  }
 }

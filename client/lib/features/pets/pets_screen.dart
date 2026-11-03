@@ -318,7 +318,7 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
     final raids = {for (final r in await widget.adventure.raids()) r.dungeon.code: r.dungeon};
     return [
       for (final d in info?.dungeons ?? const <({String code, bool raid})>[])
-        if (raids[d.code] case final r?) (raid: r.code, boss: r.bossMobCode, level: r.minLevel, region: r.regionCode),
+        if (raids[d.code] case final r?) (boss: r.bossMobCode, region: r.regionCode),
     ];
   }
 

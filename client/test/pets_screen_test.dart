@@ -99,10 +99,9 @@ void main() {
       'Lvl 34–66',
       'Combat assist: +3% – +12% damage on every hit',
       'Hunts like a level 10 – 1000 monster',
-      'Raid bosses of level 430+ · 50% chance',
       'Hatchling',
-      'Chance: 50%',
       'Where to get it',
+      'Varn Undying', // the raid boss that drops the egg: map and monster only
     ]) {
       expect(find.text(t), findsOneWidget, reason: t);
     }
