@@ -70,6 +70,18 @@ func (r *MemoryRepo) CountActiveByAccount(_ context.Context, accountID uuid.UUID
 	return n, nil
 }
 
+func (r *MemoryRepo) SetBody(_ context.Context, id uuid.UUID, body string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	c, ok := r.rows[id]
+	if !ok {
+		return ErrNotFound
+	}
+	c.Body = body
+	r.rows[id] = c
+	return nil
+}
+
 func (r *MemoryRepo) Rename(_ context.Context, id uuid.UUID, name, normalized string) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()

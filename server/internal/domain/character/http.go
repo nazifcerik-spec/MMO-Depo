@@ -35,6 +35,7 @@ type createReq struct {
 	Name      string `json:"name"`
 	RaceCode  string `json:"race_code"`
 	ClassCode string `json:"class_code"`
+	Body      string `json:"body"` // male | female (DD-344)
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
@@ -53,6 +54,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		Name:      body.Name,
 		RaceCode:  body.RaceCode,
 		ClassCode: body.ClassCode,
+		Body:      body.Body,
 	})
 	if err != nil {
 		writeCharErr(w, r, err)
@@ -164,6 +166,33 @@ func (h *Handler) CancelDelete(w http.ResponseWriter, r *http.Request) {
 	apierr.WriteJSON(w, http.StatusOK, characterResponse(c))
 }
 
+// --- Appearance (DD-344) ----------------------------------------------------
+
+type appearanceReq struct {
+	Body string `json:"body"`
+}
+
+// Appearance changes the portrait figure.
+func (h *Handler) Appearance(w http.ResponseWriter, r *http.Request) {
+	acct := httpctx.AccountID(r.Context())
+	id, err := parseIDParam(r, "id")
+	if err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_ID", err.Error())
+		return
+	}
+	var body appearanceReq
+	if err := decodeJSON(r, &body); err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
+		return
+	}
+	c, err := h.svc.SetBody(r.Context(), id, acct, body.Body)
+	if err != nil {
+		writeCharErr(w, r, err)
+		return
+	}
+	apierr.WriteJSON(w, http.StatusOK, characterResponse(c))
+}
+
 // --- Rename -----------------------------------------------------------------
 
 type renameReq struct {
@@ -196,6 +225,7 @@ type characterResp struct {
 	ID            string     `json:"id"`
 	Name          string     `json:"name"`
 	RaceCode      string     `json:"race_code"`
+	Body          string     `json:"body"`
 	ClassCode     string     `json:"class_code"`
 	SpecCode      *string    `json:"spec_code,omitempty"`
 	Level         int        `json:"level"`
@@ -211,6 +241,7 @@ func characterResponse(c *Character) characterResp {
 		ID:            c.ID.String(),
 		Name:          c.Name,
 		RaceCode:      c.RaceCode,
+		Body:          c.Body,
 		ClassCode:     c.ClassCode,
 		SpecCode:      c.SpecCode,
 		Level:         int(c.Level),

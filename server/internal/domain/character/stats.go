@@ -56,6 +56,7 @@ type Sheet struct {
 	ID        string       `json:"id"`
 	Name      string       `json:"name"`
 	Race      string       `json:"race_code"`
+	Body      string       `json:"body"` // portrait figure (DD-344)
 	Class     string       `json:"class_code"`
 	Spec      *string      `json:"spec_code,omitempty"`
 	Level     int          `json:"level"`
@@ -214,6 +215,7 @@ func buildSheet(c *Character) Sheet {
 		ID:           c.ID.String(),
 		Name:         c.Name,
 		Race:         c.RaceCode,
+		Body:         c.Body,
 		Class:        c.ClassCode,
 		Spec:         c.SpecCode,
 		Level:        int(c.Level),

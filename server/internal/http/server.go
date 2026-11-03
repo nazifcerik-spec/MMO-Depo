@@ -291,6 +291,8 @@ func NewRouter(d Deps) http.Handler {
 					Post("/delete-cancel", charHandler.CancelDelete)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/rename", charHandler.Rename)
+				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
+					Post("/appearance", charHandler.Appearance) // DD-344
 
 				// --- Leveling + class progression (DD-250) ---
 				r.Get("/leveling", charHandler.Progression)

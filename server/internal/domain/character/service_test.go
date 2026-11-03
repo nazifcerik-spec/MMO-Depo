@@ -261,6 +261,32 @@ func TestRename_NotPlayableRejected(t *testing.T) {
 	require.ErrorIs(t, err, character.ErrNotPlayable)
 }
 
+// DD-344: a new character is drawn male unless it picks; the figure can change later.
+func TestSetBody(t *testing.T) {
+	svc, _ := newTestService(t)
+	acct := uuid.New()
+	c := mustCreate(t, svc, acct, "Grim")
+	require.Equal(t, "male", c.Body)
+
+	got, err := svc.SetBody(context.Background(), c.ID, acct, "Female")
+	require.NoError(t, err)
+	require.Equal(t, "female", got.Body)
+	again, err := svc.GetOwned(context.Background(), c.ID, acct)
+	require.NoError(t, err)
+	require.Equal(t, "female", again.Body)
+
+	_, err = svc.SetBody(context.Background(), c.ID, acct, "dragon")
+	var verr *character.ValidationError
+	require.ErrorAs(t, err, &verr)
+	_, err = svc.SetBody(context.Background(), c.ID, uuid.New(), "male")
+	require.Error(t, err, "only the owner")
+
+	f, err := svc.Create(context.Background(), character.CreateRequest{AccountID: acct, Name: "Lira",
+		RaceCode: "human", ClassCode: "warrior", Body: "female"})
+	require.NoError(t, err)
+	require.Equal(t, "female", f.Body)
+}
+
 func TestListForAccount(t *testing.T) {
 	svc, _ := newTestService(t)
 	acct := uuid.New()

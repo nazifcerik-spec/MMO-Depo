@@ -285,6 +285,7 @@ class EquippedItem {
     required this.rarity,
     required this.itemClass,
     this.itemSubclass = '',
+    this.minLevel = 1,
     this.prefix,
     this.suffix,
     this.bonuses = const [],
@@ -300,6 +301,7 @@ class EquippedItem {
       rarity: j['rarity'] as String? ?? 'common',
       itemClass: j['item_class'] as String? ?? '',
       itemSubclass: j['item_subclass'] as String? ?? '',
+      minLevel: (j['min_level'] as num?)?.toInt() ?? 1,
       enchantCode: j['enchant_code'] as String?,
       enchantEffect: EnchantInfo.fromJson(j['enchant_effect']),
       prefix: j['prefix'] as String?,
@@ -317,6 +319,9 @@ class EquippedItem {
   final String rarity;
   final String itemClass;
   final String itemSubclass;
+
+  /// Template level: the portrait's outfit band (DD-344).
+  final int minLevel;
   final String? prefix;
   final String? suffix;
 

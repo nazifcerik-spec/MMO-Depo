@@ -310,9 +310,12 @@ void main() {
     expect(find.text('3–16 characters, starts with a letter (A–Z, 0–9, _)'), findsWidgets);
 
     await tester.enterText(find.byType(TextFormField), 'Grim');
+    await tester.tap(find.text('Female')); // the portrait figure (DD-344)
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(be.characters.single['race_code'], 'dark_elf');
+    expect(be.characters.single['body'], 'female');
     expect(find.text('Lvl 1 · Ranger · Dark Elf'), findsOneWidget);
     expect(find.text('1/2 slots'), findsOneWidget);
 
@@ -322,14 +325,28 @@ void main() {
     expect(find.text('FOCUS'), findsOneWidget, reason: 'the class resource replaces the MP bar');
     expect(find.text('40 / 100'), findsOneWidget); // XP
     expect(find.text('Attributes'), findsOneWidget);
+    expect(find.textContaining('12', findRichText: true), findsWidgets); // 12g 34s 56c
+    // Full-body portrait beside the bars; its button switches the figure (DD-344).
+    expect(find.byKey(const Key('body-portrait')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('body-change')));
+    await tester.pumpAndSettle();
+    expect(be.characters.single['body'], 'male');
     await tester.scrollUntilVisible(find.text('90%'), 200, scrollable: _list); // below the boost boxes
     expect(find.text('90%'), findsOneWidget); // hit
-    expect(find.textContaining('12', findRichText: true), findsWidgets); // 12g 34s 56c
+    // Combat power = 2 × attack + defense + max HP / 10 (worldevent.Power).
+    expect(find.text('${18 * 2 + 7 + 12}'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('stat-block_pct')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('stat-block_pct')));
+    await tester.pumpAndSettle();
+    expect(find.text('Chance to halve an incoming hit. At most 60%.'), findsOneWidget);
     expect(be.requests.last.headers['X-Character-Id'], 'char-1');
 
     // Logging out lives at the bottom of the character tab, not the top bar.
     expect(find.byTooltip('Log out'), findsNothing);
     await tester.scrollUntilVisible(find.byKey(const Key('sheet-logout')), 300, scrollable: _list);
+    await tester.ensureVisible(find.byKey(const Key('sheet-logout')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('sheet-logout')));
     await tester.pumpAndSettle();
     expect(find.text('Log in'), findsOneWidget);
@@ -569,6 +586,8 @@ void main() {
     await tester.pump(const Duration(seconds: 6)); // the toast leaves the bottom of the screen
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.byKey(const Key('sheet-logout')), 300, scrollable: _list);
+    await tester.ensureVisible(find.byKey(const Key('sheet-logout')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('sheet-logout')));
     await tester.pumpAndSettle();
     expect(socket.closed, isTrue);

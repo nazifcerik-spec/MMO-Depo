@@ -3364,6 +3364,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-344 — Tam boy karakter portresi + yeni Savaş alanı
+
+**Context:** Kullanıcı karakter sayfasında can/öfke çubuklarının yanında tam boy, ırka göre figür ve giydiği ekipmana göre değişen görünüm istedi; ideal olan her eşyanın kendi görseliydi. 795 zırh parçası × 20 vücut (10 ırk × 2 cinsiyet) ≈ 16 bin hizalı katman demek ve Gemini şeffaf, hizalı katman üretemiyor. Kullanıcı önce tek ırkla karma yaklaşımı denemeyi seçti. Savaş alanı yalnız 4 değer gösteriyordu, sunucuda 12 değer vardı.
+**Decision:** Migration 0063 `character.body` (male/female, varsayılan male); oluşturmada seçim, `POST /character/{id}/appearance`, `sheet.body`. Figür: `scripts/body_art.py` (ırk + vücut başına aynı karakter, 5×2 iki Gemini sayfası, oluklardan panel + zemin farkından figür bulup 200×320 çerçeve) → `client/assets/bodies/<ırk>_<vücut>_<kıyafet>.webp`; kıyafet = `none` ya da göğüs zırhının türü (kumaş/deri/plaka) × 6 seviye bandı (1/100/300/500/700/850) = 19 görsel. Çerçeve rengi göğüs zırhının nadirliği, efsanevi/mitikte parıltı. Elde tutulan: silah ve kalkanlar eşyanın kendi görseli: `scripts/held_cutout.py` 977 ikonun arka planını siler (`client/assets/held/`), silah 45° dik sağ elde, kalkan sol elde. İstemci `BodyPortrait` + `bodyOutfit`; figürü olmayan ırkta ırk portresi. `StatBar.stacked` (dar sütun). Savaş alanı `CombatStats`: Savaş gücü (`worldevent.Power`), saldırı/savunma/isabet, 9 eşit kutu (kritik, kritik hasar, kaçınma, blok, hasar azaltma, can çalma, pet desteği, infaz, son direniş), tavanlı değerlerde çubuk, sahip olunmayan soluk, dokununca açıklama.
+**Consequences:** Şimdilik yalnız insan erkek + kadın (38 görsel); kalan 9 ırk 342 görsel, onay sonrası. Zırh parçaları tek tek görünmez: kıyafeti göğüs zırhı belirler, miğfer/bacak/çizme/eldiven figürü değiştirmez. Mevcut karakterler erkek başlar, portredeki düğmeyle değişir. Testler: `SetBody`, `bodyOutfit` + insan görsellerinin tamlığı, karakter akışı (cinsiyet seçimi, düğme, güç, açıklama).
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

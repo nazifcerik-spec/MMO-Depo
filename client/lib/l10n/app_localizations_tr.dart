@@ -3447,4 +3447,103 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get petStage3 => 'Usta';
+
+  @override
+  String get bodyMale => 'Erkek';
+
+  @override
+  String get bodyFemale => 'Kadın';
+
+  @override
+  String get bodyChoice => 'Görünüm';
+
+  @override
+  String get bodyChange => 'Görünümü değiştir';
+
+  @override
+  String get portraitNoArmor => 'Zırh yok';
+
+  @override
+  String get combatPower => 'Savaş gücü';
+
+  @override
+  String get combatTapHint => 'dokun: açıklama';
+
+  @override
+  String statCap(int cap) {
+    return 'tavan %$cap';
+  }
+
+  @override
+  String get cEvasion => 'Kaçınma';
+
+  @override
+  String get cBlock => 'Blok';
+
+  @override
+  String get cCritDmg => 'Kritik hasar';
+
+  @override
+  String get cDmgReduction => 'Hasar azaltma';
+
+  @override
+  String get cLifesteal => 'Can çalma';
+
+  @override
+  String get cExecute => 'İnfaz';
+
+  @override
+  String get cMissingHp => 'Son direniş';
+
+  @override
+  String get cPetAssist => 'Pet desteği';
+
+  @override
+  String get xPower => 'Dünya etkinliklerinde kullanılan güç: 2 × saldırı + savunma + azami can / 10.';
+
+  @override
+  String get xAttack => 'Her vuruşun düşmanın savunmasından önceki temel hasarı.';
+
+  @override
+  String get xDefense => 'Aldığın her vuruştan savunmanın yarısı düşülür.';
+
+  @override
+  String xCrit(int cap) {
+    return 'Bir vuruşun kritik olma şansı. En çok %$cap.';
+  }
+
+  @override
+  String get xCritDmg => 'Kritik vuruş normal vuruşun bu katı kadar hasar verir.';
+
+  @override
+  String get xHit => 'Vuruşunun isabet şansı; düşmanın kaçınması düşülür (%15–95).';
+
+  @override
+  String xEvasion(int cap) {
+    return 'Düşmanın isabet şansından düşülür. En çok %$cap.';
+  }
+
+  @override
+  String xBlock(int cap) {
+    return 'Gelen vuruşu yarıya indirme şansı. En çok %$cap.';
+  }
+
+  @override
+  String xDmgReduction(int cap) {
+    return 'Aldığın her vuruş bu oranda azalır. En çok %$cap.';
+  }
+
+  @override
+  String get xLifesteal => 'Verdiğin hasarın bu kadarı kadar iyileşirsin.';
+
+  @override
+  String xExecute(int pct) {
+    return 'Canı %$pct ve altındaki düşmanlara ek hasar.';
+  }
+
+  @override
+  String get xMissingHp => 'Canın azaldıkça bu kadara varan ek hasar.';
+
+  @override
+  String get xPetAssist => 'Aktif petin her vuruşuna bu kadar hasar ekler.';
 }

@@ -61,6 +61,7 @@ class CharacterSheet {
     required this.state,
     this.resourceKind = '',
     this.resourceMax = 0,
+    this.body = 'male',
   });
 
   factory CharacterSheet.fromJson(Map<String, dynamic> j) {
@@ -82,12 +83,16 @@ class CharacterSheet {
       state: j['state'] as String? ?? 'active',
       resourceKind: j['resource_kind'] as String? ?? '',
       resourceMax: (j['resource_max'] as num?)?.toInt() ?? 0,
+      body: j['body'] as String? ?? 'male',
     );
   }
 
   final String id;
   final String name;
   final String raceCode;
+
+  /// The portrait figure: male | female (DD-344).
+  final String body;
   final String classCode;
   final int level;
   final int xp;

@@ -320,15 +320,67 @@ class MessageView extends StatelessWidget {
 
 /// Labelled linear bar (HP/MP/ST/EN/XP).
 class StatBar extends StatelessWidget {
-  const StatBar({super.key, required this.label, required this.value, required this.color, required this.valueText});
+  const StatBar({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.color,
+    required this.valueText,
+    this.stacked = false,
+  });
 
   final String label;
   final double value;
   final Color color;
   final String valueText;
 
+  /// Label and value above the bar (narrow columns, e.g. beside the portrait).
+  final bool stacked;
+
   @override
   Widget build(BuildContext context) {
+    final bar = ClipRRect(
+      borderRadius: BorderRadius.circular(Radii.sm),
+      // Fills from the old value to the new one (first build: no motion).
+      child: TweenAnimationBuilder<double>(
+        tween: Tween(end: value.isNaN ? 0 : value.clamp(0, 1).toDouble()),
+        duration: motion(context, const Duration(milliseconds: 400)),
+        curve: Curves.easeOut,
+        builder: (_, v, _) => LinearProgressIndicator(
+          value: v,
+          minHeight: stacked ? 8 : 10,
+          color: color,
+          backgroundColor: Palette.bgElevated,
+        ),
+      ),
+    );
+    if (stacked) {
+      return Semantics(
+        label: '$label $valueText',
+        excludeSemantics: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    label,
+                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Palette.textSecondary),
+                  ),
+                ),
+                Text(
+                  valueText,
+                  style: const TextStyle(fontSize: 11, fontFeatures: numeric, color: Palette.textPrimary),
+                ),
+              ],
+            ),
+            const SizedBox(height: 3),
+            bar,
+          ],
+        ),
+      );
+    }
     return Semantics(
       label: '$label $valueText',
       excludeSemantics: true,
@@ -341,19 +393,7 @@ class StatBar extends StatelessWidget {
               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Palette.textSecondary),
             ),
           ),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(Radii.sm),
-              // Fills from the old value to the new one (first build: no motion).
-              child: TweenAnimationBuilder<double>(
-                tween: Tween(end: value.isNaN ? 0 : value.clamp(0, 1).toDouble()),
-                duration: motion(context, const Duration(milliseconds: 400)),
-                curve: Curves.easeOut,
-                builder: (_, v, _) =>
-                    LinearProgressIndicator(value: v, minHeight: 10, color: color, backgroundColor: Palette.bgElevated),
-              ),
-            ),
-          ),
+          Expanded(child: bar),
           const SizedBox(width: Space.md),
           SizedBox(
             width: 92,

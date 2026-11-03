@@ -3435,4 +3435,103 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get petStage3 => '成年';
+
+  @override
+  String get bodyMale => '男';
+
+  @override
+  String get bodyFemale => '女';
+
+  @override
+  String get bodyChoice => '外观';
+
+  @override
+  String get bodyChange => '更改外观';
+
+  @override
+  String get portraitNoArmor => '无护甲';
+
+  @override
+  String get combatPower => '战斗力';
+
+  @override
+  String get combatTapHint => '点按查看说明';
+
+  @override
+  String statCap(int cap) {
+    return '上限 $cap%';
+  }
+
+  @override
+  String get cEvasion => '闪避';
+
+  @override
+  String get cBlock => '格挡';
+
+  @override
+  String get cCritDmg => '暴击伤害';
+
+  @override
+  String get cDmgReduction => '减伤';
+
+  @override
+  String get cLifesteal => '吸血';
+
+  @override
+  String get cExecute => '斩杀';
+
+  @override
+  String get cMissingHp => '背水一战';
+
+  @override
+  String get cPetAssist => '宠物协助';
+
+  @override
+  String get xPower => '世界事件使用的强度：2 × 攻击 + 防御 + 最大生命 / 10。';
+
+  @override
+  String get xAttack => '每次攻击在计算敌方防御前的基础伤害。';
+
+  @override
+  String get xDefense => '你受到的每次攻击会减去你防御的一半。';
+
+  @override
+  String xCrit(int cap) {
+    return '攻击暴击的几率，最多 $cap%。';
+  }
+
+  @override
+  String get xCritDmg => '暴击造成普通攻击的该倍数伤害。';
+
+  @override
+  String get xHit => '命中几率，减去敌人闪避（15–95%）。';
+
+  @override
+  String xEvasion(int cap) {
+    return '从敌人命中几率中扣除，最多 $cap%。';
+  }
+
+  @override
+  String xBlock(int cap) {
+    return '将受到的攻击减半的几率，最多 $cap%。';
+  }
+
+  @override
+  String xDmgReduction(int cap) {
+    return '受到的每次攻击按此比例降低，最多 $cap%。';
+  }
+
+  @override
+  String get xLifesteal => '按造成伤害的该比例回复生命。';
+
+  @override
+  String xExecute(int pct) {
+    return '对生命值不高于 $pct% 的敌人造成额外伤害。';
+  }
+
+  @override
+  String get xMissingHp => '生命越低，额外伤害越高，最多为此值。';
+
+  @override
+  String get xPetAssist => '出战宠物为你的每次攻击增加该比例伤害。';
 }

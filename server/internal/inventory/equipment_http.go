@@ -54,6 +54,7 @@ func (h *EquipmentHandler) View(w http.ResponseWriter, r *http.Request) {
 			"rarity":        b.Rarity,
 			"item_class":    b.ItemClass,
 			"item_subclass": b.ItemSubclass,
+			"min_level":     b.MinLevel, // the portrait's outfit band (DD-344)
 			"is_bound":      b.IsBound,
 		}
 		if b.Prefix != nil {

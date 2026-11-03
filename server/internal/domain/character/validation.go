@@ -62,6 +62,22 @@ func validateRace(raw string) (string, error) {
 	return s, nil
 }
 
+// Bodies are the portrait figures (DD-344); empty picks the first.
+var Bodies = []string{"male", "female"}
+
+func validateBody(raw string) (string, error) {
+	s := strings.ToLower(strings.TrimSpace(raw))
+	if s == "" {
+		return Bodies[0], nil
+	}
+	for _, b := range Bodies {
+		if s == b {
+			return s, nil
+		}
+	}
+	return "", &ValidationError{Field: "body", Message: "unknown body"}
+}
+
 func validateClass(raw string) (string, error) {
 	s := strings.ToLower(strings.TrimSpace(raw))
 	if s == "" {

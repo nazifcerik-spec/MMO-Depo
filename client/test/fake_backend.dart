@@ -498,6 +498,7 @@ class FakeBackend {
         'name': body['name'],
         'race_code': body['race_code'],
         'class_code': body['class_code'],
+        'body': body['body'] ?? 'male',
         'level': 1,
         'state': 'active',
       };
@@ -608,6 +609,13 @@ class FakeBackend {
         'replayed': false,
         'gather': {'level': gatherLevel + 1, 'xp': 4, 'xp_to_next': 70, 'gained': 36, 'leveled_up': true},
       });
+    }
+    final look = RegExp(r'^/v1/character/([^/]+)/appearance$').firstMatch(path);
+    if (look != null) {
+      final c = characters.firstWhere((c) => c['id'] == look[1], orElse: () => const {});
+      if (c.isEmpty) return error(404, 'E_NOT_FOUND');
+      c['body'] = body['body'];
+      return json(200, c);
     }
     final del = RegExp(r'^/v1/character/([^/]+)/(delete|delete-cancel)$').firstMatch(path);
     if (del != null) {

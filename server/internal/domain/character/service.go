@@ -71,6 +71,7 @@ type CreateRequest struct {
 	Name      string
 	RaceCode  string
 	ClassCode string
+	Body      string // male | female; empty = male (DD-344)
 }
 
 // --- Create -----------------------------------------------------------------
@@ -88,6 +89,10 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 		return nil, err
 	}
 	class, err := validateClass(req.ClassCode)
+	if err != nil {
+		return nil, err
+	}
+	body, err := validateBody(req.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -118,6 +123,7 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 		Name:           name,
 		NameNormalized: normalized,
 		RaceCode:       race,
+		Body:           body,
 		ClassCode:      class,
 		Level:          1,
 		XP:             0,
@@ -271,6 +277,26 @@ func (s *Service) Rename(ctx context.Context, characterID, accountID uuid.UUID, 
 	}
 	c.Name = name
 	c.NameNormalized = normalized
+	return c, nil
+}
+
+// SetBody changes the portrait figure (DD-344).
+func (s *Service) SetBody(ctx context.Context, characterID, accountID uuid.UUID, raw string) (*Character, error) {
+	c, err := s.GetOwned(ctx, characterID, accountID)
+	if err != nil {
+		return nil, err
+	}
+	body, err := validateBody(raw)
+	if err != nil {
+		return nil, err
+	}
+	if body == c.Body {
+		return c, nil
+	}
+	if err := s.repo.SetBody(ctx, c.ID, body); err != nil {
+		return nil, err
+	}
+	c.Body = body
 	return c, nil
 }
 

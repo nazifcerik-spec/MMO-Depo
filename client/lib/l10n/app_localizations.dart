@@ -6069,6 +6069,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adult'**
   String get petStage3;
+
+  /// No description provided for @bodyMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get bodyMale;
+
+  /// No description provided for @bodyFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get bodyFemale;
+
+  /// No description provided for @bodyChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get bodyChoice;
+
+  /// No description provided for @bodyChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change appearance'**
+  String get bodyChange;
+
+  /// No description provided for @portraitNoArmor.
+  ///
+  /// In en, this message translates to:
+  /// **'No armor'**
+  String get portraitNoArmor;
+
+  /// No description provided for @combatPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat power'**
+  String get combatPower;
+
+  /// No description provided for @combatTapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'tap for details'**
+  String get combatTapHint;
+
+  /// No description provided for @statCap.
+  ///
+  /// In en, this message translates to:
+  /// **'cap {cap}%'**
+  String statCap(int cap);
+
+  /// No description provided for @cEvasion.
+  ///
+  /// In en, this message translates to:
+  /// **'Evasion'**
+  String get cEvasion;
+
+  /// No description provided for @cBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get cBlock;
+
+  /// No description provided for @cCritDmg.
+  ///
+  /// In en, this message translates to:
+  /// **'Crit damage'**
+  String get cCritDmg;
+
+  /// No description provided for @cDmgReduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage reduction'**
+  String get cDmgReduction;
+
+  /// No description provided for @cLifesteal.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifesteal'**
+  String get cLifesteal;
+
+  /// No description provided for @cExecute.
+  ///
+  /// In en, this message translates to:
+  /// **'Execute'**
+  String get cExecute;
+
+  /// No description provided for @cMissingHp.
+  ///
+  /// In en, this message translates to:
+  /// **'Last stand'**
+  String get cMissingHp;
+
+  /// No description provided for @cPetAssist.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet assist'**
+  String get cPetAssist;
+
+  /// No description provided for @xPower.
+  ///
+  /// In en, this message translates to:
+  /// **'The strength used in world events: 2 × attack + defense + max HP / 10.'**
+  String get xPower;
+
+  /// No description provided for @xAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'Base damage of each hit before the enemy\'s defense.'**
+  String get xAttack;
+
+  /// No description provided for @xDefense.
+  ///
+  /// In en, this message translates to:
+  /// **'Each hit you take loses half of your defense.'**
+  String get xDefense;
+
+  /// No description provided for @xCrit.
+  ///
+  /// In en, this message translates to:
+  /// **'Chance that a hit is critical. At most {cap}%.'**
+  String xCrit(int cap);
+
+  /// No description provided for @xCritDmg.
+  ///
+  /// In en, this message translates to:
+  /// **'A critical hit deals this multiple of a normal one.'**
+  String get xCritDmg;
+
+  /// No description provided for @xHit.
+  ///
+  /// In en, this message translates to:
+  /// **'Your chance to land a hit, minus the enemy\'s evasion (15–95%).'**
+  String get xHit;
+
+  /// No description provided for @xEvasion.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken off the enemy\'s hit chance. At most {cap}%.'**
+  String xEvasion(int cap);
+
+  /// No description provided for @xBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Chance to halve an incoming hit. At most {cap}%.'**
+  String xBlock(int cap);
+
+  /// No description provided for @xDmgReduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Every hit you take is lowered by this share. At most {cap}%.'**
+  String xDmgReduction(int cap);
+
+  /// No description provided for @xLifesteal.
+  ///
+  /// In en, this message translates to:
+  /// **'You heal this share of the damage you deal.'**
+  String get xLifesteal;
+
+  /// No description provided for @xExecute.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra damage against enemies at or below {pct}% HP.'**
+  String xExecute(int pct);
+
+  /// No description provided for @xMissingHp.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to this much extra damage as your own HP drops.'**
+  String get xMissingHp;
+
+  /// No description provided for @xPetAssist.
+  ///
+  /// In en, this message translates to:
+  /// **'Your active pet adds this share to each of your hits.'**
+  String get xPetAssist;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

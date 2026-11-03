@@ -1,4 +1,7 @@
-import '../inventory/inventory_models.dart' show FoodBuff;
+import 'dart:math' as math;
+
+import '../inventory/inventory_models.dart' show EquippedItem, FoodBuff;
+import '../inventory/inventory_repository.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,7 @@ import '../progression/progression_screen.dart' show bonusText;
 import '../social/group_panels.dart';
 import '../social/group_repository.dart';
 import 'character_repository.dart';
+import 'body_portrait.dart';
 import 'class_info.dart' show SkillArt;
 import 'leveling.dart';
 import 'models.dart';
@@ -83,6 +87,8 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   List<ClassSkill>? _skills;
   LevelingSummary? _leveling;
   FoodBuff? _buff;
+  Map<String, EquippedItem> _equipped = const {};
+  late final _inventory = InventoryRepository(widget.repo.api, widget.initial.id);
   late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
   late final _groups = GroupRepository(widget.repo.api, widget.initial.id);
 
@@ -142,6 +148,22 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
       if (mounted) setState(() => _buff = b);
     } on ApiError {
       // Optional line.
+    }
+    try {
+      final eq = await _inventory.equipment();
+      if (mounted) setState(() => _equipped = eq);
+    } on ApiError {
+      // The portrait keeps its last outfit.
+    }
+  }
+
+  /// Switches the portrait figure (DD-344).
+  Future<void> _changeBody() async {
+    try {
+      await widget.repo.setBody(_sheet.id, _sheet.body == 'female' ? 'male' : 'female');
+      await _fetch();
+    } on ApiError catch (e) {
+      if (mounted) toast(context, Text(errorText(AppLocalizations.of(context), e)));
     }
   }
 
@@ -209,7 +231,13 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
       final cur = r['${key}_current'] ?? 0, max = r['${key}_max'] ?? 0;
       return Padding(
         padding: const EdgeInsets.only(bottom: Space.sm),
-        child: StatBar(label: label, value: max == 0 ? 0 : cur / max, color: color, valueText: '$cur/$max'),
+        child: StatBar(
+          label: label,
+          value: max == 0 ? 0 : cur / max,
+          color: color,
+          valueText: '$cur/$max',
+          stacked: true,
+        ),
       );
     }
 
@@ -238,21 +266,36 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
           const SizedBox(height: Space.lg),
           _Section(
             children: [
-              bar(l.hp, 'hp', Palette.danger),
-              if (s.resourceKind.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: Space.sm),
-                  child: StatBar(
-                    label: ContentNames.of('resource', s.resourceKind).toUpperCase(),
-                    value: 1,
-                    color: Palette.info,
-                    valueText: '${s.resourceMax}',
+              // The full-body portrait beside the bars (DD-344).
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BodyPortrait(race: s.raceCode, body: s.body, equipped: _equipped, onChangeBody: _changeBody),
+                  const SizedBox(width: Space.md),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        bar(l.hp, 'hp', Palette.danger),
+                        if (s.resourceKind.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: Space.sm),
+                            child: StatBar(
+                              label: ContentNames.of('resource', s.resourceKind).toUpperCase(),
+                              value: 1,
+                              color: Palette.info,
+                              valueText: '${s.resourceMax}',
+                              stacked: true,
+                            ),
+                          )
+                        else
+                          bar(l.mp, 'mp', Palette.info),
+                        bar(l.stamina, 'stamina', Palette.success),
+                        bar(l.energy, 'energy', Palette.warning),
+                      ],
+                    ),
                   ),
-                )
-              else
-                bar(l.mp, 'mp', Palette.info),
-              bar(l.stamina, 'stamina', Palette.success),
-              bar(l.energy, 'energy', Palette.warning),
+                ],
+              ),
               if (_buff case FoodBuff(expiresAt: final until?) when until.isAfter(DateTime.now()))
                 Row(
                   children: [
@@ -297,17 +340,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
           const SizedBox(height: Space.lg),
           _Section(
             title: l.combat,
-            children: [
-              _Grid(
-                columns: 2,
-                entries: [
-                  (l.attack, '${s.derived['attack'] ?? 0}'),
-                  (l.defense, '${s.derived['defense'] ?? 0}'),
-                  (l.crit, l.percent(s.derived['crit_pct'] ?? 0)),
-                  (l.hit, l.percent(s.derived['hit_pct'] ?? 0)),
-                ],
-              ),
-            ],
+            children: [CombatStats(sheet: s)],
           ),
           if (widget.live case final live?) ...[
             const SizedBox(height: Space.lg),
@@ -500,12 +533,275 @@ class _SectionState extends State<_Section> {
   }
 }
 
-/// Label/value tiles in a fixed-column grid (3×2 attributes, 2×2 combat).
+/// Stat caps (content/progression.yaml caps).
+const statCaps = {'crit_pct': 60, 'evasion_pct': 40, 'block_pct': 60, 'dmg_reduction_pct': 75};
+
+/// The combat section: power, attack, defense and hit, then every combat stat
+/// with its cap; a tap explains the stat, stats the character lacks dim.
+class CombatStats extends StatefulWidget {
+  const CombatStats({super.key, required this.sheet});
+
+  final CharacterSheet sheet;
+
+  @override
+  State<CombatStats> createState() => _CombatStatsState();
+}
+
+class _CombatStatsState extends State<CombatStats> {
+  String? _open;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final d = widget.sheet.derived;
+    int v(String k) => d[k] ?? 0;
+    final hpMax = widget.sheet.resources['hp_max'] ?? 0;
+    // worldevent.Power: the strength events snapshot.
+    final power = math.max(1, v('attack') * 2 + v('defense') + hpMax ~/ 10);
+    final critMult = 2 * (100 + v('crit_dmg_pct')) / 100;
+    final stats = <(String, String, String, Color, int?, String)>[
+      (
+        'crit_pct',
+        l.crit,
+        l.percent(v('crit_pct')),
+        Palette.danger,
+        statCaps['crit_pct'],
+        l.xCrit(statCaps['crit_pct']!),
+      ),
+      ('crit_dmg_pct', l.cCritDmg, '×${critMult.toStringAsFixed(2)}', Palette.danger, null, l.xCritDmg),
+      (
+        'evasion_pct',
+        l.cEvasion,
+        l.percent(v('evasion_pct')),
+        Palette.info,
+        statCaps['evasion_pct'],
+        l.xEvasion(statCaps['evasion_pct']!),
+      ),
+      (
+        'block_pct',
+        l.cBlock,
+        l.percent(v('block_pct')),
+        Palette.info,
+        statCaps['block_pct'],
+        l.xBlock(statCaps['block_pct']!),
+      ),
+      (
+        'dmg_reduction_pct',
+        l.cDmgReduction,
+        l.percent(v('dmg_reduction_pct')),
+        Palette.info,
+        statCaps['dmg_reduction_pct'],
+        l.xDmgReduction(statCaps['dmg_reduction_pct']!),
+      ),
+      ('lifesteal_pct', l.cLifesteal, l.percent(v('lifesteal_pct')), Palette.success, null, l.xLifesteal),
+      ('pet_assist_pct', l.cPetAssist, l.percent(v('pet_assist_pct')), Palette.epic, null, l.xPetAssist),
+      ('execute_pct', l.cExecute, l.percent(v('execute_pct')), Palette.danger, null, l.xExecute(35)),
+      ('missing_hp_dmg_pct', l.cMissingHp, l.percent(v('missing_hp_dmg_pct')), Palette.danger, null, l.xMissingHp),
+    ];
+    final explain = {
+      'power': l.xPower,
+      'attack': l.xAttack,
+      'defense': l.xDefense,
+      'hit_pct': l.xHit,
+      for (final s in stats) s.$1: s.$6,
+    };
+
+    Widget tap(String key, Widget child) => InkWell(
+      key: Key('stat-$key'),
+      borderRadius: BorderRadius.circular(Radii.md),
+      onTap: () => setState(() => _open = _open == key ? null : key),
+      child: child,
+    );
+    Widget big(String key, IconData icon, Color color, String label, String value) => Expanded(
+      child: tap(
+        key,
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: Space.md),
+          decoration: BoxDecoration(color: Palette.bgElevated, borderRadius: BorderRadius.circular(Radii.md)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, size: 14, color: color),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Palette.textMuted),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 2),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, fontFeatures: numeric),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(l.combatTapHint, style: const TextStyle(fontSize: 10, color: Palette.textMuted)),
+        ),
+        const SizedBox(height: Space.xs),
+        tap(
+          'power',
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: Space.md, vertical: Space.sm),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [Palette.accent.withValues(alpha: 0.14), Colors.transparent]),
+              borderRadius: BorderRadius.circular(Radii.md),
+              border: Border.all(color: Palette.accent.withValues(alpha: 0.35)),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.local_fire_department, color: Palette.accent),
+                const SizedBox(width: Space.sm),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l.combatPower, style: const TextStyle(fontSize: 11, color: Palette.textSecondary)),
+                    Text(
+                      '$power',
+                      key: const Key('combat-power'),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: Palette.accent,
+                        fontFeatures: numeric,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: Space.sm),
+        Row(
+          children: [
+            big('attack', Icons.flash_on, Palette.danger, l.attack, '${v('attack')}'),
+            const SizedBox(width: Space.sm),
+            big('defense', Icons.shield_outlined, Palette.info, l.defense, '${v('defense')}'),
+            const SizedBox(width: Space.sm),
+            big('hit_pct', Icons.gps_fixed, Palette.warning, l.hit, l.percent(v('hit_pct'))),
+          ],
+        ),
+        const SizedBox(height: Space.sm),
+        LayoutBuilder(
+          builder: (context, c) {
+            const cols = 3;
+            final w = (c.maxWidth - (cols - 1) * Space.xs) / cols;
+            return Wrap(
+              spacing: Space.xs,
+              runSpacing: Space.xs,
+              children: [
+                for (final (key, label, value, color, cap, _) in stats)
+                  SizedBox(
+                    width: w,
+                    child: tap(
+                      key,
+                      Opacity(
+                        // A stat the character lacks dims (crit damage always counts).
+                        opacity: v(key) == 0 && key != 'crit_dmg_pct' ? 0.4 : 1,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Palette.bgElevated,
+                            borderRadius: BorderRadius.circular(Radii.sm),
+                            border: Border.all(color: _open == key ? color : Colors.transparent),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                label,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: Palette.textMuted,
+                                ),
+                              ),
+                              Text(
+                                value,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  fontFeatures: numeric,
+                                ),
+                              ),
+                              // Uncapped tiles keep the cap line's room: one size for all.
+                              Visibility.maintain(
+                                visible: cap != null,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    const SizedBox(height: 4),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(2),
+                                      child: LinearProgressIndicator(
+                                        value: cap == null ? 0 : (v(key) / cap).clamp(0, 1).toDouble(),
+                                        minHeight: 3,
+                                        color: color,
+                                        backgroundColor: Palette.borderSubtle,
+                                      ),
+                                    ),
+                                    Text(
+                                      l.statCap(cap ?? 0),
+                                      style: const TextStyle(fontSize: 9, color: Palette.textMuted),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+        if (_open case final k?)
+          Container(
+            key: const Key('stat-explain'),
+            margin: const EdgeInsets.only(top: Space.sm),
+            padding: const EdgeInsets.all(Space.sm),
+            decoration: BoxDecoration(
+              color: Palette.bgElevated,
+              borderRadius: BorderRadius.circular(Radii.sm),
+              border: Border.all(color: Palette.borderStrong),
+            ),
+            child: Text(explain[k] ?? '', style: const TextStyle(fontSize: 12, color: Palette.textSecondary)),
+          ),
+      ],
+    );
+  }
+}
+
+/// Label/value tiles in a fixed-column grid (3×2 attributes).
 class _Grid extends StatelessWidget {
-  const _Grid({required this.entries, this.columns = 3});
+  const _Grid({required this.entries});
 
   final List<(String, String)> entries;
-  final int columns;
+  static const columns = 3;
 
   @override
   Widget build(BuildContext context) {

@@ -856,6 +856,7 @@ class _NameDialog extends StatefulWidget {
 class _NameDialogState extends State<_NameDialog> {
   final _form = GlobalKey<FormState>();
   final _name = TextEditingController();
+  String _body = 'male';
   bool _busy = false;
   String? _error;
 
@@ -873,7 +874,7 @@ class _NameDialogState extends State<_NameDialog> {
       _error = null;
     });
     try {
-      final c = await widget.repo.create(_name.text.trim(), widget.race, widget.classCode);
+      final c = await widget.repo.create(_name.text.trim(), widget.race, widget.classCode, body: _body);
       if (mounted) Navigator.of(context).pop(c);
     } on ApiError catch (e) {
       if (mounted) setState(() => _error = errorText(l, e));
@@ -905,6 +906,19 @@ class _NameDialogState extends State<_NameDialog> {
               decoration: InputDecoration(labelText: l.characterName, helperText: l.nameRule),
               validator: (v) => characterNamePattern.hasMatch((v ?? '').trim()) ? null : l.nameRule,
               onFieldSubmitted: (_) => _submit(),
+            ),
+            const SizedBox(height: Space.sm),
+            Text(l.bodyChoice, style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: Space.xs),
+            SegmentedButton<String>(
+              key: const Key('body-choice'),
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(value: 'male', label: Text(l.bodyMale), icon: const Icon(Icons.male, size: 18)),
+                ButtonSegment(value: 'female', label: Text(l.bodyFemale), icon: const Icon(Icons.female, size: 18)),
+              ],
+              selected: {_body},
+              onSelectionChanged: (s) => setState(() => _body = s.first),
             ),
             if (_error != null) Text(_error!, style: const TextStyle(color: Palette.danger)),
           ],

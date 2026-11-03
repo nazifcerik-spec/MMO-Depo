@@ -3448,4 +3448,103 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get petStage3 => 'Adult';
+
+  @override
+  String get bodyMale => 'Male';
+
+  @override
+  String get bodyFemale => 'Female';
+
+  @override
+  String get bodyChoice => 'Appearance';
+
+  @override
+  String get bodyChange => 'Change appearance';
+
+  @override
+  String get portraitNoArmor => 'No armor';
+
+  @override
+  String get combatPower => 'Combat power';
+
+  @override
+  String get combatTapHint => 'tap for details';
+
+  @override
+  String statCap(int cap) {
+    return 'cap $cap%';
+  }
+
+  @override
+  String get cEvasion => 'Evasion';
+
+  @override
+  String get cBlock => 'Block';
+
+  @override
+  String get cCritDmg => 'Crit damage';
+
+  @override
+  String get cDmgReduction => 'Damage reduction';
+
+  @override
+  String get cLifesteal => 'Lifesteal';
+
+  @override
+  String get cExecute => 'Execute';
+
+  @override
+  String get cMissingHp => 'Last stand';
+
+  @override
+  String get cPetAssist => 'Pet assist';
+
+  @override
+  String get xPower => 'The strength used in world events: 2 × attack + defense + max HP / 10.';
+
+  @override
+  String get xAttack => 'Base damage of each hit before the enemy\'s defense.';
+
+  @override
+  String get xDefense => 'Each hit you take loses half of your defense.';
+
+  @override
+  String xCrit(int cap) {
+    return 'Chance that a hit is critical. At most $cap%.';
+  }
+
+  @override
+  String get xCritDmg => 'A critical hit deals this multiple of a normal one.';
+
+  @override
+  String get xHit => 'Your chance to land a hit, minus the enemy\'s evasion (15–95%).';
+
+  @override
+  String xEvasion(int cap) {
+    return 'Taken off the enemy\'s hit chance. At most $cap%.';
+  }
+
+  @override
+  String xBlock(int cap) {
+    return 'Chance to halve an incoming hit. At most $cap%.';
+  }
+
+  @override
+  String xDmgReduction(int cap) {
+    return 'Every hit you take is lowered by this share. At most $cap%.';
+  }
+
+  @override
+  String get xLifesteal => 'You heal this share of the damage you deal.';
+
+  @override
+  String xExecute(int pct) {
+    return 'Extra damage against enemies at or below $pct% HP.';
+  }
+
+  @override
+  String get xMissingHp => 'Up to this much extra damage as your own HP drops.';
+
+  @override
+  String get xPetAssist => 'Your active pet adds this share to each of your hits.';
 }

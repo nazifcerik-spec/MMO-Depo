@@ -3448,4 +3448,103 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get petStage3 => 'Adulta';
+
+  @override
+  String get bodyMale => 'Hombre';
+
+  @override
+  String get bodyFemale => 'Mujer';
+
+  @override
+  String get bodyChoice => 'Apariencia';
+
+  @override
+  String get bodyChange => 'Cambiar apariencia';
+
+  @override
+  String get portraitNoArmor => 'Sin armadura';
+
+  @override
+  String get combatPower => 'Poder de combate';
+
+  @override
+  String get combatTapHint => 'toca para detalles';
+
+  @override
+  String statCap(int cap) {
+    return 'tope $cap%';
+  }
+
+  @override
+  String get cEvasion => 'Evasión';
+
+  @override
+  String get cBlock => 'Bloqueo';
+
+  @override
+  String get cCritDmg => 'Daño crítico';
+
+  @override
+  String get cDmgReduction => 'Reducción de daño';
+
+  @override
+  String get cLifesteal => 'Robo de vida';
+
+  @override
+  String get cExecute => 'Ejecución';
+
+  @override
+  String get cMissingHp => 'Última resistencia';
+
+  @override
+  String get cPetAssist => 'Apoyo de mascota';
+
+  @override
+  String get xPower => 'La fuerza usada en los eventos: 2 × ataque + defensa + vida máx. / 10.';
+
+  @override
+  String get xAttack => 'Daño base de cada golpe antes de la defensa enemiga.';
+
+  @override
+  String get xDefense => 'Cada golpe que recibes pierde la mitad de tu defensa.';
+
+  @override
+  String xCrit(int cap) {
+    return 'Probabilidad de que un golpe sea crítico. Como máximo $cap%.';
+  }
+
+  @override
+  String get xCritDmg => 'Un crítico inflige este múltiplo de un golpe normal.';
+
+  @override
+  String get xHit => 'Tu probabilidad de acertar, menos la evasión enemiga (15–95%).';
+
+  @override
+  String xEvasion(int cap) {
+    return 'Se resta de la probabilidad de acierto enemiga. Como máximo $cap%.';
+  }
+
+  @override
+  String xBlock(int cap) {
+    return 'Probabilidad de reducir a la mitad un golpe recibido. Como máximo $cap%.';
+  }
+
+  @override
+  String xDmgReduction(int cap) {
+    return 'Cada golpe recibido se reduce en esta parte. Como máximo $cap%.';
+  }
+
+  @override
+  String get xLifesteal => 'Te curas esta parte del daño que infliges.';
+
+  @override
+  String xExecute(int pct) {
+    return 'Daño extra contra enemigos con $pct% de vida o menos.';
+  }
+
+  @override
+  String get xMissingHp => 'Hasta este daño extra a medida que baja tu vida.';
+
+  @override
+  String get xPetAssist => 'Tu mascota activa añade esta parte a cada golpe.';
 }

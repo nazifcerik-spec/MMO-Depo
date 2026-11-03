@@ -19,6 +19,8 @@ type Repository interface {
 	// Rename atomically updates name + name_normalized. Returns ErrNameTaken
 	// on unique-violation.
 	Rename(ctx context.Context, id uuid.UUID, name, normalized string) error
+	// SetBody changes the portrait figure (DD-344).
+	SetBody(ctx context.Context, id uuid.UUID, body string) error
 
 	// TouchLastPlayed sets last_played_at = ts. No-op on non-active characters.
 	TouchLastPlayed(ctx context.Context, id uuid.UUID, ts time.Time) error

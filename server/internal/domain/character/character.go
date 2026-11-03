@@ -40,6 +40,7 @@ type Character struct {
 	Name               string
 	NameNormalized     string
 	RaceCode           string
+	Body               string // portrait figure: male | female (DD-344)
 	ClassCode          string
 	SpecCode           *string
 	Level              int16

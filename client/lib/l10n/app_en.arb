@@ -2717,5 +2717,76 @@
         "type": "String"
       }
     }
-  }
+  },
+  "bodyMale": "Male",
+  "bodyFemale": "Female",
+  "bodyChoice": "Appearance",
+  "bodyChange": "Change appearance",
+  "portraitNoArmor": "No armor",
+  "combatPower": "Combat power",
+  "combatTapHint": "tap for details",
+  "statCap": "cap {cap}%",
+  "@statCap": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "cEvasion": "Evasion",
+  "cBlock": "Block",
+  "cCritDmg": "Crit damage",
+  "cDmgReduction": "Damage reduction",
+  "cLifesteal": "Lifesteal",
+  "cExecute": "Execute",
+  "cMissingHp": "Last stand",
+  "cPetAssist": "Pet assist",
+  "xPower": "The strength used in world events: 2 × attack + defense + max HP / 10.",
+  "xAttack": "Base damage of each hit before the enemy's defense.",
+  "xDefense": "Each hit you take loses half of your defense.",
+  "xCrit": "Chance that a hit is critical. At most {cap}%.",
+  "@xCrit": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "xCritDmg": "A critical hit deals this multiple of a normal one.",
+  "xHit": "Your chance to land a hit, minus the enemy's evasion (15–95%).",
+  "xEvasion": "Taken off the enemy's hit chance. At most {cap}%.",
+  "@xEvasion": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "xBlock": "Chance to halve an incoming hit. At most {cap}%.",
+  "@xBlock": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "xDmgReduction": "Every hit you take is lowered by this share. At most {cap}%.",
+  "@xDmgReduction": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "xLifesteal": "You heal this share of the damage you deal.",
+  "xExecute": "Extra damage against enemies at or below {pct}% HP.",
+  "@xExecute": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "xMissingHp": "Up to this much extra damage as your own HP drops.",
+  "xPetAssist": "Your active pet adds this share to each of your hits."
 }

@@ -29,11 +29,15 @@ func (r *PgRepo) Create(ctx context.Context, c Character) error {
 	const q = `
 		INSERT INTO character.character
 		  (id, account_id, name, name_normalized, race_code, class_code, spec_code,
-		   level, xp, state, created_at, updated_at)
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`
+		   level, xp, state, created_at, updated_at, body)
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+	body := c.Body
+	if body == "" {
+		body = Bodies[0]
+	}
 	_, err := r.pool.Exec(ctx, q,
 		c.ID, c.AccountID, c.Name, c.NameNormalized, c.RaceCode, c.ClassCode, c.SpecCode,
-		c.Level, c.XP, string(c.State), c.CreatedAt, c.UpdatedAt,
+		c.Level, c.XP, string(c.State), c.CreatedAt, c.UpdatedAt, body,
 	)
 	if err != nil {
 		if pgUniqueViolation(err) {
@@ -54,7 +58,7 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 		&c.CreatedAt, &c.UpdatedAt, &c.LastPlayedAt, &c.DeleteGraceAt, &c.Version,
 		&c.HPStored, &c.HPUpdatedAt,
 		&c.Alloc.Strength, &c.Alloc.Vitality, &c.Alloc.Dexterity, &c.Alloc.Intelligence, &c.Alloc.Wisdom, &c.Alloc.Luck,
-		&c.OverflowXP, &c.PostCapXP,
+		&c.OverflowXP, &c.PostCapXP, &c.Body,
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -74,7 +78,7 @@ const baseSelect = `SELECT id, account_id, name, name_normalized, race_code, cla
 	                       created_at, updated_at, last_played_at, delete_grace_at, version,
 	                       hp_current, hp_updated_at,
 	                       attr_str, attr_vit, attr_dex, attr_int, attr_wis, attr_luck,
-	                       promotion_overflow_xp, postcap_xp
+	                       promotion_overflow_xp, postcap_xp, body
 	                  FROM character.character`
 
 func (r *PgRepo) Get(ctx context.Context, id uuid.UUID) (*Character, error) {
@@ -108,6 +112,19 @@ func (r *PgRepo) CountActiveByAccount(ctx context.Context, accountID uuid.UUID) 
 		  WHERE account_id = $1 AND state IN ('active','delete_grace')`,
 		accountID).Scan(&n)
 	return n, err
+}
+
+func (r *PgRepo) SetBody(ctx context.Context, id uuid.UUID, body string) error {
+	tag, err := r.pool.Exec(ctx, `UPDATE character.character
+	              SET body = $2, updated_at = now(), version = version + 1
+	            WHERE id = $1`, id, body)
+	if err != nil {
+		return err
+	}
+	if tag.RowsAffected() == 0 {
+		return ErrNotFound
+	}
+	return nil
 }
 
 func (r *PgRepo) Rename(ctx context.Context, id uuid.UUID, name, normalized string) error {

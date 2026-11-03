@@ -61,8 +61,13 @@ class CharacterRepository {
 
   Future<CharacterList> list() async => CharacterList.fromJson(await api.get('/v1/character'));
 
-  Future<CharacterSummary> create(String name, String race, String cls) async =>
-      CharacterSummary.fromJson(await api.post('/v1/character', {'name': name, 'race_code': race, 'class_code': cls}));
+  Future<CharacterSummary> create(String name, String race, String cls, {String body = 'male'}) async =>
+      CharacterSummary.fromJson(
+        await api.post('/v1/character', {'name': name, 'race_code': race, 'class_code': cls, 'body': body}),
+      );
+
+  /// Changes the portrait figure (DD-344).
+  Future<void> setBody(String id, String body) => api.post('/v1/character/$id/appearance', {'body': body});
 
   /// Marks the character as played and scopes later calls to it.
   Future<CharacterSheet> enter(String id) async {
