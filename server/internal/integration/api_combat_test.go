@@ -60,9 +60,9 @@ func TestHTTPCombatRewind(t *testing.T) {
 	r := run["run"].(map[string]any)
 	require.Contains(t, []any{"cleared", "defeat", "timeout"}, r["report"].(map[string]any)["end"])
 	p.ok("POST", "/v1/dungeon/"+did+"/reveal", map[string]any{}) // replay
-	if r["cleared"] == true {
-		p.fail("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"}, 409, "")
-	}
+	// Solo dungeons have no weekly lockout (DD-262): cleared or not, it can run again.
+	d = p.ok("POST", p.path("/dungeon"), map[string]any{"dungeon_code": "crypt_of_ashes"})
+	p.ok("POST", "/v1/dungeon/"+d["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
 	hist := items(p.ok("GET", p.path("/dungeon/history"), nil), "runs")
 	require.NotEmpty(t, hist)
 

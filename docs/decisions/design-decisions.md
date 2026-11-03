@@ -3391,6 +3391,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-346 — Karakter kişiselleştirme: yüz, saç, renk katmanları
+
+**Context:** Kullanıcı oluşturma ekranına cinsiyet + 5 yüz + 5 saç stili (cinsiyet başına, toplam 25 + 25 kombinasyon) + 5 saç rengi + 5 göz rengi istedi; önizlemeli, katmanlı, kayıtlı. Verdiği referans görsellerde sanatçı imzası ve filigran var; oyuna konamaz.
+**Decision:** Referanslar kullanılmadı ve yüklenmedi, genel stil yazıyla tarif edildi; görseller özgün. `scripts/head_art.py`: cinsiyet başına Gemini 5×2 sayfa (üst sıra kel yüzler, alt sıra saç stilleri), saç/kaş/sakal krom yeşil, iris macenta boyanır; betik katmanlara ayırır (`<body>_face<n>_{base,brows,eyes}`, `<body>_hair<n>`, gri + alfa) ve her kafayı göz konumundan hizalar, böylece her yüz her saça oturur. İstemci `HeadLayers` renkleri modulate ile verir, `AppearancePicker` oluşturmada ve sonradan düzenlemede ortak. Migration 0064 `face_id/hair_style_id/hair_color_id/eye_color_id`; `POST /character`, `POST /character/{id}/appearance`, sheet. `gender` alanı mevcut `body`. Cinsiyet değişince yüz ve saç stili 1'e döner, renkler kalır. Seçenek sayıları sunucuda ve istemcide sabit (`FaceOptions`..., `faceOptions`...). Kafa tam boy figürün üstüne biner (boyun ve gövde solar).
+**Consequences:** Yalnız insan: diğer ırklar yalnız cinsiyet seçer (`customizableRaces`). Figürün kendi eli/boynu açık tenli kalır, kadın figürün örgüsü kendi renginde görünür; koyu yüz + açık el uyumsuzluğu figürler ten rengine göre yeniden üretilmeden gitmez. Fix: figürü olmayan ırkta portre yedeği yanlış yolla açılıyordu; eski test zindan haftalık kilidi varsayıyordu (DD-262 sonrası yok), yalnız temizlenen koşuda düşüyordu.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

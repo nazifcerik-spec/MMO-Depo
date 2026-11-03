@@ -304,6 +304,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 144. **Karakter kişiselleştirme (bitti — yalnız insan)** — Sprint 144, DD-346. Migration 0064. `scripts/head_art.py` → `assets/heads/` katmanları (5 yüz + 5 saç × 2 cinsiyet). Oluşturma ekranında Görünüm: cinsiyet, yüz, saç stili, saç rengi, göz rengi, canlı önizleme; `POST /character/{id}/appearance`; `BodyPortrait` figürde seçilen baş.
 
+144. **Karakter kişiselleştirme (bitti — yalnız insan)** — Sprint 144, DD-346. Migration 0064 (`face_id`, `hair_style_id`, `hair_color_id`, `eye_color_id`). `scripts/head_art.py` (krom yeşil/macenta anahtarlama, göz hizası) → `assets/heads/` (40 katman, 25 + 25 kombinasyon, 258 KB). `HeadLayers` + `AppearancePicker` (oluşturma + portre düğmesi), `POST /character/{id}/appearance` kısmi güncelleme; cinsiyet değişince yüz/saç sıfırlanır.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
