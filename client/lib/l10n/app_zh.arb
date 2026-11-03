@@ -509,5 +509,11 @@
   "xLifesteal": "按造成伤害的该比例回复生命。",
   "xExecute": "对生命值不高于 {pct}% 的敌人造成额外伤害。",
   "xMissingHp": "生命越低，额外伤害越高，最多为此值。",
-  "xPetAssist": "出战宠物为你的每次攻击增加该比例伤害。"
+  "xPetAssist": "出战宠物为你的每次攻击增加该比例伤害。",
+  "lookFace": "脸型",
+  "lookHairStyle": "发型",
+  "lookHairColor": "发色",
+  "lookEyeColor": "瞳色",
+  "lookSave": "保存",
+  "lookHumanOnly": "该种族的脸型和发型选项即将推出。"
 }

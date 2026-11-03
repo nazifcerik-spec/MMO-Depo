@@ -3547,4 +3547,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get xPetAssist => 'Your active pet adds this share to each of your hits.';
+
+  @override
+  String get lookFace => 'Face';
+
+  @override
+  String get lookHairStyle => 'Hair style';
+
+  @override
+  String get lookHairColor => 'Hair color';
+
+  @override
+  String get lookEyeColor => 'Eye color';
+
+  @override
+  String get lookSave => 'Save';
+
+  @override
+  String get lookHumanOnly => 'Face and hair options for this race are coming soon.';
 }

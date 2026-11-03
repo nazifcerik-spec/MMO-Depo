@@ -40,7 +40,11 @@ type Character struct {
 	Name               string
 	NameNormalized     string
 	RaceCode           string
-	Body               string // portrait figure: male | female (DD-344)
+	Body               string // gender, the portrait figure: male | female (DD-344)
+	FaceID             int16  // customization (DD-346), each 1..its option count
+	HairStyleID        int16
+	HairColorID        int16
+	EyeColorID         int16
 	ClassCode          string
 	SpecCode           *string
 	Level              int16

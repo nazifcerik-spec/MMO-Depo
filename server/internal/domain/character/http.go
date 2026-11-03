@@ -35,7 +35,7 @@ type createReq struct {
 	Name      string `json:"name"`
 	RaceCode  string `json:"race_code"`
 	ClassCode string `json:"class_code"`
-	Body      string `json:"body"` // male | female (DD-344)
+	appearanceReq
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +54,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		Name:      body.Name,
 		RaceCode:  body.RaceCode,
 		ClassCode: body.ClassCode,
-		Body:      body.Body,
+		Look:      body.look(),
 	})
 	if err != nil {
 		writeCharErr(w, r, err)
@@ -168,11 +168,22 @@ func (h *Handler) CancelDelete(w http.ResponseWriter, r *http.Request) {
 
 // --- Appearance (DD-344) ----------------------------------------------------
 
+// appearanceReq is the character's look (DD-344, DD-346); body is the gender.
+// An omitted id stays as it is.
 type appearanceReq struct {
-	Body string `json:"body"`
+	Body        string `json:"body"`
+	FaceID      int16  `json:"face_id"`
+	HairStyleID int16  `json:"hair_style_id"`
+	HairColorID int16  `json:"hair_color_id"`
+	EyeColorID  int16  `json:"eye_color_id"`
 }
 
-// Appearance changes the portrait figure.
+func (a appearanceReq) look() Appearance {
+	return Appearance{Body: a.Body, FaceID: a.FaceID, HairStyleID: a.HairStyleID,
+		HairColorID: a.HairColorID, EyeColorID: a.EyeColorID}
+}
+
+// Appearance changes the character's look.
 func (h *Handler) Appearance(w http.ResponseWriter, r *http.Request) {
 	acct := httpctx.AccountID(r.Context())
 	id, err := parseIDParam(r, "id")
@@ -185,7 +196,7 @@ func (h *Handler) Appearance(w http.ResponseWriter, r *http.Request) {
 		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
 		return
 	}
-	c, err := h.svc.SetBody(r.Context(), id, acct, body.Body)
+	c, err := h.svc.SetAppearance(r.Context(), id, acct, body.look())
 	if err != nil {
 		writeCharErr(w, r, err)
 		return
@@ -226,6 +237,10 @@ type characterResp struct {
 	Name          string     `json:"name"`
 	RaceCode      string     `json:"race_code"`
 	Body          string     `json:"body"`
+	FaceID        int16      `json:"face_id"`
+	HairStyleID   int16      `json:"hair_style_id"`
+	HairColorID   int16      `json:"hair_color_id"`
+	EyeColorID    int16      `json:"eye_color_id"`
 	ClassCode     string     `json:"class_code"`
 	SpecCode      *string    `json:"spec_code,omitempty"`
 	Level         int        `json:"level"`
@@ -242,6 +257,10 @@ func characterResponse(c *Character) characterResp {
 		Name:          c.Name,
 		RaceCode:      c.RaceCode,
 		Body:          c.Body,
+		FaceID:        c.FaceID,
+		HairStyleID:   c.HairStyleID,
+		HairColorID:   c.HairColorID,
+		EyeColorID:    c.EyeColorID,
 		ClassCode:     c.ClassCode,
 		SpecCode:      c.SpecCode,
 		Level:         int(c.Level),

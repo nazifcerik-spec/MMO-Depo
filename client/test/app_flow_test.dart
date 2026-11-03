@@ -301,6 +301,12 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dark Elf'));
     await tester.pump();
+    // The look: non-human races choose only the gender (DD-346).
+    await tester.ensureVisible(find.byKey(const Key('body-choice')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('look-face-1')), findsNothing);
+    await tester.tap(find.text('Female'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Continue as Ranger'));
     await tester.pumpAndSettle();
     expect(find.text('Name your character'), findsOneWidget);
@@ -310,8 +316,6 @@ void main() {
     expect(find.text('3–16 characters, starts with a letter (A–Z, 0–9, _)'), findsWidgets);
 
     await tester.enterText(find.byType(TextFormField), 'Grim');
-    await tester.tap(find.text('Female')); // the portrait figure (DD-344)
-    await tester.pumpAndSettle();
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(be.characters.single['race_code'], 'dark_elf');
@@ -326,9 +330,15 @@ void main() {
     expect(find.text('40 / 100'), findsOneWidget); // XP
     expect(find.text('Attributes'), findsOneWidget);
     expect(find.textContaining('12', findRichText: true), findsWidgets); // 12g 34s 56c
-    // Full-body portrait beside the bars; its button switches the figure (DD-344).
+    // Full-body portrait beside the bars; its button edits the look (DD-344).
     expect(find.byKey(const Key('body-portrait')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('body-change')));
+    await tester.tap(find.byKey(const Key('look-edit')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Male'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('look-save')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('look-save')));
     await tester.pumpAndSettle();
     expect(be.characters.single['body'], 'male');
     await tester.scrollUntilVisible(find.text('90%'), 200, scrollable: _list); // below the boost boxes

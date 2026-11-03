@@ -3534,4 +3534,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get xPetAssist => '出战宠物为你的每次攻击增加该比例伤害。';
+
+  @override
+  String get lookFace => '脸型';
+
+  @override
+  String get lookHairStyle => '发型';
+
+  @override
+  String get lookHairColor => '发色';
+
+  @override
+  String get lookEyeColor => '瞳色';
+
+  @override
+  String get lookSave => '保存';
+
+  @override
+  String get lookHumanOnly => '该种族的脸型和发型选项即将推出。';
 }

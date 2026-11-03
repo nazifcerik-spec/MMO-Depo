@@ -6243,6 +6243,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your active pet adds this share to each of your hits.'**
   String get xPetAssist;
+
+  /// No description provided for @lookFace.
+  ///
+  /// In en, this message translates to:
+  /// **'Face'**
+  String get lookFace;
+
+  /// No description provided for @lookHairStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hair style'**
+  String get lookHairStyle;
+
+  /// No description provided for @lookHairColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Hair color'**
+  String get lookHairColor;
+
+  /// No description provided for @lookEyeColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye color'**
+  String get lookEyeColor;
+
+  /// No description provided for @lookSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get lookSave;
+
+  /// No description provided for @lookHumanOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Face and hair options for this race are coming soon.'**
+  String get lookHumanOnly;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

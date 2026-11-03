@@ -70,14 +70,15 @@ func (r *MemoryRepo) CountActiveByAccount(_ context.Context, accountID uuid.UUID
 	return n, nil
 }
 
-func (r *MemoryRepo) SetBody(_ context.Context, id uuid.UUID, body string) error {
+func (r *MemoryRepo) SetAppearance(_ context.Context, id uuid.UUID, look Appearance) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	c, ok := r.rows[id]
 	if !ok {
 		return ErrNotFound
 	}
-	c.Body = body
+	c.Body, c.FaceID, c.HairStyleID, c.HairColorID, c.EyeColorID =
+		look.Body, look.FaceID, look.HairStyleID, look.HairColorID, look.EyeColorID
 	r.rows[id] = c
 	return nil
 }

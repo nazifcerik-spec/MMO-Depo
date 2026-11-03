@@ -261,30 +261,54 @@ func TestRename_NotPlayableRejected(t *testing.T) {
 	require.ErrorIs(t, err, character.ErrNotPlayable)
 }
 
-// DD-344: a new character is drawn male unless it picks; the figure can change later.
-func TestSetBody(t *testing.T) {
+// DD-344, DD-346: a new character is male with the first options unless it
+// picks; the look can change later and a new body resets its faces and hair.
+func TestAppearance(t *testing.T) {
 	svc, _ := newTestService(t)
+	ctx := context.Background()
 	acct := uuid.New()
 	c := mustCreate(t, svc, acct, "Grim")
 	require.Equal(t, "male", c.Body)
+	require.Equal(t, []int16{1, 1, 1, 1}, []int16{c.FaceID, c.HairStyleID, c.HairColorID, c.EyeColorID})
 
-	got, err := svc.SetBody(context.Background(), c.ID, acct, "Female")
+	got, err := svc.SetAppearance(ctx, c.ID, acct, character.Appearance{FaceID: 3, HairStyleID: 4, HairColorID: 2, EyeColorID: 5})
+	require.NoError(t, err)
+	require.Equal(t, []int16{3, 4, 2, 5}, []int16{got.FaceID, got.HairStyleID, got.HairColorID, got.EyeColorID})
+	again, err := svc.GetOwned(ctx, c.ID, acct)
+	require.NoError(t, err)
+	require.Equal(t, int16(5), again.EyeColorID, "stored")
+
+	got, err = svc.SetAppearance(ctx, c.ID, acct, character.Appearance{Body: "Female"})
 	require.NoError(t, err)
 	require.Equal(t, "female", got.Body)
-	again, err := svc.GetOwned(context.Background(), c.ID, acct)
+	require.Equal(t, []int16{1, 1, 2, 5}, []int16{got.FaceID, got.HairStyleID, got.HairColorID, got.EyeColorID},
+		"another body's face and hair do not carry over; colours do")
+	got, err = svc.SetAppearance(ctx, c.ID, acct, character.Appearance{Body: "male", FaceID: 2})
 	require.NoError(t, err)
-	require.Equal(t, "female", again.Body)
+	require.Equal(t, []int16{2, 1}, []int16{got.FaceID, got.HairStyleID}, "a chosen face stays")
 
-	_, err = svc.SetBody(context.Background(), c.ID, acct, "dragon")
 	var verr *character.ValidationError
-	require.ErrorAs(t, err, &verr)
-	_, err = svc.SetBody(context.Background(), c.ID, uuid.New(), "male")
+	for name, look := range map[string]character.Appearance{
+		"body":  {Body: "dragon"},
+		"face":  {FaceID: character.FaceOptions + 1},
+		"style": {HairStyleID: -1},
+		"hair":  {HairColorID: character.HairColorOptions + 1},
+		"eyes":  {EyeColorID: character.EyeColorOptions + 1},
+	} {
+		_, err = svc.SetAppearance(ctx, c.ID, acct, look)
+		require.ErrorAs(t, err, &verr, name)
+	}
+	_, err = svc.SetAppearance(ctx, c.ID, uuid.New(), character.Appearance{Body: "male"})
 	require.Error(t, err, "only the owner")
 
-	f, err := svc.Create(context.Background(), character.CreateRequest{AccountID: acct, Name: "Lira",
-		RaceCode: "human", ClassCode: "warrior", Body: "female"})
+	f, err := svc.Create(ctx, character.CreateRequest{AccountID: acct, Name: "Lira", RaceCode: "human", ClassCode: "warrior",
+		Look: character.Appearance{Body: "female", FaceID: 4, HairStyleID: 2, HairColorID: 3, EyeColorID: 1}})
 	require.NoError(t, err)
 	require.Equal(t, "female", f.Body)
+	require.Equal(t, []int16{4, 2, 3, 1}, []int16{f.FaceID, f.HairStyleID, f.HairColorID, f.EyeColorID})
+	_, err = svc.Create(ctx, character.CreateRequest{AccountID: uuid.New(), Name: "Nope", RaceCode: "human", ClassCode: "warrior",
+		Look: character.Appearance{FaceID: 99}})
+	require.ErrorAs(t, err, &verr)
 }
 
 func TestListForAccount(t *testing.T) {

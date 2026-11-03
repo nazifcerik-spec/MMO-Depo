@@ -499,6 +499,10 @@ class FakeBackend {
         'race_code': body['race_code'],
         'class_code': body['class_code'],
         'body': body['body'] ?? 'male',
+        'face_id': body['face_id'] ?? 1,
+        'hair_style_id': body['hair_style_id'] ?? 1,
+        'hair_color_id': body['hair_color_id'] ?? 1,
+        'eye_color_id': body['eye_color_id'] ?? 1,
         'level': 1,
         'state': 'active',
       };
@@ -614,7 +618,7 @@ class FakeBackend {
     if (look != null) {
       final c = characters.firstWhere((c) => c['id'] == look[1], orElse: () => const {});
       if (c.isEmpty) return error(404, 'E_NOT_FOUND');
-      c['body'] = body['body'];
+      c.addAll(body.cast<String, dynamic>());
       return json(200, c);
     }
     final del = RegExp(r'^/v1/character/([^/]+)/(delete|delete-cancel)$').firstMatch(path);

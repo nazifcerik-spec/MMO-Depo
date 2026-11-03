@@ -302,6 +302,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 143. **Karakter slotu 6 (bitti)** — Sprint 143, DD-345. `CHARACTER_SLOT_CAP` varsayılanı 6.
 
+144. **Karakter kişiselleştirme (bitti — yalnız insan)** — Sprint 144, DD-346. Migration 0064. `scripts/head_art.py` → `assets/heads/` katmanları (5 yüz + 5 saç × 2 cinsiyet). Oluşturma ekranında Görünüm: cinsiyet, yüz, saç stili, saç rengi, göz rengi, canlı önizleme; `POST /character/{id}/appearance`; `BodyPortrait` figürde seçilen baş.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -3547,4 +3547,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get xPetAssist => 'Tu mascota activa añade esta parte a cada golpe.';
+
+  @override
+  String get lookFace => 'Rostro';
+
+  @override
+  String get lookHairStyle => 'Peinado';
+
+  @override
+  String get lookHairColor => 'Color de pelo';
+
+  @override
+  String get lookEyeColor => 'Color de ojos';
+
+  @override
+  String get lookSave => 'Guardar';
+
+  @override
+  String get lookHumanOnly => 'Las opciones de rostro y pelo de esta raza llegarán pronto.';
 }

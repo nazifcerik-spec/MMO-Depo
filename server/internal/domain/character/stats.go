@@ -56,7 +56,11 @@ type Sheet struct {
 	ID        string       `json:"id"`
 	Name      string       `json:"name"`
 	Race      string       `json:"race_code"`
-	Body      string       `json:"body"` // portrait figure (DD-344)
+	Body      string       `json:"body"` // gender, the portrait figure (DD-344)
+	FaceID    int16        `json:"face_id"`
+	HairStyle int16        `json:"hair_style_id"`
+	HairColor int16        `json:"hair_color_id"`
+	EyeColor  int16        `json:"eye_color_id"`
 	Class     string       `json:"class_code"`
 	Spec      *string      `json:"spec_code,omitempty"`
 	Level     int          `json:"level"`
@@ -216,6 +220,10 @@ func buildSheet(c *Character) Sheet {
 		Name:         c.Name,
 		Race:         c.RaceCode,
 		Body:         c.Body,
+		FaceID:       c.FaceID,
+		HairStyle:    c.HairStyleID,
+		HairColor:    c.HairColorID,
+		EyeColor:     c.EyeColorID,
 		Class:        c.ClassCode,
 		Spec:         c.SpecCode,
 		Level:        int(c.Level),

@@ -71,7 +71,7 @@ type CreateRequest struct {
 	Name      string
 	RaceCode  string
 	ClassCode string
-	Body      string // male | female; empty = male (DD-344)
+	Look      Appearance // gender and customization (DD-344, DD-346)
 }
 
 // --- Create -----------------------------------------------------------------
@@ -89,10 +89,6 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 		return nil, err
 	}
 	class, err := validateClass(req.ClassCode)
-	if err != nil {
-		return nil, err
-	}
-	body, err := validateBody(req.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +119,7 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 		Name:           name,
 		NameNormalized: normalized,
 		RaceCode:       race,
-		Body:           body,
+		Body:           Bodies[0],
 		ClassCode:      class,
 		Level:          1,
 		XP:             0,
@@ -131,6 +127,9 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 		CreatedAt:      now,
 		UpdatedAt:      now,
 		Version:        1,
+	}
+	if err := req.Look.apply(&c); err != nil {
+		return nil, err
 	}
 	if err := s.repo.Create(ctx, c); err != nil {
 		return nil, err
@@ -280,23 +279,19 @@ func (s *Service) Rename(ctx context.Context, characterID, accountID uuid.UUID, 
 	return c, nil
 }
 
-// SetBody changes the portrait figure (DD-344).
-func (s *Service) SetBody(ctx context.Context, characterID, accountID uuid.UUID, raw string) (*Character, error) {
+// SetAppearance changes the character's look (DD-344, DD-346).
+func (s *Service) SetAppearance(ctx context.Context, characterID, accountID uuid.UUID, look Appearance) (*Character, error) {
 	c, err := s.GetOwned(ctx, characterID, accountID)
 	if err != nil {
 		return nil, err
 	}
-	body, err := validateBody(raw)
-	if err != nil {
+	if err := look.apply(c); err != nil {
 		return nil, err
 	}
-	if body == c.Body {
-		return c, nil
-	}
-	if err := s.repo.SetBody(ctx, c.ID, body); err != nil {
+	if err := s.repo.SetAppearance(ctx, c.ID, Appearance{Body: c.Body, FaceID: c.FaceID,
+		HairStyleID: c.HairStyleID, HairColorID: c.HairColorID, EyeColorID: c.EyeColorID}); err != nil {
 		return nil, err
 	}
-	c.Body = body
 	return c, nil
 }
 

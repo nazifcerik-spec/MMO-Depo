@@ -46,6 +46,49 @@ class CharacterList {
   bool get full => characters.length >= slotCap;
 }
 
+/// A character's look (DD-344, DD-346): `body` is the gender; faces and hair
+/// styles are per body, colours shared. Ids are 1-based.
+class Appearance {
+  const Appearance({this.body = 'male', this.face = 1, this.hairStyle = 1, this.hairColor = 1, this.eyeColor = 1});
+
+  factory Appearance.fromJson(Map<String, dynamic> j) {
+    int id(String k) => (j[k] as num?)?.toInt() ?? 1;
+    return Appearance(
+      body: j['body'] as String? ?? 'male',
+      face: id('face_id'),
+      hairStyle: id('hair_style_id'),
+      hairColor: id('hair_color_id'),
+      eyeColor: id('eye_color_id'),
+    );
+  }
+
+  final String body;
+  final int face;
+  final int hairStyle;
+  final int hairColor;
+  final int eyeColor;
+
+  Map<String, dynamic> toJson() => {
+    'body': body,
+    'face_id': face,
+    'hair_style_id': hairStyle,
+    'hair_color_id': hairColor,
+    'eye_color_id': eyeColor,
+  };
+
+  Appearance copyWith({int? face, int? hairStyle, int? hairColor, int? eyeColor}) => Appearance(
+    body: body,
+    face: face ?? this.face,
+    hairStyle: hairStyle ?? this.hairStyle,
+    hairColor: hairColor ?? this.hairColor,
+    eyeColor: eyeColor ?? this.eyeColor,
+  );
+
+  /// Another body has its own faces and hair styles: those start over.
+  Appearance withBody(String next) =>
+      next == body ? this : Appearance(body: next, hairColor: hairColor, eyeColor: eyeColor);
+}
+
 class CharacterSheet {
   const CharacterSheet({
     required this.id,
@@ -61,7 +104,7 @@ class CharacterSheet {
     required this.state,
     this.resourceKind = '',
     this.resourceMax = 0,
-    this.body = 'male',
+    this.look = const Appearance(),
   });
 
   factory CharacterSheet.fromJson(Map<String, dynamic> j) {
@@ -83,7 +126,7 @@ class CharacterSheet {
       state: j['state'] as String? ?? 'active',
       resourceKind: j['resource_kind'] as String? ?? '',
       resourceMax: (j['resource_max'] as num?)?.toInt() ?? 0,
-      body: j['body'] as String? ?? 'male',
+      look: Appearance.fromJson(j),
     );
   }
 
@@ -91,8 +134,8 @@ class CharacterSheet {
   final String name;
   final String raceCode;
 
-  /// The portrait figure: male | female (DD-344).
-  final String body;
+  /// Gender and customization (DD-344, DD-346).
+  final Appearance look;
   final String classCode;
   final int level;
   final int xp;

@@ -78,6 +78,70 @@ func validateBody(raw string) (string, error) {
 	return "", &ValidationError{Field: "body", Message: "unknown body"}
 }
 
+// Customization option counts (DD-346); faces and hair styles are per body.
+// New art only needs a higher count here and in the client.
+const (
+	FaceOptions      = 5
+	HairStyleOptions = 5
+	HairColorOptions = 5
+	EyeColorOptions  = 5
+)
+
+// Appearance is a character's look (DD-346). A zero id means "unchanged"
+// (the default 1 for a new character).
+type Appearance struct {
+	Body                                         string
+	FaceID, HairStyleID, HairColorID, EyeColorID int16
+}
+
+func validateAppearanceID(field string, id int16, count int16) error {
+	if id < 0 || id > count {
+		return &ValidationError{Field: field, Message: "unknown option"}
+	}
+	return nil
+}
+
+// apply puts the requested look on c. Faces and hair styles belong to a body,
+// so changing the body resets the ones the request does not choose.
+func (a Appearance) apply(c *Character) error {
+	body := c.Body
+	if a.Body != "" {
+		var err error
+		if body, err = validateBody(a.Body); err != nil {
+			return err
+		}
+	}
+	for _, f := range []struct {
+		field     string
+		id, count int16
+	}{
+		{"face_id", a.FaceID, FaceOptions},
+		{"hair_style_id", a.HairStyleID, HairStyleOptions},
+		{"hair_color_id", a.HairColorID, HairColorOptions},
+		{"eye_color_id", a.EyeColorID, EyeColorOptions},
+	} {
+		if err := validateAppearanceID(f.field, f.id, f.count); err != nil {
+			return err
+		}
+	}
+	if body != c.Body {
+		c.FaceID, c.HairStyleID = 1, 1
+	}
+	c.Body = body
+	set := func(dst *int16, id int16) {
+		if id > 0 {
+			*dst = id
+		} else if *dst == 0 {
+			*dst = 1
+		}
+	}
+	set(&c.FaceID, a.FaceID)
+	set(&c.HairStyleID, a.HairStyleID)
+	set(&c.HairColorID, a.HairColorID)
+	set(&c.EyeColorID, a.EyeColorID)
+	return nil
+}
+
 func validateClass(raw string) (string, error) {
 	s := strings.ToLower(strings.TrimSpace(raw))
 	if s == "" {

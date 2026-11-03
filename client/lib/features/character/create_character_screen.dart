@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
 import '../inventory/item_images.dart';
+import 'appearance_picker.dart';
 import 'character_repository.dart';
 import 'character_sheet_view.dart' show skillDescription;
 import 'class_catalog.dart';
@@ -27,6 +28,7 @@ class CreateCharacterScreen extends StatefulWidget {
 class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   String _race = races.first;
   String _class = classes.first;
+  Appearance _look = const Appearance();
   String? _skill; // skill whose bubble is open
 
   ClassCatalog? _catalog;
@@ -75,7 +77,7 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   Future<void> _continue() async {
     final created = await showDialog<CharacterSummary>(
       context: context,
-      builder: (_) => _NameDialog(repo: widget.repo, race: _race, classCode: _class),
+      builder: (_) => _NameDialog(repo: widget.repo, race: _race, classCode: _class, look: _look),
     );
     if (created != null && mounted) Navigator.of(context).pop(created);
   }
@@ -149,6 +151,10 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                     _Section(
                       title: l.chooseRace,
                       child: _Races(selected: _race, onPick: (r) => setState(() => _race = r)),
+                    ),
+                    _Section(
+                      title: l.bodyChoice,
+                      child: AppearancePicker(look: _look, race: _race, onChanged: (v) => setState(() => _look = v)),
                     ),
                   ],
                 ),
@@ -843,11 +849,12 @@ class _Lines extends StatelessWidget {
 
 /// Asks for the name, then creates the character (pops with it).
 class _NameDialog extends StatefulWidget {
-  const _NameDialog({required this.repo, required this.race, required this.classCode});
+  const _NameDialog({required this.repo, required this.race, required this.classCode, required this.look});
 
   final CharacterRepository repo;
   final String race;
   final String classCode;
+  final Appearance look;
 
   @override
   State<_NameDialog> createState() => _NameDialogState();
@@ -856,7 +863,6 @@ class _NameDialog extends StatefulWidget {
 class _NameDialogState extends State<_NameDialog> {
   final _form = GlobalKey<FormState>();
   final _name = TextEditingController();
-  String _body = 'male';
   bool _busy = false;
   String? _error;
 
@@ -874,7 +880,7 @@ class _NameDialogState extends State<_NameDialog> {
       _error = null;
     });
     try {
-      final c = await widget.repo.create(_name.text.trim(), widget.race, widget.classCode, body: _body);
+      final c = await widget.repo.create(_name.text.trim(), widget.race, widget.classCode, look: widget.look);
       if (mounted) Navigator.of(context).pop(c);
     } on ApiError catch (e) {
       if (mounted) setState(() => _error = errorText(l, e));
@@ -906,19 +912,6 @@ class _NameDialogState extends State<_NameDialog> {
               decoration: InputDecoration(labelText: l.characterName, helperText: l.nameRule),
               validator: (v) => characterNamePattern.hasMatch((v ?? '').trim()) ? null : l.nameRule,
               onFieldSubmitted: (_) => _submit(),
-            ),
-            const SizedBox(height: Space.sm),
-            Text(l.bodyChoice, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: Space.xs),
-            SegmentedButton<String>(
-              key: const Key('body-choice'),
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(value: 'male', label: Text(l.bodyMale), icon: const Icon(Icons.male, size: 18)),
-                ButtonSegment(value: 'female', label: Text(l.bodyFemale), icon: const Icon(Icons.female, size: 18)),
-              ],
-              selected: {_body},
-              onSelectionChanged: (s) => setState(() => _body = s.first),
             ),
             if (_error != null) Text(_error!, style: const TextStyle(color: Palette.danger)),
           ],

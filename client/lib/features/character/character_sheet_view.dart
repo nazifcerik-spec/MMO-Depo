@@ -14,6 +14,7 @@ import '../progression/progression_screen.dart' show bonusText;
 import '../social/group_panels.dart';
 import '../social/group_repository.dart';
 import 'character_repository.dart';
+import 'appearance_picker.dart';
 import 'body_portrait.dart';
 import 'class_info.dart' show SkillArt;
 import 'leveling.dart';
@@ -157,10 +158,12 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
     }
   }
 
-  /// Switches the portrait figure (DD-344).
-  Future<void> _changeBody() async {
+  /// Edits the character's look (DD-344, DD-346).
+  Future<void> _editLook() async {
+    final look = await showAppearanceEditor(context, _sheet.look, _sheet.raceCode);
+    if (look == null || !mounted) return;
     try {
-      await widget.repo.setBody(_sheet.id, _sheet.body == 'female' ? 'male' : 'female');
+      await widget.repo.setAppearance(_sheet.id, look);
       await _fetch();
     } on ApiError catch (e) {
       if (mounted) toast(context, Text(errorText(AppLocalizations.of(context), e)));
@@ -270,7 +273,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  BodyPortrait(race: s.raceCode, body: s.body, equipped: _equipped, onChangeBody: _changeBody),
+                  BodyPortrait(race: s.raceCode, look: s.look, equipped: _equipped, onEdit: _editLook),
                   const SizedBox(width: Space.md),
                   Expanded(
                     child: Column(

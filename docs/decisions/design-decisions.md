@@ -3382,6 +3382,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-346 — Karakter kişiselleştirme: yüz, saç stili, saç ve göz rengi
+
+**Context:** Kullanıcı karakter oluşturmaya cinsiyet + 5 yüz, 5 saç stili (cinsiyet başı), 5 saç rengi, 5 göz rengi istedi; katmanlı, anında güncellenen, ekipmanla uyumlu. Verdiği referanslarda sanatçı imzası ve filigran var; bunlar oyuna konmaz, Gemini'ye de yüklenmez. 5×5 tek sayfa denemesinde Gemini bazı saç stillerini aynı çizdi.
+**Decision:** Migration 0064 `face_id/hair_style_id/hair_color_id/eye_color_id` (`character.body` cinsiyet olarak kalır). `character.Appearance`: oluşturmada `Look`, `POST /character/{id}/appearance` kısmi; sayılar `*Options` sabitleri, geçersiz → 400 `E_VALIDATION`; başka cinsiyete geçişte yüz + saç stili 1'e döner, renkler kalır. Görsel: `scripts/head_art.py`, cinsiyet başı bir Gemini 5×2 sayfası (üstte 5 kel yüz, altta aynı kişide 5 saç), saç/kaş/sakal yeşil ve iris macenta boyanır; betik gözlerden hizalar ve `assets/heads/` altına base, brows, eyes, hair katmanlarını gri + alfa yazar (40 dosya, 257 KB). Özgün çizim, referanslar yalnız yazıyla tarif edildi. İstemci: `Appearance`, `HeadLayers` (katmanlar, saç ve göz `modulate` ile boyanır), `AppearancePicker` (canlı önizleme, 5'li görselli satırlar), oluşturma ekranında Görünüm bölümü, portre düğmesiyle `showAppearanceEditor`; `BodyPortrait` figürün başına seçilen başı koyar (boyun ve saç ucu solar).
+**Consequences:** 25 + 25 yüz/saç kombinasyonu ve 5 × 5 renk çalışır; yeni seçenek = yeni katman + iki sabit. Yüz ve saç yalnız insanda; diğer ırklar yalnız cinsiyet seçer. Figürlerde boyun/eller açık tenli kalır, kadın figürün kendi örgüsü ve erkek figürün sakal izi baş katmanının altında görünebilir: uyum için figürlerin yeniden üretilmesi gerekir. Mevcut karakterler 1/1/1/1 başlar, portre düğmesiyle değişir. Testler: `TestAppearance`, `TestHTTPAppearance`, `body_portrait_test` (katman tamlığı, seçici), karakter akışı.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

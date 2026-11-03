@@ -29,15 +29,17 @@ func (r *PgRepo) Create(ctx context.Context, c Character) error {
 	const q = `
 		INSERT INTO character.character
 		  (id, account_id, name, name_normalized, race_code, class_code, spec_code,
-		   level, xp, state, created_at, updated_at, body)
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+		   level, xp, state, created_at, updated_at, body, face_id, hair_style_id, hair_color_id, eye_color_id)
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`
 	body := c.Body
 	if body == "" {
 		body = Bodies[0]
 	}
+	first := func(id int16) int16 { return max(id, 1) }
 	_, err := r.pool.Exec(ctx, q,
 		c.ID, c.AccountID, c.Name, c.NameNormalized, c.RaceCode, c.ClassCode, c.SpecCode,
 		c.Level, c.XP, string(c.State), c.CreatedAt, c.UpdatedAt, body,
+		first(c.FaceID), first(c.HairStyleID), first(c.HairColorID), first(c.EyeColorID),
 	)
 	if err != nil {
 		if pgUniqueViolation(err) {
@@ -58,7 +60,7 @@ func (r *PgRepo) scan(row pgx.Row) (*Character, error) {
 		&c.CreatedAt, &c.UpdatedAt, &c.LastPlayedAt, &c.DeleteGraceAt, &c.Version,
 		&c.HPStored, &c.HPUpdatedAt,
 		&c.Alloc.Strength, &c.Alloc.Vitality, &c.Alloc.Dexterity, &c.Alloc.Intelligence, &c.Alloc.Wisdom, &c.Alloc.Luck,
-		&c.OverflowXP, &c.PostCapXP, &c.Body,
+		&c.OverflowXP, &c.PostCapXP, &c.Body, &c.FaceID, &c.HairStyleID, &c.HairColorID, &c.EyeColorID,
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -78,7 +80,7 @@ const baseSelect = `SELECT id, account_id, name, name_normalized, race_code, cla
 	                       created_at, updated_at, last_played_at, delete_grace_at, version,
 	                       hp_current, hp_updated_at,
 	                       attr_str, attr_vit, attr_dex, attr_int, attr_wis, attr_luck,
-	                       promotion_overflow_xp, postcap_xp, body
+	                       promotion_overflow_xp, postcap_xp, body, face_id, hair_style_id, hair_color_id, eye_color_id
 	                  FROM character.character`
 
 func (r *PgRepo) Get(ctx context.Context, id uuid.UUID) (*Character, error) {
@@ -114,10 +116,11 @@ func (r *PgRepo) CountActiveByAccount(ctx context.Context, accountID uuid.UUID) 
 	return n, err
 }
 
-func (r *PgRepo) SetBody(ctx context.Context, id uuid.UUID, body string) error {
+func (r *PgRepo) SetAppearance(ctx context.Context, id uuid.UUID, look Appearance) error {
 	tag, err := r.pool.Exec(ctx, `UPDATE character.character
-	              SET body = $2, updated_at = now(), version = version + 1
-	            WHERE id = $1`, id, body)
+	              SET body = $2, face_id = $3, hair_style_id = $4, hair_color_id = $5, eye_color_id = $6,
+	                  updated_at = now(), version = version + 1
+	            WHERE id = $1`, id, look.Body, look.FaceID, look.HairStyleID, look.HairColorID, look.EyeColorID)
 	if err != nil {
 		return err
 	}

@@ -2788,5 +2788,11 @@
     }
   },
   "xMissingHp": "Up to this much extra damage as your own HP drops.",
-  "xPetAssist": "Your active pet adds this share to each of your hits."
+  "xPetAssist": "Your active pet adds this share to each of your hits.",
+  "lookFace": "Face",
+  "lookHairStyle": "Hair style",
+  "lookHairColor": "Hair color",
+  "lookEyeColor": "Eye color",
+  "lookSave": "Save",
+  "lookHumanOnly": "Face and hair options for this race are coming soon."
 }

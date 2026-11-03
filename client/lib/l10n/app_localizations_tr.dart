@@ -3546,4 +3546,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get xPetAssist => 'Aktif petin her vuruşuna bu kadar hasar ekler.';
+
+  @override
+  String get lookFace => 'Yüz';
+
+  @override
+  String get lookHairStyle => 'Saç stili';
+
+  @override
+  String get lookHairColor => 'Saç rengi';
+
+  @override
+  String get lookEyeColor => 'Göz rengi';
+
+  @override
+  String get lookSave => 'Kaydet';
+
+  @override
+  String get lookHumanOnly => 'Bu ırkın yüz ve saç seçenekleri yakında.';
 }

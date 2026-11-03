@@ -509,5 +509,11 @@
   "xLifesteal": "Te curas esta parte del daño que infliges.",
   "xExecute": "Daño extra contra enemigos con {pct}% de vida o menos.",
   "xMissingHp": "Hasta este daño extra a medida que baja tu vida.",
-  "xPetAssist": "Tu mascota activa añade esta parte a cada golpe."
+  "xPetAssist": "Tu mascota activa añade esta parte a cada golpe.",
+  "lookFace": "Rostro",
+  "lookHairStyle": "Peinado",
+  "lookHairColor": "Color de pelo",
+  "lookEyeColor": "Color de ojos",
+  "lookSave": "Guardar",
+  "lookHumanOnly": "Las opciones de rostro y pelo de esta raza llegarán pronto."
 }

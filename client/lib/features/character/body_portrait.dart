@@ -6,6 +6,8 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
+import 'appearance_picker.dart';
+import 'models.dart';
 
 /// Level bands of the chest piece, one outfit each (scripts/body_art.py BANDS).
 const bodyBands = [1, 100, 300, 500, 700, 850];
@@ -28,28 +30,34 @@ String bodyOutfit(EquippedItem? chest) {
 }
 
 /// The character drawn full-body (DD-344): race and body figure in the
-/// chest piece's outfit, framed in its rarity, holding its own main-hand
-/// weapon and off-hand item. Races without figures yet show their portrait.
+/// chest piece's outfit with the chosen head on it (DD-346), framed in its
+/// rarity, holding its own main-hand weapon and off-hand item. Races without
+/// figures yet show their portrait.
 class BodyPortrait extends StatelessWidget {
   const BodyPortrait({
     super.key,
     required this.race,
-    required this.body,
+    required this.look,
     this.equipped = const {},
     this.width = 118,
-    this.onChangeBody,
+    this.onEdit,
   });
 
   final String race;
-  final String body;
+  final Appearance look;
   final Map<String, EquippedItem> equipped;
   final double width;
 
-  /// Switches the figure (male/female); null hides the button.
-  final VoidCallback? onChangeBody;
+  /// Opens the look editor; null hides the button.
+  final VoidCallback? onEdit;
 
   // Where the figure's hands are in the frame (scripts/body_art.py W x H).
   static const _hand = Offset(0.24, 0.55);
+
+  // Where the figure's eyes are in the frame, and how wide a head frame must
+  // be to fit its head.
+  static const _eyes = Offset(0.505, 0.122);
+  static const _head = 0.34;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +65,7 @@ class BodyPortrait extends StatelessWidget {
     final height = width * 1.6;
     final chest = equipped['chest'];
     final outfit = bodyOutfit(chest);
+    final body = look.body;
     final figure = ItemImages.bodyPath('${race}_${body}_$outfit') ?? ItemImages.bodyPath('${race}_${body}_none');
     final frame = chest == null ? Palette.borderStrong : rarityColor(chest.rarity);
     final dpr = MediaQuery.devicePixelRatioOf(context);
@@ -113,15 +122,21 @@ class BodyPortrait extends StatelessWidget {
               )
             else if (raceArt != null)
               Positioned.fill(
-                child: Image.asset(race, fit: BoxFit.cover, cacheWidth: (width * 2 * dpr).round()),
+                child: Image.asset(raceArt, fit: BoxFit.cover, cacheWidth: (width * 2 * dpr).round()),
               )
             else
               const Center(child: Icon(Icons.person, color: Palette.textMuted, size: 48)),
             if (figure != null) ...[
+              if (customizableRaces.contains(race))
+                Positioned(
+                  left: _eyes.dx * width - width * _head / 2,
+                  top: _eyes.dy * height - width * _head / 2,
+                  child: HeadLayers(look: look, size: width * _head, onFigure: true),
+                ),
               held(equipped['mainhand']?.templateCode, offhand: false),
               held(equipped['offhand']?.templateCode, offhand: true),
             ],
-            if (onChangeBody != null)
+            if (onEdit != null)
               Positioned(
                 right: 2,
                 top: 2,
@@ -129,14 +144,14 @@ class BodyPortrait extends StatelessWidget {
                   color: Colors.black45,
                   shape: const CircleBorder(),
                   child: IconButton(
-                    key: const Key('body-change'),
+                    key: const Key('look-edit'),
                     tooltip: l.bodyChange,
                     visualDensity: VisualDensity.compact,
                     iconSize: 16,
                     constraints: const BoxConstraints.tightFor(width: 28, height: 28),
                     padding: EdgeInsets.zero,
-                    onPressed: onChangeBody,
-                    icon: Icon(body == 'female' ? Icons.female : Icons.male, color: Palette.textSecondary),
+                    onPressed: onEdit,
+                    icon: const Icon(Icons.face_retouching_natural, color: Palette.textSecondary),
                   ),
                 ),
               ),

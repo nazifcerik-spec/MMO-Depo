@@ -1024,5 +1024,11 @@
   "xLifesteal": "Verdiğin hasarın bu kadarı kadar iyileşirsin.",
   "xExecute": "Canı %{pct} ve altındaki düşmanlara ek hasar.",
   "xMissingHp": "Canın azaldıkça bu kadara varan ek hasar.",
-  "xPetAssist": "Aktif petin her vuruşuna bu kadar hasar ekler."
+  "xPetAssist": "Aktif petin her vuruşuna bu kadar hasar ekler.",
+  "lookFace": "Yüz",
+  "lookHairStyle": "Saç stili",
+  "lookHairColor": "Saç rengi",
+  "lookEyeColor": "Göz rengi",
+  "lookSave": "Kaydet",
+  "lookHumanOnly": "Bu ırkın yüz ve saç seçenekleri yakında."
 }
