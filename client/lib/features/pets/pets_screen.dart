@@ -83,12 +83,17 @@ int petStage(int level) => level <= 33 ? 1 : (level <= 66 ? 2 : 3);
 /// The species' art at [stage] (`scripts/pet_assets.py`), framed on its own
 /// backdrop; a paw icon while it is missing.
 class PetArt extends StatelessWidget {
-  const PetArt({super.key, required this.species, required this.stage, required this.size, required this.color});
+  const PetArt({super.key, required this.species, required this.stage, required this.size, required this.color})
+    : egg = false;
+
+  /// The species' egg in the same frame and size as its stages.
+  const PetArt.egg({super.key, required this.species, required this.size, required this.color}) : stage = 0, egg = true;
 
   final String species;
   final int stage;
   final double size;
   final Color color;
+  final bool egg;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -100,10 +105,10 @@ class PetArt extends StatelessWidget {
     ),
     clipBehavior: Clip.antiAlias,
     child: Image.asset(
-      'assets/pets/${species}_$stage.webp',
+      egg ? 'assets/items/pet_egg_$species.webp' : 'assets/pets/${species}_$stage.webp',
       fit: BoxFit.cover,
       cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
-      errorBuilder: (_, _, _) => Icon(Icons.pets, size: size * 0.5, color: color),
+      errorBuilder: (_, _, _) => Icon(egg ? Icons.egg_outlined : Icons.pets, size: size * 0.5, color: color),
     ),
   );
 }
@@ -450,7 +455,7 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
       color: color,
       onTap: () => _hatch(e),
       badge: '×${e.quantity}',
-      child: ItemArt(code: e.template, icon: Icons.egg_outlined, color: color, size: 40),
+      child: PetArt.egg(species: e.species, size: 64, color: color),
     );
   }
 
@@ -472,7 +477,7 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
           : (ready ? Icons.check_circle : Icons.directions_run),
       child: hatched
           ? PetArt(species: p.species, stage: petStage(p.level), size: 64, color: color)
-          : ItemArt(code: 'pet_egg_${p.species}', icon: Icons.egg_outlined, color: color, size: 40),
+          : PetArt.egg(species: p.species, size: 64, color: color),
     );
   }
 
@@ -652,7 +657,7 @@ class _PetCard extends StatelessWidget {
                     swapKey: hatched ? petStage(pet.level) : 0,
                     child: hatched
                         ? PetArt(species: pet.species, stage: petStage(pet.level), size: 64, color: color)
-                        : ItemArt(code: 'pet_egg_${pet.species}', icon: Icons.egg_outlined, color: color, size: 64),
+                        : PetArt.egg(species: pet.species, size: 64, color: color),
                   ),
                 ),
                 const SizedBox(width: Space.md),

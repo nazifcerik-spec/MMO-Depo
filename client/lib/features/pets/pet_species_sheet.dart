@@ -4,7 +4,6 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
-import '../inventory/item_images.dart';
 import '../inventory/item_widgets.dart';
 import 'pets_screen.dart';
 
@@ -192,11 +191,7 @@ class PetSpeciesSheet extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      stage(
-                        ItemArt(code: 'pet_egg_${s.code}', icon: Icons.egg_outlined, color: color, size: 52),
-                        l.petHatching,
-                        '',
-                      ),
+                      stage(PetArt.egg(species: s.code, size: 52, color: color), l.petHatching, ''),
                       for (final (n, name, from, to) in [
                         (1, l.petStage1, 1, 33),
                         (2, l.petStage2, 34, 66),
