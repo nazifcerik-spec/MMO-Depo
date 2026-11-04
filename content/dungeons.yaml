@@ -364,7 +364,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 92
+    power_pct: 95
     waves:
       - { mob_code: tomb_keeper, count: 3 }
       - { mob_code: black_knight, count: 3 }
@@ -380,7 +380,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 70
+    power_pct: 73
     waves:
       - { mob_code: throne_guardian, count: 3 }
       - { mob_code: dragon_sorcerer, count: 3 }
@@ -396,7 +396,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 70
+    power_pct: 75
     waves:
       - { mob_code: stone_gargoyle, count: 3 }
       - { mob_code: cursed_sorcerer, count: 3 }

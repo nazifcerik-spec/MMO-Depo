@@ -3535,6 +3535,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-362 — Sv 100–250 yetenekleri ve anlık yetenekler
+
+**Context:** İlk terfi Sv 300'e taşınınca (DD-351) Sv 75–300 arasında yeni yetenek kalmadı: yaklaşık 48 saatlik tasarım süresi. Kullanıcı Savaşçı senaryosunu onaylayıp tüm sınıflara istedi. İlk deneme ters etki yaptı: yeni aktifler vuruş turunu ve kaynağı aldığı için baskın temizleme oranı düştü (ör. Sv 300 5 kişi %61 → %20), yani oyuncu yeni yetenekle zayıflıyordu.
+**Decision:** Her temel sınıfa Sv 100/150/200/250'de dört yetenek: üç aktif + bir pasif. Hasar vuruşu eklenmez; iş türleri sınıfın temel kadrosunda olmayan türlerden seçilir ve aynı işi yapan sonraki yeteneklerden hep zayıftır, böylece terfi yetenekleri yutulmaz (DD-352). Aktifler anlıktır (`instant: true`, `combat.Skill.Instant`): tur harcamaz, turun hamlesinden sonra kalan kaynakla çalışır; vuruş olamaz (contentpack reddeder). Mevcut yetenekler ve eski anlık görüntüler aynı davranır. Baskın gücü: crownless_palace 95, dragon_king_lair 73, time_lord_tower 75. Oluşturma ekranının İlk yetenekler bölümü Sv 75'e kadar kalır, sonrakiler sınıf yolunda.
+**Consequences:** Sayılar `TestRaidTargets` ve `TestBalanceTargets` ile doğrulandı; `TestGapSkillsLeadToThePromotion` kuralları sabitler. Yeni 40 yeteneğin çizimi yok: yedek ikon gösterilir. Kaynak harcaması Öfke vb. kaynakla sınırlı, anlık yetenek ana hamlenin önüne geçmez. Bir kaynak iki kez sayılmasın diye savaş günlüğünde anlık yetenek ayrı satır değil; hasar ve iyileşme turun Tick alanlarına eklenir.
+**Tarih:** 2026-11-05
+
+---
+
+## DD-363 — Koruyucu kalkanları Sv 285'ten başlar
+
+**Context:** Kalkanlar Muhafız uzmanlığı ister, uzmanlık Sv 300'de açılır (DD-351). Sv 110–260 yedi kalkan hiç kullanılamıyordu ama üretilebiliyordu; Sv 285 kalkanı da yalnız üretimle geldiği için yeni Muhafız kalkansız kalabiliyordu.
+**Decision:** `SHIELD_FROM` 285 (`gen_jewelry.py`), yedi kalkanın eşyası, tarifi, adları ve görseli kalktı; migration 0069 tarifleri siler, eldeki ve ilandaki kalkanları `shield_sovereign`'a çevirir (şablonlar geçmiş kayıtları için DB'de kalır, sürmekte olan üretim işleri kendi tarif anlık görüntüsüyle biter). `shield_sovereign` Demirkale dükkânında satılır.
+**Consequences:** Sv 300'de her Muhafız kalkan alabilir. Dönüşüm eldeki düşük kalkanı bedavaya yükseltir; bu kalkanları kimse takamadığı için etkisi küçük. `requires: [shield]` hâlâ savaşta uygulanmıyor: Kalkan Darbesi kalkansız da kullanılır.
+**Tarih:** 2026-11-05
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

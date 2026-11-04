@@ -68,7 +68,7 @@ func TestHTTPJewelryPairs(t *testing.T) {
 	require.Equal(t, "necklace", slotOf(neck.ID))
 
 	// Guardian shields need the branch.
-	shield := w.give(me, "shield_royal", 1)
+	shield := w.give(me, "shield_sovereign", 1)
 	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET level = 110 WHERE id = $1`, me.ID)
 	require.NoError(t, err)
 	p.fail("POST", p.path("/equip/"+shield.ID.String()), map[string]any{}, 403, "")

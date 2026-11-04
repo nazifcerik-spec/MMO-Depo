@@ -132,6 +132,10 @@ type Skill struct {
 	SelfHPBelow   int32 `json:",omitempty"` // only when own HP% is at or below this
 	TargetHPBelow int32 `json:",omitempty"` // only when target HP% is at or below this
 	DurationTurns int   `json:",omitempty"` // length of timed effects
+
+	// Instant skills cost no turn: after the turn's action they fire from
+	// what is left of the resource (DD-362). Never a strike.
+	Instant bool `json:",omitempty"`
 }
 
 // Clone returns a copy whose Skills slice is not shared.

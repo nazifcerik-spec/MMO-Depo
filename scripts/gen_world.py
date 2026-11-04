@@ -431,8 +431,8 @@ for z in ZONES:
 raids = []
 # Each raid's enemy strength in percent (DD-307), tuned by the balance
 # simulation so a full party at the raid's level clears about 40% of runs.
-RAID_POWER = {'north_keep_siege': 90, 'crownless_palace': 92, 'dragon_king_lair': 70,
-              'time_lord_tower': 70, 'archangels_fall': 82, 'fallen_god_throne': 90}
+RAID_POWER = {'north_keep_siege': 90, 'crownless_palace': 95, 'dragon_king_lair': 73,
+              'time_lord_tower': 75, 'archangels_fall': 82, 'fallen_god_throne': 90}
 # A raid sits where its wave mobs live (DD-302).
 MOB_ZONE = {code: z['code'] for z in ZONES for code, _, _, _ in z['mobs']}
 for r in RAIDS:

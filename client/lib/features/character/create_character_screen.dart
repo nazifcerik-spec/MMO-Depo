@@ -614,7 +614,8 @@ class _Skills extends StatelessWidget {
     }
     final list = [
       for (final s in all)
-        if (s.spec.isEmpty || s.spec == node.code) s,
+        // "First skills": the later base-class skills (DD-362) are on the class path below.
+        if ((s.spec.isEmpty || s.spec == node.code) && s.unlockLevel <= 75) s,
     ]..sort((a, b) => a.unlockLevel.compareTo(b.unlockLevel));
     if (list.isEmpty) return const SizedBox.shrink();
     final color = classColor(node.code);

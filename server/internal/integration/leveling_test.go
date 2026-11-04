@@ -353,7 +353,7 @@ func TestWarriorFixtures(t *testing.T) {
 	}{
 		{"warrior", 1, false, 10, "", false},
 		{"warrior", 99, false, 100, "", false},
-		{"warrior", 100, false, 200, "veteran", false},
+		{"warrior", 100, false, 150, "veteran", false},
 		{"warrior", 299, false, 300, "elite", false},
 		{"warrior", 300, true, 300, "champion", false},
 		{"guardian", 300, false, 400, "champion", false},

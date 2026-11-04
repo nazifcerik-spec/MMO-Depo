@@ -11,9 +11,11 @@
 #   W<power>/<cd>  armor debuff on the target
 #   options: d<turns> h<self hp%> a<ally hp%> t<target hp%> c<cost> g<gain>
 #            T:<TYPE> (data-model type when not the effect's default)
+#            i: instant, costs no turn (DD-362)
 #   P <mods> [@TRIGGER[/stacks]]  passive; mods: atk hp def mp (percent),
 #            crit cdmg hit eva blk ls dr exe miss (points), e.g. "atk5,crit3"
-# Level 600 is the Awakening, 700 the Ultimate.
+# Level 600 is the Awakening, 700 the Ultimate. Base-class rows keep their level:
+# 100-250 there fill the gap before the first promotion (DD-362).
 
 L = lambda en, tr, zh, es: dict(en=en, tr=tr, zh=zh, es=es)
 
@@ -90,6 +92,10 @@ CLASSES = [
             (25, 'backstab', 'S200/3', 'Backstab', 'Sırttan Bıçaklama', '背刺', 'Puñalada Trasera'),
             (50, 'opportunist', 'P crit4,cdmg10 @ON_CRIT/5', 'Opportunist', 'Fırsatçı', '投机者', 'Oportunista'),
             (75, 'kidney_strike', 'X140/7 d1', 'Kidney Strike', 'Böbrek Darbesi', '肾击', 'Golpe en los Riñones'),
+            (100, 'rupture', 'D30/6 d3 i', 'Rupture', 'Kanatma', '割裂', 'Ruptura'),
+            (150, 'shadow_poise', 'P eva3,cdmg5', 'Shadow Poise', 'Gölge Duruşu', '暗影姿态', 'Porte Sombrío'),
+            (200, 'smoke_veil', 'B15/12 d3 h40 i', 'Smoke Veil', 'Duman Perdesi', '烟雾面纱', 'Velo de Humo'),
+            (250, 'killing_focus', 'E10/8 d3 i', 'Killing Focus', 'Katil Odağı', '杀戮专注', 'Concentración Letal'),
         ],
         promotions=[
             dict(code='assassin', name=L('Assassin', 'Suikastçı', '刺客', 'Asesino'), roles=['melee_dps', 'burst'],
@@ -192,6 +198,10 @@ CLASSES = [
             (25, 'power_shot', 'S210/3', 'Power Shot', 'Güçlü Atış', '强力射击', 'Disparo Potente'),
             (50, 'hunters_eye', 'P hit4,crit3 @ON_HIT/5', "Hunter's Eye", 'Avcı Gözü', '猎人之眼', 'Ojo del Cazador'),
             (75, 'marked_target', 'W20/7 d3', 'Marked Target', 'İşaretli Hedef', '标记目标', 'Objetivo Marcado'),
+            (100, 'barbed_arrow', 'D30/6 d3 i', 'Barbed Arrow', 'Dikenli Ok', '倒钩箭', 'Flecha Dentada'),
+            (150, 'fieldcraft', 'P atk3,crit2', 'Fieldcraft', 'Arazi Bilgisi', '野外技艺', 'Oficio de Campo'),
+            (200, 'field_dressing', 'O4/12 d3 h40 i', 'Field Dressing', 'Sahra Sargısı', '战地包扎', 'Vendaje de Campaña'),
+            (250, 'steady_breath', 'E10/8 d3 i', 'Steady Breath', 'Sakin Nefes', '平稳呼吸', 'Respiración Serena'),
         ],
         promotions=[
             dict(code='marksman', name=L('Marksman', 'Nişancı', '神射手', 'Tirador'), roles=['ranged_dps', 'burst'],
@@ -294,6 +304,10 @@ CLASSES = [
             (25, 'arcane_blast', 'S230/3', 'Arcane Blast', 'Gizem Patlaması', '奥术冲击', 'Explosión Arcana'),
             (50, 'mana_flow', 'P atk6 @ON_SKILL_CAST/5', 'Mana Flow', 'Mana Akışı', '法力流动', 'Flujo de Maná'),
             (75, 'spell_surge', 'E25/8 d3', 'Spell Surge', 'Büyü Dalgası', '法术涌动', 'Oleada de Hechizos'),
+            (100, 'scorch', 'D40/6 d3 i', 'Scorch', 'Kavurma', '灼烧', 'Abrasar'),
+            (150, 'arcane_resilience', 'P hp4,crit2', 'Arcane Resilience', 'Gizem Dayanıklılığı', '奥术韧性', 'Resistencia Arcana'),
+            (200, 'mana_mend', 'H12/12 h35 i', 'Mana Mend', 'Mana Onarımı', '法力修复', 'Reparación de Maná'),
+            (250, 'arcane_exposure', 'W15/7 d3 i', 'Arcane Exposure', 'Gizem Teşhiri', '奥术暴露', 'Exposición Arcana'),
         ],
         promotions=[
             dict(code='arcanist', name=L('Arcanist', 'Gizemci', '奥术师', 'Arcanista'), roles=['magic_dps', 'sustained_dps'],
@@ -396,6 +410,10 @@ CLASSES = [
             (25, 'chi_burst', 'S220/3', 'Chi Burst', 'Chi Patlaması', '气爆', 'Estallido de Chi'),
             (50, 'inner_flow', 'P atk4,eva3 @ON_RESOURCE_GAINED/5', 'Inner Flow', 'İç Akış', '内息流转', 'Flujo Interior'),
             (75, 'flying_kick', 'X150/7 d1', 'Flying Kick', 'Uçan Tekme', '飞踢', 'Patada Voladora'),
+            (100, 'pressure_point', 'W15/6 d3 i', 'Pressure Point', 'Baskı Noktası', '压力点', 'Punto de Presión'),
+            (150, 'tempered_form', 'P def4,crit2', 'Tempered Form', 'Çelikleşmiş Beden', '淬炼之躯', 'Forma Templada'),
+            (200, 'stone_breath', 'G20/7 d3 h50 i', 'Stone Breath', 'Taş Nefesi', '磐石之息', 'Aliento de Piedra'),
+            (250, 'centered_chi', 'E10/8 d3 i', 'Centered Chi', 'Dengeli Chi', '凝神之气', 'Chi Centrado'),
         ],
         promotions=[
             dict(code='disciple', name=L('Disciple', 'Mürit', '门徒', 'Discípulo'), roles=['tank', 'bruiser', 'afk_safe'],
@@ -501,6 +519,10 @@ CLASSES = [
             (25, 'blessing', 'E20/8 d3', 'Blessing', 'Kutsama', '祝福', 'Bendición'),
             (50, 'divine_favor', 'P atk4,hp4 @ON_HEAL/5', 'Divine Favor', 'İlahi Lütuf', '神恩', 'Favor Divino'),
             (75, 'purify', 'B25/9 d3 h65 T:DISPEL', 'Purify', 'Arındırma', '净化', 'Purificar'),
+            (100, 'holy_fire', 'D40/6 d3 i', 'Holy Fire', 'Kutsal Ateş', '圣火', 'Fuego Sagrado'),
+            (150, 'steadfast_faith', 'P hp3,dr2', 'Steadfast Faith', 'Sarsılmaz İman', '坚定信仰', 'Fe Inquebrantable'),
+            (200, 'renewing_prayer', 'O4/9 d4 a70 i', 'Renewing Prayer', 'Yenileyici Dua', '复苏祈祷', 'Plegaria Renovadora'),
+            (250, 'exposing_light', 'W15/7 d3 i', 'Exposing Light', 'Açığa Çıkaran Işık', '曝露之光', 'Luz Reveladora'),
         ],
         promotions=[
             dict(code='saint', name=L('Saint', 'Aziz', '圣者', 'Santo'), roles=['healer', 'barrier_support', 'group_support'], support=0.6,
@@ -604,6 +626,10 @@ CLASSES = [
             (25, 'consecration', 'D70/6 d3', 'Consecration', 'Takdis', '奉献', 'Consagración'),
             (50, 'holy_conviction', 'P atk4,dr3 @ON_RESOURCE_GAINED/5', 'Holy Conviction', 'Kutsal İnanç', '神圣信念', 'Convicción Sagrada'),
             (75, 'lay_on_hands', 'H35/12 h35', 'Lay on Hands', 'El Koyma', '圣疗术', 'Imposición de Manos'),
+            (100, 'sundering_verdict', 'W15/7 d3 i', 'Sundering Verdict', 'Parçalayan Hüküm', '破甲裁决', 'Veredicto Demoledor'),
+            (150, 'oathbound_plate', 'P def3,hp2', 'Oathbound Plate', 'Yeminli Zırh', '誓约板甲', 'Placas Juramentadas'),
+            (200, 'sacred_ward', 'B15/9 d3 h45 i', 'Sacred Ward', 'Kutsal Koruma', '神圣守护', 'Custodia Sagrada'),
+            (250, 'righteous_aura', 'E10/8 d3 i', 'Righteous Aura', 'Erdem Aurası', '正义灵光', 'Aura Recta'),
         ],
         promotions=[
             dict(code='protector', name=L('Protector', 'Koruyucu', '守护者', 'Protector'), roles=['tank', 'barrier_support', 'afk_safe'],
@@ -709,6 +735,10 @@ CLASSES = [
             (25, 'entangling_roots', 'X140/7 d1 T:ROOT', 'Entangling Roots', 'Dolanan Kökler', '纠缠根须', 'Raíces Enredadoras'),
             (50, 'natures_cycle', 'P atk4,hp4 @ON_SKILL_CAST/5', "Nature's Cycle", 'Doğanın Döngüsü', '自然循环', 'Ciclo de la Naturaleza'),
             (75, 'wild_growth', 'E20/8 d3', 'Wild Growth', 'Yabani Büyüme', '野性成长', 'Crecimiento Salvaje'),
+            (100, 'creeping_vines', 'D40/6 d3 i', 'Creeping Vines', 'Sürünen Sarmaşıklar', '蔓延藤蔓', 'Enredaderas Reptantes'),
+            (150, 'deep_roots', 'P hp3,crit2', 'Deep Roots', 'Derin Kökler', '深根', 'Raíces Profundas'),
+            (200, 'barkskin', 'B15/12 d3 h40 i', 'Barkskin', 'Ağaç Kabuğu', '树皮术', 'Piel de Corteza'),
+            (250, 'withering_spores', 'W15/7 d3 i', 'Withering Spores', 'Soldurucu Sporlar', '枯萎孢子', 'Esporas Marchitas'),
         ],
         promotions=[
             dict(code='grove_keeper', name=L('Grove Keeper', 'Koru Bekçisi', '林地守护者', 'Guardián del Bosque'), support=0.55,
@@ -816,6 +846,10 @@ CLASSES = [
             (25, 'quick_tempo', 'E20/7 d3', 'Quick Tempo', 'Hızlı Tempo', '快板', 'Tempo Rápido'),
             (50, 'rhythm', 'P atk4,crit3 @ON_ATTACK/5', 'Rhythm', 'Ritim', '韵律', 'Ritmo'),
             (75, 'inspiring_chorus', 'G30/8 d3', 'Inspiring Chorus', 'İlham Veren Koro', '激励合唱', 'Coro Inspirador'),
+            (100, 'mocking_note', 'W15/6 d3 i', 'Mocking Note', 'Alaycı Nota', '嘲讽音符', 'Nota Burlona'),
+            (150, 'stage_presence', 'P eva2,hp3', 'Stage Presence', 'Sahne Duruşu', '舞台风范', 'Presencia Escénica'),
+            (200, 'warding_refrain', 'B15/12 d3 h40 i', 'Warding Refrain', 'Koruyucu Nakarat', '守护副歌', 'Estribillo Protector'),
+            (250, 'dissonant_chord', 'D30/6 d3 i', 'Dissonant Chord', 'Uyumsuz Akor', '不和谐和弦', 'Acorde Disonante'),
         ],
         promotions=[
             dict(code='minstrel', name=L('Minstrel', 'Âşık', '游吟乐师', 'Juglar'), support=0.6,
@@ -923,6 +957,10 @@ CLASSES = [
             (25, 'lightning_strike', 'S220/3', 'Lightning Strike', 'Şimşek Çarpması', '雷击', 'Golpe de Rayo'),
             (50, 'spirit_connection', 'P atk4,hp4 @ON_SKILL_CAST/5', 'Spirit Connection', 'Ruh Bağlantısı', '灵魂连接', 'Conexión Espiritual'),
             (75, 'ancestral_guidance', 'E20/8 d3', 'Ancestral Guidance', 'Ata Rehberliği', '先祖指引', 'Guía Ancestral'),
+            (100, 'spirit_flame', 'D40/6 d3 i', 'Spirit Flame', 'Ruh Alevi', '灵焰', 'Llama Espiritual'),
+            (150, 'ancestral_resolve', 'P hp3,dr2', 'Ancestral Resolve', 'Ata Azmi', '先祖决意', 'Determinación Ancestral'),
+            (200, 'stoneward', 'G20/7 d3 h50 i', 'Stoneward', 'Taş Muhafaza', '石之守护', 'Guarda de Piedra'),
+            (250, 'spirit_hex', 'W15/7 d3 i', 'Spirit Hex', 'Ruh Laneti', '灵魂诅咒', 'Maleficio Espiritual'),
         ],
         promotions=[
             dict(code='totemist', name=L('Totemist', 'Totemci', '图腾师', 'Totemista'), support=0.5,

@@ -112,7 +112,16 @@ void main() {
     expect(mobs, hasLength(146));
     expectArt('mobs', mobs);
     final skills = codes('skills.yaml', RegExp(r'^  - code: (\w+)', multiLine: true)).toList();
-    expect(skills, hasLength(471));
-    expectArt('skills', skills);
+    expect(skills, hasLength(511));
+    // DD-362: the 40 base-class skills of levels 100-250 show the stand-in icon
+    // until their sheets are painted (`art_sets.py` set `gap_skills`).
+    final gap = {
+      for (final b in File('../content/skills.yaml').readAsStringSync().split(RegExp(r'^  - code: ', multiLine: true)))
+        if (RegExp(r'unlock_level: (100|150|200|250)\s').hasMatch(b) &&
+            !RegExp(r'^\s+spec: ', multiLine: true).hasMatch(b))
+          b.split(RegExp(r'\s')).first,
+    };
+    expect(gap, hasLength(40));
+    expectArt('skills', skills.where((c) => !gap.contains(c)));
   });
 }

@@ -35,6 +35,7 @@ type ClassSkill struct {
 	AutoTrigger    AutoTrigger `yaml:"auto_trigger"`
 	ResourceGain   int32       `yaml:"resource_gain"`
 	DurationTurns  int         `yaml:"duration_turns"`
+	Instant        bool        `yaml:"instant"`
 	Requires       []string    `yaml:"requires"`
 
 	// Shared skill data model (DD-252): descriptive fields the resolver
@@ -175,6 +176,9 @@ func validateSkills(skills []ClassSkill) error {
 			if combat.Timed(s.Effect) != (s.DurationTurns > 0) {
 				return fmt.Errorf("skill %s: timed effects need duration_turns (and only they)", s.Code)
 			}
+			if s.Instant && (s.Effect == combat.EffectStrike || s.Effect == combat.EffectStun) {
+				return fmt.Errorf("skill %s: an instant skill cannot be a strike", s.Code)
+			}
 			if !s.AutoTrigger.defined() {
 				return fmt.Errorf("skill %s: active skills need an auto_trigger rule (passive-only play)", s.Code)
 			}
@@ -262,7 +266,7 @@ ON CONFLICT (code) DO UPDATE SET
 			"category": s.category(), "activation_mode": s.ActivationMode,
 			"on_cooldown": s.AutoTrigger.OnCooldown, "ally_hp_below": s.AutoTrigger.AllyHPBelow,
 			"self_hp_below": s.AutoTrigger.SelfHPBelow, "target_hp_below": s.AutoTrigger.TargetHPBelow,
-			"resource_gain": s.ResourceGain, "duration_turns": s.DurationTurns, "requires": s.Requires,
+			"resource_gain": s.ResourceGain, "duration_turns": s.DurationTurns, "instant": s.Instant, "requires": s.Requires,
 			"type": s.Type, "damage_type": s.DamageType, "target_type": s.TargetType, "range": s.Range,
 			"cast_time": s.CastTime, "tags": s.Tags, "passive": s.Passive,
 		})

@@ -190,7 +190,7 @@ func TestNextMilestone(t *testing.T) {
 		kind  string
 	}{
 		{"warrior", 73, 75, "skill"},
-		{"warrior", 99, 100, "title"},
+		{"warrior", 99, 100, "skill"},
 		{"warrior", 299, 300, "promotion"},
 		{"warrior", 300, 300, "promotion"}, // pending choice is the objective
 		{"guardian", 687, 700, "promotion"},

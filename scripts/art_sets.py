@@ -553,6 +553,21 @@ SKILL_LOOK = {
 # prompt, so each skill is described by objects taken from the words of its
 # name instead (DD-336).
 SKILL_MOTIF = {
+    'rupture': 'a deep bleeding slash', 'poise': 'a poised shadow dancer', 'veil': 'a curling wall of smoke',
+    'killing': 'a blood-red crosshair', 'barbed': 'a hooked barbed arrowhead', 'fieldcraft': 'a compass over a map',
+    'dressing': 'a wound bandage roll', 'steady': 'a calm breath of mist', 'scorch': 'a scorched burning brand',
+    'resilience': 'a cracked rune ward holding firm', 'mend': 'a stitched glowing wound',
+    'exposure': 'an opened glowing eye', 'pressure': 'a fingertip striking a glowing point',
+    'tempered': 'a body wreathed in forge sparks', 'stone': 'a grey standing stone', 'centered': 'a still ring of energy',
+    'steadfast': 'a planted iron banner', 'renewing': 'praying hands with a green glow',
+    'exposing': 'a beam of revealing light', 'sundering': 'a gavel splitting armor',
+    'oathbound': 'a breastplate bound with chains', 'ward': 'a glowing warding circle', 'righteous': 'a golden halo aura',
+    'creeping': 'creeping thorny vines', 'roots': 'deep roots gripping earth', 'barkskin': 'an arm covered in bark',
+    'withering': 'a withered drooping flower', 'spores': 'a cloud of spores', 'mocking': 'a laughing jester mask',
+    'stage': 'a theatre spotlight', 'refrain': 'a looping golden music staff', 'dissonant': 'a jagged broken chord wave',
+    'stoneward': 'a stone totem shield', 'hex': 'a cursed swirling sigil', 'resolve': 'a clenched fist before a flame',
+    'sunder': 'an axe splitting a breastplate', 'discipline': 'an iron helm with a straight crest',
+    'wind': 'a warrior drawing a gust of breath', 'cry': 'a roaring open war horn',
     'aegis': 'a radiant round shield', 'aim': 'a crosshair over a target', 'aimed': 'a crosshair over a target',
     'ancestor': 'ghostly ancestor faces', 'ancestors': 'ghostly ancestor faces', 'ancestral': 'ghostly ancestor faces',
     'ancients': 'ghostly ancestor faces', 'ancient': 'weathered ancient stone', 'angel': 'white angel wings',
@@ -681,8 +696,14 @@ def skill_motif(cls, name):
     return ' with '.join(found[:2]) or CLASS_MOTIF[cls]
 
 
-def skills():
-    """Class skill icons in class order, so a sheet keeps one palette."""
+def is_gap(s):
+    """Base-class skills between level 75 and the first promotion (DD-362)."""
+    return not s.get('spec') and 75 < s['unlock_level'] < 300
+
+
+def skills(gap=False):
+    """Class skill icons in class order, so a sheet keeps one palette. The gap
+    skills are their own set: adding them must not shift the existing sheets."""
     import yaml
     with io.open(os.path.join(ROOT, 'content', 'skills.yaml'), encoding='utf-8') as f:
         sk = yaml.safe_load(f)['skills']
@@ -692,7 +713,7 @@ def skills():
     out = []
     for cls in PAL:
         for s in sk:
-            if s['class'] != cls:
+            if s['class'] != cls or is_gap(s) != gap:
                 continue
             epic = ', epic and radiant' if s.get('category') in ('ultimate', 'awakening') else ''
             out.append((s['code'], '%s, as %s, in %s%s' % (
@@ -765,6 +786,13 @@ MEDALLION = ('Each cell is one round medallion that fills its square, with an or
 NO_TEXT = ('IMPORTANT: no captions, no labels, no names, no text or letters of any kind anywhere in the image. '
            'No logos, no watermark, no outer frame.')
 
+SKILL_HEAD = ('fantasy RPG class ability icons. Each cell is one square ability icon that fills its cell '
+                        'edge to edge with a thin bevelled dark frame: one dramatic painted symbol of the skill, '
+                        'centered, on a dark background tinted with the class colours. Stylized hand-painted '
+                        'high-fantasy MMORPG spell icon art, bold readable shapes that stay clear when tiny, vivid '
+                        'glow, every icon clearly different. The icons are pure pictures with nothing written on '
+                        'them and no caption bars under them; sigils are abstract shapes, never letters or '
+                        'numerals:')
 SETS = {
     'nodes': dict(dir='class_nodes', mode='medallion', size=160, entries=nodes,
                   head='fantasy class emblem icons. ' + MEDALLION + ' Each emblem shows one symbol:'),
@@ -789,13 +817,9 @@ SETS = {
                  head='fantasy monster bestiary icons. ' + MEDALLION + ' Inside each medallion is a painted portrait '
                       'of one monster, head and upper body facing the viewer, in its home terrain:'),
     'skills': dict(dir='skills', mode='item', size=128, grid=5, entries=skills,
-                   head='fantasy RPG class ability icons. Each cell is one square ability icon that fills its cell '
-                        'edge to edge with a thin bevelled dark frame: one dramatic painted symbol of the skill, '
-                        'centered, on a dark background tinted with the class colours. Stylized hand-painted '
-                        'high-fantasy MMORPG spell icon art, bold readable shapes that stay clear when tiny, vivid '
-                        'glow, every icon clearly different. The icons are pure pictures with nothing written on '
-                        'them and no caption bars under them; sigils are abstract shapes, never letters or '
-                        'numerals:'),
+                   head=SKILL_HEAD),
+    'gap_skills': dict(dir='skills', mode='item', size=128, grid=5, entries=lambda: skills(gap=True),
+                       head=SKILL_HEAD),
     'scrolls': dict(dir='items', mode='item', size=128, grid=5, entries=lambda: SCROLLS,
                     head='fantasy enchanting scroll icons. Each cell shows exactly one open scroll, whole and '
                          'centered, at a slight diagonal, on the same plain dark slate-blue backdrop with a soft '

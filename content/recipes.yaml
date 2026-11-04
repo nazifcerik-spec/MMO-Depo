@@ -6509,19 +6509,6 @@ recipes:
     profession_xp_reward: 46
     craft_seconds: 60
 
-  - code: recipe_shield_royal
-    display_name_key: recipe.shield_royal
-    profession_code: blacksmithing
-    min_skill: 11
-    inputs:
-      - { template_code: aluminium_bar, quantity: 4 }
-      - { template_code: hare_pelt, quantity: 1 }
-    gold_cost_copper: 755
-    output_template_code: shield_royal
-    output_stack: 1
-    profession_xp_reward: 40
-    craft_seconds: 55
-
   - code: recipe_shortsword_royal
     display_name_key: recipe.shortsword_royal
     profession_code: blacksmithing
@@ -7028,20 +7015,6 @@ recipes:
     output_stack: 1
     profession_xp_reward: 54
     craft_seconds: 70
-
-  - code: recipe_shield_sunforged
-    display_name_key: recipe.shield_sunforged
-    profession_code: blacksmithing
-    min_skill: 14
-    inputs:
-      - { template_code: lead_bar, quantity: 3 }
-      - { template_code: aluminium_bar, quantity: 1 }
-      - { template_code: badger_pelt, quantity: 1 }
-    gold_cost_copper: 985
-    output_template_code: shield_sunforged
-    output_stack: 1
-    profession_xp_reward: 48
-    craft_seconds: 60
 
   - code: recipe_shortsword_sunforged
     display_name_key: recipe.shortsword_sunforged
@@ -7556,20 +7529,6 @@ recipes:
     output_stack: 1
     profession_xp_reward: 61
     craft_seconds: 75
-
-  - code: recipe_shield_obsidian
-    display_name_key: recipe.shield_obsidian
-    profession_code: blacksmithing
-    min_skill: 16
-    inputs:
-      - { template_code: iron_bar, quantity: 3 }
-      - { template_code: lead_bar, quantity: 1 }
-      - { template_code: badger_pelt, quantity: 1 }
-    gold_cost_copper: 1229
-    output_template_code: shield_obsidian
-    output_stack: 1
-    profession_xp_reward: 53
-    craft_seconds: 65
 
   - code: recipe_shortsword_obsidian
     display_name_key: recipe.shortsword_obsidian
@@ -8086,20 +8045,6 @@ recipes:
     profession_xp_reward: 73
     craft_seconds: 80
 
-  - code: recipe_shield_sandsteel
-    display_name_key: recipe.shield_sandsteel
-    profession_code: blacksmithing
-    min_skill: 19
-    inputs:
-      - { template_code: copper_bar, quantity: 3 }
-      - { template_code: tin_bar, quantity: 1 }
-      - { template_code: red_fox_pelt, quantity: 1 }
-    gold_cost_copper: 1484
-    output_template_code: shield_sandsteel
-    output_stack: 1
-    profession_xp_reward: 64
-    craft_seconds: 70
-
   - code: recipe_shortsword_sandsteel
     display_name_key: recipe.shortsword_sandsteel
     profession_code: blacksmithing
@@ -8614,20 +8559,6 @@ recipes:
     output_stack: 1
     profession_xp_reward: 82
     craft_seconds: 85
-
-  - code: recipe_shield_runebound
-    display_name_key: recipe.shield_runebound
-    profession_code: blacksmithing
-    min_skill: 21
-    inputs:
-      - { template_code: bronze_bar, quantity: 3 }
-      - { template_code: copper_bar, quantity: 1 }
-      - { template_code: boar_hide, quantity: 1 }
-    gold_cost_copper: 1750
-    output_template_code: shield_runebound
-    output_stack: 1
-    profession_xp_reward: 71
-    craft_seconds: 75
 
   - code: recipe_shortsword_runebound
     display_name_key: recipe.shortsword_runebound
@@ -9144,20 +9075,6 @@ recipes:
     profession_xp_reward: 97
     craft_seconds: 95
 
-  - code: recipe_shield_phoenix
-    display_name_key: recipe.shield_phoenix
-    profession_code: blacksmithing
-    min_skill: 24
-    inputs:
-      - { template_code: bronze_bar, quantity: 3 }
-      - { template_code: copper_bar, quantity: 1 }
-      - { template_code: mountain_goat_hide, quantity: 1 }
-    gold_cost_copper: 2025
-    output_template_code: shield_phoenix
-    output_stack: 1
-    profession_xp_reward: 85
-    craft_seconds: 80
-
   - code: recipe_shortsword_phoenix
     display_name_key: recipe.shortsword_phoenix
     profession_code: blacksmithing
@@ -9672,20 +9589,6 @@ recipes:
     output_stack: 1
     profession_xp_reward: 109
     craft_seconds: 100
-
-  - code: recipe_shield_dreadforged
-    display_name_key: recipe.shield_dreadforged
-    profession_code: blacksmithing
-    min_skill: 26
-    inputs:
-      - { template_code: bronze_bar, quantity: 3 }
-      - { template_code: copper_bar, quantity: 1 }
-      - { template_code: wolf_pelt, quantity: 1 }
-    gold_cost_copper: 2310
-    output_template_code: shield_dreadforged
-    output_stack: 1
-    profession_xp_reward: 96
-    craft_seconds: 85
 
   - code: recipe_shortsword_dreadforged
     display_name_key: recipe.shortsword_dreadforged

@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/otter/server/internal/classskill"
 	"github.com/otter/server/internal/leveling"
 )
 
@@ -41,6 +42,55 @@ func TestShippedKitsHoldOneOfEachJob(t *testing.T) {
 				hasUltimate = hasUltimate || ultimate[s.Code]
 			}
 			require.Equal(t, at >= 950, hasUltimate, "%v at %d", p, at)
+		}
+	}
+}
+
+// DD-362: every base class gains a skill at levels 100, 150, 200 and 250. They
+// take nothing from the base kit, and a gap skill never outclasses a later skill
+// of the same job, or the promotion would lose what it grants.
+func TestGapSkillsLeadToThePromotion(t *testing.T) {
+	w := load(t)
+	cfg := leveling.Current()
+	for _, k := range cfg.Classes {
+		if k.Parent != "" {
+			continue
+		}
+		var gap, base, later []classskill.Skill
+		for _, s := range w.skills.ForClass(k.Code) {
+			switch {
+			case s.Spec != k.Code:
+				later = append(later, s)
+			case s.UnlockLevel > 75:
+				gap = append(gap, s)
+			default:
+				base = append(base, s)
+			}
+		}
+		levels := map[int]int{}
+		for _, s := range gap {
+			levels[int(s.UnlockLevel)]++
+		}
+		require.Equal(t, map[int]int{100: 1, 150: 1, 200: 1, 250: 1}, levels, k.Code)
+
+		kit := map[string]bool{}
+		for _, a := range w.skills.Actives(cfg.Path(k.Code), 299) {
+			kit[a.Code] = true
+		}
+		for _, s := range append(append([]classskill.Skill{}, base...), gap...) {
+			if s.Kind == "active" {
+				require.True(t, kit[s.Code], "%s dropped from the kit before the promotion", s.Code)
+			}
+		}
+		for _, g := range gap {
+			if g.Kind != "active" {
+				continue
+			}
+			for _, l := range later {
+				if l.Kind == "active" && l.Job == g.Job {
+					require.Less(t, g.Strength, l.Strength, "%s would outclass %s", g.Code, l.Code)
+				}
+			}
 		}
 	}
 }

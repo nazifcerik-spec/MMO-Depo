@@ -25448,22 +25448,6 @@ items:
       - { kind: flat, target: defense, amount: 10 }
       - { kind: flat, target: evasion_pct, amount: 1 }
 
-  - code: shield_royal
-    display_name_key: item.shield_royal
-    item_class: armor
-    item_subclass: shield
-    min_level: 110
-    base_value_copper: 7549
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 24 }
-      - { kind: flat, target: block_pct, amount: 3 }
-
   # --- tier 135 ---
 
   - code: necklace_sunforged
@@ -25506,22 +25490,6 @@ items:
     stat_bonuses:
       - { kind: flat, target: defense, amount: 12 }
       - { kind: flat, target: evasion_pct, amount: 1 }
-
-  - code: shield_sunforged
-    display_name_key: item.shield_sunforged
-    item_class: armor
-    item_subclass: shield
-    min_level: 135
-    base_value_copper: 9852
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 29 }
-      - { kind: flat, target: block_pct, amount: 3 }
 
   # --- tier 160 ---
 
@@ -25566,22 +25534,6 @@ items:
       - { kind: flat, target: defense, amount: 14 }
       - { kind: flat, target: evasion_pct, amount: 1 }
 
-  - code: shield_obsidian
-    display_name_key: item.shield_obsidian
-    item_class: armor
-    item_subclass: shield
-    min_level: 160
-    base_value_copper: 12286
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 34 }
-      - { kind: flat, target: block_pct, amount: 4 }
-
   # --- tier 185 ---
 
   - code: necklace_sandsteel
@@ -25624,22 +25576,6 @@ items:
     stat_bonuses:
       - { kind: flat, target: defense, amount: 16 }
       - { kind: flat, target: evasion_pct, amount: 1 }
-
-  - code: shield_sandsteel
-    display_name_key: item.shield_sandsteel
-    item_class: armor
-    item_subclass: shield
-    min_level: 185
-    base_value_copper: 14839
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 39 }
-      - { kind: flat, target: block_pct, amount: 4 }
 
   # --- tier 210 ---
 
@@ -25684,22 +25620,6 @@ items:
       - { kind: flat, target: defense, amount: 18 }
       - { kind: flat, target: evasion_pct, amount: 1 }
 
-  - code: shield_runebound
-    display_name_key: item.shield_runebound
-    item_class: armor
-    item_subclass: shield
-    min_level: 210
-    base_value_copper: 17497
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 44 }
-      - { kind: flat, target: block_pct, amount: 4 }
-
   # --- tier 235 ---
 
   - code: necklace_phoenix
@@ -25743,22 +25663,6 @@ items:
       - { kind: flat, target: defense, amount: 20 }
       - { kind: flat, target: evasion_pct, amount: 1 }
 
-  - code: shield_phoenix
-    display_name_key: item.shield_phoenix
-    item_class: armor
-    item_subclass: shield
-    min_level: 235
-    base_value_copper: 20252
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 49 }
-      - { kind: flat, target: block_pct, amount: 4 }
-
   # --- tier 260 ---
 
   - code: necklace_dreadforged
@@ -25801,22 +25705,6 @@ items:
     stat_bonuses:
       - { kind: flat, target: defense, amount: 22 }
       - { kind: flat, target: evasion_pct, amount: 2 }
-
-  - code: shield_dreadforged
-    display_name_key: item.shield_dreadforged
-    item_class: armor
-    item_subclass: shield
-    min_level: 260
-    base_value_copper: 23096
-    base_weight_g: 4500
-    bind_kind: boe
-    affixable: true
-    equip_slot: offhand
-    class_restriction: warrior
-    requirements: { spec: guardian }
-    stat_bonuses:
-      - { kind: flat, target: defense, amount: 54 }
-      - { kind: flat, target: block_pct, amount: 5 }
 
   # --- tier 285 ---
 

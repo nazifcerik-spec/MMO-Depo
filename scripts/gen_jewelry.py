@@ -46,7 +46,7 @@ JEWELRY = [
 ]
 SHIELD = ('shield', L('Shield', 'Kalkan', '盾', 'Escudo'), 4500, 1100,
           lambda lv: [('defense', round(0.2 * lv + 2)), ('block_pct', round(2 + lv / 100))])
-JEWELRY_FROM, SHIELD_FROM = 25, 110
+JEWELRY_FROM, SHIELD_FROM = 25, 285
 START, END = '  # >>> generated: jewelry (scripts/gen_jewelry.py)\n', '  # <<< generated: jewelry\n'
 
 

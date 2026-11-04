@@ -72,6 +72,7 @@ ACTIVE_TEXT = {
     'weaken': ('Lowers enemy armor by {p}% for {d} turns.', 'Düşman zırhını {d} tur %{p} düşürür.',
                '{d}回合内敌人护甲降低{p}%。', 'Reduce la armadura enemiga un {p}% durante {d} turnos.'),
 }
+INSTANT_TEXT = (' Instant: uses no turn.', ' Anlık: turu harcamaz.', '瞬发：不占用回合。', ' Instantánea: no consume turno.')
 GAIN_TEXT = (' Generates {g} {r}.', ' {g} {r} üretir.', '产生{g}点{r}。', ' Genera {g} de {r}.')
 TARGET_TEXT = (' Used on targets below {t}% HP.', ' Canı %{t} altındaki hedeflere kullanılır.',
                '对生命低于{t}%的目标使用。', ' Se usa contra objetivos con menos del {t}% de vida.')
@@ -113,10 +114,12 @@ def parse_active(note):
     m = re.fullmatch(r'([A-Z])(\d+)/(\d+)', toks[0])
     assert m, note
     a = dict(effect=EFFECT[m.group(1)], power=int(m.group(2)), cd=int(m.group(3)), d=0, h=0, a=0, t=0,
-             cost=None, gain=0, type=None)
+             cost=None, gain=0, type=None, instant=False)
     for t in toks[1:]:
         if t.startswith('T:'):
             a['type'] = t[2:]
+        elif t == 'i':
+            a['instant'] = True
         elif t[0] in 'dhatcg' and t[1:].isdigit():
             a[{'d': 'd', 'h': 'h', 'a': 'a', 't': 't', 'c': 'cost', 'g': 'gain'}[t[0]]] = int(t[1:])
         else:
@@ -250,7 +253,8 @@ for c in CLASSES:
             names = dict(zip(LANG_ORDER, names))
             scode = code + '_' + key
             category = {600: 'awakening', 700: 'ultimate'}.get(lvl)
-            lvl = UNLOCK_LEVEL.get(lvl, lvl)
+            if tier > 0:  # base-class rows are real levels (DD-362)
+                lvl = UNLOCK_LEVEL.get(lvl, lvl)
             put('skill.' + scode, names)
             sl = ['  - code: ' + scode, '    display_name_key: skill.' + scode, '    class: ' + c['code']]
             if tier > 0:
@@ -288,6 +292,8 @@ for c in CLASSES:
                     sl.append('    resource_gain: %d' % a['gain'])
                 if a['d']:
                     sl.append('    duration_turns: %d' % a['d'])
+                if a['instant']:
+                    sl.append('    instant: true')
                 trig = []
                 if a['h']:
                     trig.append('self_hp_below: %d' % a['h'])
@@ -317,6 +323,8 @@ for c in CLASSES:
                         t += SELF_TEXT[i].format(h=a['h'])
                     if a['a']:
                         t += ALLY_TEXT[i].format(h=a['a'])
+                    if a['instant']:
+                        t += INSTANT_TEXT[i]
                     strings[lang]['skill.' + scode + '.desc'] = t
             skills_out.append('\n'.join(sl))
 

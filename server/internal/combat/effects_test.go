@@ -9,6 +9,36 @@ import (
 // DD-252 shared effects: barrier, damage/heal over time, armor debuff,
 // stun; generic resources (start share, per-turn regeneration).
 
+// DD-362: an instant skill adds to a turn. The turn's action still happens, and
+// it has first call on the resource.
+func TestInstantSkillsCostNoTurn(t *testing.T) {
+	self := &Combatant{Name: "p", HPMax: 200, HPCurrent: 200, Attack: 100, HitPct: 95, MPMax: 100,
+		Skills: []Skill{
+			{Code: "cry", Effect: EffectEmpower, Power: 10, MPCost: 10, CooldownTurns: 8, DurationTurns: 3, Instant: true},
+			{Code: "slash", Effect: EffectStrike, Power: 200, MPCost: 95, CooldownTurns: 3},
+		}}
+	mob := &Combatant{Name: "m", HPMax: 5000, HPCurrent: 5000, Attack: 10, HitPct: 95}
+	k := newCaster(self)
+
+	rec := k.act(fixedRNG(0), 1, self, mob)
+	require.Equal(t, "slash", rec.Skill, "the action comes first")
+	require.Equal(t, int32(100), self.Attack, "5 left: the instant waits")
+
+	k.mp = 50
+	rec = k.act(fixedRNG(0), 2, self, mob)
+	require.Empty(t, rec.Skill, "slash is cooling down: a basic attack")
+	require.Positive(t, rec.Damage, "the turn still attacks")
+	require.Equal(t, int32(110), self.Attack, "and the instant fired")
+	require.Equal(t, int32(40), k.mp)
+
+	dot := &Combatant{Name: "p", HPMax: 200, HPCurrent: 200, Attack: 100, HitPct: 95, MPMax: 100,
+		Skills: []Skill{{Code: "burn", Effect: EffectDot, Power: 50, CooldownTurns: 6, DurationTurns: 3, Instant: true}}}
+	prey := &Combatant{Name: "m", HPMax: 5000, HPCurrent: 5000, HitPct: 95}
+	rec = newCaster(dot).act(fixedRNG(0), 1, dot, prey)
+	require.Equal(t, int32(50), rec.Tick)
+	require.Equal(t, prey.HPCurrent, rec.TargetHPAft, "the log shows the HP after both")
+}
+
 func TestBarrierAbsorbsAndFades(t *testing.T) {
 	self := &Combatant{Name: "p", HPMax: 200, HPCurrent: 200, Attack: 10, HitPct: 95, MPMax: 100,
 		Skills: []Skill{{Code: "ward", Effect: EffectBarrier, Power: 25, MPCost: 10, CooldownTurns: 9, DurationTurns: 2}}}

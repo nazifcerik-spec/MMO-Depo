@@ -235,6 +235,7 @@ func (k *caster) actWith(r RNG, turn int, self, target, ally *Combatant) TurnRec
 	}
 	rec := k.cast(r, turn, self, target, ally)
 	rec.Tick, rec.TickHeal = dmg, heal
+	k.instants(r, turn, self, target, ally, &rec)
 	return rec
 }
 
@@ -243,11 +244,37 @@ func supportive(effect string) bool {
 	return effect == EffectHeal || effect == EffectHot || effect == EffectBarrier
 }
 
-// cast uses the first usable skill or attacks.
+// cast uses the first usable turn-taking skill or attacks.
 func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord {
+	if rec, ok := k.use(r, turn, self, target, ally, false); ok {
+		return rec
+	}
+	rec := resolveSwing(r, turn, self, target)
+	k.gain(self, rec, nil)
+	return rec
+}
+
+// instants fires the ready instant skills after the turn's action, so they add
+// to a turn and never replace one, and the action has first call on the resource.
+func (k *caster) instants(r RNG, turn int, self, target, ally *Combatant, rec *TurnRecord) {
+	for target.HPCurrent > 0 {
+		u, ok := k.use(r, turn, self, target, ally, true)
+		if !ok {
+			return
+		}
+		rec.Tick += u.Damage
+		rec.TickHeal += u.Heal
+		if rec.Target == target.Name {
+			rec.TargetHPAft = target.HPCurrent
+		}
+	}
+}
+
+// use casts the first usable skill of the given kind.
+func (k *caster) use(r RNG, turn int, self, target, ally *Combatant, instant bool) (TurnRecord, bool) {
 	for i := range self.Skills {
 		sk := &self.Skills[i]
-		if turn < k.ready[i] || sk.MPCost > k.mp {
+		if sk.Instant != instant || turn < k.ready[i] || sk.MPCost > k.mp {
 			continue
 		}
 		benef := self
@@ -279,7 +306,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: self.Name, Hit: true, Skill: sk.Code,
-				TargetHPAft: self.HPCurrent}
+				TargetHPAft: self.HPCurrent}, true
 		case EffectHeal:
 			if sk.SelfHPBelow == 0 && benef.HPCurrent*2 > benef.HPMax {
 				continue // not worth it yet
@@ -291,7 +318,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			benef.HPCurrent += heal
 			k.spend(i, turn, *sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
-				Heal: heal, TargetHPAft: benef.HPCurrent}
+				Heal: heal, TargetHPAft: benef.HPCurrent}, true
 		case EffectStrike, EffectStun:
 			if sk.Effect == EffectStun && !k.noStun && k.stunned(turn+1) {
 				continue // still stunned: no chaining
@@ -303,7 +330,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 				k.stun = turn + max(1, sk.DurationTurns)
 			}
 			k.gain(self, rec, sk)
-			return rec
+			return rec, true
 		case EffectBarrier:
 			if k.shield != 0 {
 				continue
@@ -313,7 +340,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
-				TargetHPAft: benef.HPCurrent}
+				TargetHPAft: benef.HPCurrent}, true
 		case EffectHot:
 			if k.hot.left > 0 || (sk.SelfHPBelow == 0 && benef.HPCurrent*10 > benef.HPMax*7) {
 				continue // running already, or not hurt enough (default: <= 70% HP)
@@ -325,7 +352,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: benef.Name, Hit: true, Skill: sk.Code,
-				Heal: heal, TargetHPAft: benef.HPCurrent}
+				Heal: heal, TargetHPAft: benef.HPCurrent}, true
 		case EffectDot:
 			if k.dot.left > 0 {
 				continue
@@ -339,7 +366,7 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			rec := TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Skill: sk.Code,
 				Damage: first, TargetHPAft: target.HPCurrent}
 			k.gain(self, rec, sk)
-			return rec
+			return rec, true
 		case EffectWeaken:
 			if k.weak.on {
 				continue
@@ -350,12 +377,10 @@ func (k *caster) cast(r RNG, turn int, self, target, ally *Combatant) TurnRecord
 			k.spend(i, turn, *sk)
 			k.gain(self, TurnRecord{}, sk)
 			return TurnRecord{Turn: turn, Actor: self.Name, Target: target.Name, Hit: true, Skill: sk.Code,
-				TargetHPAft: target.HPCurrent}
+				TargetHPAft: target.HPCurrent}, true
 		}
 	}
-	rec := resolveSwing(r, turn, self, target)
-	k.gain(self, rec, nil)
-	return rec
+	return TurnRecord{}, false
 }
 
 func (k *caster) spend(i, turn int, sk Skill) {

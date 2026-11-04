@@ -110,6 +110,7 @@ type Config struct {
 	TargetHPBelow  int32    `json:"target_hp_below,omitempty"` // auto-trigger: target HP% <=
 	ResourceGain   int32    `json:"resource_gain,omitempty"`
 	DurationTurns  int      `json:"duration_turns,omitempty"`
+	Instant        bool     `json:"instant,omitempty"`  // costs no turn (DD-362)
 	Requires       []string `json:"requires,omitempty"` // equipment tags (e.g. shield)
 
 	// Shared data model (DD-252).
@@ -196,7 +197,7 @@ func (c *Catalog) Actives(path []string, level int) []combat.Skill {
 		self := max(s.Config.SelfHPBelow, s.Config.AllyHPBelow)
 		out = append(out, combat.Skill{Code: s.Code, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost,
 			CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: self,
-			TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns})
+			TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns, Instant: s.Config.Instant})
 	}
 	return out
 }

@@ -72,6 +72,56 @@ skills:
     cooldown_turns: 2
     auto_trigger: { target_hp_below: 35 }
 
+  # Before the first promotion (DD-362): jobs no later Warrior skill swallows,
+  # except the battle cry, which a branch's stronger buff replaces.
+  - code: warrior_sunder
+    display_name_key: skill.warrior_sunder
+    class: warrior
+    unlock_level: 100
+    kind: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    duration_turns: 3
+    instant: true
+    mp_cost: 25
+    cooldown_turns: 6
+    auto_trigger: { on_cooldown: true }
+  - code: warrior_iron_discipline
+    display_name_key: skill.warrior_iron_discipline
+    class: warrior
+    unlock_level: 150
+    kind: passive
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.03 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 2 }
+  - code: warrior_second_wind
+    display_name_key: skill.warrior_second_wind
+    class: warrior
+    unlock_level: 200
+    kind: active
+    sort_order: 6
+    effect: hot
+    power: 4
+    duration_turns: 3
+    instant: true
+    mp_cost: 25
+    cooldown_turns: 12
+    auto_trigger: { self_hp_below: 40 }
+  - code: warrior_battle_cry
+    display_name_key: skill.warrior_battle_cry
+    class: warrior
+    unlock_level: 250
+    kind: active
+    sort_order: 86
+    effect: empower
+    power: 10
+    duration_turns: 3
+    instant: true
+    mp_cost: 20
+    cooldown_turns: 8
+    auto_trigger: { on_cooldown: true }
+
   # Guardian (Lv100: tank / defense / sustain / threat)
   - code: guardian_unyielding
     display_name_key: skill.guardian_unyielding
@@ -618,6 +668,76 @@ skills:
     target_type: enemy
     range: melee
     tags: [stun]
+
+  - code: rogue_rupture
+    display_name_key: skill.rogue_rupture
+    class: rogue
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 30
+    mp_cost: 17
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: physical
+    target_type: enemy
+    range: melee
+    tags: [dot]
+
+  - code: rogue_shadow_poise
+    display_name_key: skill.rogue_shadow_poise
+    class: rogue
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: flat, target: evasion_pct, amount: 3 }
+      - { kind: flat, target: crit_dmg_pct, amount: 5 }
+
+  - code: rogue_smoke_veil
+    display_name_key: skill.rogue_smoke_veil
+    class: rogue
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: barrier
+    power: 15
+    mp_cost: 15
+    cooldown_turns: 12
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 40 }
+    type: BARRIER
+    target_type: self
+    range: ranged
+    tags: [barrier]
+
+  - code: rogue_killing_focus
+    display_name_key: skill.rogue_killing_focus
+    class: rogue
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: empower
+    power: 10
+    mp_cost: 15
+    cooldown_turns: 8
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: BUFF
+    target_type: self
+    range: ranged
+    tags: [buff]
 
   - code: assassin_lethal_opening
     display_name_key: skill.assassin_lethal_opening
@@ -1396,6 +1516,76 @@ skills:
     target_type: enemy
     range: ranged
     tags: [debuff]
+
+  - code: ranger_barbed_arrow
+    display_name_key: skill.ranger_barbed_arrow
+    class: ranger
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 30
+    mp_cost: 17
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: physical
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
+  - code: ranger_fieldcraft
+    display_name_key: skill.ranger_fieldcraft
+    class: ranger
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: attack, amount: 0.03 }
+      - { kind: flat, target: crit_pct, amount: 2 }
+
+  - code: ranger_field_dressing
+    display_name_key: skill.ranger_field_dressing
+    class: ranger
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: hot
+    power: 4
+    mp_cost: 14
+    cooldown_turns: 12
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 40 }
+    type: HOT
+    target_type: self
+    range: ranged
+    tags: [hot]
+
+  - code: ranger_steady_breath
+    display_name_key: skill.ranger_steady_breath
+    class: ranger
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: empower
+    power: 10
+    mp_cost: 15
+    cooldown_turns: 8
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: BUFF
+    target_type: self
+    range: ranged
+    tags: [buff]
 
   - code: marksman_steady_aim
     display_name_key: skill.marksman_steady_aim
@@ -2188,6 +2378,75 @@ skills:
     target_type: self
     range: ranged
     tags: [buff]
+
+  - code: mage_scorch
+    display_name_key: skill.mage_scorch
+    class: mage
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 40
+    mp_cost: 20
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: arcane
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
+  - code: mage_arcane_resilience
+    display_name_key: skill.mage_arcane_resilience
+    class: mage
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.04 }
+      - { kind: flat, target: crit_pct, amount: 2 }
+
+  - code: mage_mana_mend
+    display_name_key: skill.mage_mana_mend
+    class: mage
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: heal
+    power: 12
+    mp_cost: 16
+    cooldown_turns: 12
+    instant: true
+    auto_trigger: { self_hp_below: 35 }
+    type: HEAL
+    target_type: self
+    range: ranged
+    tags: [heal]
+
+  - code: mage_arcane_exposure
+    display_name_key: skill.mage_arcane_exposure
+    class: mage
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: ranged
+    tags: [debuff]
 
   - code: arcanist_arcane_efficiency
     display_name_key: skill.arcanist_arcane_efficiency
@@ -2986,6 +3245,75 @@ skills:
     range: melee
     tags: [stun]
 
+  - code: monk_pressure_point
+    display_name_key: skill.monk_pressure_point
+    class: monk
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: melee
+    tags: [debuff]
+
+  - code: monk_tempered_form
+    display_name_key: skill.monk_tempered_form
+    class: monk
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: defense, amount: 0.04 }
+      - { kind: flat, target: crit_pct, amount: 2 }
+
+  - code: monk_stone_breath
+    display_name_key: skill.monk_stone_breath
+    class: monk
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: guard
+    power: 20
+    mp_cost: 20
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 50 }
+    type: BUFF
+    target_type: self
+    range: ranged
+    tags: [buff]
+
+  - code: monk_centered_chi
+    display_name_key: skill.monk_centered_chi
+    class: monk
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: empower
+    power: 10
+    mp_cost: 15
+    cooldown_turns: 8
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: BUFF
+    target_type: self
+    range: ranged
+    tags: [buff]
+
   - code: disciple_balanced_spirit
     display_name_key: skill.disciple_balanced_spirit
     class: monk
@@ -3764,6 +4092,76 @@ skills:
     target_type: self
     range: ranged
     tags: [dispel]
+
+  - code: cleric_holy_fire
+    display_name_key: skill.cleric_holy_fire
+    class: cleric
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 40
+    mp_cost: 20
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: holy
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
+  - code: cleric_steadfast_faith
+    display_name_key: skill.cleric_steadfast_faith
+    class: cleric
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.03 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 2 }
+
+  - code: cleric_renewing_prayer
+    display_name_key: skill.cleric_renewing_prayer
+    class: cleric
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: hot
+    power: 4
+    mp_cost: 15
+    cooldown_turns: 9
+    duration_turns: 4
+    instant: true
+    auto_trigger: { ally_hp_below: 70 }
+    type: HOT
+    target_type: ally
+    range: ranged
+    tags: [hot]
+
+  - code: cleric_exposing_light
+    display_name_key: skill.cleric_exposing_light
+    class: cleric
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: ranged
+    tags: [debuff]
 
   - code: saint_sacred_grace
     display_name_key: skill.saint_sacred_grace
@@ -4551,6 +4949,75 @@ skills:
     range: ranged
     tags: [heal]
 
+  - code: paladin_sundering_verdict
+    display_name_key: skill.paladin_sundering_verdict
+    class: paladin
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: melee
+    tags: [debuff]
+
+  - code: paladin_oathbound_plate
+    display_name_key: skill.paladin_oathbound_plate
+    class: paladin
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: defense, amount: 0.03 }
+      - { kind: mult_add, target: hp_max, amount: 0.02 }
+
+  - code: paladin_sacred_ward
+    display_name_key: skill.paladin_sacred_ward
+    class: paladin
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: barrier
+    power: 15
+    mp_cost: 15
+    cooldown_turns: 9
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 45 }
+    type: BARRIER
+    target_type: self
+    range: ranged
+    tags: [barrier]
+
+  - code: paladin_righteous_aura
+    display_name_key: skill.paladin_righteous_aura
+    class: paladin
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: empower
+    power: 10
+    mp_cost: 15
+    cooldown_turns: 8
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: BUFF
+    target_type: party
+    range: ranged
+    tags: [buff]
+
   - code: protector_sacred_defense
     display_name_key: skill.protector_sacred_defense
     class: paladin
@@ -5322,6 +5789,76 @@ skills:
     target_type: self
     range: ranged
     tags: [buff]
+
+  - code: druid_creeping_vines
+    display_name_key: skill.druid_creeping_vines
+    class: druid
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 40
+    mp_cost: 20
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: nature
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
+  - code: druid_deep_roots
+    display_name_key: skill.druid_deep_roots
+    class: druid
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.03 }
+      - { kind: flat, target: crit_pct, amount: 2 }
+
+  - code: druid_barkskin
+    display_name_key: skill.druid_barkskin
+    class: druid
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: barrier
+    power: 15
+    mp_cost: 15
+    cooldown_turns: 12
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 40 }
+    type: BARRIER
+    target_type: self
+    range: ranged
+    tags: [barrier]
+
+  - code: druid_withering_spores
+    display_name_key: skill.druid_withering_spores
+    class: druid
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: ranged
+    tags: [debuff]
 
   - code: grove_keeper_keeper_of_life
     display_name_key: skill.grove_keeper_keeper_of_life
@@ -6104,6 +6641,76 @@ skills:
     range: ranged
     tags: [buff]
 
+  - code: bard_mocking_note
+    display_name_key: skill.bard_mocking_note
+    class: bard
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: ranged
+    tags: [debuff]
+
+  - code: bard_stage_presence
+    display_name_key: skill.bard_stage_presence
+    class: bard
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: flat, target: evasion_pct, amount: 2 }
+      - { kind: mult_add, target: hp_max, amount: 0.03 }
+
+  - code: bard_warding_refrain
+    display_name_key: skill.bard_warding_refrain
+    class: bard
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: barrier
+    power: 15
+    mp_cost: 15
+    cooldown_turns: 12
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 40 }
+    type: BARRIER
+    target_type: self
+    range: ranged
+    tags: [barrier]
+
+  - code: bard_dissonant_chord
+    display_name_key: skill.bard_dissonant_chord
+    class: bard
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 30
+    mp_cost: 17
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: sonic
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
   - code: minstrel_melodic_inspiration
     display_name_key: skill.minstrel_melodic_inspiration
     class: bard
@@ -6882,6 +7489,76 @@ skills:
     target_type: party
     range: ranged
     tags: [buff]
+
+  - code: shaman_spirit_flame
+    display_name_key: skill.shaman_spirit_flame
+    class: shaman
+    unlock_level: 100
+    kind: active
+    activation_mode: active
+    sort_order: 30
+    effect: dot
+    power: 40
+    mp_cost: 20
+    cooldown_turns: 6
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DOT
+    damage_type: nature
+    target_type: enemy
+    range: ranged
+    tags: [dot]
+
+  - code: shaman_ancestral_resolve
+    display_name_key: skill.shaman_ancestral_resolve
+    class: shaman
+    unlock_level: 150
+    kind: passive
+    type: STAT_MODIFIER
+    passive: { trigger: ON_COMBAT_START, scaling: steady_state }
+    tags: [passive]
+    modifiers:
+      - { kind: mult_add, target: hp_max, amount: 0.03 }
+      - { kind: flat, target: dmg_reduction_pct, amount: 2 }
+
+  - code: shaman_stoneward
+    display_name_key: skill.shaman_stoneward
+    class: shaman
+    unlock_level: 200
+    kind: active
+    activation_mode: active
+    sort_order: 6
+    effect: guard
+    power: 20
+    mp_cost: 20
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { self_hp_below: 50 }
+    type: BUFF
+    target_type: self
+    range: ranged
+    tags: [buff]
+
+  - code: shaman_spirit_hex
+    display_name_key: skill.shaman_spirit_hex
+    class: shaman
+    unlock_level: 250
+    kind: active
+    activation_mode: active
+    sort_order: 86
+    effect: weaken
+    power: 15
+    mp_cost: 17
+    cooldown_turns: 7
+    duration_turns: 3
+    instant: true
+    auto_trigger: { on_cooldown: true }
+    type: DEBUFF
+    target_type: enemy
+    range: ranged
+    tags: [debuff]
 
   - code: totemist_totemic_knowledge
     display_name_key: skill.totemist_totemic_knowledge
