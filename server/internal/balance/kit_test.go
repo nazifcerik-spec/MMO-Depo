@@ -44,3 +44,31 @@ func TestShippedKitsHoldOneOfEachJob(t *testing.T) {
 		}
 	}
 }
+
+// DD-353: every active earns its place: on some path through its class node it
+// is in the kit when it unlocks, so no branch's skill is dead on arrival.
+func TestEveryActiveIsUsedSomewhere(t *testing.T) {
+	w := load(t)
+	cfg := leveling.Current()
+	used := map[string]bool{}
+	all := map[string]bool{}
+	for _, k := range cfg.Classes {
+		n, _ := cfg.Class(k.Code)
+		if n.Tier() != 2 {
+			continue
+		}
+		path := cfg.Path(k.Code)
+		for _, s := range w.skills.ForClass(path[0]) {
+			if s.Kind != "active" {
+				continue
+			}
+			all[s.Code] = true
+			for _, a := range w.skills.Actives(path, int(s.UnlockLevel)) {
+				used[a.Code] = true
+			}
+		}
+	}
+	for code := range all {
+		require.True(t, used[code], "%s is outclassed on every path", code)
+	}
+}

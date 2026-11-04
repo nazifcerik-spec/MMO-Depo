@@ -131,7 +131,7 @@ CLASSES = [
             dict(code='duelist', name=L('Duelist', 'Düellocu', '决斗者', 'Duelista'), roles=['melee_dps', 'sustained_dps'],
                  skills=[
                      (100, 'combat_rhythm', 'P atk6 @ON_HIT/5', 'Combat Rhythm', 'Savaş Ritmi', '战斗节奏', 'Ritmo de Combate'),
-                     (100, 'riposte', 'S180/2', 'Riposte', 'Karşı Hamle', '还击', 'Réplica'),
+                     (100, 'riposte', 'S210/2', 'Riposte', 'Karşı Hamle', '还击', 'Réplica'),
                      (150, 'flurry', 'S260/4', 'Flurry', 'Darbe Yağmuru', '疾风连刺', 'Ráfaga'),
                      (200, 'perfect_footwork', 'G40/8 d3 h60', 'Perfect Footwork', 'Kusursuz Ayak Oyunu', '完美步法', 'Juego de Pies Perfecto'),
                      (250, 'duelists_challenge', 'E25/8 d3', "Duelist's Challenge", 'Düellocunun Meydan Okuması', '决斗者的挑战', 'Desafío del Duelista'),
@@ -141,7 +141,7 @@ CLASSES = [
                           roles=['melee_dps', 'sustained_dps'], afk=(4, 3, 3, 2, 3, 5, 3), strong=['farming', 'aoe'], weak=['boss'],
                           skills=[
                               (300, 'blade_tempo', 'P atk6 @ON_HIT/10', 'Blade Tempo', 'Bıçak Temposu', '刃之节拍', 'Tempo de Hojas'),
-                              (350, 'twin_slash', 'S240/2', 'Twin Slash', 'İkiz Kesik', '双刃斩', 'Tajo Gemelo'),
+                              (350, 'twin_slash', 'S280/2', 'Twin Slash', 'İkiz Kesik', '双刃斩', 'Tajo Gemelo'),
                               (400, 'whirling_blades', 'S300/4', 'Whirling Blades', 'Dönen Bıçaklar', '旋刃', 'Hojas Giratorias'),
                               (450, 'perfect_rhythm', 'P crit4,hit3', 'Perfect Rhythm', 'Kusursuz Ritim', '完美韵律', 'Ritmo Perfecto'),
                               (500, 'blade_cascade', 'S360/5', 'Blade Cascade', 'Bıçak Çağlayanı', '刃之瀑布', 'Cascada de Hojas'),
@@ -300,7 +300,7 @@ CLASSES = [
                  skills=[
                      (100, 'arcane_efficiency', 'P atk5,crit2', 'Arcane Efficiency', 'Gizem Verimliliği', '奥术效能', 'Eficiencia Arcana'),
                      (100, 'arcane_missile', 'S240/2', 'Arcane Missile', 'Gizem Füzesi', '奥术飞弹', 'Misil Arcano'),
-                     (150, 'mana_channel', 'E20/8 d3', 'Mana Channel', 'Mana Kanalı', '法力导引', 'Canalizar Maná'),
+                     (150, 'mana_channel', 'E27/8 d3', 'Mana Channel', 'Mana Kanalı', '法力导引', 'Canalizar Maná'),
                      (200, 'arcane_barrier', 'B35/10 d3 h60', 'Arcane Barrier', 'Gizem Bariyeri', '奥术屏障', 'Barrera Arcana'),
                      (250, 'arcane_echo', 'S320/4', 'Arcane Echo', 'Gizem Yankısı', '奥术回响', 'Eco Arcano'),
                  ],
@@ -403,7 +403,7 @@ CLASSES = [
                      (100, 'balanced_spirit', 'P dr4,hp5', 'Balanced Spirit', 'Dengeli Ruh', '平衡之灵', 'Espíritu Equilibrado'),
                      (100, 'chi_guard', 'G40/8 d3 h70', 'Chi Guard', 'Chi Savunması', '气之守护', 'Guardia de Chi'),
                      (150, 'inner_healing', 'H25/8 h50', 'Inner Healing', 'İç Şifa', '内愈', 'Curación Interior'),
-                     (200, 'deflecting_palm', 'S200/3', 'Deflecting Palm', 'Saptıran Avuç', '卸力掌', 'Palma Desviadora'),
+                     (200, 'deflecting_palm', 'S240/3', 'Deflecting Palm', 'Saptıran Avuç', '卸力掌', 'Palma Desviadora'),
                      (250, 'focused_meditation', 'B30/10 d3 h55', 'Focused Meditation', 'Odaklı Meditasyon', '专注冥想', 'Meditación Concentrada'),
                  ],
                  specs=[
@@ -424,7 +424,7 @@ CLASSES = [
                           roles=['bruiser', 'hot', 'afk_safe'], afk=(3, 4, 4, 4, 3, 2, 5), strong=['afk', 'solo'], weak=['aoe'],
                           skills=[
                               (300, 'spirit_balance', 'P hp5,ls3 @ON_HEAL', 'Spirit Balance', 'Ruh Dengesi', '灵魂平衡', 'Equilibrio Espiritual'),
-                              (350, 'spirit_step', 'G35/7 d2 h70', 'Spirit Step', 'Ruh Adımı', '灵步', 'Paso Espiritual'),
+                              (350, 'spirit_step', 'G42/7 d3 h70', 'Spirit Step', 'Ruh Adımı', '灵步', 'Paso Espiritual'),
                               (400, 'healing_palm', 'H30/8 a55', 'Healing Palm', 'Şifalı Avuç', '疗愈掌', 'Palma Curativa'),
                               (450, 'spiritual_harmony', 'P atk4,hp4', 'Spiritual Harmony', 'Ruhani Ahenk', '灵性和谐', 'Armonía Espiritual'),
                               (500, 'astral_guard', 'B40/10 d3 h55', 'Astral Guard', 'Astral Muhafız', '星界守护', 'Guardia Astral'),
@@ -447,8 +447,8 @@ CLASSES = [
                           roles=['melee_dps', 'sustained_dps'], afk=(4, 3, 3, 2, 5, 3, 3), strong=['boss'], weak=['aoe'],
                           skills=[
                               (300, 'perfect_combination', 'P atk6 @ON_SKILL_CAST/5', 'Perfect Combination', 'Kusursuz Kombinasyon', '完美组合', 'Combinación Perfecta'),
-                              (350, 'triple_strike', 'S270/2', 'Triple Strike', 'Üçlü Darbe', '三连击', 'Triple Golpe'),
-                              (400, 'flowing_kick', 'S330/3', 'Flowing Kick', 'Akıcı Tekme', '流水踢', 'Patada Fluida'),
+                              (350, 'triple_strike', 'S350/2', 'Triple Strike', 'Üçlü Darbe', '三连击', 'Triple Golpe'),
+                              (400, 'flowing_kick', 'S370/3', 'Flowing Kick', 'Akıcı Tekme', '流水踢', 'Patada Fluida'),
                               (450, 'combo_memory', 'P crit4,hit3', 'Combo Memory', 'Kombo Hafızası', '连击记忆', 'Memoria de Combo'),
                               (500, 'perfect_finisher', 'S450/5 t40', 'Perfect Finisher', 'Kusursuz Bitiriş', '完美终结', 'Remate Perfecto'),
                               (550, 'endless_sequence', 'P atk6', 'Endless Sequence', 'Sonsuz Dizi', '无尽连段', 'Secuencia Infinita'),
@@ -460,7 +460,7 @@ CLASSES = [
                           roles=['melee_dps', 'burst'], afk=(5, 2, 3, 2, 4, 4, 2), strong=['farming'], weak=['afk'],
                           skills=[
                               (300, 'storm_tempo', 'P atk5,crit3 @ON_CRIT/5', 'Storm Tempo', 'Fırtına Temposu', '风暴节奏', 'Tempo de Tormenta'),
-                              (350, 'thunder_fist', 'S300/3', 'Thunder Fist', 'Gök Gürültüsü Yumruğu', '雷霆拳', 'Puño del Trueno'),
+                              (350, 'thunder_fist', 'S350/3', 'Thunder Fist', 'Gök Gürültüsü Yumruğu', '雷霆拳', 'Puño del Trueno'),
                               (400, 'storm_kick', 'X180/8 d1', 'Storm Kick', 'Fırtına Tekmesi', '风暴踢', 'Patada de Tormenta'),
                               (450, 'static_charge', 'P cdmg15', 'Static Charge', 'Statik Yük', '静电充能', 'Carga Estática'),
                               (500, 'lightning_barrage', 'S420/5', 'Lightning Barrage', 'Şimşek Yağmuru', '闪电连击', 'Andanada de Relámpagos'),
@@ -622,7 +622,7 @@ CLASSES = [
                               (350, 'divine_block', 'G55/9 d3 h65', 'Divine Block', 'İlahi Blok', '神圣格挡', 'Bloqueo Divino'),
                               (400, 'shield_of_faith', 'B45/10 d3 h55', 'Shield of Faith', 'İnanç Kalkanı', '信仰之盾', 'Escudo de Fe'),
                               (450, 'shared_protection', 'P hp5,def5', 'Shared Protection', 'Paylaşılan Koruma', '共享守护', 'Protección Compartida'),
-                              (500, 'sacred_bastion', 'H30/10 h50', 'Sacred Bastion', 'Kutsal Burç', '神圣棱堡', 'Bastión Sagrado'),
+                              (500, 'sacred_bastion', 'H37/10 h50', 'Sacred Bastion', 'Kutsal Burç', '神圣棱堡', 'Bastión Sagrado'),
                               (550, 'holy_bulwark', 'P dr5', 'Holy Bulwark', 'Kutsal Siper', '圣光壁垒', 'Baluarte Sagrado'),
                               (600, 'aegis_guardian', 'P hp6,blk5', 'Aegis Guardian', 'Kalkan Muhafızı', '圣盾守卫', 'Guardián de la Égida'),
                               (700, 'citadel_of_light', 'B100/20 d4 h40', 'Citadel of Light', 'Işık Kalesi', '光明城塞', 'Ciudadela de Luz'),
@@ -763,7 +763,7 @@ CLASSES = [
                           skills=[
                               (300, 'guardian_form', 'P def8,hp5', 'Guardian Form', 'Muhafız Formu', '守护形态', 'Forma Guardiana'),
                               (350, 'maul', 'S260/3', 'Maul', 'Parçala', '重殴', 'Zarpazo'),
-                              (400, 'iron_fur', 'G55/9 d3 h65', 'Iron Fur', 'Demir Post', '铁鬃', 'Pelaje de Hierro'),
+                              (400, 'iron_fur', 'G63/9 d3 h65', 'Iron Fur', 'Demir Post', '铁鬃', 'Pelaje de Hierro'),
                               (450, 'primal_endurance', 'P hp6,dr3', 'Primal Endurance', 'İlkel Dayanıklılık', '原始耐力', 'Resistencia Primigenia'),
                               (500, 'savage_guard', 'B45/10 d3 h50', 'Savage Guard', 'Vahşi Muhafaza', '野蛮守护', 'Guardia Salvaje'),
                               (550, 'ancient_hide', 'P dr5', 'Ancient Hide', 'Kadim Post', '远古之皮', 'Piel Ancestral'),
@@ -776,7 +776,7 @@ CLASSES = [
                           skills=[
                               (300, 'lunar_cycle', 'P atk5,crit3', 'Lunar Cycle', 'Ay Döngüsü', '月相循环', 'Ciclo Lunar'),
                               (350, 'moonfire', 'D90/6 d4', 'Moonfire', 'Ay Ateşi', '月火术', 'Fuego Lunar'),
-                              (400, 'lunar_blessing', 'E25/8 d3', 'Lunar Blessing', 'Ay Kutsaması', '月之祝福', 'Bendición Lunar'),
+                              (400, 'lunar_blessing', 'E27/8 d4', 'Lunar Blessing', 'Ay Kutsaması', '月之祝福', 'Bendición Lunar'),
                               (450, 'moonlit_grace', 'P cdmg12,crit2', 'Moonlit Grace', 'Ay Işığı Lütfu', '月光恩典', 'Gracia Lunar'),
                               (500, 'starfall', 'S420/5', 'Starfall', 'Yıldız Yağmuru', '星辰坠落', 'Lluvia de Estrellas'),
                               (550, 'celestial_alignment', 'P atk6', 'Celestial Alignment', 'Göksel Hizalanma', '天体连珠', 'Alineación Celestial'),
@@ -939,7 +939,7 @@ CLASSES = [
                           roles=['tank', 'barrier_support', 'afk_safe'], afk=(2, 5, 4, 5, 4, 2, 5), strong=['afk', 'group'], weak=['farming'],
                           skills=[
                               (300, 'stone_totem', 'P dr5,def4', 'Stone Totem', 'Taş Totemi', '石之图腾', 'Tótem de Piedra'),
-                              (350, 'stone_skin_totem', 'G50/9 d3 h70', 'Stone Skin Totem', 'Taş Deri Totemi', '石肤图腾', 'Tótem de Piel de Piedra'),
+                              (350, 'stone_skin_totem', 'G56/9 d3 h70', 'Stone Skin Totem', 'Taş Deri Totemi', '石肤图腾', 'Tótem de Piel de Piedra'),
                               (400, 'earthbind', 'X160/8 d2 T:ROOT', 'Earthbind', 'Toprak Bağı', '地缚', 'Atadura Terrenal'),
                               (450, 'earthen_protection', 'P hp6,def4', 'Earthen Protection', 'Toprak Koruması', '大地守护', 'Protección Terrenal'),
                               (500, 'mountain_spirit', 'B50/11 d3 h50', 'Mountain Spirit', 'Dağ Ruhu', '山岳之灵', 'Espíritu de la Montaña'),

@@ -90,8 +90,8 @@ skills:
     kind: active
     sort_order: 35
     effect: strike
-    power: 160
-    mp_cost: 25
+    power: 200
+    mp_cost: 30
     cooldown_turns: 3
     requires: [shield]
     auto_trigger: { on_cooldown: true }
@@ -161,8 +161,8 @@ skills:
     kind: active
     sort_order: 45
     effect: strike
-    power: 150
-    mp_cost: 20
+    power: 240
+    mp_cost: 30
     cooldown_turns: 4
     auto_trigger: { on_cooldown: true }
   - code: executioner_blood_rush
@@ -477,8 +477,8 @@ skills:
     kind: active
     sort_order: 33
     effect: strike
-    power: 200
-    mp_cost: 30
+    power: 260
+    mp_cost: 40
     cooldown_turns: 3
     auto_trigger: { on_cooldown: true }
   - code: weapon_master_weapon_shift
@@ -984,10 +984,10 @@ skills:
     unlock_level: 300
     kind: active
     activation_mode: active
-    sort_order: 67
+    sort_order: 64
     effect: strike
-    power: 180
-    mp_cost: 21
+    power: 210
+    mp_cost: 27
     cooldown_turns: 2
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -1072,10 +1072,10 @@ skills:
     unlock_level: 725
     kind: active
     activation_mode: active
-    sort_order: 61
+    sort_order: 57
     effect: strike
-    power: 240
-    mp_cost: 33
+    power: 280
+    mp_cost: 41
     cooldown_turns: 2
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -2230,8 +2230,8 @@ skills:
     activation_mode: active
     sort_order: 86
     effect: empower
-    power: 20
-    mp_cost: 20
+    power: 27
+    mp_cost: 23
     cooldown_turns: 8
     duration_turns: 3
     auto_trigger: { on_cooldown: true }
@@ -3043,10 +3043,10 @@ skills:
     unlock_level: 500
     kind: active
     activation_mode: active
-    sort_order: 65
+    sort_order: 61
     effect: strike
-    power: 200
-    mp_cost: 25
+    power: 240
+    mp_cost: 33
     cooldown_turns: 3
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -3224,10 +3224,10 @@ skills:
     activation_mode: active
     sort_order: 6
     effect: guard
-    power: 35
-    mp_cost: 27
+    power: 42
+    mp_cost: 31
     cooldown_turns: 7
-    duration_turns: 2
+    duration_turns: 3
     auto_trigger: { self_hp_below: 70 }
     type: BUFF
     target_type: self
@@ -3444,10 +3444,10 @@ skills:
     unlock_level: 725
     kind: active
     activation_mode: active
-    sort_order: 58
+    sort_order: 50
     effect: strike
-    power: 270
-    mp_cost: 39
+    power: 350
+    mp_cost: 55
     cooldown_turns: 2
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -3463,10 +3463,10 @@ skills:
     unlock_level: 750
     kind: active
     activation_mode: active
-    sort_order: 52
+    sort_order: 48
     effect: strike
-    power: 330
-    mp_cost: 51
+    power: 370
+    mp_cost: 59
     cooldown_turns: 3
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -3573,10 +3573,10 @@ skills:
     unlock_level: 725
     kind: active
     activation_mode: active
-    sort_order: 55
+    sort_order: 50
     effect: strike
-    power: 300
-    mp_cost: 45
+    power: 350
+    mp_cost: 55
     cooldown_turns: 3
     auto_trigger: { on_cooldown: true }
     type: DAMAGE
@@ -4707,8 +4707,8 @@ skills:
     activation_mode: active
     sort_order: 6
     effect: heal
-    power: 30
-    mp_cost: 25
+    power: 37
+    mp_cost: 28
     cooldown_turns: 10
     auto_trigger: { self_hp_below: 50 }
     type: HEAL
@@ -5801,8 +5801,8 @@ skills:
     activation_mode: active
     sort_order: 6
     effect: guard
-    power: 55
-    mp_cost: 37
+    power: 63
+    mp_cost: 41
     cooldown_turns: 9
     duration_turns: 3
     auto_trigger: { self_hp_below: 65 }
@@ -5931,10 +5931,10 @@ skills:
     activation_mode: active
     sort_order: 86
     effect: empower
-    power: 25
-    mp_cost: 22
+    power: 27
+    mp_cost: 23
     cooldown_turns: 8
-    duration_turns: 3
+    duration_turns: 4
     auto_trigger: { on_cooldown: true }
     type: BUFF
     target_type: self
@@ -6995,8 +6995,8 @@ skills:
     activation_mode: active
     sort_order: 6
     effect: guard
-    power: 50
-    mp_cost: 35
+    power: 56
+    mp_cost: 38
     cooldown_turns: 9
     duration_turns: 3
     auto_trigger: { self_hp_below: 70 }

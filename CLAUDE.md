@@ -318,6 +318,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 150. **Aynı işin en güçlüsü kalır (bitti)** — Sprint 150, DD-352. `classskill.strongest` yol + seviyede iş başına tek aktif (iş = etki + tür + tetik + bekleme bandı; uyanış/nihai ayrı; güç × süre). `/v1/classes/{class}/skills` `job` + `strength`, istemci `skillKit`. Pasifler değişmedi. Geri dönüş etiketi `before-dd-352`.
 
+151. **Zayıf dal yetenekleri güçlendi (bitti)** — Sprint 151, DD-353. 15 aktifin gücü yerini aldığı yeteneğin üstüne çıktı (`class_data.py`, Savaşçı elle), `TestEveryActiveIsUsedSomewhere`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

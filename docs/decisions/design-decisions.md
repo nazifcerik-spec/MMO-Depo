@@ -3454,6 +3454,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-353 — Zayıf kalan dal yetenekleri güçlendirildi
+
+**Context:** DD-352 ile aynı işin en güçlüsü kaldığı için 281 aktiften 14'ü hiçbir yolda devreye girmiyordu; kullanıcı gücün, yerini aldıkları yeteneklerin üstüne çıkarılmasını onayladı.
+**Decision:** Güçler: Kalkan Darbesi 200, Yırtma 240, Hassas Vuruş 260, Karşı Hamle 210, İkiz Kesik 280, Mana Kanalı 27, Saptıran Avuç 240, Ruh Adımı 42 (süre 3), Üçlü Darbe 350, Gök Gürültüsü Yumruğu 350, Kutsal Burç 37, Demir Post 63, Ay Kutsaması 27 (süre 4), Taş Deri Totemi 56. Üçlü Darbe yükselince Akıcı Tekme geride kaldığı için o da 370 oldu. Kaynak maliyetleri güçle birlikte arttı (Savaşçı'da elle: 30/30/40). Açıklamalar dört dilde güncellendi. `TestEveryActiveIsUsedSomewhere`: her aktif en az bir yolda açıldığı seviyede kullanılır. Geri dönüş: `before-dd-353` etiketi yerelde.
+**Consequences:** Hiçbir aktif artık boşa düşmez. Bir üst kademe, yerini aldığı yetenekten en az %5 güçlüdür. Bu yetenekler normal vuruşta daha yüksek güç verdiği için ilgili uzmanlıklar biraz güçlendi; denge testleri ek ayar olmadan geçti, uzmanlık raporu yenilendi. Yalnız içerik değişti, yeni APK gerekmez.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
