@@ -43,6 +43,8 @@ var DefaultModes = map[string]Mode{
 	"friend_online":        ModeOff,
 	"market_sold":          ModePushAndInbox,
 	"market_expiring":      ModeOff,
+	"market_outbid":        ModePushAndInbox, // DD-359
+	"market_won":           ModePushAndInbox, // DD-359
 	"party_invite":         ModePushAndInbox,
 	"raid_matched":         ModePushAndInbox, // the raid queue formed a party (DD-299)
 	"guild_invite":         ModePushAndInbox,

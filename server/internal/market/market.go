@@ -90,6 +90,15 @@ type Listing struct {
 	CreatedAt        time.Time  `json:"created_at"`
 	ExpiresAt        time.Time  `json:"expires_at"`
 	ClosedAt         *time.Time `json:"closed_at,omitempty"`
+
+	// Auction (DD-359).
+	Kind             string     `json:"kind"`
+	StartBidCopper   *int64     `json:"start_bid_copper,omitempty"`
+	BuyoutCopper     *int64     `json:"buyout_copper,omitempty"`
+	CurrentBidCopper *int64     `json:"current_bid_copper,omitempty"`
+	BidderID         *uuid.UUID `json:"bidder_character_id,omitempty"`
+	BidCount         int        `json:"bid_count"`
+	MinNextBidCopper *int64     `json:"min_next_bid_copper,omitempty"`
 }
 
 type PriceStats struct {

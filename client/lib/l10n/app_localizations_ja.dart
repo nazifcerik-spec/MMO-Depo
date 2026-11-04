@@ -3887,4 +3887,78 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get errItemEquipped => '先に装備を外してください。';
+
+  @override
+  String get bid => '入札';
+
+  @override
+  String get bidPlaced => '入札しました。';
+
+  @override
+  String get marketFixed => '固定価格';
+
+  @override
+  String get marketAuction => 'オークション';
+
+  @override
+  String auctionNoBids(String price) {
+    return '入札なし、開始価格 $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return '最高入札 $price（$count件）';
+  }
+
+  @override
+  String get auctionYouLead => 'あなたが最高入札者';
+
+  @override
+  String get auctionStartBid => 'ロット全体の開始価格';
+
+  @override
+  String get auctionBuyoutOptional => '即決価格（任意）';
+
+  @override
+  String get auctionRules => '時間切れで最高入札者が落札します。残り5分以内の入札で時間が延長されます。入札後は取り消せません。';
+
+  @override
+  String get auctionYouReceiveAtLeast => '最低受取額';
+
+  @override
+  String auctionMinBid(String price) {
+    return '最低入札額：$price';
+  }
+
+  @override
+  String get auctionBidCopper => '入札額（銅貨）';
+
+  @override
+  String get auctionHeldNote => 'ゴールドは預かられ、他の人が上回るとすぐ返金されます。';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return '即決：$price';
+  }
+
+  @override
+  String get errBidTooLow => '最低入札額を下回っています。';
+
+  @override
+  String get errTopBidder => 'すでに最高入札者です。';
+
+  @override
+  String get errAuctionBusy => '他の入札を処理中です。少し待ってからお試しください。';
+
+  @override
+  String get errAuctionHasBids => '入札があるオークションは取り消せません。';
+
+  @override
+  String get nkMarketOutbid => '入札額を上回られました';
+
+  @override
+  String get nkMarketWon => 'オークションに落札しました';
+
+  @override
+  String get evMarketOutbid => '入札額を上回られ、ゴールドが返金されました。';
 }

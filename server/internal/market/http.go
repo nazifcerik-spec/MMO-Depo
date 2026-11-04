@@ -50,6 +50,9 @@ func reply(w http.ResponseWriter, r *http.Request, status int, v any, err error)
 }
 
 type sellBody struct {
+	Auction         bool      `json:"auction"`
+	StartBid        int64     `json:"start_bid_copper"`
+	Buyout          int64     `json:"buyout_copper"`
 	ItemInstanceID  uuid.UUID `json:"item_instance_id"`
 	StackQuantity   int32     `json:"stack_quantity"`
 	UnitPriceCopper int64     `json:"unit_price_copper"`
@@ -72,8 +75,31 @@ func (h *Handler) Sell(w http.ResponseWriter, r *http.Request) {
 	l, err := h.svc.Sell(r.Context(), actor, acct, SellRequest{
 		ItemID: b.ItemInstanceID, Quantity: b.StackQuantity, UnitPrice: b.UnitPriceCopper,
 		DurationHours: b.DurationHours, IdempotencyKey: r.Header.Get("Idempotency-Key"),
+		Auction: b.Auction, StartBid: b.StartBid, Buyout: b.Buyout,
 	})
 	reply(w, r, http.StatusCreated, l, err)
+}
+
+// Bid — POST /character/{id}/market/bid/{listing_id} {amount_copper, buyout} (DD-359).
+func (h *Handler) Bid(w http.ResponseWriter, r *http.Request) {
+	actor, acct, ok := scope(w, r)
+	if !ok {
+		return
+	}
+	id, ok := listingID(w, r)
+	if !ok {
+		return
+	}
+	var b struct {
+		Amount int64 `json:"amount_copper"`
+		Buyout bool  `json:"buyout"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&b); err != nil {
+		apierr.Write(w, r, http.StatusBadRequest, "E_INVALID_JSON", err.Error())
+		return
+	}
+	l, err := h.svc.Bid(r.Context(), actor, acct, id, b.Amount, b.Buyout)
+	reply(w, r, http.StatusOK, l, err)
 }
 
 func (h *Handler) Buy(w http.ResponseWriter, r *http.Request) {
@@ -125,7 +151,7 @@ func (h *Handler) Search(w http.ResponseWriter, r *http.Request) {
 	num := func(k string) int64 { n, _ := strconv.ParseInt(q.Get(k), 10, 64); return n }
 	list, err := h.svc.Search(r.Context(), SearchQuery{
 		TemplateCode: q.Get("template"), ItemClass: q.Get("class"), Rarity: q.Get("rarity"),
-		MinPrice: num("min_price"), MaxPrice: num("max_price"), Sort: q.Get("sort"),
+		MinPrice: num("min_price"), MaxPrice: num("max_price"), Sort: q.Get("sort"), Kind: q.Get("kind"),
 		Limit: int(num("limit")), Offset: int(num("offset")),
 	})
 	reply(w, r, 200, map[string]any{"count": len(list), "listings": list}, err)
@@ -159,6 +185,13 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		{ErrNotSeller, 403, "E_NOT_SELLER"},
 		{ErrIdempotencyMissing, 400, "E_IDEMPOTENCY_KEY_REQUIRED"},
 		{economy.ErrInsufficientBalance, 409, "E_INSUFFICIENT_GOLD"},
+		{ErrAuctionOnly, 409, "E_AUCTION_ONLY"},
+		{ErrNotAuction, 409, "E_NOT_AUCTION"},
+		{ErrBidTooLow, 409, "E_BID_TOO_LOW"},
+		{ErrTopBidder, 409, "E_ALREADY_TOP_BIDDER"},
+		{ErrAuctionBusy, 409, "E_AUCTION_BUSY"},
+		{ErrHasBids, 409, "E_AUCTION_HAS_BIDS"},
+		{ErrBadStartBid, 400, "E_PRICE_OUT_OF_RANGE"},
 	} {
 		if errors.Is(err, c.err) {
 			apierr.Write(w, r, c.status, c.code, err.Error())

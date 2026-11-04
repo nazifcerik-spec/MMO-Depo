@@ -26,6 +26,13 @@ func TestDomainErrorsMapToClientStatus(t *testing.T) {
 		"ErrSelfBuy":            ErrSelfBuy,
 		"ErrBagFull":            ErrBagFull,
 		"ErrUnavailable":        ErrUnavailable,
+		"ErrAuctionOnly":        ErrAuctionOnly,
+		"ErrNotAuction":         ErrNotAuction,
+		"ErrBidTooLow":          ErrBidTooLow,
+		"ErrTopBidder":          ErrTopBidder,
+		"ErrAuctionBusy":        ErrAuctionBusy,
+		"ErrHasBids":            ErrHasBids,
+		"ErrBadStartBid":        ErrBadStartBid,
 	} {
 		t.Run(name, func(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)

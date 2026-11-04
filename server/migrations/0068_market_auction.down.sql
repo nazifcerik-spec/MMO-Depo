@@ -1,0 +1,10 @@
+DROP TABLE market.auction_bid;
+DROP INDEX market.idx_market_auction_due;
+ALTER TABLE market.listing
+  DROP COLUMN extensions,
+  DROP COLUMN bid_count,
+  DROP COLUMN bidder_character_id,
+  DROP COLUMN current_bid_copper,
+  DROP COLUMN buyout_copper,
+  DROP COLUMN start_bid_copper,
+  DROP COLUMN kind;

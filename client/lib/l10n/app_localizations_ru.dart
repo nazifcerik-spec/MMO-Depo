@@ -3914,4 +3914,79 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Сначала снимите предмет.';
+
+  @override
+  String get bid => 'Ставка';
+
+  @override
+  String get bidPlaced => 'Ставка сделана.';
+
+  @override
+  String get marketFixed => 'Фиксированная цена';
+
+  @override
+  String get marketAuction => 'Аукцион';
+
+  @override
+  String auctionNoBids(String price) {
+    return 'Ставок нет, старт $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return 'Лучшая ставка $price (ставок: $count)';
+  }
+
+  @override
+  String get auctionYouLead => 'вы лидируете';
+
+  @override
+  String get auctionStartBid => 'Начальная ставка за весь лот';
+
+  @override
+  String get auctionBuyoutOptional => 'Цена выкупа (необязательно)';
+
+  @override
+  String get auctionRules =>
+      'Когда время истечёт, побеждает лучшая ставка. Ставка в последние 5 минут продлевает аукцион. После первой ставки отменить его нельзя.';
+
+  @override
+  String get auctionYouReceiveAtLeast => 'Вы получите минимум';
+
+  @override
+  String auctionMinBid(String price) {
+    return 'Минимальная ставка: $price';
+  }
+
+  @override
+  String get auctionBidCopper => 'Ваша ставка в меди';
+
+  @override
+  String get auctionHeldNote => 'Золото удерживается и сразу возвращается, если вашу ставку перебьют.';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return 'Выкупить: $price';
+  }
+
+  @override
+  String get errBidTooLow => 'Ставка ниже минимальной.';
+
+  @override
+  String get errTopBidder => 'Ваша ставка уже лучшая.';
+
+  @override
+  String get errAuctionBusy => 'Обрабатывается другая ставка. Повторите чуть позже.';
+
+  @override
+  String get errAuctionHasBids => 'Аукцион со ставками отменить нельзя.';
+
+  @override
+  String get nkMarketOutbid => 'Вашу ставку перебили';
+
+  @override
+  String get nkMarketWon => 'Вы выиграли аукцион';
+
+  @override
+  String get evMarketOutbid => 'Вашу ставку перебили, золото возвращено.';
 }

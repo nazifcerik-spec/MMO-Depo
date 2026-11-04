@@ -20,6 +20,8 @@ String notificationKindName(AppLocalizations l, String kind) => switch (kind) {
   'achievement_unlocked' => l.nkAchievement,
   'support_reply' => l.nkSupport,
   'report_reviewed' => l.nkReportReviewed,
+  'market_outbid' => l.nkMarketOutbid,
+  'market_won' => l.nkMarketWon,
   _ => l.nkSystem,
 };
 
@@ -43,6 +45,7 @@ String? _detail(InboxItem n) {
     'raid_matched' when s('raid') != null => ContentNames.of('dungeon', s('raid')!),
     'support_reply' => s('subject'),
     'report_reviewed' => s('target'),
+    'market_outbid' || 'market_won' when s('template_code') != null => itemName(s('template_code')!),
     'travel_completed' when s('region') != null => ContentNames.of('region', s('region')!),
     'world_event_active' when s('event') != null => ContentNames.of('worldevent', s('event')!),
     'achievement_unlocked' when s('code') != null => ContentNames.of('achievement', s('code')!),

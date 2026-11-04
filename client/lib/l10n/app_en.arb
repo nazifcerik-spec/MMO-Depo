@@ -2963,5 +2963,58 @@
   "errGuildVaultClosing": "The guild is disbanding, nothing can be deposited.",
   "errGuildVaultLimit": "That is over your daily limit.",
   "errItemBound": "Bound items stay with their character.",
-  "errItemEquipped": "Take the item off first."
+  "errItemEquipped": "Take the item off first.",
+  "bid": "Bid",
+  "bidPlaced": "Your bid is placed.",
+  "marketFixed": "Fixed price",
+  "marketAuction": "Auction",
+  "auctionNoBids": "No bids yet, starts at {price}",
+  "@auctionNoBids": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "auctionTopBid": "Top bid {price} ({count} bids)",
+  "@auctionTopBid": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionYouLead": "you lead",
+  "auctionStartBid": "Starting bid for the whole lot",
+  "auctionBuyoutOptional": "Buyout price (optional)",
+  "auctionRules": "The top bid wins when time runs out. A bid in the last 5 minutes extends the auction. It cannot be cancelled once someone has bid.",
+  "auctionYouReceiveAtLeast": "You receive at least",
+  "auctionMinBid": "Lowest bid: {price}",
+  "@auctionMinBid": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "auctionBidCopper": "Your bid in copper",
+  "auctionHeldNote": "The gold is held and returned right away if someone outbids you.",
+  "auctionBuyoutFor": "Buy now: {price}",
+  "@auctionBuyoutFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "errBidTooLow": "That bid is below the minimum.",
+  "errTopBidder": "You already have the top bid.",
+  "errAuctionBusy": "Another bid is going through. Try again in a moment.",
+  "errAuctionHasBids": "An auction with bids cannot be cancelled.",
+  "nkMarketOutbid": "You were outbid",
+  "nkMarketWon": "You won an auction",
+  "evMarketOutbid": "You were outbid; your gold is back."
 }

@@ -3914,4 +3914,79 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Quítate el objeto primero.';
+
+  @override
+  String get bid => 'Pujar';
+
+  @override
+  String get bidPlaced => 'Puja realizada.';
+
+  @override
+  String get marketFixed => 'Precio fijo';
+
+  @override
+  String get marketAuction => 'Subasta';
+
+  @override
+  String auctionNoBids(String price) {
+    return 'Sin pujas, empieza en $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return 'Puja más alta $price ($count pujas)';
+  }
+
+  @override
+  String get auctionYouLead => 'vas en cabeza';
+
+  @override
+  String get auctionStartBid => 'Puja inicial por todo el lote';
+
+  @override
+  String get auctionBuyoutOptional => 'Precio de compra inmediata (opcional)';
+
+  @override
+  String get auctionRules =>
+      'Gana la puja más alta al acabar el tiempo. Una puja en los últimos 5 minutos alarga la subasta. No se puede cancelar una vez que alguien ha pujado.';
+
+  @override
+  String get auctionYouReceiveAtLeast => 'Recibes como mínimo';
+
+  @override
+  String auctionMinBid(String price) {
+    return 'Puja mínima: $price';
+  }
+
+  @override
+  String get auctionBidCopper => 'Tu puja en cobre';
+
+  @override
+  String get auctionHeldNote => 'El oro queda retenido y se devuelve en cuanto alguien te supere.';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return 'Comprar ya: $price';
+  }
+
+  @override
+  String get errBidTooLow => 'Esa puja está por debajo del mínimo.';
+
+  @override
+  String get errTopBidder => 'Ya tienes la puja más alta.';
+
+  @override
+  String get errAuctionBusy => 'Se está procesando otra puja. Inténtalo de nuevo en un momento.';
+
+  @override
+  String get errAuctionHasBids => 'No se puede cancelar una subasta con pujas.';
+
+  @override
+  String get nkMarketOutbid => 'Han superado tu puja';
+
+  @override
+  String get nkMarketWon => 'Has ganado una subasta';
+
+  @override
+  String get evMarketOutbid => 'Han superado tu puja; tu oro ha vuelto.';
 }

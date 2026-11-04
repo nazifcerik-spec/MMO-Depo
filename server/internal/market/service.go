@@ -66,6 +66,11 @@ type SellRequest struct {
 	UnitPrice      int64
 	DurationHours  int16
 	IdempotencyKey string
+
+	// An auction (DD-359) sells the lot to the top bidder. UnitPrice is ignored.
+	Auction  bool
+	StartBid int64
+	Buyout   int64 // 0 = no buyout
 }
 
 // Sell charges the listing fee, then escrows the item (or a split-off part of
@@ -125,7 +130,21 @@ func (s *Service) Sell(ctx context.Context, actor, account uuid.UUID, req SellRe
 		return nil, ErrBadQuantity
 	}
 	lo, hi := PriceBounds(tmpl.BaseValueCopper)
-	if req.UnitPrice < lo || req.UnitPrice > hi {
+	kind := "fixed"
+	var startBid, buyout *int64
+	if req.Auction {
+		kind = "auction"
+		// Bounds apply to what one unit of the lot would fetch.
+		if req.StartBid < lo*int64(req.Quantity) || req.StartBid > hi*int64(req.Quantity) ||
+			(req.Buyout != 0 && (req.Buyout <= req.StartBid || req.Buyout > hi*int64(req.Quantity))) {
+			return nil, fmt.Errorf("%w: start [%d, %d]", ErrBadStartBid, lo*int64(req.Quantity), hi*int64(req.Quantity))
+		}
+		startBid = &req.StartBid
+		if req.Buyout != 0 {
+			buyout = &req.Buyout
+		}
+		req.UnitPrice = max(1, (req.StartBid+int64(req.Quantity)-1)/int64(req.Quantity))
+	} else if req.UnitPrice < lo || req.UnitPrice > hi {
 		return nil, fmt.Errorf("%w: [%d, %d]", ErrPriceOutOfRange, lo, hi)
 	}
 
@@ -176,7 +195,7 @@ func (s *Service) Sell(ctx context.Context, actor, account uuid.UUID, req SellRe
 				  (template_code, owner_character_id, stack_quantity, rarity, prefix_code, suffix_code,
 				   is_bound, is_locked, lock_owner, locked_ref_id, source_kind, source_ref_id)
 				SELECT template_code, owner_character_id, $2, rarity, prefix_code, suffix_code,
-				       false, true, 'market', $3, source_kind, source_ref_id
+				       false, true, 'market', $3, 'market', $3
 				  FROM inventory.item_instance WHERE id = $1
 				RETURNING id`, req.ItemID, req.Quantity, listingID).Scan(&escrowID); err != nil {
 				return err
@@ -185,11 +204,12 @@ func (s *Service) Sell(ctx context.Context, actor, account uuid.UUID, req SellRe
 		_, err := tx.Exec(ctx, `
 			INSERT INTO market.listing
 			  (id, seller_character_id, item_instance_id, template_code, item_class, rarity, prefix_code, suffix_code,
-			   stack_quantity, unit_price_copper, listing_fee_copper, fee_txn_id, duration_hours, created_at, expires_at)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+			   stack_quantity, unit_price_copper, listing_fee_copper, fee_txn_id, duration_hours, created_at, expires_at,
+			   kind, start_bid_copper, buyout_copper)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
 			listingID, actor, escrowID, tmplCode, tmpl.ItemClass, rarity, prefix, suffix,
 			req.Quantity, req.UnitPrice, fee, res.TxnID, req.DurationHours,
-			now, now.Add(time.Duration(req.DurationHours)*time.Hour))
+			now, now.Add(time.Duration(req.DurationHours)*time.Hour), kind, startBid, buyout)
 		return err
 	})
 	if err != nil {
@@ -252,17 +272,21 @@ func (s *Service) Buy(ctx context.Context, actor, account, listingID uuid.UUID, 
 		var buyer *uuid.UUID
 		var expires time.Time
 		var sellerAccount uuid.UUID
+		var kind string
 		err := tx.QueryRow(ctx, `
 			SELECT l.seller_character_id, c.account_id, l.state, l.buyer_character_id,
-			       l.unit_price_copper, l.total_price_copper, l.expires_at
+			       l.unit_price_copper, l.total_price_copper, l.expires_at, l.kind
 			  FROM market.listing l JOIN character.character c ON c.id = l.seller_character_id
 			 WHERE l.id = $1 FOR UPDATE OF l`, listingID).
-			Scan(&seller, &sellerAccount, &state, &buyer, &unit, &total, &expires)
+			Scan(&seller, &sellerAccount, &state, &buyer, &unit, &total, &expires, &kind)
 		if errors.Is(err, pgx.ErrNoRows) {
 			return ErrNotFound
 		}
 		if err != nil {
 			return err
+		}
+		if kind == "auction" {
+			return ErrAuctionOnly
 		}
 		if state == "pending_sale" && buyer != nil && *buyer == actor {
 			return nil // retry of our own reservation
@@ -384,10 +408,11 @@ func (s *Service) Cancel(ctx context.Context, actor, account, listingID uuid.UUI
 		var state string
 		var fee int64
 		var created time.Time
+		var bids int
 		err := tx.QueryRow(ctx, `
-			SELECT seller_character_id, state, listing_fee_copper, created_at, item_instance_id, template_code, stack_quantity
+			SELECT bid_count, seller_character_id, state, listing_fee_copper, created_at, item_instance_id, template_code, stack_quantity
 			  FROM market.listing WHERE id = $1 FOR UPDATE`, listingID).
-			Scan(&seller, &state, &fee, &created, &inst.ID, &inst.TemplateCode, &inst.StackQuantity)
+			Scan(&bids, &seller, &state, &fee, &created, &inst.ID, &inst.TemplateCode, &inst.StackQuantity)
 		if errors.Is(err, pgx.ErrNoRows) {
 			return ErrNotFound
 		}
@@ -396,6 +421,9 @@ func (s *Service) Cancel(ctx context.Context, actor, account, listingID uuid.UUI
 		}
 		if seller != actor {
 			return ErrNotSeller
+		}
+		if bids > 0 {
+			return ErrHasBids
 		}
 		if state != "active" {
 			return ErrUnavailable
@@ -469,6 +497,10 @@ func (s *Service) AdminCancel(ctx context.Context, listingID uuid.UUID, refundFe
 		_, err = tx.Exec(ctx, `
 			UPDATE market.listing SET state = 'cancelled', closed_at = now(), close_reason = 'admin'
 			 WHERE id = $1`, listingID)
+		if err != nil {
+			return err
+		}
+		_, err = tx.Exec(ctx, `UPDATE market.auction_bid SET state = 'outbid' WHERE listing_id = $1 AND state = 'active'`, listingID)
 		return err
 	})
 	if err != nil {
@@ -498,6 +530,7 @@ func ExpireAndRecover(ctx context.Context, pool *pgxpool.Pool, batch int) (int64
 			WITH exp AS (
 			  UPDATE market.listing SET state = 'expired', closed_at = now(), close_reason = 'expired'
 			   WHERE id IN (SELECT id FROM market.listing WHERE state = 'active' AND expires_at <= now()
+			                   AND bidder_character_id IS NULL
 			                 ORDER BY expires_at LIMIT $1 FOR UPDATE SKIP LOCKED)
 			  RETURNING id, item_instance_id)
 			UPDATE inventory.item_instance i
@@ -553,14 +586,20 @@ func ExpireAndRecover(ctx context.Context, pool *pgxpool.Pool, batch int) (int64
 const listingCols = `
 	SELECT l.id, l.seller_character_id, c.name, l.item_instance_id, l.template_code, l.item_class, l.rarity,
 	       l.prefix_code, l.suffix_code, l.stack_quantity, l.unit_price_copper, l.total_price_copper,
-	       l.listing_fee_copper, l.duration_hours, l.state, l.created_at, l.expires_at, l.closed_at
+	       l.listing_fee_copper, l.duration_hours, l.state, l.created_at, l.expires_at, l.closed_at,
+	       l.kind, l.start_bid_copper, l.buyout_copper, l.current_bid_copper, l.bidder_character_id, l.bid_count
 	  FROM market.listing l JOIN character.character c ON c.id = l.seller_character_id `
 
 func scanListing(r pgx.CollectableRow) (Listing, error) {
 	var l Listing
 	err := r.Scan(&l.ID, &l.SellerID, &l.SellerName, &l.ItemInstanceID, &l.TemplateCode, &l.ItemClass, &l.Rarity,
 		&l.PrefixCode, &l.SuffixCode, &l.StackQuantity, &l.UnitPriceCopper, &l.TotalPriceCopper,
-		&l.ListingFeeCopper, &l.DurationHours, &l.State, &l.CreatedAt, &l.ExpiresAt, &l.ClosedAt)
+		&l.ListingFeeCopper, &l.DurationHours, &l.State, &l.CreatedAt, &l.ExpiresAt, &l.ClosedAt,
+		&l.Kind, &l.StartBidCopper, &l.BuyoutCopper, &l.CurrentBidCopper, &l.BidderID, &l.BidCount)
+	if err == nil && l.Kind == "auction" {
+		next := MinNextBid(*l.StartBidCopper, l.CurrentBidCopper)
+		l.MinNextBidCopper = &next
+	}
 	return l, err
 }
 
@@ -590,6 +629,7 @@ func (s *Service) MyListings(ctx context.Context, actor, account uuid.UUID) ([]L
 }
 
 type SearchQuery struct {
+	Kind         string // fixed | auction; empty = both
 	TemplateCode string
 	ItemClass    string
 	Rarity       string
@@ -621,6 +661,9 @@ func (s *Service) Search(ctx context.Context, q SearchQuery) ([]Listing, error) 
 	}
 	if q.MaxPrice > 0 {
 		add("l.unit_price_copper <= $%d", q.MaxPrice)
+	}
+	if q.Kind != "" {
+		add("l.kind = $%d", q.Kind)
 	}
 	order := "l.unit_price_copper ASC, l.created_at"
 	switch q.Sort {
@@ -658,8 +701,8 @@ func (s *Service) History(ctx context.Context, templateCode string) (*PriceStats
 		return nil, err
 	}
 	if err := s.pool.QueryRow(ctx, `
-		SELECT min(unit_price_copper) FROM market.listing
-		 WHERE template_code = $1 AND state = 'active' AND expires_at > now()`, templateCode).
+		SELECT min(unit_price_copper) FROM market.listing -- fixed prices only: a bid is not an offer
+		 WHERE kind = 'fixed' AND template_code = $1 AND state = 'active' AND expires_at > now()`, templateCode).
 		Scan(&st.LowestActive); err != nil {
 		return nil, err
 	}

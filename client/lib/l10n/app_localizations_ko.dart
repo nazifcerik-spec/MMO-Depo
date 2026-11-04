@@ -3888,4 +3888,78 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get errItemEquipped => '먼저 아이템을 해제하세요.';
+
+  @override
+  String get bid => '입찰';
+
+  @override
+  String get bidPlaced => '입찰했습니다.';
+
+  @override
+  String get marketFixed => '고정가';
+
+  @override
+  String get marketAuction => '경매';
+
+  @override
+  String auctionNoBids(String price) {
+    return '입찰 없음, 시작가 $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return '최고 입찰 $price ($count회)';
+  }
+
+  @override
+  String get auctionYouLead => '내가 선두';
+
+  @override
+  String get auctionStartBid => '전체 묶음 시작가';
+
+  @override
+  String get auctionBuyoutOptional => '즉시 구매가 (선택)';
+
+  @override
+  String get auctionRules => '시간이 끝나면 최고 입찰자가 낙찰됩니다. 마지막 5분 안의 입찰은 경매를 연장합니다. 입찰이 들어온 뒤에는 취소할 수 없습니다.';
+
+  @override
+  String get auctionYouReceiveAtLeast => '최소 수령액';
+
+  @override
+  String auctionMinBid(String price) {
+    return '최소 입찰가: $price';
+  }
+
+  @override
+  String get auctionBidCopper => '입찰액 (구리)';
+
+  @override
+  String get auctionHeldNote => '골드는 보류되며 다른 사람이 더 높게 입찰하면 바로 돌려받습니다.';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return '즉시 구매: $price';
+  }
+
+  @override
+  String get errBidTooLow => '최소 입찰가보다 낮습니다.';
+
+  @override
+  String get errTopBidder => '이미 최고 입찰자입니다.';
+
+  @override
+  String get errAuctionBusy => '다른 입찰을 처리 중입니다. 잠시 후 다시 시도하세요.';
+
+  @override
+  String get errAuctionHasBids => '입찰이 있는 경매는 취소할 수 없습니다.';
+
+  @override
+  String get nkMarketOutbid => '입찰가를 추월당했습니다';
+
+  @override
+  String get nkMarketWon => '경매에서 낙찰되었습니다';
+
+  @override
+  String get evMarketOutbid => '입찰가를 추월당해 골드가 반환되었습니다.';
 }

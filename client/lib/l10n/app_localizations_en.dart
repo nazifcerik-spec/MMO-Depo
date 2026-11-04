@@ -3914,4 +3914,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Take the item off first.';
+
+  @override
+  String get bid => 'Bid';
+
+  @override
+  String get bidPlaced => 'Your bid is placed.';
+
+  @override
+  String get marketFixed => 'Fixed price';
+
+  @override
+  String get marketAuction => 'Auction';
+
+  @override
+  String auctionNoBids(String price) {
+    return 'No bids yet, starts at $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return 'Top bid $price ($count bids)';
+  }
+
+  @override
+  String get auctionYouLead => 'you lead';
+
+  @override
+  String get auctionStartBid => 'Starting bid for the whole lot';
+
+  @override
+  String get auctionBuyoutOptional => 'Buyout price (optional)';
+
+  @override
+  String get auctionRules =>
+      'The top bid wins when time runs out. A bid in the last 5 minutes extends the auction. It cannot be cancelled once someone has bid.';
+
+  @override
+  String get auctionYouReceiveAtLeast => 'You receive at least';
+
+  @override
+  String auctionMinBid(String price) {
+    return 'Lowest bid: $price';
+  }
+
+  @override
+  String get auctionBidCopper => 'Your bid in copper';
+
+  @override
+  String get auctionHeldNote => 'The gold is held and returned right away if someone outbids you.';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return 'Buy now: $price';
+  }
+
+  @override
+  String get errBidTooLow => 'That bid is below the minimum.';
+
+  @override
+  String get errTopBidder => 'You already have the top bid.';
+
+  @override
+  String get errAuctionBusy => 'Another bid is going through. Try again in a moment.';
+
+  @override
+  String get errAuctionHasBids => 'An auction with bids cannot be cancelled.';
+
+  @override
+  String get nkMarketOutbid => 'You were outbid';
+
+  @override
+  String get nkMarketWon => 'You won an auction';
+
+  @override
+  String get evMarketOutbid => 'You were outbid; your gold is back.';
 }

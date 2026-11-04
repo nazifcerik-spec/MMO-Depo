@@ -6902,6 +6902,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take the item off first.'**
   String get errItemEquipped;
+
+  /// No description provided for @bid.
+  ///
+  /// In en, this message translates to:
+  /// **'Bid'**
+  String get bid;
+
+  /// No description provided for @bidPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bid is placed.'**
+  String get bidPlaced;
+
+  /// No description provided for @marketFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed price'**
+  String get marketFixed;
+
+  /// No description provided for @marketAuction.
+  ///
+  /// In en, this message translates to:
+  /// **'Auction'**
+  String get marketAuction;
+
+  /// No description provided for @auctionNoBids.
+  ///
+  /// In en, this message translates to:
+  /// **'No bids yet, starts at {price}'**
+  String auctionNoBids(String price);
+
+  /// No description provided for @auctionTopBid.
+  ///
+  /// In en, this message translates to:
+  /// **'Top bid {price} ({count} bids)'**
+  String auctionTopBid(String price, int count);
+
+  /// No description provided for @auctionYouLead.
+  ///
+  /// In en, this message translates to:
+  /// **'you lead'**
+  String get auctionYouLead;
+
+  /// No description provided for @auctionStartBid.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting bid for the whole lot'**
+  String get auctionStartBid;
+
+  /// No description provided for @auctionBuyoutOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyout price (optional)'**
+  String get auctionBuyoutOptional;
+
+  /// No description provided for @auctionRules.
+  ///
+  /// In en, this message translates to:
+  /// **'The top bid wins when time runs out. A bid in the last 5 minutes extends the auction. It cannot be cancelled once someone has bid.'**
+  String get auctionRules;
+
+  /// No description provided for @auctionYouReceiveAtLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'You receive at least'**
+  String get auctionYouReceiveAtLeast;
+
+  /// No description provided for @auctionMinBid.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest bid: {price}'**
+  String auctionMinBid(String price);
+
+  /// No description provided for @auctionBidCopper.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bid in copper'**
+  String get auctionBidCopper;
+
+  /// No description provided for @auctionHeldNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The gold is held and returned right away if someone outbids you.'**
+  String get auctionHeldNote;
+
+  /// No description provided for @auctionBuyoutFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy now: {price}'**
+  String auctionBuyoutFor(String price);
+
+  /// No description provided for @errBidTooLow.
+  ///
+  /// In en, this message translates to:
+  /// **'That bid is below the minimum.'**
+  String get errBidTooLow;
+
+  /// No description provided for @errTopBidder.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have the top bid.'**
+  String get errTopBidder;
+
+  /// No description provided for @errAuctionBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Another bid is going through. Try again in a moment.'**
+  String get errAuctionBusy;
+
+  /// No description provided for @errAuctionHasBids.
+  ///
+  /// In en, this message translates to:
+  /// **'An auction with bids cannot be cancelled.'**
+  String get errAuctionHasBids;
+
+  /// No description provided for @nkMarketOutbid.
+  ///
+  /// In en, this message translates to:
+  /// **'You were outbid'**
+  String get nkMarketOutbid;
+
+  /// No description provided for @nkMarketWon.
+  ///
+  /// In en, this message translates to:
+  /// **'You won an auction'**
+  String get nkMarketWon;
+
+  /// No description provided for @evMarketOutbid.
+  ///
+  /// In en, this message translates to:
+  /// **'You were outbid; your gold is back.'**
+  String get evMarketOutbid;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

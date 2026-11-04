@@ -3508,6 +3508,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-359 — Pazarda açık artırma
+
+**Context:** Kullanıcı pazar düzenlemeleri istedi; sabit fiyat vardı, açık artırma Phase 02 için tasarlanmıştı (docs/marketplace/auction.md).
+**Decision:** Migration 0068: `market.listing` `kind`, başlangıç, hemen al, güncel teklif, teklif veren, uzatma sayısı + `market.auction_bid`. Aynı ilan ve eşya emaneti kullanılır; teklif parası `system.auction_escrow`'da durur. Akış: teklif `pending` yazılır (ilan kilidi altında doğrulanır) → defter → teklif sayılır, önceki `outbid` olur ve parası hemen döner. En az %5 artış. Son 5 dakikadaki teklif süreyi 5 dakikaya çıkarır, en çok 6 kez. Süre dolunca worker yerleşimi sabit fiyatın `pending_sale` adımlarıyla yapar: satıcıya kesinti sonrası ödeme, eşya kazananda; aynı defter anahtarı sayesinde kesinti sonrası kurtarma ortak. Hemen al aynı yolu anında işletir. Teklif almış ilan iptal edilemez; yönetici iptal ederse teklif worker ile iade olur. Takılan teklif ve ödenmemiş iade `Keeper.Run` ile çözülür. Fiyat bandı lot birimine göre, ilan ücreti başlangıç üzerinden. Bildirim: `market_outbid`, `market_won`; WS `market.outbid`. İstemci: tür süzgeci, teklif penceresi, hemen al, satış sayfasında açık artırma seçeneği. Aynı işte düzeltilen hata: dükkândan alınmış bir yığının bir kısmını pazara koymak benzersizlik kısıtı yüzünden 500 veriyordu.
+**Consequences:** Kazananın çantası doluysa eşya taşma olarak bekler, ilk uygun görüntülemede yerleşir. Teklif veren karakter silinirse iade edilecek kimse kalmaz, tutar emanette kalır. 30 günlük en düşük fiyat önerisi yalnız sabit fiyatlı ilanlara bakar.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

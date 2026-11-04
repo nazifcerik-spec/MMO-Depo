@@ -534,6 +534,7 @@ func NewRouter(d Deps) http.Handler {
 					r.Get("/market/listings", h.Mine)
 					r.With(idem).Post("/market/sell", h.Sell)
 					r.With(idem).Post("/market/buy/{listing_id}", h.Buy)
+					r.With(idem).Post("/market/bid/{listing_id}", h.Bid)
 					r.With(idem).Post("/market/cancel/{listing_id}", h.Cancel)
 				}
 			})

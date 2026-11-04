@@ -209,6 +209,7 @@ class _HomeShellState extends State<HomeShell> {
       'achievement.unlocked' => (l.evAchievement, true),
       'mastery.tier_up' => (l.evMasteryTier, true),
       'market.sold' => (l.evMarketSold, true),
+      'market.outbid' => (l.evMarketOutbid, true),
       'mail.received' => (l.evMailReceived, false),
       'party.invite' => (l.evPartyInvite, false),
       'guild.invite' => (l.evGuildInvite, false),

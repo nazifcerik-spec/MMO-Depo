@@ -3872,4 +3872,78 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errItemEquipped => '请先卸下该物品。';
+
+  @override
+  String get bid => '出价';
+
+  @override
+  String get bidPlaced => '出价成功。';
+
+  @override
+  String get marketFixed => '一口价';
+
+  @override
+  String get marketAuction => '拍卖';
+
+  @override
+  String auctionNoBids(String price) {
+    return '暂无出价，起拍价 $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return '最高出价 $price（$count 次）';
+  }
+
+  @override
+  String get auctionYouLead => '你领先';
+
+  @override
+  String get auctionStartBid => '整批起拍价';
+
+  @override
+  String get auctionBuyoutOptional => '一口价（可选）';
+
+  @override
+  String get auctionRules => '时间结束时最高出价者获胜。最后 5 分钟内出价会延长拍卖。有人出价后不能取消。';
+
+  @override
+  String get auctionYouReceiveAtLeast => '至少可得';
+
+  @override
+  String auctionMinBid(String price) {
+    return '最低出价：$price';
+  }
+
+  @override
+  String get auctionBidCopper => '你的出价（铜币）';
+
+  @override
+  String get auctionHeldNote => '金币会被暂扣，如有人出价更高会立即退还。';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return '立即购买：$price';
+  }
+
+  @override
+  String get errBidTooLow => '出价低于最低要求。';
+
+  @override
+  String get errTopBidder => '你已是最高出价者。';
+
+  @override
+  String get errAuctionBusy => '另一笔出价正在处理中，请稍后再试。';
+
+  @override
+  String get errAuctionHasBids => '已有出价的拍卖不能取消。';
+
+  @override
+  String get nkMarketOutbid => '你的出价被超过';
+
+  @override
+  String get nkMarketWon => '你赢得了拍卖';
+
+  @override
+  String get evMarketOutbid => '你的出价被超过，金币已退还。';
 }

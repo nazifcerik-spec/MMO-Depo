@@ -326,6 +326,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 154. **Lonca kasası + bankası (bitti)** — Sprint 154, DD-358. Migration 0067, `economy.AccountGuild` gerçek bakiye, `guild/vault.go`, `inventory.store`, rütbe başı günlük sınır, hareket kaydı, boş olmadan dağılmaz, `GuildVaultScreen`.
 
+155. **Pazarda açık artırma (bitti)** — Sprint 155, DD-359. Migration 0068, `market/auction.go` (`Keeper`: yerleşim + iade), `POST /market/bid/{id}`, emanet, %5 artış, 5 dk uzatma, hemen al; istemci teklif penceresi ve listeleme seçeneği.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

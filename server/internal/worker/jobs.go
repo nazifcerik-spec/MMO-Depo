@@ -474,12 +474,22 @@ func (j MailExpire) Run(ctx context.Context) (int64, error) {
 }
 
 // MarketExpire expires overdue listings and resolves abandoned pending sales.
-type MarketExpire struct{ Pool *pgxpool.Pool }
+type MarketExpire struct {
+	Pool   *pgxpool.Pool
+	Txn    economy.TxnService
+	Notify Notifier
+	Log    *slog.Logger
+}
 
 func (MarketExpire) Name() string            { return "market_expire" }
 func (MarketExpire) Interval() time.Duration { return time.Minute }
 func (j MarketExpire) Run(ctx context.Context) (int64, error) {
-	return market.ExpireAndRecover(ctx, j.Pool, BatchSize)
+	n, err := market.ExpireAndRecover(ctx, j.Pool, BatchSize)
+	if err != nil || j.Txn == nil {
+		return n, err
+	}
+	m, err := market.Keeper{Pool: j.Pool, Txn: j.Txn, Notify: j.Notify, Log: j.Log}.Run(ctx, BatchSize)
+	return n + m, err
 }
 
 // All returns the default job set for cmd/worker.
@@ -498,7 +508,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 	return []Job{
 		ChatGC(pool),
 		MailExpire{Pool: pool, Txn: txn, Slots: inventory.NewService(inventory.NewPgRepo(pool), nil)},
-		MarketExpire{Pool: pool},
+		MarketExpire{Pool: pool, Txn: txn, Notify: d.Notifier, Log: logger},
 		ActivityExpire{Pool: pool, Notifier: d.Notifier, Log: logger},
 		TravelArrive{Pool: pool, Notifier: d.Notifier, Log: logger},
 		PushDispatch{Pool: pool, Senders: d.Senders},

@@ -3913,4 +3913,79 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errItemEquipped => 'Önce eşyayı çıkar.';
+
+  @override
+  String get bid => 'Teklif ver';
+
+  @override
+  String get bidPlaced => 'Teklifin verildi.';
+
+  @override
+  String get marketFixed => 'Sabit fiyat';
+
+  @override
+  String get marketAuction => 'Açık artırma';
+
+  @override
+  String auctionNoBids(String price) {
+    return 'Henüz teklif yok, başlangıç $price';
+  }
+
+  @override
+  String auctionTopBid(String price, int count) {
+    return 'En yüksek teklif $price ($count teklif)';
+  }
+
+  @override
+  String get auctionYouLead => 'öndesin';
+
+  @override
+  String get auctionStartBid => 'Tüm lot için başlangıç teklifi';
+
+  @override
+  String get auctionBuyoutOptional => 'Hemen al fiyatı (isteğe bağlı)';
+
+  @override
+  String get auctionRules =>
+      'Süre bitince en yüksek teklif kazanır. Son 5 dakikadaki teklif süreyi uzatır. Teklif geldikten sonra iptal edilemez.';
+
+  @override
+  String get auctionYouReceiveAtLeast => 'En az eline geçecek';
+
+  @override
+  String auctionMinBid(String price) {
+    return 'En düşük teklif: $price';
+  }
+
+  @override
+  String get auctionBidCopper => 'Bakır cinsinden teklifin';
+
+  @override
+  String get auctionHeldNote => 'Altın tutulur; biri teklifini geçerse hemen geri döner.';
+
+  @override
+  String auctionBuyoutFor(String price) {
+    return 'Hemen al: $price';
+  }
+
+  @override
+  String get errBidTooLow => 'Bu teklif en düşük tutarın altında.';
+
+  @override
+  String get errTopBidder => 'En yüksek teklif zaten senin.';
+
+  @override
+  String get errAuctionBusy => 'Başka bir teklif işleniyor. Birazdan yeniden dene.';
+
+  @override
+  String get errAuctionHasBids => 'Teklif almış açık artırma iptal edilemez.';
+
+  @override
+  String get nkMarketOutbid => 'Teklifin geçildi';
+
+  @override
+  String get nkMarketWon => 'Açık artırmayı kazandın';
+
+  @override
+  String get evMarketOutbid => 'Teklifin geçildi, altının geri döndü.';
 }

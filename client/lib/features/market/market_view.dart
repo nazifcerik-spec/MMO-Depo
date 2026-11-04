@@ -44,6 +44,7 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
   bool _hasMore = false;
   int _gold = 0;
   String? _class;
+  String? _kind;
   String _sort = 'price_asc';
 
   @override
@@ -62,7 +63,7 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
   @override
   Future<void> fetch() async {
     final r = await Future.wait<Object>([
-      widget.repo.search(itemClass: _class, sort: _sort),
+      widget.repo.search(kind: _kind, itemClass: _class, sort: _sort),
       widget.repo.mine(),
       widget.gold(),
     ]);
@@ -73,7 +74,7 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
   }
 
   Future<void> _more() => run(() async {
-    final next = await widget.repo.search(itemClass: _class, sort: _sort, offset: _results.length);
+    final next = await widget.repo.search(kind: _kind, itemClass: _class, sort: _sort, offset: _results.length);
     if (mounted) {
       setState(() {
         _results = [..._results, ...next];
@@ -88,6 +89,33 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
       _sort = sort ?? _sort;
     });
     run(load);
+  }
+
+  void _filterKind(String? kind) {
+    setState(() => _kind = kind);
+    run(load);
+  }
+
+  /// A bid or the buyout on an auction (DD-359).
+  Future<void> _bid(Listing x) async {
+    final l = AppLocalizations.of(context);
+    final min = x.minNextBid ?? 1;
+    final choice = await showDialog<_BidChoice>(
+      context: context,
+      builder: (_) => _BidDialog(listing: x, title: _name(x), gold: _gold),
+    );
+    if (choice == null) return;
+    await run(() async {
+      if (choice.buyout) {
+        await widget.repo.buyout(x);
+        if (mounted) toast(context, Text(l.bought(_name(x))));
+      } else {
+        await widget.repo.bid(x, choice.amount < min ? min : choice.amount);
+        if (mounted) toast(context, Text(l.bidPlaced));
+      }
+      widget.dataVersion.value++;
+      await load();
+    });
   }
 
   Future<void> _buy(Listing listing) async {
@@ -184,6 +212,23 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
         Wrap(
           spacing: Space.sm,
           children: [
+            for (final (key, label) in <(String?, String)>[
+              (null, l.filterAll),
+              ('fixed', l.marketFixed),
+              ('auction', l.marketAuction),
+            ])
+              ChoiceChip(
+                key: ValueKey('market-kind-${key ?? 'all'}'),
+                label: Text(label),
+                selected: _kind == key,
+                onSelected: (_) => _filterKind(key),
+              ),
+          ],
+        ),
+        const SizedBox(height: Space.sm),
+        Wrap(
+          spacing: Space.sm,
+          children: [
             for (final (key, label) in [('price_asc', l.sortCheapest), ('newest', l.sortNewest)])
               ChoiceChip(
                 label: Text(label),
@@ -203,12 +248,31 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
             margin: const EdgeInsets.only(bottom: Space.sm),
             child: ListTile(
               title: Text(_name(x), style: TextStyle(color: rarityColor(x.rarity))),
-              subtitle: Text(l.listingLine(x.sellerName, goldString(x.unitPrice))),
-              trailing: FilledButton.tonal(
-                style: compactButton,
-                onPressed: x.sellerCharacterId != me && x.totalPrice <= _gold ? () => _buy(x) : null,
-                child: GoldText(x.totalPrice, size: 13),
+              subtitle: Text(
+                x.isAuction
+                    ? [
+                        x.currentBid == null
+                            ? l.auctionNoBids(goldString(x.minNextBid ?? 0))
+                            : l.auctionTopBid(goldString(x.currentBid!), x.bidCount),
+                        if (x.bidderId == me) l.auctionYouLead,
+                        shortDuration(l, x.expiresAt.difference(DateTime.now())),
+                      ].join(' · ')
+                    : l.listingLine(x.sellerName, goldString(x.unitPrice)),
               ),
+              trailing: x.isAuction
+                  ? FilledButton.tonal(
+                      key: ValueKey('bid-${x.id}'),
+                      style: compactButton,
+                      onPressed: x.sellerCharacterId != me && x.bidderId != me && (x.minNextBid ?? 0) <= _gold
+                          ? () => _bid(x)
+                          : null,
+                      child: Text(l.bid),
+                    )
+                  : FilledButton.tonal(
+                      style: compactButton,
+                      onPressed: x.sellerCharacterId != me && x.totalPrice <= _gold ? () => _buy(x) : null,
+                      child: GoldText(x.totalPrice, size: 13),
+                    ),
             ),
           ),
         if (_hasMore) TextButton(onPressed: _more, child: Text(l.loadMore)),
@@ -243,8 +307,12 @@ class _ListingSheetState extends State<_ListingSheet> {
   final _gold = TextEditingController();
   final _silver = TextEditingController();
   final _copper = TextEditingController();
+  final _buyGold = TextEditingController();
+  final _buySilver = TextEditingController();
+  final _buyCopper = TextEditingController();
   late int _qty = widget.item.stack;
   int _hours = 24;
+  bool _auction = false;
   PriceStats? _stats;
   bool _busy = false;
   String? _error;
@@ -252,7 +320,7 @@ class _ListingSheetState extends State<_ListingSheet> {
   @override
   void initState() {
     super.initState();
-    for (final c in [_gold, _silver, _copper]) {
+    for (final c in [_gold, _silver, _copper, _buyGold, _buySilver, _buyCopper]) {
       c.addListener(() => setState(() {}));
     }
     _loadStats();
@@ -260,7 +328,7 @@ class _ListingSheetState extends State<_ListingSheet> {
 
   @override
   void dispose() {
-    for (final c in [_gold, _silver, _copper]) {
+    for (final c in [_gold, _silver, _copper, _buyGold, _buySilver, _buyCopper]) {
       c.dispose();
     }
     super.dispose();
@@ -289,6 +357,11 @@ class _ListingSheetState extends State<_ListingSheet> {
     return v(_gold) * 10000 + v(_silver) * 100 + v(_copper);
   }
 
+  int get _buyout {
+    int v(TextEditingController c) => int.tryParse(c.text) ?? 0;
+    return v(_buyGold) * 10000 + v(_buySilver) * 100 + v(_buyCopper);
+  }
+
   Future<void> _submit() async {
     final l = AppLocalizations.of(context);
     setState(() {
@@ -296,6 +369,17 @@ class _ListingSheetState extends State<_ListingSheet> {
       _error = null;
     });
     try {
+      if (_auction) {
+        await widget.repo.sellAuction(
+          itemId: widget.item.instanceId,
+          quantity: _qty,
+          startBid: _unit,
+          buyout: _buyout,
+          hours: _hours,
+        );
+        if (mounted) Navigator.of(context).pop(true);
+        return;
+      }
       await widget.repo.sell(itemId: widget.item.instanceId, quantity: _qty, unitPrice: _unit, hours: _hours);
       if (mounted) Navigator.of(context).pop(true);
     } on ApiError catch (e) {
@@ -362,7 +446,25 @@ class _ListingSheetState extends State<_ListingSheet> {
                 ),
               ],
               const SizedBox(height: Space.lg),
-              Text(l.unitPrice, style: text.bodySmall),
+              Wrap(
+                spacing: Space.sm,
+                children: [
+                  ChoiceChip(
+                    key: const Key('listing-fixed'),
+                    label: Text(l.marketFixed),
+                    selected: !_auction,
+                    onSelected: (_) => setState(() => _auction = false),
+                  ),
+                  ChoiceChip(
+                    key: const Key('listing-auction'),
+                    label: Text(l.marketAuction),
+                    selected: _auction,
+                    onSelected: (_) => setState(() => _auction = true),
+                  ),
+                ],
+              ),
+              const SizedBox(height: Space.lg),
+              Text(_auction ? l.auctionStartBid : l.unitPrice, style: text.bodySmall),
               const SizedBox(height: Space.sm),
               Row(
                 children: [
@@ -376,6 +478,22 @@ class _ListingSheetState extends State<_ListingSheet> {
               if (_stats?.suggested case final s?) ...[
                 const SizedBox(height: Space.xs),
                 Text(l.suggestedPrice(goldString(s)), style: text.bodySmall),
+              ],
+              if (_auction) ...[
+                const SizedBox(height: Space.lg),
+                Text(l.auctionBuyoutOptional, style: text.bodySmall),
+                const SizedBox(height: Space.sm),
+                Row(
+                  children: [
+                    coin(_buyGold, 'g', Palette.accent),
+                    const SizedBox(width: Space.sm),
+                    coin(_buySilver, 's', const Color(0xFFC9CDD6)),
+                    const SizedBox(width: Space.sm),
+                    coin(_buyCopper, 'c', const Color(0xFFC07A4A)),
+                  ],
+                ),
+                const SizedBox(height: Space.xs),
+                Text(l.auctionRules, style: text.bodySmall),
               ],
               const SizedBox(height: Space.lg),
               Text(l.durationLabel, style: text.bodySmall),
@@ -392,8 +510,16 @@ class _ListingSheetState extends State<_ListingSheet> {
                 ],
               ),
               const SizedBox(height: Space.lg),
-              _Line(label: l.listingFee, copper: listingFeePreview(_unit, _qty, _hours)),
-              _Line(label: l.youReceive, copper: saleProceedsPreview(total)),
+              _Line(
+                label: l.listingFee,
+                copper: _auction
+                    ? listingFeePreview(((_unit + _qty - 1) / _qty).floor(), _qty, _hours)
+                    : listingFeePreview(_unit, _qty, _hours),
+              ),
+              _Line(
+                label: _auction ? l.auctionYouReceiveAtLeast : l.youReceive,
+                copper: saleProceedsPreview(_auction ? _unit : total),
+              ),
               if (_error != null) ...[
                 const SizedBox(height: Space.md),
                 Text(_error!, style: const TextStyle(color: Palette.danger)),
@@ -409,6 +535,80 @@ class _ListingSheetState extends State<_ListingSheet> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _BidChoice {
+  const _BidChoice(this.amount, this.buyout);
+
+  final int amount;
+  final bool buyout;
+}
+
+/// Asks for a bid in whole gold, silver and copper; offers the buyout if any.
+class _BidDialog extends StatefulWidget {
+  const _BidDialog({required this.listing, required this.title, required this.gold});
+
+  final Listing listing;
+  final String title;
+  final int gold;
+
+  @override
+  State<_BidDialog> createState() => _BidDialogState();
+}
+
+class _BidDialogState extends State<_BidDialog> {
+  late final _amount = TextEditingController(text: '${widget.listing.minNextBid ?? 1}');
+
+  @override
+  void dispose() {
+    _amount.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final x = widget.listing;
+    final min = x.minNextBid ?? 1;
+    final amount = int.tryParse(_amount.text) ?? 0;
+    return AlertDialog(
+      title: Text(widget.title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l.auctionMinBid(goldString(min))),
+          const SizedBox(height: Space.sm),
+          TextField(
+            key: const Key('bid-amount'),
+            controller: _amount,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (_) => setState(() {}),
+            decoration: InputDecoration(labelText: l.auctionBidCopper, helperText: goldString(amount)),
+          ),
+          const SizedBox(height: Space.xs),
+          Text(l.auctionHeldNote, style: const TextStyle(fontSize: 12, color: Palette.textMuted)),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l.cancel)),
+        if (x.buyout != null)
+          TextButton(
+            key: const Key('bid-buyout'),
+            onPressed: x.buyout! <= widget.gold ? () => Navigator.of(context).pop(_BidChoice(0, true)) : null,
+            child: Text(l.auctionBuyoutFor(goldString(x.buyout!))),
+          ),
+        FilledButton(
+          key: const Key('bid-confirm'),
+          onPressed: amount >= min && amount <= widget.gold
+              ? () => Navigator.of(context).pop(_BidChoice(amount, false))
+              : null,
+          child: Text(l.bid),
+        ),
+      ],
     );
   }
 }

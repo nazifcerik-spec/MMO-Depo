@@ -28,6 +28,12 @@ class Listing {
     required this.state,
     this.prefix,
     this.suffix,
+    this.kind = 'fixed',
+    this.buyout,
+    this.currentBid,
+    this.minNextBid,
+    this.bidCount = 0,
+    this.bidderId,
   });
 
   factory Listing.fromJson(Map<String, dynamic> j) {
@@ -46,6 +52,12 @@ class Listing {
       state: j['state'] as String? ?? 'active',
       prefix: j['prefix_code'] as String?,
       suffix: j['suffix_code'] as String?,
+      kind: j['kind'] as String? ?? 'fixed',
+      buyout: (j['buyout_copper'] as num?)?.toInt(),
+      currentBid: (j['current_bid_copper'] as num?)?.toInt(),
+      minNextBid: (j['min_next_bid_copper'] as num?)?.toInt(),
+      bidCount: n('bid_count'),
+      bidderId: j['bidder_character_id'] as String?,
     );
   }
 
@@ -62,6 +74,16 @@ class Listing {
   final String state;
   final String? prefix;
   final String? suffix;
+
+  /// fixed | auction (DD-359).
+  final String kind;
+  final int? buyout;
+  final int? currentBid;
+  final int? minNextBid;
+  final int bidCount;
+  final String? bidderId;
+
+  bool get isAuction => kind == 'auction';
 }
 
 /// 30-day price stats for one template (price suggestion when listing).
@@ -91,9 +113,16 @@ class MarketRepository {
   ];
 
   /// [itemClass]/[rarity] null = any. [sort]: price_asc | price_desc | newest.
-  Future<List<Listing>> search({String? itemClass, String? rarity, String sort = 'price_asc', int offset = 0}) async {
+  Future<List<Listing>> search({
+    String? kind,
+    String? itemClass,
+    String? rarity,
+    String sort = 'price_asc',
+    int offset = 0,
+  }) async {
     final q = Uri(
       queryParameters: {
+        'kind': ?kind,
         'class': ?itemClass,
         'rarity': ?rarity,
         'sort': sort,
@@ -122,6 +151,26 @@ class MarketRepository {
         'unit_price_copper': unitPrice,
         'duration_hours': hours,
       });
+
+  /// Lists the lot at auction: [startBid] for the whole lot, [buyout] optional.
+  Future<void> sellAuction({
+    required String itemId,
+    required int quantity,
+    required int startBid,
+    required int buyout,
+    required int hours,
+  }) => api.post('$_char/market/sell', {
+    'item_instance_id': itemId,
+    'stack_quantity': quantity,
+    'duration_hours': hours,
+    'auction': true,
+    'start_bid_copper': startBid,
+    'buyout_copper': buyout,
+  });
+
+  Future<void> bid(Listing l, int amount) => api.post('$_char/market/bid/${l.id}', {'amount_copper': amount});
+
+  Future<void> buyout(Listing l) => api.post('$_char/market/bid/${l.id}', {'buyout': true});
 
   /// The unit price the buyer saw is echoed so a changed listing is refused.
   Future<void> buy(Listing l) => api.post('$_char/market/buy/${l.id}', {'expected_unit_price_copper': l.unitPrice});
