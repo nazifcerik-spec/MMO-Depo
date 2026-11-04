@@ -12,6 +12,7 @@ import (
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
+	"github.com/otter/server/internal/inventory"
 )
 
 // Handler serves /v1/character/{id}/guild/* and GET /v1/guilds/{guild_id}.
@@ -308,6 +309,16 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 		{ErrTooLong, 400, "E_TOO_LONG"},
 		{ErrIdempotencyMissing, 400, "E_IDEMPOTENCY_KEY_REQUIRED"},
 		{economy.ErrInsufficientBalance, 409, "E_INSUFFICIENT_GOLD"},
+		{ErrVaultNotEmpty, 409, "E_GUILD_VAULT_NOT_EMPTY"},
+		{ErrVaultClosing, 409, "E_GUILD_VAULT_CLOSING"},
+		{ErrVaultLimit, 409, "E_GUILD_VAULT_LIMIT"},
+		{ErrVaultAmount, 400, "E_VALIDATION"},
+		{inventory.ErrNotFound, 404, "E_NOT_FOUND"},
+		{inventory.ErrBagFull, 409, "E_BAG_FULL"},
+		{inventory.ErrBankFull, 409, "E_BANK_FULL"},
+		{inventory.ErrBound, 409, "E_ITEM_BOUND"},
+		{inventory.ErrLocked, 409, "E_ITEM_LOCKED"},
+		{inventory.ErrEquipped, 409, "E_ITEM_EQUIPPED"},
 	} {
 		if errors.Is(err, c.err) {
 			apierr.Write(w, r, c.status, c.code, err.Error())

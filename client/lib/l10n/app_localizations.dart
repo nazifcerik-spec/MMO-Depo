@@ -5103,18 +5103,6 @@ abstract class AppLocalizations {
   /// **'The bank is full.'**
   String get errBankFull;
 
-  /// No description provided for @errItemBound.
-  ///
-  /// In en, this message translates to:
-  /// **'Bound items stay with their character.'**
-  String get errItemBound;
-
-  /// No description provided for @errItemEquipped.
-  ///
-  /// In en, this message translates to:
-  /// **'Take the item off first.'**
-  String get errItemEquipped;
-
   /// No description provided for @tabTrade.
   ///
   /// In en, this message translates to:
@@ -6800,6 +6788,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The table is still being counted.'**
   String get rankingEmpty;
+
+  /// No description provided for @guildVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury and bank'**
+  String get guildVault;
+
+  /// No description provided for @guildVaultTreasury.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild treasury'**
+  String get guildVaultTreasury;
+
+  /// No description provided for @guildVaultBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild bank'**
+  String get guildVaultBank;
+
+  /// No description provided for @guildVaultDepositGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit gold'**
+  String get guildVaultDepositGold;
+
+  /// No description provided for @guildVaultWithdrawGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw gold'**
+  String get guildVaultWithdrawGold;
+
+  /// No description provided for @guildVaultGoldAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in gold'**
+  String get guildVaultGoldAmount;
+
+  /// No description provided for @guildVaultNoLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You can withdraw without a daily limit.'**
+  String get guildVaultNoLimit;
+
+  /// No description provided for @guildVaultGoldToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn today: {used} of {limit}'**
+  String guildVaultGoldToday(String used, String limit);
+
+  /// No description provided for @guildVaultItemsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Items taken today: {used} of {limit}'**
+  String guildVaultItemsToday(int used, int limit);
+
+  /// No description provided for @guildVaultNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rank cannot use the guild bank yet.'**
+  String get guildVaultNoItems;
+
+  /// No description provided for @guildVaultLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Movements'**
+  String get guildVaultLog;
+
+  /// No description provided for @guildVaultLogEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has moved yet.'**
+  String get guildVaultLogEmpty;
+
+  /// No description provided for @guildVaultLogIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} deposited {what}'**
+  String guildVaultLogIn(String name, String what);
+
+  /// No description provided for @guildVaultLogOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} withdrew {what}'**
+  String guildVaultLogOut(String name, String what);
+
+  /// No description provided for @errGuildVaultNotEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty the treasury and the bank before disbanding.'**
+  String get errGuildVaultNotEmpty;
+
+  /// No description provided for @errGuildVaultClosing.
+  ///
+  /// In en, this message translates to:
+  /// **'The guild is disbanding, nothing can be deposited.'**
+  String get errGuildVaultClosing;
+
+  /// No description provided for @errGuildVaultLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'That is over your daily limit.'**
+  String get errGuildVaultLimit;
+
+  /// No description provided for @errItemBound.
+  ///
+  /// In en, this message translates to:
+  /// **'Bound items stay with their character.'**
+  String get errItemBound;
+
+  /// No description provided for @errItemEquipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the item off first.'**
+  String get errItemEquipped;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

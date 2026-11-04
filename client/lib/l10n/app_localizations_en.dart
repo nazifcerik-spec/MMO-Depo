@@ -2894,12 +2894,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errBankFull => 'The bank is full.';
 
   @override
-  String get errItemBound => 'Bound items stay with their character.';
-
-  @override
-  String get errItemEquipped => 'Take the item off first.';
-
-  @override
   String get tabTrade => 'Trade';
 
   @override
@@ -3855,4 +3849,69 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rankingEmpty => 'The table is still being counted.';
+
+  @override
+  String get guildVault => 'Treasury and bank';
+
+  @override
+  String get guildVaultTreasury => 'Guild treasury';
+
+  @override
+  String get guildVaultBank => 'Guild bank';
+
+  @override
+  String get guildVaultDepositGold => 'Deposit gold';
+
+  @override
+  String get guildVaultWithdrawGold => 'Withdraw gold';
+
+  @override
+  String get guildVaultGoldAmount => 'Amount in gold';
+
+  @override
+  String get guildVaultNoLimit => 'You can withdraw without a daily limit.';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return 'Withdrawn today: $used of $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return 'Items taken today: $used of $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => 'Your rank cannot use the guild bank yet.';
+
+  @override
+  String get guildVaultLog => 'Movements';
+
+  @override
+  String get guildVaultLogEmpty => 'Nothing has moved yet.';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name deposited $what';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name withdrew $what';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => 'Empty the treasury and the bank before disbanding.';
+
+  @override
+  String get errGuildVaultClosing => 'The guild is disbanding, nothing can be deposited.';
+
+  @override
+  String get errGuildVaultLimit => 'That is over your daily limit.';
+
+  @override
+  String get errItemBound => 'Bound items stay with their character.';
+
+  @override
+  String get errItemEquipped => 'Take the item off first.';
 }

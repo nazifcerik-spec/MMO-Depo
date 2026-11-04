@@ -2894,12 +2894,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errBankFull => 'El banco está lleno.';
 
   @override
-  String get errItemBound => 'Los objetos ligados se quedan con su personaje.';
-
-  @override
-  String get errItemEquipped => 'Quítate el objeto primero.';
-
-  @override
   String get tabTrade => 'Intercambio';
 
   @override
@@ -3855,4 +3849,69 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rankingEmpty => 'La tabla aún se está calculando.';
+
+  @override
+  String get guildVault => 'Tesorería y banco';
+
+  @override
+  String get guildVaultTreasury => 'Tesorería del gremio';
+
+  @override
+  String get guildVaultBank => 'Banco del gremio';
+
+  @override
+  String get guildVaultDepositGold => 'Depositar oro';
+
+  @override
+  String get guildVaultWithdrawGold => 'Retirar oro';
+
+  @override
+  String get guildVaultGoldAmount => 'Cantidad de oro';
+
+  @override
+  String get guildVaultNoLimit => 'Puedes retirar sin límite diario.';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return 'Retirado hoy: $used de $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return 'Objetos retirados hoy: $used de $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => 'Tu rango aún no puede usar el banco del gremio.';
+
+  @override
+  String get guildVaultLog => 'Movimientos';
+
+  @override
+  String get guildVaultLogEmpty => 'Aún no hay movimientos.';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name depositó $what';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name retiró $what';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => 'Vacía la tesorería y el banco antes de disolver el gremio.';
+
+  @override
+  String get errGuildVaultClosing => 'El gremio se está disolviendo: no se puede depositar.';
+
+  @override
+  String get errGuildVaultLimit => 'Eso supera tu límite diario.';
+
+  @override
+  String get errItemBound => 'Los objetos ligados se quedan con su personaje.';
+
+  @override
+  String get errItemEquipped => 'Quítate el objeto primero.';
 }

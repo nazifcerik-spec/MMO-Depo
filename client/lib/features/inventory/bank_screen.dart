@@ -55,7 +55,7 @@ class _BankScreenState extends State<BankScreen> {
     if (item.stack > 1) {
       final picked = await showDialog<int>(
         context: context,
-        builder: (_) => _QuantityDialog(item: item, title: deposit ? l.bankDeposit : l.bankWithdraw),
+        builder: (_) => QuantityDialog(item: item, title: deposit ? l.bankDeposit : l.bankWithdraw),
       );
       if (picked == null) return;
       qty = picked;
@@ -104,13 +104,13 @@ class _BankScreenState extends State<BankScreen> {
                       const SizedBox(height: Space.sm),
                       if (bank.items.isEmpty) Text(l.bankEmpty, style: text.bodySmall),
                       for (final i in bank.items)
-                        _ItemRow(key: Key('bank-${i.instanceId}'), item: i, onTap: () => _move(i, deposit: false)),
+                        StoreItemRow(key: Key('bank-${i.instanceId}'), item: i, onTap: () => _move(i, deposit: false)),
                       const SizedBox(height: Space.lg),
                       Text('${l.bag} · ${l.slotsUsed(bag.slotsUsed, bag.slotCap)}', style: text.titleMedium),
                       const SizedBox(height: Space.sm),
                       for (final i in bag.items)
                         if (!i.isLocked && !i.isBound)
-                          _ItemRow(key: Key('bag-${i.instanceId}'), item: i, onTap: () => _move(i, deposit: true)),
+                          StoreItemRow(key: Key('bag-${i.instanceId}'), item: i, onTap: () => _move(i, deposit: true)),
                     ],
                   ),
                 ),
@@ -120,8 +120,8 @@ class _BankScreenState extends State<BankScreen> {
   }
 }
 
-class _ItemRow extends StatelessWidget {
-  const _ItemRow({super.key, required this.item, required this.onTap});
+class StoreItemRow extends StatelessWidget {
+  const StoreItemRow({super.key, required this.item, required this.onTap});
 
   final BagItem item;
   final VoidCallback onTap;
@@ -143,17 +143,17 @@ class _ItemRow extends StatelessWidget {
   );
 }
 
-class _QuantityDialog extends StatefulWidget {
-  const _QuantityDialog({required this.item, required this.title});
+class QuantityDialog extends StatefulWidget {
+  const QuantityDialog({super.key, required this.item, required this.title});
 
   final BagItem item;
   final String title;
 
   @override
-  State<_QuantityDialog> createState() => _QuantityDialogState();
+  State<QuantityDialog> createState() => QuantityDialogState();
 }
 
-class _QuantityDialogState extends State<_QuantityDialog> {
+class QuantityDialogState extends State<QuantityDialog> {
   late int _qty = widget.item.stack;
 
   @override

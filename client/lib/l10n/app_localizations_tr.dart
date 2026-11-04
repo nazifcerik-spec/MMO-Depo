@@ -2893,12 +2893,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errBankFull => 'Banka dolu.';
 
   @override
-  String get errItemBound => 'Bağlı eşyalar karakterinde kalır.';
-
-  @override
-  String get errItemEquipped => 'Önce eşyayı çıkar.';
-
-  @override
   String get tabTrade => 'Takas';
 
   @override
@@ -3854,4 +3848,69 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get rankingEmpty => 'Tablo henüz hesaplanıyor.';
+
+  @override
+  String get guildVault => 'Kasa ve banka';
+
+  @override
+  String get guildVaultTreasury => 'Lonca kasası';
+
+  @override
+  String get guildVaultBank => 'Lonca bankası';
+
+  @override
+  String get guildVaultDepositGold => 'Altın yatır';
+
+  @override
+  String get guildVaultWithdrawGold => 'Altın çek';
+
+  @override
+  String get guildVaultGoldAmount => 'Altın miktarı';
+
+  @override
+  String get guildVaultNoLimit => 'Günlük sınır olmadan çekebilirsin.';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return 'Bugün çekilen: $used / $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return 'Bugün alınan eşya: $used / $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => 'Rütben henüz lonca bankasını kullanamıyor.';
+
+  @override
+  String get guildVaultLog => 'Hareketler';
+
+  @override
+  String get guildVaultLogEmpty => 'Henüz hareket yok.';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name, $what yatırdı';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name, $what çekti';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => 'Dağıtmadan önce kasayı ve bankayı boşalt.';
+
+  @override
+  String get errGuildVaultClosing => 'Lonca dağılıyor, yatırma yapılamaz.';
+
+  @override
+  String get errGuildVaultLimit => 'Bu, günlük sınırını aşıyor.';
+
+  @override
+  String get errItemBound => 'Bağlı eşyalar karakterinde kalır.';
+
+  @override
+  String get errItemEquipped => 'Önce eşyayı çıkar.';
 }

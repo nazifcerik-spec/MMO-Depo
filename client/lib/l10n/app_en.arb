@@ -2292,8 +2292,6 @@
   "bankDeposit": "Deposit",
   "bankWithdraw": "Take",
   "errBankFull": "The bank is full.",
-  "errItemBound": "Bound items stay with their character.",
-  "errItemEquipped": "Take the item off first.",
   "tabTrade": "Trade",
   "tradeHint": "Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.",
   "tradeWith": "Player name",
@@ -2906,5 +2904,64 @@
   "rankingAllClasses": "All classes",
   "rankingHowScore": "How the score adds up",
   "rankingScoreNote": "Each dungeon and raid counts once. Updated every few minutes.",
-  "rankingEmpty": "The table is still being counted."
+  "rankingEmpty": "The table is still being counted.",
+  "guildVault": "Treasury and bank",
+  "guildVaultTreasury": "Guild treasury",
+  "guildVaultBank": "Guild bank",
+  "guildVaultDepositGold": "Deposit gold",
+  "guildVaultWithdrawGold": "Withdraw gold",
+  "guildVaultGoldAmount": "Amount in gold",
+  "guildVaultNoLimit": "You can withdraw without a daily limit.",
+  "guildVaultGoldToday": "Withdrawn today: {used} of {limit}",
+  "@guildVaultGoldToday": {
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "guildVaultItemsToday": "Items taken today: {used} of {limit}",
+  "@guildVaultItemsToday": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "guildVaultNoItems": "Your rank cannot use the guild bank yet.",
+  "guildVaultLog": "Movements",
+  "guildVaultLogEmpty": "Nothing has moved yet.",
+  "guildVaultLogIn": "{name} deposited {what}",
+  "@guildVaultLogIn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "guildVaultLogOut": "{name} withdrew {what}",
+  "@guildVaultLogOut": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "errGuildVaultNotEmpty": "Empty the treasury and the bank before disbanding.",
+  "errGuildVaultClosing": "The guild is disbanding, nothing can be deposited.",
+  "errGuildVaultLimit": "That is over your daily limit.",
+  "errItemBound": "Bound items stay with their character.",
+  "errItemEquipped": "Take the item off first."
 }

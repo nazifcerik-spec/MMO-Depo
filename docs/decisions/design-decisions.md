@@ -3499,6 +3499,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-358 — Lonca kasası ve bankası
+
+**Context:** Kullanıcı lonca düzenlemeleri istedi. Sprint 20'de kasa, banka, araştırma ve savaş kapsam dışı bırakılmıştı; savaş PvP sayıldığı için yine dışarıda kaldı.
+**Decision:** Migration 0067 `economy.guild_wallet`, `item_instance.guild_bank_id/slot`, `social.guild_vault_log`, `social.guild_withdrawal`. Altın defterden geçer: `AccountGuild` Postgres'te gerçek bakiye oldu, takas edilebilir para birimi lonca hesabında durabilir. `guild/vault.go`: her rütbe altın yatırır; günlük çekme Lider sınırsız, Subay 1000g, Kıdemli 200g, Üye 50g, Çırak yok (docs/guild/permissions.md §5'in bu ekonomiye indirgenmiş hali). Eşya 100 kutu, tek sekme: Çırak görmez; Üye günde 10, Kıdemli 30 yığın, Subay ve Lider sınırsız. Sınır önce ayrılır, hareket başarısızsa geri verilir. `inventory` banka akışı `store` ile iki depoya genelleştirildi. Her hareket kayıtta. Lonca yalnız boşken dağılır (`E_GUILD_VAULT_NOT_EMPTY`), dağılırken yatırma olmaz. İstemci: Lonca paneli → `GuildVaultScreen`.
+**Consequences:** Sekme satın alma, lonca seviyesi ve araştırma yok; lonca savaşı PvP kapsamında bekliyor. Yönetici zorla dağıtırsa veya son üye karakterini silerse kalan altın defterde görünür ama erişilemez, eşyalar lonca satırıyla silinir. Mutabakat işi lonca cüzdanlarını henüz kontrol etmiyor.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

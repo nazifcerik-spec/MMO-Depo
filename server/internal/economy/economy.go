@@ -145,7 +145,8 @@ func ValidateIntent(intent Intent, currencies map[string]Currency) error {
 		}
 		// Scope check — system may credit/debit any currency; non-system must
 		// match declared currency scope.
-		if e.AccountKind != AccountSystem && string(e.AccountKind) != cur.Scope {
+		guildGold := e.AccountKind == AccountGuild && cur.Tradable // a guild's treasury (DD-358)
+		if e.AccountKind != AccountSystem && string(e.AccountKind) != cur.Scope && !guildGold {
 			return fmt.Errorf("%w: currency %s is scope %s, entry account_kind %s",
 				ErrScopeMismatch, cur.Code, cur.Scope, e.AccountKind)
 		}

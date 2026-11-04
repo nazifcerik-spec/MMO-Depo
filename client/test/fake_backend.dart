@@ -64,6 +64,7 @@ class FakeBackend {
   /// null = endpoint missing: the creation screen shows a notice instead.
   Map<String, dynamic>? classCatalog;
   Map<String, dynamic>? lastReport;
+  int vaultCopper = 0;
   Map<String, dynamic>? rankingPage;
   Map<String, String>? lastRankingQuery;
   List<Map<String, dynamic>>? warriorSkills;
@@ -251,6 +252,25 @@ class FakeBackend {
       return json(200, _session());
     }
     if (path == '/v1/story') return json(200, {'chapters': story});
+    if (path.contains('/guild/bank') || path.contains('/guild/treasury')) {
+      if (path.endsWith('/treasury/deposit')) vaultCopper += body['copper'] as int;
+      if (path.endsWith('/treasury/withdraw')) {
+        if ((body['copper'] as int) > vaultCopper) return error(409, 'E_INSUFFICIENT_GOLD');
+        vaultCopper -= body['copper'] as int;
+      }
+      return json(200, {
+        'treasury_copper': vaultCopper,
+        'bank': {'items': const [], 'slot_cap': 100, 'slots_used': 0},
+        'log': [
+          if (vaultCopper > 0) {'character_name': 'Grim', 'action': 'gold_in', 'gold_copper': vaultCopper},
+        ],
+        'can_use_items': true,
+        'gold_limit': 500000,
+        'gold_today': 0,
+        'items_limit': 10,
+        'items_today': 0,
+      });
+    }
     if (path.startsWith('/v1/character/char-1/shop')) {
       if (path.endsWith('/buy')) {
         final code = path.split('/')[5];

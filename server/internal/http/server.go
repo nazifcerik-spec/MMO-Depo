@@ -474,6 +474,11 @@ func NewRouter(d Deps) http.Handler {
 					r.With(idem).Post("/guild/motd", h.MOTD)
 					r.With(idem).Post("/guild/disband", h.Disband)
 					r.With(idem).Post("/guild/disband/cancel", h.CancelDisband)
+					r.Get("/guild/bank", h.Vault)
+					r.With(idem).Post("/guild/treasury/deposit", h.DepositGold)
+					r.With(idem).Post("/guild/treasury/withdraw", h.WithdrawGold)
+					r.With(idem).Post("/guild/bank/deposit", h.DepositItem)
+					r.With(idem).Post("/guild/bank/withdraw", h.WithdrawItem)
 				}
 
 				// --- Social (Sprint 21) ---

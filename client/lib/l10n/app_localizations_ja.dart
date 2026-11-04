@@ -2894,12 +2894,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errBankFull => 'The bank is full.';
 
   @override
-  String get errItemBound => 'Bound items stay with their character.';
-
-  @override
-  String get errItemEquipped => 'Take the item off first.';
-
-  @override
   String get tabTrade => 'Trade';
 
   @override
@@ -3828,4 +3822,69 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get rankingEmpty => 'ランキングを集計中です。';
+
+  @override
+  String get guildVault => '金庫と銀行';
+
+  @override
+  String get guildVaultTreasury => 'ギルド金庫';
+
+  @override
+  String get guildVaultBank => 'ギルド銀行';
+
+  @override
+  String get guildVaultDepositGold => 'ゴールドを預ける';
+
+  @override
+  String get guildVaultWithdrawGold => 'ゴールドを引き出す';
+
+  @override
+  String get guildVaultGoldAmount => 'ゴールドの額';
+
+  @override
+  String get guildVaultNoLimit => '1日の上限なしで引き出せます。';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return '本日の引き出し：$used / $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return '本日取り出したアイテム：$used / $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => '今の階級ではギルド銀行を使えません。';
+
+  @override
+  String get guildVaultLog => '履歴';
+
+  @override
+  String get guildVaultLogEmpty => 'まだ履歴はありません。';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name が $what を預けました';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name が $what を引き出しました';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => '解散する前に金庫と銀行を空にしてください。';
+
+  @override
+  String get errGuildVaultClosing => 'ギルドは解散中のため預けられません。';
+
+  @override
+  String get errGuildVaultLimit => '1日の上限を超えています。';
+
+  @override
+  String get errItemBound => 'バインド済みのアイテムは移動できません。';
+
+  @override
+  String get errItemEquipped => '先に装備を外してください。';
 }

@@ -31,6 +31,7 @@ type Service struct {
 	txn    economy.TxnService
 	pub    EventPublisher
 	notify notification.Notifier
+	vault  ItemVault
 	now    func() time.Time
 	log    *slog.Logger
 }
@@ -526,6 +527,15 @@ func (s *Service) setDisband(ctx context.Context, actor, account uuid.UUID, at *
 	}
 	if rank != RankLeader {
 		return ErrForbidden
+	}
+	if at != nil {
+		empty, err := s.vaultEmpty(ctx, s.pool, guildID)
+		if err != nil {
+			return err
+		}
+		if !empty {
+			return ErrVaultNotEmpty
+		}
 	}
 	cond := `disband_scheduled_at IS NULL`
 	errNone := ErrDisbandScheduled

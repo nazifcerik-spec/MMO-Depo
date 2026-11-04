@@ -2894,12 +2894,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get errBankFull => 'The bank is full.';
 
   @override
-  String get errItemBound => 'Bound items stay with their character.';
-
-  @override
-  String get errItemEquipped => 'Take the item off first.';
-
-  @override
   String get tabTrade => 'Trade';
 
   @override
@@ -3855,4 +3849,69 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get rankingEmpty => 'Таблица ещё подсчитывается.';
+
+  @override
+  String get guildVault => 'Казна и банк';
+
+  @override
+  String get guildVaultTreasury => 'Казна гильдии';
+
+  @override
+  String get guildVaultBank => 'Банк гильдии';
+
+  @override
+  String get guildVaultDepositGold => 'Внести золото';
+
+  @override
+  String get guildVaultWithdrawGold => 'Снять золото';
+
+  @override
+  String get guildVaultGoldAmount => 'Сумма в золоте';
+
+  @override
+  String get guildVaultNoLimit => 'Вы можете снимать без дневного лимита.';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return 'Снято сегодня: $used из $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return 'Предметов взято сегодня: $used из $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => 'Ваше звание пока не даёт доступа к банку гильдии.';
+
+  @override
+  String get guildVaultLog => 'Операции';
+
+  @override
+  String get guildVaultLogEmpty => 'Операций пока нет.';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name внёс(ла): $what';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name снял(а): $what';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => 'Перед роспуском опустошите казну и банк.';
+
+  @override
+  String get errGuildVaultClosing => 'Гильдия распускается, вносить нельзя.';
+
+  @override
+  String get errGuildVaultLimit => 'Это превышает ваш дневной лимит.';
+
+  @override
+  String get errItemBound => 'Привязанный предмет остаётся у персонажа.';
+
+  @override
+  String get errItemEquipped => 'Сначала снимите предмет.';
 }

@@ -79,8 +79,8 @@ func balanceSelect(kind AccountKind, currency string) (string, error) {
 		return `SELECT amount FROM economy.account_currency_balance
 		         WHERE account_id = $1 AND currency_code = '` + safeCurrency(currency) + `'`, nil
 	case AccountGuild:
-		// Guild treasury table lands with Faz 01 sprint 15+. Placeholder.
-		return "", fmt.Errorf("guild balance table not yet implemented")
+		return `SELECT amount FROM economy.guild_wallet
+		         WHERE guild_id = $1 AND currency_code = '` + safeCurrency(currency) + `'`, nil
 	case AccountSystem:
 		// System balances are ledger-only; not a projection table.
 		// Sum recent entries — for now not supported (system flow is measured
@@ -334,7 +334,18 @@ func (s *PgTxnService) lockAndReadBalance(ctx context.Context, tx pgx.Tx, kind A
 		return bal, err
 
 	case AccountGuild:
-		return 0, fmt.Errorf("guild balance not yet implemented")
+		_, err := tx.Exec(ctx, `
+			INSERT INTO economy.guild_wallet (guild_id, currency_code) VALUES ($1, $2)
+			ON CONFLICT (guild_id, currency_code) DO NOTHING`, ref, currency)
+		if err != nil {
+			return 0, err
+		}
+		var bal int64
+		err = tx.QueryRow(ctx,
+			`SELECT amount FROM economy.guild_wallet
+			  WHERE guild_id = $1 AND currency_code = $2 FOR UPDATE`,
+			ref, currency).Scan(&bal)
+		return bal, err
 	}
 	return 0, fmt.Errorf("unknown account kind %s", kind)
 }
@@ -359,6 +370,11 @@ func upsertBalance(ctx context.Context, tx pgx.Tx, key balanceKey, newBal int64)
 			UPDATE economy.account_currency_balance
 			   SET amount = $3, updated_at = now(), version = version + 1
 			 WHERE account_id = $1 AND currency_code = $2`, key.Ref, key.Currency, newBal)
+		return err
+	case AccountGuild:
+		_, err := tx.Exec(ctx, `
+			UPDATE economy.guild_wallet SET amount = $3, updated_at = now()
+			 WHERE guild_id = $1 AND currency_code = $2`, key.Ref, key.Currency, newBal)
 		return err
 	}
 	return fmt.Errorf("unknown account kind %s", key.Kind)

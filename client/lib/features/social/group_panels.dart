@@ -10,7 +10,9 @@ import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import '../workshop/workshop_view.dart' show professionName;
+import '../inventory/inventory_repository.dart';
 import 'group_repository.dart';
+import 'guild_vault_screen.dart';
 
 String guildRankName(AppLocalizations l, int rank) => switch (rank) {
   GuildRanks.leader => l.rankLeader,
@@ -485,6 +487,20 @@ class _GuildPanelState extends State<GuildPanel> with PanelState, _LiveReload, A
               );
             }(),
           ),
+        const SizedBox(height: Space.md),
+        OutlinedButton.icon(
+          key: const Key('open-guild-vault'),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => GuildVaultScreen(
+                repo: widget.repo,
+                inventory: InventoryRepository(widget.repo.api, widget.repo.characterId),
+              ),
+            ),
+          ),
+          icon: const Icon(Icons.account_balance_outlined),
+          label: Text(l.guildVault),
+        ),
         const SizedBox(height: Space.xl),
         if (mine != GuildRanks.leader)
           OutlinedButton(

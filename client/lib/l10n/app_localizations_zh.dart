@@ -2884,12 +2884,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errBankFull => '银行已满。';
 
   @override
-  String get errItemBound => '绑定物品不能存入银行。';
-
-  @override
-  String get errItemEquipped => '请先卸下该物品。';
-
-  @override
   String get tabTrade => '交易';
 
   @override
@@ -3813,4 +3807,69 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rankingEmpty => '榜单正在统计中。';
+
+  @override
+  String get guildVault => '金库和银行';
+
+  @override
+  String get guildVaultTreasury => '公会金库';
+
+  @override
+  String get guildVaultBank => '公会银行';
+
+  @override
+  String get guildVaultDepositGold => '存入金币';
+
+  @override
+  String get guildVaultWithdrawGold => '取出金币';
+
+  @override
+  String get guildVaultGoldAmount => '金币数量';
+
+  @override
+  String get guildVaultNoLimit => '你可以无限额取出。';
+
+  @override
+  String guildVaultGoldToday(String used, String limit) {
+    return '今日已取：$used / $limit';
+  }
+
+  @override
+  String guildVaultItemsToday(int used, int limit) {
+    return '今日取出物品：$used / $limit';
+  }
+
+  @override
+  String get guildVaultNoItems => '你的职位暂时不能使用公会银行。';
+
+  @override
+  String get guildVaultLog => '记录';
+
+  @override
+  String get guildVaultLogEmpty => '暂无记录。';
+
+  @override
+  String guildVaultLogIn(String name, String what) {
+    return '$name 存入了 $what';
+  }
+
+  @override
+  String guildVaultLogOut(String name, String what) {
+    return '$name 取出了 $what';
+  }
+
+  @override
+  String get errGuildVaultNotEmpty => '解散前请先清空金库和银行。';
+
+  @override
+  String get errGuildVaultClosing => '公会正在解散，无法存入。';
+
+  @override
+  String get errGuildVaultLimit => '超出了你的每日上限。';
+
+  @override
+  String get errItemBound => '绑定物品不能存入银行。';
+
+  @override
+  String get errItemEquipped => '请先卸下该物品。';
 }

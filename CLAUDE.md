@@ -324,6 +324,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 153. **Eğitim + Rehber + sıralama (bitti)** — Sprint 153, DD-356..357. `features/guide/guide.dart` (atlanabilir eğitim kartı, Karakter sekmesinde Rehber), migration 0066 `progression.character_score`, worker `leaderboard_refresh`, `GET /v1/leaderboard`, `RankingScreen`.
 
+154. **Lonca kasası + bankası (bitti)** — Sprint 154, DD-358. Migration 0067, `economy.AccountGuild` gerçek bakiye, `guild/vault.go`, `inventory.store`, rütbe başı günlük sınır, hareket kaydı, boş olmadan dağılmaz, `GuildVaultScreen`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

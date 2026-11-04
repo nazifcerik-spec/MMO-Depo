@@ -1,3 +1,4 @@
+import '../inventory/inventory_models.dart' show Bank;
 import '../../core/api_client.dart';
 
 class GroupMember {
@@ -120,6 +121,59 @@ abstract final class GuildRanks {
       to >= officer && to <= initiate && target > actor && (actor == leader || (actor == officer && to >= veteran));
 }
 
+/// One guild treasury or bank movement.
+class GuildVaultEntry {
+  const GuildVaultEntry({required this.name, required this.action, this.templateCode, this.quantity, this.goldCopper});
+
+  factory GuildVaultEntry.fromJson(Map<String, dynamic> j) => GuildVaultEntry(
+    name: j['character_name'] as String? ?? '',
+    action: j['action'] as String? ?? '',
+    templateCode: j['template_code'] as String?,
+    quantity: (j['quantity'] as num?)?.toInt(),
+    goldCopper: (j['gold_copper'] as num?)?.toInt(),
+  );
+
+  final String name;
+  final String action; // gold_in | gold_out | item_in | item_out
+  final String? templateCode;
+  final int? quantity;
+  final int? goldCopper;
+}
+
+/// GET /guild/bank (DD-358). Limits of -1 mean none, 0 no access.
+class GuildVault {
+  const GuildVault({
+    required this.treasuryCopper,
+    required this.bank,
+    required this.log,
+    required this.canUseItems,
+    required this.goldLimit,
+    required this.goldToday,
+    required this.itemsLimit,
+    required this.itemsToday,
+  });
+
+  factory GuildVault.fromJson(Map<String, dynamic> j) => GuildVault(
+    treasuryCopper: (j['treasury_copper'] as num?)?.toInt() ?? 0,
+    bank: Bank.fromJson(j['bank'] as Map<String, dynamic>? ?? const {}),
+    log: [for (final e in (j['log'] as List? ?? const [])) GuildVaultEntry.fromJson(e as Map<String, dynamic>)],
+    canUseItems: j['can_use_items'] as bool? ?? false,
+    goldLimit: (j['gold_limit'] as num?)?.toInt() ?? 0,
+    goldToday: (j['gold_today'] as num?)?.toInt() ?? 0,
+    itemsLimit: (j['items_limit'] as num?)?.toInt() ?? 0,
+    itemsToday: (j['items_today'] as num?)?.toInt() ?? 0,
+  );
+
+  final int treasuryCopper;
+  final Bank bank;
+  final List<GuildVaultEntry> log;
+  final bool canUseItems;
+  final int goldLimit;
+  final int goldToday;
+  final int itemsLimit;
+  final int itemsToday;
+}
+
 class GroupRepository {
   const GroupRepository(this.api, this.characterId);
 
@@ -153,6 +207,20 @@ class GroupRepository {
   Future<void> disbandParty() => api.post('$_c/party/disband', const {});
 
   // --- guild ----------------------------------------------------------------
+
+  Future<GuildVault> vault() async => GuildVault.fromJson(await api.get('$_c/guild/bank'));
+
+  Future<GuildVault> depositGold(int copper) async =>
+      GuildVault.fromJson(await api.post('$_c/guild/treasury/deposit', {'copper': copper}));
+
+  Future<GuildVault> withdrawGold(int copper) async =>
+      GuildVault.fromJson(await api.post('$_c/guild/treasury/withdraw', {'copper': copper}));
+
+  Future<GuildVault> depositItem(String id, int qty) async =>
+      GuildVault.fromJson(await api.post('$_c/guild/bank/deposit', {'item_id': id, 'quantity': qty}));
+
+  Future<GuildVault> withdrawItem(String id, int qty) async =>
+      GuildVault.fromJson(await api.post('$_c/guild/bank/withdraw', {'item_id': id, 'quantity': qty}));
 
   Future<Guild?> guild() async {
     final g = (await api.get('$_c/guild'))['guild'];

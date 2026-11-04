@@ -337,7 +337,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	partySvc := party.NewService(pool, charSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc)
 	partyHandler := party.NewHandler(partySvc)
 	raidSvc.WithParties(partySvc).WithRegionGate(worldSvc) // raid finding (DD-299), by location (DD-302)
-	guildHandler := guild.NewHandler(guild.NewService(pool, charSvc, txnSvc, logger).WithPublisher(wsPub).WithNotifier(notifSvc))
+	guildHandler := guild.NewHandler(guild.NewService(pool, charSvc, txnSvc, logger).WithVault(invSvc).WithPublisher(wsPub).WithNotifier(notifSvc))
 	logger.Info("party + guild wired")
 
 	// --- Social (Sprint 21) — friends, block, mail, chat ---
