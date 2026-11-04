@@ -8,51 +8,51 @@ Each final specialization is simulated with the production combat engine (skills
 
 | role | kill speed | survival | boss | AFK safety | aoe | group |
 |---|---|---|---|---|---|---|
-| dps | 0.47 | 0.10 | 0.45 | 0.79 | 0.48 | 0.20 |
-| tank | 0.05 | 0.50 | 0.27 | 1.00 | 0.05 | 0.77 |
-| support | 0.22 | 0.26 | 0.42 | 0.86 | 0.17 | 0.90 |
+| dps | 0.50 | 0.10 | 0.35 | 0.78 | 0.48 | 0.20 |
+| tank | 0.07 | 0.52 | 0.23 | 1.00 | 0.05 | 0.77 |
+| support | 0.29 | 0.26 | 0.38 | 0.87 | 0.17 | 0.90 |
 
 ## Specializations
 
 | class | promotion | specialization | role | L700 kill turns | L1000 kill turns | L1000 survival turns | boss win | AFK safety | kill | surv | boss | aoe | group | afk | strong in | weak in |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| bard | minstrel | virtuoso | support | 0.0 | 6.6 | 47.0 | 98% | 100% | 0.23 | 0.14 | 0.72 | 0.33 | 1.00 | 1.00 | group | solo |
-| bard | minstrel | harmonist | support | 0.0 | 6.6 | 300.0 | 100% | 100% | 0.23 | 1.00 | 0.66 | 0.00 | 0.97 | 1.00 | group, afk | solo |
-| bard | skald | war_chanter | support | 0.0 | 5.0 | 35.3 | 98% | 88% | 0.37 | 0.10 | 0.96 | 0.33 | 0.92 | 0.76 | group, dungeon | solo |
-| bard | skald | dirge_singer | support | 0.0 | 5.5 | 24.1 | 85% | 100% | 0.32 | 0.06 | 0.86 | 0.33 | 0.63 | 1.00 | boss, group | farming |
-| cleric | saint | high_priest | support | 0.0 | 10.9 | 18.6 | 2% | 83% | 0.06 | 0.04 | 0.01 | 0.00 | 0.97 | 0.66 | group, dungeon | solo, farming |
-| cleric | saint | aegis_priest | support | 0.0 | 13.5 | 18.2 | 0% | 85% | 0.00 | 0.04 | 0.00 | 0.00 | 0.95 | 0.69 | group, afk | farming |
-| cleric | oracle | prophet | support | 0.0 | 4.5 | 9.8 | 0% | 77% | 0.43 | 0.01 | 0.00 | 0.33 | 0.97 | 0.52 | group | solo |
-| cleric | oracle | exorcist | dps | 0.0 | 4.9 | 9.1 | 0% | 52% | 0.39 | 0.01 | 0.00 | 0.33 | 0.34 | 0.00 | boss, dungeon | farming |
-| druid | grove_keeper | life_binder | support | 0.0 | 11.6 | 300.0 | 100% | 100% | 0.04 | 1.00 | 0.34 | 0.00 | 0.97 | 1.00 | group | solo |
-| druid | grove_keeper | thorn_sage | dps | 0.0 | 3.4 | 27.8 | 90% | 100% | 0.65 | 0.07 | 0.47 | 0.67 | 0.34 | 1.00 | aoe, afk | boss |
-| druid | shapeshifter | bearwarden | tank | 0.0 | 12.2 | 61.7 | 100% | 100% | 0.03 | 0.19 | 0.30 | 0.00 | 0.54 | 1.00 | boss, afk | farming |
-| druid | shapeshifter | mooncaller | dps | 0.0 | 6.5 | 17.1 | 8% | 97% | 0.23 | 0.04 | 0.06 | 0.67 | 0.04 | 0.93 | farming | afk |
-| mage | arcanist | rune_master | dps | 0.0 | 3.2 | 8.1 | 0% | 77% | 0.69 | 0.01 | 0.00 | 0.67 | 0.26 | 0.52 | dungeon | afk |
-| mage | arcanist | chronomancer | dps | 0.0 | 4.6 | 9.3 | 0% | 80% | 0.42 | 0.01 | 0.00 | 0.33 | 0.53 | 0.59 | group, afk | farming |
-| mage | elementalist | pyromancer | dps | 0.0 | 3.5 | 6.6 | 0% | 63% | 0.62 | 0.00 | 0.00 | 1.00 | 0.00 | 0.24 | farming, aoe | afk |
-| mage | elementalist | cryomancer | dps | 0.0 | 5.3 | 9.5 | 0% | 72% | 0.33 | 0.01 | 0.00 | 0.67 | 0.26 | 0.41 | afk, aoe | boss |
-| monk | disciple | iron_body | tank | 0.0 | 8.4 | 300.0 | 100% | 100% | 0.13 | 1.00 | 0.51 | 0.00 | 0.53 | 1.00 | afk, boss | farming |
-| monk | disciple | spirit_walker | dps | 0.0 | 5.7 | 286.7 | 100% | 100% | 0.30 | 0.95 | 0.73 | 0.00 | 0.58 | 1.00 | afk, solo | aoe |
-| monk | fighter | combo_master | dps | 0.0 | 5.0 | 40.4 | 95% | 100% | 0.37 | 0.12 | 0.88 | 0.33 | 0.00 | 1.00 | boss | aoe |
-| monk | fighter | storm_fist | dps | 0.0 | 4.7 | 70.0 | 97% | 83% | 0.41 | 0.22 | 1.00 | 0.67 | 0.00 | 0.66 | farming | afk |
-| paladin | protector | aegis_knight | tank | 0.0 | 13.8 | 300.0 | 100% | 100% | 0.00 | 1.00 | 0.23 | 0.00 | 0.88 | 1.00 | boss, group | farming |
-| paladin | protector | lightwarden | tank | 0.0 | 13.2 | 300.0 | 100% | 100% | 0.01 | 1.00 | 0.27 | 0.00 | 0.91 | 1.00 | group, afk | farming |
-| paladin | crusader | templar | dps | 0.0 | 7.4 | 26.3 | 57% | 100% | 0.18 | 0.07 | 0.29 | 0.67 | 0.62 | 1.00 | group, farming | boss |
-| paladin | crusader | justicar | dps | 0.0 | 7.5 | 25.6 | 43% | 100% | 0.18 | 0.07 | 0.22 | 0.00 | 0.32 | 1.00 | boss | aoe |
-| ranger | marksman | sharpshooter | dps | 0.0 | 2.8 | 20.5 | 80% | 100% | 0.83 | 0.05 | 0.78 | 0.00 | 0.00 | 1.00 | boss | aoe |
-| ranger | marksman | crossbow_master | dps | 0.0 | 5.0 | 35.9 | 93% | 95% | 0.37 | 0.10 | 0.85 | 0.33 | 0.26 | 0.90 | boss, dungeon | farming |
-| ranger | scout | beastmaster | dps | 0.0 | 5.3 | 40.7 | 90% | 100% | 0.34 | 0.12 | 0.62 | 0.33 | 0.00 | 1.00 | afk, solo | boss |
-| ranger | scout | trapper | dps | 0.0 | 3.4 | 49.8 | 100% | 98% | 0.65 | 0.15 | 0.82 | 1.00 | 0.26 | 0.97 | aoe, farming | boss |
-| rogue | assassin | nightblade | dps | 0.0 | 2.7 | 16.4 | 47% | 97% | 0.87 | 0.03 | 0.59 | 0.00 | 0.00 | 0.93 | boss, solo | aoe, afk |
-| rogue | assassin | poison_master | dps | 0.0 | 3.4 | 19.0 | 72% | 88% | 0.65 | 0.04 | 0.86 | 0.33 | 0.26 | 0.76 | boss | farming |
-| rogue | duelist | blade_dancer | dps | 0.0 | 2.4 | 13.8 | 37% | 87% | 1.00 | 0.02 | 0.50 | 1.00 | 0.00 | 0.72 | farming, aoe | boss |
-| rogue | duelist | trickster | dps | 0.0 | 3.0 | 20.0 | 63% | 97% | 0.75 | 0.05 | 0.69 | 0.00 | 0.00 | 0.93 | afk, solo | farming |
-| shaman | totemist | earthwarden | tank | 0.0 | 9.0 | 34.1 | 77% | 100% | 0.11 | 0.09 | 0.25 | 0.00 | 0.90 | 1.00 | afk, group | farming |
-| shaman | totemist | storm_totemist | dps | 0.0 | 7.1 | 11.2 | 0% | 80% | 0.20 | 0.02 | 0.00 | 1.00 | 0.34 | 0.59 | aoe, farming | boss |
-| shaman | spirit_caller | ancestor_sage | support | 0.0 | 11.6 | 45.3 | 100% | 100% | 0.04 | 0.13 | 0.33 | 0.00 | 0.97 | 1.00 | group | solo |
-| shaman | spirit_caller | hexer | support | 0.0 | 4.0 | 20.3 | 73% | 100% | 0.52 | 0.05 | 0.32 | 0.33 | 0.62 | 1.00 | boss | farming |
-| warrior | guardian | iron_fortress | tank | 0.0 | 12.1 | 49.5 | 98% | 100% | 0.03 | 0.15 | 0.26 | 0.00 | 0.79 | 1.00 | boss, afk, group | farming |
-| warrior | guardian | warlord | tank | 0.0 | 12.0 | 31.0 | 23% | 100% | 0.03 | 0.08 | 0.09 | 0.33 | 0.87 | 1.00 | group, dungeon | solo |
-| warrior | executioner | berserker | dps | 0.0 | 8.7 | 68.3 | 100% | 100% | 0.12 | 0.21 | 0.56 | 0.67 | 0.26 | 1.00 | boss, farming | afk |
-| warrior | executioner | weapon_master | dps | 0.0 | 7.3 | 17.8 | 53% | 100% | 0.19 | 0.04 | 0.38 | 0.33 | 0.00 | 1.00 | solo, farming | group |
+| bard | minstrel | virtuoso | support | 0.0 | 5.4 | 65.2 | 100% | 100% | 0.38 | 0.20 | 0.77 | 0.33 | 1.00 | 1.00 | group | solo |
+| bard | minstrel | harmonist | support | 0.0 | 6.2 | 300.0 | 100% | 100% | 0.30 | 1.00 | 0.68 | 0.00 | 0.97 | 1.00 | group, afk | solo |
+| bard | skald | war_chanter | support | 0.0 | 5.6 | 28.5 | 90% | 100% | 0.36 | 0.07 | 0.63 | 0.33 | 0.92 | 1.00 | group, dungeon | solo |
+| bard | skald | dirge_singer | support | 0.0 | 5.5 | 23.2 | 90% | 100% | 0.37 | 0.06 | 0.76 | 0.33 | 0.63 | 1.00 | boss, group | farming |
+| cleric | saint | high_priest | support | 0.0 | 9.6 | 16.9 | 0% | 78% | 0.11 | 0.04 | 0.00 | 0.00 | 0.97 | 0.55 | group, dungeon | solo, farming |
+| cleric | saint | aegis_priest | support | 0.0 | 10.6 | 16.8 | 0% | 80% | 0.07 | 0.04 | 0.00 | 0.00 | 0.95 | 0.59 | group, afk | farming |
+| cleric | oracle | prophet | support | 0.0 | 4.5 | 9.8 | 0% | 80% | 0.50 | 0.01 | 0.00 | 0.33 | 0.97 | 0.59 | group | solo |
+| cleric | oracle | exorcist | dps | 0.0 | 4.9 | 9.1 | 0% | 52% | 0.45 | 0.01 | 0.00 | 0.33 | 0.34 | 0.00 | boss, dungeon | farming |
+| druid | grove_keeper | life_binder | support | 0.0 | 10.1 | 298.9 | 100% | 100% | 0.09 | 1.00 | 0.32 | 0.00 | 0.97 | 1.00 | group | solo |
+| druid | grove_keeper | thorn_sage | dps | 0.0 | 3.4 | 27.4 | 92% | 100% | 0.76 | 0.07 | 0.40 | 0.67 | 0.34 | 1.00 | aoe, afk | boss |
+| druid | shapeshifter | bearwarden | tank | 0.0 | 11.8 | 99.3 | 100% | 100% | 0.04 | 0.32 | 0.25 | 0.00 | 0.54 | 1.00 | boss, afk | farming |
+| druid | shapeshifter | mooncaller | dps | 0.0 | 6.5 | 18.2 | 12% | 97% | 0.28 | 0.04 | 0.07 | 0.67 | 0.04 | 0.93 | farming | afk |
+| mage | arcanist | rune_master | dps | 0.0 | 3.2 | 8.1 | 0% | 67% | 0.80 | 0.01 | 0.00 | 0.67 | 0.26 | 0.31 | dungeon | afk |
+| mage | arcanist | chronomancer | dps | 0.0 | 4.6 | 9.3 | 0% | 68% | 0.48 | 0.01 | 0.00 | 0.33 | 0.53 | 0.34 | group, afk | farming |
+| mage | elementalist | pyromancer | dps | 0.0 | 3.5 | 6.6 | 0% | 68% | 0.72 | 0.00 | 0.00 | 1.00 | 0.00 | 0.34 | farming, aoe | afk |
+| mage | elementalist | cryomancer | dps | 0.0 | 5.3 | 9.5 | 0% | 72% | 0.39 | 0.01 | 0.00 | 0.67 | 0.26 | 0.41 | afk, aoe | boss |
+| monk | disciple | iron_body | tank | 0.0 | 8.7 | 300.0 | 100% | 100% | 0.14 | 1.00 | 0.40 | 0.00 | 0.53 | 1.00 | afk, boss | farming |
+| monk | disciple | spirit_walker | dps | 0.0 | 6.3 | 296.9 | 100% | 100% | 0.29 | 0.99 | 0.55 | 0.00 | 0.58 | 1.00 | afk, solo | aoe |
+| monk | fighter | combo_master | dps | 0.0 | 5.2 | 48.3 | 100% | 92% | 0.41 | 0.14 | 0.86 | 0.33 | 0.00 | 0.83 | boss | aoe |
+| monk | fighter | storm_fist | dps | 0.0 | 4.6 | 61.9 | 100% | 92% | 0.49 | 0.19 | 1.00 | 0.67 | 0.00 | 0.83 | farming | afk |
+| paladin | protector | aegis_knight | tank | 0.0 | 13.8 | 300.0 | 100% | 100% | 0.00 | 1.00 | 0.20 | 0.00 | 0.88 | 1.00 | boss, group | farming |
+| paladin | protector | lightwarden | tank | 0.0 | 13.2 | 300.0 | 100% | 100% | 0.01 | 1.00 | 0.23 | 0.00 | 0.91 | 1.00 | group, afk | farming |
+| paladin | crusader | templar | dps | 0.0 | 8.3 | 26.5 | 53% | 100% | 0.16 | 0.07 | 0.21 | 0.67 | 0.62 | 1.00 | group, farming | boss |
+| paladin | crusader | justicar | dps | 0.0 | 7.7 | 24.0 | 38% | 100% | 0.20 | 0.06 | 0.16 | 0.00 | 0.32 | 1.00 | boss | aoe |
+| ranger | marksman | sharpshooter | dps | 0.0 | 3.8 | 22.7 | 73% | 100% | 0.65 | 0.06 | 0.58 | 0.00 | 0.00 | 1.00 | boss | aoe |
+| ranger | marksman | crossbow_master | dps | 0.0 | 5.8 | 36.9 | 95% | 100% | 0.34 | 0.10 | 0.75 | 0.33 | 0.26 | 1.00 | boss, dungeon | farming |
+| ranger | scout | beastmaster | dps | 0.0 | 6.9 | 42.1 | 93% | 100% | 0.24 | 0.12 | 0.56 | 0.33 | 0.00 | 1.00 | afk, solo | boss |
+| ranger | scout | trapper | dps | 0.0 | 3.4 | 38.7 | 95% | 100% | 0.77 | 0.11 | 0.67 | 1.00 | 0.26 | 1.00 | aoe, farming | boss |
+| rogue | assassin | nightblade | dps | 0.0 | 2.7 | 16.4 | 45% | 92% | 1.00 | 0.03 | 0.45 | 0.00 | 0.00 | 0.83 | boss, solo | aoe, afk |
+| rogue | assassin | poison_master | dps | 0.0 | 3.5 | 16.5 | 62% | 93% | 0.72 | 0.03 | 0.53 | 0.33 | 0.26 | 0.86 | boss | farming |
+| rogue | duelist | blade_dancer | dps | 0.0 | 2.8 | 13.8 | 23% | 90% | 0.98 | 0.03 | 0.25 | 1.00 | 0.00 | 0.79 | farming, aoe | boss |
+| rogue | duelist | trickster | dps | 0.0 | 3.4 | 18.3 | 23% | 92% | 0.74 | 0.04 | 0.18 | 0.00 | 0.00 | 0.83 | afk, solo | farming |
+| shaman | totemist | earthwarden | tank | 0.0 | 7.7 | 25.7 | 37% | 100% | 0.19 | 0.07 | 0.11 | 0.00 | 0.90 | 1.00 | afk, group | farming |
+| shaman | totemist | storm_totemist | dps | 0.0 | 6.5 | 10.7 | 0% | 85% | 0.27 | 0.01 | 0.00 | 1.00 | 0.34 | 0.69 | aoe, farming | boss |
+| shaman | spirit_caller | ancestor_sage | support | 0.0 | 9.3 | 45.1 | 97% | 100% | 0.12 | 0.13 | 0.30 | 0.00 | 0.97 | 1.00 | group | solo |
+| shaman | spirit_caller | hexer | support | 0.0 | 4.0 | 22.9 | 88% | 97% | 0.61 | 0.06 | 0.33 | 0.33 | 0.62 | 0.93 | boss | farming |
+| warrior | guardian | iron_fortress | tank | 0.0 | 11.2 | 61.1 | 100% | 100% | 0.06 | 0.19 | 0.27 | 0.00 | 0.79 | 1.00 | boss, afk, group | farming |
+| warrior | guardian | warlord | tank | 0.0 | 11.1 | 30.6 | 43% | 100% | 0.06 | 0.08 | 0.14 | 0.33 | 0.87 | 1.00 | group, dungeon | solo |
+| warrior | executioner | berserker | dps | 0.0 | 8.6 | 58.5 | 98% | 100% | 0.15 | 0.18 | 0.47 | 0.67 | 0.26 | 1.00 | boss, farming | afk |
+| warrior | executioner | weapon_master | dps | 0.0 | 7.1 | 19.5 | 42% | 98% | 0.23 | 0.04 | 0.29 | 0.33 | 0.00 | 0.97 | solo, farming | group |

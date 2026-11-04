@@ -1,7 +1,8 @@
 // Package classskill serves class skills (Sprint 42, DD-222; DD-250):
 // passives feed the sheet modifier stack, actives are auto-cast in combat.
 // What a character has follows from its class path (base class → promotions)
-// and level alone — no per-character state.
+// and level alone — no per-character state. Of the actives that do the same
+// job only the strongest stays (DD-352).
 package classskill
 
 import (
@@ -41,6 +42,64 @@ type Skill struct {
 	// activation; the same definition serves manual and AFK play.
 	Spec   string `json:"spec"`
 	Config Config `json:"config"`
+
+	// DD-352: what an active does and how strongly; set by NewCatalog.
+	Job      string  `json:"job,omitempty"`
+	Strength float64 `json:"strength,omitempty"`
+}
+
+// job is what an active skill does: its effect, kind, trigger and cooldown
+// band. A basic attack, a regular skill and a heavy hit are different jobs, so
+// a character keeps a rotation; a finisher is not an everyday strike.
+// Awakening and ultimate skills are each their own job.
+func (s Skill) job() string {
+	if s.Config.Category == "awakening" || s.Config.Category == "ultimate" {
+		return s.Code
+	}
+	trigger := "ready"
+	switch {
+	case s.Config.TargetHPBelow > 0:
+		trigger = "target_hp"
+	case s.Config.SelfHPBelow > 0 || s.Config.AllyHPBelow > 0:
+		trigger = "hp"
+	}
+	band := "heavy"
+	switch {
+	case s.CooldownTurns <= 1:
+		band = "basic"
+	case s.CooldownTurns <= 4:
+		band = "regular"
+	case s.CooldownTurns >= 10:
+		band = "long"
+	}
+	return s.Effect + "/" + s.Config.Type + "/" + trigger + "/" + band
+}
+
+// strength compares skills of one job: power over its whole duration.
+func (s Skill) strength() float64 {
+	return float64(s.Power) * float64(max(s.Config.DurationTurns, 1))
+}
+
+// strongest keeps, per job, the strongest active (the newest on a tie).
+// Passives and order are untouched.
+func strongest(list []Skill) []Skill {
+	best := map[string]Skill{}
+	for _, s := range list {
+		if s.Kind != "active" {
+			continue
+		}
+		b, seen := best[s.Job]
+		if !seen || s.Strength > b.Strength || (s.Strength == b.Strength && s.UnlockLevel > b.UnlockLevel) {
+			best[s.Job] = s
+		}
+	}
+	out := make([]Skill, 0, len(list))
+	for _, s := range list {
+		if s.Kind != "active" || best[s.Job].Code == s.Code {
+			out = append(out, s)
+		}
+	}
+	return out
 }
 
 // Config is a skill's activation data (content.class_skill.config).
@@ -83,6 +142,9 @@ func NewCatalog(list []Skill) *Catalog {
 		if s.Spec == "" {
 			s.Spec = s.Class
 		}
+		if s.Kind == "active" {
+			s.Job, s.Strength = s.job(), s.strength()
+		}
 		c.byClass[s.Class] = append(c.byClass[s.Class], s)
 	}
 	return c
@@ -121,16 +183,20 @@ func (c *Catalog) Passives(path []string, level int) []skill.Modifier {
 
 // Actives returns the path's unlocked active skills in cast-priority order.
 func (c *Catalog) Actives(path []string, level int) []combat.Skill {
-	var out []combat.Skill
+	var unlocked []Skill
 	for _, s := range c.owned(path) {
 		if s.Kind == "active" && int(s.UnlockLevel) <= level {
-			// Party healing is not simulated: alone, the character is the
-			// ally its ally-HP rule watches.
-			self := max(s.Config.SelfHPBelow, s.Config.AllyHPBelow)
-			out = append(out, combat.Skill{Code: s.Code, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost,
-				CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: self,
-				TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns})
+			unlocked = append(unlocked, s)
 		}
+	}
+	var out []combat.Skill
+	for _, s := range strongest(unlocked) {
+		// Party healing is not simulated: alone, the character is the
+		// ally its ally-HP rule watches.
+		self := max(s.Config.SelfHPBelow, s.Config.AllyHPBelow)
+		out = append(out, combat.Skill{Code: s.Code, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost,
+			CooldownTurns: s.CooldownTurns, Gain: s.Config.ResourceGain, SelfHPBelow: self,
+			TargetHPBelow: s.Config.TargetHPBelow, DurationTurns: s.Config.DurationTurns})
 	}
 	return out
 }

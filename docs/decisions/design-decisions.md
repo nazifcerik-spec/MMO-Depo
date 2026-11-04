@@ -3445,6 +3445,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-352 — Aynı işi yapan aktif yeteneklerin yalnız en güçlüsü kalır
+
+**Context:** Kullanıcı piramitte ilerlerken aynı işi yapan aktif yeteneklerin üst üste birikmemesini, daha iyi olanın kalıp düşük olanın karakterin yetenek listesinden çıkmasını istedi. Aynı iş yalnız etki türü sayılsaydı Büyücüde tek hasar yeteneği olarak 16 tur beklemeli nihai yetenek kalırdı, temel saldırı da giderdi.
+**Decision:** Aynı iş = etki + `type` + tetik (hazır olunca / can eşiği / hedef can eşiği) + bekleme bandı (temel ≤1, normal 2–4, ağır 5–9, uzun ≥10 tur). Uyanış ve nihai yetenekler kendi işleridir, ne değişir ne değiştirir. Güç = `power` × süre (en az 1 tur); eşitlikte yeni olan kalır. `classskill.strongest` yol + seviyede açık aktiflere uygulanır: savaşta yalnız kalanlar kullanılır. Karakter durumu tutulmaz, kural seviye + yoldan türer. `GET /v1/classes/{class}/skills` aktiflerde `job` + `strength` döner, istemci `skillKit` aynı kuralla listeyi süzer (kilitli ama daha güçlü olanlar görünür, zayıf kalacaklar görünmez). Pasifler, ustalık ve yetenek ağacı değişmedi. Geri dönüş: `before-dd-352` etiketi.
+**Consequences:** Tam yolda aktif yetenek ortalama 12'den 8,7'ye iner (en az 6, en çok 11). Denge testleri ek ayar olmadan geçer. Yeni dalın yeteneği eldekinden zayıfsa kural gereği hiç kullanılmaz: 281 aktiften 14'ü hiçbir yolda devreye girmez (ör. Muhafız'ın Kalkan Darbesi, Ağır Kesik'ten zayıf). Denge benzetimi artık tür, kategori ve müttefik can tetiğini de okur (önceden müttefik tetikli şifalar hazır oldukça kullanılıyordu). Başlamış av/zindan anlık görüntüsünü korur, yeni kural sonraki işte geçerli olur. Oluşturma ekranındaki sınıf yolu penceresi düğümün tüm yeteneklerini göstermeye devam eder.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

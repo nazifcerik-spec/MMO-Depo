@@ -316,6 +316,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 149. **Terfi seviyeleri 300 / 700 (bitti)** — Sprint 149, DD-351. Terfi yetenekleri Sv 300–600, uzmanlık 700–850, uyanış 900, nihai 950 (`gen_classes.py` `UNLOCK_LEVEL`). Baskın gücü yeniden ayarlandı, Kâhin hasar yeteneği Sv 500, `brood_cavern` son dalga 1. Uzmanlık kontrolü Sv 950/1000.
 
+150. **Aynı işin en güçlüsü kalır (bitti)** — Sprint 150, DD-352. `classskill.strongest` yol + seviyede iş başına tek aktif (iş = etki + tür + tetik + bekleme bandı; uyanış/nihai ayrı; güç × süre). `/v1/classes/{class}/skills` `job` + `strength`, istemci `skillKit`. Pasifler değişmedi. Geri dönüş etiketi `before-dd-352`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -96,7 +96,8 @@ func load(t *testing.T) *world {
 		cs := classskill.Skill{Code: s.Code, Class: s.Class, UnlockLevel: s.UnlockLevel, Kind: s.Kind,
 			SortOrder: s.SortOrder, Effect: s.Effect, Power: s.Power, MPCost: s.MPCost, CooldownTurns: int(s.CooldownTurns),
 			Spec: s.Spec, Config: classskill.Config{SelfHPBelow: s.AutoTrigger.SelfHPBelow,
-				TargetHPBelow: s.AutoTrigger.TargetHPBelow, ResourceGain: s.ResourceGain, DurationTurns: s.DurationTurns}}
+				TargetHPBelow: s.AutoTrigger.TargetHPBelow, ResourceGain: s.ResourceGain, DurationTurns: s.DurationTurns,
+				AllyHPBelow: s.AutoTrigger.AllyHPBelow, Category: s.Category, Type: s.Type}}
 		for _, m := range s.Modifiers {
 			cs.Modifiers = append(cs.Modifiers, skill.Modifier{Kind: skill.ModifierKind(m.Kind), Target: skill.Target(m.Target), Amount: m.Amount})
 		}

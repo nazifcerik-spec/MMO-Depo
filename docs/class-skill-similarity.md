@@ -6,6 +6,7 @@ Her temel sınıfın kendi ağacı (temel sınıf, 2 terfi, 4 uzmanlık) içinde
 - **Aynı kol:** iki yetenek aynı karakterde birlikte bulunabilir (temel → terfi → uzmanlık). **Farklı kol:** bir karakter ikisini birden alamaz, kolların birbirine benzemesi demektir.
 - Benzerlik sayısal değerlere göredir: yetenek adı, görseli, aktif yeteneğin tetik koşulu ve pasifin tetikleyicisi hesaba katılmaz. Pasifler sürekli etki olarak hesaplandığı için (`steady_state`) tetikleyici sayıyı değiştirmez.
 - Bu liste bir bulgu dökümüdür, kusur listesi değildir: aynı koldaki aynı etki bilinçli bir üst kademe olabilir.
+- DD-352 ile aynı yolda aynı işi yapan aktiflerin yalnız en güçlüsü kalır; bu liste içerikteki tüm tanımları karşılaştırır, karakterde kalanı değil.
 - Anlık görüntü: DD-351 sonrası içerik (seviyeler Sv 300 / 700 kapılarına göre).
 
 | Sınıf | Yetenek | Neredeyse aynı çift | Aynı kol | Farklı kol |

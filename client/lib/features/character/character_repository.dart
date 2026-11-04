@@ -5,6 +5,28 @@ import 'models.dart';
 
 /// One class skill (DD-222): actives auto-cast in combat, passives are stat
 /// modifiers; both unlock by level.
+/// The skills to show on a path at [level] (DD-352): an active is listed while
+/// it is the strongest unlocked one of its job, or locked and stronger than it.
+/// Same rule as the server's `classskill.strongest`.
+List<ClassSkill> skillKit(List<ClassSkill> onPath, int level) {
+  final best = <String, ClassSkill>{};
+  for (final k in onPath) {
+    if (k.job.isEmpty || k.unlockLevel > level) continue;
+    final b = best[k.job];
+    if (b == null || k.strength > b.strength || (k.strength == b.strength && k.unlockLevel > b.unlockLevel)) {
+      best[k.job] = k;
+    }
+  }
+  return [
+    for (final k in onPath)
+      if (k.job.isEmpty ||
+          best[k.job] == null ||
+          identical(best[k.job], k) ||
+          (k.unlockLevel > level && k.strength > best[k.job]!.strength))
+        k,
+  ];
+}
+
 class ClassSkill {
   const ClassSkill({
     required this.code,
@@ -18,6 +40,8 @@ class ClassSkill {
     this.spec = '',
     this.durationTurns = 0,
     this.category = '',
+    this.job = '',
+    this.strength = 0,
   });
 
   factory ClassSkill.fromJson(Map<String, dynamic> j) => ClassSkill(
@@ -25,6 +49,8 @@ class ClassSkill {
     spec: j['spec'] as String? ?? '',
     durationTurns: ((j['config'] as Map<String, dynamic>?)?['duration_turns'] as num?)?.toInt() ?? 0,
     category: (j['config'] as Map<String, dynamic>?)?['category'] as String? ?? '',
+    job: j['job'] as String? ?? '',
+    strength: (j['strength'] as num?)?.toDouble() ?? 0,
     active: j['kind'] == 'active',
     unlockLevel: (j['unlock_level'] as num?)?.toInt() ?? 1,
     effect: j['effect'] as String? ?? '',
@@ -39,6 +65,11 @@ class ClassSkill {
   final String code;
   final bool active;
   final int unlockLevel;
+
+  /// What an active does and how strongly (DD-352); only the strongest of a
+  /// job stays. Empty on old servers.
+  final String job;
+  final double strength;
   final String effect; // strike | heal | guard | empower
 
   /// Owning class node (DD-250): the base class or a promotion.

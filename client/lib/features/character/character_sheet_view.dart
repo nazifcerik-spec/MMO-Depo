@@ -362,8 +362,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               title: l.skills,
               collapsible: true, // folded until opened (DD-301)
               children: [
-                for (final k in _skills!)
-                  if (_onPath(k)) _SkillRow(skill: k, level: s.level),
+                for (final k in skillKit([...?_skills?.where(_onPath)], s.level)) _SkillRow(skill: k, level: s.level),
               ],
             ),
           ],

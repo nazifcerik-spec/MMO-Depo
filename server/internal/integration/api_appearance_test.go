@@ -33,6 +33,19 @@ func TestHTTPRaceClassesAndPassives(t *testing.T) {
 	require.Greater(t, str(orc["id"].(string)), str(p.char))
 }
 
+// DD-352: the public skill list carries what lets the client hide a replaced skill.
+func TestHTTPSkillsCarryTheirJob(t *testing.T) {
+	p := newHTTPPlayer(t, "mage")
+	for _, it := range items(p.ok("GET", "/v1/classes/mage/skills", nil), "skills") {
+		if it["kind"] == "active" {
+			require.NotEmpty(t, it["job"], it["code"])
+			require.Positive(t, it["strength"], it["code"])
+		} else {
+			require.NotContains(t, it, "job", it["code"])
+		}
+	}
+}
+
 // DD-346: the look is saved at creation and stays editable through the API.
 func TestHTTPAppearance(t *testing.T) {
 	p := newHTTPPlayer(t, "warrior")
