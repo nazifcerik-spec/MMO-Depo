@@ -2259,21 +2259,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chooseRace => 'Irkını seç';
 
   @override
-  String get raceHint => 'Irkın seçebileceğin sınıfları ve pasif yeteneklerini belirler.';
-
-  @override
-  String get raceHumanDesc => 'Kentlerin halkı';
-
-  @override
-  String get raceElfDesc => 'Kadim ormanların çocukları';
-
-  @override
-  String get raceDwarfDesc => 'Dağların demircileri';
-
-  @override
-  String get raceOrcDesc => 'Bozkırın savaşçıları';
-
-  @override
   String continueAs(String name) {
     return '$name ile devam et';
   }
@@ -2298,24 +2283,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get raceGnome => 'Gnom';
-
-  @override
-  String get raceTrollDesc => 'Orman adalarının avcıları';
-
-  @override
-  String get raceUndeadDesc => 'Mezardan kalkanlar';
-
-  @override
-  String get raceDarkElfDesc => 'Yeraltının çocukları';
-
-  @override
-  String get raceDrakariDesc => 'Ejder kanından gelenler';
-
-  @override
-  String get raceTaurenDesc => 'Ovaların koruyucuları';
-
-  @override
-  String get raceGnomeDesc => 'Zeki mucitler';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {

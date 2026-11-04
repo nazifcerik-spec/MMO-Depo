@@ -4006,36 +4006,6 @@ abstract class AppLocalizations {
   /// **'Choose your race'**
   String get chooseRace;
 
-  /// No description provided for @raceHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Your race decides which classes you can pick and its passive abilities.'**
-  String get raceHint;
-
-  /// No description provided for @raceHumanDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'People of the cities'**
-  String get raceHumanDesc;
-
-  /// No description provided for @raceElfDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Children of the old woods'**
-  String get raceElfDesc;
-
-  /// No description provided for @raceDwarfDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Smiths of the mountains'**
-  String get raceDwarfDesc;
-
-  /// No description provided for @raceOrcDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Warriors of the steppe'**
-  String get raceOrcDesc;
-
   /// No description provided for @continueAs.
   ///
   /// In en, this message translates to:
@@ -4083,42 +4053,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gnome'**
   String get raceGnome;
-
-  /// No description provided for @raceTrollDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Hunters of the jungle isles'**
-  String get raceTrollDesc;
-
-  /// No description provided for @raceUndeadDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Risen from the grave'**
-  String get raceUndeadDesc;
-
-  /// No description provided for @raceDarkElfDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Children of the deep dark'**
-  String get raceDarkElfDesc;
-
-  /// No description provided for @raceDrakariDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Kin of dragon blood'**
-  String get raceDrakariDesc;
-
-  /// No description provided for @raceTaurenDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Guardians of the plains'**
-  String get raceTaurenDesc;
-
-  /// No description provided for @raceGnomeDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Clever tinkerers'**
-  String get raceGnomeDesc;
 
   /// No description provided for @foodBuffLine.
   ///

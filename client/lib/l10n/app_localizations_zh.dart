@@ -2257,21 +2257,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chooseRace => '选择种族';
 
   @override
-  String get raceHint => '种族决定可选职业和被动能力。';
-
-  @override
-  String get raceHumanDesc => '城邦之民';
-
-  @override
-  String get raceElfDesc => '远古森林之子';
-
-  @override
-  String get raceDwarfDesc => '群山的铁匠';
-
-  @override
-  String get raceOrcDesc => '草原的战士';
-
-  @override
   String continueAs(String name) {
     return '以$name继续';
   }
@@ -2296,24 +2281,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get raceGnome => '侏儒';
-
-  @override
-  String get raceTrollDesc => '丛林群岛的猎手';
-
-  @override
-  String get raceUndeadDesc => '从坟墓中复生';
-
-  @override
-  String get raceDarkElfDesc => '幽暗地域之子';
-
-  @override
-  String get raceDrakariDesc => '流淌龙血的一族';
-
-  @override
-  String get raceTaurenDesc => '平原的守护者';
-
-  @override
-  String get raceGnomeDesc => '聪明的工匠';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {

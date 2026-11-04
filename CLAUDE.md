@@ -312,6 +312,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 147. **Irk önce + ırk sınıfları + ırk pasifleri (bitti)** — Sprint 147, DD-349. `content/progression.yaml` `races` (sınıf listesi, `mult_add` nitelik pasifleri, `profession_xp`); oluşturmada sunucu kapısı (`E_VALIDATION`), pasifler sheet modifier'ı, `crafting.WithXPBonus`, `/v1/classes` `races`. İstemci: önce ırk kartları + `RaceAbilities`, sonra ırka özel sınıf piramidi (`pyramidRows`), karakter sayfasında katlanır bölüm. Var olan karakterler korunur.
 
+148. **Irk kartları 5'li (bitti)** — Sprint 148, DD-350. `_Races` satır başına 5 kart, yalnız portre + ad; sloganlar ve açıklama notu silindi.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

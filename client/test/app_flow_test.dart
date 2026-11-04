@@ -341,7 +341,10 @@ void main() {
     final cards = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_RaceCard');
     final sizes = {for (final e in cards.evaluate()) tester.getSize(find.byWidget(e.widget))};
     expect(sizes, hasLength(1), reason: '$sizes');
-    expect(find.text('Your race decides which classes you can pick and its passive abilities.'), findsOneWidget);
+    // Five a row, names only (DD-350).
+    expect(tester.getTopLeft(find.text('Troll')).dy, closeTo(tester.getTopLeft(find.text('Elf')).dy, 2));
+    expect(tester.getTopLeft(find.text('Undead')).dy, greaterThan(tester.getTopLeft(find.text('Troll')).dy));
+    expect(find.text('People of the cities'), findsNothing);
 
     // Human: its passives, and only its classes.
     await show(find.byKey(const ValueKey('race-abilities-human')));

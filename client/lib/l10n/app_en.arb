@@ -1772,11 +1772,6 @@
   "difficultyHard": "Hard — fragile; needs the right gear",
   "skillsTapHint": "tap for details",
   "chooseRace": "Choose your race",
-  "raceHint": "Your race decides which classes you can pick and its passive abilities.",
-  "raceHumanDesc": "People of the cities",
-  "raceElfDesc": "Children of the old woods",
-  "raceDwarfDesc": "Smiths of the mountains",
-  "raceOrcDesc": "Warriors of the steppe",
   "continueAs": "Continue as {name}",
   "@continueAs": {
     "placeholders": {
@@ -1792,12 +1787,6 @@
   "raceDrakari": "Drakari",
   "raceTauren": "Tauren",
   "raceGnome": "Gnome",
-  "raceTrollDesc": "Hunters of the jungle isles",
-  "raceUndeadDesc": "Risen from the grave",
-  "raceDarkElfDesc": "Children of the deep dark",
-  "raceDrakariDesc": "Kin of dragon blood",
-  "raceTaurenDesc": "Guardians of the plains",
-  "raceGnomeDesc": "Clever tinkerers",
   "foodBuffLine": "+{atk}% attack and +{def}% defense for {minutes} min",
   "@foodBuffLine": {
     "placeholders": {

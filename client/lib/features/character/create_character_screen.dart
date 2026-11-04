@@ -777,7 +777,7 @@ class _BubblePainter extends CustomPainter {
   bool shouldRepaint(_BubblePainter old) => old.arrowX != arrowX || old.color != color;
 }
 
-/// The races: portrait (or icon), name, a line of lore.
+/// The races, five a row: portrait (or icon) and name.
 class _Races extends StatelessWidget {
   const _Races({required this.selected, required this.onPick});
 
@@ -787,68 +787,30 @@ class _Races extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    String desc(String r) => switch (r) {
-      'human' => l.raceHumanDesc,
-      'elf' => l.raceElfDesc,
-      'dwarf' => l.raceDwarfDesc,
-      'orc' => l.raceOrcDesc,
-      'troll' => l.raceTrollDesc,
-      'undead' => l.raceUndeadDesc,
-      'dark_elf' => l.raceDarkElfDesc,
-      'drakari' => l.raceDrakariDesc,
-      'tauren' => l.raceTaurenDesc,
-      'gnome' => l.raceGnomeDesc,
-      _ => '',
-    };
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Four cards a row (ten races: 4 + 4 + 2).
-        LayoutBuilder(
-          builder: (context, box) {
-            final w = (box.maxWidth - 3 * Space.xs) / 4;
-            return Wrap(
-              spacing: Space.xs,
-              runSpacing: Space.xs,
-              children: [
-                for (final r in races)
-                  SizedBox(
-                    width: w,
-                    child: _RaceCard(
-                      code: r,
-                      name: raceName(l, r),
-                      desc: desc(r),
-                      selected: r == selected,
-                      onTap: () => onPick(r),
-                    ),
-                  ),
-              ],
-            );
-          },
-        ),
-        const SizedBox(height: Space.sm),
-        Text(
-          l.raceHint,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 11, color: Palette.textMuted),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, box) {
+        final w = (box.maxWidth - 4 * Space.xs) / 5;
+        return Wrap(
+          spacing: Space.xs,
+          runSpacing: Space.xs,
+          children: [
+            for (final r in races)
+              SizedBox(
+                width: w,
+                child: _RaceCard(code: r, name: raceName(l, r), selected: r == selected, onTap: () => onPick(r)),
+              ),
+          ],
+        );
+      },
     );
   }
 }
 
 class _RaceCard extends StatelessWidget {
-  const _RaceCard({
-    required this.code,
-    required this.name,
-    required this.desc,
-    required this.selected,
-    required this.onTap,
-  });
+  const _RaceCard({required this.code, required this.name, required this.selected, required this.onTap});
 
   final String code;
   final String name;
-  final String desc;
   final bool selected;
   final VoidCallback onTap;
 
@@ -863,7 +825,7 @@ class _RaceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(Radii.md),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Radii.md),
             border: Border.all(color: selected ? Palette.accent : Palette.borderSubtle, width: _border),
@@ -882,14 +844,13 @@ class _RaceCard extends StatelessWidget {
                       : Image.asset(
                           path,
                           fit: BoxFit.cover,
-                          cacheWidth: (100 * MediaQuery.devicePixelRatioOf(context)).round(),
+                          cacheWidth: (64 * MediaQuery.devicePixelRatioOf(context)).round(),
                           errorBuilder: (_, _, _) => fallback,
                         ),
                 ),
               ),
               const SizedBox(height: 4),
-              _Lines(name, lines: 1, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
-              _Lines(desc, lines: 2, style: const TextStyle(fontSize: 11, color: Palette.textSecondary)),
+              _Lines(name, lines: 1, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
             ],
           ),
         ),

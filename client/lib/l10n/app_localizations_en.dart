@@ -2260,21 +2260,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseRace => 'Choose your race';
 
   @override
-  String get raceHint => 'Your race decides which classes you can pick and its passive abilities.';
-
-  @override
-  String get raceHumanDesc => 'People of the cities';
-
-  @override
-  String get raceElfDesc => 'Children of the old woods';
-
-  @override
-  String get raceDwarfDesc => 'Smiths of the mountains';
-
-  @override
-  String get raceOrcDesc => 'Warriors of the steppe';
-
-  @override
   String continueAs(String name) {
     return 'Continue as $name';
   }
@@ -2299,24 +2284,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get raceGnome => 'Gnome';
-
-  @override
-  String get raceTrollDesc => 'Hunters of the jungle isles';
-
-  @override
-  String get raceUndeadDesc => 'Risen from the grave';
-
-  @override
-  String get raceDarkElfDesc => 'Children of the deep dark';
-
-  @override
-  String get raceDrakariDesc => 'Kin of dragon blood';
-
-  @override
-  String get raceTaurenDesc => 'Guardians of the plains';
-
-  @override
-  String get raceGnomeDesc => 'Clever tinkerers';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {

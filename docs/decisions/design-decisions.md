@@ -3427,6 +3427,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-350 — Irk seçimi: satır başına 5 kart, yalnız ad
+
+**Context:** Kullanıcı ırk seçme alanında satır başına 5 ırk, kartlarda yalnız ırk adı istedi; slogan ve açıklama notu kalksın.
+**Decision:** `_Races` satır başına 5 kart (10 ırk: 5 + 5); `_RaceCard` portre + ad. Irk sloganları ve açıklama notu ekrandan ve dört dilin l10n dosyalarından silindi (`race*Desc`, `raceHint`).
+**Consequences:** Irk seçimi daha az yer kaplar, sınıf piramidi yukarı gelir. Irkın ne getirdiği altındaki 'Irk yetenekleri' bölümünde görünür.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi
