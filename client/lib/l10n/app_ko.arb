@@ -1,0 +1,18 @@
+{
+  "@@locale": "ko",
+  "language": "언어",
+  "nameRule": "한 가지 문자로 16자 이내, 글자로 시작 (숫자와 _ 사용 가능)",
+  "report": "신고",
+  "reportTitle": "{name} 신고",
+  "reportWhy": "무슨 일이 있었나요?",
+  "reportHarassment": "괴롭힘 또는 욕설",
+  "reportCheating": "부정행위 또는 봇",
+  "reportName": "부적절한 이름",
+  "reportSpam": "도배 또는 광고",
+  "reportScam": "사기",
+  "reportOther": "기타",
+  "reportNote": "상세 내용 (선택)",
+  "reportSent": "신고가 접수되었습니다. 감사합니다.",
+  "errReportSelf": "자신의 캐릭터는 신고할 수 없습니다.",
+  "nkReportReviewed": "신고가 검토되었습니다"
+}

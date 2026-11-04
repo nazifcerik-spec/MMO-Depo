@@ -21,6 +21,7 @@ import (
 	"github.com/otter/server/internal/http/apierr"
 	"github.com/otter/server/internal/httpctx"
 	"github.com/otter/server/internal/market"
+	"github.com/otter/server/internal/report"
 	"github.com/otter/server/internal/support"
 )
 
@@ -33,6 +34,7 @@ type Handler struct {
 	svc        *Service
 	market     MarketCanceller
 	support    SupportDesk
+	reports    ReportDesk
 	clientErrs ClientErrors
 }
 
@@ -43,6 +45,15 @@ type SupportDesk interface {
 	Queue(ctx context.Context, state string, limit int) ([]support.Ticket, error)
 	Answer(ctx context.Context, admin, ticket uuid.UUID, reply string, closeIt bool) (*support.Ticket, error)
 }
+
+// ReportDesk is the player-report queue (DD-355).
+type ReportDesk interface {
+	Queue(ctx context.Context, state string, limit int) ([]report.Report, error)
+	Resolve(ctx context.Context, admin, id uuid.UUID, state, note string) error
+}
+
+// WithReports enables the player-report routes.
+func (h *Handler) WithReports(d ReportDesk) *Handler { h.reports = d; return h }
 
 // WithSupport enables the support-ticket routes.
 func (h *Handler) WithSupport(d SupportDesk) *Handler { h.support = d; return h }
@@ -108,6 +119,8 @@ type body struct {
 	RefundFee bool   `json:"refund_fee"`
 	StartsIn  int    `json:"starts_in_minutes"`
 	Reply     string `json:"reply"`
+	State     string `json:"state"`
+	Note      string `json:"note"`
 	Close     bool   `json:"close"`
 }
 
@@ -463,6 +476,10 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 		if h.clientErrs != nil {
 			r.Get("/internal/ops/client-errors", h.ClientErrorList)
 		}
+		if h.reports != nil {
+			r.Get("/internal/ops/reports", h.ReportQueue)
+			r.Post("/internal/ops/reports/{report_id}/resolve", h.ReportResolve)
+		}
 		r.Get("/internal/ops/progression", h.Progression)
 	})
 }
@@ -491,6 +508,45 @@ func (h *Handler) ClientErrorList(w http.ResponseWriter, r *http.Request) {
 	}
 	h.svc.Audit(r.Context(), a, AuditEntry{Action: "client_errors.read", RequestID: chimw.GetReqID(r.Context())})
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"errors": list})
+}
+
+// ReportQueue — GET /internal/ops/reports?state=open|actioned|dismissed&limit=N.
+func (h *Handler) ReportQueue(w http.ResponseWriter, r *http.Request) {
+	a, ok := h.allow(w, r, perm(r, PermReports), false)
+	if !ok {
+		return
+	}
+	limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
+	list, err := h.reports.Queue(r.Context(), r.URL.Query().Get("state"), limit)
+	if err != nil {
+		report.WriteErr(w, r, err)
+		return
+	}
+	h.svc.Audit(r.Context(), a, AuditEntry{Action: "reports.queue", RequestID: chimw.GetReqID(r.Context())})
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"reports": list})
+}
+
+// ReportResolve — POST /internal/ops/reports/{report_id}/resolve {state, note}.
+func (h *Handler) ReportResolve(w http.ResponseWriter, r *http.Request) {
+	b, ok := decode(w, r)
+	if !ok {
+		return
+	}
+	a, ok := h.allow(w, r, perm(r, PermReports), false)
+	if !ok {
+		return
+	}
+	id, ok := pathID(w, r, "report_id")
+	if !ok {
+		return
+	}
+	if err := h.reports.Resolve(r.Context(), a.ID, id, b.State, b.Note); err != nil {
+		report.WriteErr(w, r, err)
+		return
+	}
+	h.svc.Audit(r.Context(), a, AuditEntry{Action: "reports.resolve", TargetKind: "player_report", TargetID: &id,
+		After: map[string]any{"state": b.State}, RequestID: chimw.GetReqID(r.Context())})
+	apierr.WriteJSON(w, http.StatusOK, map[string]any{"state": b.State})
 }
 
 // SupportQueue — GET /internal/ops/support/tickets?state=open|answered|closed&limit=N.

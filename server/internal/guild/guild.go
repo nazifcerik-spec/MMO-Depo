@@ -11,6 +11,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/domain/character"
 )
 
 const (
@@ -64,7 +66,7 @@ func CanSetRank(actor, target, newRank int16) bool {
 
 var (
 	nameRe = regexp.MustCompile(`^[\p{L}\p{N}]+( [\p{L}\p{N}]+)*$`)
-	tagRe  = regexp.MustCompile(`^[A-Za-z0-9]{2,5}$`)
+	tagRe  = regexp.MustCompile(`^[\p{L}\p{N}]{2,5}$`)
 )
 
 // NormalizeName validates a guild name and returns (display, normalized).
@@ -73,7 +75,7 @@ func NormalizeName(raw string) (string, string, error) {
 	if n := len([]rune(s)); n < 3 || n > 24 || !nameRe.MatchString(s) {
 		return "", "", ErrInvalidName
 	}
-	return s, strings.ToLower(s), nil
+	return s, character.NameKey(s), nil
 }
 
 // NormalizeTag validates a tag and returns (display, normalized).
@@ -82,7 +84,7 @@ func NormalizeTag(raw string) (string, string, error) {
 	if !tagRe.MatchString(s) {
 		return "", "", ErrInvalidTag
 	}
-	return strings.ToUpper(s), strings.ToLower(s), nil
+	return strings.ToUpper(s), character.NameKey(s), nil
 }
 
 // --- types ------------------------------------------------------------------

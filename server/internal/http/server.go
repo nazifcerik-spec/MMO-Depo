@@ -50,6 +50,7 @@ import (
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
+	"github.com/otter/server/internal/report"
 	"github.com/otter/server/internal/shop"
 	"github.com/otter/server/internal/social"
 	"github.com/otter/server/internal/story"
@@ -100,6 +101,7 @@ type Deps struct {
 	AdminHandler      *admin.Handler
 	PrivacyHandler    *privacy.Handler   // DD-231: export download + legal pages
 	SupportHandler    *support.Handler   // DD-234: player support tickets
+	ReportHandler     *report.Handler    // DD-355: player reports
 	ClientErrHandler  *clienterr.Handler // DD-235: app crash reports
 	Metrics           *observability.Metrics
 	CORSOrigins       []string
@@ -250,6 +252,12 @@ func NewRouter(d Deps) http.Handler {
 					Endpoint: "POST /v1/support/tickets", PerAccount: ptrBucket(ratelimit.PerHour(5)),
 				}, d.Logger), appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/support/tickets", h.Create)
 			})
+		}
+		// --- Player reports (DD-355) ---
+		if h := d.ReportHandler; h != nil {
+			r.With(appmw.RequireAuth(d.AuthService, d.Logger), appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "POST /v1/reports", PerAccount: ptrBucket(ratelimit.PerHour(10)),
+			}, d.Logger), appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/reports", h.Create)
 		}
 		// --- Client error reports (DD-235): public, crashes happen before login ---
 		if h := d.ClientErrHandler; h != nil {

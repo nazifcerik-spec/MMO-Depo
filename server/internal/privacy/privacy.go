@@ -73,6 +73,8 @@ var exportSections = []struct{ name, sql string }{
 	        FROM worldevent.attendance WHERE account_id = $1`},
 	{"support_tickets", `SELECT id, category, subject, body, state, reply, created_at, replied_at, closed_at
 	        FROM ops.support_ticket WHERE account_id = $1 ORDER BY created_at DESC`},
+	{"player_reports", `SELECT target_name, category, note, state, created_at
+	        FROM ops.player_report WHERE reporter_account = $1 ORDER BY created_at DESC`},
 }
 
 // Export assembles everything stored about an account into one document
@@ -172,6 +174,8 @@ var (
 		`DELETE FROM notification.preference_kind WHERE account_id = $1`,
 		`DELETE FROM notification.preference WHERE account_id = $1`,
 		`DELETE FROM ops.support_ticket WHERE account_id = $1`,
+		`DELETE FROM ops.player_report WHERE reporter_account = $1`,
+		`UPDATE ops.player_report SET target_account = NULL, target_name = 'deleted', chat_excerpt = NULL WHERE target_account = $1`,
 		`DELETE FROM inventory.item_instance WHERE bank_account_id = $1`, // the account bank (DD-314)
 	}
 )

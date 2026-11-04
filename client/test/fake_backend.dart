@@ -63,6 +63,7 @@ class FakeBackend {
   // --- class catalog (DD-253) ---
   /// null = endpoint missing: the creation screen shows a notice instead.
   Map<String, dynamic>? classCatalog;
+  Map<String, dynamic>? lastReport;
   List<Map<String, dynamic>>? warriorSkills;
 
   // --- leveling (DD-250) ---
@@ -1314,6 +1315,9 @@ class FakeBackend {
     switch ((req.method, path)) {
       case ('GET', '/v1/support/tickets'):
         return json(200, {'tickets': tickets});
+      case ('POST', '/v1/reports'):
+        lastReport = Map<String, dynamic>.from(body);
+        return json(202, {'status': 'received'});
       case ('POST', '/v1/support/tickets'):
         lastTicket = Map<String, dynamic>.from(body);
         final t = {

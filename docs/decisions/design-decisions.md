@@ -3463,6 +3463,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-354 — Yedi dilin alfabeleriyle karakter adı ve dil seçimi
+
+**Context:** Kullanıcı Türkçe karakterli isimleri ve oyunun Türkçe, İngilizce, Rusça, Korece, Çince, Japonca, İspanyolca dillerini hassas biçimde desteklemesini istedi. Ad kuralı yalnız ASCII kabul ediyordu, dil cihazdan geliyordu.
+**Decision:** `character.validateName`: NFC, 16 karaktere kadar, harfle başlar, tek alfabe (Latin / Kiril / CJK+Hangul), rakam ve _ serbest; CJK en az 2, diğerleri en az 3; tam/yarım genişlik, birleşen işaret, emoji, boşluk reddedilir. `character.NameKey`: yerel ayardan bağımsız anahtar (I, İ, i, ı tek harf; Kiril benzerleri Latin'e katlanır, NFKC). Parti, lonca, posta, takas, şikâyet aramaları bu anahtarı kullanır; lonca etiketi de Unicode. İstemci: `AppLocale` (cihazda saklanır), hesap menüsü ve giriş ekranında dil seçimi, seçilince içerik adları yeniden çekilir.
+**Consequences:** Eski ASCII anahtarları değişmez, geçiş gerekmez. Tek kod noktasında Latin ve Kiril karışımı reddedilir, ama tamamen Kiril bir ad Latin benzeriyle aynı anahtara düşer, ikincisi alınamaz. Yedi dilin çevirileri ayrı adımda (bkz. DD-361).
+**Tarih:** 2026-11-04
+
+---
+
+## DD-355 — Oyuncu şikâyeti
+
+**Context:** Sohbetli oyunda oyuncunun oyuncuyu bildirecek yolu yoktu; kullanıcı gerekli düzenlemeyi istedi.
+**Decision:** Migration 0065 `ops.player_report`. `POST /v1/reports` (kategori, isteğe bağlı not ve sohbet satırı, saatte 10). Sohbet alıntısı istemciden değil sunucu kaydından ve yalnız bildirilen kişi yazdıysa alınır. Aynı bildiren + hedef + kategori açıkken tekrar bir şey değiştirmez. Operatör: `GET /internal/ops/reports`, `POST .../{id}/resolve` (`ops.reports` izni, denetim kaydı). Bildiren yalnız incelendiğini öğrenir (`report_reviewed`, gelen kutusu). Veri dışa aktarımında var, hesap silmede bildirdikleri silinir, hakkındakiler anonimleşir. İstemci: sohbette satıra uzun bas, arkadaş menüsü.
+**Consequences:** Otomatik yaptırım yok, karar operatörün. Sohbet satırı silinse de alıntı raporda kalır.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

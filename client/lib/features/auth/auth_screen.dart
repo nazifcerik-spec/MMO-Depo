@@ -110,7 +110,15 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: Space.xxl),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        key: const ValueKey('auth-language'),
+                        onPressed: () => showLanguagePicker(context, null),
+                        icon: const Icon(Icons.language, size: 18),
+                        label: Text(l.language),
+                      ),
+                    ),
                     Semantics(label: l.appTitle, image: true, child: const _Logo()),
                     const SizedBox(height: Space.sm),
                     Text(l.tagline, textAlign: TextAlign.center, style: text.bodySmall),

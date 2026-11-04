@@ -320,6 +320,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 151. **Zayıf dal yetenekleri güçlendi (bitti)** — Sprint 151, DD-353. 15 aktifin gücü yerini aldığı yeteneğin üstüne çıktı (`class_data.py`, Savaşçı elle), `TestEveryActiveIsUsedSomewhere`.
 
+152. **İsim alfabeleri + dil seçimi + oyuncu şikâyeti (bitti)** — Sprint 152, DD-354..355. `character.NameKey`, `AppLocale`, migration 0065 `ops.player_report`, `POST /v1/reports`, ops kuyruğu. Çeviriler sonraki adımda.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

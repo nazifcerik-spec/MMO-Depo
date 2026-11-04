@@ -166,6 +166,15 @@ class SocialRepository {
 
   Future<void> removeFriend(String id) => api.post('$_c/friends/remove', {'target_character_id': id});
 
+  /// Reports a player (DD-355); [messageId] points at the chat line in question.
+  Future<void> report(String name, String category, String note, {int? messageId}) => api.post('/v1/reports', {
+    'character_id': characterId,
+    'target_name': name,
+    'category': category,
+    'note': note,
+    if (messageId != null && messageId > 0) 'chat_message_id': messageId,
+  });
+
   Future<void> block(String name) => api.post('$_c/blocks', {'target_name': name});
 
   Future<void> unblock(String id) => api.post('$_c/blocks/remove', {'target_character_id': id});

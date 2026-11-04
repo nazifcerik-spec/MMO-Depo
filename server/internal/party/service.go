@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"log/slog"
-	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -12,6 +11,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/notification"
 )
 
@@ -617,7 +617,7 @@ func characterByName(ctx context.Context, q querier, name string) (uuid.UUID, uu
 	var id, account uuid.UUID
 	err := q.QueryRow(ctx, `
 		SELECT id, account_id FROM character.character
-		 WHERE name_normalized = $1 AND state = 'active'`, strings.ToLower(strings.TrimSpace(name))).
+		 WHERE name_normalized = $1 AND state = 'active'`, character.NameKey(name)).
 		Scan(&id, &account)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return uuid.Nil, uuid.Nil, ErrTargetNotFound

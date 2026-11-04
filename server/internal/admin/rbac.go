@@ -22,6 +22,7 @@ const (
 	PermRoleGrant          = "admin.role_grant"
 	PermSupportTickets     = "support.tickets"   // DD-234
 	PermClientErrors       = "ops.client_errors" // DD-235
+	PermReports            = "ops.reports"       // DD-355
 )
 
 var readAll = []string{PermPlayerRead, PermCharacterRead, PermLedgerRead}
@@ -29,14 +30,14 @@ var readAll = []string{PermPlayerRead, PermCharacterRead, PermLedgerRead}
 // RolePermissions is the v1 fixed matrix.
 var RolePermissions = map[string][]string{
 	"viewer":        readAll,
-	"support_l1":    append(append([]string{}, readAll...), PermPlayerPIIReveal, PermPlayerMute24h, PermSupportTickets),
-	"support_l2":    append(append([]string{}, readAll...), PermPlayerPIIReveal, PermPlayerMute24h, PermPlayerBan7d, PermCharacterFreeze, PermLedgerReversal100k, PermMarketCancel, PermAuditRead, PermSupportTickets, PermClientErrors),
+	"support_l1":    append(append([]string{}, readAll...), PermPlayerPIIReveal, PermPlayerMute24h, PermSupportTickets, PermReports),
+	"support_l2":    append(append([]string{}, readAll...), PermPlayerPIIReveal, PermPlayerMute24h, PermPlayerBan7d, PermCharacterFreeze, PermReports, PermLedgerReversal100k, PermMarketCancel, PermAuditRead, PermSupportTickets, PermClientErrors),
 	"game_designer": append(append([]string{}, readAll...), PermEventTrigger),
 	"ops_engineer":  append(append([]string{}, readAll...), PermPlayerPIIReveal, PermCharacterFreeze, PermEventTrigger, PermAuditRead, PermClientErrors),
 	"admin": {
 		PermPlayerRead, PermPlayerPIIReveal, PermPlayerMute24h, PermPlayerBan7d, PermPlayerBanPermanent,
 		PermCharacterRead, PermCharacterFreeze, PermLedgerRead, PermLedgerReversal100k, PermLedgerReversalAny,
-		PermMarketCancel, PermGuildDisband, PermEventTrigger, PermAuditRead, PermRoleGrant, PermSupportTickets, PermClientErrors,
+		PermMarketCancel, PermGuildDisband, PermEventTrigger, PermAuditRead, PermRoleGrant, PermSupportTickets, PermClientErrors, PermReports,
 	},
 }
 

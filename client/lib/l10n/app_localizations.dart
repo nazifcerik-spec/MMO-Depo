@@ -7,6 +7,9 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_ru.dart';
 import 'app_localizations_tr.dart';
 import 'app_localizations_zh.dart';
 
@@ -92,7 +95,15 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('es'), Locale('tr'), Locale('zh')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('es'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('ru'),
+    Locale('tr'),
+    Locale('zh'),
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -271,7 +282,7 @@ abstract class AppLocalizations {
   /// No description provided for @nameRule.
   ///
   /// In en, this message translates to:
-  /// **'3–16 characters, starts with a letter (A–Z, 0–9, _)'**
+  /// **'Up to 16 characters in one alphabet, starts with a letter (digits and _ allowed)'**
   String get nameRule;
 
   /// No description provided for @race.
@@ -6243,6 +6254,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'+{pct}% bonus XP in {name}'**
   String raceProfessionXp(int pct, String name);
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @report.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get report;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report {name}'**
+  String reportTitle(String name);
+
+  /// No description provided for @reportWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get reportWhy;
+
+  /// No description provided for @reportHarassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or insults'**
+  String get reportHarassment;
+
+  /// No description provided for @reportCheating.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheating or bots'**
+  String get reportCheating;
+
+  /// No description provided for @reportName.
+  ///
+  /// In en, this message translates to:
+  /// **'Offensive name'**
+  String get reportName;
+
+  /// No description provided for @reportSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam or advertising'**
+  String get reportSpam;
+
+  /// No description provided for @reportScam.
+  ///
+  /// In en, this message translates to:
+  /// **'Scam'**
+  String get reportScam;
+
+  /// No description provided for @reportOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get reportOther;
+
+  /// No description provided for @reportNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get reportNote;
+
+  /// No description provided for @reportSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent. Thank you.'**
+  String get reportSent;
+
+  /// No description provided for @errReportSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t report your own character.'**
+  String get errReportSelf;
+
+  /// No description provided for @nkReportReviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report was reviewed'**
+  String get nkReportReviewed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -6254,7 +6349,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'es', 'tr', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'ja', 'ko', 'ru', 'tr', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -6267,6 +6362,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'ru':
+      return AppLocalizationsRu();
     case 'tr':
       return AppLocalizationsTr();
     case 'zh':

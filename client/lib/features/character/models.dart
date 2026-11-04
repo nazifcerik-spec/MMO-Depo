@@ -172,4 +172,5 @@ const races = ['human', 'elf', 'dwarf', 'orc', 'troll', 'undead', 'dark_elf', 'd
 const classes = ['warrior', 'rogue', 'ranger', 'mage', 'monk', 'cleric', 'paladin', 'druid', 'bard', 'shaman'];
 
 /// Mirrors the server rule so most mistakes are caught before a round trip.
-final characterNamePattern = RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,15}$');
+// The server checks the rest: one alphabet, the shortest length per script (DD-354).
+final characterNamePattern = RegExp(r'^\p{L}[\p{L}\p{N}_]{1,15}$', unicode: true);

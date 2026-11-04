@@ -1,0 +1,18 @@
+{
+  "@@locale": "ja",
+  "language": "言語",
+  "nameRule": "1種類の文字で16文字以内、文字で始めます（数字と _ も使えます）",
+  "report": "通報",
+  "reportTitle": "{name} を通報",
+  "reportWhy": "何がありましたか？",
+  "reportHarassment": "嫌がらせ・暴言",
+  "reportCheating": "チート・ボット",
+  "reportName": "不適切な名前",
+  "reportSpam": "スパム・宣伝",
+  "reportScam": "詐欺",
+  "reportOther": "その他",
+  "reportNote": "詳細（任意）",
+  "reportSent": "通報を受け付けました。ありがとうございます。",
+  "errReportSelf": "自分のキャラクターは通報できません。",
+  "nkReportReviewed": "通報が確認されました"
+}

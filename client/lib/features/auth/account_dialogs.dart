@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
+import '../../core/app_locale.dart';
 import '../../core/config.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/content_names.dart';
 import '../../shared/links.dart';
 import '../../shared/widgets.dart';
 import '../support/support_repository.dart';
@@ -184,6 +186,29 @@ class _ChangePasswordDialogState extends State<_ChangePasswordDialog> {
 }
 
 /// Account menu (DD-231): password, data export, deletion, legal pages.
+/// Picks the game's language; content names follow straight away (DD-354).
+Future<void> showLanguagePicker(BuildContext context, ApiClient? api) async {
+  final current = Localizations.localeOf(context).languageCode;
+  final code = await showDialog<String>(
+    context: context,
+    builder: (dialog) => SimpleDialog(
+      title: Text(AppLocalizations.of(dialog).language),
+      children: [
+        for (final (code, name) in appLanguages)
+          ListTile(
+            key: ValueKey('language-$code'),
+            title: Text(name),
+            trailing: code == current ? const Icon(Icons.check, color: Palette.accent) : null,
+            onTap: () => Navigator.pop(dialog, code),
+          ),
+      ],
+    ),
+  );
+  if (code == null || code == current) return;
+  if (api != null) await ContentNames.load(api, code);
+  await AppLocale.instance.choose(code);
+}
+
 class AccountMenuButton extends StatelessWidget {
   const AccountMenuButton({super.key, required this.auth});
 
@@ -217,6 +242,7 @@ class AccountMenuButton extends StatelessWidget {
         'support' => Navigator.of(
           context,
         ).push(MaterialPageRoute<void>(builder: (_) => SupportScreen(repo: SupportRepository(auth.api)))),
+        'language' => showLanguagePicker(context, auth.api),
         'terms' => openExternal(context, legalUrl(context, 'terms')),
         _ => openExternal(context, legalUrl(context, 'privacy')),
       },
@@ -228,6 +254,7 @@ class AccountMenuButton extends StatelessWidget {
           ),
           const PopupMenuDivider(),
         ],
+        PopupMenuItem(value: 'language', child: Text(l.language)),
         PopupMenuItem(value: 'password', child: Text(l.changePassword)),
         PopupMenuItem(value: 'export', child: Text(l.downloadMyData)),
         PopupMenuItem(value: 'support', child: Text(l.support)),

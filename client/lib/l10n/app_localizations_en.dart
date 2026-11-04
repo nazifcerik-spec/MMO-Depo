@@ -99,7 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get characterName => 'Name';
 
   @override
-  String get nameRule => '3–16 characters, starts with a letter (A–Z, 0–9, _)';
+  String get nameRule => 'Up to 16 characters in one alphabet, starts with a letter (digits and _ allowed)';
 
   @override
   String get race => 'Race';
@@ -3551,4 +3551,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String raceProfessionXp(int pct, String name) {
     return '+$pct% bonus XP in $name';
   }
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String reportTitle(String name) {
+    return 'Report $name';
+  }
+
+  @override
+  String get reportWhy => 'What happened?';
+
+  @override
+  String get reportHarassment => 'Harassment or insults';
+
+  @override
+  String get reportCheating => 'Cheating or bots';
+
+  @override
+  String get reportName => 'Offensive name';
+
+  @override
+  String get reportSpam => 'Spam or advertising';
+
+  @override
+  String get reportScam => 'Scam';
+
+  @override
+  String get reportOther => 'Something else';
+
+  @override
+  String get reportNote => 'Details (optional)';
+
+  @override
+  String get reportSent => 'Report sent. Thank you.';
+
+  @override
+  String get errReportSelf => 'You can\'t report your own character.';
+
+  @override
+  String get nkReportReviewed => 'Your report was reviewed';
 }

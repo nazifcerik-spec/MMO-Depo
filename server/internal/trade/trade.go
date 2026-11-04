@@ -11,13 +11,13 @@ import (
 	"fmt"
 	"log/slog"
 	"math"
-	"strings"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 )
 
@@ -135,7 +135,7 @@ func (s *Service) Open(ctx context.Context, actor, account uuid.UUID, targetName
 	}
 	var target uuid.UUID
 	err := s.pool.QueryRow(ctx, `SELECT id FROM character.character WHERE name_normalized = $1
-		AND state = 'active'`, strings.ToLower(strings.TrimSpace(targetName))).Scan(&target)
+		AND state = 'active'`, character.NameKey(targetName)).Scan(&target)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return nil, ErrNotFound
 	}

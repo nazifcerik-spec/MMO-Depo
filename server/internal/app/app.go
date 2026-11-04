@@ -50,6 +50,7 @@ import (
 	"github.com/otter/server/internal/quest"
 	"github.com/otter/server/internal/raid"
 	"github.com/otter/server/internal/ratelimit"
+	"github.com/otter/server/internal/report"
 	"github.com/otter/server/internal/shop"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
@@ -350,8 +351,9 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// --- Admin / Ops (Sprint 26, DD-213) ---
 	supportSvc := support.NewService(pool, notifSvc, logger)
 	clientErrSvc := clienterr.NewService(pool, metrics.ObserveClientError)
+	reportSvc := report.NewService(pool, notifSvc, logger)
 	adminHandler := admin.NewHandler(admin.NewService(pool, txnSvc, logger), marketSvc).
-		WithSupport(supportSvc).WithClientErrors(clientErrSvc)
+		WithSupport(supportSvc).WithClientErrors(clientErrSvc).WithReports(reportSvc)
 
 	// --- Content Pack Loader (Sprint 12) ---
 	// YAML → DB upsert → refresh in-process catalogs. Runs after all services
@@ -443,6 +445,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 			craftCatSvc, craftRepo, craftSvc, logger)),
 		AdminHandler:     adminHandler,
 		SupportHandler:   support.NewHandler(supportSvc),
+		ReportHandler:    report.NewHandler(reportSvc),
 		ClientErrHandler: clienterr.NewHandler(clientErrSvc),
 		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
 			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,

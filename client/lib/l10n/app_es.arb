@@ -509,5 +509,20 @@
   "raceAbilitiesHint": "todas pasivas",
   "chooseClass": "Elige tu clase",
   "raceAttrBonus": "+{pct} % {name}",
-  "raceProfessionXp": "+{pct} % de XP extra en {name}"
+  "raceProfessionXp": "+{pct} % de XP extra en {name}",
+  "language": "Idioma",
+  "nameRule": "Hasta 16 caracteres de un solo alfabeto; empieza por una letra (se admiten cifras y _)",
+  "report": "Denunciar",
+  "reportTitle": "Denunciar a {name}",
+  "reportWhy": "¿Qué ha pasado?",
+  "reportHarassment": "Acoso o insultos",
+  "reportCheating": "Trampas o bots",
+  "reportName": "Nombre ofensivo",
+  "reportSpam": "Spam o publicidad",
+  "reportScam": "Estafa",
+  "reportOther": "Otro motivo",
+  "reportNote": "Detalles (opcional)",
+  "reportSent": "Denuncia enviada. Gracias.",
+  "errReportSelf": "No puedes denunciar a tu propio personaje.",
+  "nkReportReviewed": "Tu denuncia se ha revisado"
 }

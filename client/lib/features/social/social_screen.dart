@@ -267,20 +267,27 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
                         ),
                       );
                     }
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 3),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '${m.fromName}: ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: mine ? Palette.accent : Palette.info,
+                    return InkWell(
+                      key: ValueKey('chat-line-${m.id}'),
+                      // Someone else's line: hold to report it (DD-355).
+                      onLongPress: mine
+                          ? null
+                          : () => showReportDialog(context, widget.repo, m.fromName, messageId: m.id),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${m.fromName}: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: mine ? Palette.accent : Palette.info,
+                                ),
                               ),
-                            ),
-                            TextSpan(text: m.body),
-                          ],
+                              TextSpan(text: m.body),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -316,6 +323,114 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
 
 // --- Friends ------------------------------------------------------------------
 
+/// Reports a player (DD-355). The server takes the chat line from its own log.
+Future<void> showReportDialog(BuildContext context, SocialRepository repo, String name, {int? messageId}) async {
+  final sent = await showDialog<bool>(
+    context: context,
+    builder: (_) => _ReportDialog(repo: repo, name: name, messageId: messageId),
+  );
+  if (sent == true && context.mounted) toast(context, Text(AppLocalizations.of(context).reportSent));
+}
+
+class _ReportDialog extends StatefulWidget {
+  const _ReportDialog({required this.repo, required this.name, this.messageId});
+
+  final SocialRepository repo;
+  final String name;
+  final int? messageId;
+
+  @override
+  State<_ReportDialog> createState() => _ReportDialogState();
+}
+
+class _ReportDialogState extends State<_ReportDialog> {
+  final _note = TextEditingController();
+  String? _category;
+  bool _busy = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _note.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l = AppLocalizations.of(context);
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await widget.repo.report(widget.name, _category!, _note.text.trim(), messageId: widget.messageId);
+      if (mounted) Navigator.of(context).pop(true);
+    } on ApiError catch (e) {
+      if (mounted) setState(() => _error = errorText(l, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final categories = {
+      'harassment': l.reportHarassment,
+      'cheating': l.reportCheating,
+      'name': l.reportName,
+      'spam': l.reportSpam,
+      'scam': l.reportScam,
+      'other': l.reportOther,
+    };
+    return AlertDialog(
+      title: Text(l.reportTitle(widget.name)),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l.reportWhy),
+            const SizedBox(height: Space.xs),
+            RadioGroup<String>(
+              groupValue: _category,
+              onChanged: (v) => setState(() => _category = v),
+              child: Column(
+                children: [
+                  for (final e in categories.entries)
+                    RadioListTile<String>(
+                      key: ValueKey('report-${e.key}'),
+                      value: e.key,
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(e.value),
+                    ),
+                ],
+              ),
+            ),
+            TextField(
+              key: const ValueKey('report-note'),
+              controller: _note,
+              maxLength: 500,
+              maxLines: 3,
+              minLines: 2,
+              decoration: InputDecoration(labelText: l.reportNote),
+            ),
+            if (_error != null) Text(_error!, style: const TextStyle(color: Palette.danger)),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: _busy ? null : () => Navigator.of(context).pop(), child: Text(l.cancel)),
+        FilledButton(
+          key: const ValueKey('report-send'),
+          onPressed: _busy || _category == null ? null : _submit,
+          child: Text(l.report),
+        ),
+      ],
+    );
+  }
+}
+
 class _FriendsPanel extends StatefulWidget {
   const _FriendsPanel({required this.repo, required this.onWhisper});
 
@@ -326,7 +441,7 @@ class _FriendsPanel extends StatefulWidget {
   State<_FriendsPanel> createState() => _FriendsPanelState();
 }
 
-enum _FriendAction { whisper, remove, block }
+enum _FriendAction { whisper, remove, block, report }
 
 class _FriendsPanelState extends State<_FriendsPanel> with PanelState, AutomaticKeepAliveClientMixin {
   final _name = TextEditingController();
@@ -392,6 +507,8 @@ class _FriendsPanelState extends State<_FriendsPanel> with PanelState, Automatic
           danger: true,
         );
         if (ok) await run(() => widget.repo.block(f.name).then((_) => fetch()));
+      case _FriendAction.report:
+        await showReportDialog(context, widget.repo, f.name);
     }
   }
 
@@ -459,6 +576,7 @@ class _FriendsPanelState extends State<_FriendsPanel> with PanelState, Automatic
                 PopupMenuItem(value: _FriendAction.whisper, child: Text(l.whisper)),
                 PopupMenuItem(value: _FriendAction.remove, child: Text(l.remove)),
                 PopupMenuItem(value: _FriendAction.block, child: Text(l.block)),
+                PopupMenuItem(value: _FriendAction.report, child: Text(l.report)),
               ],
             ),
           ),

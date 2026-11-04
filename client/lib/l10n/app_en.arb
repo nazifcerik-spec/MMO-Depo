@@ -39,7 +39,7 @@
   "noCharacters": "No characters yet. Create your first hero.",
   "create": "Create",
   "characterName": "Name",
-  "nameRule": "3–16 characters, starts with a letter (A–Z, 0–9, _)",
+  "nameRule": "Up to 16 characters in one alphabet, starts with a letter (digits and _ allowed)",
   "race": "Race",
   "characterClass": "Class",
   "raceHuman": "Human",
@@ -2808,5 +2808,26 @@
         "type": "String"
       }
     }
-  }
+  },
+  "language": "Language",
+  "report": "Report",
+  "reportTitle": "Report {name}",
+  "@reportTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportWhy": "What happened?",
+  "reportHarassment": "Harassment or insults",
+  "reportCheating": "Cheating or bots",
+  "reportName": "Offensive name",
+  "reportSpam": "Spam or advertising",
+  "reportScam": "Scam",
+  "reportOther": "Something else",
+  "reportNote": "Details (optional)",
+  "reportSent": "Report sent. Thank you.",
+  "errReportSelf": "You can't report your own character.",
+  "nkReportReviewed": "Your report was reviewed"
 }

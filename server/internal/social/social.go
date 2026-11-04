@@ -15,6 +15,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/notification"
@@ -132,7 +133,7 @@ func characterByName(ctx context.Context, q querier, name string) (charRef, erro
 	var c charRef
 	err := q.QueryRow(ctx, `
 		SELECT id, name, account_id FROM character.character
-		 WHERE name_normalized = $1 AND state = 'active'`, strings.ToLower(strings.TrimSpace(name))).
+		 WHERE name_normalized = $1 AND state = 'active'`, character.NameKey(name)).
 		Scan(&c.ID, &c.Name, &c.Account)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return c, ErrTargetNotFound

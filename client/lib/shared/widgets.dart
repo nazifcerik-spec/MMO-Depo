@@ -142,6 +142,7 @@ String errorText(AppLocalizations l, Object error) {
     'E_EMPTY' => l.errEmpty,
     'E_NOT_IN_CHANNEL' => l.errNotInChannel,
     'E_MUTED' => l.errMuted,
+    'E_REPORT_SELF' => l.errReportSelf,
     'E_HAS_ATTACHMENTS' => l.errHasAttachments,
     'E_HP_FULL' => l.errHpFull,
     'E_IN_COMBAT' => l.errInCombat,

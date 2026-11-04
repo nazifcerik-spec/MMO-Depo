@@ -99,7 +99,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get characterName => 'İsim';
 
   @override
-  String get nameRule => '3–16 karakter, harfle başlar (A–Z, 0–9, _)';
+  String get nameRule => 'Tek alfabeyle en çok 16 karakter, harfle başlar (rakam ve _ olabilir)';
 
   @override
   String get race => 'Irk';
@@ -3550,4 +3550,48 @@ class AppLocalizationsTr extends AppLocalizations {
   String raceProfessionXp(int pct, String name) {
     return '$name becerisinde +%$pct bonus XP';
   }
+
+  @override
+  String get language => 'Dil';
+
+  @override
+  String get report => 'Şikâyet et';
+
+  @override
+  String reportTitle(String name) {
+    return '$name adlı oyuncuyu şikâyet et';
+  }
+
+  @override
+  String get reportWhy => 'Ne oldu?';
+
+  @override
+  String get reportHarassment => 'Taciz veya hakaret';
+
+  @override
+  String get reportCheating => 'Hile veya bot';
+
+  @override
+  String get reportName => 'Uygunsuz isim';
+
+  @override
+  String get reportSpam => 'Spam veya reklam';
+
+  @override
+  String get reportScam => 'Dolandırıcılık';
+
+  @override
+  String get reportOther => 'Başka bir şey';
+
+  @override
+  String get reportNote => 'Ayrıntı (isteğe bağlı)';
+
+  @override
+  String get reportSent => 'Şikâyetin iletildi. Teşekkürler.';
+
+  @override
+  String get errReportSelf => 'Kendi karakterini şikâyet edemezsin.';
+
+  @override
+  String get nkReportReviewed => 'Şikâyetin incelendi';
 }

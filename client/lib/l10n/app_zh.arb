@@ -509,5 +509,20 @@
   "raceAbilitiesHint": "均为被动",
   "chooseClass": "选择职业",
   "raceAttrBonus": "{name} +{pct}%",
-  "raceProfessionXp": "{name}技能经验 +{pct}%"
+  "raceProfessionXp": "{name}技能经验 +{pct}%",
+  "language": "语言",
+  "nameRule": "最多 16 个字符，只用一种文字，以字母或文字开头（可含数字和 _）",
+  "report": "举报",
+  "reportTitle": "举报 {name}",
+  "reportWhy": "发生了什么？",
+  "reportHarassment": "骚扰或辱骂",
+  "reportCheating": "作弊或外挂",
+  "reportName": "不当名称",
+  "reportSpam": "刷屏或广告",
+  "reportScam": "诈骗",
+  "reportOther": "其他",
+  "reportNote": "详情（可选）",
+  "reportSent": "举报已提交，谢谢。",
+  "errReportSelf": "不能举报自己的角色。",
+  "nkReportReviewed": "你的举报已处理"
 }

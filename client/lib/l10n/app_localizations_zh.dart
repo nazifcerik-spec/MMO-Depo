@@ -99,7 +99,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get characterName => 'Name';
 
   @override
-  String get nameRule => '3–16 characters, starts with a letter (A–Z, 0–9, _)';
+  String get nameRule => '最多 16 个字符，只用一种文字，以字母或文字开头（可含数字和 _）';
 
   @override
   String get race => 'Race';
@@ -3538,4 +3538,48 @@ class AppLocalizationsZh extends AppLocalizations {
   String raceProfessionXp(int pct, String name) {
     return '$name技能经验 +$pct%';
   }
+
+  @override
+  String get language => '语言';
+
+  @override
+  String get report => '举报';
+
+  @override
+  String reportTitle(String name) {
+    return '举报 $name';
+  }
+
+  @override
+  String get reportWhy => '发生了什么？';
+
+  @override
+  String get reportHarassment => '骚扰或辱骂';
+
+  @override
+  String get reportCheating => '作弊或外挂';
+
+  @override
+  String get reportName => '不当名称';
+
+  @override
+  String get reportSpam => '刷屏或广告';
+
+  @override
+  String get reportScam => '诈骗';
+
+  @override
+  String get reportOther => '其他';
+
+  @override
+  String get reportNote => '详情（可选）';
+
+  @override
+  String get reportSent => '举报已提交，谢谢。';
+
+  @override
+  String get errReportSelf => '不能举报自己的角色。';
+
+  @override
+  String get nkReportReviewed => '你的举报已处理';
 }

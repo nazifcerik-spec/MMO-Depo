@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../core/app_locale.dart';
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_screen.dart';
 import '../features/character/character_repository.dart';
@@ -48,12 +49,19 @@ class _OtterAppState extends State<OtterApp> {
 
   @override
   Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: AppLocale.instance,
+      builder: (context, chosen, _) => _app(context, widget.locale ?? chosen),
+    );
+  }
+
+  Widget _app(BuildContext context, Locale? locale) {
     return MaterialApp(
       navigatorKey: _navigator,
       onGenerateTitle: (c) => AppLocalizations.of(c).appTitle,
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
-      locale: widget.locale,
+      locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

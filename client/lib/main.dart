@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app/app.dart';
 import 'core/api_client.dart';
+import 'core/app_locale.dart';
 import 'core/config.dart';
 import 'core/error_reporter.dart';
 import 'core/token_store.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ErrorReporter(baseUrl: AppConfig.apiBaseUrl).install();
   await ItemImages.load();
+  await AppLocale.instance.load();
   final api = ApiClient(baseUrl: AppConfig.apiBaseUrl, store: SecureTokenStore());
   runApp(OtterApp(auth: AuthController(api)));
 }
