@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MeNa World Yönetim</title>
+<link rel="stylesheet" href="/internal/admin/panel.css">
+</head>
+<body>
+<main id="app"></main>
+<dialog id="stepup">
+  <form method="dialog" id="stepup-form">
+    <h2>Yeniden doğrulama</h2>
+    <p>Bu işlem için doğrulayıcı uygulamandaki kodu gir.</p>
+    <input id="stepup-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required>
+    <p class="error" id="stepup-error"></p>
+    <div class="row">
+      <button type="button" id="stepup-cancel" class="ghost">Vazgeç</button>
+      <button type="submit">Doğrula</button>
+    </div>
+  </form>
+</dialog>
+<script src="/internal/admin/panel.js"></script>
+</body>
+</html>

@@ -354,7 +354,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	clientErrSvc := clienterr.NewService(pool, metrics.ObserveClientError)
 	reportSvc := report.NewService(pool, notifSvc, logger)
 	adminHandler := admin.NewHandler(admin.NewService(pool, txnSvc, logger), marketSvc).
-		WithSupport(supportSvc).WithClientErrors(clientErrSvc).WithReports(reportSvc)
+		WithSupport(supportSvc).WithClientErrors(clientErrSvc).WithReports(reportSvc).WithOnline(wsHub)
 
 	// --- Content Pack Loader (Sprint 12) ---
 	// YAML → DB upsert → refresh in-process catalogs. Runs after all services

@@ -28,6 +28,7 @@ import (
 // MarketCanceller is the market capability admin needs.
 type MarketCanceller interface {
 	AdminCancel(ctx context.Context, listingID uuid.UUID, refundFee bool) (*market.Listing, error)
+	Search(ctx context.Context, q market.SearchQuery) ([]market.Listing, error)
 }
 
 type Handler struct {
@@ -36,6 +37,7 @@ type Handler struct {
 	support    SupportDesk
 	reports    ReportDesk
 	clientErrs ClientErrors
+	online     OnlineCounter
 }
 
 func NewHandler(svc *Service, m MarketCanceller) *Handler { return &Handler{svc: svc, market: m} }
@@ -360,6 +362,15 @@ func (h *Handler) Reverse(w http.ResponseWriter, r *http.Request) {
 	reply(w, r, map[string]any{"reversal_txn_id": txn}, err)
 }
 
+// Listings — GET /internal/ops/market/listings: the newest active listings.
+func (h *Handler) Listings(w http.ResponseWriter, r *http.Request) {
+	if _, ok := h.allow(w, r, perm(r, PermMarketCancel), false); !ok {
+		return
+	}
+	list, err := h.market.Search(r.Context(), market.SearchQuery{Sort: "newest", Limit: 100})
+	reply(w, r, map[string]any{"listings": list}, err)
+}
+
 func (h *Handler) CancelListing(w http.ResponseWriter, r *http.Request) {
 	a, ok := h.allow(w, r, perm(r, PermMarketCancel), false)
 	if !ok {
@@ -445,6 +456,7 @@ func writeErr(w http.ResponseWriter, r *http.Request, err error) {
 
 // Routes mounts /internal/admin and /internal/ops on r.
 func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, loginLimit func(http.Handler) http.Handler) {
+	PanelRoutes(r)
 	r.With(loginLimit).Post("/internal/admin/login", h.Login)
 	r.Group(func(r chi.Router) {
 		r.Use(limit, h.RequireAdmin)
@@ -454,6 +466,7 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 		r.Get("/internal/admin/users", h.Users)
 		r.Post("/internal/admin/users/{admin_id}/role", h.SetRole)
 
+		r.Get("/internal/ops/overview", h.Overview)
 		r.Get("/internal/ops/audit", h.Audit)
 		r.Get("/internal/ops/players", h.SearchPlayers)
 		r.Get("/internal/ops/players/{account_id}", h.Player)
@@ -466,6 +479,7 @@ func (h *Handler) Routes(r chi.Router, limit func(http.Handler) http.Handler, lo
 		r.Post("/internal/ops/characters/{character_id}/unfreeze", h.Freeze(false))
 		r.Get("/internal/ops/ledger", h.Ledger)
 		r.Post("/internal/ops/ledger/{txn_id}/reverse", h.Reverse)
+		r.Get("/internal/ops/market/listings", h.Listings)
 		r.Post("/internal/ops/market/{listing_id}/cancel", h.CancelListing)
 		r.Post("/internal/ops/guilds/{guild_id}/disband", h.DisbandGuild)
 		r.Post("/internal/ops/world-events/{template_code}/trigger", h.TriggerEvent)

@@ -1,0 +1,74 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1116;
+  --surface: #181b22;
+  --raised: #20242d;
+  --line: #2c313c;
+  --text: #e9ebf0;
+  --muted: #9aa0ad;
+  --accent: #e4a756;
+  --danger: #e0645a;
+  --ok: #6fbf73;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; }
+h1 { font-size: 20px; margin: 0; font-weight: 600; }
+h2 { font-size: 17px; margin: 0 0 12px; font-weight: 600; }
+h3 { font-size: 14px; margin: 16px 0 8px; font-weight: 600; color: var(--muted); }
+p { margin: 0 0 8px; }
+.muted { color: var(--muted); }
+.error { color: var(--danger); min-height: 1.2em; }
+.success { color: var(--ok); }
+input, select, textarea {
+  background: var(--raised); color: var(--text); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 10px; font: inherit; min-width: 0;
+}
+input:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+textarea { width: 100%; min-height: 72px; resize: vertical; }
+label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+button {
+  background: var(--accent); color: #1b1408; border: 0; border-radius: 8px; padding: 8px 14px;
+  font: inherit; font-weight: 600; cursor: pointer; min-height: 36px;
+}
+button.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+button.danger { background: var(--danger); color: #fff; }
+button:disabled { opacity: .5; cursor: default; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.grow { flex: 1 1 200px; }
+.login { max-width: 360px; margin: 10vh auto; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 12px; }
+.login input { width: 100%; }
+.layout { display: grid; grid-template-columns: 200px 1fr; min-height: 100vh; }
+nav { background: var(--surface); border-right: 1px solid var(--line); padding: 16px 8px; display: flex; flex-direction: column; gap: 2px; }
+nav .brand { padding: 0 8px 12px; }
+nav button { background: transparent; color: var(--text); text-align: left; font-weight: 400; width: 100%; }
+nav button.active { background: var(--raised); color: var(--accent); font-weight: 600; }
+nav .who { margin-top: auto; padding: 12px 8px 0; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+section.page { padding: 24px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.stat b { display: block; font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; white-space: nowrap; }
+tr.clickable { cursor: pointer; }
+tr.clickable:hover { background: var(--raised); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.mono { font-family: ui-monospace, Consolas, monospace; font-size: 12px; overflow-wrap: anywhere; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--raised); font-size: 12px; }
+.badge.warn { color: var(--danger); }
+.quote { border-left: 3px solid var(--line); padding: 4px 10px; color: var(--muted); margin: 8px 0; overflow-wrap: anywhere; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+dt { color: var(--muted); }
+dd { margin: 0; overflow-wrap: anywhere; }
+dialog { background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 12px; padding: 20px; max-width: 360px; }
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog input { width: 100%; margin: 8px 0; }
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  nav { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--line); }
+  nav button { width: auto; }
+  nav .brand, nav .who { width: 100%; padding: 4px 8px; }
+  section.page { padding: 16px; }
+}

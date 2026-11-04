@@ -3517,6 +3517,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-360 — Yönetim paneli
+
+**Context:** Admin rotaları (DD-213) vardı ama arayüzü yoktu; her işlem elle HTTP isteği demekti. Şikâyet ve destek kuyrukları da büyüyor.
+**Decision:** Sunucuya gömülü üç statik dosya: `/internal/admin/panel` (html, js, css; `go:embed`). Veri taşımazlar, mevcut JSON rotalarını çağırırlar; oturum, izin ve denetim kaydı o rotalarda kalır. Sıkı CSP (`default-src 'none'`, `script-src 'self'`, satır içi yok, çerçeveye girmez), `no-store`. Sunucudan gelen her şey `textContent` ile yazılır (`innerHTML` testle yasak), jeton `sessionStorage`'da. Sayfalar izne göre görünür: özet, oyuncular (arama, ayrıntı, susturma/yasak, karakter dondurma), şikâyetler, destek, defter (ters kayıt), pazar (ilan iptali), lonca ve etkinlik, istemci hataları, denetim kaydı, yöneticiler. `E_STEPUP_REQUIRED` gelince TOTP penceresi açılır, işlem bir kez yeniden denenir. Yeni rotalar `GET /internal/ops/overview` ve `GET /internal/ops/market/listings`.
+**Consequences:** Derleme adımı ve bağımlılık yok. Süresiz yasak gibi işlemler yeniden doğrulama ister, 7 güne kadar yasak istemez (DD-213 matrisi). Panel `/internal` altında herkese açık adreste görünür, korumayı parola + TOTP + 5/dk giriş sınırı sağlar; ek olarak IP kısıtı isteyen üretimde Caddy'den ekler. Arayüz yalnız Türkçe.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

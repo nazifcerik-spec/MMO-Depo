@@ -328,6 +328,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 155. **Pazarda açık artırma (bitti)** — Sprint 155, DD-359. Migration 0068, `market/auction.go` (`Keeper`: yerleşim + iade), `POST /market/bid/{id}`, emanet, %5 artış, 5 dk uzatma, hemen al; istemci teklif penceresi ve listeleme seçeneği.
 
+156. **Yönetim paneli (bitti)** — Sprint 156, DD-360. `internal/admin/panel/` (html/js/css gömülü, sıkı CSP, yalnız `textContent`), http://localhost:8080/internal/admin/panel. Sayfalar izne göre: özet, oyuncular, şikâyetler, destek, defter, pazar, lonca ve etkinlik, istemci hataları, denetim kaydı, yöneticiler; `E_STEPUP_REQUIRED` → TOTP penceresi + bir kez yeniden deneme. Yeni `GET /internal/ops/overview`, `/internal/ops/market/listings`. İlk yönetici: `cmd/adminctl`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
