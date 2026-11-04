@@ -103,6 +103,7 @@ class CharacterSheet {
     required this.resources,
     required this.state,
     this.resourceKind = '',
+    this.equipmentTags = const [],
     this.resourceMax = 0,
     this.look = const Appearance(),
   });
@@ -125,6 +126,7 @@ class CharacterSheet {
       resources: ints(j['resources']),
       state: j['state'] as String? ?? 'active',
       resourceKind: j['resource_kind'] as String? ?? '',
+      equipmentTags: [...(j['equipment_tags'] as List? ?? const []).cast<String>()],
       resourceMax: (j['resource_max'] as num?)?.toInt() ?? 0,
       look: Appearance.fromJson(j),
     );
@@ -154,6 +156,9 @@ class CharacterSheet {
   /// Class combat resource (DD-252): rage, energy, focus, mana, chi, ...
   /// Empty on servers without one. Combat fills it per encounter.
   final String resourceKind;
+
+  /// What the worn gear lets skills use, e.g. shield (DD-364).
+  final List<String> equipmentTags;
   final int resourceMax;
 
   /// 0..1 progress toward the next level (1 at level cap).

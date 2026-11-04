@@ -3940,4 +3940,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get evMarketOutbid => '你的出价被超过，金币已退还。';
+
+  @override
+  String get skillNeedsShield => '需要盾牌';
 }

@@ -3990,4 +3990,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get evMarketOutbid => 'Han superado tu puja; tu oro ha vuelto.';
+
+  @override
+  String get skillNeedsShield => 'Requiere escudo';
 }

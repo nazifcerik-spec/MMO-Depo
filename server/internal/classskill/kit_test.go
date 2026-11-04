@@ -8,7 +8,7 @@ import (
 
 func activeCodes(c *Catalog, path []string, level int) []string {
 	var out []string
-	for _, s := range c.Actives(path, level) {
+	for _, s := range c.Actives(path, level, "shield") {
 		out = append(out, s.Code)
 	}
 	return out

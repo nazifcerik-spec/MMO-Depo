@@ -1154,5 +1154,6 @@
   "errAuctionHasBids": "입찰이 있는 경매는 취소할 수 없습니다.",
   "nkMarketOutbid": "입찰가를 추월당했습니다",
   "nkMarketWon": "경매에서 낙찰되었습니다",
-  "evMarketOutbid": "입찰가를 추월당해 골드가 반환되었습니다."
+  "evMarketOutbid": "입찰가를 추월당해 골드가 반환되었습니다.",
+  "skillNeedsShield": "방패 필요"
 }

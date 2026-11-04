@@ -332,7 +332,9 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 157. **Yedi dil tam çeviri (bitti)** — Sprint 157, DD-361. Arayüz 1155 anahtar × 7 dil (`l10n_complete_test.dart`), içerik `content/i18n/{ru,ko,ja}.yaml` (elle tutulur, üreteç yazmaz; yeni eşya İngilizceye düşer, yeni sınıf/yetenek paketi reddeder) + `es`/`zh-CN` tamam. Rusça ekipman: isim + tamlama, `affix.format` dile göre. Dil başına telefona sığma testi. Kalan: yasal sayfalar TR/EN, e-posta ve küfür listesi TR+EN.
 
-158. **Sv 100–250 yetenekleri + kalkan budama (bitti)** — Sprint 158, DD-362..363. Her temel sınıfa Sv 100/150/200/250'de 3 anlık aktif + 1 pasif (`class_data.py`, Savaşçı elle; `instant: true`: tur harcamaz, turun hamlesinden sonra kalan kaynakla çalışır, vuruş olamaz). Sonraki aynı işteki yeteneklerden zayıf (`TestGapSkillsLeadToThePromotion`). Baskın gücü 95/73/75. `gen_classes.py` temel sınıf satırlarının seviyesini korur. Kalkanlar Sv 285'ten (`SHIELD_FROM`), migration 0069 eldekileri `shield_sovereign`'a çevirir, o kalkan dükkânda. Görsel bekliyor: 40 yeni yetenek yedek ikon. Geri dönüş etiketi `before-dd-362`.
+158. **Sv 100–250 yetenekleri + kalkan budama (bitti)** — Sprint 158, DD-362..363. Her temel sınıfa Sv 100/150/200/250'de 3 anlık aktif + 1 pasif (`class_data.py`, Savaşçı elle; `instant: true`: tur harcamaz, turun hamlesinden sonra kalan kaynakla çalışır, vuruş olamaz). Sonraki aynı işteki yeteneklerden zayıf (`TestGapSkillsLeadToThePromotion`). Baskın gücü 95/73/75. `gen_classes.py` temel sınıf satırlarının seviyesini korur. Kalkanlar Sv 285'ten (`SHIELD_FROM`), migration 0069 eldekileri `shield_sovereign`'a çevirir, o kalkan dükkânda. Geri dönüş etiketi `before-dd-362`.
+
+159. **Kalkan şartı + Sv 100–250 ikonları (bitti)** — Sprint 159, DD-364. `requires` artık savaşta geçerli: sheet `equipment_tags`, `Catalog.Actives(path, level, equipment...)` şartı karşılanmayanı `strongest`'tan önce eler (Ağır Kesik kalır); istemci soluk gösterir + 'Kalkan gerekir'. 40 ikon `art_sets.py gap_skills`.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 

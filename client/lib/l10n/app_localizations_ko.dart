@@ -3944,4 +3944,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get evMarketOutbid => '입찰가를 추월당해 골드가 반환되었습니다.';
+
+  @override
+  String get skillNeedsShield => '방패 필요';
 }

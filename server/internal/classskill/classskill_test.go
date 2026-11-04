@@ -97,3 +97,19 @@ func TestPathOfAndUnlockDefaults(t *testing.T) {
 	require.Equal(t, "passive", u[0].Category)
 	require.Equal(t, "ultimate", u[1].Category)
 }
+
+// DD-364: a skill without its gear does not count, so it replaces nothing.
+func TestCatalog_RequiredGear(t *testing.T) {
+	c := NewCatalog([]Skill{
+		{Code: "slash", Class: "warrior", UnlockLevel: 25, Kind: "active", Effect: "strike", Power: 190, CooldownTurns: 3},
+		{Code: "slam", Class: "warrior", Spec: "guardian", UnlockLevel: 300, Kind: "active", Effect: "strike", Power: 200,
+			CooldownTurns: 3, Config: Config{Requires: []string{"shield"}}},
+	})
+	path := []string{"warrior", "guardian"}
+	bare := c.Actives(path, 300)
+	require.Len(t, bare, 1)
+	require.Equal(t, "slash", bare[0].Code)
+	armed := c.Actives(path, 300, "shield")
+	require.Len(t, armed, 1)
+	require.Equal(t, "slam", armed[0].Code)
+}

@@ -9,6 +9,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"slices"
 	"sort"
 	"sync/atomic"
 
@@ -73,6 +74,16 @@ func (s Skill) job() string {
 		band = "long"
 	}
 	return s.Effect + "/" + s.Config.Type + "/" + trigger + "/" + band
+}
+
+// wearing reports whether the gear a skill needs is on.
+func (s Skill) wearing(equipment []string) bool {
+	for _, r := range s.Config.Requires {
+		if !slices.Contains(equipment, r) {
+			return false
+		}
+	}
+	return true
 }
 
 // strength compares skills of one job: power over its whole duration.
@@ -183,10 +194,13 @@ func (c *Catalog) Passives(path []string, level int) []skill.Modifier {
 }
 
 // Actives returns the path's unlocked active skills in cast-priority order.
-func (c *Catalog) Actives(path []string, level int) []combat.Skill {
+//
+// A skill whose gear is not worn (equipment tags, e.g. shield) does not count at
+// all, so it does not replace the skill it would otherwise outclass (DD-364).
+func (c *Catalog) Actives(path []string, level int, equipment ...string) []combat.Skill {
 	var unlocked []Skill
 	for _, s := range c.owned(path) {
-		if s.Kind == "active" && int(s.UnlockLevel) <= level {
+		if s.Kind == "active" && int(s.UnlockLevel) <= level && s.wearing(equipment) {
 			unlocked = append(unlocked, s)
 		}
 	}
@@ -266,7 +280,7 @@ func (s *Service) PassiveModifiers(_ context.Context, _ uuid.UUID, sheet charact
 
 // ActiveSkills gives combat the unlocked actives for a sheet (hunt/dungeon).
 func (s *Service) ActiveSkills(sheet *character.Sheet) []combat.Skill {
-	return s.cat.Load().Actives(pathOf(sheet), sheet.Level)
+	return s.cat.Load().Actives(pathOf(sheet), sheet.Level, sheet.EquipmentTags...)
 }
 
 // Unlocks lists every skill as a leveling unlock (contentpack installs them

@@ -23,6 +23,7 @@ type EquippedFetcher interface {
 type EquippedBonus struct {
 	StatBonusesRaw []byte
 	Modifiers      []Modifier
+	Tags           []string // what the piece lets skills use (DD-364)
 }
 
 // CharacterAdapter satisfies character.SheetComputer by using an EquippedFetcher
@@ -65,7 +66,9 @@ func (a *CharacterAdapter) ComputeSheet(ctx context.Context, characterID uuid.UU
 		return base, err
 	}
 	mods := []Modifier{}
+	base.EquipmentTags = nil
 	for _, b := range bonuses {
+		base.EquipmentTags = append(base.EquipmentTags, b.Tags...)
 		mods = append(mods, b.Modifiers...)
 		list, err := DecodeModifiers(b.StatBonusesRaw)
 		if err != nil {

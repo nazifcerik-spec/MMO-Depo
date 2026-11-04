@@ -3988,4 +3988,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get evMarketOutbid => 'Teklifin geçildi, altının geri döndü.';
+
+  @override
+  String get skillNeedsShield => 'Kalkan gerekir';
 }

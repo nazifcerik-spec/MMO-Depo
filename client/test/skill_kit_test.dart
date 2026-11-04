@@ -34,6 +34,32 @@ void main() {
     expect(kit(1), ['bolt', 'burst', 'element_bolt', 'weak_bolt', 'fire_ball', 'calm', 'old_server']);
   });
 
+  test('a skill without its gear stays listed but replaces nothing (DD-364)', () {
+    const slam = ClassSkill(
+      code: 'slam',
+      active: true,
+      unlockLevel: 300,
+      job: 'strike',
+      strength: 200,
+      requires: ['shield'],
+    );
+    const slash = ClassSkill(code: 'slash', active: true, unlockLevel: 25, job: 'strike', strength: 190);
+    List<String> at(List<String> gear) => [
+      for (final k in skillKit([slash, slam], 300, equipment: gear)) k.code,
+    ];
+    expect(at(const []), ['slash', 'slam'], reason: 'the slash is still what gets cast');
+    expect(at(const ['shield']), ['slam']);
+    final parsed = ClassSkill.fromJson({
+      'code': 'a',
+      'kind': 'active',
+      'config': {
+        'requires': ['shield'],
+      },
+    });
+    expect(parsed.requires, ['shield']);
+    expect(parsed.wearing(const []), isFalse);
+  });
+
   test('the job and its strength come from the server', () {
     final k = ClassSkill.fromJson({'code': 'a', 'kind': 'active', 'job': 'strike/x', 'strength': 250});
     expect(k.job, 'strike/x');

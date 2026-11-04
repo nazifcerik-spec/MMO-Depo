@@ -75,6 +75,9 @@ type Sheet struct {
 	// mana, ...) and pool size; empty for classes without one.
 	ResourceKind string `json:"resource_kind,omitempty"`
 	ResourceMax  int    `json:"resource_max,omitempty"`
+
+	// What the worn gear lets skills use (e.g. shield; DD-364).
+	EquipmentTags []string `json:"equipment_tags,omitempty"`
 }
 
 // classBase is each class's level-1 primary block; growthPerLevel is what

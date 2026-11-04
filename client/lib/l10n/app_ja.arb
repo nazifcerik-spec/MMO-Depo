@@ -1154,5 +1154,6 @@
   "errAuctionHasBids": "入札があるオークションは取り消せません。",
   "nkMarketOutbid": "入札額を上回られました",
   "nkMarketWon": "オークションに落札しました",
-  "evMarketOutbid": "入札額を上回られ、ゴールドが返金されました。"
+  "evMarketOutbid": "入札額を上回られ、ゴールドが返金されました。",
+  "skillNeedsShield": "盾が必要"
 }

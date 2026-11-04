@@ -1154,5 +1154,6 @@
   "errAuctionHasBids": "No se puede cancelar una subasta con pujas.",
   "nkMarketOutbid": "Han superado tu puja",
   "nkMarketWon": "Has ganado una subasta",
-  "evMarketOutbid": "Han superado tu puja; tu oro ha vuelto."
+  "evMarketOutbid": "Han superado tu puja; tu oro ha vuelto.",
+  "skillNeedsShield": "Requiere escudo"
 }

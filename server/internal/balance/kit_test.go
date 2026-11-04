@@ -34,7 +34,7 @@ func TestShippedKitsHoldOneOfEachJob(t *testing.T) {
 				p = path[:2]
 			}
 			seen, hasUltimate := map[string]bool{}, false
-			kit := w.skills.Actives(p, at)
+			kit := w.skills.Actives(p, at, "shield")
 			require.NotEmpty(t, kit, "%v at %d", p, at)
 			for _, s := range kit {
 				require.False(t, seen[jobs[s.Code]], "%v at %d: two skills do %s", p, at, jobs[s.Code])
@@ -113,7 +113,7 @@ func TestEveryActiveIsUsedSomewhere(t *testing.T) {
 				continue
 			}
 			all[s.Code] = true
-			for _, a := range w.skills.Actives(path, int(s.UnlockLevel)) {
+			for _, a := range w.skills.Actives(path, int(s.UnlockLevel), "shield") {
 				used[a.Code] = true
 			}
 		}

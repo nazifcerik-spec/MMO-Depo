@@ -3989,4 +3989,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get evMarketOutbid => 'Вашу ставку перебили, золото возвращено.';
+
+  @override
+  String get skillNeedsShield => 'Нужен щит';
 }

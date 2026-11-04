@@ -120,7 +120,7 @@ func (w *world) specPlayer(spec string, level int) combat.Combatant {
 	d := s.Derived
 	p := combat.Combatant{Name: "player", HPMax: int32(s.Resources.HPMax), HPCurrent: int32(s.Resources.HPMax),
 		Attack: int32(d.Attack), Defense: int32(d.Defense), CritPct: int32(d.CritPct), HitPct: int32(d.HitPct),
-		EvasionPct: int32(d.EvasionPct), MPMax: int32(s.Resources.MPMax), Skills: w.skills.Actives(path, level),
+		EvasionPct: int32(d.EvasionPct), MPMax: int32(s.Resources.MPMax), Skills: w.skills.Actives(path, level, "shield"),
 		Level: int16(level), BlockPct: int32(d.BlockPct), CritDmgPct: int32(d.CritDmgPct), ExecutePct: int32(d.ExecutePct),
 		MissingHPDmgPct: int32(d.MissingHPDmgPct), LifestealPct: int32(d.LifestealPct), DmgReductionPct: int32(d.DmgReductionPct)}
 	combat.ApplyResource(&p, class)

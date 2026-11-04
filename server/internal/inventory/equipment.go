@@ -391,6 +391,9 @@ func (s *EquipmentService) EquippedBonuses(ctx context.Context, characterID uuid
 	worn := make([]string, 0, len(list))
 	for _, b := range list {
 		worn = append(worn, b.TemplateCode)
+		if b.ItemSubclass == "shield" {
+			out = append(out, skill.EquippedBonus{Tags: []string{"shield"}})
+		}
 		if mods := EffectiveModifiers(b); len(mods) > 0 {
 			out = append(out, skill.EquippedBonus{Modifiers: mods})
 		}

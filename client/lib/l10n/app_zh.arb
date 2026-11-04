@@ -1154,5 +1154,6 @@
   "errAuctionHasBids": "已有出价的拍卖不能取消。",
   "nkMarketOutbid": "你的出价被超过",
   "nkMarketWon": "你赢得了拍卖",
-  "evMarketOutbid": "你的出价被超过，金币已退还。"
+  "evMarketOutbid": "你的出价被超过，金币已退还。",
+  "skillNeedsShield": "需要盾牌"
 }

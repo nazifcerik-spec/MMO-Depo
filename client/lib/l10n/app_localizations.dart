@@ -7034,6 +7034,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You were outbid; your gold is back.'**
   String get evMarketOutbid;
+
+  /// No description provided for @skillNeedsShield.
+  ///
+  /// In en, this message translates to:
+  /// **'Shield required'**
+  String get skillNeedsShield;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

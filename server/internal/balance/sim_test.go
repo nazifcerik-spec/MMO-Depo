@@ -212,7 +212,7 @@ func (w *world) playerIn(build string, level int, gear []contentpack.Item, inPar
 	p := combat.Combatant{Name: "player", HPMax: int32(s.Resources.HPMax), HPCurrent: int32(s.Resources.HPMax),
 		Attack: int32(d.Attack), Defense: int32(d.Defense), CritPct: int32(d.CritPct),
 		HitPct: int32(d.HitPct), EvasionPct: int32(d.EvasionPct), MPMax: int32(s.Resources.MPMax),
-		Skills:            w.skills.Actives(path, level),
+		Skills:            w.skills.Actives(path, level, "shield"),
 		Level:             int16(level),
 		RegenPerEncounter: int32(float64(encSeconds/2) * character.HPRegenPer2s(s.Primary.VIT)),
 		RegenPerSec:       character.HPRegenPer2s(s.Primary.VIT) / 2,

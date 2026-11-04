@@ -1154,5 +1154,6 @@
   "errAuctionHasBids": "Teklif almış açık artırma iptal edilemez.",
   "nkMarketOutbid": "Teklifin geçildi",
   "nkMarketWon": "Açık artırmayı kazandın",
-  "evMarketOutbid": "Teklifin geçildi, altının geri döndü."
+  "evMarketOutbid": "Teklifin geçildi, altının geri döndü.",
+  "skillNeedsShield": "Kalkan gerekir"
 }

@@ -370,7 +370,8 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               title: l.skills,
               collapsible: true, // folded until opened (DD-301)
               children: [
-                for (final k in skillKit([...?_skills?.where(_onPath)], s.level)) _SkillRow(skill: k, level: s.level),
+                for (final k in skillKit([...?_skills?.where(_onPath)], s.level, equipment: s.equipmentTags))
+                  _SkillRow(skill: k, level: s.level, equipment: s.equipmentTags),
               ],
             ),
           ],
@@ -478,17 +479,19 @@ String skillDescription(AppLocalizations l, ClassSkill k) {
 }
 
 class _SkillRow extends StatelessWidget {
-  const _SkillRow({required this.skill, required this.level});
+  const _SkillRow({required this.skill, required this.level, this.equipment = const []});
 
   final ClassSkill skill;
   final int level;
+  final List<String> equipment;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final locked = skill.unlockLevel > level;
+    final bare = !locked && !skill.wearing(equipment);
     return Opacity(
-      opacity: locked ? 0.6 : 1,
+      opacity: locked || bare ? 0.6 : 1,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Space.xs),
         child: Row(
@@ -509,6 +512,7 @@ class _SkillRow extends StatelessWidget {
               ),
             ),
             if (locked) Text(l.levelReq(skill.unlockLevel), style: Theme.of(context).textTheme.bodySmall),
+            if (bare) Text(l.skillNeedsShield, style: Theme.of(context).textTheme.bodySmall),
           ],
         ),
       ),

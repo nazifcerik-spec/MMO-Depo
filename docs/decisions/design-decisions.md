@@ -3553,6 +3553,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-364 — Kalkan şartı savaşta uygulanır, Sv 100–250 yetenek ikonları
+
+**Context:** Kalkan Darbesi 'Kalkan gerekir' diyordu ama `requires` yalnız içerikte yazılıydı: kalkansız da çalışıyordu (DD-363). DD-352 yüzünden şart doğrudan uygulansaydı kalkansız Muhafız hem Kalkan Darbesi'ni hem onun yerini aldığı Ağır Kesik'i kaybederdi. DD-362'nin 40 yeni yeteneğinin de çizimi yoktu; kullanıcı ikisini de istedi.
+**Decision:** Giyili eşya etiket verir (`skill.EquippedBonus.Tags`, şimdilik yalnız `shield`), sheet `equipment_tags` olarak taşır. `Catalog.Actives` şartı karşılanmayan yeteneği en güçlüyü seçmeden önce eler; böylece hiçbir şeyin yerini almaz. Karar av/zindan/baskın başlangıcındaki anlık görüntüde verilir, statlar gibi. İstemci `skillKit` aynı kuralı izler: yetenek soluk ve 'Kalkan gerekir' ile listede kalır. İkonlar `art_sets.py` `gap_skills` setinden (2 Gemini sayfası); mevcut `skills` sayfalarının numarası değişmedi, `art_sets_test` yine her yeteneğin çizimini zorunlu tutar.
+**Consequences:** Sv 300'de kalkan takmayan Muhafız Ağır Kesik ile savaşır, kalkan dükkânda (DD-363). Sürmekte olan av eski kadroyla biter. Denge simülasyonu Muhafızı kalkanlı sayar. `two_handed` şartı içerikte tanımlı ama kullanan yetenek ve onu veren eşya etiketi yok.
+**Tarih:** 2026-11-05
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

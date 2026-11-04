@@ -3943,4 +3943,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get evMarketOutbid => '入札額を上回られ、ゴールドが返金されました。';
+
+  @override
+  String get skillNeedsShield => '盾が必要';
 }

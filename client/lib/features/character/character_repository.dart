@@ -8,10 +8,13 @@ import 'models.dart';
 /// The skills to show on a path at [level] (DD-352): an active is listed while
 /// it is the strongest unlocked one of its job, or locked and stronger than it.
 /// Same rule as the server's `classskill.strongest`.
-List<ClassSkill> skillKit(List<ClassSkill> onPath, int level) {
+///
+/// An unlocked skill whose gear is not worn stays listed but replaces nothing
+/// (DD-364): the server does not cast it.
+List<ClassSkill> skillKit(List<ClassSkill> onPath, int level, {List<String> equipment = const []}) {
   final best = <String, ClassSkill>{};
   for (final k in onPath) {
-    if (k.job.isEmpty || k.unlockLevel > level) continue;
+    if (k.job.isEmpty || k.unlockLevel > level || !k.wearing(equipment)) continue;
     final b = best[k.job];
     if (b == null || k.strength > b.strength || (k.strength == b.strength && k.unlockLevel > b.unlockLevel)) {
       best[k.job] = k;
@@ -22,6 +25,7 @@ List<ClassSkill> skillKit(List<ClassSkill> onPath, int level) {
       if (k.job.isEmpty ||
           best[k.job] == null ||
           identical(best[k.job], k) ||
+          !k.wearing(equipment) ||
           (k.unlockLevel > level && k.strength > best[k.job]!.strength))
         k,
   ];
@@ -42,6 +46,7 @@ class ClassSkill {
     this.category = '',
     this.job = '',
     this.strength = 0,
+    this.requires = const [],
   });
 
   factory ClassSkill.fromJson(Map<String, dynamic> j) => ClassSkill(
@@ -51,6 +56,7 @@ class ClassSkill {
     category: (j['config'] as Map<String, dynamic>?)?['category'] as String? ?? '',
     job: j['job'] as String? ?? '',
     strength: (j['strength'] as num?)?.toDouble() ?? 0,
+    requires: [...((j['config'] as Map<String, dynamic>?)?['requires'] as List? ?? const []).cast<String>()],
     active: j['kind'] == 'active',
     unlockLevel: (j['unlock_level'] as num?)?.toInt() ?? 1,
     effect: j['effect'] as String? ?? '',
@@ -70,6 +76,10 @@ class ClassSkill {
   /// job stays. Empty on old servers.
   final String job;
   final double strength;
+
+  /// Gear the skill needs worn, e.g. shield (DD-364).
+  final List<String> requires;
+  bool wearing(List<String> equipment) => requires.every(equipment.contains);
   final String effect; // strike | heal | guard | empower
 
   /// Owning class node (DD-250): the base class or a promotion.

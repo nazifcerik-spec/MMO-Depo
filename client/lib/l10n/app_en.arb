@@ -3016,5 +3016,6 @@
   "errAuctionHasBids": "An auction with bids cannot be cancelled.",
   "nkMarketOutbid": "You were outbid",
   "nkMarketWon": "You won an auction",
-  "evMarketOutbid": "You were outbid; your gold is back."
+  "evMarketOutbid": "You were outbid; your gold is back.",
+  "skillNeedsShield": "Shield required"
 }

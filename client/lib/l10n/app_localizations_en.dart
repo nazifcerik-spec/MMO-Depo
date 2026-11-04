@@ -3989,4 +3989,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get evMarketOutbid => 'You were outbid; your gold is back.';
+
+  @override
+  String get skillNeedsShield => 'Shield required';
 }
