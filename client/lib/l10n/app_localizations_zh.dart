@@ -13,111 +13,111 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => 'MeNa World';
 
   @override
-  String get tagline => 'Adventures that keep going while you\'re away.';
+  String get tagline => '离线时，冒险依然继续。';
 
   @override
-  String get emailOrUsername => 'Email or username';
+  String get emailOrUsername => '邮箱或用户名';
 
   @override
-  String get email => 'Email';
+  String get email => '邮箱';
 
   @override
-  String get username => 'Username';
+  String get username => '用户名';
 
   @override
-  String get password => 'Password';
+  String get password => '密码';
 
   @override
-  String get passwordConfirm => 'Confirm password';
+  String get passwordConfirm => '确认密码';
 
   @override
-  String get showPassword => 'Show password';
+  String get showPassword => '显示密码';
 
   @override
-  String get hidePassword => 'Hide password';
+  String get hidePassword => '隐藏密码';
 
   @override
-  String get login => 'Log in';
+  String get login => '登录';
 
   @override
-  String get register => 'Create account';
+  String get register => '创建账号';
 
   @override
-  String get noAccount => 'New here? Create an account';
+  String get noAccount => '新玩家？创建账号';
 
   @override
-  String get haveAccount => 'Already have an account? Log in';
+  String get haveAccount => '已有账号？登录';
 
   @override
-  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => '我已年满 13 岁，并接受服务条款和隐私政策';
 
   @override
-  String get fieldRequired => 'Required';
+  String get fieldRequired => '必填';
 
   @override
-  String get invalidEmail => 'Enter a valid email';
+  String get invalidEmail => '请输入有效的邮箱';
 
   @override
-  String get usernameRule => '3–32 letters, digits, _ or .';
+  String get usernameRule => '3–32 个字母、数字、_ 或 .';
 
   @override
-  String get passwordMin => 'At least 8 characters';
+  String get passwordMin => '至少 8 个字符';
 
   @override
-  String get passwordMismatch => 'Passwords do not match';
+  String get passwordMismatch => '两次输入的密码不一致';
 
   @override
-  String get termsRequired => 'Please accept the terms to continue';
+  String get termsRequired => '请接受条款后继续';
 
   @override
-  String get logout => 'Log out';
+  String get logout => '退出登录';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '重试';
 
   @override
-  String get offline => 'Can\'t reach the server. Check your connection.';
+  String get offline => '无法连接服务器，请检查网络。';
 
   @override
-  String get characters => 'Characters';
+  String get characters => '角色';
 
   @override
   String slotsUsed(int used, int cap) {
-    return '$used/$cap slots';
+    return '槽位 $used/$cap';
   }
 
   @override
-  String get newCharacter => 'New character';
+  String get newCharacter => '新建角色';
 
   @override
-  String get noCharacters => 'No characters yet. Create your first hero.';
+  String get noCharacters => '还没有角色，创建你的第一位英雄吧。';
 
   @override
-  String get create => 'Create';
+  String get create => '创建';
 
   @override
-  String get characterName => 'Name';
+  String get characterName => '名称';
 
   @override
   String get nameRule => '最多 16 个字符，只用一种文字，以字母或文字开头（可含数字和 _）';
 
   @override
-  String get race => 'Race';
+  String get race => '种族';
 
   @override
-  String get characterClass => 'Class';
+  String get characterClass => '职业';
 
   @override
-  String get raceHuman => 'Human';
+  String get raceHuman => '人类';
 
   @override
-  String get raceElf => 'Elf';
+  String get raceElf => '精灵';
 
   @override
-  String get raceDwarf => 'Dwarf';
+  String get raceDwarf => '矮人';
 
   @override
-  String get raceOrc => 'Orc';
+  String get raceOrc => '兽人';
 
   @override
   String get classWarrior => '战士';
@@ -130,28 +130,28 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String levelLine(int level, String cls, String race) {
-    return 'Lvl $level · $cls · $race';
+    return '$level 级 · $cls · $race';
   }
 
   @override
   String levelShort(int level) {
-    return '$level级';
+    return '$level 级';
   }
 
   @override
-  String get hp => 'HP';
+  String get hp => '生命';
 
   @override
-  String get mp => 'MP';
+  String get mp => '法力';
 
   @override
-  String get stamina => 'ST';
+  String get stamina => '耐力';
 
   @override
-  String get energy => 'EN';
+  String get energy => '能量';
 
   @override
-  String get xp => 'XP';
+  String get xp => '经验';
 
   @override
   String xpValue(int xp, int next) {
@@ -159,40 +159,40 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get attributes => 'Attributes';
+  String get attributes => '属性';
 
   @override
-  String get combat => 'Combat';
+  String get combat => '战斗';
 
   @override
-  String get statStr => 'STR';
+  String get statStr => '力量';
 
   @override
-  String get statAgi => 'DEX';
+  String get statAgi => '敏捷';
 
   @override
-  String get statInt => 'INT';
+  String get statInt => '智力';
 
   @override
-  String get statVit => 'VIT';
+  String get statVit => '体质';
 
   @override
-  String get statCha => 'WIS';
+  String get statCha => '智慧';
 
   @override
-  String get statLuck => 'LUCK';
+  String get statLuck => '幸运';
 
   @override
-  String get attack => 'Attack';
+  String get attack => '攻击';
 
   @override
-  String get defense => 'Defense';
+  String get defense => '防御';
 
   @override
-  String get crit => 'Crit';
+  String get crit => '暴击';
 
   @override
-  String get hit => 'Hit';
+  String get hit => '命中';
 
   @override
   String percent(int value) {
@@ -200,622 +200,622 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get gold => 'Gold';
+  String get gold => '金币';
 
   @override
-  String get switchCharacter => 'Switch character';
+  String get switchCharacter => '切换角色';
 
   @override
-  String get statePendingDelete => 'Deletion pending';
+  String get statePendingDelete => '等待删除';
 
   @override
-  String get stateFrozen => 'Frozen';
+  String get stateFrozen => '已冻结';
 
   @override
-  String get errInvalidCredentials => 'Wrong email/username or password.';
+  String get errInvalidCredentials => '邮箱/用户名或密码错误。';
 
   @override
-  String get errAccountLocked => 'Your account is temporarily locked.';
+  String get errAccountLocked => '你的账号已被临时锁定。';
 
   @override
-  String get errAccountBanned => 'This account has been banned.';
+  String get errAccountBanned => '此账号已被封禁。';
 
   @override
-  String get errAccountExists => 'That email or username is already taken.';
+  String get errAccountExists => '该邮箱或用户名已被占用。';
 
   @override
-  String get errRateLimited => 'Too many attempts. Please wait a moment.';
+  String get errRateLimited => '尝试次数过多，请稍候。';
 
   @override
-  String get errNameTaken => 'That name is already taken.';
+  String get errNameTaken => '该名称已被占用。';
 
   @override
-  String get errSlotCap => 'All character slots are in use.';
+  String get errSlotCap => '角色槽位已满。';
 
   @override
-  String get errNotPlayable => 'This character can\'t be played right now.';
+  String get errNotPlayable => '此角色暂时无法游玩。';
 
   @override
-  String get errSessionExpired => 'Your session expired. Please log in again.';
+  String get errSessionExpired => '登录已过期，请重新登录。';
 
   @override
   String errGeneric(String code) {
-    return 'Something went wrong ($code).';
+    return '出现问题（$code）。';
   }
 
   @override
-  String get navCharacter => 'Character';
+  String get navCharacter => '角色';
 
   @override
-  String get navActivity => 'Gather';
+  String get navActivity => '采集';
 
   @override
-  String get actMining => 'Mining';
+  String get actMining => '采矿';
 
   @override
-  String get actFishing => 'Fishing';
+  String get actFishing => '钓鱼';
 
   @override
-  String get actWoodcutting => 'Woodcutting';
+  String get actWoodcutting => '伐木';
 
   @override
-  String get actHerbalism => 'Herbalism';
+  String get actHerbalism => '采药';
 
   @override
-  String get actHunting => 'Hunting';
+  String get actHunting => '狩猎';
 
   @override
-  String get activityChoose => 'Choose an activity';
+  String get activityChoose => '选择活动';
 
   @override
-  String get durationLabel => 'Duration';
+  String get durationLabel => '时长';
 
   @override
-  String get gatherResource => 'Resource';
+  String get gatherResource => '资源';
 
   @override
   String gatherXp(int xp, int next) {
-    return '$xp / $next XP';
+    return '$xp / $next 经验';
   }
 
   @override
-  String get gatherMax => 'Max level';
+  String get gatherMax => '最高等级';
 
   @override
   String gatherLocked(int level) {
-    return 'Unlocks at level $level';
+    return '$level 级解锁';
   }
 
   @override
   String gatherXpGained(String name, int xp) {
-    return '$name +$xp XP';
+    return '$name +$xp 经验';
   }
 
   @override
   String gatherLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$name达到 $level 级！';
   }
 
   @override
-  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+  String get errGatherLevel => '你的采集等级不足以采集此资源。';
 
   @override
   String startActivity(String name) {
-    return 'Start $name';
+    return '开始$name';
   }
 
   @override
-  String get collect => 'Collect';
+  String get collect => '领取';
 
   @override
-  String get abandon => 'Abandon';
+  String get abandon => '放弃';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => '取消';
 
   @override
-  String get soFar => 'Gathered so far';
+  String get soFar => '目前已采集';
 
   @override
-  String get activityDone => 'Complete — ready to collect';
+  String get activityDone => '已完成，可以领取';
 
   @override
   String remaining(String time) {
-    return '$time left';
+    return '剩余 $time';
   }
 
   @override
   String durHm(int h, String m) {
-    return '${h}h ${m}m';
+    return '$h 小时 $m 分';
   }
 
   @override
   String durM(int m) {
-    return '${m}m';
+    return '$m 分';
   }
 
   @override
   String durS(int s) {
-    return '${s}s';
+    return '$s 秒';
   }
 
   @override
-  String get collectEarlyTitle => 'Collect early?';
+  String get collectEarlyTitle => '提前领取？';
 
   @override
-  String get collectEarlyBody => 'You get what has been gathered so far and the activity ends.';
+  String get collectEarlyBody => '你将获得目前已采集的物品，活动随之结束。';
 
   @override
-  String get abandonTitle => 'Abandon activity?';
+  String get abandonTitle => '放弃活动？';
 
   @override
-  String get abandonBody => 'Everything gathered so far will be lost.';
+  String get abandonBody => '目前采集的物品都会丢失。';
 
   @override
-  String get lootCollect => 'Nice!';
+  String get lootCollect => '太好了！';
 
   @override
-  String get lootNothing => 'Nothing this time.';
+  String get lootNothing => '这次什么也没有。';
 
   @override
   String xpGain(int xp) {
-    return '+$xp XP';
+    return '+$xp 经验';
   }
 
   @override
-  String get rarityCommon => 'Common';
+  String get rarityCommon => '普通';
 
   @override
-  String get rarityUncommon => 'Uncommon';
+  String get rarityUncommon => '优秀';
 
   @override
-  String get rarityRare => 'Rare';
+  String get rarityRare => '稀有';
 
   @override
-  String get rarityEpic => 'Epic';
+  String get rarityEpic => '史诗';
 
   @override
-  String get rarityLegendary => 'Legendary';
+  String get rarityLegendary => '传说';
 
   @override
-  String get rarityMythic => 'Mythic';
+  String get rarityMythic => '神话';
 
   @override
-  String get errSlotBusy => 'Another activity is already running.';
+  String get errSlotBusy => '已有其他活动在进行。';
 
   @override
-  String get errNotActive => 'This activity has already ended.';
+  String get errNotActive => '此活动已结束。';
 
   @override
-  String get evAchievement => 'Achievement unlocked!';
+  String get evAchievement => '解锁成就！';
 
   @override
-  String get evMasteryTier => 'Mastery tier up!';
+  String get evMasteryTier => '精通阶段提升！';
 
   @override
-  String get evMarketSold => 'One of your listings sold.';
+  String get evMarketSold => '你上架的物品已售出。';
 
   @override
-  String get evMailReceived => 'You have new mail.';
+  String get evMailReceived => '你有新邮件。';
 
   @override
-  String get evPartyInvite => 'You were invited to a party.';
+  String get evPartyInvite => '你收到了队伍邀请。';
 
   @override
-  String get evGuildInvite => 'You were invited to a guild.';
+  String get evGuildInvite => '你收到了公会邀请。';
 
   @override
-  String get navBag => 'Bag';
+  String get navBag => '背包';
 
   @override
-  String get equipment => 'Equipment';
+  String get equipment => '装备';
 
   @override
-  String get bag => 'Bag';
+  String get bag => '背包';
 
   @override
   String weightKg(String cur, String cap) {
-    return '$cur/$cap kg';
+    return '$cur/$cap 千克';
   }
 
   @override
-  String get slotHelm => 'Helm';
+  String get slotHelm => '头盔';
 
   @override
-  String get slotNecklace => 'Neck';
+  String get slotNecklace => '项链';
 
   @override
-  String get slotChest => 'Chest';
+  String get slotChest => '胸甲';
 
   @override
-  String get slotGloves => 'Gloves';
+  String get slotGloves => '手套';
 
   @override
-  String get slotLegs => 'Legs';
+  String get slotLegs => '腿甲';
 
   @override
-  String get slotBoots => 'Boots';
+  String get slotBoots => '靴子';
 
   @override
-  String get slotMainhand => 'Main hand';
+  String get slotMainhand => '主手';
 
   @override
-  String get slotOffhand => 'Off hand';
+  String get slotOffhand => '副手';
 
   @override
-  String get slotRing => 'Ring';
+  String get slotRing => '戒指';
 
   @override
-  String get slotTrinket => 'Trinket';
+  String get slotTrinket => '饰品';
 
   @override
-  String get equip => 'Equip';
+  String get equip => '装备';
 
   @override
-  String get unequip => 'Unequip';
+  String get unequip => '卸下';
 
   @override
-  String get sell => 'Sell';
+  String get sell => '出售';
 
   @override
-  String get sortLabel => 'Sort';
+  String get sortLabel => '排序';
 
   @override
-  String get sortSlot => 'Bag order';
+  String get sortSlot => '背包顺序';
 
   @override
-  String get sortRarity => 'Rarity';
+  String get sortRarity => '稀有度';
 
   @override
-  String get sortType => 'Type';
+  String get sortType => '类型';
 
   @override
-  String get sortName => 'Name';
+  String get sortName => '名称';
 
   @override
-  String get sortValue => 'Value';
+  String get sortValue => '价值';
 
   @override
   String selectedCount(int count) {
-    return '$count selected';
+    return '已选择 $count 个';
   }
 
   @override
-  String get selectAll => 'Select all';
+  String get selectAll => '全选';
 
   @override
-  String get clearSelection => 'Clear selection';
+  String get clearSelection => '清除选择';
 
   @override
   String sellSelectedTitle(int count) {
-    return 'Sell $count items?';
+    return '出售 $count 件物品？';
   }
 
   @override
   String destroySelectedTitle(int count) {
-    return 'Destroy $count items?';
+    return '销毁 $count 件物品？';
   }
 
   @override
-  String get deleteEntry => 'Delete';
+  String get deleteEntry => '删除';
 
   @override
   String craftHowMany(String name) {
-    return 'How many $name?';
+    return '制作多少个$name？';
   }
 
   @override
   String craftCount(int count) {
-    return 'Craft ×$count';
+    return '制作 ×$count';
   }
 
   @override
-  String get destroy => 'Destroy';
+  String get destroy => '销毁';
 
   @override
   String sellTitle(String name) {
-    return 'Sell $name?';
+    return '出售$name？';
   }
 
   @override
-  String get sellBody => 'You can buy it back from the vendor for 2 hours.';
+  String get sellBody => '2 小时内可从商人处购回。';
 
   @override
   String destroyTitle(String name) {
-    return 'Destroy $name?';
+    return '销毁$name？';
   }
 
   @override
-  String get destroyBody => 'This cannot be undone.';
+  String get destroyBody => '此操作无法撤销。';
 
   @override
-  String get soldFor => 'Sold for';
+  String get soldFor => '售价';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => '数量';
 
   @override
-  String get requiresLevel => 'Requires level';
+  String get requiresLevel => '需要等级';
 
   @override
-  String get weight => 'Weight';
+  String get weight => '重量';
 
   @override
   String weightGrams(int g) {
-    return '$g g';
+    return '$g 克';
   }
 
   @override
-  String get sellValue => 'Sells for';
+  String get sellValue => '出售价格';
 
   @override
-  String get bound => 'Soulbound';
+  String get bound => '灵魂绑定';
 
   @override
-  String get itemLocked => 'This item is held by a trade, mail or listing.';
+  String get itemLocked => '此物品正被交易、邮件或上架占用。';
 
   @override
-  String get errBagFull => 'Your bag is full.';
+  String get errBagFull => '背包已满。';
 
   @override
-  String get errItemLocked => 'This item is locked.';
+  String get errItemLocked => '此物品已锁定。';
 
   @override
-  String get errClassRestriction => 'Your class can\'t use this item.';
+  String get errClassRestriction => '你的职业无法使用此物品。';
 
   @override
-  String get errLevelRequirement => 'Your level is too low.';
+  String get errLevelRequirement => '你的等级太低。';
 
   @override
-  String get errNotEquippable => 'This item can\'t be equipped.';
+  String get errNotEquippable => '此物品无法装备。';
 
   @override
-  String get navAdventure => 'Adventure';
+  String get navAdventure => '冒险';
 
   @override
-  String get segHunt => 'Hunt';
+  String get segHunt => '狩猎';
 
   @override
-  String get segDungeon => 'Dungeon';
+  String get segDungeon => '地下城';
 
   @override
-  String get segTravel => 'Travel';
+  String get segTravel => '旅行';
 
   @override
-  String get huntChoose => 'Choose your prey';
+  String get huntChoose => '选择猎物';
 
   @override
-  String get startHunt => 'Start hunt';
+  String get startHunt => '开始狩猎';
 
   @override
-  String get huntDone => 'Hunt over — collect your spoils';
+  String get huntDone => '狩猎结束，领取战利品';
 
   @override
-  String get huntEarlyBody => 'You keep the fights won so far and the hunt ends.';
+  String get huntEarlyBody => '你将保留已获胜的战斗，狩猎随之结束。';
 
   @override
   String mobStats(int hp, int atk, int def) {
-    return 'HP $hp · ATK $atk · DEF $def';
+    return '生命 $hp · 攻击 $atk · 防御 $def';
   }
 
   @override
   String huntSummary(int won, int lost) {
-    return '$won won · $lost lost';
+    return '胜 $won · 负 $lost';
   }
 
   @override
   String levelUp(int level) {
-    return 'Level up! Now level $level';
+    return '升级！现在是 $level 级';
   }
 
   @override
   String levelReq(int level) {
-    return 'Lvl $level+';
+    return '$level 级+';
   }
 
   @override
   String dungeonEncounters(int count, String boss) {
-    return '$count fights · boss $boss';
+    return '$count 场战斗 · 首领 $boss';
   }
 
   @override
-  String get dungeonEnter => 'Enter';
+  String get dungeonEnter => '进入';
 
   @override
-  String get dungeonDone => 'Run complete — claim rewards';
+  String get dungeonDone => '探索完成，领取奖励';
 
   @override
-  String get dungeonWaitHint => 'Rewards unlock when the run ends.';
+  String get dungeonWaitHint => '探索结束后解锁奖励。';
 
   @override
-  String get dungeonCleared => 'Cleared!';
+  String get dungeonCleared => '通关！';
 
   @override
-  String get dungeonFailed => 'Party wiped';
+  String get dungeonFailed => '队伍全灭';
 
   @override
-  String get bossKilled => 'Boss defeated';
+  String get bossKilled => '首领已击败';
 
   @override
-  String get bonus => 'Clear bonus';
+  String get bonus => '通关奖励';
 
   @override
-  String get youAreIn => 'You are in';
+  String get youAreIn => '你位于';
 
   @override
-  String get routes => 'Routes';
+  String get routes => '路线';
 
   @override
-  String get noRoutes => 'No routes from here.';
+  String get noRoutes => '此处没有路线。';
 
   @override
-  String get travelTo => 'Go';
+  String get travelTo => '出发';
 
   @override
   String travelling(String place) {
-    return 'Travelling to $place';
+    return '正在前往$place';
   }
 
   @override
-  String get arrive => 'Arrive';
+  String get arrive => '到达';
 
   @override
-  String get arrived => 'You have arrived';
+  String get arrived => '你已到达';
 
   @override
-  String get cancelTravel => 'Turn back';
+  String get cancelTravel => '返回';
 
   @override
-  String get kindCity => 'City';
+  String get kindCity => '城市';
 
   @override
-  String get kindZone => 'Zone';
+  String get kindZone => '区域';
 
   @override
-  String get kindWilderness => 'Wilderness';
+  String get kindWilderness => '荒野';
 
   @override
-  String get kindDungeon => 'Dungeon';
+  String get kindDungeon => '地下城';
 
   @override
-  String get kindContinent => 'Continent';
+  String get kindContinent => '大陆';
 
   @override
-  String get safeZone => 'safe';
+  String get safeZone => '安全';
 
   @override
-  String get errBusy => 'Something is already in progress.';
+  String get errBusy => '已有事项在进行。';
 
   @override
-  String get errNotReady => 'Not finished yet.';
+  String get errNotReady => '尚未完成。';
 
   @override
-  String get errWeeklyLocked => 'You already cleared this dungeon this week.';
+  String get errWeeklyLocked => '你本周已通关此地下城。';
 
   @override
-  String get errNoRoute => 'There is no direct route there.';
+  String get errNoRoute => '没有直达那里的路线。';
 
   @override
-  String get navWorkshop => 'Workshop';
+  String get navWorkshop => '工坊';
 
   @override
-  String get segCraft => 'Craft';
+  String get segCraft => '制作';
 
   @override
-  String get segShop => 'Shop';
+  String get segShop => '商店';
 
   @override
-  String get profBlacksmithing => 'Blacksmithing';
+  String get profBlacksmithing => '锻造';
 
   @override
-  String get profAlchemy => 'Alchemy';
+  String get profAlchemy => '炼金';
 
   @override
-  String get profCooking => 'Cooking';
+  String get profCooking => '烹饪';
 
   @override
-  String get learn => 'Learn';
+  String get learn => '学习';
 
   @override
   String recipeCount(int count) {
-    return '$count recipes';
+    return '$count 个配方';
   }
 
   @override
-  String get itemType => 'Type';
+  String get itemType => '类型';
 
   @override
-  String get stackSize => 'Stack';
+  String get stackSize => '堆叠';
 
   @override
-  String get skillXpReward => 'Skill XP';
+  String get skillXpReward => '技能经验';
 
   @override
-  String get learnHint => 'Learn this profession to unlock its recipes.';
+  String get learnHint => '学习此专业以解锁配方。';
 
   @override
-  String get craft => 'Craft';
+  String get craft => '制作';
 
   @override
   String crafted(String name, int count) {
-    return 'Crafted $name ×$count';
+    return '已制作 $name ×$count';
   }
 
   @override
   String skillUp(String profession, int level) {
-    return '$profession is now level $level';
+    return '$profession现在是 $level 级';
   }
 
   @override
   String requiresSkill(int level) {
-    return 'Needs skill $level';
+    return '需要技能 $level';
   }
 
   @override
-  String get buy => 'Buy';
+  String get buy => '购买';
 
   @override
   String bought(String name) {
-    return 'Bought $name';
+    return '已购买$name';
   }
 
   @override
-  String get buybacks => 'Buy back';
+  String get buybacks => '购回';
 
   @override
-  String get buybackHint => 'Items you sold can be bought back for 2 hours.';
+  String get buybackHint => '已售出的物品可在 2 小时内购回。';
 
   @override
-  String get errInsufficientGold => 'Not enough gold.';
+  String get errInsufficientGold => '金币不足。';
 
   @override
   String get errInsufficientMaterials => '材料不足。';
 
   @override
-  String get errSkillTooLow => 'Your skill is too low for this recipe.';
+  String get errSkillTooLow => '你的技能不足以使用此配方。';
 
   @override
-  String get errProfessionNotLearned => 'Learn the profession first.';
+  String get errProfessionNotLearned => '请先学习该专业。';
 
   @override
-  String get errPriceChanged => 'The price changed — check it and try again.';
+  String get errPriceChanged => '价格已变动，请确认后重试。';
 
   @override
-  String get errCannotSell => 'This item can\'t be sold.';
+  String get errCannotSell => '此物品无法出售。';
 
   @override
-  String get errBuybackExpired => 'The buy-back window has closed.';
+  String get errBuybackExpired => '购回期限已过。';
 
   @override
-  String get segMarket => 'Market';
+  String get segMarket => '市场';
 
   @override
-  String get classWeapon => 'Weapons';
+  String get classWeapon => '武器';
 
   @override
-  String get classArmor => 'Armor';
+  String get classArmor => '护甲';
 
   @override
-  String get classConsumable => 'Consumables';
+  String get classConsumable => '消耗品';
 
   @override
-  String get classMaterial => 'Materials';
+  String get classMaterial => '材料';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => '全部';
 
   @override
-  String get sortCheapest => 'Cheapest';
+  String get sortCheapest => '最便宜';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => '最新';
 
   @override
-  String get marketEmpty => 'No listings match.';
+  String get marketEmpty => '没有符合条件的商品。';
 
   @override
   String listingLine(String seller, String price) {
-    return '$seller · $price each';
+    return '$seller · 单价 $price';
   }
 
   @override
@@ -823,956 +823,950 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String myListings(int count) {
-    return 'My listings ($count)';
+    return '我的上架（$count）';
   }
 
   @override
-  String get cancelListing => 'Cancel listing';
+  String get cancelListing => '下架';
 
   @override
   String cancelListingTitle(String name) {
-    return 'Cancel $name?';
+    return '下架$name？';
   }
 
   @override
-  String get cancelListingBody =>
-      'The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.';
+  String get cancelListingBody => '物品将返回背包。上架费仅在前 6 小时内部分退还。';
 
   @override
   String buyListingTitle(String name) {
-    return 'Buy $name?';
+    return '购买$name？';
   }
 
   @override
   String buyListingBody(String price, String seller) {
-    return 'Pay $price to $seller.';
+    return '向$seller支付 $price。';
   }
 
   @override
-  String get listOnMarket => 'List on market';
+  String get listOnMarket => '上架到市场';
 
   @override
   String listed(String name) {
-    return '$name listed on the market';
+    return '$name已上架市场';
   }
 
   @override
   String quantityOf(int count, int max) {
-    return 'Quantity: $count of $max';
+    return '数量：$count / $max';
   }
 
   @override
-  String get unitPrice => 'Price per item';
+  String get unitPrice => '单价';
 
   @override
   String suggestedPrice(String price) {
-    return 'Market price: $price';
+    return '市场价：$price';
   }
 
   @override
-  String get listingFee => 'Listing fee (non-refundable)';
+  String get listingFee => '上架费（不可退还）';
 
   @override
-  String get youReceive => 'You receive when sold';
+  String get youReceive => '售出后到手';
 
   @override
-  String get errPriceOutOfRange => 'That price is outside the allowed range.';
+  String get errPriceOutOfRange => '该价格超出允许范围。';
 
   @override
-  String get errListingCap => 'You have too many active listings.';
+  String get errListingCap => '你的在售商品过多。';
 
   @override
-  String get errSelfBuy => 'You can\'t buy your own listing.';
+  String get errSelfBuy => '不能购买自己的商品。';
 
   @override
-  String get errListingUnavailable => 'This listing is no longer available.';
+  String get errListingUnavailable => '此商品已不可用。';
 
   @override
-  String get errNotTradable => 'This item can\'t be traded.';
+  String get errNotTradable => '此物品无法交易。';
 
   @override
-  String get social => 'Social';
+  String get social => '社交';
 
   @override
-  String get tabChat => 'Chat';
+  String get tabChat => '聊天';
 
   @override
-  String get tabFriends => 'Friends';
+  String get tabFriends => '好友';
 
   @override
-  String get tabMail => 'Mail';
+  String get tabMail => '邮件';
 
   @override
-  String get chanGlobal => 'World';
+  String get chanGlobal => '世界';
 
   @override
-  String get chanGuild => 'Guild';
+  String get chanGuild => '公会';
 
   @override
-  String get chanParty => 'Party';
+  String get chanParty => '队伍';
 
   @override
-  String get chatEmpty => 'No messages yet. Say hello!';
+  String get chatEmpty => '还没有消息，打个招呼吧！';
 
   @override
   String chatHint(String channel) {
-    return 'Message $channel';
+    return '发送到$channel';
   }
 
   @override
-  String get send => 'Send';
+  String get send => '发送';
 
   @override
-  String get addFriend => 'Add';
+  String get addFriend => '添加';
 
   @override
   String friendAdded(String name) {
-    return 'You and $name are now friends';
+    return '你和$name已成为好友';
   }
 
   @override
   String friendRequested(String name) {
-    return 'Friend request sent to $name';
+    return '已向$name发送好友请求';
   }
 
   @override
-  String get friendRequests => 'Friend requests';
+  String get friendRequests => '好友请求';
 
   @override
   String friendsCount(int count) {
-    return 'Friends ($count)';
+    return '好友（$count）';
   }
 
   @override
-  String get noFriends => 'No friends yet — add someone by name.';
+  String get noFriends => '还没有好友，通过名称添加吧。';
 
   @override
-  String get more => 'More';
+  String get more => '更多';
 
   @override
-  String get whisper => 'Whisper';
+  String get whisper => '私聊';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '移除';
 
   @override
-  String get block => 'Block';
+  String get block => '屏蔽';
 
   @override
-  String get unblock => 'Unblock';
+  String get unblock => '取消屏蔽';
 
   @override
-  String get blockedList => 'Blocked';
+  String get blockedList => '已屏蔽';
 
   @override
   String removeFriendTitle(String name) {
-    return 'Remove $name?';
+    return '移除$name？';
   }
 
   @override
-  String get removeFriendBody => 'You can send a new friend request later.';
+  String get removeFriendBody => '之后可以重新发送好友请求。';
 
   @override
   String blockTitle(String name) {
-    return 'Block $name?';
+    return '屏蔽$name？';
   }
 
   @override
-  String get blockBody =>
-      'They can\'t whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.';
+  String get blockBody => '对方无法私聊你，其聊天内容会被隐藏，邮件也会被丢弃，好友关系同时解除。';
 
   @override
-  String get accept => 'Accept';
+  String get accept => '接受';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '拒绝';
 
   @override
-  String get newMail => 'Write mail';
+  String get newMail => '写邮件';
 
   @override
-  String get inboxEmpty => 'Your mailbox is empty.';
+  String get inboxEmpty => '邮箱是空的。';
 
   @override
-  String get noSubject => '(no subject)';
+  String get noSubject => '（无主题）';
 
   @override
   String mailFrom(String name) {
-    return 'From $name';
+    return '来自$name';
   }
 
   @override
-  String get attachments => 'Attachments';
+  String get attachments => '附件';
 
   @override
-  String get claim => 'Take attachments';
+  String get claim => '领取附件';
 
   @override
-  String get mailClaimed => 'Attachments moved to your bag and wallet';
+  String get mailClaimed => '附件已移入背包和钱包';
 
   @override
-  String get deleteMailTitle => 'Delete this mail?';
+  String get deleteMailTitle => '删除这封邮件？';
 
   @override
-  String get deleteMailBody => 'Deleted mail can\'t be recovered.';
+  String get deleteMailBody => '删除的邮件无法恢复。';
 
   @override
   String mailSent(String postage) {
-    return 'Mail sent (postage $postage)';
+    return '邮件已发送（邮资 $postage）';
   }
 
   @override
-  String get mailTo => 'To (character name)';
+  String get mailTo => '收件人（角色名）';
 
   @override
-  String get mailSubject => 'Subject';
+  String get mailSubject => '主题';
 
   @override
-  String get mailBody => 'Message';
+  String get mailBody => '内容';
 
   @override
-  String get attachGold => 'Attach gold';
+  String get attachGold => '附加金币';
 
   @override
-  String get errAlreadyFriends => 'You\'re already friends.';
+  String get errAlreadyFriends => '你们已经是好友。';
 
   @override
-  String get errAlreadyRequested => 'A friend request is already pending.';
+  String get errAlreadyRequested => '好友请求正在等待处理。';
 
   @override
-  String get errBlocked => 'You can\'t interact with this player.';
+  String get errBlocked => '你无法与此玩家互动。';
 
   @override
-  String get errFriendCap => 'Your friend list is full.';
+  String get errFriendCap => '好友列表已满。';
 
   @override
-  String get errTargetNotFound => 'No character with that name.';
+  String get errTargetNotFound => '没有这个名称的角色。';
 
   @override
-  String get errSelfTarget => 'You can\'t target yourself.';
+  String get errSelfTarget => '不能以自己为目标。';
 
   @override
-  String get errInboxFull => 'Their mailbox is full.';
+  String get errInboxFull => '对方邮箱已满。';
 
   @override
-  String get errTooLong => 'That\'s too long.';
+  String get errTooLong => '内容太长。';
 
   @override
-  String get errEmpty => 'Write something first.';
+  String get errEmpty => '请先输入内容。';
 
   @override
-  String get errNotInChannel => 'You\'re not in that group.';
+  String get errNotInChannel => '你不在该群组中。';
 
   @override
-  String get errMuted => 'You are muted and can\'t chat right now.';
+  String get errMuted => '你已被禁言，暂时无法聊天。';
 
   @override
-  String get errHasAttachments => 'Take the attachments before deleting.';
+  String get errHasAttachments => '删除前请先领取附件。';
 
   @override
-  String get useItem => 'Use';
+  String get useItem => '使用';
 
   @override
   String restoresHp(int amount) {
-    return 'Restores $amount HP';
+    return '恢复 $amount 生命';
   }
 
   @override
   String usedItem(String name, int hp, int max) {
-    return 'Used $name · HP $hp/$max';
+    return '已使用$name · 生命 $hp/$max';
   }
 
   @override
-  String get errHpFull => 'Your health is already full.';
+  String get errHpFull => '生命值已满。';
 
   @override
-  String get errInCombat => 'Finish your hunt or dungeon run first.';
+  String get errInCombat => '请先结束狩猎或地下城探索。';
 
   @override
-  String get errNotUsable => 'This item can\'t be used.';
+  String get errNotUsable => '此物品无法使用。';
 
   @override
-  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+  String get errTooWounded => '你伤势过重无法战斗。请休息或喝药水。';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => '忘记密码？';
 
   @override
-  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+  String get resetHint => '输入账号邮箱，我们会发送设置新密码的链接。';
 
   @override
-  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+  String get resetSent => '如果该邮箱存在账号，重置链接已发出，1 小时后失效。';
 
   @override
-  String get sendLink => 'Send link';
+  String get sendLink => '发送链接';
 
   @override
   String get close => '关闭';
 
   @override
-  String get changePassword => 'Change password';
+  String get changePassword => '修改密码';
 
   @override
-  String get currentPassword => 'Current password';
+  String get currentPassword => '当前密码';
 
   @override
-  String get newPassword => 'New password';
+  String get newPassword => '新密码';
 
   @override
-  String get save => 'Save';
+  String get save => '保存';
 
   @override
-  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+  String get passwordChanged => '密码已修改，其他设备已退出登录。';
 
   @override
-  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+  String get verifyEmailBanner => '请确认你的邮箱地址。';
 
   @override
-  String get resend => 'Resend';
+  String get resend => '重新发送';
 
   @override
-  String get verificationSent => 'Verification e-mail sent.';
+  String get verificationSent => '验证邮件已发送。';
 
   @override
-  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+  String get errEmailNotVerified => '创建角色前请先确认邮箱。';
 
   @override
-  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+  String get errAlreadyVerified => '你的邮箱已确认。';
 
   @override
-  String get tabParty => 'Party';
+  String get tabParty => '队伍';
 
   @override
-  String get tabGuild => 'Guild';
+  String get tabGuild => '公会';
 
   @override
-  String get invite => 'Invite';
+  String get invite => '邀请';
 
   @override
   String invitedBy(String name) {
-    return 'Invited by $name';
+    return '$name邀请了你';
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
+  String get noParty => '你不在队伍中。邀请他人即可组队（2–5 人）。';
 
   @override
-  String get createParty => 'Create party';
+  String get createParty => '创建队伍';
 
   @override
-  String get pendingInvites => 'Invitations';
+  String get pendingInvites => '邀请';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Party ($count/$cap)';
+    return '队伍（$count/$cap）';
   }
 
   @override
-  String get makeLeader => 'Make leader';
+  String get makeLeader => '设为队长';
 
   @override
-  String get kick => 'Remove';
+  String get kick => '移出';
 
   @override
-  String get leave => 'Leave';
+  String get leave => '离开';
 
   @override
-  String get disband => 'Disband';
+  String get disband => '解散';
 
   @override
-  String get leavePartyTitle => 'Leave the party?';
+  String get leavePartyTitle => '离开队伍？';
 
   @override
-  String get leavePartyBody =>
-      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
+  String get leavePartyBody => '如果你是队长，由资历最久的成员接任。只剩一人时队伍解散。';
 
   @override
-  String get disbandPartyTitle => 'Disband the party?';
+  String get disbandPartyTitle => '解散队伍？';
 
   @override
-  String get disbandPartyBody => 'Everyone is removed from the party.';
+  String get disbandPartyBody => '所有人都会离开队伍。';
 
   @override
-  String get rankLeader => 'Leader';
+  String get rankLeader => '会长';
 
   @override
-  String get rankOfficer => 'Officer';
+  String get rankOfficer => '干部';
 
   @override
-  String get rankVeteran => 'Veteran';
+  String get rankVeteran => '资深成员';
 
   @override
-  String get rankMember => 'Member';
+  String get rankMember => '成员';
 
   @override
-  String get rankInitiate => 'Initiate';
+  String get rankInitiate => '新人';
 
   @override
-  String get createGuild => 'Found a guild';
+  String get createGuild => '创建公会';
 
   @override
   String createGuildBody(String fee) {
-    return 'Founding a guild costs $fee.';
+    return '创建公会需要 $fee。';
   }
 
   @override
   String createGuildFee(String fee) {
-    return 'Found guild ($fee)';
+    return '创建公会（$fee）';
   }
 
   @override
-  String get guildName => 'Guild name';
+  String get guildName => '公会名称';
 
   @override
-  String get guildTag => 'Tag';
+  String get guildTag => '标签';
 
   @override
-  String get guildTagHint => '2–5 letters or digits';
+  String get guildTagHint => '2–5 个字母或数字';
 
   @override
   String guildMembers(int count, int cap) {
-    return '$count/$cap members';
+    return '成员 $count/$cap';
   }
 
   @override
   String disbandScheduled(String time) {
-    return 'Guild disbands in $time';
+    return '公会将在 $time 后解散';
   }
 
   @override
-  String get motd => 'Message of the day';
+  String get motd => '每日公告';
 
   @override
-  String get editMotd => 'Edit message of the day';
+  String get editMotd => '编辑每日公告';
 
   @override
-  String get setRank => 'Change rank';
+  String get setRank => '更改职位';
 
   @override
   String setRankFor(String name) {
-    return 'New rank for $name';
+    return '$name的新职位';
   }
 
   @override
   String transferTitle(String name) {
-    return 'Make $name guild leader?';
+    return '让$name成为会长？';
   }
 
   @override
-  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+  String get transferBody => '你将成为干部，且无法自行撤销。';
 
   @override
   String kickTitle(String name) {
-    return 'Remove $name from the guild?';
+    return '将$name移出公会？';
   }
 
   @override
-  String get leaveGuildTitle => 'Leave the guild?';
+  String get leaveGuildTitle => '离开公会？';
 
   @override
-  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+  String get leaveGuildBody => '重新加入需要新的邀请。';
 
   @override
-  String get disbandGuildTitle => 'Disband the guild?';
+  String get disbandGuildTitle => '解散公会？';
 
   @override
-  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+  String get disbandGuildBody => '公会将在 48 小时后解散，在此之前可以取消。';
 
   @override
-  String get cancelDisband => 'Cancel disbanding';
+  String get cancelDisband => '取消解散';
 
   @override
-  String get errAlreadyInGroup => 'They\'re already in a group.';
+  String get errAlreadyInGroup => '对方已在群组中。';
 
   @override
-  String get errNotLeader => 'Only the leader can do that.';
+  String get errNotLeader => '只有首领可以这样做。';
 
   @override
-  String get errGroupFull => 'The group is full.';
+  String get errGroupFull => '群组已满。';
 
   @override
-  String get errInviteInvalid => 'That invitation has expired.';
+  String get errInviteInvalid => '邀请已过期。';
 
   @override
-  String get errAlreadyInvited => 'An invitation is already pending.';
+  String get errAlreadyInvited => '邀请正在等待处理。';
 
   @override
-  String get errGuildForbidden => 'Your rank can\'t do that.';
+  String get errGuildForbidden => '你的职位无法这样做。';
 
   @override
-  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+  String get errLeaderCannotLeave => '请先移交会长或解散公会。';
 
   @override
-  String get errInvalidGuildName => '3–24 letters or digits.';
+  String get errInvalidGuildName => '3–24 个字母或数字。';
 
   @override
-  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+  String get errInvalidTag => '标签必须是 2–5 个字母或数字。';
 
   @override
-  String get errTagTaken => 'That tag is taken.';
+  String get errTagTaken => '该标签已被占用。';
 
   @override
-  String get progress => 'Achievements & mastery';
+  String get progress => '成就与精通';
 
   @override
-  String get tabAchievements => 'Achievements';
+  String get tabAchievements => '成就';
 
   @override
-  String get tabMastery => 'Mastery';
+  String get tabMastery => '精通';
 
   @override
-  String get tabReputation => 'Reputation';
+  String get tabReputation => '声望';
 
   @override
-  String get tabTitles => 'Titles';
+  String get tabTitles => '称号';
 
   @override
   String achievementPoints(int points) {
-    return '$points achievement points';
+    return '$points 成就点数';
   }
 
   @override
   String pointsShort(int points) {
-    return '$points pts';
+    return '$points 点';
   }
 
   @override
   String rewardTitle(String title) {
-    return 'Title: $title';
+    return '称号：$title';
   }
 
   @override
   String masteryTier(int tier, int max) {
-    return 'Tier $tier/$max';
+    return '阶段 $tier/$max';
   }
 
   @override
   String repDailyLeft(int amount) {
-    return '+$amount today';
+    return '今日 +$amount';
   }
 
   @override
-  String get noTitle => 'No title';
+  String get noTitle => '无称号';
 
   @override
-  String get noTitlesYet => 'Titles unlock through achievements.';
+  String get noTitlesYet => '称号通过成就解锁。';
 
   @override
-  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+  String get errTitleNotOwned => '你尚未解锁该称号。';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => '通知';
 
   @override
-  String get markAllRead => 'Mark all as read';
+  String get markAllRead => '全部标为已读';
 
   @override
-  String get inboxNothing => 'No notifications yet.';
+  String get inboxNothing => '还没有通知。';
 
   @override
-  String get notifSettings => 'Notification settings';
+  String get notifSettings => '通知设置';
 
   @override
-  String get muteAll => 'Pause push notifications';
+  String get muteAll => '暂停推送通知';
 
   @override
-  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+  String get muteHint => '暂停 24 小时，收件箱仍会接收。';
 
   @override
   String mutedFor(String time) {
-    return 'Paused for $time';
+    return '已暂停 $time';
   }
 
   @override
-  String get modePushInbox => 'Push + inbox';
+  String get modePushInbox => '推送 + 收件箱';
 
   @override
-  String get modeInbox => 'Inbox only';
+  String get modeInbox => '仅收件箱';
 
   @override
-  String get modeSilent => 'Silent';
+  String get modeSilent => '静音';
 
   @override
-  String get modeOff => 'Off';
+  String get modeOff => '关闭';
 
   @override
-  String get nkActivity => 'Activity finished';
+  String get nkActivity => '活动已结束';
 
   @override
-  String get nkDungeon => 'Dungeon run finished';
+  String get nkDungeon => '地下城探索已结束';
 
   @override
-  String get nkTravel => 'Arrived';
+  String get nkTravel => '已到达';
 
   @override
-  String get nkWorldEvent => 'World event started';
+  String get nkWorldEvent => '世界事件已开始';
 
   @override
-  String get nkMarketSold => 'Item sold';
+  String get nkMarketSold => '物品已售出';
 
   @override
-  String get nkMail => 'New mail';
+  String get nkMail => '新邮件';
 
   @override
-  String get nkPartyInvite => 'Party invitation';
+  String get nkPartyInvite => '队伍邀请';
 
   @override
-  String get nkGuildInvite => 'Guild invitation';
+  String get nkGuildInvite => '公会邀请';
 
   @override
-  String get nkAchievement => 'Achievement unlocked';
+  String get nkAchievement => '成就已解锁';
 
   @override
-  String get nkSystem => 'Announcement';
+  String get nkSystem => '公告';
 
   @override
   String timeAgo(String time) {
-    return '$time ago';
+    return '$time前';
   }
 
   @override
-  String get segEvents => 'Events';
+  String get segEvents => '活动';
 
   @override
-  String get eventsEmpty => 'No world events scheduled right now.';
+  String get eventsEmpty => '目前没有安排世界事件。';
 
   @override
-  String get worldBoss => 'World boss';
+  String get worldBoss => '世界首领';
 
   @override
-  String get invasion => 'Invasion';
+  String get invasion => '入侵';
 
   @override
   String startsIn(String time) {
-    return 'Starts in $time';
+    return '$time后开始';
   }
 
   @override
   String endsIn(String time) {
-    return 'Ends in $time';
+    return '$time后结束';
   }
 
   @override
   String regionOnly(String region) {
-    return '$region only';
+    return '仅限$region';
   }
 
   @override
-  String get eventGoal => 'Goal';
+  String get eventGoal => '目标';
 
   @override
-  String get enlist => 'Enlist';
+  String get enlist => '报名';
 
   @override
-  String get enlistHint =>
-      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+  String get enlistHint => '报名时会锁定你当前的战力。活动进行的每一分钟都会计分，结束时发放奖励。';
 
   @override
   String enlistedPower(int power) {
-    return 'Enlisted · power $power';
+    return '已报名 · 战力 $power';
   }
 
   @override
   String myContribution(int score, int tier) {
-    return 'Your score $score · reward tier $tier';
+    return '你的积分 $score · 奖励阶段 $tier';
   }
 
   @override
-  String get eventSucceeded => 'Victory';
+  String get eventSucceeded => '胜利';
 
   @override
-  String get eventFailed => 'Failed';
+  String get eventFailed => '失败';
 
   @override
   String tokenBalance(int tokens) {
-    return '$tokens event tokens';
+    return '$tokens 活动代币';
   }
 
   @override
   String claimDaily(int tokens) {
-    return 'Claim $tokens';
+    return '领取 $tokens';
   }
 
   @override
-  String get claimedToday => 'Claimed';
+  String get claimedToday => '已领取';
 
   @override
   String eventTokensGained(int tokens) {
-    return '+$tokens event tokens';
+    return '+$tokens 活动代币';
   }
 
   @override
-  String get errEventNotOpen => 'Enlistment for this event is closed.';
+  String get errEventNotOpen => '此活动的报名已关闭。';
 
   @override
-  String get errWrongRegion => '这只怪物在其他区域。请先前往那里。';
+  String get errWrongRegion => '请先前往活动所在地区。';
 
   @override
-  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+  String get errAlreadyEnlisted => '你已报名。';
 
   @override
-  String get errAlreadyClaimed => 'Already claimed today.';
+  String get errAlreadyClaimed => '今天已领取。';
 
   @override
-  String get errEventNotActive => 'This event isn\'t running.';
+  String get errEventNotActive => '此活动未在进行。';
 
   @override
   String gatherYield(String activity) {
-    return '$activity yield';
+    return '$activity产量';
   }
 
   @override
   String perHour(String value) {
-    return '$value/h';
+    return '$value/小时';
   }
 
   @override
-  String get quests => 'Quests';
+  String get quests => '任务';
 
   @override
-  String get questsInProgress => 'In progress';
+  String get questsInProgress => '进行中';
 
   @override
-  String get questsNoneOpen => 'No open quests. Pick one below.';
+  String get questsNoneOpen => '没有进行中的任务，请在下方选择。';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => '主线';
 
   @override
-  String get questsSide => 'Side quests';
+  String get questsSide => '支线任务';
 
   @override
-  String get questsDaily => 'Daily';
+  String get questsDaily => '每日';
 
   @override
   String resetsIn(String time) {
-    return 'Resets in $time';
+    return '$time后重置';
   }
 
   @override
-  String get turnIn => 'Turn in';
+  String get turnIn => '提交';
 
   @override
   String questRewarded(String rewards) {
-    return 'Quest complete: $rewards';
+    return '任务完成：$rewards';
   }
 
   @override
-  String get abandonQuestTitle => 'Abandon quest?';
+  String get abandonQuestTitle => '放弃任务？';
 
   @override
-  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+  String get abandonQuestBody => '进度会丢失，之后可以重新接取。';
 
   @override
-  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+  String get abandonDailyBody => '进度会丢失，今天无法再次接取此每日任务。';
 
   @override
   String objGather(String activity) {
-    return 'Gather ($activity)';
+    return '采集（$activity）';
   }
 
   @override
-  String get objKillAny => 'Defeat enemies';
+  String get objKillAny => '击败敌人';
 
   @override
   String objKill(String mob) {
-    return 'Defeat $mob';
+    return '击败$mob';
   }
 
   @override
-  String get objBoss => 'Defeat a boss';
+  String get objBoss => '击败首领';
 
   @override
-  String get objDungeonAny => 'Clear a dungeon';
+  String get objDungeonAny => '通关地下城';
 
   @override
   String objDungeon(String dungeon) {
-    return 'Clear $dungeon';
+    return '通关$dungeon';
   }
 
   @override
-  String get objCraftAny => 'Craft items';
+  String get objCraftAny => '制作物品';
 
   @override
   String objCraft(String item) {
-    return 'Craft $item';
+    return '制作$item';
   }
 
   @override
-  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+  String get evQuestComplete => '任务目标已完成，快去提交！';
 
   @override
-  String get errQuestLocked => 'Finish the previous story quest first.';
+  String get errQuestLocked => '请先完成上一个主线任务。';
 
   @override
-  String get errQuestTaken => 'You already took this quest.';
+  String get errQuestTaken => '你已接取此任务。';
 
   @override
-  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+  String get errQuestNotOffered => '此每日任务不在今天的任务板上。';
 
   @override
-  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+  String get errQuestCap => '进行中的任务过多，请完成或放弃一个。';
 
   @override
-  String get errQuestNotActive => 'This quest isn\'t open.';
+  String get errQuestNotActive => '此任务未开启。';
 
   @override
-  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+  String get errQuestIncomplete => '目标尚未完成。';
 
   @override
-  String get skills => 'Skills';
+  String get skills => '技能';
 
   @override
-  String get skillActive => 'Active';
+  String get skillActive => '主动';
 
   @override
-  String get skillPassive => 'Passive';
+  String get skillPassive => '被动';
 
   @override
   String skillStrike(int power) {
-    return '$power% damage';
+    return '$power% 伤害';
   }
 
   @override
   String skillHeal(int power) {
-    return 'Heals $power% HP when below half';
+    return '生命低于一半时恢复 $power% 生命';
   }
 
   @override
   String skillMp(int mp) {
-    return '$mp MP';
+    return '$mp 法力';
   }
 
   @override
   String skillCooldown(int turns) {
-    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: '每 $turns 回合', one: '每回合');
     return '$_temp0';
   }
 
   @override
-  String get termsOfService => 'Terms of Service';
+  String get termsOfService => '服务条款';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => '隐私政策';
 
   @override
-  String get accountMenu => 'Account';
+  String get accountMenu => '账号';
 
   @override
-  String get downloadMyData => 'Download my data';
+  String get downloadMyData => '下载我的数据';
 
   @override
-  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+  String get exportOpened => '下载链接已在浏览器中打开（15 分钟内有效）。';
 
   @override
-  String get linkOpenFailed => 'Could not open the link.';
+  String get linkOpenFailed => '无法打开链接。';
 
   @override
-  String get deleteAccount => 'Delete my account';
+  String get deleteAccount => '删除我的账号';
 
   @override
-  String get deleteAccountBody =>
-      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+  String get deleteAccountBody => '你的账号和所有角色将在 30 天后永久删除。在此期间重新登录可取消删除。请输入密码确认。';
 
   @override
-  String get deleteAccountConfirm => 'Delete account';
+  String get deleteAccountConfirm => '删除账号';
 
   @override
   String deleteScheduled(String date) {
-    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+    return '你的账号将于 $date 删除。如需取消，请在此之前登录。';
   }
 
   @override
-  String get deletionCancelled => 'Your account deletion request was cancelled.';
+  String get deletionCancelled => '账号删除请求已取消。';
 
   @override
-  String get support => 'Support';
+  String get support => '客服';
 
   @override
-  String get supportIntro =>
-      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+  String get supportIntro => '发现错误或账号需要帮助？给我们留言，团队会在这里回复，并向你发送通知。';
 
   @override
-  String get supportNew => 'New request';
+  String get supportNew => '新请求';
 
   @override
-  String get supportNone => 'No requests yet.';
+  String get supportNone => '还没有请求。';
 
   @override
-  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+  String get supportSent => '请求已收到。有回复时会通知你。';
 
   @override
-  String get supportCategory => 'Topic';
+  String get supportCategory => '主题';
 
   @override
-  String get supportSubject => 'Subject';
+  String get supportSubject => '标题';
 
   @override
-  String get supportMessage => 'What happened? Step by step if you can.';
+  String get supportMessage => '发生了什么？尽量逐步说明。';
 
   @override
-  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+  String get supportTooShort => '标题至少 3 个字符，内容至少 10 个字符。';
 
   @override
-  String get supportBug => 'Bug';
+  String get supportBug => '错误';
 
   @override
-  String get supportAccount => 'Account';
+  String get supportAccount => '账号';
 
   @override
-  String get supportAbuse => 'Abuse / report a player';
+  String get supportAbuse => '滥用 / 举报玩家';
 
   @override
-  String get supportFeedback => 'Suggestion';
+  String get supportFeedback => '建议';
 
   @override
-  String get supportOther => 'Other';
+  String get supportOther => '其他';
 
   @override
-  String get supportOpen => 'Open';
+  String get supportOpen => '待处理';
 
   @override
-  String get supportAnswered => 'Answered';
+  String get supportAnswered => '已回复';
 
   @override
-  String get supportClosed => 'Closed';
+  String get supportClosed => '已关闭';
 
   @override
-  String get supportReply => 'Team reply';
+  String get supportReply => '团队回复';
 
   @override
-  String get nkSupport => 'Support reply';
+  String get nkSupport => '客服回复';
 
   @override
-  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+  String get errServerBusy => '服务器繁忙，请几秒后重试。';
 
   @override
-  String get notifTabInbox => 'Notifications';
+  String get notifTabInbox => '通知';
 
   @override
-  String get notifTabRewards => 'Rewards';
+  String get notifTabRewards => '奖励';
 
   @override
-  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+  String get rewardsNone => '还没有奖励。采集或战斗获得的一切都会列在这里（保留 30 天）。';
 
   @override
   String rewardFromActivity(String name) {
-    return 'Gathering: $name';
+    return '采集：$name';
   }
 
   @override
   String rewardFromHunt(String name) {
-    return 'Hunt: $name';
+    return '狩猎：$name';
   }
 
   @override
   String rewardFromDungeon(String name) {
-    return 'Dungeon: $name';
+    return '地下城：$name';
   }
 
   @override
   String rewardLevelUp(int level) {
-    return 'Level $level!';
+    return '$level 级！';
   }
 
   @override

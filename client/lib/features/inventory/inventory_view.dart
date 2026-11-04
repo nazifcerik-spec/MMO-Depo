@@ -518,22 +518,31 @@ class _InventoryViewState extends State<InventoryView> {
                           icon: const Icon(Icons.account_balance_outlined, size: 18),
                           label: Text(l.bankTitle),
                         ),
-                        PopupMenuButton<BagSort>(
-                          tooltip: l.sortLabel,
-                          initialValue: _sort,
-                          onSelected: (v) => setState(() => _sort = v),
-                          itemBuilder: (_) => [
-                            for (final v in BagSort.values) PopupMenuItem(value: v, child: Text(_sortName(l, v))),
-                          ],
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: Space.xs),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.sort, size: 18, color: Palette.textSecondary),
-                                const SizedBox(width: Space.xs),
-                                Text(_sortName(l, _sort), style: text.bodySmall),
-                              ],
+                        Flexible(
+                          child: PopupMenuButton<BagSort>(
+                            tooltip: l.sortLabel,
+                            initialValue: _sort,
+                            onSelected: (v) => setState(() => _sort = v),
+                            itemBuilder: (_) => [
+                              for (final v in BagSort.values) PopupMenuItem(value: v, child: Text(_sortName(l, v))),
+                            ],
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: Space.xs),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.sort, size: 18, color: Palette.textSecondary),
+                                  const SizedBox(width: Space.xs),
+                                  Flexible(
+                                    child: Text(
+                                      _sortName(l, _sort),
+                                      style: text.bodySmall,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

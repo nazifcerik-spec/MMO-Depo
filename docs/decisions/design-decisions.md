@@ -3526,6 +3526,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-361 — Yedi dil: arayüz ve oyun içeriği tam çeviri
+
+**Context:** Kullanıcı Türkçe, İngilizce, Rusça, Korece, Çince, Japonca ve İspanyolcanın hassas desteklenmesini istedi. Arayüzde Rusça/Korece/Japonca yalnız son eklenen metinleri, İspanyolca/Çince yarısını taşıyordu; içerikte (eşya, yetenek, canavar) Rusça/Korece/Japonca hiç yoktu, İspanyolca/Çince 402 ad eksikti.
+**Decision:** Arayüz: 1155 anahtarın tamamı 7 dilde (`client/lib/l10n/`), yer tutucular birebir; `l10n_complete_test.dart` eksik anahtarı ve farklı yer tutucuyu reddeder. Rusça çekim için sayılar parantez/iki nokta ile verilir. İçerik: yeni `content/i18n/{ru,ko,ja}.yaml` (4635 ad), `es`/`zh-CN` tamamlandı. Rusçada ekipman adı isim + değişmez tamlama (`Шлем из железа`), böylece cinsiyet uyumu gerekmez; `affix.format` dile göre sıralı (ru/es `{name} {prefix} {suffix}`, ko/ja/zh önce sonek). Yetenek açıklamalarında sayılar İngilizce metinle aynı olmak zorunda. Dil başına taşma testi: 5 sekme telefonda sığar.
+**Consequences:** `ru/ko/ja.yaml` üreteçlerden gelmez, elle tutulur: yeni eşya İngilizce görünür (yedek), yeni sınıf/yetenek ise paket doğrulamasını düşürür ve çeviri ister. Kalanlar: yasal sayfalar yalnız TR/EN, e-posta şablonları ve küfür listesi TR+EN; yönetim paneli yalnız Türkçe. Çeviriler ana dili konuşan biri tarafından gözden geçirilmedi.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

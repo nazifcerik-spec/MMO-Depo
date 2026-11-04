@@ -38,6 +38,9 @@ func TestStringsLookupAndLoad(t *testing.T) {
 	s := &Strings{ByLang: map[string]map[string]string{"en": {"k": "en"}, "tr": {"k": "tr"}}}
 	require.Equal(t, "tr", s.Lookup("TR")["k"])
 	require.Equal(t, "en", s.Lookup("de")["k"], "unknown language falls back to English")
+	partial := &Strings{ByLang: map[string]map[string]string{"en": {"a": "A", "b": "B"}, "ru": {"a": "А"}}}
+	partial.fillFallbacks()
+	require.Equal(t, "B", partial.Lookup("ru")["b"], "a name a language lacks falls back to English")
 
 	dir := t.TempDir()
 	require.NoError(t, os.WriteFile(filepath.Join(dir, "en.yaml"), []byte("k: v\n"), 0o600))

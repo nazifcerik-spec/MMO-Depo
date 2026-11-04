@@ -330,6 +330,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 156. **Yönetim paneli (bitti)** — Sprint 156, DD-360. `internal/admin/panel/` (html/js/css gömülü, sıkı CSP, yalnız `textContent`), http://localhost:8080/internal/admin/panel. Sayfalar izne göre: özet, oyuncular, şikâyetler, destek, defter, pazar, lonca ve etkinlik, istemci hataları, denetim kaydı, yöneticiler; `E_STEPUP_REQUIRED` → TOTP penceresi + bir kez yeniden deneme. Yeni `GET /internal/ops/overview`, `/internal/ops/market/listings`. İlk yönetici: `cmd/adminctl`.
 
+157. **Yedi dil tam çeviri (bitti)** — Sprint 157, DD-361. Arayüz 1155 anahtar × 7 dil (`l10n_complete_test.dart`), içerik `content/i18n/{ru,ko,ja}.yaml` (elle tutulur, üreteç yazmaz; yeni eşya İngilizceye düşer, yeni sınıf/yetenek paketi reddeder) + `es`/`zh-CN` tamam. Rusça ekipman: isim + tamlama, `affix.format` dile göre. Dil başına telefona sığma testi. Kalan: yasal sayfalar TR/EN, e-posta ve küfür listesi TR+EN.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

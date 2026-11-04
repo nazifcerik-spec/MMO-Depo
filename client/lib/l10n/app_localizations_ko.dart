@@ -13,129 +13,129 @@ class AppLocalizationsKo extends AppLocalizations {
   String get appTitle => 'MeNa World';
 
   @override
-  String get tagline => 'Adventures that keep going while you\'re away.';
+  String get tagline => '접속하지 않는 동안에도 모험은 계속됩니다.';
 
   @override
-  String get emailOrUsername => 'Email or username';
+  String get emailOrUsername => '이메일 또는 사용자 이름';
 
   @override
-  String get email => 'Email';
+  String get email => '이메일';
 
   @override
-  String get username => 'Username';
+  String get username => '사용자 이름';
 
   @override
-  String get password => 'Password';
+  String get password => '비밀번호';
 
   @override
-  String get passwordConfirm => 'Confirm password';
+  String get passwordConfirm => '비밀번호 확인';
 
   @override
-  String get showPassword => 'Show password';
+  String get showPassword => '비밀번호 표시';
 
   @override
-  String get hidePassword => 'Hide password';
+  String get hidePassword => '비밀번호 숨기기';
 
   @override
-  String get login => 'Log in';
+  String get login => '로그인';
 
   @override
-  String get register => 'Create account';
+  String get register => '계정 만들기';
 
   @override
-  String get noAccount => 'New here? Create an account';
+  String get noAccount => '처음이신가요? 계정을 만드세요';
 
   @override
-  String get haveAccount => 'Already have an account? Log in';
+  String get haveAccount => '이미 계정이 있나요? 로그인';
 
   @override
-  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => '만 13세 이상이며 서비스 약관과 개인정보 처리방침에 동의합니다';
 
   @override
-  String get fieldRequired => 'Required';
+  String get fieldRequired => '필수 항목';
 
   @override
-  String get invalidEmail => 'Enter a valid email';
+  String get invalidEmail => '올바른 이메일을 입력하세요';
 
   @override
-  String get usernameRule => '3–32 letters, digits, _ or .';
+  String get usernameRule => '3~32자의 문자, 숫자, _ 또는 .';
 
   @override
-  String get passwordMin => 'At least 8 characters';
+  String get passwordMin => '8자 이상';
 
   @override
-  String get passwordMismatch => 'Passwords do not match';
+  String get passwordMismatch => '비밀번호가 일치하지 않습니다';
 
   @override
-  String get termsRequired => 'Please accept the terms to continue';
+  String get termsRequired => '계속하려면 약관에 동의하세요';
 
   @override
-  String get logout => 'Log out';
+  String get logout => '로그아웃';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '다시 시도';
 
   @override
-  String get offline => 'Can\'t reach the server. Check your connection.';
+  String get offline => '서버에 연결할 수 없습니다. 연결 상태를 확인하세요.';
 
   @override
-  String get characters => 'Characters';
+  String get characters => '캐릭터';
 
   @override
   String slotsUsed(int used, int cap) {
-    return '$used/$cap slots';
+    return '슬롯 $used/$cap';
   }
 
   @override
-  String get newCharacter => 'New character';
+  String get newCharacter => '새 캐릭터';
 
   @override
-  String get noCharacters => 'No characters yet. Create your first hero.';
+  String get noCharacters => '아직 캐릭터가 없습니다. 첫 영웅을 만들어 보세요.';
 
   @override
-  String get create => 'Create';
+  String get create => '만들기';
 
   @override
-  String get characterName => 'Name';
+  String get characterName => '이름';
 
   @override
   String get nameRule => '한 가지 문자로 16자 이내, 글자로 시작 (숫자와 _ 사용 가능)';
 
   @override
-  String get race => 'Race';
+  String get race => '종족';
 
   @override
-  String get characterClass => 'Class';
+  String get characterClass => '직업';
 
   @override
-  String get raceHuman => 'Human';
+  String get raceHuman => '인간';
 
   @override
-  String get raceElf => 'Elf';
+  String get raceElf => '엘프';
 
   @override
-  String get raceDwarf => 'Dwarf';
+  String get raceDwarf => '드워프';
 
   @override
-  String get raceOrc => 'Orc';
+  String get raceOrc => '오크';
 
   @override
-  String get classWarrior => 'Warrior';
+  String get classWarrior => '전사';
 
   @override
-  String get classMage => 'Mage';
+  String get classMage => '마법사';
 
   @override
-  String get classRogue => 'Rogue';
+  String get classRogue => '도적';
 
   @override
   String levelLine(int level, String cls, String race) {
-    return 'Lvl $level · $cls · $race';
+    return 'Lv.$level · $cls · $race';
   }
 
   @override
   String levelShort(int level) {
-    return 'Lvl $level';
+    return 'Lv.$level';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get energy => 'EN';
 
   @override
-  String get xp => 'XP';
+  String get xp => '경험치';
 
   @override
   String xpValue(int xp, int next) {
@@ -159,40 +159,40 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get attributes => 'Attributes';
+  String get attributes => '능력치';
 
   @override
-  String get combat => 'Combat';
+  String get combat => '전투';
 
   @override
-  String get statStr => 'STR';
+  String get statStr => '힘';
 
   @override
-  String get statAgi => 'DEX';
+  String get statAgi => '민첩';
 
   @override
-  String get statInt => 'INT';
+  String get statInt => '지능';
 
   @override
-  String get statVit => 'VIT';
+  String get statVit => '활력';
 
   @override
-  String get statCha => 'WIS';
+  String get statCha => '지혜';
 
   @override
-  String get statLuck => 'LUCK';
+  String get statLuck => '행운';
 
   @override
-  String get attack => 'Attack';
+  String get attack => '공격력';
 
   @override
-  String get defense => 'Defense';
+  String get defense => '방어력';
 
   @override
-  String get crit => 'Crit';
+  String get crit => '치명타';
 
   @override
-  String get hit => 'Hit';
+  String get hit => '명중';
 
   @override
   String percent(int value) {
@@ -200,218 +200,218 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get gold => 'Gold';
+  String get gold => '골드';
 
   @override
-  String get switchCharacter => 'Switch character';
+  String get switchCharacter => '캐릭터 변경';
 
   @override
-  String get statePendingDelete => 'Deletion pending';
+  String get statePendingDelete => '삭제 대기 중';
 
   @override
-  String get stateFrozen => 'Frozen';
+  String get stateFrozen => '동결됨';
 
   @override
-  String get errInvalidCredentials => 'Wrong email/username or password.';
+  String get errInvalidCredentials => '이메일/사용자 이름 또는 비밀번호가 올바르지 않습니다.';
 
   @override
-  String get errAccountLocked => 'Your account is temporarily locked.';
+  String get errAccountLocked => '계정이 일시적으로 잠겼습니다.';
 
   @override
-  String get errAccountBanned => 'This account has been banned.';
+  String get errAccountBanned => '이 계정은 정지되었습니다.';
 
   @override
-  String get errAccountExists => 'That email or username is already taken.';
+  String get errAccountExists => '이미 사용 중인 이메일 또는 사용자 이름입니다.';
 
   @override
-  String get errRateLimited => 'Too many attempts. Please wait a moment.';
+  String get errRateLimited => '시도 횟수가 너무 많습니다. 잠시 기다려 주세요.';
 
   @override
-  String get errNameTaken => 'That name is already taken.';
+  String get errNameTaken => '이미 사용 중인 이름입니다.';
 
   @override
-  String get errSlotCap => 'All character slots are in use.';
+  String get errSlotCap => '캐릭터 슬롯이 모두 사용 중입니다.';
 
   @override
-  String get errNotPlayable => 'This character can\'t be played right now.';
+  String get errNotPlayable => '지금은 이 캐릭터로 플레이할 수 없습니다.';
 
   @override
-  String get errSessionExpired => 'Your session expired. Please log in again.';
+  String get errSessionExpired => '세션이 만료되었습니다. 다시 로그인하세요.';
 
   @override
   String errGeneric(String code) {
-    return 'Something went wrong ($code).';
+    return '문제가 발생했습니다 ($code).';
   }
 
   @override
-  String get navCharacter => 'Character';
+  String get navCharacter => '캐릭터';
 
   @override
-  String get navActivity => 'Gather';
+  String get navActivity => '채집';
 
   @override
-  String get actMining => 'Mining';
+  String get actMining => '채광';
 
   @override
-  String get actFishing => 'Fishing';
+  String get actFishing => '낚시';
 
   @override
-  String get actWoodcutting => 'Woodcutting';
+  String get actWoodcutting => '벌목';
 
   @override
-  String get actHerbalism => 'Herbalism';
+  String get actHerbalism => '약초 채집';
 
   @override
-  String get actHunting => 'Hunting';
+  String get actHunting => '사냥';
 
   @override
-  String get activityChoose => 'Choose an activity';
+  String get activityChoose => '활동 선택';
 
   @override
-  String get durationLabel => 'Duration';
+  String get durationLabel => '시간';
 
   @override
-  String get gatherResource => 'Resource';
+  String get gatherResource => '자원';
 
   @override
   String gatherXp(int xp, int next) {
-    return '$xp / $next XP';
+    return '경험치 $xp / $next';
   }
 
   @override
-  String get gatherMax => 'Max level';
+  String get gatherMax => '최대 레벨';
 
   @override
   String gatherLocked(int level) {
-    return 'Unlocks at level $level';
+    return '레벨 $level에 해금';
   }
 
   @override
   String gatherXpGained(String name, int xp) {
-    return '$name +$xp XP';
+    return '$name 경험치 +$xp';
   }
 
   @override
   String gatherLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$name 레벨 $level 달성!';
   }
 
   @override
-  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+  String get errGatherLevel => '이 자원을 채집하기에는 채집 레벨이 낮습니다.';
 
   @override
   String startActivity(String name) {
-    return 'Start $name';
+    return '$name 시작';
   }
 
   @override
-  String get collect => 'Collect';
+  String get collect => '수령';
 
   @override
-  String get abandon => 'Abandon';
+  String get abandon => '포기';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => '취소';
 
   @override
-  String get soFar => 'Gathered so far';
+  String get soFar => '지금까지 채집한 양';
 
   @override
-  String get activityDone => 'Complete — ready to collect';
+  String get activityDone => '완료 — 수령 가능';
 
   @override
   String remaining(String time) {
-    return '$time left';
+    return '$time 남음';
   }
 
   @override
   String durHm(int h, String m) {
-    return '${h}h ${m}m';
+    return '$h시간 $m분';
   }
 
   @override
   String durM(int m) {
-    return '${m}m';
+    return '$m분';
   }
 
   @override
   String durS(int s) {
-    return '${s}s';
+    return '$s초';
   }
 
   @override
-  String get collectEarlyTitle => 'Collect early?';
+  String get collectEarlyTitle => '일찍 수령할까요?';
 
   @override
-  String get collectEarlyBody => 'You get what has been gathered so far and the activity ends.';
+  String get collectEarlyBody => '지금까지 채집한 것을 받고 활동이 종료됩니다.';
 
   @override
-  String get abandonTitle => 'Abandon activity?';
+  String get abandonTitle => '활동을 포기할까요?';
 
   @override
-  String get abandonBody => 'Everything gathered so far will be lost.';
+  String get abandonBody => '지금까지 채집한 것을 모두 잃습니다.';
 
   @override
-  String get lootCollect => 'Nice!';
+  String get lootCollect => '좋아요!';
 
   @override
-  String get lootNothing => 'Nothing this time.';
+  String get lootNothing => '이번에는 아무것도 없습니다.';
 
   @override
   String xpGain(int xp) {
-    return '+$xp XP';
+    return '경험치 +$xp';
   }
 
   @override
-  String get rarityCommon => 'Common';
+  String get rarityCommon => '일반';
 
   @override
-  String get rarityUncommon => 'Uncommon';
+  String get rarityUncommon => '고급';
 
   @override
-  String get rarityRare => 'Rare';
+  String get rarityRare => '희귀';
 
   @override
-  String get rarityEpic => 'Epic';
+  String get rarityEpic => '영웅';
 
   @override
-  String get rarityLegendary => 'Legendary';
+  String get rarityLegendary => '전설';
 
   @override
-  String get rarityMythic => 'Mythic';
+  String get rarityMythic => '신화';
 
   @override
-  String get errSlotBusy => 'Another activity is already running.';
+  String get errSlotBusy => '다른 활동이 이미 진행 중입니다.';
 
   @override
-  String get errNotActive => 'This activity has already ended.';
+  String get errNotActive => '이 활동은 이미 종료되었습니다.';
 
   @override
-  String get evAchievement => 'Achievement unlocked!';
+  String get evAchievement => '업적 달성!';
 
   @override
-  String get evMasteryTier => 'Mastery tier up!';
+  String get evMasteryTier => '숙련 단계 상승!';
 
   @override
-  String get evMarketSold => 'One of your listings sold.';
+  String get evMarketSold => '등록한 물품이 판매되었습니다.';
 
   @override
-  String get evMailReceived => 'You have new mail.';
+  String get evMailReceived => '새 우편이 도착했습니다.';
 
   @override
-  String get evPartyInvite => 'You were invited to a party.';
+  String get evPartyInvite => '파티에 초대되었습니다.';
 
   @override
-  String get evGuildInvite => 'You were invited to a guild.';
+  String get evGuildInvite => '길드에 초대되었습니다.';
 
   @override
-  String get navBag => 'Bag';
+  String get navBag => '가방';
 
   @override
-  String get equipment => 'Equipment';
+  String get equipment => '장비';
 
   @override
-  String get bag => 'Bag';
+  String get bag => '가방';
 
   @override
   String weightKg(String cur, String cap) {
@@ -419,126 +419,126 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get slotHelm => 'Helm';
+  String get slotHelm => '투구';
 
   @override
-  String get slotNecklace => 'Neck';
+  String get slotNecklace => '목걸이';
 
   @override
-  String get slotChest => 'Chest';
+  String get slotChest => '가슴';
 
   @override
-  String get slotGloves => 'Gloves';
+  String get slotGloves => '장갑';
 
   @override
-  String get slotLegs => 'Legs';
+  String get slotLegs => '다리';
 
   @override
-  String get slotBoots => 'Boots';
+  String get slotBoots => '신발';
 
   @override
-  String get slotMainhand => 'Main hand';
+  String get slotMainhand => '주무기';
 
   @override
-  String get slotOffhand => 'Off hand';
+  String get slotOffhand => '보조 무기';
 
   @override
-  String get slotRing => 'Ring';
+  String get slotRing => '반지';
 
   @override
-  String get slotTrinket => 'Trinket';
+  String get slotTrinket => '장신구';
 
   @override
-  String get equip => 'Equip';
+  String get equip => '장착';
 
   @override
-  String get unequip => 'Unequip';
+  String get unequip => '해제';
 
   @override
-  String get sell => 'Sell';
+  String get sell => '판매';
 
   @override
-  String get sortLabel => 'Sort';
+  String get sortLabel => '정렬';
 
   @override
-  String get sortSlot => 'Bag order';
+  String get sortSlot => '가방 순서';
 
   @override
-  String get sortRarity => 'Rarity';
+  String get sortRarity => '희귀도';
 
   @override
-  String get sortType => 'Type';
+  String get sortType => '종류';
 
   @override
-  String get sortName => 'Name';
+  String get sortName => '이름';
 
   @override
-  String get sortValue => 'Value';
+  String get sortValue => '가치';
 
   @override
   String selectedCount(int count) {
-    return '$count selected';
+    return '$count개 선택됨';
   }
 
   @override
-  String get selectAll => 'Select all';
+  String get selectAll => '모두 선택';
 
   @override
-  String get clearSelection => 'Clear selection';
+  String get clearSelection => '선택 해제';
 
   @override
   String sellSelectedTitle(int count) {
-    return 'Sell $count items?';
+    return '아이템 $count개를 판매할까요?';
   }
 
   @override
   String destroySelectedTitle(int count) {
-    return 'Destroy $count items?';
+    return '아이템 $count개를 파괴할까요?';
   }
 
   @override
-  String get deleteEntry => 'Delete';
+  String get deleteEntry => '삭제';
 
   @override
   String craftHowMany(String name) {
-    return 'How many $name?';
+    return '$name을(를) 몇 개 만들까요?';
   }
 
   @override
   String craftCount(int count) {
-    return 'Craft ×$count';
+    return '$count개 제작';
   }
 
   @override
-  String get destroy => 'Destroy';
+  String get destroy => '파괴';
 
   @override
   String sellTitle(String name) {
-    return 'Sell $name?';
+    return '$name을(를) 판매할까요?';
   }
 
   @override
-  String get sellBody => 'You can buy it back from the vendor for 2 hours.';
+  String get sellBody => '2시간 동안 상인에게서 다시 구매할 수 있습니다.';
 
   @override
   String destroyTitle(String name) {
-    return 'Destroy $name?';
+    return '$name을(를) 파괴할까요?';
   }
 
   @override
-  String get destroyBody => 'This cannot be undone.';
+  String get destroyBody => '되돌릴 수 없습니다.';
 
   @override
-  String get soldFor => 'Sold for';
+  String get soldFor => '판매 금액';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => '수량';
 
   @override
-  String get requiresLevel => 'Requires level';
+  String get requiresLevel => '요구 레벨';
 
   @override
-  String get weight => 'Weight';
+  String get weight => '무게';
 
   @override
   String weightGrams(int g) {
@@ -546,276 +546,276 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get sellValue => 'Sells for';
+  String get sellValue => '판매가';
 
   @override
-  String get bound => 'Soulbound';
+  String get bound => '귀속';
 
   @override
-  String get itemLocked => 'This item is held by a trade, mail or listing.';
+  String get itemLocked => '이 아이템은 거래, 우편 또는 등록에 묶여 있습니다.';
 
   @override
-  String get errBagFull => 'Your bag is full.';
+  String get errBagFull => '가방이 가득 찼습니다.';
 
   @override
-  String get errItemLocked => 'This item is locked.';
+  String get errItemLocked => '이 아이템은 잠겨 있습니다.';
 
   @override
-  String get errClassRestriction => 'Your class can\'t use this item.';
+  String get errClassRestriction => '현재 직업은 이 아이템을 사용할 수 없습니다.';
 
   @override
-  String get errLevelRequirement => 'Your level is too low.';
+  String get errLevelRequirement => '레벨이 너무 낮습니다.';
 
   @override
-  String get errNotEquippable => 'This item can\'t be equipped.';
+  String get errNotEquippable => '이 아이템은 장착할 수 없습니다.';
 
   @override
-  String get navAdventure => 'Adventure';
+  String get navAdventure => '모험';
 
   @override
-  String get segHunt => 'Hunt';
+  String get segHunt => '사냥';
 
   @override
-  String get segDungeon => 'Dungeon';
+  String get segDungeon => '던전';
 
   @override
-  String get segTravel => 'Travel';
+  String get segTravel => '이동';
 
   @override
-  String get huntChoose => 'Choose your prey';
+  String get huntChoose => '사냥감 선택';
 
   @override
-  String get startHunt => 'Start hunt';
+  String get startHunt => '사냥 시작';
 
   @override
-  String get huntDone => 'Hunt over — collect your spoils';
+  String get huntDone => '사냥 종료 — 전리품 수령';
 
   @override
-  String get huntEarlyBody => 'You keep the fights won so far and the hunt ends.';
+  String get huntEarlyBody => '지금까지 이긴 전투의 보상을 받고 사냥이 종료됩니다.';
 
   @override
   String mobStats(int hp, int atk, int def) {
-    return 'HP $hp · ATK $atk · DEF $def';
+    return 'HP $hp · 공격 $atk · 방어 $def';
   }
 
   @override
   String huntSummary(int won, int lost) {
-    return '$won won · $lost lost';
+    return '$won승 · $lost패';
   }
 
   @override
   String levelUp(int level) {
-    return 'Level up! Now level $level';
+    return '레벨 업! 이제 레벨 $level';
   }
 
   @override
   String levelReq(int level) {
-    return 'Lvl $level+';
+    return 'Lv.$level+';
   }
 
   @override
   String dungeonEncounters(int count, String boss) {
-    return '$count fights · boss $boss';
+    return '전투 $count회 · 보스 $boss';
   }
 
   @override
-  String get dungeonEnter => 'Enter';
+  String get dungeonEnter => '입장';
 
   @override
-  String get dungeonDone => 'Run complete — claim rewards';
+  String get dungeonDone => '공략 완료 — 보상 수령';
 
   @override
-  String get dungeonWaitHint => 'Rewards unlock when the run ends.';
+  String get dungeonWaitHint => '공략이 끝나면 보상이 열립니다.';
 
   @override
-  String get dungeonCleared => 'Cleared!';
+  String get dungeonCleared => '클리어!';
 
   @override
-  String get dungeonFailed => 'Party wiped';
+  String get dungeonFailed => '파티 전멸';
 
   @override
-  String get bossKilled => 'Boss defeated';
+  String get bossKilled => '보스 처치';
 
   @override
-  String get bonus => 'Clear bonus';
+  String get bonus => '클리어 보너스';
 
   @override
-  String get youAreIn => 'You are in';
+  String get youAreIn => '현재 위치';
 
   @override
-  String get routes => 'Routes';
+  String get routes => '경로';
 
   @override
-  String get noRoutes => 'No routes from here.';
+  String get noRoutes => '여기서 갈 수 있는 경로가 없습니다.';
 
   @override
-  String get travelTo => 'Go';
+  String get travelTo => '이동';
 
   @override
   String travelling(String place) {
-    return 'Travelling to $place';
+    return '$place(으)로 이동 중';
   }
 
   @override
-  String get arrive => 'Arrive';
+  String get arrive => '도착';
 
   @override
-  String get arrived => 'You have arrived';
+  String get arrived => '도착했습니다';
 
   @override
-  String get cancelTravel => 'Turn back';
+  String get cancelTravel => '되돌아가기';
 
   @override
-  String get kindCity => 'City';
+  String get kindCity => '도시';
 
   @override
-  String get kindZone => 'Zone';
+  String get kindZone => '지역';
 
   @override
-  String get kindWilderness => 'Wilderness';
+  String get kindWilderness => '야생';
 
   @override
-  String get kindDungeon => 'Dungeon';
+  String get kindDungeon => '던전';
 
   @override
-  String get kindContinent => 'Continent';
+  String get kindContinent => '대륙';
 
   @override
-  String get safeZone => 'safe';
+  String get safeZone => '안전';
 
   @override
-  String get errBusy => 'Something is already in progress.';
+  String get errBusy => '이미 진행 중인 작업이 있습니다.';
 
   @override
-  String get errNotReady => 'Not finished yet.';
+  String get errNotReady => '아직 끝나지 않았습니다.';
 
   @override
-  String get errWeeklyLocked => 'You already cleared this dungeon this week.';
+  String get errWeeklyLocked => '이번 주에 이미 이 던전을 클리어했습니다.';
 
   @override
-  String get errNoRoute => 'There is no direct route there.';
+  String get errNoRoute => '그곳으로 가는 직행 경로가 없습니다.';
 
   @override
-  String get navWorkshop => 'Workshop';
+  String get navWorkshop => '공방';
 
   @override
-  String get segCraft => 'Craft';
+  String get segCraft => '제작';
 
   @override
-  String get segShop => 'Shop';
+  String get segShop => '상점';
 
   @override
-  String get profBlacksmithing => 'Blacksmithing';
+  String get profBlacksmithing => '대장 기술';
 
   @override
-  String get profAlchemy => 'Alchemy';
+  String get profAlchemy => '연금술';
 
   @override
-  String get profCooking => 'Cooking';
+  String get profCooking => '요리';
 
   @override
-  String get learn => 'Learn';
+  String get learn => '배우기';
 
   @override
   String recipeCount(int count) {
-    return '$count recipes';
+    return '레시피 $count개';
   }
 
   @override
-  String get itemType => 'Type';
+  String get itemType => '종류';
 
   @override
-  String get stackSize => 'Stack';
+  String get stackSize => '묶음';
 
   @override
-  String get skillXpReward => 'Skill XP';
+  String get skillXpReward => '기술 경험치';
 
   @override
-  String get learnHint => 'Learn this profession to unlock its recipes.';
+  String get learnHint => '이 직업을 배우면 레시피가 열립니다.';
 
   @override
-  String get craft => 'Craft';
+  String get craft => '제작';
 
   @override
   String crafted(String name, int count) {
-    return 'Crafted $name ×$count';
+    return '$name $count개 제작 완료';
   }
 
   @override
   String skillUp(String profession, int level) {
-    return '$profession is now level $level';
+    return '$profession 레벨 $level 달성';
   }
 
   @override
   String requiresSkill(int level) {
-    return 'Needs skill $level';
+    return '기술 $level 필요';
   }
 
   @override
-  String get buy => 'Buy';
+  String get buy => '구매';
 
   @override
   String bought(String name) {
-    return 'Bought $name';
+    return '$name 구매 완료';
   }
 
   @override
-  String get buybacks => 'Buy back';
+  String get buybacks => '재구매';
 
   @override
-  String get buybackHint => 'Items you sold can be bought back for 2 hours.';
+  String get buybackHint => '판매한 아이템은 2시간 동안 다시 구매할 수 있습니다.';
 
   @override
-  String get errInsufficientGold => 'Not enough gold.';
+  String get errInsufficientGold => '골드가 부족합니다.';
 
   @override
-  String get errInsufficientMaterials => 'You\'re missing materials.';
+  String get errInsufficientMaterials => '재료가 부족합니다.';
 
   @override
-  String get errSkillTooLow => 'Your skill is too low for this recipe.';
+  String get errSkillTooLow => '이 레시피에 필요한 기술 레벨이 부족합니다.';
 
   @override
-  String get errProfessionNotLearned => 'Learn the profession first.';
+  String get errProfessionNotLearned => '먼저 직업을 배우세요.';
 
   @override
-  String get errPriceChanged => 'The price changed — check it and try again.';
+  String get errPriceChanged => '가격이 변경되었습니다. 확인 후 다시 시도하세요.';
 
   @override
-  String get errCannotSell => 'This item can\'t be sold.';
+  String get errCannotSell => '이 아이템은 판매할 수 없습니다.';
 
   @override
-  String get errBuybackExpired => 'The buy-back window has closed.';
+  String get errBuybackExpired => '재구매 기간이 끝났습니다.';
 
   @override
-  String get segMarket => 'Market';
+  String get segMarket => '시장';
 
   @override
-  String get classWeapon => 'Weapons';
+  String get classWeapon => '무기';
 
   @override
-  String get classArmor => 'Armor';
+  String get classArmor => '방어구';
 
   @override
-  String get classConsumable => 'Consumables';
+  String get classConsumable => '소모품';
 
   @override
-  String get classMaterial => 'Materials';
+  String get classMaterial => '재료';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => '전체';
 
   @override
-  String get sortCheapest => 'Cheapest';
+  String get sortCheapest => '최저가순';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => '최신순';
 
   @override
-  String get marketEmpty => 'No listings match.';
+  String get marketEmpty => '조건에 맞는 물품이 없습니다.';
 
   @override
   String listingLine(String seller, String price) {
-    return '$seller · $price each';
+    return '$seller · 개당 $price';
   }
 
   @override
@@ -823,1590 +823,1580 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String myListings(int count) {
-    return 'My listings ($count)';
+    return '내 등록 물품 ($count)';
   }
 
   @override
-  String get cancelListing => 'Cancel listing';
+  String get cancelListing => '등록 취소';
 
   @override
   String cancelListingTitle(String name) {
-    return 'Cancel $name?';
+    return '$name 등록을 취소할까요?';
   }
 
   @override
-  String get cancelListingBody =>
-      'The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.';
+  String get cancelListingBody => '아이템은 가방으로 돌아옵니다. 등록 수수료는 처음 6시간 이내에만 일부 환불됩니다.';
 
   @override
   String buyListingTitle(String name) {
-    return 'Buy $name?';
+    return '$name을(를) 구매할까요?';
   }
 
   @override
   String buyListingBody(String price, String seller) {
-    return 'Pay $price to $seller.';
+    return '$seller에게 $price을(를) 지불합니다.';
   }
 
   @override
-  String get listOnMarket => 'List on market';
+  String get listOnMarket => '시장에 등록';
 
   @override
   String listed(String name) {
-    return '$name listed on the market';
+    return '$name 시장에 등록됨';
   }
 
   @override
   String quantityOf(int count, int max) {
-    return 'Quantity: $count of $max';
+    return '수량: $max개 중 $count개';
   }
 
   @override
-  String get unitPrice => 'Price per item';
+  String get unitPrice => '개당 가격';
 
   @override
   String suggestedPrice(String price) {
-    return 'Market price: $price';
+    return '시세: $price';
   }
 
   @override
-  String get listingFee => 'Listing fee (non-refundable)';
+  String get listingFee => '등록 수수료 (환불 불가)';
 
   @override
-  String get youReceive => 'You receive when sold';
+  String get youReceive => '판매 시 수령액';
 
   @override
-  String get errPriceOutOfRange => 'That price is outside the allowed range.';
+  String get errPriceOutOfRange => '허용 범위를 벗어난 가격입니다.';
 
   @override
-  String get errListingCap => 'You have too many active listings.';
+  String get errListingCap => '활성 등록 물품이 너무 많습니다.';
 
   @override
-  String get errSelfBuy => 'You can\'t buy your own listing.';
+  String get errSelfBuy => '자신의 물품은 구매할 수 없습니다.';
 
   @override
-  String get errListingUnavailable => 'This listing is no longer available.';
+  String get errListingUnavailable => '이 물품은 더 이상 구매할 수 없습니다.';
 
   @override
-  String get errNotTradable => 'This item can\'t be traded.';
+  String get errNotTradable => '이 아이템은 거래할 수 없습니다.';
 
   @override
-  String get social => 'Social';
+  String get social => '소셜';
 
   @override
-  String get tabChat => 'Chat';
+  String get tabChat => '채팅';
 
   @override
-  String get tabFriends => 'Friends';
+  String get tabFriends => '친구';
 
   @override
-  String get tabMail => 'Mail';
+  String get tabMail => '우편';
 
   @override
-  String get chanGlobal => 'World';
+  String get chanGlobal => '월드';
 
   @override
-  String get chanGuild => 'Guild';
+  String get chanGuild => '길드';
 
   @override
-  String get chanParty => 'Party';
+  String get chanParty => '파티';
 
   @override
-  String get chatEmpty => 'No messages yet. Say hello!';
+  String get chatEmpty => '아직 메시지가 없습니다. 인사를 건네 보세요!';
 
   @override
   String chatHint(String channel) {
-    return 'Message $channel';
+    return '$channel에 메시지 보내기';
   }
 
   @override
-  String get send => 'Send';
+  String get send => '보내기';
 
   @override
-  String get addFriend => 'Add';
+  String get addFriend => '추가';
 
   @override
   String friendAdded(String name) {
-    return 'You and $name are now friends';
+    return '$name님과 친구가 되었습니다';
   }
 
   @override
   String friendRequested(String name) {
-    return 'Friend request sent to $name';
+    return '$name님에게 친구 요청을 보냈습니다';
   }
 
   @override
-  String get friendRequests => 'Friend requests';
+  String get friendRequests => '친구 요청';
 
   @override
   String friendsCount(int count) {
-    return 'Friends ($count)';
+    return '친구 ($count)';
   }
 
   @override
-  String get noFriends => 'No friends yet — add someone by name.';
+  String get noFriends => '아직 친구가 없습니다. 이름으로 추가해 보세요.';
 
   @override
-  String get more => 'More';
+  String get more => '더 보기';
 
   @override
-  String get whisper => 'Whisper';
+  String get whisper => '귓속말';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '삭제';
 
   @override
-  String get block => 'Block';
+  String get block => '차단';
 
   @override
-  String get unblock => 'Unblock';
+  String get unblock => '차단 해제';
 
   @override
-  String get blockedList => 'Blocked';
+  String get blockedList => '차단 목록';
 
   @override
   String removeFriendTitle(String name) {
-    return 'Remove $name?';
+    return '$name님을 친구에서 삭제할까요?';
   }
 
   @override
-  String get removeFriendBody => 'You can send a new friend request later.';
+  String get removeFriendBody => '나중에 다시 친구 요청을 보낼 수 있습니다.';
 
   @override
   String blockTitle(String name) {
-    return 'Block $name?';
+    return '$name님을 차단할까요?';
   }
 
   @override
-  String get blockBody =>
-      'They can\'t whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.';
+  String get blockBody => '상대는 귓속말을 보낼 수 없고, 채팅이 숨겨지며, 우편은 전달되지 않습니다. 친구 관계도 끝납니다.';
 
   @override
-  String get accept => 'Accept';
+  String get accept => '수락';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '거절';
 
   @override
-  String get newMail => 'Write mail';
+  String get newMail => '우편 쓰기';
 
   @override
-  String get inboxEmpty => 'Your mailbox is empty.';
+  String get inboxEmpty => '우편함이 비어 있습니다.';
 
   @override
-  String get noSubject => '(no subject)';
+  String get noSubject => '(제목 없음)';
 
   @override
   String mailFrom(String name) {
-    return 'From $name';
+    return '보낸 사람: $name';
   }
 
   @override
-  String get attachments => 'Attachments';
+  String get attachments => '첨부물';
 
   @override
-  String get claim => 'Take attachments';
+  String get claim => '첨부물 받기';
 
   @override
-  String get mailClaimed => 'Attachments moved to your bag and wallet';
+  String get mailClaimed => '첨부물을 가방과 지갑으로 옮겼습니다';
 
   @override
-  String get deleteMailTitle => 'Delete this mail?';
+  String get deleteMailTitle => '이 우편을 삭제할까요?';
 
   @override
-  String get deleteMailBody => 'Deleted mail can\'t be recovered.';
+  String get deleteMailBody => '삭제한 우편은 복구할 수 없습니다.';
 
   @override
   String mailSent(String postage) {
-    return 'Mail sent (postage $postage)';
+    return '우편을 보냈습니다 (우편료 $postage)';
   }
 
   @override
-  String get mailTo => 'To (character name)';
+  String get mailTo => '받는 사람 (캐릭터 이름)';
 
   @override
-  String get mailSubject => 'Subject';
+  String get mailSubject => '제목';
 
   @override
-  String get mailBody => 'Message';
+  String get mailBody => '내용';
 
   @override
-  String get attachGold => 'Attach gold';
+  String get attachGold => '골드 첨부';
 
   @override
-  String get errAlreadyFriends => 'You\'re already friends.';
+  String get errAlreadyFriends => '이미 친구입니다.';
 
   @override
-  String get errAlreadyRequested => 'A friend request is already pending.';
+  String get errAlreadyRequested => '친구 요청이 이미 대기 중입니다.';
 
   @override
-  String get errBlocked => 'You can\'t interact with this player.';
+  String get errBlocked => '이 플레이어와 상호작용할 수 없습니다.';
 
   @override
-  String get errFriendCap => 'Your friend list is full.';
+  String get errFriendCap => '친구 목록이 가득 찼습니다.';
 
   @override
-  String get errTargetNotFound => 'No character with that name.';
+  String get errTargetNotFound => '해당 이름의 캐릭터가 없습니다.';
 
   @override
-  String get errSelfTarget => 'You can\'t target yourself.';
+  String get errSelfTarget => '자신을 대상으로 할 수 없습니다.';
 
   @override
-  String get errInboxFull => 'Their mailbox is full.';
+  String get errInboxFull => '상대의 우편함이 가득 찼습니다.';
 
   @override
-  String get errTooLong => 'That\'s too long.';
+  String get errTooLong => '너무 깁니다.';
 
   @override
-  String get errEmpty => 'Write something first.';
+  String get errEmpty => '먼저 내용을 입력하세요.';
 
   @override
-  String get errNotInChannel => 'You\'re not in that group.';
+  String get errNotInChannel => '해당 그룹에 속해 있지 않습니다.';
 
   @override
-  String get errMuted => 'You are muted and can\'t chat right now.';
+  String get errMuted => '채팅 금지 상태라 지금은 채팅할 수 없습니다.';
 
   @override
-  String get errHasAttachments => 'Take the attachments before deleting.';
+  String get errHasAttachments => '삭제하기 전에 첨부물을 받으세요.';
 
   @override
-  String get useItem => 'Use';
+  String get useItem => '사용';
 
   @override
   String restoresHp(int amount) {
-    return 'Restores $amount HP';
+    return 'HP $amount 회복';
   }
 
   @override
   String usedItem(String name, int hp, int max) {
-    return 'Used $name · HP $hp/$max';
+    return '$name 사용 · HP $hp/$max';
   }
 
   @override
-  String get errHpFull => 'Your health is already full.';
+  String get errHpFull => '체력이 이미 가득 찼습니다.';
 
   @override
-  String get errInCombat => 'Finish your hunt or dungeon run first.';
+  String get errInCombat => '먼저 사냥이나 던전 공략을 끝내세요.';
 
   @override
-  String get errNotUsable => 'This item can\'t be used.';
+  String get errNotUsable => '이 아이템은 사용할 수 없습니다.';
 
   @override
-  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+  String get errTooWounded => '부상이 심해 싸울 수 없습니다. 쉬거나 물약을 마시세요.';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => '비밀번호를 잊으셨나요?';
 
   @override
-  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+  String get resetHint => '계정 이메일을 입력하면 새 비밀번호 설정 링크를 보내 드립니다.';
 
   @override
-  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+  String get resetSent => '해당 이메일의 계정이 있다면 재설정 링크를 보냈습니다. 링크는 1시간 후 만료됩니다.';
 
   @override
-  String get sendLink => 'Send link';
+  String get sendLink => '링크 보내기';
 
   @override
-  String get close => 'Close';
+  String get close => '닫기';
 
   @override
-  String get changePassword => 'Change password';
+  String get changePassword => '비밀번호 변경';
 
   @override
-  String get currentPassword => 'Current password';
+  String get currentPassword => '현재 비밀번호';
 
   @override
-  String get newPassword => 'New password';
+  String get newPassword => '새 비밀번호';
 
   @override
-  String get save => 'Save';
+  String get save => '저장';
 
   @override
-  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+  String get passwordChanged => '비밀번호가 변경되었습니다. 다른 기기에서 로그아웃되었습니다.';
 
   @override
-  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+  String get verifyEmailBanner => '이메일 주소를 인증해 주세요.';
 
   @override
-  String get resend => 'Resend';
+  String get resend => '다시 보내기';
 
   @override
-  String get verificationSent => 'Verification e-mail sent.';
+  String get verificationSent => '인증 메일을 보냈습니다.';
 
   @override
-  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+  String get errEmailNotVerified => '캐릭터를 만들기 전에 이메일을 인증하세요.';
 
   @override
-  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+  String get errAlreadyVerified => '이메일이 이미 인증되었습니다.';
 
   @override
-  String get tabParty => 'Party';
+  String get tabParty => '파티';
 
   @override
-  String get tabGuild => 'Guild';
+  String get tabGuild => '길드';
 
   @override
-  String get invite => 'Invite';
+  String get invite => '초대';
 
   @override
   String invitedBy(String name) {
-    return 'Invited by $name';
+    return '$name님의 초대';
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
+  String get noParty => '파티에 속해 있지 않습니다. 누군가를 초대하면 파티가 만들어집니다 (2~5명).';
 
   @override
-  String get createParty => 'Create party';
+  String get createParty => '파티 만들기';
 
   @override
-  String get pendingInvites => 'Invitations';
+  String get pendingInvites => '초대 목록';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Party ($count/$cap)';
+    return '파티 ($count/$cap)';
   }
 
   @override
-  String get makeLeader => 'Make leader';
+  String get makeLeader => '파티장으로 지정';
 
   @override
-  String get kick => 'Remove';
+  String get kick => '추방';
 
   @override
-  String get leave => 'Leave';
+  String get leave => '나가기';
 
   @override
-  String get disband => 'Disband';
+  String get disband => '해산';
 
   @override
-  String get leavePartyTitle => 'Leave the party?';
+  String get leavePartyTitle => '파티에서 나갈까요?';
 
   @override
-  String get leavePartyBody =>
-      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
+  String get leavePartyBody => '파티장이 나가면 가장 오래된 파티원이 이어받습니다. 한 명만 남으면 파티가 해산됩니다.';
 
   @override
-  String get disbandPartyTitle => 'Disband the party?';
+  String get disbandPartyTitle => '파티를 해산할까요?';
 
   @override
-  String get disbandPartyBody => 'Everyone is removed from the party.';
+  String get disbandPartyBody => '모든 파티원이 파티에서 제외됩니다.';
 
   @override
-  String get rankLeader => 'Leader';
+  String get rankLeader => '길드장';
 
   @override
-  String get rankOfficer => 'Officer';
+  String get rankOfficer => '간부';
 
   @override
-  String get rankVeteran => 'Veteran';
+  String get rankVeteran => '베테랑';
 
   @override
-  String get rankMember => 'Member';
+  String get rankMember => '길드원';
 
   @override
-  String get rankInitiate => 'Initiate';
+  String get rankInitiate => '수습';
 
   @override
-  String get createGuild => 'Found a guild';
+  String get createGuild => '길드 창설';
 
   @override
   String createGuildBody(String fee) {
-    return 'Founding a guild costs $fee.';
+    return '길드 창설 비용은 $fee입니다.';
   }
 
   @override
   String createGuildFee(String fee) {
-    return 'Found guild ($fee)';
+    return '길드 창설 ($fee)';
   }
 
   @override
-  String get guildName => 'Guild name';
+  String get guildName => '길드 이름';
 
   @override
-  String get guildTag => 'Tag';
+  String get guildTag => '태그';
 
   @override
-  String get guildTagHint => '2–5 letters or digits';
+  String get guildTagHint => '문자 또는 숫자 2~5자';
 
   @override
   String guildMembers(int count, int cap) {
-    return '$count/$cap members';
+    return '길드원 $count/$cap';
   }
 
   @override
   String disbandScheduled(String time) {
-    return 'Guild disbands in $time';
+    return '$time 후 길드 해산';
   }
 
   @override
-  String get motd => 'Message of the day';
+  String get motd => '오늘의 메시지';
 
   @override
-  String get editMotd => 'Edit message of the day';
+  String get editMotd => '오늘의 메시지 수정';
 
   @override
-  String get setRank => 'Change rank';
+  String get setRank => '등급 변경';
 
   @override
   String setRankFor(String name) {
-    return 'New rank for $name';
+    return '$name의 새 등급';
   }
 
   @override
   String transferTitle(String name) {
-    return 'Make $name guild leader?';
+    return '$name님을 길드장으로 지정할까요?';
   }
 
   @override
-  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+  String get transferBody => '본인은 간부가 되며, 직접 되돌릴 수 없습니다.';
 
   @override
   String kickTitle(String name) {
-    return 'Remove $name from the guild?';
+    return '$name님을 길드에서 추방할까요?';
   }
 
   @override
-  String get leaveGuildTitle => 'Leave the guild?';
+  String get leaveGuildTitle => '길드를 나갈까요?';
 
   @override
-  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+  String get leaveGuildBody => '다시 가입하려면 새 초대가 필요합니다.';
 
   @override
-  String get disbandGuildTitle => 'Disband the guild?';
+  String get disbandGuildTitle => '길드를 해산할까요?';
 
   @override
-  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+  String get disbandGuildBody => '길드는 48시간 후 해산되며, 그 전까지 취소할 수 있습니다.';
 
   @override
-  String get cancelDisband => 'Cancel disbanding';
+  String get cancelDisband => '해산 취소';
 
   @override
-  String get errAlreadyInGroup => 'They\'re already in a group.';
+  String get errAlreadyInGroup => '이미 그룹에 속해 있습니다.';
 
   @override
-  String get errNotLeader => 'Only the leader can do that.';
+  String get errNotLeader => '파티장/길드장만 할 수 있습니다.';
 
   @override
-  String get errGroupFull => 'The group is full.';
+  String get errGroupFull => '그룹이 가득 찼습니다.';
 
   @override
-  String get errInviteInvalid => 'That invitation has expired.';
+  String get errInviteInvalid => '초대가 만료되었습니다.';
 
   @override
-  String get errAlreadyInvited => 'An invitation is already pending.';
+  String get errAlreadyInvited => '초대가 이미 대기 중입니다.';
 
   @override
-  String get errGuildForbidden => 'Your rank can\'t do that.';
+  String get errGuildForbidden => '현재 등급으로는 할 수 없습니다.';
 
   @override
-  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+  String get errLeaderCannotLeave => '먼저 길드장을 넘기거나 길드를 해산하세요.';
 
   @override
-  String get errInvalidGuildName => '3–24 letters or digits.';
+  String get errInvalidGuildName => '문자 또는 숫자 3~24자.';
 
   @override
-  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+  String get errInvalidTag => '태그는 문자 또는 숫자 2~5자여야 합니다.';
 
   @override
-  String get errTagTaken => 'That tag is taken.';
+  String get errTagTaken => '이미 사용 중인 태그입니다.';
 
   @override
-  String get progress => 'Achievements & mastery';
+  String get progress => '업적 및 숙련';
 
   @override
-  String get tabAchievements => 'Achievements';
+  String get tabAchievements => '업적';
 
   @override
-  String get tabMastery => 'Mastery';
+  String get tabMastery => '숙련';
 
   @override
-  String get tabReputation => 'Reputation';
+  String get tabReputation => '평판';
 
   @override
-  String get tabTitles => 'Titles';
+  String get tabTitles => '칭호';
 
   @override
   String achievementPoints(int points) {
-    return '$points achievement points';
+    return '업적 점수 $points';
   }
 
   @override
   String pointsShort(int points) {
-    return '$points pts';
+    return '$points점';
   }
 
   @override
   String rewardTitle(String title) {
-    return 'Title: $title';
+    return '칭호: $title';
   }
 
   @override
   String masteryTier(int tier, int max) {
-    return 'Tier $tier/$max';
+    return '$tier/$max단계';
   }
 
   @override
   String repDailyLeft(int amount) {
-    return '+$amount today';
+    return '오늘 +$amount';
   }
 
   @override
-  String get noTitle => 'No title';
+  String get noTitle => '칭호 없음';
 
   @override
-  String get noTitlesYet => 'Titles unlock through achievements.';
+  String get noTitlesYet => '칭호는 업적으로 해금됩니다.';
 
   @override
-  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+  String get errTitleNotOwned => '아직 해금하지 않은 칭호입니다.';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => '알림';
 
   @override
-  String get markAllRead => 'Mark all as read';
+  String get markAllRead => '모두 읽음으로 표시';
 
   @override
-  String get inboxNothing => 'No notifications yet.';
+  String get inboxNothing => '아직 알림이 없습니다.';
 
   @override
-  String get notifSettings => 'Notification settings';
+  String get notifSettings => '알림 설정';
 
   @override
-  String get muteAll => 'Pause push notifications';
+  String get muteAll => '푸시 알림 일시 중지';
 
   @override
-  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+  String get muteHint => '24시간 동안. 받은 알림함은 계속 쌓입니다.';
 
   @override
   String mutedFor(String time) {
-    return 'Paused for $time';
+    return '$time 동안 일시 중지';
   }
 
   @override
-  String get modePushInbox => 'Push + inbox';
+  String get modePushInbox => '푸시 + 알림함';
 
   @override
-  String get modeInbox => 'Inbox only';
+  String get modeInbox => '알림함만';
 
   @override
-  String get modeSilent => 'Silent';
+  String get modeSilent => '무음';
 
   @override
-  String get modeOff => 'Off';
+  String get modeOff => '끄기';
 
   @override
-  String get nkActivity => 'Activity finished';
+  String get nkActivity => '활동 완료';
 
   @override
-  String get nkDungeon => 'Dungeon run finished';
+  String get nkDungeon => '던전 공략 완료';
 
   @override
-  String get nkTravel => 'Arrived';
+  String get nkTravel => '도착';
 
   @override
-  String get nkWorldEvent => 'World event started';
+  String get nkWorldEvent => '월드 이벤트 시작';
 
   @override
-  String get nkMarketSold => 'Item sold';
+  String get nkMarketSold => '아이템 판매';
 
   @override
-  String get nkMail => 'New mail';
+  String get nkMail => '새 우편';
 
   @override
-  String get nkPartyInvite => 'Party invitation';
+  String get nkPartyInvite => '파티 초대';
 
   @override
-  String get nkGuildInvite => 'Guild invitation';
+  String get nkGuildInvite => '길드 초대';
 
   @override
-  String get nkAchievement => 'Achievement unlocked';
+  String get nkAchievement => '업적 달성';
 
   @override
-  String get nkSystem => 'Announcement';
+  String get nkSystem => '공지';
 
   @override
   String timeAgo(String time) {
-    return '$time ago';
+    return '$time 전';
   }
 
   @override
-  String get segEvents => 'Events';
+  String get segEvents => '이벤트';
 
   @override
-  String get eventsEmpty => 'No world events scheduled right now.';
+  String get eventsEmpty => '예정된 월드 이벤트가 없습니다.';
 
   @override
-  String get worldBoss => 'World boss';
+  String get worldBoss => '월드 보스';
 
   @override
-  String get invasion => 'Invasion';
+  String get invasion => '침공';
 
   @override
   String startsIn(String time) {
-    return 'Starts in $time';
+    return '$time 후 시작';
   }
 
   @override
   String endsIn(String time) {
-    return 'Ends in $time';
+    return '$time 후 종료';
   }
 
   @override
   String regionOnly(String region) {
-    return '$region only';
+    return '$region 전용';
   }
 
   @override
-  String get eventGoal => 'Goal';
+  String get eventGoal => '목표';
 
   @override
-  String get enlist => 'Enlist';
+  String get enlist => '참가';
 
   @override
-  String get enlistHint =>
-      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+  String get enlistHint => '참가하는 순간 현재 전투력이 고정됩니다. 이벤트가 진행되는 매 분마다 점수를 얻고, 보상은 종료 시 지급됩니다.';
 
   @override
   String enlistedPower(int power) {
-    return 'Enlisted · power $power';
+    return '참가 중 · 전투력 $power';
   }
 
   @override
   String myContribution(int score, int tier) {
-    return 'Your score $score · reward tier $tier';
+    return '내 점수 $score · 보상 등급 $tier';
   }
 
   @override
-  String get eventSucceeded => 'Victory';
+  String get eventSucceeded => '승리';
 
   @override
-  String get eventFailed => 'Failed';
+  String get eventFailed => '실패';
 
   @override
   String tokenBalance(int tokens) {
-    return '$tokens event tokens';
+    return '이벤트 토큰 $tokens개';
   }
 
   @override
   String claimDaily(int tokens) {
-    return 'Claim $tokens';
+    return '$tokens개 받기';
   }
 
   @override
-  String get claimedToday => 'Claimed';
+  String get claimedToday => '수령 완료';
 
   @override
   String eventTokensGained(int tokens) {
-    return '+$tokens event tokens';
+    return '이벤트 토큰 +$tokens';
   }
 
   @override
-  String get errEventNotOpen => 'Enlistment for this event is closed.';
+  String get errEventNotOpen => '이 이벤트의 참가가 마감되었습니다.';
 
   @override
-  String get errWrongRegion => 'Travel to the event\'s region first.';
+  String get errWrongRegion => '먼저 이벤트 지역으로 이동하세요.';
 
   @override
-  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+  String get errAlreadyEnlisted => '이미 참가했습니다.';
 
   @override
-  String get errAlreadyClaimed => 'Already claimed today.';
+  String get errAlreadyClaimed => '오늘은 이미 받았습니다.';
 
   @override
-  String get errEventNotActive => 'This event isn\'t running.';
+  String get errEventNotActive => '이 이벤트는 진행 중이 아닙니다.';
 
   @override
   String gatherYield(String activity) {
-    return '$activity yield';
+    return '$activity 산출량';
   }
 
   @override
   String perHour(String value) {
-    return '$value/h';
+    return '시간당 $value';
   }
 
   @override
-  String get quests => 'Quests';
+  String get quests => '퀘스트';
 
   @override
-  String get questsInProgress => 'In progress';
+  String get questsInProgress => '진행 중';
 
   @override
-  String get questsNoneOpen => 'No open quests. Pick one below.';
+  String get questsNoneOpen => '진행 중인 퀘스트가 없습니다. 아래에서 고르세요.';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => '스토리';
 
   @override
-  String get questsSide => 'Side quests';
+  String get questsSide => '서브 퀘스트';
 
   @override
-  String get questsDaily => 'Daily';
+  String get questsDaily => '일일';
 
   @override
   String resetsIn(String time) {
-    return 'Resets in $time';
+    return '$time 후 초기화';
   }
 
   @override
-  String get turnIn => 'Turn in';
+  String get turnIn => '완료 보고';
 
   @override
   String questRewarded(String rewards) {
-    return 'Quest complete: $rewards';
+    return '퀘스트 완료: $rewards';
   }
 
   @override
-  String get abandonQuestTitle => 'Abandon quest?';
+  String get abandonQuestTitle => '퀘스트를 포기할까요?';
 
   @override
-  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+  String get abandonQuestBody => '진행 상황을 잃습니다. 나중에 다시 받을 수 있습니다.';
 
   @override
-  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+  String get abandonDailyBody => '진행 상황을 잃으며 오늘은 이 일일 퀘스트를 다시 받을 수 없습니다.';
 
   @override
   String objGather(String activity) {
-    return 'Gather ($activity)';
+    return '채집 ($activity)';
   }
 
   @override
-  String get objKillAny => 'Defeat enemies';
+  String get objKillAny => '적 처치';
 
   @override
   String objKill(String mob) {
-    return 'Defeat $mob';
+    return '$mob 처치';
   }
 
   @override
-  String get objBoss => 'Defeat a boss';
+  String get objBoss => '보스 처치';
 
   @override
-  String get objDungeonAny => 'Clear a dungeon';
+  String get objDungeonAny => '던전 클리어';
 
   @override
   String objDungeon(String dungeon) {
-    return 'Clear $dungeon';
+    return '$dungeon 클리어';
   }
 
   @override
-  String get objCraftAny => 'Craft items';
+  String get objCraftAny => '아이템 제작';
 
   @override
   String objCraft(String item) {
-    return 'Craft $item';
+    return '$item 제작';
   }
 
   @override
-  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+  String get evQuestComplete => '퀘스트 목표 달성 — 완료 보고하세요!';
 
   @override
-  String get errQuestLocked => 'Finish the previous story quest first.';
+  String get errQuestLocked => '먼저 이전 스토리 퀘스트를 끝내세요.';
 
   @override
-  String get errQuestTaken => 'You already took this quest.';
+  String get errQuestTaken => '이미 받은 퀘스트입니다.';
 
   @override
-  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+  String get errQuestNotOffered => '오늘의 게시판에 없는 일일 퀘스트입니다.';
 
   @override
-  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+  String get errQuestCap => '진행 중인 퀘스트가 너무 많습니다. 하나를 끝내거나 포기하세요.';
 
   @override
-  String get errQuestNotActive => 'This quest isn\'t open.';
+  String get errQuestNotActive => '진행 중인 퀘스트가 아닙니다.';
 
   @override
-  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+  String get errQuestIncomplete => '아직 목표를 달성하지 못했습니다.';
 
   @override
-  String get skills => 'Skills';
+  String get skills => '스킬';
 
   @override
-  String get skillActive => 'Active';
+  String get skillActive => '액티브';
 
   @override
-  String get skillPassive => 'Passive';
+  String get skillPassive => '패시브';
 
   @override
   String skillStrike(int power) {
-    return '$power% damage';
+    return '피해 $power%';
   }
 
   @override
   String skillHeal(int power) {
-    return 'Heals $power% HP when below half';
+    return 'HP가 절반 이하일 때 HP $power% 회복';
   }
 
   @override
   String skillMp(int mp) {
-    return '$mp MP';
+    return 'MP $mp';
   }
 
   @override
   String skillCooldown(int turns) {
-    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: '$turns턴마다', one: '매 턴');
     return '$_temp0';
   }
 
   @override
-  String get termsOfService => 'Terms of Service';
+  String get termsOfService => '서비스 약관';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => '개인정보 처리방침';
 
   @override
-  String get accountMenu => 'Account';
+  String get accountMenu => '계정';
 
   @override
-  String get downloadMyData => 'Download my data';
+  String get downloadMyData => '내 데이터 다운로드';
 
   @override
-  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+  String get exportOpened => '브라우저에서 다운로드 링크를 열었습니다 (15분간 유효).';
 
   @override
-  String get linkOpenFailed => 'Could not open the link.';
+  String get linkOpenFailed => '링크를 열 수 없습니다.';
 
   @override
-  String get deleteAccount => 'Delete my account';
+  String get deleteAccount => '계정 삭제';
 
   @override
-  String get deleteAccountBody =>
-      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+  String get deleteAccountBody => '계정과 모든 캐릭터가 30일 후 영구 삭제됩니다. 그 기간 안에 로그인하면 삭제가 취소됩니다. 확인을 위해 비밀번호를 입력하세요.';
 
   @override
-  String get deleteAccountConfirm => 'Delete account';
+  String get deleteAccountConfirm => '계정 삭제';
 
   @override
   String deleteScheduled(String date) {
-    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+    return '계정이 $date에 삭제됩니다. 취소하려면 그 전에 로그인하세요.';
   }
 
   @override
-  String get deletionCancelled => 'Your account deletion request was cancelled.';
+  String get deletionCancelled => '계정 삭제 요청이 취소되었습니다.';
 
   @override
-  String get support => 'Support';
+  String get support => '고객 지원';
 
   @override
-  String get supportIntro =>
-      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+  String get supportIntro => '버그를 발견했거나 계정 관련 도움이 필요하신가요? 문의를 남기면 팀이 이곳에 답변하고 알림을 보내 드립니다.';
 
   @override
-  String get supportNew => 'New request';
+  String get supportNew => '새 문의';
 
   @override
-  String get supportNone => 'No requests yet.';
+  String get supportNone => '아직 문의가 없습니다.';
 
   @override
-  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+  String get supportSent => '문의가 접수되었습니다. 답변이 등록되면 알려 드립니다.';
 
   @override
-  String get supportCategory => 'Topic';
+  String get supportCategory => '주제';
 
   @override
-  String get supportSubject => 'Subject';
+  String get supportSubject => '제목';
 
   @override
-  String get supportMessage => 'What happened? Step by step if you can.';
+  String get supportMessage => '무슨 일이 있었나요? 가능하면 단계별로 적어 주세요.';
 
   @override
-  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+  String get supportTooShort => '제목은 3자 이상, 내용은 10자 이상이어야 합니다.';
 
   @override
-  String get supportBug => 'Bug';
+  String get supportBug => '버그';
 
   @override
-  String get supportAccount => 'Account';
+  String get supportAccount => '계정';
 
   @override
-  String get supportAbuse => 'Abuse / report a player';
+  String get supportAbuse => '악용 / 플레이어 신고';
 
   @override
-  String get supportFeedback => 'Suggestion';
+  String get supportFeedback => '건의';
 
   @override
-  String get supportOther => 'Other';
+  String get supportOther => '기타';
 
   @override
-  String get supportOpen => 'Open';
+  String get supportOpen => '접수됨';
 
   @override
-  String get supportAnswered => 'Answered';
+  String get supportAnswered => '답변됨';
 
   @override
-  String get supportClosed => 'Closed';
+  String get supportClosed => '종료됨';
 
   @override
-  String get supportReply => 'Team reply';
+  String get supportReply => '운영팀 답변';
 
   @override
-  String get nkSupport => 'Support reply';
+  String get nkSupport => '고객 지원 답변';
 
   @override
-  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+  String get errServerBusy => '서버가 혼잡합니다. 몇 초 후 다시 시도하세요.';
 
   @override
-  String get notifTabInbox => 'Notifications';
+  String get notifTabInbox => '알림';
 
   @override
-  String get notifTabRewards => 'Rewards';
+  String get notifTabRewards => '보상';
 
   @override
-  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+  String get rewardsNone => '아직 보상이 없습니다. 채집하거나 전투에서 얻은 모든 것이 여기에 표시됩니다 (30일 보관).';
 
   @override
   String rewardFromActivity(String name) {
-    return 'Gathering: $name';
+    return '채집: $name';
   }
 
   @override
   String rewardFromHunt(String name) {
-    return 'Hunt: $name';
+    return '사냥: $name';
   }
 
   @override
   String rewardFromDungeon(String name) {
-    return 'Dungeon: $name';
+    return '던전: $name';
   }
 
   @override
   String rewardLevelUp(int level) {
-    return 'Level $level!';
+    return '레벨 $level!';
   }
 
   @override
   String get levelMax => 'MAX';
 
   @override
-  String get promotionAvailable => 'PROMOTION AVAILABLE';
+  String get promotionAvailable => '전직 가능';
 
   @override
-  String get promotionChoose => 'Choose';
+  String get promotionChoose => '선택';
 
   @override
   String promotionConfirm(String name) {
-    return 'Become $name?';
+    return '$name(으)로 전직할까요?';
   }
 
   @override
-  String get promotionBody => 'This choice shapes your class for good.';
+  String get promotionBody => '이 선택은 직업을 영구히 결정합니다.';
 
   @override
   String nextMilestone(int level, String what) {
-    return 'Next: Lv $level · $what';
+    return '다음: Lv.$level · $what';
   }
 
   @override
-  String get msPromotion => 'Class promotion';
+  String get msPromotion => '직업 전직';
 
   @override
   String msAwakening(String name) {
-    return 'Awakening: $name';
+    return '각성: $name';
   }
 
   @override
   String msUltimate(String name) {
-    return 'Ultimate: $name';
+    return '궁극기: $name';
   }
 
   @override
-  String get msCapstone => 'Talent capstone';
+  String get msCapstone => '특성 최종 단계';
 
   @override
-  String get msMastery => 'Class mastery';
+  String get msMastery => '직업 마스터리';
 
   @override
   String msTitle(String name) {
-    return 'Title: $name';
+    return '칭호: $name';
   }
 
   @override
   String estMinutes(int n) {
-    return '~$n min';
+    return '약 $n분';
   }
 
   @override
   String estHours(String h) {
-    return '~$h h';
+    return '약 $h시간';
   }
 
   @override
   String overflowHeld(int xp) {
-    return '$xp XP is waiting for your choice';
+    return '경험치 $xp이(가) 선택을 기다립니다';
   }
 
   @override
   String attributePointsBtn(int n) {
-    return 'Attributes · $n points';
+    return '능력치 · $n포인트';
   }
 
   @override
   String talentPointsBtn(int n) {
-    return 'Talents · $n points';
+    return '특성 · $n포인트';
   }
 
   @override
-  String get talentsTitle => 'Talents';
+  String get talentsTitle => '특성';
 
   @override
   String capstoneLocked(int level, int points) {
-    return 'Needs level $level and $points points in this tree';
+    return '레벨 $level과 이 트리의 $points포인트 필요';
   }
 
   @override
   String masteryUnlocked(String title) {
-    return 'Class mastery: $title';
+    return '직업 마스터리: $title';
   }
 
   @override
-  String get errPromotionUnavailable => 'That promotion is not available.';
+  String get errPromotionUnavailable => '해당 전직은 불가능합니다.';
 
   @override
-  String get errNotEnoughPoints => 'Not enough points.';
+  String get errNotEnoughPoints => '포인트가 부족합니다.';
 
   @override
-  String get errTalentMaxed => 'That talent is already at max rank.';
+  String get errTalentMaxed => '이 특성은 이미 최대 등급입니다.';
 
   @override
-  String get errCapstoneLocked => 'The capstone needs its level and a full tree.';
+  String get errCapstoneLocked => '최종 단계에는 레벨과 완성된 트리가 필요합니다.';
 
   @override
-  String get errSpecRequirement => 'Your specialization cannot use this item.';
+  String get errSpecRequirement => '현재 전문화는 이 아이템을 사용할 수 없습니다.';
 
   @override
-  String get errAttributeRequirement => 'Your attributes are too low for this item.';
+  String get errAttributeRequirement => '이 아이템을 쓰기에는 능력치가 낮습니다.';
 
   @override
-  String get errBusyCombat => 'Not while in combat, AFK or a dungeon.';
+  String get errBusyCombat => '전투, 방치 활동, 던전 중에는 할 수 없습니다.';
 
   @override
   String skillGuard(int pct, int turns) {
-    return '+$pct% armor for $turns turns';
+    return '$turns턴 동안 방어구 +$pct%';
   }
 
   @override
   String skillEmpower(int pct, int turns) {
-    return '+$pct% attack for $turns turns';
+    return '$turns턴 동안 공격력 +$pct%';
   }
 
   @override
-  String get classRanger => 'Ranger';
+  String get classRanger => '레인저';
 
   @override
-  String get classCleric => 'Cleric';
+  String get classCleric => '성직자';
 
   @override
-  String get classMonk => 'Monk';
+  String get classMonk => '수도승';
 
   @override
-  String get classPaladin => 'Paladin';
+  String get classPaladin => '팔라딘';
 
   @override
-  String get classDruid => 'Druid';
+  String get classDruid => '드루이드';
 
   @override
-  String get classBard => 'Bard';
+  String get classBard => '음유시인';
 
   @override
-  String get classShaman => 'Shaman';
+  String get classShaman => '주술사';
 
   @override
-  String get errEquipmentPermission => 'Your class cannot use this equipment type.';
+  String get errEquipmentPermission => '현재 직업은 이 장비 종류를 사용할 수 없습니다.';
 
   @override
-  String get classResource => 'Resource';
+  String get classResource => '자원';
 
   @override
-  String get classFocus => 'Attribute focus';
+  String get classFocus => '주요 능력치';
 
   @override
   String classSecondary(String names) {
-    return 'Secondary: $names';
+    return '보조: $names';
   }
 
   @override
-  String get resStartsEmpty => 'Starts empty';
+  String get resStartsEmpty => '0에서 시작';
 
   @override
-  String get resStartsFull => 'Starts full';
+  String get resStartsFull => '가득 찬 상태로 시작';
 
   @override
   String resStartsAt(int pct) {
-    return 'Starts at $pct%';
+    return '$pct%에서 시작';
   }
 
   @override
   String resPerHit(int n) {
-    return '+$n per hit';
+    return '타격당 +$n';
   }
 
   @override
   String resPerTurn(int n) {
-    return '+$n per turn';
+    return '턴당 +$n';
   }
 
   @override
   String baseAttributesHint(int total) {
-    return 'Base attributes · 1 point every 2 levels, $total in total';
+    return '기본 능력치 · 2레벨마다 1포인트, 총 $total';
   }
 
   @override
-  String get classEquipment => 'Equipment';
+  String get classEquipment => '장비';
 
   @override
-  String get firstSkills => 'First skills';
+  String get firstSkills => '초기 스킬';
 
   @override
-  String get classPath => 'Class path';
+  String get classPath => '직업 경로';
 
   @override
-  String get classPathHint => 'Tap a class to see its skills.';
+  String get classPathHint => '직업을 누르면 스킬을 볼 수 있습니다.';
 
   @override
   String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
-    return 'Lv $awakening Awakening · Lv $ultimate Ultimate · Lv $capstone talent capstone · Lv $mastery class mastery';
+    return 'Lv.$awakening 각성 · Lv.$ultimate 궁극기 · Lv.$capstone 특성 최종 단계 · Lv.$mastery 직업 마스터리';
   }
 
   @override
-  String get skillTagActive => 'active';
+  String get skillTagActive => '액티브';
 
   @override
-  String get skillTagPassive => 'passive';
+  String get skillTagPassive => '패시브';
 
   @override
-  String get skillTagAwakening => 'awakening';
+  String get skillTagAwakening => '각성';
 
   @override
-  String get skillTagUltimate => 'ultimate';
+  String get skillTagUltimate => '궁극기';
 
   @override
   String skillCostCd(int cost, int cd) {
-    return 'Cost $cost · cooldown $cd turns';
+    return '비용 $cost · 재사용 $cd턴';
   }
 
   @override
   String masteryAt(int level, String title) {
-    return 'Lv $level mastery: $title';
+    return 'Lv.$level 마스터리: $title';
   }
 
   @override
-  String get classInfoFailed => 'Class details couldn\'t load.';
+  String get classInfoFailed => '직업 정보를 불러오지 못했습니다.';
 
   @override
   String xpShare(int pct) {
-    return 'XP $pct%';
+    return '경험치 $pct%';
   }
 
   @override
-  String get dungeonsSolo => 'Dungeons';
+  String get dungeonsSolo => '던전';
 
   @override
-  String get raidsTab => 'Raids';
+  String get raidsTab => '레이드';
 
   @override
   String raidGroup(int min, int max) {
-    return 'Party of $min–$max';
+    return '$min~$max인 파티';
   }
 
   @override
   String raidBossGear(int count) {
-    return 'Boss: $count gear pieces guaranteed';
+    return '보스: 장비 $count개 확정';
   }
 
   @override
-  String get raidOpen => 'Open raid';
+  String get raidOpen => '레이드 열기';
 
   @override
-  String get raidNeedParty =>
-      'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.';
+  String get raidNeedParty => '레이드는 파티 콘텐츠입니다. 아래에서 무작위 파티 대기열에 들어가거나, 게시판의 모집에 참여하거나, 직접 모집하세요.';
 
   @override
-  String get raidLeaderOnly => 'Your party leader opens raids.';
+  String get raidLeaderOnly => '레이드는 파티장이 엽니다.';
 
   @override
-  String get raidLobby => 'Raid lobby';
+  String get raidLobby => '레이드 로비';
 
   @override
-  String get raidJoin => 'Join';
+  String get raidJoin => '참가';
 
   @override
-  String get raidLeave => 'Leave';
+  String get raidLeave => '나가기';
 
   @override
-  String get raidCancel => 'Call off';
+  String get raidCancel => '취소';
 
   @override
-  String get raidCancelBody => 'The lobby closes for everyone.';
+  String get raidCancelBody => '모두의 로비가 닫힙니다.';
 
   @override
-  String get raidStart => 'Start raid';
+  String get raidStart => '레이드 시작';
 
   @override
-  String get raidStartBody => 'Nobody can join or leave once it starts.';
+  String get raidStartBody => '시작하면 누구도 참가하거나 나갈 수 없습니다.';
 
   @override
   String raidMembers(int count, int max) {
-    return 'Members ($count/$max)';
+    return '인원 ($count/$max)';
   }
 
   @override
   String raidNeedMore(int min) {
-    return 'At least $min members to start';
+    return '시작하려면 최소 $min명 필요';
   }
 
   @override
-  String get raidWaitHint => 'Rewards open when the raid ends; every member collects their own.';
+  String get raidWaitHint => '레이드가 끝나면 보상이 열리며, 각자 자신의 보상을 받습니다.';
 
   @override
-  String get raidDone => 'Raid over — collect your rewards';
+  String get raidDone => '레이드 종료 — 보상 수령';
 
   @override
-  String get raidLocked => 'Cleared this week';
+  String get raidLocked => '이번 주 클리어';
 
   @override
-  String get raidCollected => 'collected';
+  String get raidCollected => '수령 완료';
 
   @override
-  String get errRaidNeedsParty => 'Join a party first.';
+  String get errRaidNeedsParty => '먼저 파티에 가입하세요.';
 
   @override
-  String get errRaidExists => 'Your party already has an open raid.';
+  String get errRaidExists => '파티에 이미 열린 레이드가 있습니다.';
 
   @override
-  String get errAlreadyInRaid => 'You are already in a raid.';
+  String get errAlreadyInRaid => '이미 레이드에 참가 중입니다.';
 
   @override
-  String get errRaidNotOpen => 'This raid is no longer open.';
+  String get errRaidNotOpen => '이 레이드는 더 이상 열려 있지 않습니다.';
 
   @override
-  String get errRaidNotEnough => 'Not enough members to start.';
+  String get errRaidNotEnough => '시작할 인원이 부족합니다.';
 
   @override
-  String get errRaidWeeklyLocked => 'You already cleared this raid this week.';
+  String get errRaidWeeklyLocked => '이번 주에 이미 이 레이드를 클리어했습니다.';
 
   @override
   String errCharacterBusy(String action) {
-    return 'Finish what your character is doing first: $action.';
+    return '먼저 캐릭터의 현재 작업을 끝내세요: $action.';
   }
 
   @override
-  String get busyGathering => 'gathering';
+  String get busyGathering => '채집';
 
   @override
-  String get busyHunt => 'hunt';
+  String get busyHunt => '사냥';
 
   @override
-  String get busyDungeon => 'dungeon';
+  String get busyDungeon => '던전';
 
   @override
-  String get busyRaid => 'raid';
+  String get busyRaid => '레이드';
 
   @override
-  String get busyTravel => 'travel';
+  String get busyTravel => '이동';
 
   @override
-  String get busyCrafting => 'crafting';
+  String get busyCrafting => '제작';
 
   @override
-  String get errCraftActive => 'A crafting job is already running.';
+  String get errCraftActive => '제작 작업이 이미 진행 중입니다.';
 
   @override
-  String get errCraftTooLong => 'That job would take more than 6 hours.';
+  String get errCraftTooLong => '이 작업은 6시간을 넘습니다.';
 
   @override
   String craftEach(String time) {
-    return '$time each';
+    return '개당 $time';
   }
 
   @override
   String craftTotal(String time) {
-    return 'Total $time';
+    return '총 $time';
   }
 
   @override
   String craftRunning(String item, int count) {
-    return 'Crafting $item ×$count';
+    return '$item $count개 제작 중';
   }
 
   @override
   String craftProgress(int done, int count) {
-    return '$done/$count ready';
+    return '$done/$count 완료';
   }
 
   @override
-  String get craftDone => 'All done — collect';
+  String get craftDone => '모두 완료 — 수령';
 
   @override
-  String get craftCollectEarlyTitle => 'Collect now?';
+  String get craftCollectEarlyTitle => '지금 수령할까요?';
 
   @override
   String craftCollectEarlyBody(int done, int rest) {
-    return 'The $done finished items are delivered; the materials and gold of the other $rest come back.';
+    return '완성된 $done개는 지급되고, 나머지 $rest개의 재료와 골드는 돌려받습니다.';
   }
 
   @override
   String craftCollected(int made, int refunded) {
-    return '$made made, $refunded refunded';
+    return '$made개 제작, $refunded개 환불';
   }
 
   @override
-  String get craftBusyHint => 'Crafting takes time; your character does nothing else meanwhile.';
+  String get craftBusyHint => '제작에는 시간이 걸리며, 그동안 캐릭터는 다른 일을 하지 않습니다.';
 
   @override
-  String get eventHowTitle => 'How to take part';
+  String get eventHowTitle => '참가 방법';
 
   @override
-  String get eventRewardsTitle => 'Rewards';
+  String get eventRewardsTitle => '보상';
 
   @override
   String eventStepEnlist(int level) {
-    return 'Enlist from 24 hours before it starts until it ends (level $level+).';
+    return '시작 24시간 전부터 종료 시까지 참가할 수 있습니다 (Lv.$level 이상).';
   }
 
   @override
   String eventStepRegion(String region) {
-    return 'Be in $region when you enlist.';
+    return '참가할 때 $region에 있어야 합니다.';
   }
 
   @override
   String eventStepPower(int power) {
-    return 'Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: $power.';
+    return '참가 시 전투력이 고정됩니다: 공격력 × 2 + 방어력 + HP ÷ 10. 현재 전투력: $power.';
   }
 
   @override
   String eventStepScore(int tier) {
-    return 'Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier $tier.';
+    return '점수 = 전투력 × 참가 시간(분). 시작 시점(또는 더 늦게 참가한 경우 그 시점)부터 계산하며 $tier단계에서 멈춥니다.';
   }
 
   @override
-  String get eventStepGoal =>
-      'If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.';
+  String get eventStepGoal => '모두 함께 목표를 달성하면 최고 단계까지 보상을 받고, 아니면 2단계까지만 받습니다.';
 
   @override
-  String get eventStepPaid =>
-      'Rewards are paid automatically when it closes. Enlisting does not stop your other actions.';
+  String get eventStepPaid => '보상은 종료 시 자동 지급됩니다. 참가해도 다른 행동은 멈추지 않습니다.';
 
   @override
   String eventTier(int tier, String score) {
-    return 'Tier $tier · $score+ points';
+    return '$tier단계 · $score점 이상';
   }
 
   @override
   String eventTierTokens(int count) {
-    return '+$count event tokens';
+    return '이벤트 토큰 +$count';
   }
 
   @override
   String eventEstimate(String score, int tier) {
-    return 'Join now: about $score points → tier $tier';
+    return '지금 참가 시: 약 $score점 → $tier단계';
   }
 
   @override
   String eventEstimateNone(String score) {
-    return 'Join now: about $score points — not enough for a tier';
+    return '지금 참가 시: 약 $score점 — 단계에 못 미침';
   }
 
   @override
   String seasonalHow(int count) {
-    return 'While the event runs, claim $count event tokens once a day (the day starts at 00:00 UTC).';
+    return '이벤트 기간 동안 하루 한 번 이벤트 토큰 $count개를 받을 수 있습니다 (하루는 00:00 UTC에 시작).';
   }
 
   @override
   String seasonalBenefit(int count) {
-    return 'Tokens stay on your account (balance: $count).';
+    return '토큰은 계정에 남습니다 (잔액: $count).';
   }
 
   @override
-  String get eventDetails => 'Details';
+  String get eventDetails => '자세히';
 
   @override
-  String get createCharacterTitle => 'Create character';
+  String get createCharacterTitle => '캐릭터 만들기';
 
   @override
-  String get classTraits => 'Class traits';
+  String get classTraits => '직업 특성';
 
   @override
   String classResourceLine(String name) {
-    return 'Resource: $name';
+    return '자원: $name';
   }
 
   @override
   String classFocusLine(String primary, String secondary) {
-    return 'Main attribute: $primary · second: $secondary';
+    return '주 능력치: $primary · 보조: $secondary';
   }
 
   @override
   String classFocusOnly(String primary) {
-    return 'Main attribute: $primary';
+    return '주 능력치: $primary';
   }
 
   @override
-  String get classDifficulty => 'Difficulty';
+  String get classDifficulty => '난이도';
 
   @override
-  String get difficultyEasy => 'Easy — forgiving, safe on AFK hunts';
+  String get difficultyEasy => '쉬움 — 실수에 관대하고 방치 사냥에 안전함';
 
   @override
-  String get difficultyMedium => 'Medium — balanced; skill order matters';
+  String get difficultyMedium => '보통 — 균형 잡힘, 스킬 순서가 중요함';
 
   @override
-  String get difficultyHard => 'Hard — fragile; needs the right gear';
+  String get difficultyHard => '어려움 — 약함, 알맞은 장비가 필요함';
 
   @override
-  String get skillsTapHint => 'tap for details';
+  String get skillsTapHint => '눌러서 자세히 보기';
 
   @override
-  String get chooseRace => 'Choose your race';
+  String get chooseRace => '종족 선택';
 
   @override
   String continueAs(String name) {
-    return 'Continue as $name';
+    return '$name(으)로 계속';
   }
 
   @override
-  String get nameYourCharacter => 'Name your character';
+  String get nameYourCharacter => '캐릭터 이름 짓기';
 
   @override
-  String get raceTroll => 'Troll';
+  String get raceTroll => '트롤';
 
   @override
-  String get raceUndead => 'Undead';
+  String get raceUndead => '언데드';
 
   @override
-  String get raceDarkElf => 'Dark Elf';
+  String get raceDarkElf => '다크 엘프';
 
   @override
-  String get raceDrakari => 'Drakari';
+  String get raceDrakari => '드라카리';
 
   @override
-  String get raceTauren => 'Tauren';
+  String get raceTauren => '타우렌';
 
   @override
-  String get raceGnome => 'Gnome';
+  String get raceGnome => '노움';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {
-    return '+$atk% attack and +$def% defense for $minutes min';
+    return '$minutes분 동안 공격력 +$atk%, 방어력 +$def%';
   }
 
   @override
   String fedToast(int atk, int def) {
-    return 'Fed: +$atk% attack, +$def% defense';
+    return '포만: 공격력 +$atk%, 방어력 +$def%';
   }
 
   @override
   String fedActive(int atk, int def, String time) {
-    return 'Fed · +$atk% attack · +$def% defense · $time left';
+    return '포만 · 공격력 +$atk% · 방어력 +$def% · $time 남음';
   }
 
   @override
   String huntReach(String regions) {
-    return 'Hunting from here: $regions';
+    return '이곳에서 사냥 가능: $regions';
   }
 
   @override
-  String get huntNoMobsHere => 'There is nothing to hunt here. Travel to a hunting ground first.';
+  String get huntNoMobsHere => '이곳에는 사냥감이 없습니다. 먼저 사냥터로 이동하세요.';
 
   @override
-  String get huntOtherRegions => 'Monsters in other regions';
+  String get huntOtherRegions => '다른 지역의 몬스터';
 
   @override
-  String get huntTravelHint => 'Travel to a monster\'s region, or a region linked to it by road, to hunt it.';
+  String get huntTravelHint => '몬스터를 사냥하려면 그 지역이나 도로로 연결된 지역으로 이동하세요.';
 
   @override
-  String get errMobRegion => 'This monster lives in another region. Travel there first.';
+  String get errMobRegion => '이 몬스터는 다른 지역에 삽니다. 먼저 그곳으로 이동하세요.';
 
   @override
   String restoresHpPct(int pct) {
-    return 'Restores $pct% of max HP';
+    return '최대 HP의 $pct% 회복';
   }
 
   @override
-  String get statEvasion => '% Evasion';
+  String get statEvasion => '% 회피';
 
   @override
-  String get statBlock => '% Block';
+  String get statBlock => '% 방어';
 
   @override
-  String get statCritDmg => '% Crit damage';
+  String get statCritDmg => '% 치명타 피해';
 
   @override
-  String get statLifesteal => '% Lifesteal';
+  String get statLifesteal => '% 흡혈';
 
   @override
-  String get statDmgReduction => '% Damage reduction';
+  String get statDmgReduction => '% 피해 감소';
 
   @override
-  String get classJewelry => 'Jewelry';
+  String get classJewelry => '장신구';
 
   @override
-  String get mapHint =>
-      'You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.';
+  String get mapHint => '레벨이 허용하는 모든 지역으로 바로 이동할 수 있으며, 시간은 최단 도로를 따릅니다. 지도를 드래그하거나 확대하고 지역을 누르세요.';
 
   @override
-  String get mapNoRoad => 'No direct road leads here. Travel through the glowing regions next to you.';
+  String get mapNoRoad => '이곳으로 가는 직행 도로가 없습니다. 옆의 빛나는 지역을 거쳐 이동하세요.';
 
   @override
-  String get youAreHere => 'You are here.';
+  String get youAreHere => '현재 위치입니다.';
 
   @override
   String travelTime(String time) {
-    return 'Travel time: $time';
+    return '이동 시간: $time';
   }
 
   @override
   String xpPerKill(int xp) {
-    return '$xp XP';
+    return '경험치 $xp';
   }
 
   @override
-  String get deleteCharacter => 'Delete character';
+  String get deleteCharacter => '캐릭터 삭제';
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name will be deleted right away, with all items and gold. This cannot be undone. Type the character\'s name to confirm.';
+    return '$name은(는) 모든 아이템, 골드와 함께 즉시 삭제됩니다. 되돌릴 수 없습니다. 확인을 위해 캐릭터 이름을 입력하세요.';
   }
 
   @override
-  String get characterNameConfirm => 'Character name';
+  String get characterNameConfirm => '캐릭터 이름';
 
   @override
   String characterDeletesAt(String when) {
-    return 'Deleted on $when';
+    return '삭제 예정: $when';
   }
 
   @override
-  String get cancelCharacterDelete => 'Cancel deletion';
+  String get cancelCharacterDelete => '삭제 취소';
 
   @override
   String characterDeleted(String name) {
-    return '$name was deleted.';
+    return '$name 삭제 완료.';
   }
 
   @override
   String characterDeleteCancelled(String name) {
-    return '$name will not be deleted.';
+    return '$name은(는) 삭제되지 않습니다.';
   }
 
   @override
-  String get errNameMismatch => 'The name does not match.';
+  String get errNameMismatch => '이름이 일치하지 않습니다.';
 
   @override
   String attrGainPerPoint(String gains) {
-    return 'Per point: $gains';
+    return '포인트당: $gains';
   }
 
   @override
   String attrGainPending(String gains) {
-    return 'Adding: $gains';
+    return '추가 예정: $gains';
   }
 
   @override
-  String get attrNoEffect => 'No effect for your class';
+  String get attrNoEffect => '현재 직업에는 효과 없음';
 
   @override
-  String get attrInputHint => 'Type how many points each attribute gets';
+  String get attrInputHint => '각 능력치에 줄 포인트를 입력하세요';
 
   @override
   String get gainHp => 'HP';
@@ -2415,727 +2405,719 @@ class AppLocalizationsKo extends AppLocalizations {
   String get gainMp => 'MP';
 
   @override
-  String get gainHpRegen => 'HP/s';
+  String get gainHpRegen => 'HP/초';
 
   @override
-  String get huntSupplies => 'Supplies to take';
+  String get huntSupplies => '가져갈 보급품';
 
   @override
-  String get huntSuppliesHint =>
-      'Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.';
+  String get huntSuppliesHint => '물약은 전투 사이 HP가 절반 아래일 때, 음식은 효과가 끝났을 때, 마나 물약은 마나가 부족할 때 사용합니다. 남은 것은 가방으로 돌아옵니다.';
 
   @override
-  String get supplyHp => 'Healing potions';
+  String get supplyHp => '회복 물약';
 
   @override
-  String get supplyMp => 'Mana potions';
+  String get supplyMp => '마나 물약';
 
   @override
-  String get supplyMpHint => 'For classes using mana, energy, focus, nature energy or spirit';
+  String get supplyMpHint => '마나, 기력, 집중, 자연 에너지, 영혼을 쓰는 직업용';
 
   @override
-  String get supplyFood => 'Food';
+  String get supplyFood => '음식';
 
   @override
-  String get huntNoSupplies => 'No potions or food in your bag: buy them at the shop or craft them.';
+  String get huntNoSupplies => '가방에 물약이나 음식이 없습니다. 상점에서 사거나 제작하세요.';
 
   @override
   String restoresMpPct(int pct) {
-    return 'Refills $pct% of your mana';
+    return '마나 $pct% 회복';
   }
 
   @override
-  String get huntSupplyOnly => 'Used only as a hunt supply';
+  String get huntSupplyOnly => '사냥 보급품으로만 사용';
 
   @override
-  String get errBadSupply => 'That item cannot be taken on a hunt.';
+  String get errBadSupply => '이 아이템은 사냥에 가져갈 수 없습니다.';
 
   @override
-  String get errNotEnoughSupplies => 'Your bag holds fewer of that supply.';
+  String get errNotEnoughSupplies => '가방에 그만큼의 보급품이 없습니다.';
 
   @override
-  String get errHuntOnly => 'Take it on a hunt as a supply.';
+  String get errHuntOnly => '보급품으로 사냥에 가져가세요.';
 
   @override
-  String get huntFled => 'Your HP fell under 5%: you broke off the fight';
+  String get huntFled => 'HP가 5% 아래로 떨어져 전투에서 물러났습니다';
 
   @override
   String suppliesUsed(String list) {
-    return 'Used: $list';
+    return '사용: $list';
   }
 
   @override
-  String get compareTitle => 'Compared with what you wear';
+  String get compareTitle => '착용 장비와 비교';
 
   @override
   String compareWorn(String name) {
-    return 'Worn: $name';
+    return '착용 중: $name';
   }
 
   @override
-  String get compareEmpty => 'That slot is empty: equipping adds all of these.';
+  String get compareEmpty => '이 슬롯은 비어 있습니다. 장착하면 아래 수치가 모두 더해집니다.';
 
   @override
-  String get compareColStat => 'Stat';
+  String get compareColStat => '능력치';
 
   @override
-  String get compareColWorn => 'Worn';
+  String get compareColWorn => '착용';
 
   @override
-  String get compareColThis => 'This';
+  String get compareColThis => '이 장비';
 
   @override
-  String get compareColDiff => 'Change';
+  String get compareColDiff => '변화';
 
   @override
-  String get compareSame => 'Same stats as what you wear.';
+  String get compareSame => '착용 장비와 능력치가 같습니다.';
 
   @override
-  String get wearOk => 'Your class can wear this';
+  String get wearOk => '현재 직업이 착용할 수 있습니다';
 
   @override
-  String get wearClass => 'Your class can\'t wear this';
+  String get wearClass => '현재 직업은 착용할 수 없습니다';
 
   @override
   String wearLevel(int level) {
-    return 'Needs level $level';
+    return '레벨 $level 필요';
   }
 
   @override
-  String get wearAttribute => 'Your attributes are too low';
+  String get wearAttribute => '능력치가 낮습니다';
 
   @override
-  String get wearLegendClass => 'not for your class';
+  String get wearLegendClass => '직업 불일치';
 
   @override
-  String get wearLegendLater => 'not yet (level or attributes)';
+  String get wearLegendLater => '아직 불가 (레벨 또는 능력치)';
 
   @override
-  String get enchantAction => 'Enchant';
+  String get enchantAction => '마법 부여';
 
   @override
-  String get enchantPick => 'Choose the gear to enchant';
+  String get enchantPick => '마법을 부여할 장비 선택';
 
   @override
-  String get enchantNone => 'None of your gear fits this scroll.';
+  String get enchantNone => '이 두루마리에 맞는 장비가 없습니다.';
 
   @override
   String enchantFits(String groups) {
-    return 'Goes on: $groups';
+    return '대상: $groups';
   }
 
   @override
-  String get enchantGroupWeapon => 'weapons';
+  String get enchantGroupWeapon => '무기';
 
   @override
-  String get enchantGroupArmor => 'armor';
+  String get enchantGroupArmor => '방어구';
 
   @override
-  String get enchantGroupJewelry => 'jewelry';
+  String get enchantGroupJewelry => '장신구';
 
   @override
-  String get enchantGroupAny => 'any gear';
+  String get enchantGroupAny => '모든 장비';
 
   @override
-  String get enchantReplaceTitle => 'Replace the enchant?';
+  String get enchantReplaceTitle => '마법 부여를 교체할까요?';
 
   @override
   String enchantReplaceBody(String old, String next) {
-    return '$old is lost and $next takes its place.';
+    return '$old은(는) 사라지고 $next이(가) 적용됩니다.';
   }
 
   @override
   String enchantDone(String item) {
-    return '$item enchanted';
+    return '$item에 마법 부여 완료';
   }
 
   @override
   String enchantOn(String name) {
-    return 'Enchant: $name';
+    return '마법 부여: $name';
   }
 
   @override
-  String get wornTag => 'worn';
+  String get wornTag => '착용';
 
   @override
-  String get errNotEnchant => 'That is not an enchanting scroll.';
+  String get errNotEnchant => '마법 부여 두루마리가 아닙니다.';
 
   @override
-  String get errEnchantSlot => 'The enchant doesn\'t fit that gear.';
+  String get errEnchantSlot => '이 장비에는 맞지 않는 마법 부여입니다.';
 
   @override
-  String get statGatherMining => 'Mining yield';
+  String get statGatherMining => '채광 산출량';
 
   @override
-  String get statGatherHerbalism => 'Herbalism yield';
+  String get statGatherHerbalism => '약초 채집 산출량';
 
   @override
-  String get statGatherWoodcutting => 'Woodcutting yield';
+  String get statGatherWoodcutting => '벌목 산출량';
 
   @override
-  String get statGatherFishing => 'Fishing yield';
+  String get statGatherFishing => '낚시 산출량';
 
   @override
-  String get statGatherHunting => 'Hunting yield';
+  String get statGatherHunting => '사냥 산출량';
 
   @override
-  String get statCraftSpeed => 'Crafting speed';
+  String get statCraftSpeed => '제작 속도';
 
   @override
   String diffXp(int pct) {
-    return '$pct% XP';
+    return '경험치 $pct%';
   }
 
   @override
-  String get diffNoXp => 'no XP';
+  String get diffNoXp => '경험치 없음';
 
   @override
-  String get diffLegend => 'Recipe colors: the XP a craft teaches at your skill';
+  String get diffLegend => '레시피 색상: 현재 기술에서 제작으로 얻는 경험치';
 
   @override
-  String get recipeGroupEnchantWeapon => 'Weapon enchants';
+  String get recipeGroupEnchantWeapon => '무기 마법 부여';
 
   @override
-  String get recipeGroupEnchantArmor => 'Armor enchants';
+  String get recipeGroupEnchantArmor => '방어구 마법 부여';
 
   @override
-  String get recipeGroupEnchantJewelry => 'Jewelry enchants';
+  String get recipeGroupEnchantJewelry => '장신구 마법 부여';
 
   @override
-  String get recipeGroupEnchantProfession => 'Profession enchants';
+  String get recipeGroupEnchantProfession => '직업 마법 부여';
 
   @override
-  String get partyHint =>
-      'Members doing the same work at the same time (the same gathering kind, profession, hunt or dungeon) each earn +3% XP per member working: five together earn +15%. Nobody gives XP away.';
+  String get partyHint => '같은 작업(같은 채집, 직업, 사냥, 던전)을 동시에 하는 파티원은 일하는 인원당 경험치 +3%를 얻습니다. 5명이면 +15%. 누구의 경험치도 줄어들지 않습니다.';
 
   @override
-  String get partyChat => 'Party chat';
+  String get partyChat => '파티 채팅';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return 'Party bonus with $names: $earned → $kept XP';
+    return '$names님과 파티 보너스: $earned → 경험치 $kept';
   }
 
   @override
   String evRaidMatched(String raid) {
-    return 'A party was found for $raid. See Raids.';
+    return '$raid 파티를 찾았습니다. 레이드를 확인하세요.';
   }
 
   @override
-  String get nkRaidMatched => 'Raid party found';
+  String get nkRaidMatched => '레이드 파티 찾음';
 
   @override
-  String get workHunt => 'Hunting';
+  String get workHunt => '사냥';
 
   @override
-  String get workDungeon => 'Dungeon';
+  String get workDungeon => '던전';
 
   @override
-  String get raidFind => 'Find a party';
+  String get raidFind => '파티 찾기';
 
   @override
-  String get raidQueueJoin => 'Queue';
+  String get raidQueueJoin => '대기열 참가';
 
   @override
-  String get raidQueueLeave => 'Leave queue';
+  String get raidQueueLeave => '대기열 나가기';
 
   @override
   String raidQueued(String raid, int waiting) {
-    return 'Queued for $raid · $waiting waiting';
+    return '$raid 대기 중 · $waiting명 대기';
   }
 
   @override
-  String get raidQueueHint => 'A random party forms once 5 are waiting, or after 5 minutes with at least 2.';
+  String get raidQueueHint => '5명이 모이거나, 최소 2명으로 5분이 지나면 무작위 파티가 만들어집니다.';
 
   @override
-  String get raidAdvertise => 'Advertise';
+  String get raidAdvertise => '모집 등록';
 
   @override
-  String get raidUnlist => 'Remove listing';
+  String get raidUnlist => '모집 삭제';
 
   @override
   String raidListed(String raid) {
-    return 'Your party is on the board for $raid';
+    return '파티가 $raid 게시판에 등록되었습니다';
   }
 
   @override
-  String get raidBoard => 'Listing board';
+  String get raidBoard => '모집 게시판';
 
   @override
-  String get raidBoardEmpty => 'No open listings.';
+  String get raidBoardEmpty => '열린 모집이 없습니다.';
 
   @override
-  String get raidJoinParty => 'Join party';
+  String get raidJoinParty => '파티 참가';
 
   @override
-  String get raidPickRaid => 'Raid';
+  String get raidPickRaid => '레이드';
 
   @override
-  String get errListingGone => 'That listing is gone or full.';
+  String get errListingGone => '모집이 사라졌거나 가득 찼습니다.';
 
   @override
-  String get workGathering => 'Gathering';
+  String get workGathering => '채집';
 
   @override
-  String get workAdventure => 'Adventure';
+  String get workAdventure => '모험';
 
   @override
-  String get workRaid => 'Raid';
+  String get workRaid => '레이드';
 
   @override
-  String get workTravel => 'Travelling';
+  String get workTravel => '이동 중';
 
   @override
-  String get workCrafting => 'Crafting';
+  String get workCrafting => '제작';
 
   @override
-  String get workIdle => 'Idle';
+  String get workIdle => '대기';
 
   @override
-  String get errDungeonRegion => 'Travel to this place on the map first.';
+  String get errDungeonRegion => '먼저 지도에서 이곳으로 이동하세요.';
 
   @override
-  String get dungeonsElsewhere =>
-      'More dungeons and raids open as you travel: each is entered from its own region on the map.';
+  String get dungeonsElsewhere => '이동할수록 던전과 레이드가 더 열립니다. 각각 지도의 해당 지역에서 입장합니다.';
 
   @override
-  String get dungeonNoneHere => 'No dungeon in reach here. Travel on the map to a dungeon region.';
+  String get dungeonNoneHere => '여기서 갈 수 있는 던전이 없습니다. 지도에서 던전 지역으로 이동하세요.';
 
   @override
   String dungeonXp(int xp) {
-    return '≈ $xp XP for you';
+    return '나에게 약 $xp 경험치';
   }
 
   @override
   String appVersionLine(String version) {
-    return 'Version $version';
+    return '버전 $version';
   }
 
   @override
-  String get updateButton => 'Update';
+  String get updateButton => '업데이트';
 
   @override
   String updateAvailable(String version) {
-    return 'New version ready: $version';
+    return '새 버전 준비됨: $version';
   }
 
   @override
-  String get updateLatest => 'You have the latest version';
+  String get updateLatest => '최신 버전입니다';
 
   @override
   String updateConfirm(String version, int size) {
-    return 'Download and install version $version ($size MB)?';
+    return '버전 $version($size MB)을 다운로드하여 설치할까요?';
   }
 
   @override
-  String get updateDownloading => 'Downloading…';
+  String get updateDownloading => '다운로드 중…';
 
   @override
-  String get updatePermission => 'Allow installs from MeNa World, then tap Update again.';
+  String get updatePermission => 'MeNa World의 설치를 허용한 뒤 업데이트를 다시 누르세요.';
 
   @override
-  String get updateFailed => 'Could not get the update. Check your connection.';
+  String get updateFailed => '업데이트를 받지 못했습니다. 연결을 확인하세요.';
 
   @override
-  String get fightReport => 'Fight report';
+  String get fightReport => '전투 보고서';
 
   @override
-  String get endTimeUp => 'Time ran out: it went on to the planned end.';
+  String get endTimeUp => '시간 종료: 예정된 끝까지 진행되었습니다.';
 
   @override
-  String get endEarly => 'Collected early: stopped before the planned end.';
+  String get endEarly => '일찍 수령: 예정된 끝보다 먼저 멈췄습니다.';
 
   @override
   String endFled(String mob) {
-    return 'HP fell below 5% against $mob: you broke off and came back.';
+    return '$mob과(와)의 전투에서 HP가 5% 아래로 떨어져 물러났습니다.';
   }
 
   @override
   String endDefeat(String mob) {
-    return 'You fell to $mob.';
+    return '$mob에게 쓰러졌습니다.';
   }
 
   @override
   String endPartyDefeat(String mob) {
-    return 'The party fell to $mob.';
+    return '파티가 $mob에게 쓰러졌습니다.';
   }
 
   @override
   String endTimeout(String mob) {
-    return 'The fight with $mob went past the turn limit: it stopped.';
+    return '$mob과(와)의 전투가 턴 제한을 넘어 중단되었습니다.';
   }
 
   @override
-  String get endCleared => 'Cleared: every wave and the boss fell.';
+  String get endCleared => '클리어: 모든 웨이브와 보스를 쓰러뜨렸습니다.';
 
   @override
-  String get repCampHint =>
-      'Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.';
+  String get repCampHint => 'HP가 50% 아래면 사냥꾼은 다음 전투 전에 야영하여 회복하므로, 5%까지 떨어지는 일은 드뭅니다.';
 
   @override
-  String get repYou => 'You';
+  String get repYou => '나';
 
   @override
-  String get repLevel => 'Level';
+  String get repLevel => '레벨';
 
   @override
   String get repHp => 'HP';
 
   @override
-  String get repAttack => 'Attack';
+  String get repAttack => '공격력';
 
   @override
-  String get repDefense => 'Defense';
+  String get repDefense => '방어력';
 
   @override
-  String get repEvasion => 'Evasion';
+  String get repEvasion => '회피';
 
   @override
-  String get repHitChance => 'Hit chance';
+  String get repHitChance => '명중률';
 
   @override
-  String get repCrit => 'Crit';
+  String get repCrit => '치명타';
 
   @override
   String repFights(int n) {
-    return '$n fights';
+    return '전투 $n회';
   }
 
   @override
   String repSwings(int hits, int swings, int pct, int avg, int max) {
-    return '$hits/$swings hits ($pct%), avg $avg, max $max';
+    return '명중 $hits/$swings ($pct%), 평균 $avg, 최대 $max';
   }
 
   @override
-  String get repYourSwings => 'Your swings';
+  String get repYourSwings => '내 공격';
 
   @override
-  String get repPartySwings => 'The party\'s swings';
+  String get repPartySwings => '파티의 공격';
 
   @override
-  String get repEnemySwings => 'Enemy swings';
+  String get repEnemySwings => '적의 공격';
 
   @override
   String repLowest(int pct) {
-    return 'Lowest HP in a fight: $pct%';
+    return '전투 중 최저 HP: $pct%';
   }
 
   @override
   String repRest(String time) {
-    return 'Camped: $time';
+    return '야영: $time';
   }
 
   @override
-  String get restart => 'Restart';
+  String get restart => '재시작';
 
   @override
-  String get restartTitle => 'Collect and start again?';
+  String get restartTitle => '수령하고 다시 시작할까요?';
 
   @override
-  String get restartBody => 'What came in so far goes to your bag, and the same run starts again for the same time.';
+  String get restartBody => '지금까지 얻은 것은 가방으로 들어가고, 같은 작업이 같은 시간으로 다시 시작됩니다.';
 
   @override
-  String get dailyTitle => 'Daily login reward';
+  String get dailyTitle => '일일 접속 보상';
 
   @override
-  String get dailyBody =>
-      'Claim once a day on any character. Each week in a row pays more and day 29 the most; a missed day starts the cycle again.';
+  String get dailyBody => '어느 캐릭터로든 하루 한 번 받을 수 있습니다. 주가 이어질수록 더 많이 주며 29일째가 가장 많습니다. 하루라도 놓치면 처음부터 다시 시작합니다.';
 
   @override
-  String get dailyClaim => 'Claim';
+  String get dailyClaim => '받기';
 
   @override
-  String get dailyTomorrow => 'Come back tomorrow';
+  String get dailyTomorrow => '내일 다시 오세요';
 
   @override
   String dailyDay(int n) {
-    return 'Day $n';
+    return '$n일째';
   }
 
   @override
-  String get dailyOpen => 'Daily reward';
+  String get dailyOpen => '일일 보상';
 
   @override
   String chatMutedNotice(String name, int min) {
-    return '$name was muted for $min minutes for swearing.';
+    return '$name님이 욕설로 $min분간 채팅 금지되었습니다.';
   }
 
   @override
-  String get storyTitle => 'Story';
+  String get storyTitle => '스토리';
 
   @override
-  String get storyOpen => 'Story mode';
+  String get storyOpen => '스토리 모드';
 
   @override
-  String get storyComingSoon => 'Story mode is coming soon. Chapters will appear here as they are written.';
+  String get storyComingSoon => '스토리 모드가 곧 추가됩니다. 챕터가 작성되는 대로 여기에 표시됩니다.';
 
   @override
   String storyLocked(int level) {
-    return 'Opens at level $level';
+    return '레벨 $level에 열림';
   }
 
   @override
-  String get bankTitle => 'Bank';
+  String get bankTitle => '은행';
 
   @override
-  String get bankHint =>
-      'Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.';
+  String get bankHint => '모든 캐릭터가 공유합니다. 가방의 아이템을 누르면 보관하고, 은행의 아이템을 누르면 꺼냅니다. 귀속 아이템은 해당 캐릭터에 남습니다.';
 
   @override
-  String get bankEmpty => 'The bank is empty.';
+  String get bankEmpty => '은행이 비어 있습니다.';
 
   @override
-  String get bankDeposit => 'Deposit';
+  String get bankDeposit => '보관';
 
   @override
-  String get bankWithdraw => 'Take';
+  String get bankWithdraw => '꺼내기';
 
   @override
-  String get errBankFull => 'The bank is full.';
+  String get errBankFull => '은행이 가득 찼습니다.';
 
   @override
-  String get tabTrade => 'Trade';
+  String get tabTrade => '거래';
 
   @override
-  String get tradeHint =>
-      'Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.';
+  String get tradeHint => '다른 플레이어와 아이템을 거래합니다. 양쪽이 아이템을 올리고 확인하며, 각자 내주는 아이템의 평균 시세의 8%를 개당 세금으로 냅니다.';
 
   @override
-  String get tradeWith => 'Player name';
+  String get tradeWith => '플레이어 이름';
 
   @override
-  String get tradeOpen => 'Start trade';
+  String get tradeOpen => '거래 시작';
 
   @override
   String tradeTitle(String name) {
-    return 'Trade with $name';
+    return '$name님과 거래';
   }
 
   @override
-  String get tradeYours => 'You give';
+  String get tradeYours => '내가 줄 것';
 
   @override
   String tradeTheirs(String name) {
-    return '$name gives';
+    return '$name님이 줄 것';
   }
 
   @override
-  String get tradeNothing => 'Nothing yet.';
+  String get tradeNothing => '아직 없습니다.';
 
   @override
-  String get tradeAdd => 'Add item';
+  String get tradeAdd => '아이템 추가';
 
   @override
-  String get tradeRemove => 'Take back';
+  String get tradeRemove => '되돌리기';
 
   @override
-  String get tradeTax => 'Your tax';
+  String get tradeTax => '내 세금';
 
   @override
-  String get tradeReady => 'Ready';
+  String get tradeReady => '준비됨';
 
   @override
-  String get tradeWaiting => 'Not ready';
+  String get tradeWaiting => '준비 안 됨';
 
   @override
-  String get tradeConfirm => 'Confirm trade';
+  String get tradeConfirm => '거래 확인';
 
   @override
-  String get tradeWaitingThem => 'Waiting for the other player';
+  String get tradeWaitingThem => '상대방을 기다리는 중';
 
   @override
-  String get tradeCancel => 'Cancel trade';
+  String get tradeCancel => '거래 취소';
 
   @override
-  String get tradeCancelBody => 'Nothing changes hands.';
+  String get tradeCancelBody => '아무것도 오가지 않습니다.';
 
   @override
-  String get tradeDone => 'Trade complete.';
+  String get tradeDone => '거래 완료.';
 
   @override
-  String get errTradeBusy => 'One of you is already trading.';
+  String get errTradeBusy => '둘 중 한 명이 이미 거래 중입니다.';
 
   @override
-  String get errTradeClosed => 'That trade is over.';
+  String get errTradeClosed => '이 거래는 끝났습니다.';
 
   @override
-  String get errTradeItem => 'That item cannot be traded now.';
+  String get errTradeItem => '이 아이템은 지금 거래할 수 없습니다.';
 
   @override
-  String get errTradeEmpty => 'Put something up first.';
+  String get errTradeEmpty => '먼저 무언가를 올리세요.';
 
   @override
-  String get errTradeTooMany => 'Too many items in the trade.';
+  String get errTradeTooMany => '거래 아이템이 너무 많습니다.';
 
   @override
-  String get errCraftLevel => 'Your character\'s level is below this item\'s level.';
+  String get errCraftLevel => '캐릭터 레벨이 이 아이템 레벨보다 낮습니다.';
 
   @override
-  String get gatherNoneHere => 'Your resources grow on other maps: travel to one shown beside them.';
+  String get gatherNoneHere => '가진 자원은 다른 지도에서 납니다. 옆에 표시된 곳으로 이동하세요.';
 
   @override
-  String get errGatherRegion => 'That resource grows on another map.';
+  String get errGatherRegion => '이 자원은 다른 지도에서 납니다.';
 
   @override
-  String get helpersOpen => 'Helpers';
+  String get helpersOpen => '도우미';
 
   @override
-  String get helpersTitle => 'Helpers';
+  String get helpersTitle => '도우미';
 
   @override
-  String get helpersHint =>
-      'Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.';
+  String get helpersHint => '채집과 제작을 도와줄 도우미를 고용하세요. 속도는 절반이고 경험치도 절반이며, 경험치는 내 직업으로 들어옵니다. 종류마다 고유 보너스가 있습니다.';
 
   @override
-  String get helpersGather => 'Gathering';
+  String get helpersGather => '채집';
 
   @override
-  String get helpersCraft => 'Crafting';
+  String get helpersCraft => '제작';
 
   @override
-  String get helperHire => 'Hire';
+  String get helperHire => '고용';
 
   @override
   String helperHireBody(String name, String price) {
-    return 'Hire the $name for $price?';
+    return '$name을(를) $price에 고용할까요?';
   }
 
   @override
-  String get helperSend => 'Send to work';
+  String get helperSend => '일 보내기';
 
   @override
-  String get helperCancel => 'Call back';
+  String get helperCancel => '불러오기';
 
   @override
-  String get helperCancelBody => 'A gathering run brings nothing back; a craft returns its materials and gold.';
+  String get helperCancelBody => '채집은 아무것도 돌아오지 않으며, 제작은 재료와 골드가 돌아옵니다.';
 
   @override
-  String get helperDone => 'Done — collect it';
+  String get helperDone => '완료 — 수령';
 
   @override
   String helperWorking(String time) {
-    return 'Working, $time left';
+    return '작업 중, $time 남음';
   }
 
   @override
   String helperCollected(int items, int xp, String profession) {
-    return '$items items, +$xp $profession XP';
+    return '아이템 $items개, $profession 경험치 +$xp';
   }
 
   @override
-  String get helperNoRecipes => 'No recipe at your level in this profession yet.';
+  String get helperNoRecipes => '이 직업에는 아직 레벨에 맞는 레시피가 없습니다.';
 
   @override
-  String get helperPickRecipe => 'Pick a recipe';
+  String get helperPickRecipe => '레시피 선택';
 
   @override
   String helperBonusYield(int pct) {
-    return '+$pct% yield';
+    return '산출량 +$pct%';
   }
 
   @override
   String helperBonusSpeed(int pct) {
-    return '$pct% faster';
+    return '$pct% 빠름';
   }
 
   @override
   String helperBonusXp(int pct) {
-    return '+$pct% XP';
+    return '경험치 +$pct%';
   }
 
   @override
   String helperBonusGold(int pct) {
-    return '$pct% less gold cost';
+    return '골드 비용 $pct% 감소';
   }
 
   @override
   String helperBonusDouble(int pct) {
-    return '$pct% chance of a double output';
+    return '$pct% 확률로 2배 산출';
   }
 
   @override
-  String get helperMiner => 'Miner';
+  String get helperMiner => '광부';
 
   @override
-  String get helperWoodsman => 'Woodsman';
+  String get helperWoodsman => '나무꾼';
 
   @override
-  String get helperAngler => 'Angler';
+  String get helperAngler => '낚시꾼';
 
   @override
-  String get helperHerbalist => 'Herbalist';
+  String get helperHerbalist => '약초사';
 
   @override
-  String get helperTrapper => 'Trapper';
+  String get helperTrapper => '덫 사냥꾼';
 
   @override
-  String get helperSmith => 'Smith';
+  String get helperSmith => '대장장이';
 
   @override
-  String get helperTanner => 'Tanner';
+  String get helperTanner => '무두장이';
 
   @override
-  String get helperWeaver => 'Weaver';
+  String get helperWeaver => '직조공';
 
   @override
-  String get helperCarver => 'Carver';
+  String get helperCarver => '목공';
 
   @override
-  String get helperApothecary => 'Apothecary';
+  String get helperApothecary => '약제사';
 
   @override
-  String get helperCook => 'Cook';
+  String get helperCook => '요리사';
 
   @override
-  String get helperSmelter => 'Smelter';
+  String get helperSmelter => '제련공';
 
   @override
-  String get helperScribe => 'Scribe';
+  String get helperScribe => '필경사';
 
   @override
-  String get helperGemcutter => 'Gemcutter';
+  String get helperGemcutter => '보석 세공사';
 
   @override
-  String get errHelperBusy => 'That helper is already working.';
+  String get errHelperBusy => '이 도우미는 이미 일하고 있습니다.';
 
   @override
-  String get errHelperNotReady => 'The helper is not done yet.';
+  String get errHelperNotReady => '도우미가 아직 끝내지 않았습니다.';
 
   @override
-  String get shopOpen => 'Shop';
+  String get shopOpen => '상점';
 
   @override
-  String get shopTitle => 'Credit shop';
+  String get shopTitle => '크레딧 상점';
 
   @override
-  String get shopCredits => 'Credits';
+  String get shopCredits => '크레딧';
 
   @override
-  String get shopAvatars => 'Avatars';
+  String get shopAvatars => '아바타';
 
   @override
-  String get shopBackgrounds => 'Backgrounds';
+  String get shopBackgrounds => '배경';
 
   @override
   String shopBalance(int n) {
-    return '$n credits';
+    return '$n 크레딧';
   }
 
   @override
-  String get shopBuyCredits => 'Buy credits to unlock boosts and cosmetics.';
+  String get shopBuyCredits => '크레딧을 구매해 부스트와 치장 아이템을 잠금 해제하세요.';
 
   @override
-  String get shopPaymentsSoon => 'Buying credits with money is coming soon.';
+  String get shopPaymentsSoon => '크레딧 구매 기능이 곧 추가됩니다.';
 
   @override
-  String get shopBoosts => 'XP boosts';
+  String get shopBoosts => '경험치 부스트';
 
   @override
-  String get shopBuy => 'Buy';
+  String get shopBuy => '구매';
 
   @override
   String shopBuyBody(int n) {
-    return 'Spend $n credits?';
+    return '$n 크레딧을 사용할까요?';
   }
 
   @override
@@ -3144,233 +3126,233 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get boostGather => 'Gathering';
+  String get boostGather => '채집';
 
   @override
-  String get boostAdventure => 'Combat';
+  String get boostAdventure => '전투';
 
   @override
-  String get boostCraft => 'Professions';
+  String get boostCraft => '직업';
 
   @override
-  String get boostDesc => '+100% XP for 2 hours';
+  String get boostDesc => '2시간 동안 경험치 +100%';
 
   @override
-  String get boostShort => '+100% XP, 2 h';
+  String get boostShort => '경험치 +100%, 2시간';
 
   @override
   String boostLeft(String time) {
-    return 'Active, $time left';
+    return '활성, $time 남음';
   }
 
   @override
   String boostWatchAd(int n) {
-    return 'Watch ad ($n left)';
+    return '광고 보기 ($n회 남음)';
   }
 
   @override
-  String get boostAdsSoon => 'Ads coming soon';
+  String get boostAdsSoon => '광고 준비 중';
 
   @override
-  String get errInsufficientCredits => 'Not enough credits.';
+  String get errInsufficientCredits => '크레딧이 부족합니다.';
 
   @override
-  String get errBoostActive => 'That boost is already running.';
+  String get errBoostActive => '이 부스트는 이미 적용 중입니다.';
 
   @override
-  String get errAdLimit => 'No more ad boosts today.';
+  String get errAdLimit => '오늘의 광고 부스트를 모두 사용했습니다.';
 
   @override
   String helperCanMake(int n) {
-    return 'Can make: $n';
+    return '제작 가능: $n';
   }
 
   @override
-  String get helperPickResource => 'What to gather';
+  String get helperPickResource => '채집할 것';
 
   @override
-  String get helperCraftHint => 'Materials and gold are taken now; you keep playing meanwhile.';
+  String get helperCraftHint => '재료와 골드는 지금 차감되며, 그동안 계속 플레이할 수 있습니다.';
 
   @override
-  String get petsOpen => 'Pets';
+  String get petsOpen => '펫';
 
   @override
   String get petsHint =>
-      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.';
+      '펫 알은 레벨 400 이상의 레이드를 클리어하면 나옵니다. 알은 부화기에서 부화하고, 펫은 자체 사냥으로 성장하며, 활성 펫은 보너스를 줍니다. 활성 펫은 전투에도 함께하여 모든 타격에 피해를 더합니다.';
 
   @override
-  String get petsEggs => 'Eggs';
+  String get petsEggs => '알';
 
   @override
-  String get petsNoEggs => 'No eggs. Clear raids past level 400 to find some.';
+  String get petsNoEggs => '알이 없습니다. 레벨 400 이상의 레이드를 클리어해 찾으세요.';
 
   @override
   String petsMine(int n, int max) {
-    return 'My pets ($n/$max)';
+    return '내 펫 ($n/$max)';
   }
 
   @override
-  String get petHatch => 'Incubate';
+  String get petHatch => '부화';
 
   @override
   String petHatchBody(String egg, String time) {
-    return 'Put a $egg in the incubator? It hatches in $time.';
+    return '$egg을(를) 부화기에 넣을까요? $time 후 부화합니다.';
   }
 
   @override
-  String get petHatching => 'In its egg';
+  String get petHatching => '알 속';
 
   @override
-  String get petHatched => 'Hatched!';
+  String get petHatched => '부화!';
 
   @override
   String petPower(int n) {
-    return 'Fights like a level $n monster';
+    return '레벨 $n 몬스터처럼 싸웁니다';
   }
 
   @override
-  String get petActive => 'Active';
+  String get petActive => '활성';
 
   @override
-  String get petActivate => 'Make active';
+  String get petActivate => '활성화';
 
   @override
-  String get petDeactivate => 'Rest';
+  String get petDeactivate => '휴식';
 
   @override
-  String get petHunt => 'Send hunting';
+  String get petHunt => '사냥 보내기';
 
   @override
   String petHunting(String mob) {
-    return 'Hunting $mob';
+    return '$mob 사냥 중';
   }
 
   @override
-  String get petHuntDone => 'Hunt over';
+  String get petHuntDone => '사냥 종료';
 
   @override
-  String get petCollectEarly => 'Ending the hunt now pays the fights so far.';
+  String get petCollectEarly => '지금 사냥을 끝내면 지금까지의 전투만 정산됩니다.';
 
   @override
   String petCollected(int wins, int xp) {
-    return '$wins wins, +$xp pet XP';
+    return '$wins승, 펫 경험치 +$xp';
   }
 
   @override
   String petLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$name 레벨 $level 달성!';
   }
 
   @override
-  String get petDied => 'Your pet was beaten; the hunt ended early.';
+  String get petDied => '펫이 쓰러져 사냥이 일찍 끝났습니다.';
 
   @override
-  String get petPickMob => 'Monster to hunt';
+  String get petPickMob => '사냥할 몬스터';
 
   @override
   String petXpPerWin(int n) {
-    return '+$n XP a win';
+    return '승리당 경험치 +$n';
   }
 
   @override
-  String get errPetCap => 'You have as many pets as you can keep.';
+  String get errPetCap => '보유할 수 있는 펫 수에 도달했습니다.';
 
   @override
-  String get errPetHatching => 'The pet has not hatched yet.';
+  String get errPetHatching => '펫이 아직 부화하지 않았습니다.';
 
   @override
-  String get errPetHunting => 'The pet is already hunting.';
+  String get errPetHunting => '펫이 이미 사냥 중입니다.';
 
   @override
   String petStageLevels(int from, int to) {
-    return 'Lvl $from–$to';
+    return 'Lv.$from–$to';
   }
 
   @override
-  String get regionMobs => 'Monsters';
+  String get regionMobs => '몬스터';
 
   @override
-  String get regionDungeons => 'Dungeons';
+  String get regionDungeons => '던전';
 
   @override
-  String get regionGather => 'Resources';
+  String get regionGather => '자원';
 
   @override
-  String get regionEmpty => 'No monsters, dungeons, resources or quests belong to this region.';
+  String get regionEmpty => '이 지역에 속한 몬스터, 던전, 자원, 퀘스트가 없습니다.';
 
   @override
-  String get regionRaids => 'Raids';
+  String get regionRaids => '레이드';
 
   @override
-  String get tagUse => 'Use';
+  String get tagUse => '용도';
 
   @override
-  String get tagAllClasses => 'All classes';
+  String get tagAllClasses => '모든 직업';
 
   @override
-  String get tagDrops => 'Dropped by';
+  String get tagDrops => '드롭';
 
   @override
-  String get tagRaid => 'Raid';
+  String get tagRaid => '레이드';
 
   @override
-  String get tagDungeon => 'Dungeon';
+  String get tagDungeon => '던전';
 
   @override
-  String get tagCrafted => 'Crafted by';
+  String get tagCrafted => '제작';
 
   @override
   String tagSkill(int n) {
-    return 'skill $n';
+    return '기술 $n';
   }
 
   @override
-  String get tagSold => 'Sold by';
+  String get tagSold => '판매';
 
   @override
-  String get tagGathered => 'Gathered by';
+  String get tagGathered => '채집';
 
   @override
-  String get tagUsedIn => 'Material for';
+  String get tagUsedIn => '재료';
 
   @override
-  String get petEvolution => 'Evolution';
+  String get petEvolution => '진화';
 
   @override
-  String get petStrength => 'Strength details';
+  String get petStrength => '강함 상세';
 
   @override
   String petAssistRange(int min, int max) {
-    return 'Combat assist: +$min% – +$max% damage on every hit';
+    return '전투 지원: 모든 타격에 피해 +$min% ~ +$max%';
   }
 
   @override
   String petBonusRange(String min, String max) {
-    return 'Bonus: $min – $max';
+    return '보너스: $min ~ $max';
   }
 
   @override
   String petFightsRange(int min, int max) {
-    return 'Hunts like a level $min – $max monster';
+    return '레벨 $min~$max 몬스터처럼 사냥합니다';
   }
 
   @override
-  String get petFind => 'Where to get it';
+  String get petFind => '획득처';
 
   @override
   String petAssist(int pct) {
-    return 'Combat assist: +$pct% damage';
+    return '전투 지원: 피해 +$pct%';
   }
 
   @override
-  String get petLevelNote => 'From level 1 to 100';
+  String get petLevelNote => '레벨 1부터 100까지';
 
   @override
-  String get petIndex => 'Pet Index';
+  String get petIndex => '펫 도감';
 
   @override
   String petIndexCount(int n, int max) {
-    return '$n / $max discovered';
+    return '$n / $max 발견';
   }
 
   @override
@@ -3379,171 +3361,171 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get petEggTapHint => 'Tap an egg to incubate it.';
+  String get petEggTapHint => '알을 누르면 부화기에 넣을 수 있습니다.';
 
   @override
-  String get petTapHint => 'Tap a pet to see it · the green dot marks the active pet.';
+  String get petTapHint => '펫을 누르면 볼 수 있습니다 · 초록 점은 활성 펫입니다.';
 
   @override
-  String get petIndexHint => 'Tap a pet to open its page.';
+  String get petIndexHint => '펫을 누르면 페이지가 열립니다.';
 
   @override
-  String get petUnknown => 'Not discovered yet';
+  String get petUnknown => '아직 발견하지 못함';
 
   @override
-  String get petAbout => 'About';
+  String get petAbout => '소개';
 
   @override
-  String get petHabitat => 'Habitat';
+  String get petHabitat => '서식지';
 
   @override
   String petElement(String name) {
-    return 'Element: $name';
+    return '속성: $name';
   }
 
   @override
-  String get petStage1 => 'Hatchling';
+  String get petStage1 => '새끼';
 
   @override
-  String get petStage2 => 'Young';
+  String get petStage2 => '어린 개체';
 
   @override
-  String get petStage3 => 'Adult';
+  String get petStage3 => '성체';
 
   @override
-  String get bodyMale => 'Male';
+  String get bodyMale => '남성';
 
   @override
-  String get bodyFemale => 'Female';
+  String get bodyFemale => '여성';
 
   @override
-  String get bodyChoice => 'Appearance';
+  String get bodyChoice => '외모';
 
   @override
-  String get bodyChange => 'Change appearance';
+  String get bodyChange => '외모 변경';
 
   @override
-  String get portraitNoArmor => 'No armor';
+  String get portraitNoArmor => '방어구 없음';
 
   @override
-  String get combatPower => 'Combat power';
+  String get combatPower => '전투력';
 
   @override
-  String get combatTapHint => 'tap for details';
+  String get combatTapHint => '눌러서 자세히 보기';
 
   @override
   String statCap(int cap) {
-    return 'cap $cap%';
+    return '상한 $cap%';
   }
 
   @override
-  String get cEvasion => 'Evasion';
+  String get cEvasion => '회피';
 
   @override
-  String get cBlock => 'Block';
+  String get cBlock => '방어';
 
   @override
-  String get cCritDmg => 'Crit damage';
+  String get cCritDmg => '치명타 피해';
 
   @override
-  String get cDmgReduction => 'Damage reduction';
+  String get cDmgReduction => '피해 감소';
 
   @override
-  String get cLifesteal => 'Lifesteal';
+  String get cLifesteal => '흡혈';
 
   @override
-  String get cExecute => 'Execute';
+  String get cExecute => '처형';
 
   @override
-  String get cMissingHp => 'Last stand';
+  String get cMissingHp => '최후의 저항';
 
   @override
-  String get cPetAssist => 'Pet assist';
+  String get cPetAssist => '펫 지원';
 
   @override
-  String get xPower => 'The strength used in world events: 2 × attack + defense + max HP / 10.';
+  String get xPower => '월드 이벤트에서 쓰는 힘: 공격력 2배 + 방어력 + 최대 HP / 10.';
 
   @override
-  String get xAttack => 'Base damage of each hit before the enemy\'s defense.';
+  String get xAttack => '적의 방어력을 적용하기 전 각 타격의 기본 피해.';
 
   @override
-  String get xDefense => 'Each hit you take loses half of your defense.';
+  String get xDefense => '받는 타격마다 방어력의 절반만큼 줄어듭니다.';
 
   @override
   String xCrit(int cap) {
-    return 'Chance that a hit is critical. At most $cap%.';
+    return '타격이 치명타가 될 확률. 최대 $cap%.';
   }
 
   @override
-  String get xCritDmg => 'A critical hit deals this multiple of a normal one.';
+  String get xCritDmg => '치명타는 일반 타격의 이 배수만큼 피해를 줍니다.';
 
   @override
-  String get xHit => 'Your chance to land a hit, minus the enemy\'s evasion (15–95%).';
+  String get xHit => '타격이 맞을 확률에서 적의 회피를 뺀 값 (15~95%).';
 
   @override
   String xEvasion(int cap) {
-    return 'Taken off the enemy\'s hit chance. At most $cap%.';
+    return '적의 명중률에서 빠집니다. 최대 $cap%.';
   }
 
   @override
   String xBlock(int cap) {
-    return 'Chance to halve an incoming hit. At most $cap%.';
+    return '받는 타격을 절반으로 줄일 확률. 최대 $cap%.';
   }
 
   @override
   String xDmgReduction(int cap) {
-    return 'Every hit you take is lowered by this share. At most $cap%.';
+    return '받는 타격이 이 비율만큼 줄어듭니다. 최대 $cap%.';
   }
 
   @override
-  String get xLifesteal => 'You heal this share of the damage you deal.';
+  String get xLifesteal => '준 피해의 이 비율만큼 회복합니다.';
 
   @override
   String xExecute(int pct) {
-    return 'Extra damage against enemies at or below $pct% HP.';
+    return 'HP $pct% 이하인 적에게 주는 추가 피해.';
   }
 
   @override
-  String get xMissingHp => 'Up to this much extra damage as your own HP drops.';
+  String get xMissingHp => '자신의 HP가 줄수록 이 값까지 추가 피해.';
 
   @override
-  String get xPetAssist => 'Your active pet adds this share to each of your hits.';
+  String get xPetAssist => '활성 펫이 내 타격마다 이 비율을 더합니다.';
 
   @override
-  String get lookFace => 'Face';
+  String get lookFace => '얼굴';
 
   @override
-  String get lookHairStyle => 'Hair style';
+  String get lookHairStyle => '머리 모양';
 
   @override
-  String get lookHairColor => 'Hair color';
+  String get lookHairColor => '머리 색';
 
   @override
-  String get lookEyeColor => 'Eye color';
+  String get lookEyeColor => '눈 색';
 
   @override
-  String get lookSave => 'Save';
+  String get lookSave => '저장';
 
   @override
-  String get lookHumanOnly => 'Face and hair options for this race are coming soon.';
+  String get lookHumanOnly => '이 종족의 얼굴과 머리 옵션은 곧 추가됩니다.';
 
   @override
-  String get raceAbilities => 'Race abilities';
+  String get raceAbilities => '종족 능력';
 
   @override
-  String get raceAbilitiesHint => 'all passive';
+  String get raceAbilitiesHint => '모두 패시브';
 
   @override
-  String get chooseClass => 'Choose your class';
+  String get chooseClass => '직업 선택';
 
   @override
   String raceAttrBonus(int pct, String name) {
-    return '+$pct% $name';
+    return '$name +$pct%';
   }
 
   @override
   String raceProfessionXp(int pct, String name) {
-    return '+$pct% bonus XP in $name';
+    return '$name 보너스 경험치 +$pct%';
   }
 
   @override

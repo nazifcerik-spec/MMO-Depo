@@ -2496,6 +2496,38 @@ void main() {
     expect(find.text('Şu an planlı dünya etkinliği yok.'), findsOneWidget); // layout overflow would fail the test
   });
 
+  // DD-361: the longest labels in each language still fit a phone; a layout
+  // overflow fails the test.
+  const chrome = {
+    'es': ['Aventura', 'Eventos', 'Bolsa', 'Taller', 'Recolección'],
+    'zh': ['冒险', '活动', '背包', '工坊', '采集'],
+    'ru': ['Приключения', 'События', 'Сумка', 'Мастерская', 'Сбор'],
+    'ko': ['모험', '이벤트', '가방', '공방', '채집'],
+    'ja': ['冒険', 'イベント', 'バッグ', '工房', '採集'],
+  };
+  chrome.forEach((lang, labels) {
+    testWidgets('$lang in-game chrome fits a phone', (tester) async {
+      final be = FakeBackend()
+        ..characters.add({
+          'id': 'char-1',
+          'name': 'Grim',
+          'race_code': 'orc',
+          'class_code': 'rogue',
+          'level': 3,
+          'state': 'active',
+        });
+      final store = MemoryTokenStore();
+      await be.api(store).login('grim', 'correct-horse');
+      await _boot(tester, be, store: store, locale: Locale(lang));
+      await tester.tap(find.text('Grim'));
+      await tester.pumpAndSettle();
+      for (final label in labels) {
+        await tester.tap(find.text(label).last);
+        await tester.pumpAndSettle();
+      }
+    });
+  });
+
   test('hunting XP falls off with the level gap either way (DD-281)', () {
     const f = HuntXPFalloff(freePct: 0.05, power: 4, floor: 0.1);
     expect(f.xp(200, 40, 42), 200, reason: '5% of 40: two levels free');

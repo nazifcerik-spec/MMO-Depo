@@ -13,145 +13,145 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'MeNa World';
 
   @override
-  String get tagline => 'Adventures that keep going while you\'re away.';
+  String get tagline => 'Приключения продолжаются, пока вас нет.';
 
   @override
-  String get emailOrUsername => 'Email or username';
+  String get emailOrUsername => 'Эл. почта или имя пользователя';
 
   @override
-  String get email => 'Email';
+  String get email => 'Эл. почта';
 
   @override
-  String get username => 'Username';
+  String get username => 'Имя пользователя';
 
   @override
-  String get password => 'Password';
+  String get password => 'Пароль';
 
   @override
-  String get passwordConfirm => 'Confirm password';
+  String get passwordConfirm => 'Подтвердите пароль';
 
   @override
-  String get showPassword => 'Show password';
+  String get showPassword => 'Показать пароль';
 
   @override
-  String get hidePassword => 'Hide password';
+  String get hidePassword => 'Скрыть пароль';
 
   @override
-  String get login => 'Log in';
+  String get login => 'Войти';
 
   @override
-  String get register => 'Create account';
+  String get register => 'Создать аккаунт';
 
   @override
-  String get noAccount => 'New here? Create an account';
+  String get noAccount => 'Впервые здесь? Создайте аккаунт';
 
   @override
-  String get haveAccount => 'Already have an account? Log in';
+  String get haveAccount => 'Уже есть аккаунт? Войдите';
 
   @override
-  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => 'Мне исполнилось 13 лет, и я принимаю Условия использования и Политику конфиденциальности';
 
   @override
-  String get fieldRequired => 'Required';
+  String get fieldRequired => 'Обязательное поле';
 
   @override
-  String get invalidEmail => 'Enter a valid email';
+  String get invalidEmail => 'Введите корректный адрес эл. почты';
 
   @override
-  String get usernameRule => '3–32 letters, digits, _ or .';
+  String get usernameRule => '3–32 символа: буквы, цифры, _ или .';
 
   @override
-  String get passwordMin => 'At least 8 characters';
+  String get passwordMin => 'Минимум 8 символов';
 
   @override
-  String get passwordMismatch => 'Passwords do not match';
+  String get passwordMismatch => 'Пароли не совпадают';
 
   @override
-  String get termsRequired => 'Please accept the terms to continue';
+  String get termsRequired => 'Чтобы продолжить, примите условия';
 
   @override
-  String get logout => 'Log out';
+  String get logout => 'Выйти';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Повторить';
 
   @override
-  String get offline => 'Can\'t reach the server. Check your connection.';
+  String get offline => 'Нет связи с сервером. Проверьте подключение.';
 
   @override
-  String get characters => 'Characters';
+  String get characters => 'Персонажи';
 
   @override
   String slotsUsed(int used, int cap) {
-    return '$used/$cap slots';
+    return 'Слоты: $used/$cap';
   }
 
   @override
-  String get newCharacter => 'New character';
+  String get newCharacter => 'Новый персонаж';
 
   @override
-  String get noCharacters => 'No characters yet. Create your first hero.';
+  String get noCharacters => 'Персонажей пока нет. Создайте первого героя.';
 
   @override
-  String get create => 'Create';
+  String get create => 'Создать';
 
   @override
-  String get characterName => 'Name';
+  String get characterName => 'Имя';
 
   @override
   String get nameRule => 'До 16 символов одного алфавита, начинается с буквы (можно цифры и _)';
 
   @override
-  String get race => 'Race';
+  String get race => 'Раса';
 
   @override
-  String get characterClass => 'Class';
+  String get characterClass => 'Класс';
 
   @override
-  String get raceHuman => 'Human';
+  String get raceHuman => 'Человек';
 
   @override
-  String get raceElf => 'Elf';
+  String get raceElf => 'Эльф';
 
   @override
-  String get raceDwarf => 'Dwarf';
+  String get raceDwarf => 'Дворф';
 
   @override
-  String get raceOrc => 'Orc';
+  String get raceOrc => 'Орк';
 
   @override
-  String get classWarrior => 'Warrior';
+  String get classWarrior => 'Воин';
 
   @override
-  String get classMage => 'Mage';
+  String get classMage => 'Маг';
 
   @override
-  String get classRogue => 'Rogue';
+  String get classRogue => 'Разбойник';
 
   @override
   String levelLine(int level, String cls, String race) {
-    return 'Lvl $level · $cls · $race';
+    return 'Ур. $level · $cls · $race';
   }
 
   @override
   String levelShort(int level) {
-    return 'Lvl $level';
+    return 'Ур. $level';
   }
 
   @override
-  String get hp => 'HP';
+  String get hp => 'ОЗ';
 
   @override
-  String get mp => 'MP';
+  String get mp => 'ОМ';
 
   @override
-  String get stamina => 'ST';
+  String get stamina => 'ВН';
 
   @override
-  String get energy => 'EN';
+  String get energy => 'ЭН';
 
   @override
-  String get xp => 'XP';
+  String get xp => 'Опыт';
 
   @override
   String xpValue(int xp, int next) {
@@ -159,40 +159,40 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get attributes => 'Attributes';
+  String get attributes => 'Характеристики';
 
   @override
-  String get combat => 'Combat';
+  String get combat => 'Бой';
 
   @override
-  String get statStr => 'STR';
+  String get statStr => 'СИЛ';
 
   @override
-  String get statAgi => 'DEX';
+  String get statAgi => 'ЛОВ';
 
   @override
-  String get statInt => 'INT';
+  String get statInt => 'ИНТ';
 
   @override
-  String get statVit => 'VIT';
+  String get statVit => 'ВЫН';
 
   @override
-  String get statCha => 'WIS';
+  String get statCha => 'МДР';
 
   @override
-  String get statLuck => 'LUCK';
+  String get statLuck => 'УДЧ';
 
   @override
-  String get attack => 'Attack';
+  String get attack => 'Атака';
 
   @override
-  String get defense => 'Defense';
+  String get defense => 'Защита';
 
   @override
-  String get crit => 'Crit';
+  String get crit => 'Крит';
 
   @override
-  String get hit => 'Hit';
+  String get hit => 'Точность';
 
   @override
   String percent(int value) {
@@ -200,622 +200,622 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get gold => 'Gold';
+  String get gold => 'Золото';
 
   @override
-  String get switchCharacter => 'Switch character';
+  String get switchCharacter => 'Сменить персонажа';
 
   @override
-  String get statePendingDelete => 'Deletion pending';
+  String get statePendingDelete => 'Ожидает удаления';
 
   @override
-  String get stateFrozen => 'Frozen';
+  String get stateFrozen => 'Заморожен';
 
   @override
-  String get errInvalidCredentials => 'Wrong email/username or password.';
+  String get errInvalidCredentials => 'Неверная эл. почта, имя пользователя или пароль.';
 
   @override
-  String get errAccountLocked => 'Your account is temporarily locked.';
+  String get errAccountLocked => 'Ваш аккаунт временно заблокирован.';
 
   @override
-  String get errAccountBanned => 'This account has been banned.';
+  String get errAccountBanned => 'Этот аккаунт забанен.';
 
   @override
-  String get errAccountExists => 'That email or username is already taken.';
+  String get errAccountExists => 'Эта эл. почта или имя пользователя уже заняты.';
 
   @override
-  String get errRateLimited => 'Too many attempts. Please wait a moment.';
+  String get errRateLimited => 'Слишком много попыток. Подождите немного.';
 
   @override
-  String get errNameTaken => 'That name is already taken.';
+  String get errNameTaken => 'Это имя уже занято.';
 
   @override
-  String get errSlotCap => 'All character slots are in use.';
+  String get errSlotCap => 'Все слоты персонажей заняты.';
 
   @override
-  String get errNotPlayable => 'This character can\'t be played right now.';
+  String get errNotPlayable => 'Этим персонажем сейчас нельзя играть.';
 
   @override
-  String get errSessionExpired => 'Your session expired. Please log in again.';
+  String get errSessionExpired => 'Сессия истекла. Войдите снова.';
 
   @override
   String errGeneric(String code) {
-    return 'Something went wrong ($code).';
+    return 'Что-то пошло не так ($code).';
   }
 
   @override
-  String get navCharacter => 'Character';
+  String get navCharacter => 'Персонаж';
 
   @override
-  String get navActivity => 'Gather';
+  String get navActivity => 'Сбор';
 
   @override
-  String get actMining => 'Mining';
+  String get actMining => 'Добыча руды';
 
   @override
-  String get actFishing => 'Fishing';
+  String get actFishing => 'Рыбалка';
 
   @override
-  String get actWoodcutting => 'Woodcutting';
+  String get actWoodcutting => 'Лесозаготовка';
 
   @override
-  String get actHerbalism => 'Herbalism';
+  String get actHerbalism => 'Травничество';
 
   @override
-  String get actHunting => 'Hunting';
+  String get actHunting => 'Охота';
 
   @override
-  String get activityChoose => 'Choose an activity';
+  String get activityChoose => 'Выберите занятие';
 
   @override
-  String get durationLabel => 'Duration';
+  String get durationLabel => 'Длительность';
 
   @override
-  String get gatherResource => 'Resource';
+  String get gatherResource => 'Ресурс';
 
   @override
   String gatherXp(int xp, int next) {
-    return '$xp / $next XP';
+    return 'Опыт: $xp / $next';
   }
 
   @override
-  String get gatherMax => 'Max level';
+  String get gatherMax => 'Макс. уровень';
 
   @override
   String gatherLocked(int level) {
-    return 'Unlocks at level $level';
+    return 'Откроется на уровне $level';
   }
 
   @override
   String gatherXpGained(String name, int xp) {
-    return '$name +$xp XP';
+    return '$name: +$xp опыта';
   }
 
   @override
   String gatherLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$name: достигнут уровень $level!';
   }
 
   @override
-  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+  String get errGatherLevel => 'Ваш уровень сбора слишком низок для этого ресурса.';
 
   @override
   String startActivity(String name) {
-    return 'Start $name';
+    return 'Начать: $name';
   }
 
   @override
-  String get collect => 'Collect';
+  String get collect => 'Забрать';
 
   @override
-  String get abandon => 'Abandon';
+  String get abandon => 'Бросить';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Отмена';
 
   @override
-  String get soFar => 'Gathered so far';
+  String get soFar => 'Собрано на данный момент';
 
   @override
-  String get activityDone => 'Complete — ready to collect';
+  String get activityDone => 'Готово — можно забрать';
 
   @override
   String remaining(String time) {
-    return '$time left';
+    return 'Осталось: $time';
   }
 
   @override
   String durHm(int h, String m) {
-    return '${h}h ${m}m';
+    return '$h ч $m мин';
   }
 
   @override
   String durM(int m) {
-    return '${m}m';
+    return '$m мин';
   }
 
   @override
   String durS(int s) {
-    return '${s}s';
+    return '$s с';
   }
 
   @override
-  String get collectEarlyTitle => 'Collect early?';
+  String get collectEarlyTitle => 'Забрать досрочно?';
 
   @override
-  String get collectEarlyBody => 'You get what has been gathered so far and the activity ends.';
+  String get collectEarlyBody => 'Вы получите то, что уже собрано, и занятие закончится.';
 
   @override
-  String get abandonTitle => 'Abandon activity?';
+  String get abandonTitle => 'Бросить занятие?';
 
   @override
-  String get abandonBody => 'Everything gathered so far will be lost.';
+  String get abandonBody => 'Всё собранное будет потеряно.';
 
   @override
-  String get lootCollect => 'Nice!';
+  String get lootCollect => 'Отлично!';
 
   @override
-  String get lootNothing => 'Nothing this time.';
+  String get lootNothing => 'На этот раз ничего.';
 
   @override
   String xpGain(int xp) {
-    return '+$xp XP';
+    return '+$xp опыта';
   }
 
   @override
-  String get rarityCommon => 'Common';
+  String get rarityCommon => 'Обычное';
 
   @override
-  String get rarityUncommon => 'Uncommon';
+  String get rarityUncommon => 'Необычное';
 
   @override
-  String get rarityRare => 'Rare';
+  String get rarityRare => 'Редкое';
 
   @override
-  String get rarityEpic => 'Epic';
+  String get rarityEpic => 'Эпическое';
 
   @override
-  String get rarityLegendary => 'Legendary';
+  String get rarityLegendary => 'Легендарное';
 
   @override
-  String get rarityMythic => 'Mythic';
+  String get rarityMythic => 'Мифическое';
 
   @override
-  String get errSlotBusy => 'Another activity is already running.';
+  String get errSlotBusy => 'Уже идёт другое занятие.';
 
   @override
-  String get errNotActive => 'This activity has already ended.';
+  String get errNotActive => 'Это занятие уже завершено.';
 
   @override
-  String get evAchievement => 'Achievement unlocked!';
+  String get evAchievement => 'Получено достижение!';
 
   @override
-  String get evMasteryTier => 'Mastery tier up!';
+  String get evMasteryTier => 'Новая ступень мастерства!';
 
   @override
-  String get evMarketSold => 'One of your listings sold.';
+  String get evMarketSold => 'Ваш лот продан.';
 
   @override
-  String get evMailReceived => 'You have new mail.';
+  String get evMailReceived => 'Вам пришла почта.';
 
   @override
-  String get evPartyInvite => 'You were invited to a party.';
+  String get evPartyInvite => 'Вас пригласили в отряд.';
 
   @override
-  String get evGuildInvite => 'You were invited to a guild.';
+  String get evGuildInvite => 'Вас пригласили в гильдию.';
 
   @override
-  String get navBag => 'Bag';
+  String get navBag => 'Сумка';
 
   @override
-  String get equipment => 'Equipment';
+  String get equipment => 'Снаряжение';
 
   @override
-  String get bag => 'Bag';
+  String get bag => 'Сумка';
 
   @override
   String weightKg(String cur, String cap) {
-    return '$cur/$cap kg';
+    return '$cur/$cap кг';
   }
 
   @override
-  String get slotHelm => 'Helm';
+  String get slotHelm => 'Шлем';
 
   @override
-  String get slotNecklace => 'Neck';
+  String get slotNecklace => 'Шея';
 
   @override
-  String get slotChest => 'Chest';
+  String get slotChest => 'Грудь';
 
   @override
-  String get slotGloves => 'Gloves';
+  String get slotGloves => 'Перчатки';
 
   @override
-  String get slotLegs => 'Legs';
+  String get slotLegs => 'Ноги';
 
   @override
-  String get slotBoots => 'Boots';
+  String get slotBoots => 'Сапоги';
 
   @override
-  String get slotMainhand => 'Main hand';
+  String get slotMainhand => 'Основная рука';
 
   @override
-  String get slotOffhand => 'Off hand';
+  String get slotOffhand => 'Вторая рука';
 
   @override
-  String get slotRing => 'Ring';
+  String get slotRing => 'Кольцо';
 
   @override
-  String get slotTrinket => 'Trinket';
+  String get slotTrinket => 'Талисман';
 
   @override
-  String get equip => 'Equip';
+  String get equip => 'Надеть';
 
   @override
-  String get unequip => 'Unequip';
+  String get unequip => 'Снять';
 
   @override
-  String get sell => 'Sell';
+  String get sell => 'Продать';
 
   @override
-  String get sortLabel => 'Sort';
+  String get sortLabel => 'Сортировка';
 
   @override
-  String get sortSlot => 'Bag order';
+  String get sortSlot => 'Порядок в сумке';
 
   @override
-  String get sortRarity => 'Rarity';
+  String get sortRarity => 'Редкость';
 
   @override
-  String get sortType => 'Type';
+  String get sortType => 'Тип';
 
   @override
-  String get sortName => 'Name';
+  String get sortName => 'Название';
 
   @override
-  String get sortValue => 'Value';
+  String get sortValue => 'Цена';
 
   @override
   String selectedCount(int count) {
-    return '$count selected';
+    return 'Выбрано: $count';
   }
 
   @override
-  String get selectAll => 'Select all';
+  String get selectAll => 'Выбрать все';
 
   @override
-  String get clearSelection => 'Clear selection';
+  String get clearSelection => 'Снять выбор';
 
   @override
   String sellSelectedTitle(int count) {
-    return 'Sell $count items?';
+    return 'Продать предметы ($count)?';
   }
 
   @override
   String destroySelectedTitle(int count) {
-    return 'Destroy $count items?';
+    return 'Уничтожить предметы ($count)?';
   }
 
   @override
-  String get deleteEntry => 'Delete';
+  String get deleteEntry => 'Удалить';
 
   @override
   String craftHowMany(String name) {
-    return 'How many $name?';
+    return 'Сколько изготовить: $name?';
   }
 
   @override
   String craftCount(int count) {
-    return 'Craft ×$count';
+    return 'Изготовить ×$count';
   }
 
   @override
-  String get destroy => 'Destroy';
+  String get destroy => 'Уничтожить';
 
   @override
   String sellTitle(String name) {
-    return 'Sell $name?';
+    return 'Продать: $name?';
   }
 
   @override
-  String get sellBody => 'You can buy it back from the vendor for 2 hours.';
+  String get sellBody => 'Выкупить предмет у торговца можно в течение 2 часов.';
 
   @override
   String destroyTitle(String name) {
-    return 'Destroy $name?';
+    return 'Уничтожить: $name?';
   }
 
   @override
-  String get destroyBody => 'This cannot be undone.';
+  String get destroyBody => 'Это действие нельзя отменить.';
 
   @override
-  String get soldFor => 'Sold for';
+  String get soldFor => 'Продано за';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Количество';
 
   @override
-  String get requiresLevel => 'Requires level';
+  String get requiresLevel => 'Требуемый уровень';
 
   @override
-  String get weight => 'Weight';
+  String get weight => 'Вес';
 
   @override
   String weightGrams(int g) {
-    return '$g g';
+    return '$g г';
   }
 
   @override
-  String get sellValue => 'Sells for';
+  String get sellValue => 'Цена продажи';
 
   @override
-  String get bound => 'Soulbound';
+  String get bound => 'Персональный';
 
   @override
-  String get itemLocked => 'This item is held by a trade, mail or listing.';
+  String get itemLocked => 'Предмет занят обменом, почтой или лотом.';
 
   @override
-  String get errBagFull => 'Your bag is full.';
+  String get errBagFull => 'Ваша сумка заполнена.';
 
   @override
-  String get errItemLocked => 'This item is locked.';
+  String get errItemLocked => 'Этот предмет заблокирован.';
 
   @override
-  String get errClassRestriction => 'Your class can\'t use this item.';
+  String get errClassRestriction => 'Ваш класс не может использовать этот предмет.';
 
   @override
-  String get errLevelRequirement => 'Your level is too low.';
+  String get errLevelRequirement => 'Ваш уровень слишком низок.';
 
   @override
-  String get errNotEquippable => 'This item can\'t be equipped.';
+  String get errNotEquippable => 'Этот предмет нельзя надеть.';
 
   @override
-  String get navAdventure => 'Adventure';
+  String get navAdventure => 'Приключения';
 
   @override
-  String get segHunt => 'Hunt';
+  String get segHunt => 'Охота';
 
   @override
-  String get segDungeon => 'Dungeon';
+  String get segDungeon => 'Подземелье';
 
   @override
-  String get segTravel => 'Travel';
+  String get segTravel => 'Путешествие';
 
   @override
-  String get huntChoose => 'Choose your prey';
+  String get huntChoose => 'Выберите добычу';
 
   @override
-  String get startHunt => 'Start hunt';
+  String get startHunt => 'Начать охоту';
 
   @override
-  String get huntDone => 'Hunt over — collect your spoils';
+  String get huntDone => 'Охота окончена — заберите трофеи';
 
   @override
-  String get huntEarlyBody => 'You keep the fights won so far and the hunt ends.';
+  String get huntEarlyBody => 'Вы сохраните уже выигранные бои, и охота закончится.';
 
   @override
   String mobStats(int hp, int atk, int def) {
-    return 'HP $hp · ATK $atk · DEF $def';
+    return 'ОЗ $hp · АТК $atk · ЗАЩ $def';
   }
 
   @override
   String huntSummary(int won, int lost) {
-    return '$won won · $lost lost';
+    return 'Побед: $won · Поражений: $lost';
   }
 
   @override
   String levelUp(int level) {
-    return 'Level up! Now level $level';
+    return 'Новый уровень! Теперь уровень $level';
   }
 
   @override
   String levelReq(int level) {
-    return 'Lvl $level+';
+    return 'Ур. $level+';
   }
 
   @override
   String dungeonEncounters(int count, String boss) {
-    return '$count fights · boss $boss';
+    return 'Бои: $count · босс $boss';
   }
 
   @override
-  String get dungeonEnter => 'Enter';
+  String get dungeonEnter => 'Войти';
 
   @override
-  String get dungeonDone => 'Run complete — claim rewards';
+  String get dungeonDone => 'Забег завершён — заберите награды';
 
   @override
-  String get dungeonWaitHint => 'Rewards unlock when the run ends.';
+  String get dungeonWaitHint => 'Награды откроются по окончании забега.';
 
   @override
-  String get dungeonCleared => 'Cleared!';
+  String get dungeonCleared => 'Пройдено!';
 
   @override
-  String get dungeonFailed => 'Party wiped';
+  String get dungeonFailed => 'Отряд погиб';
 
   @override
-  String get bossKilled => 'Boss defeated';
+  String get bossKilled => 'Босс повержен';
 
   @override
-  String get bonus => 'Clear bonus';
+  String get bonus => 'Бонус за прохождение';
 
   @override
-  String get youAreIn => 'You are in';
+  String get youAreIn => 'Вы находитесь в';
 
   @override
-  String get routes => 'Routes';
+  String get routes => 'Маршруты';
 
   @override
-  String get noRoutes => 'No routes from here.';
+  String get noRoutes => 'Отсюда нет маршрутов.';
 
   @override
-  String get travelTo => 'Go';
+  String get travelTo => 'В путь';
 
   @override
   String travelling(String place) {
-    return 'Travelling to $place';
+    return 'Путь в: $place';
   }
 
   @override
-  String get arrive => 'Arrive';
+  String get arrive => 'Прибыть';
 
   @override
-  String get arrived => 'You have arrived';
+  String get arrived => 'Вы прибыли';
 
   @override
-  String get cancelTravel => 'Turn back';
+  String get cancelTravel => 'Повернуть назад';
 
   @override
-  String get kindCity => 'City';
+  String get kindCity => 'Город';
 
   @override
-  String get kindZone => 'Zone';
+  String get kindZone => 'Зона';
 
   @override
-  String get kindWilderness => 'Wilderness';
+  String get kindWilderness => 'Дикие земли';
 
   @override
-  String get kindDungeon => 'Dungeon';
+  String get kindDungeon => 'Подземелье';
 
   @override
-  String get kindContinent => 'Continent';
+  String get kindContinent => 'Континент';
 
   @override
-  String get safeZone => 'safe';
+  String get safeZone => 'безопасно';
 
   @override
-  String get errBusy => 'Something is already in progress.';
+  String get errBusy => 'Что-то уже выполняется.';
 
   @override
-  String get errNotReady => 'Not finished yet.';
+  String get errNotReady => 'Ещё не завершено.';
 
   @override
-  String get errWeeklyLocked => 'You already cleared this dungeon this week.';
+  String get errWeeklyLocked => 'Вы уже прошли это подземелье на этой неделе.';
 
   @override
-  String get errNoRoute => 'There is no direct route there.';
+  String get errNoRoute => 'Туда нет прямого маршрута.';
 
   @override
-  String get navWorkshop => 'Workshop';
+  String get navWorkshop => 'Мастерская';
 
   @override
-  String get segCraft => 'Craft';
+  String get segCraft => 'Создание';
 
   @override
-  String get segShop => 'Shop';
+  String get segShop => 'Лавка';
 
   @override
-  String get profBlacksmithing => 'Blacksmithing';
+  String get profBlacksmithing => 'Кузнечное дело';
 
   @override
-  String get profAlchemy => 'Alchemy';
+  String get profAlchemy => 'Алхимия';
 
   @override
-  String get profCooking => 'Cooking';
+  String get profCooking => 'Кулинария';
 
   @override
-  String get learn => 'Learn';
+  String get learn => 'Изучить';
 
   @override
   String recipeCount(int count) {
-    return '$count recipes';
+    return 'Рецептов: $count';
   }
 
   @override
-  String get itemType => 'Type';
+  String get itemType => 'Тип';
 
   @override
-  String get stackSize => 'Stack';
+  String get stackSize => 'Стопка';
 
   @override
-  String get skillXpReward => 'Skill XP';
+  String get skillXpReward => 'Опыт навыка';
 
   @override
-  String get learnHint => 'Learn this profession to unlock its recipes.';
+  String get learnHint => 'Изучите эту профессию, чтобы открыть рецепты.';
 
   @override
-  String get craft => 'Craft';
+  String get craft => 'Создать';
 
   @override
   String crafted(String name, int count) {
-    return 'Crafted $name ×$count';
+    return 'Создано: $name ×$count';
   }
 
   @override
   String skillUp(String profession, int level) {
-    return '$profession is now level $level';
+    return '$profession: теперь уровень $level';
   }
 
   @override
   String requiresSkill(int level) {
-    return 'Needs skill $level';
+    return 'Нужен навык $level';
   }
 
   @override
-  String get buy => 'Buy';
+  String get buy => 'Купить';
 
   @override
   String bought(String name) {
-    return 'Bought $name';
+    return 'Куплено: $name';
   }
 
   @override
-  String get buybacks => 'Buy back';
+  String get buybacks => 'Выкуп';
 
   @override
-  String get buybackHint => 'Items you sold can be bought back for 2 hours.';
+  String get buybackHint => 'Проданные предметы можно выкупить в течение 2 часов.';
 
   @override
-  String get errInsufficientGold => 'Not enough gold.';
+  String get errInsufficientGold => 'Недостаточно золота.';
 
   @override
-  String get errInsufficientMaterials => 'You\'re missing materials.';
+  String get errInsufficientMaterials => 'Не хватает материалов.';
 
   @override
-  String get errSkillTooLow => 'Your skill is too low for this recipe.';
+  String get errSkillTooLow => 'Ваш навык слишком низок для этого рецепта.';
 
   @override
-  String get errProfessionNotLearned => 'Learn the profession first.';
+  String get errProfessionNotLearned => 'Сначала изучите профессию.';
 
   @override
-  String get errPriceChanged => 'The price changed — check it and try again.';
+  String get errPriceChanged => 'Цена изменилась — проверьте её и повторите попытку.';
 
   @override
-  String get errCannotSell => 'This item can\'t be sold.';
+  String get errCannotSell => 'Этот предмет нельзя продать.';
 
   @override
-  String get errBuybackExpired => 'The buy-back window has closed.';
+  String get errBuybackExpired => 'Время выкупа истекло.';
 
   @override
-  String get segMarket => 'Market';
+  String get segMarket => 'Рынок';
 
   @override
-  String get classWeapon => 'Weapons';
+  String get classWeapon => 'Оружие';
 
   @override
-  String get classArmor => 'Armor';
+  String get classArmor => 'Броня';
 
   @override
-  String get classConsumable => 'Consumables';
+  String get classConsumable => 'Расходуемое';
 
   @override
-  String get classMaterial => 'Materials';
+  String get classMaterial => 'Материалы';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'Все';
 
   @override
-  String get sortCheapest => 'Cheapest';
+  String get sortCheapest => 'Сначала дешёвые';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => 'Сначала новые';
 
   @override
-  String get marketEmpty => 'No listings match.';
+  String get marketEmpty => 'Подходящих лотов нет.';
 
   @override
   String listingLine(String seller, String price) {
-    return '$seller · $price each';
+    return '$seller · $price за шт.';
   }
 
   @override
@@ -823,2554 +823,2554 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String myListings(int count) {
-    return 'My listings ($count)';
+    return 'Мои лоты ($count)';
   }
 
   @override
-  String get cancelListing => 'Cancel listing';
+  String get cancelListing => 'Снять лот';
 
   @override
   String cancelListingTitle(String name) {
-    return 'Cancel $name?';
+    return 'Снять с продажи: $name?';
   }
 
   @override
-  String get cancelListingBody =>
-      'The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.';
+  String get cancelListingBody => 'Предмет вернётся в сумку. Часть комиссии возвращается только в первые 6 часов.';
 
   @override
   String buyListingTitle(String name) {
-    return 'Buy $name?';
+    return 'Купить: $name?';
   }
 
   @override
   String buyListingBody(String price, String seller) {
-    return 'Pay $price to $seller.';
+    return 'Заплатить $price продавцу $seller.';
   }
 
   @override
-  String get listOnMarket => 'List on market';
+  String get listOnMarket => 'Выставить на рынок';
 
   @override
   String listed(String name) {
-    return '$name listed on the market';
+    return '$name: выставлено на рынок';
   }
 
   @override
   String quantityOf(int count, int max) {
-    return 'Quantity: $count of $max';
+    return 'Количество: $count из $max';
   }
 
   @override
-  String get unitPrice => 'Price per item';
+  String get unitPrice => 'Цена за штуку';
 
   @override
   String suggestedPrice(String price) {
-    return 'Market price: $price';
+    return 'Рыночная цена: $price';
   }
 
   @override
-  String get listingFee => 'Listing fee (non-refundable)';
+  String get listingFee => 'Комиссия за лот (не возвращается)';
 
   @override
-  String get youReceive => 'You receive when sold';
+  String get youReceive => 'Вы получите при продаже';
 
   @override
-  String get errPriceOutOfRange => 'That price is outside the allowed range.';
+  String get errPriceOutOfRange => 'Эта цена вне допустимого диапазона.';
 
   @override
-  String get errListingCap => 'You have too many active listings.';
+  String get errListingCap => 'У вас слишком много активных лотов.';
 
   @override
-  String get errSelfBuy => 'You can\'t buy your own listing.';
+  String get errSelfBuy => 'Нельзя купить собственный лот.';
 
   @override
-  String get errListingUnavailable => 'This listing is no longer available.';
+  String get errListingUnavailable => 'Этот лот больше недоступен.';
 
   @override
-  String get errNotTradable => 'This item can\'t be traded.';
+  String get errNotTradable => 'Этот предмет нельзя передать.';
 
   @override
-  String get social => 'Social';
+  String get social => 'Общение';
 
   @override
-  String get tabChat => 'Chat';
+  String get tabChat => 'Чат';
 
   @override
-  String get tabFriends => 'Friends';
+  String get tabFriends => 'Друзья';
 
   @override
-  String get tabMail => 'Mail';
+  String get tabMail => 'Почта';
 
   @override
-  String get chanGlobal => 'World';
+  String get chanGlobal => 'Мир';
 
   @override
-  String get chanGuild => 'Guild';
+  String get chanGuild => 'Гильдия';
 
   @override
-  String get chanParty => 'Party';
+  String get chanParty => 'Отряд';
 
   @override
-  String get chatEmpty => 'No messages yet. Say hello!';
+  String get chatEmpty => 'Сообщений пока нет. Поздоровайтесь!';
 
   @override
   String chatHint(String channel) {
-    return 'Message $channel';
+    return 'Сообщение: $channel';
   }
 
   @override
-  String get send => 'Send';
+  String get send => 'Отправить';
 
   @override
-  String get addFriend => 'Add';
+  String get addFriend => 'Добавить';
 
   @override
   String friendAdded(String name) {
-    return 'You and $name are now friends';
+    return 'Вы с $name теперь друзья';
   }
 
   @override
   String friendRequested(String name) {
-    return 'Friend request sent to $name';
+    return 'Запрос в друзья отправлен: $name';
   }
 
   @override
-  String get friendRequests => 'Friend requests';
+  String get friendRequests => 'Запросы в друзья';
 
   @override
   String friendsCount(int count) {
-    return 'Friends ($count)';
+    return 'Друзья ($count)';
   }
 
   @override
-  String get noFriends => 'No friends yet — add someone by name.';
+  String get noFriends => 'Друзей пока нет — добавьте кого-нибудь по имени.';
 
   @override
-  String get more => 'More';
+  String get more => 'Ещё';
 
   @override
-  String get whisper => 'Whisper';
+  String get whisper => 'Шёпот';
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'Убрать';
 
   @override
-  String get block => 'Block';
+  String get block => 'Заблокировать';
 
   @override
-  String get unblock => 'Unblock';
+  String get unblock => 'Разблокировать';
 
   @override
-  String get blockedList => 'Blocked';
+  String get blockedList => 'Заблокированные';
 
   @override
   String removeFriendTitle(String name) {
-    return 'Remove $name?';
+    return 'Убрать из друзей: $name?';
   }
 
   @override
-  String get removeFriendBody => 'You can send a new friend request later.';
+  String get removeFriendBody => 'Позже вы сможете отправить новый запрос.';
 
   @override
   String blockTitle(String name) {
-    return 'Block $name?';
+    return 'Заблокировать: $name?';
   }
 
   @override
   String get blockBody =>
-      'They can\'t whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.';
+      'Этот игрок не сможет писать вам шёпотом, его сообщения в чате будут скрыты, а его почта не будет доставляться. Дружба также прекратится.';
 
   @override
-  String get accept => 'Accept';
+  String get accept => 'Принять';
 
   @override
-  String get decline => 'Decline';
+  String get decline => 'Отклонить';
 
   @override
-  String get newMail => 'Write mail';
+  String get newMail => 'Написать письмо';
 
   @override
-  String get inboxEmpty => 'Your mailbox is empty.';
+  String get inboxEmpty => 'Ваш почтовый ящик пуст.';
 
   @override
-  String get noSubject => '(no subject)';
+  String get noSubject => '(без темы)';
 
   @override
   String mailFrom(String name) {
-    return 'From $name';
+    return 'От: $name';
   }
 
   @override
-  String get attachments => 'Attachments';
+  String get attachments => 'Вложения';
 
   @override
-  String get claim => 'Take attachments';
+  String get claim => 'Забрать вложения';
 
   @override
-  String get mailClaimed => 'Attachments moved to your bag and wallet';
+  String get mailClaimed => 'Вложения перемещены в сумку и кошелёк';
 
   @override
-  String get deleteMailTitle => 'Delete this mail?';
+  String get deleteMailTitle => 'Удалить это письмо?';
 
   @override
-  String get deleteMailBody => 'Deleted mail can\'t be recovered.';
+  String get deleteMailBody => 'Удалённое письмо нельзя восстановить.';
 
   @override
   String mailSent(String postage) {
-    return 'Mail sent (postage $postage)';
+    return 'Письмо отправлено (пошлина $postage)';
   }
 
   @override
-  String get mailTo => 'To (character name)';
+  String get mailTo => 'Кому (имя персонажа)';
 
   @override
-  String get mailSubject => 'Subject';
+  String get mailSubject => 'Тема';
 
   @override
-  String get mailBody => 'Message';
+  String get mailBody => 'Сообщение';
 
   @override
-  String get attachGold => 'Attach gold';
+  String get attachGold => 'Вложить золото';
 
   @override
-  String get errAlreadyFriends => 'You\'re already friends.';
+  String get errAlreadyFriends => 'Вы уже друзья.';
 
   @override
-  String get errAlreadyRequested => 'A friend request is already pending.';
+  String get errAlreadyRequested => 'Запрос в друзья уже отправлен.';
 
   @override
-  String get errBlocked => 'You can\'t interact with this player.';
+  String get errBlocked => 'Вы не можете взаимодействовать с этим игроком.';
 
   @override
-  String get errFriendCap => 'Your friend list is full.';
+  String get errFriendCap => 'Ваш список друзей заполнен.';
 
   @override
-  String get errTargetNotFound => 'No character with that name.';
+  String get errTargetNotFound => 'Персонажа с таким именем нет.';
 
   @override
-  String get errSelfTarget => 'You can\'t target yourself.';
+  String get errSelfTarget => 'Нельзя выбрать себя.';
 
   @override
-  String get errInboxFull => 'Their mailbox is full.';
+  String get errInboxFull => 'Почтовый ящик получателя заполнен.';
 
   @override
-  String get errTooLong => 'That\'s too long.';
+  String get errTooLong => 'Слишком длинно.';
 
   @override
-  String get errEmpty => 'Write something first.';
+  String get errEmpty => 'Сначала напишите что-нибудь.';
 
   @override
-  String get errNotInChannel => 'You\'re not in that group.';
+  String get errNotInChannel => 'Вы не состоите в этой группе.';
 
   @override
-  String get errMuted => 'You are muted and can\'t chat right now.';
+  String get errMuted => 'Вы заглушены и пока не можете писать в чат.';
 
   @override
-  String get errHasAttachments => 'Take the attachments before deleting.';
+  String get errHasAttachments => 'Перед удалением заберите вложения.';
 
   @override
-  String get useItem => 'Use';
+  String get useItem => 'Использовать';
 
   @override
   String restoresHp(int amount) {
-    return 'Restores $amount HP';
+    return 'Восстанавливает $amount ОЗ';
   }
 
   @override
   String usedItem(String name, int hp, int max) {
-    return 'Used $name · HP $hp/$max';
+    return 'Использовано: $name · ОЗ $hp/$max';
   }
 
   @override
-  String get errHpFull => 'Your health is already full.';
+  String get errHpFull => 'Ваше здоровье уже полное.';
 
   @override
-  String get errInCombat => 'Finish your hunt or dungeon run first.';
+  String get errInCombat => 'Сначала завершите охоту или забег в подземелье.';
 
   @override
-  String get errNotUsable => 'This item can\'t be used.';
+  String get errNotUsable => 'Этот предмет нельзя использовать.';
 
   @override
-  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+  String get errTooWounded => 'Вы слишком ранены для боя. Отдохните или выпейте зелье.';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => 'Забыли пароль?';
 
   @override
-  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+  String get resetHint => 'Введите эл. почту аккаунта, и мы отправим ссылку для смены пароля.';
 
   @override
-  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+  String get resetSent => 'Если аккаунт с такой почтой существует, ссылка для сброса уже в пути. Она действует 1 час.';
 
   @override
-  String get sendLink => 'Send link';
+  String get sendLink => 'Отправить ссылку';
 
   @override
-  String get close => 'Close';
+  String get close => 'Закрыть';
 
   @override
-  String get changePassword => 'Change password';
+  String get changePassword => 'Сменить пароль';
 
   @override
-  String get currentPassword => 'Current password';
+  String get currentPassword => 'Текущий пароль';
 
   @override
-  String get newPassword => 'New password';
+  String get newPassword => 'Новый пароль';
 
   @override
-  String get save => 'Save';
+  String get save => 'Сохранить';
 
   @override
-  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+  String get passwordChanged => 'Пароль изменён. На других устройствах выполнен выход.';
 
   @override
-  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+  String get verifyEmailBanner => 'Подтвердите адрес эл. почты.';
 
   @override
-  String get resend => 'Resend';
+  String get resend => 'Отправить снова';
 
   @override
-  String get verificationSent => 'Verification e-mail sent.';
+  String get verificationSent => 'Письмо для подтверждения отправлено.';
 
   @override
-  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+  String get errEmailNotVerified => 'Подтвердите эл. почту перед созданием персонажа.';
 
   @override
-  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+  String get errAlreadyVerified => 'Ваша эл. почта уже подтверждена.';
 
   @override
-  String get tabParty => 'Party';
+  String get tabParty => 'Отряд';
 
   @override
-  String get tabGuild => 'Guild';
+  String get tabGuild => 'Гильдия';
 
   @override
-  String get invite => 'Invite';
+  String get invite => 'Пригласить';
 
   @override
   String invitedBy(String name) {
-    return 'Invited by $name';
+    return 'Приглашение от: $name';
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
+  String get noParty => 'Вы не в отряде. Пригласите кого-нибудь, и отряд соберётся (2–5 участников).';
 
   @override
-  String get createParty => 'Create party';
+  String get createParty => 'Создать отряд';
 
   @override
-  String get pendingInvites => 'Invitations';
+  String get pendingInvites => 'Приглашения';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Party ($count/$cap)';
+    return 'Отряд ($count/$cap)';
   }
 
   @override
-  String get makeLeader => 'Make leader';
+  String get makeLeader => 'Сделать лидером';
 
   @override
-  String get kick => 'Remove';
+  String get kick => 'Исключить';
 
   @override
-  String get leave => 'Leave';
+  String get leave => 'Покинуть';
 
   @override
-  String get disband => 'Disband';
+  String get disband => 'Распустить';
 
   @override
-  String get leavePartyTitle => 'Leave the party?';
+  String get leavePartyTitle => 'Покинуть отряд?';
 
   @override
-  String get leavePartyBody =>
-      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
+  String get leavePartyBody => 'Если вы лидер, им станет самый давний участник. Отряд с одним участником распадается.';
 
   @override
-  String get disbandPartyTitle => 'Disband the party?';
+  String get disbandPartyTitle => 'Распустить отряд?';
 
   @override
-  String get disbandPartyBody => 'Everyone is removed from the party.';
+  String get disbandPartyBody => 'Все будут исключены из отряда.';
 
   @override
-  String get rankLeader => 'Leader';
+  String get rankLeader => 'Лидер';
 
   @override
-  String get rankOfficer => 'Officer';
+  String get rankOfficer => 'Офицер';
 
   @override
-  String get rankVeteran => 'Veteran';
+  String get rankVeteran => 'Ветеран';
 
   @override
-  String get rankMember => 'Member';
+  String get rankMember => 'Участник';
 
   @override
-  String get rankInitiate => 'Initiate';
+  String get rankInitiate => 'Новичок';
 
   @override
-  String get createGuild => 'Found a guild';
+  String get createGuild => 'Основать гильдию';
 
   @override
   String createGuildBody(String fee) {
-    return 'Founding a guild costs $fee.';
+    return 'Основание гильдии стоит $fee.';
   }
 
   @override
   String createGuildFee(String fee) {
-    return 'Found guild ($fee)';
+    return 'Основать гильдию ($fee)';
   }
 
   @override
-  String get guildName => 'Guild name';
+  String get guildName => 'Название гильдии';
 
   @override
-  String get guildTag => 'Tag';
+  String get guildTag => 'Тег';
 
   @override
-  String get guildTagHint => '2–5 letters or digits';
+  String get guildTagHint => '2–5 букв или цифр';
 
   @override
   String guildMembers(int count, int cap) {
-    return '$count/$cap members';
+    return 'Участники: $count/$cap';
   }
 
   @override
   String disbandScheduled(String time) {
-    return 'Guild disbands in $time';
+    return 'Гильдия распадётся через $time';
   }
 
   @override
-  String get motd => 'Message of the day';
+  String get motd => 'Сообщение дня';
 
   @override
-  String get editMotd => 'Edit message of the day';
+  String get editMotd => 'Изменить сообщение дня';
 
   @override
-  String get setRank => 'Change rank';
+  String get setRank => 'Изменить ранг';
 
   @override
   String setRankFor(String name) {
-    return 'New rank for $name';
+    return 'Новый ранг: $name';
   }
 
   @override
   String transferTitle(String name) {
-    return 'Make $name guild leader?';
+    return 'Сделать $name лидером гильдии?';
   }
 
   @override
-  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+  String get transferBody => 'Вы станете офицером. Самостоятельно отменить это нельзя.';
 
   @override
   String kickTitle(String name) {
-    return 'Remove $name from the guild?';
+    return 'Исключить $name из гильдии?';
   }
 
   @override
-  String get leaveGuildTitle => 'Leave the guild?';
+  String get leaveGuildTitle => 'Покинуть гильдию?';
 
   @override
-  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+  String get leaveGuildBody => 'Чтобы вернуться, понадобится новое приглашение.';
 
   @override
-  String get disbandGuildTitle => 'Disband the guild?';
+  String get disbandGuildTitle => 'Распустить гильдию?';
 
   @override
-  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+  String get disbandGuildBody => 'Гильдия распадётся через 48 часов; до этого момента можно отменить.';
 
   @override
-  String get cancelDisband => 'Cancel disbanding';
+  String get cancelDisband => 'Отменить роспуск';
 
   @override
-  String get errAlreadyInGroup => 'They\'re already in a group.';
+  String get errAlreadyInGroup => 'Этот игрок уже в группе.';
 
   @override
-  String get errNotLeader => 'Only the leader can do that.';
+  String get errNotLeader => 'Это может только лидер.';
 
   @override
-  String get errGroupFull => 'The group is full.';
+  String get errGroupFull => 'Группа заполнена.';
 
   @override
-  String get errInviteInvalid => 'That invitation has expired.';
+  String get errInviteInvalid => 'Срок приглашения истёк.';
 
   @override
-  String get errAlreadyInvited => 'An invitation is already pending.';
+  String get errAlreadyInvited => 'Приглашение уже отправлено.';
 
   @override
-  String get errGuildForbidden => 'Your rank can\'t do that.';
+  String get errGuildForbidden => 'Вашему рангу это недоступно.';
 
   @override
-  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+  String get errLeaderCannotLeave => 'Сначала передайте лидерство или распустите гильдию.';
 
   @override
-  String get errInvalidGuildName => '3–24 letters or digits.';
+  String get errInvalidGuildName => '3–24 буквы или цифры.';
 
   @override
-  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+  String get errInvalidTag => 'Тег должен содержать 2–5 букв или цифр.';
 
   @override
-  String get errTagTaken => 'That tag is taken.';
+  String get errTagTaken => 'Этот тег занят.';
 
   @override
-  String get progress => 'Achievements & mastery';
+  String get progress => 'Достижения и мастерство';
 
   @override
-  String get tabAchievements => 'Achievements';
+  String get tabAchievements => 'Достижения';
 
   @override
-  String get tabMastery => 'Mastery';
+  String get tabMastery => 'Мастерство';
 
   @override
-  String get tabReputation => 'Reputation';
+  String get tabReputation => 'Репутация';
 
   @override
-  String get tabTitles => 'Titles';
+  String get tabTitles => 'Титулы';
 
   @override
   String achievementPoints(int points) {
-    return '$points achievement points';
+    return 'Очки достижений: $points';
   }
 
   @override
   String pointsShort(int points) {
-    return '$points pts';
+    return '$points оч.';
   }
 
   @override
   String rewardTitle(String title) {
-    return 'Title: $title';
+    return 'Титул: $title';
   }
 
   @override
   String masteryTier(int tier, int max) {
-    return 'Tier $tier/$max';
+    return 'Ступень $tier/$max';
   }
 
   @override
   String repDailyLeft(int amount) {
-    return '+$amount today';
+    return '+$amount сегодня';
   }
 
   @override
-  String get noTitle => 'No title';
+  String get noTitle => 'Без титула';
 
   @override
-  String get noTitlesYet => 'Titles unlock through achievements.';
+  String get noTitlesYet => 'Титулы открываются за достижения.';
 
   @override
-  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+  String get errTitleNotOwned => 'Этот титул вам ещё не открыт.';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => 'Уведомления';
 
   @override
-  String get markAllRead => 'Mark all as read';
+  String get markAllRead => 'Отметить все как прочитанные';
 
   @override
-  String get inboxNothing => 'No notifications yet.';
+  String get inboxNothing => 'Уведомлений пока нет.';
 
   @override
-  String get notifSettings => 'Notification settings';
+  String get notifSettings => 'Настройки уведомлений';
 
   @override
-  String get muteAll => 'Pause push notifications';
+  String get muteAll => 'Приостановить push-уведомления';
 
   @override
-  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+  String get muteHint => 'На 24 часа. Входящие продолжат пополняться.';
 
   @override
   String mutedFor(String time) {
-    return 'Paused for $time';
+    return 'Приостановлено на $time';
   }
 
   @override
-  String get modePushInbox => 'Push + inbox';
+  String get modePushInbox => 'Push + входящие';
 
   @override
-  String get modeInbox => 'Inbox only';
+  String get modeInbox => 'Только входящие';
 
   @override
-  String get modeSilent => 'Silent';
+  String get modeSilent => 'Без звука';
 
   @override
-  String get modeOff => 'Off';
+  String get modeOff => 'Выкл.';
 
   @override
-  String get nkActivity => 'Activity finished';
+  String get nkActivity => 'Занятие завершено';
 
   @override
-  String get nkDungeon => 'Dungeon run finished';
+  String get nkDungeon => 'Забег в подземелье завершён';
 
   @override
-  String get nkTravel => 'Arrived';
+  String get nkTravel => 'Прибытие';
 
   @override
-  String get nkWorldEvent => 'World event started';
+  String get nkWorldEvent => 'Мировое событие началось';
 
   @override
-  String get nkMarketSold => 'Item sold';
+  String get nkMarketSold => 'Предмет продан';
 
   @override
-  String get nkMail => 'New mail';
+  String get nkMail => 'Новое письмо';
 
   @override
-  String get nkPartyInvite => 'Party invitation';
+  String get nkPartyInvite => 'Приглашение в отряд';
 
   @override
-  String get nkGuildInvite => 'Guild invitation';
+  String get nkGuildInvite => 'Приглашение в гильдию';
 
   @override
-  String get nkAchievement => 'Achievement unlocked';
+  String get nkAchievement => 'Получено достижение';
 
   @override
-  String get nkSystem => 'Announcement';
+  String get nkSystem => 'Объявление';
 
   @override
   String timeAgo(String time) {
-    return '$time ago';
+    return '$time назад';
   }
 
   @override
-  String get segEvents => 'Events';
+  String get segEvents => 'События';
 
   @override
-  String get eventsEmpty => 'No world events scheduled right now.';
+  String get eventsEmpty => 'Сейчас мировых событий нет.';
 
   @override
-  String get worldBoss => 'World boss';
+  String get worldBoss => 'Мировой босс';
 
   @override
-  String get invasion => 'Invasion';
+  String get invasion => 'Вторжение';
 
   @override
   String startsIn(String time) {
-    return 'Starts in $time';
+    return 'Начало через $time';
   }
 
   @override
   String endsIn(String time) {
-    return 'Ends in $time';
+    return 'Конец через $time';
   }
 
   @override
   String regionOnly(String region) {
-    return '$region only';
+    return 'Только $region';
   }
 
   @override
-  String get eventGoal => 'Goal';
+  String get eventGoal => 'Цель';
 
   @override
-  String get enlist => 'Enlist';
+  String get enlist => 'Записаться';
 
   @override
   String get enlistHint =>
-      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+      'При записи ваша текущая сила фиксируется. Очки идут за каждую минуту события; награды придут после его окончания.';
 
   @override
   String enlistedPower(int power) {
-    return 'Enlisted · power $power';
+    return 'Записаны · сила $power';
   }
 
   @override
   String myContribution(int score, int tier) {
-    return 'Your score $score · reward tier $tier';
+    return 'Ваши очки $score · уровень награды $tier';
   }
 
   @override
-  String get eventSucceeded => 'Victory';
+  String get eventSucceeded => 'Победа';
 
   @override
-  String get eventFailed => 'Failed';
+  String get eventFailed => 'Провал';
 
   @override
   String tokenBalance(int tokens) {
-    return '$tokens event tokens';
+    return 'Жетоны события: $tokens';
   }
 
   @override
   String claimDaily(int tokens) {
-    return 'Claim $tokens';
+    return 'Получить $tokens';
   }
 
   @override
-  String get claimedToday => 'Claimed';
+  String get claimedToday => 'Получено';
 
   @override
   String eventTokensGained(int tokens) {
-    return '+$tokens event tokens';
+    return '+$tokens жетонов события';
   }
 
   @override
-  String get errEventNotOpen => 'Enlistment for this event is closed.';
+  String get errEventNotOpen => 'Запись на это событие закрыта.';
 
   @override
-  String get errWrongRegion => 'Travel to the event\'s region first.';
+  String get errWrongRegion => 'Сначала отправьтесь в регион события.';
 
   @override
-  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+  String get errAlreadyEnlisted => 'Вы уже записаны.';
 
   @override
-  String get errAlreadyClaimed => 'Already claimed today.';
+  String get errAlreadyClaimed => 'Сегодня уже получено.';
 
   @override
-  String get errEventNotActive => 'This event isn\'t running.';
+  String get errEventNotActive => 'Это событие не идёт.';
 
   @override
   String gatherYield(String activity) {
-    return '$activity yield';
+    return '$activity: добыча';
   }
 
   @override
   String perHour(String value) {
-    return '$value/h';
+    return '$value/ч';
   }
 
   @override
-  String get quests => 'Quests';
+  String get quests => 'Задания';
 
   @override
-  String get questsInProgress => 'In progress';
+  String get questsInProgress => 'В процессе';
 
   @override
-  String get questsNoneOpen => 'No open quests. Pick one below.';
+  String get questsNoneOpen => 'Открытых заданий нет. Выберите одно ниже.';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => 'Сюжет';
 
   @override
-  String get questsSide => 'Side quests';
+  String get questsSide => 'Побочные задания';
 
   @override
-  String get questsDaily => 'Daily';
+  String get questsDaily => 'Ежедневные';
 
   @override
   String resetsIn(String time) {
-    return 'Resets in $time';
+    return 'Обновление через $time';
   }
 
   @override
-  String get turnIn => 'Turn in';
+  String get turnIn => 'Сдать';
 
   @override
   String questRewarded(String rewards) {
-    return 'Quest complete: $rewards';
+    return 'Задание выполнено: $rewards';
   }
 
   @override
-  String get abandonQuestTitle => 'Abandon quest?';
+  String get abandonQuestTitle => 'Бросить задание?';
 
   @override
-  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+  String get abandonQuestBody => 'Прогресс будет потерян. Позже задание можно взять снова.';
 
   @override
-  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+  String get abandonDailyBody => 'Прогресс будет потерян, и сегодня это ежедневное задание больше не взять.';
 
   @override
   String objGather(String activity) {
-    return 'Gather ($activity)';
+    return 'Собрать ($activity)';
   }
 
   @override
-  String get objKillAny => 'Defeat enemies';
+  String get objKillAny => 'Победить врагов';
 
   @override
   String objKill(String mob) {
-    return 'Defeat $mob';
+    return 'Победить: $mob';
   }
 
   @override
-  String get objBoss => 'Defeat a boss';
+  String get objBoss => 'Победить босса';
 
   @override
-  String get objDungeonAny => 'Clear a dungeon';
+  String get objDungeonAny => 'Пройти подземелье';
 
   @override
   String objDungeon(String dungeon) {
-    return 'Clear $dungeon';
+    return 'Пройти: $dungeon';
   }
 
   @override
-  String get objCraftAny => 'Craft items';
+  String get objCraftAny => 'Создать предметы';
 
   @override
   String objCraft(String item) {
-    return 'Craft $item';
+    return 'Создать: $item';
   }
 
   @override
-  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+  String get evQuestComplete => 'Цели задания выполнены — сдайте его!';
 
   @override
-  String get errQuestLocked => 'Finish the previous story quest first.';
+  String get errQuestLocked => 'Сначала завершите предыдущее сюжетное задание.';
 
   @override
-  String get errQuestTaken => 'You already took this quest.';
+  String get errQuestTaken => 'Вы уже взяли это задание.';
 
   @override
-  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+  String get errQuestNotOffered => 'Этого ежедневного задания сегодня нет на доске.';
 
   @override
-  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+  String get errQuestCap => 'Слишком много открытых заданий. Завершите или бросьте одно.';
 
   @override
-  String get errQuestNotActive => 'This quest isn\'t open.';
+  String get errQuestNotActive => 'Это задание не открыто.';
 
   @override
-  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+  String get errQuestIncomplete => 'Цели ещё не выполнены.';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'Навыки';
 
   @override
-  String get skillActive => 'Active';
+  String get skillActive => 'Активный';
 
   @override
-  String get skillPassive => 'Passive';
+  String get skillPassive => 'Пассивный';
 
   @override
   String skillStrike(int power) {
-    return '$power% damage';
+    return 'Урон $power%';
   }
 
   @override
   String skillHeal(int power) {
-    return 'Heals $power% HP when below half';
+    return 'Лечит $power% ОЗ, если здоровья меньше половины';
   }
 
   @override
   String skillMp(int mp) {
-    return '$mp MP';
+    return '$mp ОМ';
   }
 
   @override
   String skillCooldown(int turns) {
-    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'раз в $turns х.', one: 'каждый ход');
     return '$_temp0';
   }
 
   @override
-  String get termsOfService => 'Terms of Service';
+  String get termsOfService => 'Условия использования';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Политика конфиденциальности';
 
   @override
-  String get accountMenu => 'Account';
+  String get accountMenu => 'Аккаунт';
 
   @override
-  String get downloadMyData => 'Download my data';
+  String get downloadMyData => 'Скачать мои данные';
 
   @override
-  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+  String get exportOpened => 'Ссылка для скачивания открыта в браузере (действует 15 минут).';
 
   @override
-  String get linkOpenFailed => 'Could not open the link.';
+  String get linkOpenFailed => 'Не удалось открыть ссылку.';
 
   @override
-  String get deleteAccount => 'Delete my account';
+  String get deleteAccount => 'Удалить мой аккаунт';
 
   @override
   String get deleteAccountBody =>
-      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+      'Ваш аккаунт и все персонажи будут безвозвратно удалены через 30 дней. Вход в этот период отменяет удаление. Введите пароль для подтверждения.';
 
   @override
-  String get deleteAccountConfirm => 'Delete account';
+  String get deleteAccountConfirm => 'Удалить аккаунт';
 
   @override
   String deleteScheduled(String date) {
-    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+    return 'Ваш аккаунт будет удалён $date. Чтобы отменить, просто войдите до этой даты.';
   }
 
   @override
-  String get deletionCancelled => 'Your account deletion request was cancelled.';
+  String get deletionCancelled => 'Запрос на удаление аккаунта отменён.';
 
   @override
-  String get support => 'Support';
+  String get support => 'Поддержка';
 
   @override
   String get supportIntro =>
-      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+      'Нашли ошибку или нужна помощь с аккаунтом? Напишите нам — команда ответит здесь, и вы получите уведомление.';
 
   @override
-  String get supportNew => 'New request';
+  String get supportNew => 'Новый запрос';
 
   @override
-  String get supportNone => 'No requests yet.';
+  String get supportNone => 'Запросов пока нет.';
 
   @override
-  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+  String get supportSent => 'Запрос получен. Мы сообщим, когда появится ответ.';
 
   @override
-  String get supportCategory => 'Topic';
+  String get supportCategory => 'Тема';
 
   @override
-  String get supportSubject => 'Subject';
+  String get supportSubject => 'Заголовок';
 
   @override
-  String get supportMessage => 'What happened? Step by step if you can.';
+  String get supportMessage => 'Что случилось? По возможности опишите по шагам.';
 
   @override
-  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+  String get supportTooShort => 'Заголовок — минимум 3 символа, сообщение — минимум 10.';
 
   @override
-  String get supportBug => 'Bug';
+  String get supportBug => 'Ошибка';
 
   @override
-  String get supportAccount => 'Account';
+  String get supportAccount => 'Аккаунт';
 
   @override
-  String get supportAbuse => 'Abuse / report a player';
+  String get supportAbuse => 'Нарушение / жалоба на игрока';
 
   @override
-  String get supportFeedback => 'Suggestion';
+  String get supportFeedback => 'Предложение';
 
   @override
-  String get supportOther => 'Other';
+  String get supportOther => 'Другое';
 
   @override
-  String get supportOpen => 'Open';
+  String get supportOpen => 'Открыт';
 
   @override
-  String get supportAnswered => 'Answered';
+  String get supportAnswered => 'Отвечен';
 
   @override
-  String get supportClosed => 'Closed';
+  String get supportClosed => 'Закрыт';
 
   @override
-  String get supportReply => 'Team reply';
+  String get supportReply => 'Ответ команды';
 
   @override
-  String get nkSupport => 'Support reply';
+  String get nkSupport => 'Ответ поддержки';
 
   @override
-  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+  String get errServerBusy => 'Сервер сейчас занят. Повторите через несколько секунд.';
 
   @override
-  String get notifTabInbox => 'Notifications';
+  String get notifTabInbox => 'Уведомления';
 
   @override
-  String get notifTabRewards => 'Rewards';
+  String get notifTabRewards => 'Награды';
 
   @override
-  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+  String get rewardsNone =>
+      'Наград пока нет. Здесь отображается всё, что вы собрали или выиграли в боях (хранится 30 дней).';
 
   @override
   String rewardFromActivity(String name) {
-    return 'Gathering: $name';
+    return 'Сбор: $name';
   }
 
   @override
   String rewardFromHunt(String name) {
-    return 'Hunt: $name';
+    return 'Охота: $name';
   }
 
   @override
   String rewardFromDungeon(String name) {
-    return 'Dungeon: $name';
+    return 'Подземелье: $name';
   }
 
   @override
   String rewardLevelUp(int level) {
-    return 'Level $level!';
+    return 'Уровень $level!';
   }
 
   @override
-  String get levelMax => 'MAX';
+  String get levelMax => 'МАКС';
 
   @override
-  String get promotionAvailable => 'PROMOTION AVAILABLE';
+  String get promotionAvailable => 'ДОСТУПНО ПОВЫШЕНИЕ';
 
   @override
-  String get promotionChoose => 'Choose';
+  String get promotionChoose => 'Выбрать';
 
   @override
   String promotionConfirm(String name) {
-    return 'Become $name?';
+    return 'Стать: $name?';
   }
 
   @override
-  String get promotionBody => 'This choice shapes your class for good.';
+  String get promotionBody => 'Этот выбор определит ваш класс навсегда.';
 
   @override
   String nextMilestone(int level, String what) {
-    return 'Next: Lv $level · $what';
+    return 'Далее: ур. $level · $what';
   }
 
   @override
-  String get msPromotion => 'Class promotion';
+  String get msPromotion => 'Повышение класса';
 
   @override
   String msAwakening(String name) {
-    return 'Awakening: $name';
+    return 'Пробуждение: $name';
   }
 
   @override
   String msUltimate(String name) {
-    return 'Ultimate: $name';
+    return 'Ультимейт: $name';
   }
 
   @override
-  String get msCapstone => 'Talent capstone';
+  String get msCapstone => 'Вершина талантов';
 
   @override
-  String get msMastery => 'Class mastery';
+  String get msMastery => 'Мастерство класса';
 
   @override
   String msTitle(String name) {
-    return 'Title: $name';
+    return 'Титул: $name';
   }
 
   @override
   String estMinutes(int n) {
-    return '~$n min';
+    return '~$n мин';
   }
 
   @override
   String estHours(String h) {
-    return '~$h h';
+    return '~$h ч';
   }
 
   @override
   String overflowHeld(int xp) {
-    return '$xp XP is waiting for your choice';
+    return '$xp опыта ждут вашего выбора';
   }
 
   @override
   String attributePointsBtn(int n) {
-    return 'Attributes · $n points';
+    return 'Характеристики · очков: $n';
   }
 
   @override
   String talentPointsBtn(int n) {
-    return 'Talents · $n points';
+    return 'Таланты · очков: $n';
   }
 
   @override
-  String get talentsTitle => 'Talents';
+  String get talentsTitle => 'Таланты';
 
   @override
   String capstoneLocked(int level, int points) {
-    return 'Needs level $level and $points points in this tree';
+    return 'Нужны уровень $level и $points очков в этой ветке';
   }
 
   @override
   String masteryUnlocked(String title) {
-    return 'Class mastery: $title';
+    return 'Мастерство класса: $title';
   }
 
   @override
-  String get errPromotionUnavailable => 'That promotion is not available.';
+  String get errPromotionUnavailable => 'Это повышение недоступно.';
 
   @override
-  String get errNotEnoughPoints => 'Not enough points.';
+  String get errNotEnoughPoints => 'Недостаточно очков.';
 
   @override
-  String get errTalentMaxed => 'That talent is already at max rank.';
+  String get errTalentMaxed => 'Этот талант уже на максимальном ранге.';
 
   @override
-  String get errCapstoneLocked => 'The capstone needs its level and a full tree.';
+  String get errCapstoneLocked => 'Для вершины нужны уровень и полная ветка.';
 
   @override
-  String get errSpecRequirement => 'Your specialization cannot use this item.';
+  String get errSpecRequirement => 'Ваша специализация не может использовать этот предмет.';
 
   @override
-  String get errAttributeRequirement => 'Your attributes are too low for this item.';
+  String get errAttributeRequirement => 'Для этого предмета у вас слишком низкие характеристики.';
 
   @override
-  String get errBusyCombat => 'Not while in combat, AFK or a dungeon.';
+  String get errBusyCombat => 'Нельзя во время боя, AFK или в подземелье.';
 
   @override
   String skillGuard(int pct, int turns) {
-    return '+$pct% armor for $turns turns';
+    return '+$pct% брони на $turns х.';
   }
 
   @override
   String skillEmpower(int pct, int turns) {
-    return '+$pct% attack for $turns turns';
+    return '+$pct% атаки на $turns х.';
   }
 
   @override
-  String get classRanger => 'Ranger';
+  String get classRanger => 'Следопыт';
 
   @override
-  String get classCleric => 'Cleric';
+  String get classCleric => 'Жрец';
 
   @override
-  String get classMonk => 'Monk';
+  String get classMonk => 'Монах';
 
   @override
-  String get classPaladin => 'Paladin';
+  String get classPaladin => 'Паладин';
 
   @override
-  String get classDruid => 'Druid';
+  String get classDruid => 'Друид';
 
   @override
-  String get classBard => 'Bard';
+  String get classBard => 'Бард';
 
   @override
-  String get classShaman => 'Shaman';
+  String get classShaman => 'Шаман';
 
   @override
-  String get errEquipmentPermission => 'Your class cannot use this equipment type.';
+  String get errEquipmentPermission => 'Ваш класс не может использовать этот тип снаряжения.';
 
   @override
-  String get classResource => 'Resource';
+  String get classResource => 'Ресурс';
 
   @override
-  String get classFocus => 'Attribute focus';
+  String get classFocus => 'Ключевая характеристика';
 
   @override
   String classSecondary(String names) {
-    return 'Secondary: $names';
+    return 'Вторичные: $names';
   }
 
   @override
-  String get resStartsEmpty => 'Starts empty';
+  String get resStartsEmpty => 'Начинается с нуля';
 
   @override
-  String get resStartsFull => 'Starts full';
+  String get resStartsFull => 'Начинается полным';
 
   @override
   String resStartsAt(int pct) {
-    return 'Starts at $pct%';
+    return 'Начинается с $pct%';
   }
 
   @override
   String resPerHit(int n) {
-    return '+$n per hit';
+    return '+$n за удар';
   }
 
   @override
   String resPerTurn(int n) {
-    return '+$n per turn';
+    return '+$n за ход';
   }
 
   @override
   String baseAttributesHint(int total) {
-    return 'Base attributes · 1 point every 2 levels, $total in total';
+    return 'Базовые характеристики · 1 очко за 2 уровня, всего $total';
   }
 
   @override
-  String get classEquipment => 'Equipment';
+  String get classEquipment => 'Снаряжение';
 
   @override
-  String get firstSkills => 'First skills';
+  String get firstSkills => 'Первые навыки';
 
   @override
-  String get classPath => 'Class path';
+  String get classPath => 'Путь класса';
 
   @override
-  String get classPathHint => 'Tap a class to see its skills.';
+  String get classPathHint => 'Нажмите на класс, чтобы увидеть его навыки.';
 
   @override
   String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
-    return 'Lv $awakening Awakening · Lv $ultimate Ultimate · Lv $capstone talent capstone · Lv $mastery class mastery';
+    return 'Ур. $awakening Пробуждение · Ур. $ultimate Ультимейт · Ур. $capstone вершина талантов · Ур. $mastery мастерство класса';
   }
 
   @override
-  String get skillTagActive => 'active';
+  String get skillTagActive => 'активный';
 
   @override
-  String get skillTagPassive => 'passive';
+  String get skillTagPassive => 'пассивный';
 
   @override
-  String get skillTagAwakening => 'awakening';
+  String get skillTagAwakening => 'пробуждение';
 
   @override
-  String get skillTagUltimate => 'ultimate';
+  String get skillTagUltimate => 'ультимейт';
 
   @override
   String skillCostCd(int cost, int cd) {
-    return 'Cost $cost · cooldown $cd turns';
+    return 'Цена $cost · перезарядка $cd х.';
   }
 
   @override
   String masteryAt(int level, String title) {
-    return 'Lv $level mastery: $title';
+    return 'Мастерство на ур. $level: $title';
   }
 
   @override
-  String get classInfoFailed => 'Class details couldn\'t load.';
+  String get classInfoFailed => 'Не удалось загрузить сведения о классе.';
 
   @override
   String xpShare(int pct) {
-    return 'XP $pct%';
+    return 'Опыт $pct%';
   }
 
   @override
-  String get dungeonsSolo => 'Dungeons';
+  String get dungeonsSolo => 'Подземелья';
 
   @override
-  String get raidsTab => 'Raids';
+  String get raidsTab => 'Рейды';
 
   @override
   String raidGroup(int min, int max) {
-    return 'Party of $min–$max';
+    return 'Отряд из $min–$max';
   }
 
   @override
   String raidBossGear(int count) {
-    return 'Boss: $count gear pieces guaranteed';
+    return 'Босс: гарантированно снаряжения $count шт.';
   }
 
   @override
-  String get raidOpen => 'Open raid';
+  String get raidOpen => 'Открыть рейд';
 
   @override
   String get raidNeedParty =>
-      'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.';
+      'Рейды рассчитаны на отряд. Встаньте в очередь на случайный отряд, присоединитесь к объявлению на доске или разместите своё.';
 
   @override
-  String get raidLeaderOnly => 'Your party leader opens raids.';
+  String get raidLeaderOnly => 'Рейды открывает лидер отряда.';
 
   @override
-  String get raidLobby => 'Raid lobby';
+  String get raidLobby => 'Лобби рейда';
 
   @override
-  String get raidJoin => 'Join';
+  String get raidJoin => 'Присоединиться';
 
   @override
-  String get raidLeave => 'Leave';
+  String get raidLeave => 'Покинуть';
 
   @override
-  String get raidCancel => 'Call off';
+  String get raidCancel => 'Отменить';
 
   @override
-  String get raidCancelBody => 'The lobby closes for everyone.';
+  String get raidCancelBody => 'Лобби закроется для всех.';
 
   @override
-  String get raidStart => 'Start raid';
+  String get raidStart => 'Начать рейд';
 
   @override
-  String get raidStartBody => 'Nobody can join or leave once it starts.';
+  String get raidStartBody => 'После старта никто не сможет присоединиться или выйти.';
 
   @override
   String raidMembers(int count, int max) {
-    return 'Members ($count/$max)';
+    return 'Участники ($count/$max)';
   }
 
   @override
   String raidNeedMore(int min) {
-    return 'At least $min members to start';
+    return 'Для старта нужно минимум $min участников';
   }
 
   @override
-  String get raidWaitHint => 'Rewards open when the raid ends; every member collects their own.';
+  String get raidWaitHint => 'Награды откроются по окончании рейда; каждый участник забирает свои.';
 
   @override
-  String get raidDone => 'Raid over — collect your rewards';
+  String get raidDone => 'Рейд окончен — заберите награды';
 
   @override
-  String get raidLocked => 'Cleared this week';
+  String get raidLocked => 'Пройден на этой неделе';
 
   @override
-  String get raidCollected => 'collected';
+  String get raidCollected => 'забрано';
 
   @override
-  String get errRaidNeedsParty => 'Join a party first.';
+  String get errRaidNeedsParty => 'Сначала вступите в отряд.';
 
   @override
-  String get errRaidExists => 'Your party already has an open raid.';
+  String get errRaidExists => 'У вашего отряда уже есть открытый рейд.';
 
   @override
-  String get errAlreadyInRaid => 'You are already in a raid.';
+  String get errAlreadyInRaid => 'Вы уже в рейде.';
 
   @override
-  String get errRaidNotOpen => 'This raid is no longer open.';
+  String get errRaidNotOpen => 'Этот рейд больше не открыт.';
 
   @override
-  String get errRaidNotEnough => 'Not enough members to start.';
+  String get errRaidNotEnough => 'Недостаточно участников для старта.';
 
   @override
-  String get errRaidWeeklyLocked => 'You already cleared this raid this week.';
+  String get errRaidWeeklyLocked => 'Вы уже прошли этот рейд на этой неделе.';
 
   @override
   String errCharacterBusy(String action) {
-    return 'Finish what your character is doing first: $action.';
+    return 'Сначала завершите текущее дело персонажа: $action.';
   }
 
   @override
-  String get busyGathering => 'gathering';
+  String get busyGathering => 'сбор';
 
   @override
-  String get busyHunt => 'hunt';
+  String get busyHunt => 'охота';
 
   @override
-  String get busyDungeon => 'dungeon';
+  String get busyDungeon => 'подземелье';
 
   @override
-  String get busyRaid => 'raid';
+  String get busyRaid => 'рейд';
 
   @override
-  String get busyTravel => 'travel';
+  String get busyTravel => 'путешествие';
 
   @override
-  String get busyCrafting => 'crafting';
+  String get busyCrafting => 'создание';
 
   @override
-  String get errCraftActive => 'A crafting job is already running.';
+  String get errCraftActive => 'Задача создания уже выполняется.';
 
   @override
-  String get errCraftTooLong => 'That job would take more than 6 hours.';
+  String get errCraftTooLong => 'Эта задача заняла бы больше 6 часов.';
 
   @override
   String craftEach(String time) {
-    return '$time each';
+    return '$time за шт.';
   }
 
   @override
   String craftTotal(String time) {
-    return 'Total $time';
+    return 'Всего $time';
   }
 
   @override
   String craftRunning(String item, int count) {
-    return 'Crafting $item ×$count';
+    return 'Создание: $item ×$count';
   }
 
   @override
   String craftProgress(int done, int count) {
-    return '$done/$count ready';
+    return 'Готово: $done/$count';
   }
 
   @override
-  String get craftDone => 'All done — collect';
+  String get craftDone => 'Всё готово — заберите';
 
   @override
-  String get craftCollectEarlyTitle => 'Collect now?';
+  String get craftCollectEarlyTitle => 'Забрать сейчас?';
 
   @override
   String craftCollectEarlyBody(int done, int rest) {
-    return 'The $done finished items are delivered; the materials and gold of the other $rest come back.';
+    return 'Готовые предметы ($done) будут выданы; материалы и золото за остальные ($rest) вернутся.';
   }
 
   @override
   String craftCollected(int made, int refunded) {
-    return '$made made, $refunded refunded';
+    return 'Создано: $made, возвращено: $refunded';
   }
 
   @override
-  String get craftBusyHint => 'Crafting takes time; your character does nothing else meanwhile.';
+  String get craftBusyHint => 'Создание требует времени; в этот период персонаж ничем другим не занимается.';
 
   @override
-  String get eventHowTitle => 'How to take part';
+  String get eventHowTitle => 'Как участвовать';
 
   @override
-  String get eventRewardsTitle => 'Rewards';
+  String get eventRewardsTitle => 'Награды';
 
   @override
   String eventStepEnlist(int level) {
-    return 'Enlist from 24 hours before it starts until it ends (level $level+).';
+    return 'Запись открыта за 24 часа до начала и до конца события (ур. $level+).';
   }
 
   @override
   String eventStepRegion(String region) {
-    return 'Be in $region when you enlist.';
+    return 'При записи нужно находиться в регионе $region.';
   }
 
   @override
   String eventStepPower(int power) {
-    return 'Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: $power.';
+    return 'При записи сила фиксируется: атака × 2 + защита + ОЗ ÷ 10. Сейчас у вас: $power.';
   }
 
   @override
   String eventStepScore(int tier) {
-    return 'Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier $tier.';
+    return 'Очки = сила × минуты участия, с начала события (или с момента записи, если позже). Останавливаются на уровне $tier.';
   }
 
   @override
   String get eventStepGoal =>
-      'If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.';
+      'Если все вместе достигнут цели, награды идут до высшего уровня; иначе — только до уровня 2.';
 
   @override
-  String get eventStepPaid =>
-      'Rewards are paid automatically when it closes. Enlisting does not stop your other actions.';
+  String get eventStepPaid => 'Награды выдаются автоматически при закрытии. Запись не прерывает другие действия.';
 
   @override
   String eventTier(int tier, String score) {
-    return 'Tier $tier · $score+ points';
+    return 'Уровень $tier · от $score очков';
   }
 
   @override
   String eventTierTokens(int count) {
-    return '+$count event tokens';
+    return '+$count жетонов события';
   }
 
   @override
   String eventEstimate(String score, int tier) {
-    return 'Join now: about $score points → tier $tier';
+    return 'Если записаться сейчас: около $score очков → уровень $tier';
   }
 
   @override
   String eventEstimateNone(String score) {
-    return 'Join now: about $score points — not enough for a tier';
+    return 'Если записаться сейчас: около $score очков — на уровень не хватит';
   }
 
   @override
   String seasonalHow(int count) {
-    return 'While the event runs, claim $count event tokens once a day (the day starts at 00:00 UTC).';
+    return 'Пока идёт событие, раз в день можно получить жетоны: $count (день начинается в 00:00 UTC).';
   }
 
   @override
   String seasonalBenefit(int count) {
-    return 'Tokens stay on your account (balance: $count).';
+    return 'Жетоны остаются на аккаунте (баланс: $count).';
   }
 
   @override
-  String get eventDetails => 'Details';
+  String get eventDetails => 'Подробности';
 
   @override
-  String get createCharacterTitle => 'Create character';
+  String get createCharacterTitle => 'Создание персонажа';
 
   @override
-  String get classTraits => 'Class traits';
+  String get classTraits => 'Особенности класса';
 
   @override
   String classResourceLine(String name) {
-    return 'Resource: $name';
+    return 'Ресурс: $name';
   }
 
   @override
   String classFocusLine(String primary, String secondary) {
-    return 'Main attribute: $primary · second: $secondary';
+    return 'Главная характеристика: $primary · вторая: $secondary';
   }
 
   @override
   String classFocusOnly(String primary) {
-    return 'Main attribute: $primary';
+    return 'Главная характеристика: $primary';
   }
 
   @override
-  String get classDifficulty => 'Difficulty';
+  String get classDifficulty => 'Сложность';
 
   @override
-  String get difficultyEasy => 'Easy — forgiving, safe on AFK hunts';
+  String get difficultyEasy => 'Лёгкий — прощает ошибки, надёжен на AFK-охоте';
 
   @override
-  String get difficultyMedium => 'Medium — balanced; skill order matters';
+  String get difficultyMedium => 'Средний — сбалансирован; порядок навыков важен';
 
   @override
-  String get difficultyHard => 'Hard — fragile; needs the right gear';
+  String get difficultyHard => 'Сложный — хрупкий; нужно подходящее снаряжение';
 
   @override
-  String get skillsTapHint => 'tap for details';
+  String get skillsTapHint => 'нажмите для подробностей';
 
   @override
-  String get chooseRace => 'Choose your race';
+  String get chooseRace => 'Выберите расу';
 
   @override
   String continueAs(String name) {
-    return 'Continue as $name';
+    return 'Продолжить: $name';
   }
 
   @override
-  String get nameYourCharacter => 'Name your character';
+  String get nameYourCharacter => 'Назовите персонажа';
 
   @override
-  String get raceTroll => 'Troll';
+  String get raceTroll => 'Тролль';
 
   @override
-  String get raceUndead => 'Undead';
+  String get raceUndead => 'Нежить';
 
   @override
-  String get raceDarkElf => 'Dark Elf';
+  String get raceDarkElf => 'Тёмный эльф';
 
   @override
-  String get raceDrakari => 'Drakari';
+  String get raceDrakari => 'Дракари';
 
   @override
-  String get raceTauren => 'Tauren';
+  String get raceTauren => 'Таурен';
 
   @override
-  String get raceGnome => 'Gnome';
+  String get raceGnome => 'Гном';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {
-    return '+$atk% attack and +$def% defense for $minutes min';
+    return '+$atk% атаки и +$def% защиты на $minutes мин';
   }
 
   @override
   String fedToast(int atk, int def) {
-    return 'Fed: +$atk% attack, +$def% defense';
+    return 'Сытость: +$atk% атаки, +$def% защиты';
   }
 
   @override
   String fedActive(int atk, int def, String time) {
-    return 'Fed · +$atk% attack · +$def% defense · $time left';
+    return 'Сытость · +$atk% атаки · +$def% защиты · осталось $time';
   }
 
   @override
   String huntReach(String regions) {
-    return 'Hunting from here: $regions';
+    return 'Охота отсюда: $regions';
   }
 
   @override
-  String get huntNoMobsHere => 'There is nothing to hunt here. Travel to a hunting ground first.';
+  String get huntNoMobsHere => 'Здесь не на кого охотиться. Сначала отправьтесь в охотничьи угодья.';
 
   @override
-  String get huntOtherRegions => 'Monsters in other regions';
+  String get huntOtherRegions => 'Монстры в других регионах';
 
   @override
-  String get huntTravelHint => 'Travel to a monster\'s region, or a region linked to it by road, to hunt it.';
+  String get huntTravelHint =>
+      'Чтобы охотиться на монстра, отправьтесь в его регион или в регион, связанный с ним дорогой.';
 
   @override
-  String get errMobRegion => 'This monster lives in another region. Travel there first.';
+  String get errMobRegion => 'Этот монстр живёт в другом регионе. Сначала отправьтесь туда.';
 
   @override
   String restoresHpPct(int pct) {
-    return 'Restores $pct% of max HP';
+    return 'Восстанавливает $pct% макс. ОЗ';
   }
 
   @override
-  String get statEvasion => '% Evasion';
+  String get statEvasion => '% уклонения';
 
   @override
-  String get statBlock => '% Block';
+  String get statBlock => '% блока';
 
   @override
-  String get statCritDmg => '% Crit damage';
+  String get statCritDmg => '% крит. урона';
 
   @override
-  String get statLifesteal => '% Lifesteal';
+  String get statLifesteal => '% вампиризма';
 
   @override
-  String get statDmgReduction => '% Damage reduction';
+  String get statDmgReduction => '% снижения урона';
 
   @override
-  String get classJewelry => 'Jewelry';
+  String get classJewelry => 'Украшения';
 
   @override
   String get mapHint =>
-      'You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.';
+      'Можно сразу отправиться в любой регион, доступный по уровню; время зависит от кратчайшей дороги. Двигайте и масштабируйте карту, нажмите на регион.';
 
   @override
-  String get mapNoRoad => 'No direct road leads here. Travel through the glowing regions next to you.';
+  String get mapNoRoad => 'Прямой дороги сюда нет. Идите через светящиеся соседние регионы.';
 
   @override
-  String get youAreHere => 'You are here.';
+  String get youAreHere => 'Вы здесь.';
 
   @override
   String travelTime(String time) {
-    return 'Travel time: $time';
+    return 'Время в пути: $time';
   }
 
   @override
   String xpPerKill(int xp) {
-    return '$xp XP';
+    return '$xp опыта';
   }
 
   @override
-  String get deleteCharacter => 'Delete character';
+  String get deleteCharacter => 'Удалить персонажа';
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name will be deleted right away, with all items and gold. This cannot be undone. Type the character\'s name to confirm.';
+    return '$name будет удалён немедленно вместе со всеми предметами и золотом. Отменить это нельзя. Введите имя персонажа для подтверждения.';
   }
 
   @override
-  String get characterNameConfirm => 'Character name';
+  String get characterNameConfirm => 'Имя персонажа';
 
   @override
   String characterDeletesAt(String when) {
-    return 'Deleted on $when';
+    return 'Будет удалён: $when';
   }
 
   @override
-  String get cancelCharacterDelete => 'Cancel deletion';
+  String get cancelCharacterDelete => 'Отменить удаление';
 
   @override
   String characterDeleted(String name) {
-    return '$name was deleted.';
+    return '$name: удалён.';
   }
 
   @override
   String characterDeleteCancelled(String name) {
-    return '$name will not be deleted.';
+    return '$name: удаление отменено.';
   }
 
   @override
-  String get errNameMismatch => 'The name does not match.';
+  String get errNameMismatch => 'Имя не совпадает.';
 
   @override
   String attrGainPerPoint(String gains) {
-    return 'Per point: $gains';
+    return 'За очко: $gains';
   }
 
   @override
   String attrGainPending(String gains) {
-    return 'Adding: $gains';
+    return 'Прибавится: $gains';
   }
 
   @override
-  String get attrNoEffect => 'No effect for your class';
+  String get attrNoEffect => 'Для вашего класса без эффекта';
 
   @override
-  String get attrInputHint => 'Type how many points each attribute gets';
+  String get attrInputHint => 'Введите, сколько очков получит каждая характеристика';
 
   @override
-  String get gainHp => 'HP';
+  String get gainHp => 'ОЗ';
 
   @override
-  String get gainMp => 'MP';
+  String get gainMp => 'ОМ';
 
   @override
-  String get gainHpRegen => 'HP/s';
+  String get gainHpRegen => 'ОЗ/с';
 
   @override
-  String get huntSupplies => 'Supplies to take';
+  String get huntSupplies => 'Припасы с собой';
 
   @override
   String get huntSuppliesHint =>
-      'Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.';
+      'Зелья выпиваются между боями, когда ОЗ ниже половины, еда съедается по окончании бонуса, зелья маны — при нехватке маны. Остаток вернётся в сумку.';
 
   @override
-  String get supplyHp => 'Healing potions';
+  String get supplyHp => 'Зелья лечения';
 
   @override
-  String get supplyMp => 'Mana potions';
+  String get supplyMp => 'Зелья маны';
 
   @override
-  String get supplyMpHint => 'For classes using mana, energy, focus, nature energy or spirit';
+  String get supplyMpHint => 'Для классов с маной, энергией, концентрацией, энергией природы или духом';
 
   @override
-  String get supplyFood => 'Food';
+  String get supplyFood => 'Еда';
 
   @override
-  String get huntNoSupplies => 'No potions or food in your bag: buy them at the shop or craft them.';
+  String get huntNoSupplies => 'В сумке нет зелий и еды: купите их в лавке или изготовьте.';
 
   @override
   String restoresMpPct(int pct) {
-    return 'Refills $pct% of your mana';
+    return 'Восполняет $pct% маны';
   }
 
   @override
-  String get huntSupplyOnly => 'Used only as a hunt supply';
+  String get huntSupplyOnly => 'Используется только как припас для охоты';
 
   @override
-  String get errBadSupply => 'That item cannot be taken on a hunt.';
+  String get errBadSupply => 'Этот предмет нельзя взять на охоту.';
 
   @override
-  String get errNotEnoughSupplies => 'Your bag holds fewer of that supply.';
+  String get errNotEnoughSupplies => 'В сумке меньше этого припаса.';
 
   @override
-  String get errHuntOnly => 'Take it on a hunt as a supply.';
+  String get errHuntOnly => 'Возьмите на охоту как припас.';
 
   @override
-  String get huntFled => 'Your HP fell under 5%: you broke off the fight';
+  String get huntFled => 'ОЗ упали ниже 5%: вы вышли из боя';
 
   @override
   String suppliesUsed(String list) {
-    return 'Used: $list';
+    return 'Использовано: $list';
   }
 
   @override
-  String get compareTitle => 'Compared with what you wear';
+  String get compareTitle => 'Сравнение с надетым';
 
   @override
   String compareWorn(String name) {
-    return 'Worn: $name';
+    return 'Надето: $name';
   }
 
   @override
-  String get compareEmpty => 'That slot is empty: equipping adds all of these.';
+  String get compareEmpty => 'Этот слот пуст: при надевании добавится всё это.';
 
   @override
-  String get compareColStat => 'Stat';
+  String get compareColStat => 'Параметр';
 
   @override
-  String get compareColWorn => 'Worn';
+  String get compareColWorn => 'Надето';
 
   @override
-  String get compareColThis => 'This';
+  String get compareColThis => 'Этот';
 
   @override
-  String get compareColDiff => 'Change';
+  String get compareColDiff => 'Разница';
 
   @override
-  String get compareSame => 'Same stats as what you wear.';
+  String get compareSame => 'Те же параметры, что и у надетого.';
 
   @override
-  String get wearOk => 'Your class can wear this';
+  String get wearOk => 'Ваш класс может это носить';
 
   @override
-  String get wearClass => 'Your class can\'t wear this';
+  String get wearClass => 'Ваш класс не может это носить';
 
   @override
   String wearLevel(int level) {
-    return 'Needs level $level';
+    return 'Нужен уровень $level';
   }
 
   @override
-  String get wearAttribute => 'Your attributes are too low';
+  String get wearAttribute => 'Слишком низкие характеристики';
 
   @override
-  String get wearLegendClass => 'not for your class';
+  String get wearLegendClass => 'не для вашего класса';
 
   @override
-  String get wearLegendLater => 'not yet (level or attributes)';
+  String get wearLegendLater => 'пока нет (уровень или характеристики)';
 
   @override
-  String get enchantAction => 'Enchant';
+  String get enchantAction => 'Зачаровать';
 
   @override
-  String get enchantPick => 'Choose the gear to enchant';
+  String get enchantPick => 'Выберите снаряжение для зачарования';
 
   @override
-  String get enchantNone => 'None of your gear fits this scroll.';
+  String get enchantNone => 'Ничего из снаряжения не подходит к этому свитку.';
 
   @override
   String enchantFits(String groups) {
-    return 'Goes on: $groups';
+    return 'Подходит для: $groups';
   }
 
   @override
-  String get enchantGroupWeapon => 'weapons';
+  String get enchantGroupWeapon => 'оружие';
 
   @override
-  String get enchantGroupArmor => 'armor';
+  String get enchantGroupArmor => 'броня';
 
   @override
-  String get enchantGroupJewelry => 'jewelry';
+  String get enchantGroupJewelry => 'украшения';
 
   @override
-  String get enchantGroupAny => 'any gear';
+  String get enchantGroupAny => 'любое снаряжение';
 
   @override
-  String get enchantReplaceTitle => 'Replace the enchant?';
+  String get enchantReplaceTitle => 'Заменить зачарование?';
 
   @override
   String enchantReplaceBody(String old, String next) {
-    return '$old is lost and $next takes its place.';
+    return '$old будет потеряно, его место займёт $next.';
   }
 
   @override
   String enchantDone(String item) {
-    return '$item enchanted';
+    return 'Зачаровано: $item';
   }
 
   @override
   String enchantOn(String name) {
-    return 'Enchant: $name';
+    return 'Зачарование: $name';
   }
 
   @override
-  String get wornTag => 'worn';
+  String get wornTag => 'надето';
 
   @override
-  String get errNotEnchant => 'That is not an enchanting scroll.';
+  String get errNotEnchant => 'Это не свиток зачарования.';
 
   @override
-  String get errEnchantSlot => 'The enchant doesn\'t fit that gear.';
+  String get errEnchantSlot => 'Это зачарование не подходит к этому снаряжению.';
 
   @override
-  String get statGatherMining => 'Mining yield';
+  String get statGatherMining => 'Добыча руды: выход';
 
   @override
-  String get statGatherHerbalism => 'Herbalism yield';
+  String get statGatherHerbalism => 'Травничество: выход';
 
   @override
-  String get statGatherWoodcutting => 'Woodcutting yield';
+  String get statGatherWoodcutting => 'Лесозаготовка: выход';
 
   @override
-  String get statGatherFishing => 'Fishing yield';
+  String get statGatherFishing => 'Рыбалка: выход';
 
   @override
-  String get statGatherHunting => 'Hunting yield';
+  String get statGatherHunting => 'Охота: выход';
 
   @override
-  String get statCraftSpeed => 'Crafting speed';
+  String get statCraftSpeed => 'Скорость создания';
 
   @override
   String diffXp(int pct) {
-    return '$pct% XP';
+    return '$pct% опыта';
   }
 
   @override
-  String get diffNoXp => 'no XP';
+  String get diffNoXp => 'нет опыта';
 
   @override
-  String get diffLegend => 'Recipe colors: the XP a craft teaches at your skill';
+  String get diffLegend => 'Цвета рецептов: опыт за создание при вашем навыке';
 
   @override
-  String get recipeGroupEnchantWeapon => 'Weapon enchants';
+  String get recipeGroupEnchantWeapon => 'Зачарования оружия';
 
   @override
-  String get recipeGroupEnchantArmor => 'Armor enchants';
+  String get recipeGroupEnchantArmor => 'Зачарования брони';
 
   @override
-  String get recipeGroupEnchantJewelry => 'Jewelry enchants';
+  String get recipeGroupEnchantJewelry => 'Зачарования украшений';
 
   @override
-  String get recipeGroupEnchantProfession => 'Profession enchants';
+  String get recipeGroupEnchantProfession => 'Зачарования профессий';
 
   @override
   String get partyHint =>
-      'Members doing the same work at the same time (the same gathering kind, profession, hunt or dungeon) each earn +3% XP per member working: five together earn +15%. Nobody gives XP away.';
+      'Участники, выполняющие одну и ту же работу одновременно (тот же сбор, профессия, охота или подземелье), получают +3% опыта за каждого работающего: пятеро вместе получают +15%. Никто не отдаёт свой опыт.';
 
   @override
-  String get partyChat => 'Party chat';
+  String get partyChat => 'Чат отряда';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return 'Party bonus with $names: $earned → $kept XP';
+    return 'Бонус отряда с $names: $earned → $kept опыта';
   }
 
   @override
   String evRaidMatched(String raid) {
-    return 'A party was found for $raid. See Raids.';
+    return 'Отряд для «$raid» найден. См. Рейды.';
   }
 
   @override
-  String get nkRaidMatched => 'Raid party found';
+  String get nkRaidMatched => 'Отряд для рейда найден';
 
   @override
-  String get workHunt => 'Hunting';
+  String get workHunt => 'Охота';
 
   @override
-  String get workDungeon => 'Dungeon';
+  String get workDungeon => 'Подземелье';
 
   @override
-  String get raidFind => 'Find a party';
+  String get raidFind => 'Найти отряд';
 
   @override
-  String get raidQueueJoin => 'Queue';
+  String get raidQueueJoin => 'Встать в очередь';
 
   @override
-  String get raidQueueLeave => 'Leave queue';
+  String get raidQueueLeave => 'Выйти из очереди';
 
   @override
   String raidQueued(String raid, int waiting) {
-    return 'Queued for $raid · $waiting waiting';
+    return 'Очередь на $raid · ожидают: $waiting';
   }
 
   @override
-  String get raidQueueHint => 'A random party forms once 5 are waiting, or after 5 minutes with at least 2.';
+  String get raidQueueHint =>
+      'Случайный отряд собирается, когда ждут 5 человек, или через 5 минут, если ждут хотя бы 2.';
 
   @override
-  String get raidAdvertise => 'Advertise';
+  String get raidAdvertise => 'Разместить объявление';
 
   @override
-  String get raidUnlist => 'Remove listing';
+  String get raidUnlist => 'Снять объявление';
 
   @override
   String raidListed(String raid) {
-    return 'Your party is on the board for $raid';
+    return 'Ваш отряд на доске: $raid';
   }
 
   @override
-  String get raidBoard => 'Listing board';
+  String get raidBoard => 'Доска объявлений';
 
   @override
-  String get raidBoardEmpty => 'No open listings.';
+  String get raidBoardEmpty => 'Открытых объявлений нет.';
 
   @override
-  String get raidJoinParty => 'Join party';
+  String get raidJoinParty => 'Вступить в отряд';
 
   @override
-  String get raidPickRaid => 'Raid';
+  String get raidPickRaid => 'Рейд';
 
   @override
-  String get errListingGone => 'That listing is gone or full.';
+  String get errListingGone => 'Это объявление исчезло или заполнено.';
 
   @override
-  String get workGathering => 'Gathering';
+  String get workGathering => 'Сбор';
 
   @override
-  String get workAdventure => 'Adventure';
+  String get workAdventure => 'Приключение';
 
   @override
-  String get workRaid => 'Raid';
+  String get workRaid => 'Рейд';
 
   @override
-  String get workTravel => 'Travelling';
+  String get workTravel => 'В пути';
 
   @override
-  String get workCrafting => 'Crafting';
+  String get workCrafting => 'Создание';
 
   @override
-  String get workIdle => 'Idle';
+  String get workIdle => 'Без дела';
 
   @override
-  String get errDungeonRegion => 'Travel to this place on the map first.';
+  String get errDungeonRegion => 'Сначала отправьтесь в это место на карте.';
 
   @override
   String get dungeonsElsewhere =>
-      'More dungeons and raids open as you travel: each is entered from its own region on the map.';
+      'Новые подземелья и рейды открываются в пути: вход в каждый находится в его регионе на карте.';
 
   @override
-  String get dungeonNoneHere => 'No dungeon in reach here. Travel on the map to a dungeon region.';
+  String get dungeonNoneHere => 'Здесь нет доступных подземелий. Отправьтесь по карте в регион с подземельем.';
 
   @override
   String dungeonXp(int xp) {
-    return '≈ $xp XP for you';
+    return '≈ $xp опыта для вас';
   }
 
   @override
   String appVersionLine(String version) {
-    return 'Version $version';
+    return 'Версия $version';
   }
 
   @override
-  String get updateButton => 'Update';
+  String get updateButton => 'Обновить';
 
   @override
   String updateAvailable(String version) {
-    return 'New version ready: $version';
+    return 'Доступна новая версия: $version';
   }
 
   @override
-  String get updateLatest => 'You have the latest version';
+  String get updateLatest => 'У вас последняя версия';
 
   @override
   String updateConfirm(String version, int size) {
-    return 'Download and install version $version ($size MB)?';
+    return 'Скачать и установить версию $version ($size МБ)?';
   }
 
   @override
-  String get updateDownloading => 'Downloading…';
+  String get updateDownloading => 'Загрузка…';
 
   @override
-  String get updatePermission => 'Allow installs from MeNa World, then tap Update again.';
+  String get updatePermission => 'Разрешите установку из MeNa World и снова нажмите «Обновить».';
 
   @override
-  String get updateFailed => 'Could not get the update. Check your connection.';
+  String get updateFailed => 'Не удалось получить обновление. Проверьте подключение.';
 
   @override
-  String get fightReport => 'Fight report';
+  String get fightReport => 'Отчёт о бое';
 
   @override
-  String get endTimeUp => 'Time ran out: it went on to the planned end.';
+  String get endTimeUp => 'Время вышло: дошло до запланированного конца.';
 
   @override
-  String get endEarly => 'Collected early: stopped before the planned end.';
+  String get endEarly => 'Забрано досрочно: остановлено до запланированного конца.';
 
   @override
   String endFled(String mob) {
-    return 'HP fell below 5% against $mob: you broke off and came back.';
+    return 'ОЗ упали ниже 5% в бою с $mob: вы вышли из боя и вернулись.';
   }
 
   @override
   String endDefeat(String mob) {
-    return 'You fell to $mob.';
+    return 'Вы пали от: $mob.';
   }
 
   @override
   String endPartyDefeat(String mob) {
-    return 'The party fell to $mob.';
+    return 'Отряд пал от: $mob.';
   }
 
   @override
   String endTimeout(String mob) {
-    return 'The fight with $mob went past the turn limit: it stopped.';
+    return 'Бой с $mob превысил лимит ходов и был остановлен.';
   }
 
   @override
-  String get endCleared => 'Cleared: every wave and the boss fell.';
+  String get endCleared => 'Пройдено: все волны и босс повержены.';
 
   @override
   String get repCampHint =>
-      'Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.';
+      'При ОЗ ниже 50% охотник разбивает лагерь и восстанавливается перед следующим боем, поэтому до 5% охота доходит редко.';
 
   @override
-  String get repYou => 'You';
+  String get repYou => 'Вы';
 
   @override
-  String get repLevel => 'Level';
+  String get repLevel => 'Уровень';
 
   @override
-  String get repHp => 'HP';
+  String get repHp => 'ОЗ';
 
   @override
-  String get repAttack => 'Attack';
+  String get repAttack => 'Атака';
 
   @override
-  String get repDefense => 'Defense';
+  String get repDefense => 'Защита';
 
   @override
-  String get repEvasion => 'Evasion';
+  String get repEvasion => 'Уклонение';
 
   @override
-  String get repHitChance => 'Hit chance';
+  String get repHitChance => 'Шанс попадания';
 
   @override
-  String get repCrit => 'Crit';
+  String get repCrit => 'Крит';
 
   @override
   String repFights(int n) {
-    return '$n fights';
+    return 'Боёв: $n';
   }
 
   @override
   String repSwings(int hits, int swings, int pct, int avg, int max) {
-    return '$hits/$swings hits ($pct%), avg $avg, max $max';
+    return 'Попадания: $hits/$swings ($pct%), средн. $avg, макс. $max';
   }
 
   @override
-  String get repYourSwings => 'Your swings';
+  String get repYourSwings => 'Ваши удары';
 
   @override
-  String get repPartySwings => 'The party\'s swings';
+  String get repPartySwings => 'Удары отряда';
 
   @override
-  String get repEnemySwings => 'Enemy swings';
+  String get repEnemySwings => 'Удары врага';
 
   @override
   String repLowest(int pct) {
-    return 'Lowest HP in a fight: $pct%';
+    return 'Минимум ОЗ в бою: $pct%';
   }
 
   @override
   String repRest(String time) {
-    return 'Camped: $time';
+    return 'В лагере: $time';
   }
 
   @override
-  String get restart => 'Restart';
+  String get restart => 'Повторить';
 
   @override
-  String get restartTitle => 'Collect and start again?';
+  String get restartTitle => 'Забрать и начать снова?';
 
   @override
-  String get restartBody => 'What came in so far goes to your bag, and the same run starts again for the same time.';
+  String get restartBody => 'Полученное уходит в сумку, и то же занятие начнётся снова на то же время.';
 
   @override
-  String get dailyTitle => 'Daily login reward';
+  String get dailyTitle => 'Ежедневная награда за вход';
 
   @override
   String get dailyBody =>
-      'Claim once a day on any character. Each week in a row pays more and day 29 the most; a missed day starts the cycle again.';
+      'Получайте раз в день на любом персонаже. Каждая неделя подряд платит больше, а 29-й день — больше всего; пропуск начинает цикл заново.';
 
   @override
-  String get dailyClaim => 'Claim';
+  String get dailyClaim => 'Получить';
 
   @override
-  String get dailyTomorrow => 'Come back tomorrow';
+  String get dailyTomorrow => 'Возвращайтесь завтра';
 
   @override
   String dailyDay(int n) {
-    return 'Day $n';
+    return 'День $n';
   }
 
   @override
-  String get dailyOpen => 'Daily reward';
+  String get dailyOpen => 'Ежедневная награда';
 
   @override
   String chatMutedNotice(String name, int min) {
-    return '$name was muted for $min minutes for swearing.';
+    return '$name: заглушён на $min мин за брань.';
   }
 
   @override
-  String get storyTitle => 'Story';
+  String get storyTitle => 'Сюжет';
 
   @override
-  String get storyOpen => 'Story mode';
+  String get storyOpen => 'Сюжетный режим';
 
   @override
-  String get storyComingSoon => 'Story mode is coming soon. Chapters will appear here as they are written.';
+  String get storyComingSoon => 'Сюжетный режим скоро появится. Главы будут добавляться сюда по мере написания.';
 
   @override
   String storyLocked(int level) {
-    return 'Opens at level $level';
+    return 'Откроется на уровне $level';
   }
 
   @override
-  String get bankTitle => 'Bank';
+  String get bankTitle => 'Банк';
 
   @override
   String get bankHint =>
-      'Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.';
+      'Общий для всех ваших персонажей. Нажмите на предмет в сумке, чтобы положить его, или на предмет в банке, чтобы забрать. Персональные предметы остаются у своего персонажа.';
 
   @override
-  String get bankEmpty => 'The bank is empty.';
+  String get bankEmpty => 'Банк пуст.';
 
   @override
-  String get bankDeposit => 'Deposit';
+  String get bankDeposit => 'Положить';
 
   @override
-  String get bankWithdraw => 'Take';
+  String get bankWithdraw => 'Забрать';
 
   @override
-  String get errBankFull => 'The bank is full.';
+  String get errBankFull => 'Банк заполнен.';
 
   @override
-  String get tabTrade => 'Trade';
+  String get tabTrade => 'Обмен';
 
   @override
   String get tradeHint =>
-      'Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.';
+      'Обменивайтесь предметами с другим игроком. Оба выставляют предметы и подтверждают; каждая сторона платит налог 8% от средней рыночной цены отдаваемых предметов, за штуку.';
 
   @override
-  String get tradeWith => 'Player name';
+  String get tradeWith => 'Имя игрока';
 
   @override
-  String get tradeOpen => 'Start trade';
+  String get tradeOpen => 'Начать обмен';
 
   @override
   String tradeTitle(String name) {
-    return 'Trade with $name';
+    return 'Обмен с: $name';
   }
 
   @override
-  String get tradeYours => 'You give';
+  String get tradeYours => 'Вы отдаёте';
 
   @override
   String tradeTheirs(String name) {
-    return '$name gives';
+    return '$name отдаёт';
   }
 
   @override
-  String get tradeNothing => 'Nothing yet.';
+  String get tradeNothing => 'Пока ничего.';
 
   @override
-  String get tradeAdd => 'Add item';
+  String get tradeAdd => 'Добавить предмет';
 
   @override
-  String get tradeRemove => 'Take back';
+  String get tradeRemove => 'Забрать обратно';
 
   @override
-  String get tradeTax => 'Your tax';
+  String get tradeTax => 'Ваш налог';
 
   @override
-  String get tradeReady => 'Ready';
+  String get tradeReady => 'Готов';
 
   @override
-  String get tradeWaiting => 'Not ready';
+  String get tradeWaiting => 'Не готов';
 
   @override
-  String get tradeConfirm => 'Confirm trade';
+  String get tradeConfirm => 'Подтвердить обмен';
 
   @override
-  String get tradeWaitingThem => 'Waiting for the other player';
+  String get tradeWaitingThem => 'Ждём другого игрока';
 
   @override
-  String get tradeCancel => 'Cancel trade';
+  String get tradeCancel => 'Отменить обмен';
 
   @override
-  String get tradeCancelBody => 'Nothing changes hands.';
+  String get tradeCancelBody => 'Ничего не переходит из рук в руки.';
 
   @override
-  String get tradeDone => 'Trade complete.';
+  String get tradeDone => 'Обмен завершён.';
 
   @override
-  String get errTradeBusy => 'One of you is already trading.';
+  String get errTradeBusy => 'Один из вас уже участвует в обмене.';
 
   @override
-  String get errTradeClosed => 'That trade is over.';
+  String get errTradeClosed => 'Этот обмен окончен.';
 
   @override
-  String get errTradeItem => 'That item cannot be traded now.';
+  String get errTradeItem => 'Этот предмет сейчас нельзя обменять.';
 
   @override
-  String get errTradeEmpty => 'Put something up first.';
+  String get errTradeEmpty => 'Сначала выставьте что-нибудь.';
 
   @override
-  String get errTradeTooMany => 'Too many items in the trade.';
+  String get errTradeTooMany => 'Слишком много предметов в обмене.';
 
   @override
-  String get errCraftLevel => 'Your character\'s level is below this item\'s level.';
+  String get errCraftLevel => 'Уровень персонажа ниже уровня этого предмета.';
 
   @override
-  String get gatherNoneHere => 'Your resources grow on other maps: travel to one shown beside them.';
+  String get gatherNoneHere => 'Ваши ресурсы растут на других картах: отправьтесь туда, где они указаны.';
 
   @override
-  String get errGatherRegion => 'That resource grows on another map.';
+  String get errGatherRegion => 'Этот ресурс растёт на другой карте.';
 
   @override
-  String get helpersOpen => 'Helpers';
+  String get helpersOpen => 'Помощники';
 
   @override
-  String get helpersTitle => 'Helpers';
+  String get helpersTitle => 'Помощники';
 
   @override
   String get helpersHint =>
-      'Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.';
+      'Нанимайте помощников для сбора и создания. Они работают вдвое медленнее и получают половину опыта, который идёт в вашу профессию; у каждого вида свой бонус.';
 
   @override
-  String get helpersGather => 'Gathering';
+  String get helpersGather => 'Сбор';
 
   @override
-  String get helpersCraft => 'Crafting';
+  String get helpersCraft => 'Создание';
 
   @override
-  String get helperHire => 'Hire';
+  String get helperHire => 'Нанять';
 
   @override
   String helperHireBody(String name, String price) {
-    return 'Hire the $name for $price?';
+    return 'Нанять: $name за $price?';
   }
 
   @override
-  String get helperSend => 'Send to work';
+  String get helperSend => 'Отправить на работу';
 
   @override
-  String get helperCancel => 'Call back';
+  String get helperCancel => 'Отозвать';
 
   @override
-  String get helperCancelBody => 'A gathering run brings nothing back; a craft returns its materials and gold.';
+  String get helperCancelBody => 'При сборе ничего не вернётся; при создании вернутся материалы и золото.';
 
   @override
-  String get helperDone => 'Done — collect it';
+  String get helperDone => 'Готово — заберите';
 
   @override
   String helperWorking(String time) {
-    return 'Working, $time left';
+    return 'В работе, осталось $time';
   }
 
   @override
   String helperCollected(int items, int xp, String profession) {
-    return '$items items, +$xp $profession XP';
+    return 'Предметов: $items, +$xp опыта ($profession)';
   }
 
   @override
-  String get helperNoRecipes => 'No recipe at your level in this profession yet.';
+  String get helperNoRecipes => 'В этой профессии пока нет рецептов для вашего уровня.';
 
   @override
-  String get helperPickRecipe => 'Pick a recipe';
+  String get helperPickRecipe => 'Выберите рецепт';
 
   @override
   String helperBonusYield(int pct) {
-    return '+$pct% yield';
+    return '+$pct% выхода';
   }
 
   @override
   String helperBonusSpeed(int pct) {
-    return '$pct% faster';
+    return 'Быстрее на $pct%';
   }
 
   @override
   String helperBonusXp(int pct) {
-    return '+$pct% XP';
+    return '+$pct% опыта';
   }
 
   @override
   String helperBonusGold(int pct) {
-    return '$pct% less gold cost';
+    return 'Меньше золота на $pct%';
   }
 
   @override
   String helperBonusDouble(int pct) {
-    return '$pct% chance of a double output';
+    return 'Шанс $pct% на двойной результат';
   }
 
   @override
-  String get helperMiner => 'Miner';
+  String get helperMiner => 'Рудокоп';
 
   @override
-  String get helperWoodsman => 'Woodsman';
+  String get helperWoodsman => 'Лесоруб';
 
   @override
-  String get helperAngler => 'Angler';
+  String get helperAngler => 'Рыболов';
 
   @override
-  String get helperHerbalist => 'Herbalist';
+  String get helperHerbalist => 'Травник';
 
   @override
-  String get helperTrapper => 'Trapper';
+  String get helperTrapper => 'Траппер';
 
   @override
-  String get helperSmith => 'Smith';
+  String get helperSmith => 'Кузнец';
 
   @override
-  String get helperTanner => 'Tanner';
+  String get helperTanner => 'Кожевник';
 
   @override
-  String get helperWeaver => 'Weaver';
+  String get helperWeaver => 'Ткач';
 
   @override
-  String get helperCarver => 'Carver';
+  String get helperCarver => 'Резчик';
 
   @override
-  String get helperApothecary => 'Apothecary';
+  String get helperApothecary => 'Аптекарь';
 
   @override
-  String get helperCook => 'Cook';
+  String get helperCook => 'Повар';
 
   @override
-  String get helperSmelter => 'Smelter';
+  String get helperSmelter => 'Плавильщик';
 
   @override
-  String get helperScribe => 'Scribe';
+  String get helperScribe => 'Писарь';
 
   @override
-  String get helperGemcutter => 'Gemcutter';
+  String get helperGemcutter => 'Ювелир';
 
   @override
-  String get errHelperBusy => 'That helper is already working.';
+  String get errHelperBusy => 'Этот помощник уже работает.';
 
   @override
-  String get errHelperNotReady => 'The helper is not done yet.';
+  String get errHelperNotReady => 'Помощник ещё не закончил.';
 
   @override
-  String get shopOpen => 'Shop';
+  String get shopOpen => 'Магазин';
 
   @override
-  String get shopTitle => 'Credit shop';
+  String get shopTitle => 'Магазин кредитов';
 
   @override
-  String get shopCredits => 'Credits';
+  String get shopCredits => 'Кредиты';
 
   @override
-  String get shopAvatars => 'Avatars';
+  String get shopAvatars => 'Аватары';
 
   @override
-  String get shopBackgrounds => 'Backgrounds';
+  String get shopBackgrounds => 'Фоны';
 
   @override
   String shopBalance(int n) {
-    return '$n credits';
+    return 'Кредитов: $n';
   }
 
   @override
-  String get shopBuyCredits => 'Buy credits to unlock boosts and cosmetics.';
+  String get shopBuyCredits => 'Покупайте кредиты, чтобы открывать бонусы и косметику.';
 
   @override
-  String get shopPaymentsSoon => 'Buying credits with money is coming soon.';
+  String get shopPaymentsSoon => 'Покупка кредитов за деньги скоро появится.';
 
   @override
-  String get shopBoosts => 'XP boosts';
+  String get shopBoosts => 'Бонусы опыта';
 
   @override
-  String get shopBuy => 'Buy';
+  String get shopBuy => 'Купить';
 
   @override
   String shopBuyBody(int n) {
-    return 'Spend $n credits?';
+    return 'Потратить кредиты: $n?';
   }
 
   @override
   String shopPrice(int n) {
-    return '$n cr';
+    return '$n кр.';
   }
 
   @override
-  String get boostGather => 'Gathering';
+  String get boostGather => 'Сбор';
 
   @override
-  String get boostAdventure => 'Combat';
+  String get boostAdventure => 'Бой';
 
   @override
-  String get boostCraft => 'Professions';
+  String get boostCraft => 'Профессии';
 
   @override
-  String get boostDesc => '+100% XP for 2 hours';
+  String get boostDesc => '+100% опыта на 2 часа';
 
   @override
-  String get boostShort => '+100% XP, 2 h';
+  String get boostShort => '+100% опыта, 2 ч';
 
   @override
   String boostLeft(String time) {
-    return 'Active, $time left';
+    return 'Активно, осталось $time';
   }
 
   @override
   String boostWatchAd(int n) {
-    return 'Watch ad ($n left)';
+    return 'Смотреть рекламу (осталось: $n)';
   }
 
   @override
-  String get boostAdsSoon => 'Ads coming soon';
+  String get boostAdsSoon => 'Реклама скоро появится';
 
   @override
-  String get errInsufficientCredits => 'Not enough credits.';
+  String get errInsufficientCredits => 'Недостаточно кредитов.';
 
   @override
-  String get errBoostActive => 'That boost is already running.';
+  String get errBoostActive => 'Этот бонус уже действует.';
 
   @override
-  String get errAdLimit => 'No more ad boosts today.';
+  String get errAdLimit => 'На сегодня бонусы за рекламу закончились.';
 
   @override
   String helperCanMake(int n) {
-    return 'Can make: $n';
+    return 'Можно создать: $n';
   }
 
   @override
-  String get helperPickResource => 'What to gather';
+  String get helperPickResource => 'Что собирать';
 
   @override
-  String get helperCraftHint => 'Materials and gold are taken now; you keep playing meanwhile.';
+  String get helperCraftHint => 'Материалы и золото списываются сейчас; вы можете продолжать играть.';
 
   @override
-  String get petsOpen => 'Pets';
+  String get petsOpen => 'Питомцы';
 
   @override
   String get petsHint =>
-      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.';
+      'Яйца питомцев выпадают при прохождении рейдов выше 400-го уровня. Яйцо вылупляется в инкубаторе; питомец растёт на собственных охотах, а активный питомец даёт вам свой бонус. Он также сражается в ваших боях, добавляя урон к каждому удару.';
 
   @override
-  String get petsEggs => 'Eggs';
+  String get petsEggs => 'Яйца';
 
   @override
-  String get petsNoEggs => 'No eggs. Clear raids past level 400 to find some.';
+  String get petsNoEggs => 'Яиц нет. Проходите рейды выше 400-го уровня, чтобы найти их.';
 
   @override
   String petsMine(int n, int max) {
-    return 'My pets ($n/$max)';
+    return 'Мои питомцы ($n/$max)';
   }
 
   @override
-  String get petHatch => 'Incubate';
+  String get petHatch => 'В инкубатор';
 
   @override
   String petHatchBody(String egg, String time) {
-    return 'Put a $egg in the incubator? It hatches in $time.';
+    return 'Поместить в инкубатор: $egg? Вылупится через $time.';
   }
 
   @override
-  String get petHatching => 'In its egg';
+  String get petHatching => 'В яйце';
 
   @override
-  String get petHatched => 'Hatched!';
+  String get petHatched => 'Вылупился!';
 
   @override
   String petPower(int n) {
-    return 'Fights like a level $n monster';
+    return 'Сражается как монстр $n-го уровня';
   }
 
   @override
-  String get petActive => 'Active';
+  String get petActive => 'Активен';
 
   @override
-  String get petActivate => 'Make active';
+  String get petActivate => 'Сделать активным';
 
   @override
-  String get petDeactivate => 'Rest';
+  String get petDeactivate => 'Отдых';
 
   @override
-  String get petHunt => 'Send hunting';
+  String get petHunt => 'Отправить на охоту';
 
   @override
   String petHunting(String mob) {
-    return 'Hunting $mob';
+    return 'Охотится: $mob';
   }
 
   @override
-  String get petHuntDone => 'Hunt over';
+  String get petHuntDone => 'Охота окончена';
 
   @override
-  String get petCollectEarly => 'Ending the hunt now pays the fights so far.';
+  String get petCollectEarly => 'Если закончить охоту сейчас, оплачиваются уже прошедшие бои.';
 
   @override
   String petCollected(int wins, int xp) {
-    return '$wins wins, +$xp pet XP';
+    return 'Побед: $wins, +$xp опыта питомца';
   }
 
   @override
   String petLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$name достигает уровня $level!';
   }
 
   @override
-  String get petDied => 'Your pet was beaten; the hunt ended early.';
+  String get petDied => 'Ваш питомец побеждён; охота закончилась раньше.';
 
   @override
-  String get petPickMob => 'Monster to hunt';
+  String get petPickMob => 'Монстр для охоты';
 
   @override
   String petXpPerWin(int n) {
-    return '+$n XP a win';
+    return '+$n опыта за победу';
   }
 
   @override
-  String get errPetCap => 'You have as many pets as you can keep.';
+  String get errPetCap => 'У вас максимум питомцев.';
 
   @override
-  String get errPetHatching => 'The pet has not hatched yet.';
+  String get errPetHatching => 'Питомец ещё не вылупился.';
 
   @override
-  String get errPetHunting => 'The pet is already hunting.';
+  String get errPetHunting => 'Питомец уже на охоте.';
 
   @override
   String petStageLevels(int from, int to) {
-    return 'Lvl $from–$to';
+    return 'Ур. $from–$to';
   }
 
   @override
-  String get regionMobs => 'Monsters';
+  String get regionMobs => 'Монстры';
 
   @override
-  String get regionDungeons => 'Dungeons';
+  String get regionDungeons => 'Подземелья';
 
   @override
-  String get regionGather => 'Resources';
+  String get regionGather => 'Ресурсы';
 
   @override
-  String get regionEmpty => 'No monsters, dungeons, resources or quests belong to this region.';
+  String get regionEmpty => 'В этом регионе нет монстров, подземелий, ресурсов и заданий.';
 
   @override
-  String get regionRaids => 'Raids';
+  String get regionRaids => 'Рейды';
 
   @override
-  String get tagUse => 'Use';
+  String get tagUse => 'Использование';
 
   @override
-  String get tagAllClasses => 'All classes';
+  String get tagAllClasses => 'Все классы';
 
   @override
-  String get tagDrops => 'Dropped by';
+  String get tagDrops => 'Выпадает из';
 
   @override
-  String get tagRaid => 'Raid';
+  String get tagRaid => 'Рейд';
 
   @override
-  String get tagDungeon => 'Dungeon';
+  String get tagDungeon => 'Подземелье';
 
   @override
-  String get tagCrafted => 'Crafted by';
+  String get tagCrafted => 'Создаёт';
 
   @override
   String tagSkill(int n) {
-    return 'skill $n';
+    return 'навык $n';
   }
 
   @override
-  String get tagSold => 'Sold by';
+  String get tagSold => 'Продаёт';
 
   @override
-  String get tagGathered => 'Gathered by';
+  String get tagGathered => 'Собирает';
 
   @override
-  String get tagUsedIn => 'Material for';
+  String get tagUsedIn => 'Материал для';
 
   @override
-  String get petEvolution => 'Evolution';
+  String get petEvolution => 'Эволюция';
 
   @override
-  String get petStrength => 'Strength details';
+  String get petStrength => 'Подробности о силе';
 
   @override
   String petAssistRange(int min, int max) {
-    return 'Combat assist: +$min% – +$max% damage on every hit';
+    return 'Помощь в бою: +$min% – +$max% урона к каждому удару';
   }
 
   @override
   String petBonusRange(String min, String max) {
-    return 'Bonus: $min – $max';
+    return 'Бонус: $min – $max';
   }
 
   @override
   String petFightsRange(int min, int max) {
-    return 'Hunts like a level $min – $max monster';
+    return 'Охотится как монстр $min–$max-го уровня';
   }
 
   @override
-  String get petFind => 'Where to get it';
+  String get petFind => 'Где получить';
 
   @override
   String petAssist(int pct) {
-    return 'Combat assist: +$pct% damage';
+    return 'Помощь в бою: +$pct% урона';
   }
 
   @override
-  String get petLevelNote => 'From level 1 to 100';
+  String get petLevelNote => 'От 1-го до 100-го уровня';
 
   @override
-  String get petIndex => 'Pet Index';
+  String get petIndex => 'Индекс питомцев';
 
   @override
   String petIndexCount(int n, int max) {
-    return '$n / $max discovered';
+    return 'Открыто: $n / $max';
   }
 
   @override
@@ -3379,162 +3379,162 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get petEggTapHint => 'Tap an egg to incubate it.';
+  String get petEggTapHint => 'Нажмите на яйцо, чтобы поместить его в инкубатор.';
 
   @override
-  String get petTapHint => 'Tap a pet to see it · the green dot marks the active pet.';
+  String get petTapHint => 'Нажмите на питомца для просмотра · зелёная точка отмечает активного.';
 
   @override
-  String get petIndexHint => 'Tap a pet to open its page.';
+  String get petIndexHint => 'Нажмите на питомца, чтобы открыть его страницу.';
 
   @override
-  String get petUnknown => 'Not discovered yet';
+  String get petUnknown => 'Ещё не открыт';
 
   @override
-  String get petAbout => 'About';
+  String get petAbout => 'О питомце';
 
   @override
-  String get petHabitat => 'Habitat';
+  String get petHabitat => 'Среда обитания';
 
   @override
   String petElement(String name) {
-    return 'Element: $name';
+    return 'Стихия: $name';
   }
 
   @override
-  String get petStage1 => 'Hatchling';
+  String get petStage1 => 'Детёныш';
 
   @override
-  String get petStage2 => 'Young';
+  String get petStage2 => 'Молодой';
 
   @override
-  String get petStage3 => 'Adult';
+  String get petStage3 => 'Взрослый';
 
   @override
-  String get bodyMale => 'Male';
+  String get bodyMale => 'Мужчина';
 
   @override
-  String get bodyFemale => 'Female';
+  String get bodyFemale => 'Женщина';
 
   @override
-  String get bodyChoice => 'Appearance';
+  String get bodyChoice => 'Внешность';
 
   @override
-  String get bodyChange => 'Change appearance';
+  String get bodyChange => 'Изменить внешность';
 
   @override
-  String get portraitNoArmor => 'No armor';
+  String get portraitNoArmor => 'Без брони';
 
   @override
-  String get combatPower => 'Combat power';
+  String get combatPower => 'Боевая мощь';
 
   @override
-  String get combatTapHint => 'tap for details';
+  String get combatTapHint => 'нажмите для подробностей';
 
   @override
   String statCap(int cap) {
-    return 'cap $cap%';
+    return 'предел $cap%';
   }
 
   @override
-  String get cEvasion => 'Evasion';
+  String get cEvasion => 'Уклонение';
 
   @override
-  String get cBlock => 'Block';
+  String get cBlock => 'Блок';
 
   @override
-  String get cCritDmg => 'Crit damage';
+  String get cCritDmg => 'Крит. урон';
 
   @override
-  String get cDmgReduction => 'Damage reduction';
+  String get cDmgReduction => 'Снижение урона';
 
   @override
-  String get cLifesteal => 'Lifesteal';
+  String get cLifesteal => 'Вампиризм';
 
   @override
-  String get cExecute => 'Execute';
+  String get cExecute => 'Добивание';
 
   @override
-  String get cMissingHp => 'Last stand';
+  String get cMissingHp => 'Последний рубеж';
 
   @override
-  String get cPetAssist => 'Pet assist';
+  String get cPetAssist => 'Помощь питомца';
 
   @override
-  String get xPower => 'The strength used in world events: 2 × attack + defense + max HP / 10.';
+  String get xPower => 'Сила в мировых событиях: 2 × атака + защита + макс. ОЗ / 10.';
 
   @override
-  String get xAttack => 'Base damage of each hit before the enemy\'s defense.';
+  String get xAttack => 'Базовый урон каждого удара до учёта защиты врага.';
 
   @override
-  String get xDefense => 'Each hit you take loses half of your defense.';
+  String get xDefense => 'Каждый полученный удар ослабляется на половину вашей защиты.';
 
   @override
   String xCrit(int cap) {
-    return 'Chance that a hit is critical. At most $cap%.';
+    return 'Шанс критического удара. Не более $cap%.';
   }
 
   @override
-  String get xCritDmg => 'A critical hit deals this multiple of a normal one.';
+  String get xCritDmg => 'Во столько раз критический удар сильнее обычного.';
 
   @override
-  String get xHit => 'Your chance to land a hit, minus the enemy\'s evasion (15–95%).';
+  String get xHit => 'Ваш шанс попасть минус уклонение врага (15–95%).';
 
   @override
   String xEvasion(int cap) {
-    return 'Taken off the enemy\'s hit chance. At most $cap%.';
+    return 'Вычитается из шанса попадания врага. Не более $cap%.';
   }
 
   @override
   String xBlock(int cap) {
-    return 'Chance to halve an incoming hit. At most $cap%.';
+    return 'Шанс уменьшить входящий удар вдвое. Не более $cap%.';
   }
 
   @override
   String xDmgReduction(int cap) {
-    return 'Every hit you take is lowered by this share. At most $cap%.';
+    return 'Каждый полученный удар снижается на эту долю. Не более $cap%.';
   }
 
   @override
-  String get xLifesteal => 'You heal this share of the damage you deal.';
+  String get xLifesteal => 'Вы исцеляетесь на эту долю нанесённого урона.';
 
   @override
   String xExecute(int pct) {
-    return 'Extra damage against enemies at or below $pct% HP.';
+    return 'Дополнительный урон по врагам с $pct% ОЗ и ниже.';
   }
 
   @override
-  String get xMissingHp => 'Up to this much extra damage as your own HP drops.';
+  String get xMissingHp => 'Дополнительный урон до этой величины по мере падения ваших ОЗ.';
 
   @override
-  String get xPetAssist => 'Your active pet adds this share to each of your hits.';
+  String get xPetAssist => 'Активный питомец добавляет эту долю к каждому вашему удару.';
 
   @override
-  String get lookFace => 'Face';
+  String get lookFace => 'Лицо';
 
   @override
-  String get lookHairStyle => 'Hair style';
+  String get lookHairStyle => 'Причёска';
 
   @override
-  String get lookHairColor => 'Hair color';
+  String get lookHairColor => 'Цвет волос';
 
   @override
-  String get lookEyeColor => 'Eye color';
+  String get lookEyeColor => 'Цвет глаз';
 
   @override
-  String get lookSave => 'Save';
+  String get lookSave => 'Сохранить';
 
   @override
-  String get lookHumanOnly => 'Face and hair options for this race are coming soon.';
+  String get lookHumanOnly => 'Варианты лица и волос для этой расы скоро появятся.';
 
   @override
-  String get raceAbilities => 'Race abilities';
+  String get raceAbilities => 'Способности расы';
 
   @override
-  String get raceAbilitiesHint => 'all passive';
+  String get raceAbilitiesHint => 'все пассивные';
 
   @override
-  String get chooseClass => 'Choose your class';
+  String get chooseClass => 'Выберите класс';
 
   @override
   String raceAttrBonus(int pct, String name) {
@@ -3543,7 +3543,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String raceProfessionXp(int pct, String name) {
-    return '+$pct% bonus XP in $name';
+    return '+$pct% бонусного опыта: $name';
   }
 
   @override

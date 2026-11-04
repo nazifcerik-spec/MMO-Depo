@@ -13,129 +13,129 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appTitle => 'MeNa World';
 
   @override
-  String get tagline => 'Adventures that keep going while you\'re away.';
+  String get tagline => '離れている間も冒険は続く。';
 
   @override
-  String get emailOrUsername => 'Email or username';
+  String get emailOrUsername => 'メールアドレスまたはユーザー名';
 
   @override
-  String get email => 'Email';
+  String get email => 'メールアドレス';
 
   @override
-  String get username => 'Username';
+  String get username => 'ユーザー名';
 
   @override
-  String get password => 'Password';
+  String get password => 'パスワード';
 
   @override
-  String get passwordConfirm => 'Confirm password';
+  String get passwordConfirm => 'パスワード（確認）';
 
   @override
-  String get showPassword => 'Show password';
+  String get showPassword => 'パスワードを表示';
 
   @override
-  String get hidePassword => 'Hide password';
+  String get hidePassword => 'パスワードを隠す';
 
   @override
-  String get login => 'Log in';
+  String get login => 'ログイン';
 
   @override
-  String get register => 'Create account';
+  String get register => 'アカウント作成';
 
   @override
-  String get noAccount => 'New here? Create an account';
+  String get noAccount => '初めての方はアカウントを作成';
 
   @override
-  String get haveAccount => 'Already have an account? Log in';
+  String get haveAccount => 'アカウントをお持ちの方はログイン';
 
   @override
-  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => '13歳以上であり、利用規約とプライバシーポリシーに同意します';
 
   @override
-  String get fieldRequired => 'Required';
+  String get fieldRequired => '必須項目です';
 
   @override
-  String get invalidEmail => 'Enter a valid email';
+  String get invalidEmail => '有効なメールアドレスを入力してください';
 
   @override
-  String get usernameRule => '3–32 letters, digits, _ or .';
+  String get usernameRule => '3～32文字の文字、数字、_ または .';
 
   @override
-  String get passwordMin => 'At least 8 characters';
+  String get passwordMin => '8文字以上';
 
   @override
-  String get passwordMismatch => 'Passwords do not match';
+  String get passwordMismatch => 'パスワードが一致しません';
 
   @override
-  String get termsRequired => 'Please accept the terms to continue';
+  String get termsRequired => '続行するには規約に同意してください';
 
   @override
-  String get logout => 'Log out';
+  String get logout => 'ログアウト';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '再試行';
 
   @override
-  String get offline => 'Can\'t reach the server. Check your connection.';
+  String get offline => 'サーバーに接続できません。接続を確認してください。';
 
   @override
-  String get characters => 'Characters';
+  String get characters => 'キャラクター';
 
   @override
   String slotsUsed(int used, int cap) {
-    return '$used/$cap slots';
+    return 'スロット $used/$cap';
   }
 
   @override
-  String get newCharacter => 'New character';
+  String get newCharacter => '新規キャラクター';
 
   @override
-  String get noCharacters => 'No characters yet. Create your first hero.';
+  String get noCharacters => 'キャラクターがいません。最初の英雄を作成しましょう。';
 
   @override
-  String get create => 'Create';
+  String get create => '作成';
 
   @override
-  String get characterName => 'Name';
+  String get characterName => '名前';
 
   @override
   String get nameRule => '1種類の文字で16文字以内、文字で始めます（数字と _ も使えます）';
 
   @override
-  String get race => 'Race';
+  String get race => '種族';
 
   @override
-  String get characterClass => 'Class';
+  String get characterClass => 'クラス';
 
   @override
-  String get raceHuman => 'Human';
+  String get raceHuman => '人間';
 
   @override
-  String get raceElf => 'Elf';
+  String get raceElf => 'エルフ';
 
   @override
-  String get raceDwarf => 'Dwarf';
+  String get raceDwarf => 'ドワーフ';
 
   @override
-  String get raceOrc => 'Orc';
+  String get raceOrc => 'オーク';
 
   @override
-  String get classWarrior => 'Warrior';
+  String get classWarrior => '戦士';
 
   @override
-  String get classMage => 'Mage';
+  String get classMage => '魔術師';
 
   @override
-  String get classRogue => 'Rogue';
+  String get classRogue => '盗賊';
 
   @override
   String levelLine(int level, String cls, String race) {
-    return 'Lvl $level · $cls · $race';
+    return 'Lv.$level · $cls · $race';
   }
 
   @override
   String levelShort(int level) {
-    return 'Lvl $level';
+    return 'Lv.$level';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get energy => 'EN';
 
   @override
-  String get xp => 'XP';
+  String get xp => '経験値';
 
   @override
   String xpValue(int xp, int next) {
@@ -159,40 +159,40 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get attributes => 'Attributes';
+  String get attributes => '能力値';
 
   @override
-  String get combat => 'Combat';
+  String get combat => '戦闘';
 
   @override
-  String get statStr => 'STR';
+  String get statStr => '筋力';
 
   @override
-  String get statAgi => 'DEX';
+  String get statAgi => '器用';
 
   @override
-  String get statInt => 'INT';
+  String get statInt => '知力';
 
   @override
-  String get statVit => 'VIT';
+  String get statVit => '体力';
 
   @override
-  String get statCha => 'WIS';
+  String get statCha => '賢さ';
 
   @override
-  String get statLuck => 'LUCK';
+  String get statLuck => '運';
 
   @override
-  String get attack => 'Attack';
+  String get attack => '攻撃力';
 
   @override
-  String get defense => 'Defense';
+  String get defense => '防御力';
 
   @override
-  String get crit => 'Crit';
+  String get crit => 'クリティカル';
 
   @override
-  String get hit => 'Hit';
+  String get hit => '命中';
 
   @override
   String percent(int value) {
@@ -200,218 +200,218 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get gold => 'Gold';
+  String get gold => 'ゴールド';
 
   @override
-  String get switchCharacter => 'Switch character';
+  String get switchCharacter => 'キャラクター変更';
 
   @override
-  String get statePendingDelete => 'Deletion pending';
+  String get statePendingDelete => '削除待ち';
 
   @override
-  String get stateFrozen => 'Frozen';
+  String get stateFrozen => '凍結中';
 
   @override
-  String get errInvalidCredentials => 'Wrong email/username or password.';
+  String get errInvalidCredentials => 'メールアドレス/ユーザー名またはパスワードが違います。';
 
   @override
-  String get errAccountLocked => 'Your account is temporarily locked.';
+  String get errAccountLocked => 'アカウントは一時的にロックされています。';
 
   @override
-  String get errAccountBanned => 'This account has been banned.';
+  String get errAccountBanned => 'このアカウントは停止されています。';
 
   @override
-  String get errAccountExists => 'That email or username is already taken.';
+  String get errAccountExists => 'そのメールアドレスまたはユーザー名は既に使われています。';
 
   @override
-  String get errRateLimited => 'Too many attempts. Please wait a moment.';
+  String get errRateLimited => '試行回数が多すぎます。しばらくお待ちください。';
 
   @override
-  String get errNameTaken => 'That name is already taken.';
+  String get errNameTaken => 'その名前は既に使われています。';
 
   @override
-  String get errSlotCap => 'All character slots are in use.';
+  String get errSlotCap => 'キャラクタースロットがすべて使用中です。';
 
   @override
-  String get errNotPlayable => 'This character can\'t be played right now.';
+  String get errNotPlayable => 'このキャラクターは現在プレイできません。';
 
   @override
-  String get errSessionExpired => 'Your session expired. Please log in again.';
+  String get errSessionExpired => 'セッションが切れました。再度ログインしてください。';
 
   @override
   String errGeneric(String code) {
-    return 'Something went wrong ($code).';
+    return '問題が発生しました（$code）。';
   }
 
   @override
-  String get navCharacter => 'Character';
+  String get navCharacter => 'キャラ';
 
   @override
-  String get navActivity => 'Gather';
+  String get navActivity => '採集';
 
   @override
-  String get actMining => 'Mining';
+  String get actMining => '採掘';
 
   @override
-  String get actFishing => 'Fishing';
+  String get actFishing => '釣り';
 
   @override
-  String get actWoodcutting => 'Woodcutting';
+  String get actWoodcutting => '伐採';
 
   @override
-  String get actHerbalism => 'Herbalism';
+  String get actHerbalism => '薬草採集';
 
   @override
-  String get actHunting => 'Hunting';
+  String get actHunting => '狩猟';
 
   @override
-  String get activityChoose => 'Choose an activity';
+  String get activityChoose => '活動を選択';
 
   @override
-  String get durationLabel => 'Duration';
+  String get durationLabel => '時間';
 
   @override
-  String get gatherResource => 'Resource';
+  String get gatherResource => '資源';
 
   @override
   String gatherXp(int xp, int next) {
-    return '$xp / $next XP';
+    return '経験値 $xp / $next';
   }
 
   @override
-  String get gatherMax => 'Max level';
+  String get gatherMax => '最大レベル';
 
   @override
   String gatherLocked(int level) {
-    return 'Unlocks at level $level';
+    return 'レベル$levelで解放';
   }
 
   @override
   String gatherXpGained(String name, int xp) {
-    return '$name +$xp XP';
+    return '$name 経験値 +$xp';
   }
 
   @override
   String gatherLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$nameがレベル$levelに到達！';
   }
 
   @override
-  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+  String get errGatherLevel => 'この資源を採集するには採集レベルが足りません。';
 
   @override
   String startActivity(String name) {
-    return 'Start $name';
+    return '$nameを開始';
   }
 
   @override
-  String get collect => 'Collect';
+  String get collect => '受け取る';
 
   @override
-  String get abandon => 'Abandon';
+  String get abandon => '放棄';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'キャンセル';
 
   @override
-  String get soFar => 'Gathered so far';
+  String get soFar => 'これまでの採集量';
 
   @override
-  String get activityDone => 'Complete — ready to collect';
+  String get activityDone => '完了 — 受け取れます';
 
   @override
   String remaining(String time) {
-    return '$time left';
+    return '残り$time';
   }
 
   @override
   String durHm(int h, String m) {
-    return '${h}h ${m}m';
+    return '$h時間$m分';
   }
 
   @override
   String durM(int m) {
-    return '${m}m';
+    return '$m分';
   }
 
   @override
   String durS(int s) {
-    return '${s}s';
+    return '$s秒';
   }
 
   @override
-  String get collectEarlyTitle => 'Collect early?';
+  String get collectEarlyTitle => '早めに受け取りますか？';
 
   @override
-  String get collectEarlyBody => 'You get what has been gathered so far and the activity ends.';
+  String get collectEarlyBody => 'これまでに採集した分を受け取り、活動は終了します。';
 
   @override
-  String get abandonTitle => 'Abandon activity?';
+  String get abandonTitle => '活動を放棄しますか？';
 
   @override
-  String get abandonBody => 'Everything gathered so far will be lost.';
+  String get abandonBody => 'これまでの採集分はすべて失われます。';
 
   @override
-  String get lootCollect => 'Nice!';
+  String get lootCollect => 'やった！';
 
   @override
-  String get lootNothing => 'Nothing this time.';
+  String get lootNothing => '今回は何もありませんでした。';
 
   @override
   String xpGain(int xp) {
-    return '+$xp XP';
+    return '経験値 +$xp';
   }
 
   @override
-  String get rarityCommon => 'Common';
+  String get rarityCommon => 'コモン';
 
   @override
-  String get rarityUncommon => 'Uncommon';
+  String get rarityUncommon => 'アンコモン';
 
   @override
-  String get rarityRare => 'Rare';
+  String get rarityRare => 'レア';
 
   @override
-  String get rarityEpic => 'Epic';
+  String get rarityEpic => 'エピック';
 
   @override
-  String get rarityLegendary => 'Legendary';
+  String get rarityLegendary => 'レジェンダリー';
 
   @override
-  String get rarityMythic => 'Mythic';
+  String get rarityMythic => 'ミシック';
 
   @override
-  String get errSlotBusy => 'Another activity is already running.';
+  String get errSlotBusy => '別の活動が既に進行中です。';
 
   @override
-  String get errNotActive => 'This activity has already ended.';
+  String get errNotActive => 'この活動は既に終了しています。';
 
   @override
-  String get evAchievement => 'Achievement unlocked!';
+  String get evAchievement => '実績を解除！';
 
   @override
-  String get evMasteryTier => 'Mastery tier up!';
+  String get evMasteryTier => '熟練度の段階が上昇！';
 
   @override
-  String get evMarketSold => 'One of your listings sold.';
+  String get evMarketSold => '出品アイテムが売れました。';
 
   @override
-  String get evMailReceived => 'You have new mail.';
+  String get evMailReceived => '新しいメールが届きました。';
 
   @override
-  String get evPartyInvite => 'You were invited to a party.';
+  String get evPartyInvite => 'パーティーに招待されました。';
 
   @override
-  String get evGuildInvite => 'You were invited to a guild.';
+  String get evGuildInvite => 'ギルドに招待されました。';
 
   @override
-  String get navBag => 'Bag';
+  String get navBag => 'バッグ';
 
   @override
-  String get equipment => 'Equipment';
+  String get equipment => '装備';
 
   @override
-  String get bag => 'Bag';
+  String get bag => 'バッグ';
 
   @override
   String weightKg(String cur, String cap) {
@@ -419,126 +419,126 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get slotHelm => 'Helm';
+  String get slotHelm => '頭';
 
   @override
-  String get slotNecklace => 'Neck';
+  String get slotNecklace => '首';
 
   @override
-  String get slotChest => 'Chest';
+  String get slotChest => '胴';
 
   @override
-  String get slotGloves => 'Gloves';
+  String get slotGloves => '手';
 
   @override
-  String get slotLegs => 'Legs';
+  String get slotLegs => '脚';
 
   @override
-  String get slotBoots => 'Boots';
+  String get slotBoots => '足';
 
   @override
-  String get slotMainhand => 'Main hand';
+  String get slotMainhand => 'メイン';
 
   @override
-  String get slotOffhand => 'Off hand';
+  String get slotOffhand => 'サブ';
 
   @override
-  String get slotRing => 'Ring';
+  String get slotRing => '指輪';
 
   @override
-  String get slotTrinket => 'Trinket';
+  String get slotTrinket => 'お守り';
 
   @override
-  String get equip => 'Equip';
+  String get equip => '装備する';
 
   @override
-  String get unequip => 'Unequip';
+  String get unequip => '外す';
 
   @override
-  String get sell => 'Sell';
+  String get sell => '売却';
 
   @override
-  String get sortLabel => 'Sort';
+  String get sortLabel => '並べ替え';
 
   @override
-  String get sortSlot => 'Bag order';
+  String get sortSlot => 'バッグの順';
 
   @override
-  String get sortRarity => 'Rarity';
+  String get sortRarity => 'レアリティ';
 
   @override
-  String get sortType => 'Type';
+  String get sortType => '種類';
 
   @override
-  String get sortName => 'Name';
+  String get sortName => '名前';
 
   @override
-  String get sortValue => 'Value';
+  String get sortValue => '価値';
 
   @override
   String selectedCount(int count) {
-    return '$count selected';
+    return '$count個選択中';
   }
 
   @override
-  String get selectAll => 'Select all';
+  String get selectAll => 'すべて選択';
 
   @override
-  String get clearSelection => 'Clear selection';
+  String get clearSelection => '選択を解除';
 
   @override
   String sellSelectedTitle(int count) {
-    return 'Sell $count items?';
+    return '$count個のアイテムを売却しますか？';
   }
 
   @override
   String destroySelectedTitle(int count) {
-    return 'Destroy $count items?';
+    return '$count個のアイテムを破棄しますか？';
   }
 
   @override
-  String get deleteEntry => 'Delete';
+  String get deleteEntry => '削除';
 
   @override
   String craftHowMany(String name) {
-    return 'How many $name?';
+    return '$nameをいくつ作りますか？';
   }
 
   @override
   String craftCount(int count) {
-    return 'Craft ×$count';
+    return '$count個作成';
   }
 
   @override
-  String get destroy => 'Destroy';
+  String get destroy => '破棄';
 
   @override
   String sellTitle(String name) {
-    return 'Sell $name?';
+    return '$nameを売却しますか？';
   }
 
   @override
-  String get sellBody => 'You can buy it back from the vendor for 2 hours.';
+  String get sellBody => '2時間以内なら商人から買い戻せます。';
 
   @override
   String destroyTitle(String name) {
-    return 'Destroy $name?';
+    return '$nameを破棄しますか？';
   }
 
   @override
-  String get destroyBody => 'This cannot be undone.';
+  String get destroyBody => '元に戻せません。';
 
   @override
-  String get soldFor => 'Sold for';
+  String get soldFor => '売却額';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => '数量';
 
   @override
-  String get requiresLevel => 'Requires level';
+  String get requiresLevel => '必要レベル';
 
   @override
-  String get weight => 'Weight';
+  String get weight => '重量';
 
   @override
   String weightGrams(int g) {
@@ -546,276 +546,276 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get sellValue => 'Sells for';
+  String get sellValue => '売値';
 
   @override
-  String get bound => 'Soulbound';
+  String get bound => 'ソウルバウンド';
 
   @override
-  String get itemLocked => 'This item is held by a trade, mail or listing.';
+  String get itemLocked => 'このアイテムは取引、メール、または出品に使われています。';
 
   @override
-  String get errBagFull => 'Your bag is full.';
+  String get errBagFull => 'バッグがいっぱいです。';
 
   @override
-  String get errItemLocked => 'This item is locked.';
+  String get errItemLocked => 'このアイテムはロックされています。';
 
   @override
-  String get errClassRestriction => 'Your class can\'t use this item.';
+  String get errClassRestriction => 'このクラスでは使用できません。';
 
   @override
-  String get errLevelRequirement => 'Your level is too low.';
+  String get errLevelRequirement => 'レベルが足りません。';
 
   @override
-  String get errNotEquippable => 'This item can\'t be equipped.';
+  String get errNotEquippable => 'このアイテムは装備できません。';
 
   @override
-  String get navAdventure => 'Adventure';
+  String get navAdventure => '冒険';
 
   @override
-  String get segHunt => 'Hunt';
+  String get segHunt => '狩猟';
 
   @override
-  String get segDungeon => 'Dungeon';
+  String get segDungeon => 'ダンジョン';
 
   @override
-  String get segTravel => 'Travel';
+  String get segTravel => '移動';
 
   @override
-  String get huntChoose => 'Choose your prey';
+  String get huntChoose => '獲物を選択';
 
   @override
-  String get startHunt => 'Start hunt';
+  String get startHunt => '狩猟を開始';
 
   @override
-  String get huntDone => 'Hunt over — collect your spoils';
+  String get huntDone => '狩猟終了 — 戦利品を受け取る';
 
   @override
-  String get huntEarlyBody => 'You keep the fights won so far and the hunt ends.';
+  String get huntEarlyBody => 'これまでに勝った戦闘の分を受け取り、狩猟は終了します。';
 
   @override
   String mobStats(int hp, int atk, int def) {
-    return 'HP $hp · ATK $atk · DEF $def';
+    return 'HP $hp · 攻 $atk · 防 $def';
   }
 
   @override
   String huntSummary(int won, int lost) {
-    return '$won won · $lost lost';
+    return '$won勝 · $lost敗';
   }
 
   @override
   String levelUp(int level) {
-    return 'Level up! Now level $level';
+    return 'レベルアップ！レベル$levelになりました';
   }
 
   @override
   String levelReq(int level) {
-    return 'Lvl $level+';
+    return 'Lv.$level+';
   }
 
   @override
   String dungeonEncounters(int count, String boss) {
-    return '$count fights · boss $boss';
+    return '戦闘$count回 · ボス $boss';
   }
 
   @override
-  String get dungeonEnter => 'Enter';
+  String get dungeonEnter => '入場';
 
   @override
-  String get dungeonDone => 'Run complete — claim rewards';
+  String get dungeonDone => '攻略完了 — 報酬を受け取る';
 
   @override
-  String get dungeonWaitHint => 'Rewards unlock when the run ends.';
+  String get dungeonWaitHint => '報酬は攻略終了後に受け取れます。';
 
   @override
-  String get dungeonCleared => 'Cleared!';
+  String get dungeonCleared => 'クリア！';
 
   @override
-  String get dungeonFailed => 'Party wiped';
+  String get dungeonFailed => 'パーティー全滅';
 
   @override
-  String get bossKilled => 'Boss defeated';
+  String get bossKilled => 'ボス撃破';
 
   @override
-  String get bonus => 'Clear bonus';
+  String get bonus => 'クリアボーナス';
 
   @override
-  String get youAreIn => 'You are in';
+  String get youAreIn => '現在地';
 
   @override
-  String get routes => 'Routes';
+  String get routes => 'ルート';
 
   @override
-  String get noRoutes => 'No routes from here.';
+  String get noRoutes => 'ここからのルートはありません。';
 
   @override
-  String get travelTo => 'Go';
+  String get travelTo => '出発';
 
   @override
   String travelling(String place) {
-    return 'Travelling to $place';
+    return '$placeへ移動中';
   }
 
   @override
-  String get arrive => 'Arrive';
+  String get arrive => '到着';
 
   @override
-  String get arrived => 'You have arrived';
+  String get arrived => '到着しました';
 
   @override
-  String get cancelTravel => 'Turn back';
+  String get cancelTravel => '引き返す';
 
   @override
-  String get kindCity => 'City';
+  String get kindCity => '都市';
 
   @override
-  String get kindZone => 'Zone';
+  String get kindZone => '地域';
 
   @override
-  String get kindWilderness => 'Wilderness';
+  String get kindWilderness => '荒野';
 
   @override
-  String get kindDungeon => 'Dungeon';
+  String get kindDungeon => 'ダンジョン';
 
   @override
-  String get kindContinent => 'Continent';
+  String get kindContinent => '大陸';
 
   @override
-  String get safeZone => 'safe';
+  String get safeZone => '安全';
 
   @override
-  String get errBusy => 'Something is already in progress.';
+  String get errBusy => '既に進行中のものがあります。';
 
   @override
-  String get errNotReady => 'Not finished yet.';
+  String get errNotReady => 'まだ終わっていません。';
 
   @override
-  String get errWeeklyLocked => 'You already cleared this dungeon this week.';
+  String get errWeeklyLocked => '今週はこのダンジョンを既にクリアしています。';
 
   @override
-  String get errNoRoute => 'There is no direct route there.';
+  String get errNoRoute => 'そこへの直通ルートはありません。';
 
   @override
-  String get navWorkshop => 'Workshop';
+  String get navWorkshop => '工房';
 
   @override
-  String get segCraft => 'Craft';
+  String get segCraft => '製作';
 
   @override
-  String get segShop => 'Shop';
+  String get segShop => 'ショップ';
 
   @override
-  String get profBlacksmithing => 'Blacksmithing';
+  String get profBlacksmithing => '鍛冶';
 
   @override
-  String get profAlchemy => 'Alchemy';
+  String get profAlchemy => '錬金術';
 
   @override
-  String get profCooking => 'Cooking';
+  String get profCooking => '料理';
 
   @override
-  String get learn => 'Learn';
+  String get learn => '習得';
 
   @override
   String recipeCount(int count) {
-    return '$count recipes';
+    return 'レシピ$count件';
   }
 
   @override
-  String get itemType => 'Type';
+  String get itemType => '種類';
 
   @override
-  String get stackSize => 'Stack';
+  String get stackSize => 'スタック';
 
   @override
-  String get skillXpReward => 'Skill XP';
+  String get skillXpReward => 'スキル経験値';
 
   @override
-  String get learnHint => 'Learn this profession to unlock its recipes.';
+  String get learnHint => 'この職業を習得するとレシピが解放されます。';
 
   @override
-  String get craft => 'Craft';
+  String get craft => '製作';
 
   @override
   String crafted(String name, int count) {
-    return 'Crafted $name ×$count';
+    return '$nameを$count個製作しました';
   }
 
   @override
   String skillUp(String profession, int level) {
-    return '$profession is now level $level';
+    return '$professionがレベル$levelになりました';
   }
 
   @override
   String requiresSkill(int level) {
-    return 'Needs skill $level';
+    return 'スキル$levelが必要';
   }
 
   @override
-  String get buy => 'Buy';
+  String get buy => '購入';
 
   @override
   String bought(String name) {
-    return 'Bought $name';
+    return '$nameを購入しました';
   }
 
   @override
-  String get buybacks => 'Buy back';
+  String get buybacks => '買い戻し';
 
   @override
-  String get buybackHint => 'Items you sold can be bought back for 2 hours.';
+  String get buybackHint => '売却したアイテムは2時間以内なら買い戻せます。';
 
   @override
-  String get errInsufficientGold => 'Not enough gold.';
+  String get errInsufficientGold => 'ゴールドが足りません。';
 
   @override
-  String get errInsufficientMaterials => 'You\'re missing materials.';
+  String get errInsufficientMaterials => '素材が足りません。';
 
   @override
-  String get errSkillTooLow => 'Your skill is too low for this recipe.';
+  String get errSkillTooLow => 'このレシピにはスキルが足りません。';
 
   @override
-  String get errProfessionNotLearned => 'Learn the profession first.';
+  String get errProfessionNotLearned => '先に職業を習得してください。';
 
   @override
-  String get errPriceChanged => 'The price changed — check it and try again.';
+  String get errPriceChanged => '価格が変わりました。確認して再度お試しください。';
 
   @override
-  String get errCannotSell => 'This item can\'t be sold.';
+  String get errCannotSell => 'このアイテムは売却できません。';
 
   @override
-  String get errBuybackExpired => 'The buy-back window has closed.';
+  String get errBuybackExpired => '買い戻し期間が終了しました。';
 
   @override
-  String get segMarket => 'Market';
+  String get segMarket => 'マーケット';
 
   @override
-  String get classWeapon => 'Weapons';
+  String get classWeapon => '武器';
 
   @override
-  String get classArmor => 'Armor';
+  String get classArmor => '防具';
 
   @override
-  String get classConsumable => 'Consumables';
+  String get classConsumable => '消耗品';
 
   @override
-  String get classMaterial => 'Materials';
+  String get classMaterial => '素材';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'すべて';
 
   @override
-  String get sortCheapest => 'Cheapest';
+  String get sortCheapest => '安い順';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => '新着順';
 
   @override
-  String get marketEmpty => 'No listings match.';
+  String get marketEmpty => '該当する出品はありません。';
 
   @override
   String listingLine(String seller, String price) {
-    return '$seller · $price each';
+    return '$seller · 1個 $price';
   }
 
   @override
@@ -823,1590 +823,1580 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String myListings(int count) {
-    return 'My listings ($count)';
+    return '自分の出品（$count）';
   }
 
   @override
-  String get cancelListing => 'Cancel listing';
+  String get cancelListing => '出品を取り消す';
 
   @override
   String cancelListingTitle(String name) {
-    return 'Cancel $name?';
+    return '$nameの出品を取り消しますか？';
   }
 
   @override
-  String get cancelListingBody =>
-      'The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.';
+  String get cancelListingBody => 'アイテムはバッグに戻ります。出品手数料は最初の6時間以内のみ一部返金されます。';
 
   @override
   String buyListingTitle(String name) {
-    return 'Buy $name?';
+    return '$nameを購入しますか？';
   }
 
   @override
   String buyListingBody(String price, String seller) {
-    return 'Pay $price to $seller.';
+    return '$sellerに$priceを支払います。';
   }
 
   @override
-  String get listOnMarket => 'List on market';
+  String get listOnMarket => 'マーケットに出品';
 
   @override
   String listed(String name) {
-    return '$name listed on the market';
+    return '$nameを出品しました';
   }
 
   @override
   String quantityOf(int count, int max) {
-    return 'Quantity: $count of $max';
+    return '数量：$max個中$count個';
   }
 
   @override
-  String get unitPrice => 'Price per item';
+  String get unitPrice => '単価';
 
   @override
   String suggestedPrice(String price) {
-    return 'Market price: $price';
+    return '相場：$price';
   }
 
   @override
-  String get listingFee => 'Listing fee (non-refundable)';
+  String get listingFee => '出品手数料（返金不可）';
 
   @override
-  String get youReceive => 'You receive when sold';
+  String get youReceive => '売却時の受取額';
 
   @override
-  String get errPriceOutOfRange => 'That price is outside the allowed range.';
+  String get errPriceOutOfRange => 'その価格は許容範囲外です。';
 
   @override
-  String get errListingCap => 'You have too many active listings.';
+  String get errListingCap => '有効な出品が多すぎます。';
 
   @override
-  String get errSelfBuy => 'You can\'t buy your own listing.';
+  String get errSelfBuy => '自分の出品は購入できません。';
 
   @override
-  String get errListingUnavailable => 'This listing is no longer available.';
+  String get errListingUnavailable => 'この出品は現在利用できません。';
 
   @override
-  String get errNotTradable => 'This item can\'t be traded.';
+  String get errNotTradable => 'このアイテムは取引できません。';
 
   @override
-  String get social => 'Social';
+  String get social => 'ソーシャル';
 
   @override
-  String get tabChat => 'Chat';
+  String get tabChat => 'チャット';
 
   @override
-  String get tabFriends => 'Friends';
+  String get tabFriends => 'フレンド';
 
   @override
-  String get tabMail => 'Mail';
+  String get tabMail => 'メール';
 
   @override
-  String get chanGlobal => 'World';
+  String get chanGlobal => 'ワールド';
 
   @override
-  String get chanGuild => 'Guild';
+  String get chanGuild => 'ギルド';
 
   @override
-  String get chanParty => 'Party';
+  String get chanParty => 'パーティー';
 
   @override
-  String get chatEmpty => 'No messages yet. Say hello!';
+  String get chatEmpty => 'まだメッセージはありません。挨拶してみましょう！';
 
   @override
   String chatHint(String channel) {
-    return 'Message $channel';
+    return '$channelにメッセージ';
   }
 
   @override
-  String get send => 'Send';
+  String get send => '送信';
 
   @override
-  String get addFriend => 'Add';
+  String get addFriend => '追加';
 
   @override
   String friendAdded(String name) {
-    return 'You and $name are now friends';
+    return '$nameさんとフレンドになりました';
   }
 
   @override
   String friendRequested(String name) {
-    return 'Friend request sent to $name';
+    return '$nameさんにフレンド申請を送りました';
   }
 
   @override
-  String get friendRequests => 'Friend requests';
+  String get friendRequests => 'フレンド申請';
 
   @override
   String friendsCount(int count) {
-    return 'Friends ($count)';
+    return 'フレンド（$count）';
   }
 
   @override
-  String get noFriends => 'No friends yet — add someone by name.';
+  String get noFriends => 'フレンドはまだいません。名前で追加しましょう。';
 
   @override
-  String get more => 'More';
+  String get more => 'その他';
 
   @override
-  String get whisper => 'Whisper';
+  String get whisper => 'ささやき';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '削除';
 
   @override
-  String get block => 'Block';
+  String get block => 'ブロック';
 
   @override
-  String get unblock => 'Unblock';
+  String get unblock => 'ブロック解除';
 
   @override
-  String get blockedList => 'Blocked';
+  String get blockedList => 'ブロックリスト';
 
   @override
   String removeFriendTitle(String name) {
-    return 'Remove $name?';
+    return '$nameさんをフレンドから削除しますか？';
   }
 
   @override
-  String get removeFriendBody => 'You can send a new friend request later.';
+  String get removeFriendBody => '後でまたフレンド申請を送れます。';
 
   @override
   String blockTitle(String name) {
-    return 'Block $name?';
+    return '$nameさんをブロックしますか？';
   }
 
   @override
-  String get blockBody =>
-      'They can\'t whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.';
+  String get blockBody => '相手はささやきを送れず、チャットは非表示になり、メールは届かなくなります。フレンド関係も解消されます。';
 
   @override
-  String get accept => 'Accept';
+  String get accept => '承諾';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '辞退';
 
   @override
-  String get newMail => 'Write mail';
+  String get newMail => 'メールを書く';
 
   @override
-  String get inboxEmpty => 'Your mailbox is empty.';
+  String get inboxEmpty => 'メールボックスは空です。';
 
   @override
-  String get noSubject => '(no subject)';
+  String get noSubject => '（件名なし）';
 
   @override
   String mailFrom(String name) {
-    return 'From $name';
+    return '差出人：$name';
   }
 
   @override
-  String get attachments => 'Attachments';
+  String get attachments => '添付';
 
   @override
-  String get claim => 'Take attachments';
+  String get claim => '添付を受け取る';
 
   @override
-  String get mailClaimed => 'Attachments moved to your bag and wallet';
+  String get mailClaimed => '添付物をバッグと財布に移しました';
 
   @override
-  String get deleteMailTitle => 'Delete this mail?';
+  String get deleteMailTitle => 'このメールを削除しますか？';
 
   @override
-  String get deleteMailBody => 'Deleted mail can\'t be recovered.';
+  String get deleteMailBody => '削除したメールは復元できません。';
 
   @override
   String mailSent(String postage) {
-    return 'Mail sent (postage $postage)';
+    return 'メールを送信しました（送料 $postage）';
   }
 
   @override
-  String get mailTo => 'To (character name)';
+  String get mailTo => '宛先（キャラクター名）';
 
   @override
-  String get mailSubject => 'Subject';
+  String get mailSubject => '件名';
 
   @override
-  String get mailBody => 'Message';
+  String get mailBody => '本文';
 
   @override
-  String get attachGold => 'Attach gold';
+  String get attachGold => 'ゴールドを添付';
 
   @override
-  String get errAlreadyFriends => 'You\'re already friends.';
+  String get errAlreadyFriends => '既にフレンドです。';
 
   @override
-  String get errAlreadyRequested => 'A friend request is already pending.';
+  String get errAlreadyRequested => 'フレンド申請は既に保留中です。';
 
   @override
-  String get errBlocked => 'You can\'t interact with this player.';
+  String get errBlocked => 'このプレイヤーとはやり取りできません。';
 
   @override
-  String get errFriendCap => 'Your friend list is full.';
+  String get errFriendCap => 'フレンドリストがいっぱいです。';
 
   @override
-  String get errTargetNotFound => 'No character with that name.';
+  String get errTargetNotFound => 'その名前のキャラクターはいません。';
 
   @override
-  String get errSelfTarget => 'You can\'t target yourself.';
+  String get errSelfTarget => '自分を対象にはできません。';
 
   @override
-  String get errInboxFull => 'Their mailbox is full.';
+  String get errInboxFull => '相手のメールボックスがいっぱいです。';
 
   @override
-  String get errTooLong => 'That\'s too long.';
+  String get errTooLong => '長すぎます。';
 
   @override
-  String get errEmpty => 'Write something first.';
+  String get errEmpty => '先に入力してください。';
 
   @override
-  String get errNotInChannel => 'You\'re not in that group.';
+  String get errNotInChannel => 'そのグループに参加していません。';
 
   @override
-  String get errMuted => 'You are muted and can\'t chat right now.';
+  String get errMuted => 'チャット制限中のため、現在チャットできません。';
 
   @override
-  String get errHasAttachments => 'Take the attachments before deleting.';
+  String get errHasAttachments => '削除する前に添付を受け取ってください。';
 
   @override
-  String get useItem => 'Use';
+  String get useItem => '使用';
 
   @override
   String restoresHp(int amount) {
-    return 'Restores $amount HP';
+    return 'HPを$amount回復';
   }
 
   @override
   String usedItem(String name, int hp, int max) {
-    return 'Used $name · HP $hp/$max';
+    return '$nameを使用 · HP $hp/$max';
   }
 
   @override
-  String get errHpFull => 'Your health is already full.';
+  String get errHpFull => 'HPは既に満タンです。';
 
   @override
-  String get errInCombat => 'Finish your hunt or dungeon run first.';
+  String get errInCombat => '先に狩猟かダンジョン攻略を終えてください。';
 
   @override
-  String get errNotUsable => 'This item can\'t be used.';
+  String get errNotUsable => 'このアイテムは使用できません。';
 
   @override
-  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+  String get errTooWounded => '傷が深く戦えません。休むかポーションを飲んでください。';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => 'パスワードをお忘れですか？';
 
   @override
-  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+  String get resetHint => 'アカウントのメールアドレスを入力すると、新しいパスワードを設定するリンクを送信します。';
 
   @override
-  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+  String get resetSent => 'そのメールアドレスのアカウントがあれば、再設定リンクを送信しました。リンクの有効期限は1時間です。';
 
   @override
-  String get sendLink => 'Send link';
+  String get sendLink => 'リンクを送信';
 
   @override
-  String get close => 'Close';
+  String get close => '閉じる';
 
   @override
-  String get changePassword => 'Change password';
+  String get changePassword => 'パスワード変更';
 
   @override
-  String get currentPassword => 'Current password';
+  String get currentPassword => '現在のパスワード';
 
   @override
-  String get newPassword => 'New password';
+  String get newPassword => '新しいパスワード';
 
   @override
-  String get save => 'Save';
+  String get save => '保存';
 
   @override
-  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+  String get passwordChanged => 'パスワードを変更しました。他の端末はログアウトされました。';
 
   @override
-  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+  String get verifyEmailBanner => 'メールアドレスを確認してください。';
 
   @override
-  String get resend => 'Resend';
+  String get resend => '再送信';
 
   @override
-  String get verificationSent => 'Verification e-mail sent.';
+  String get verificationSent => '確認メールを送信しました。';
 
   @override
-  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+  String get errEmailNotVerified => 'キャラクターを作成する前にメールアドレスを確認してください。';
 
   @override
-  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+  String get errAlreadyVerified => 'メールアドレスは既に確認済みです。';
 
   @override
-  String get tabParty => 'Party';
+  String get tabParty => 'パーティー';
 
   @override
-  String get tabGuild => 'Guild';
+  String get tabGuild => 'ギルド';
 
   @override
-  String get invite => 'Invite';
+  String get invite => '招待';
 
   @override
   String invitedBy(String name) {
-    return 'Invited by $name';
+    return '$nameさんからの招待';
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
+  String get noParty => 'パーティーに参加していません。誰かを招待するとパーティーが組まれます（2～5人）。';
 
   @override
-  String get createParty => 'Create party';
+  String get createParty => 'パーティーを作成';
 
   @override
-  String get pendingInvites => 'Invitations';
+  String get pendingInvites => '招待';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Party ($count/$cap)';
+    return 'パーティー（$count/$cap）';
   }
 
   @override
-  String get makeLeader => 'Make leader';
+  String get makeLeader => 'リーダーにする';
 
   @override
-  String get kick => 'Remove';
+  String get kick => '追放';
 
   @override
-  String get leave => 'Leave';
+  String get leave => '脱退';
 
   @override
-  String get disband => 'Disband';
+  String get disband => '解散';
 
   @override
-  String get leavePartyTitle => 'Leave the party?';
+  String get leavePartyTitle => 'パーティーを抜けますか？';
 
   @override
-  String get leavePartyBody =>
-      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
+  String get leavePartyBody => 'リーダーが抜けると、最も古くからのメンバーが引き継ぎます。1人になるとパーティーは解散します。';
 
   @override
-  String get disbandPartyTitle => 'Disband the party?';
+  String get disbandPartyTitle => 'パーティーを解散しますか？';
 
   @override
-  String get disbandPartyBody => 'Everyone is removed from the party.';
+  String get disbandPartyBody => '全員がパーティーから外れます。';
 
   @override
-  String get rankLeader => 'Leader';
+  String get rankLeader => 'リーダー';
 
   @override
-  String get rankOfficer => 'Officer';
+  String get rankOfficer => 'オフィサー';
 
   @override
-  String get rankVeteran => 'Veteran';
+  String get rankVeteran => 'ベテラン';
 
   @override
-  String get rankMember => 'Member';
+  String get rankMember => 'メンバー';
 
   @override
-  String get rankInitiate => 'Initiate';
+  String get rankInitiate => '新入り';
 
   @override
-  String get createGuild => 'Found a guild';
+  String get createGuild => 'ギルドを設立';
 
   @override
   String createGuildBody(String fee) {
-    return 'Founding a guild costs $fee.';
+    return 'ギルドの設立には$feeかかります。';
   }
 
   @override
   String createGuildFee(String fee) {
-    return 'Found guild ($fee)';
+    return 'ギルドを設立（$fee）';
   }
 
   @override
-  String get guildName => 'Guild name';
+  String get guildName => 'ギルド名';
 
   @override
-  String get guildTag => 'Tag';
+  String get guildTag => 'タグ';
 
   @override
-  String get guildTagHint => '2–5 letters or digits';
+  String get guildTagHint => '文字または数字2～5字';
 
   @override
   String guildMembers(int count, int cap) {
-    return '$count/$cap members';
+    return 'メンバー $count/$cap';
   }
 
   @override
   String disbandScheduled(String time) {
-    return 'Guild disbands in $time';
+    return '$time後にギルド解散';
   }
 
   @override
-  String get motd => 'Message of the day';
+  String get motd => '本日のメッセージ';
 
   @override
-  String get editMotd => 'Edit message of the day';
+  String get editMotd => '本日のメッセージを編集';
 
   @override
-  String get setRank => 'Change rank';
+  String get setRank => 'ランク変更';
 
   @override
   String setRankFor(String name) {
-    return 'New rank for $name';
+    return '$nameさんの新しいランク';
   }
 
   @override
   String transferTitle(String name) {
-    return 'Make $name guild leader?';
+    return '$nameさんをギルドリーダーにしますか？';
   }
 
   @override
-  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+  String get transferBody => 'あなたはオフィサーになり、自分では元に戻せません。';
 
   @override
   String kickTitle(String name) {
-    return 'Remove $name from the guild?';
+    return '$nameさんをギルドから追放しますか？';
   }
 
   @override
-  String get leaveGuildTitle => 'Leave the guild?';
+  String get leaveGuildTitle => 'ギルドを脱退しますか？';
 
   @override
-  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+  String get leaveGuildBody => '再加入には新しい招待が必要です。';
 
   @override
-  String get disbandGuildTitle => 'Disband the guild?';
+  String get disbandGuildTitle => 'ギルドを解散しますか？';
 
   @override
-  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+  String get disbandGuildBody => 'ギルドは48時間後に解散します。それまでは取り消せます。';
 
   @override
-  String get cancelDisband => 'Cancel disbanding';
+  String get cancelDisband => '解散を取り消す';
 
   @override
-  String get errAlreadyInGroup => 'They\'re already in a group.';
+  String get errAlreadyInGroup => '既にグループに参加しています。';
 
   @override
-  String get errNotLeader => 'Only the leader can do that.';
+  String get errNotLeader => 'リーダーのみ可能です。';
 
   @override
-  String get errGroupFull => 'The group is full.';
+  String get errGroupFull => 'グループがいっぱいです。';
 
   @override
-  String get errInviteInvalid => 'That invitation has expired.';
+  String get errInviteInvalid => '招待の期限が切れています。';
 
   @override
-  String get errAlreadyInvited => 'An invitation is already pending.';
+  String get errAlreadyInvited => '招待は既に保留中です。';
 
   @override
-  String get errGuildForbidden => 'Your rank can\'t do that.';
+  String get errGuildForbidden => 'あなたのランクではできません。';
 
   @override
-  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+  String get errLeaderCannotLeave => '先にリーダーを譲るかギルドを解散してください。';
 
   @override
-  String get errInvalidGuildName => '3–24 letters or digits.';
+  String get errInvalidGuildName => '文字または数字3～24字。';
 
   @override
-  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+  String get errInvalidTag => 'タグは文字または数字2～5字にしてください。';
 
   @override
-  String get errTagTaken => 'That tag is taken.';
+  String get errTagTaken => 'そのタグは使用中です。';
 
   @override
-  String get progress => 'Achievements & mastery';
+  String get progress => '実績と熟練度';
 
   @override
-  String get tabAchievements => 'Achievements';
+  String get tabAchievements => '実績';
 
   @override
-  String get tabMastery => 'Mastery';
+  String get tabMastery => '熟練度';
 
   @override
-  String get tabReputation => 'Reputation';
+  String get tabReputation => '名声';
 
   @override
-  String get tabTitles => 'Titles';
+  String get tabTitles => '称号';
 
   @override
   String achievementPoints(int points) {
-    return '$points achievement points';
+    return '実績ポイント $points';
   }
 
   @override
   String pointsShort(int points) {
-    return '$points pts';
+    return '${points}pt';
   }
 
   @override
   String rewardTitle(String title) {
-    return 'Title: $title';
+    return '称号：$title';
   }
 
   @override
   String masteryTier(int tier, int max) {
-    return 'Tier $tier/$max';
+    return '段階 $tier/$max';
   }
 
   @override
   String repDailyLeft(int amount) {
-    return '+$amount today';
+    return '今日 +$amount';
   }
 
   @override
-  String get noTitle => 'No title';
+  String get noTitle => '称号なし';
 
   @override
-  String get noTitlesYet => 'Titles unlock through achievements.';
+  String get noTitlesYet => '称号は実績で解放されます。';
 
   @override
-  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+  String get errTitleNotOwned => 'その称号はまだ解放していません。';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => '通知';
 
   @override
-  String get markAllRead => 'Mark all as read';
+  String get markAllRead => 'すべて既読にする';
 
   @override
-  String get inboxNothing => 'No notifications yet.';
+  String get inboxNothing => '通知はまだありません。';
 
   @override
-  String get notifSettings => 'Notification settings';
+  String get notifSettings => '通知設定';
 
   @override
-  String get muteAll => 'Pause push notifications';
+  String get muteAll => 'プッシュ通知を一時停止';
 
   @override
-  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+  String get muteHint => '24時間。受信箱には引き続き届きます。';
 
   @override
   String mutedFor(String time) {
-    return 'Paused for $time';
+    return '$timeの間一時停止中';
   }
 
   @override
-  String get modePushInbox => 'Push + inbox';
+  String get modePushInbox => 'プッシュ + 受信箱';
 
   @override
-  String get modeInbox => 'Inbox only';
+  String get modeInbox => '受信箱のみ';
 
   @override
-  String get modeSilent => 'Silent';
+  String get modeSilent => 'サイレント';
 
   @override
-  String get modeOff => 'Off';
+  String get modeOff => 'オフ';
 
   @override
-  String get nkActivity => 'Activity finished';
+  String get nkActivity => '活動完了';
 
   @override
-  String get nkDungeon => 'Dungeon run finished';
+  String get nkDungeon => 'ダンジョン攻略完了';
 
   @override
-  String get nkTravel => 'Arrived';
+  String get nkTravel => '到着';
 
   @override
-  String get nkWorldEvent => 'World event started';
+  String get nkWorldEvent => 'ワールドイベント開始';
 
   @override
-  String get nkMarketSold => 'Item sold';
+  String get nkMarketSold => 'アイテム売却';
 
   @override
-  String get nkMail => 'New mail';
+  String get nkMail => '新着メール';
 
   @override
-  String get nkPartyInvite => 'Party invitation';
+  String get nkPartyInvite => 'パーティー招待';
 
   @override
-  String get nkGuildInvite => 'Guild invitation';
+  String get nkGuildInvite => 'ギルド招待';
 
   @override
-  String get nkAchievement => 'Achievement unlocked';
+  String get nkAchievement => '実績解除';
 
   @override
-  String get nkSystem => 'Announcement';
+  String get nkSystem => 'お知らせ';
 
   @override
   String timeAgo(String time) {
-    return '$time ago';
+    return '$time前';
   }
 
   @override
-  String get segEvents => 'Events';
+  String get segEvents => 'イベント';
 
   @override
-  String get eventsEmpty => 'No world events scheduled right now.';
+  String get eventsEmpty => '予定されているワールドイベントはありません。';
 
   @override
-  String get worldBoss => 'World boss';
+  String get worldBoss => 'ワールドボス';
 
   @override
-  String get invasion => 'Invasion';
+  String get invasion => '侵攻';
 
   @override
   String startsIn(String time) {
-    return 'Starts in $time';
+    return '$time後に開始';
   }
 
   @override
   String endsIn(String time) {
-    return 'Ends in $time';
+    return '$time後に終了';
   }
 
   @override
   String regionOnly(String region) {
-    return '$region only';
+    return '$region限定';
   }
 
   @override
-  String get eventGoal => 'Goal';
+  String get eventGoal => '目標';
 
   @override
-  String get enlist => 'Enlist';
+  String get enlist => '参加';
 
   @override
-  String get enlistHint =>
-      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+  String get enlistHint => '参加時に現在の戦闘力が固定されます。イベント中は1分ごとにスコアを獲得し、報酬は終了時に届きます。';
 
   @override
   String enlistedPower(int power) {
-    return 'Enlisted · power $power';
+    return '参加中 · 戦闘力 $power';
   }
 
   @override
   String myContribution(int score, int tier) {
-    return 'Your score $score · reward tier $tier';
+    return 'スコア $score · 報酬ランク $tier';
   }
 
   @override
-  String get eventSucceeded => 'Victory';
+  String get eventSucceeded => '勝利';
 
   @override
-  String get eventFailed => 'Failed';
+  String get eventFailed => '失敗';
 
   @override
   String tokenBalance(int tokens) {
-    return '$tokens event tokens';
+    return 'イベントトークン $tokens';
   }
 
   @override
   String claimDaily(int tokens) {
-    return 'Claim $tokens';
+    return '$tokensを受け取る';
   }
 
   @override
-  String get claimedToday => 'Claimed';
+  String get claimedToday => '受取済み';
 
   @override
   String eventTokensGained(int tokens) {
-    return '+$tokens event tokens';
+    return 'イベントトークン +$tokens';
   }
 
   @override
-  String get errEventNotOpen => 'Enlistment for this event is closed.';
+  String get errEventNotOpen => 'このイベントの参加受付は終了しました。';
 
   @override
-  String get errWrongRegion => 'Travel to the event\'s region first.';
+  String get errWrongRegion => '先にイベントの地域へ移動してください。';
 
   @override
-  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+  String get errAlreadyEnlisted => '既に参加しています。';
 
   @override
-  String get errAlreadyClaimed => 'Already claimed today.';
+  String get errAlreadyClaimed => '今日は既に受け取りました。';
 
   @override
-  String get errEventNotActive => 'This event isn\'t running.';
+  String get errEventNotActive => 'このイベントは開催されていません。';
 
   @override
   String gatherYield(String activity) {
-    return '$activity yield';
+    return '$activityの産出量';
   }
 
   @override
   String perHour(String value) {
-    return '$value/h';
+    return '$value/時';
   }
 
   @override
-  String get quests => 'Quests';
+  String get quests => 'クエスト';
 
   @override
-  String get questsInProgress => 'In progress';
+  String get questsInProgress => '進行中';
 
   @override
-  String get questsNoneOpen => 'No open quests. Pick one below.';
+  String get questsNoneOpen => '進行中のクエストはありません。下から選んでください。';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => 'ストーリー';
 
   @override
-  String get questsSide => 'Side quests';
+  String get questsSide => 'サブクエスト';
 
   @override
-  String get questsDaily => 'Daily';
+  String get questsDaily => 'デイリー';
 
   @override
   String resetsIn(String time) {
-    return 'Resets in $time';
+    return '$time後にリセット';
   }
 
   @override
-  String get turnIn => 'Turn in';
+  String get turnIn => '報告';
 
   @override
   String questRewarded(String rewards) {
-    return 'Quest complete: $rewards';
+    return 'クエスト完了：$rewards';
   }
 
   @override
-  String get abandonQuestTitle => 'Abandon quest?';
+  String get abandonQuestTitle => 'クエストを放棄しますか？';
 
   @override
-  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+  String get abandonQuestBody => '進行状況は失われます。後でまた受けられます。';
 
   @override
-  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+  String get abandonDailyBody => '進行状況は失われ、このデイリーは今日はもう受けられません。';
 
   @override
   String objGather(String activity) {
-    return 'Gather ($activity)';
+    return '採集（$activity）';
   }
 
   @override
-  String get objKillAny => 'Defeat enemies';
+  String get objKillAny => '敵を倒す';
 
   @override
   String objKill(String mob) {
-    return 'Defeat $mob';
+    return '$mobを倒す';
   }
 
   @override
-  String get objBoss => 'Defeat a boss';
+  String get objBoss => 'ボスを倒す';
 
   @override
-  String get objDungeonAny => 'Clear a dungeon';
+  String get objDungeonAny => 'ダンジョンをクリア';
 
   @override
   String objDungeon(String dungeon) {
-    return 'Clear $dungeon';
+    return '$dungeonをクリア';
   }
 
   @override
-  String get objCraftAny => 'Craft items';
+  String get objCraftAny => 'アイテムを製作';
 
   @override
   String objCraft(String item) {
-    return 'Craft $item';
+    return '$itemを製作';
   }
 
   @override
-  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+  String get evQuestComplete => 'クエスト目標を達成 — 報告しましょう！';
 
   @override
-  String get errQuestLocked => 'Finish the previous story quest first.';
+  String get errQuestLocked => '先に前のストーリークエストを終えてください。';
 
   @override
-  String get errQuestTaken => 'You already took this quest.';
+  String get errQuestTaken => 'このクエストは既に受けています。';
 
   @override
-  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+  String get errQuestNotOffered => 'そのデイリーは今日の掲示板にありません。';
 
   @override
-  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+  String get errQuestCap => '進行中のクエストが多すぎます。完了するか放棄してください。';
 
   @override
-  String get errQuestNotActive => 'This quest isn\'t open.';
+  String get errQuestNotActive => 'このクエストは進行中ではありません。';
 
   @override
-  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+  String get errQuestIncomplete => '目標はまだ達成していません。';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'スキル';
 
   @override
-  String get skillActive => 'Active';
+  String get skillActive => 'アクティブ';
 
   @override
-  String get skillPassive => 'Passive';
+  String get skillPassive => 'パッシブ';
 
   @override
   String skillStrike(int power) {
-    return '$power% damage';
+    return 'ダメージ $power%';
   }
 
   @override
   String skillHeal(int power) {
-    return 'Heals $power% HP when below half';
+    return 'HPが半分以下でHPを$power%回復';
   }
 
   @override
   String skillMp(int mp) {
-    return '$mp MP';
+    return 'MP $mp';
   }
 
   @override
   String skillCooldown(int turns) {
-    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: '$turnsターンごと', one: '毎ターン');
     return '$_temp0';
   }
 
   @override
-  String get termsOfService => 'Terms of Service';
+  String get termsOfService => '利用規約';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'プライバシーポリシー';
 
   @override
-  String get accountMenu => 'Account';
+  String get accountMenu => 'アカウント';
 
   @override
-  String get downloadMyData => 'Download my data';
+  String get downloadMyData => 'データをダウンロード';
 
   @override
-  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+  String get exportOpened => 'ブラウザでダウンロードリンクを開きました（15分間有効）。';
 
   @override
-  String get linkOpenFailed => 'Could not open the link.';
+  String get linkOpenFailed => 'リンクを開けませんでした。';
 
   @override
-  String get deleteAccount => 'Delete my account';
+  String get deleteAccount => 'アカウントを削除';
 
   @override
-  String get deleteAccountBody =>
-      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+  String get deleteAccountBody => 'アカウントとすべてのキャラクターは30日後に完全に削除されます。その間にログインすると削除は取り消されます。確認のためパスワードを入力してください。';
 
   @override
-  String get deleteAccountConfirm => 'Delete account';
+  String get deleteAccountConfirm => 'アカウントを削除';
 
   @override
   String deleteScheduled(String date) {
-    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+    return 'アカウントは$dateに削除されます。取り消すには、それまでにログインしてください。';
   }
 
   @override
-  String get deletionCancelled => 'Your account deletion request was cancelled.';
+  String get deletionCancelled => 'アカウント削除の申請を取り消しました。';
 
   @override
-  String get support => 'Support';
+  String get support => 'サポート';
 
   @override
-  String get supportIntro =>
-      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+  String get supportIntro => '不具合を見つけた、またはアカウントについて困っていますか？ご連絡いただければチームがここで回答し、通知でお知らせします。';
 
   @override
-  String get supportNew => 'New request';
+  String get supportNew => '新しい問い合わせ';
 
   @override
-  String get supportNone => 'No requests yet.';
+  String get supportNone => '問い合わせはまだありません。';
 
   @override
-  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+  String get supportSent => '問い合わせを受け付けました。回答があればお知らせします。';
 
   @override
-  String get supportCategory => 'Topic';
+  String get supportCategory => 'トピック';
 
   @override
-  String get supportSubject => 'Subject';
+  String get supportSubject => '件名';
 
   @override
-  String get supportMessage => 'What happened? Step by step if you can.';
+  String get supportMessage => '何が起きましたか？できれば順を追って書いてください。';
 
   @override
-  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+  String get supportTooShort => '件名は3文字以上、本文は10文字以上必要です。';
 
   @override
-  String get supportBug => 'Bug';
+  String get supportBug => '不具合';
 
   @override
-  String get supportAccount => 'Account';
+  String get supportAccount => 'アカウント';
 
   @override
-  String get supportAbuse => 'Abuse / report a player';
+  String get supportAbuse => '迷惑行為 / プレイヤー報告';
 
   @override
-  String get supportFeedback => 'Suggestion';
+  String get supportFeedback => '提案';
 
   @override
-  String get supportOther => 'Other';
+  String get supportOther => 'その他';
 
   @override
-  String get supportOpen => 'Open';
+  String get supportOpen => '受付中';
 
   @override
-  String get supportAnswered => 'Answered';
+  String get supportAnswered => '回答済み';
 
   @override
-  String get supportClosed => 'Closed';
+  String get supportClosed => '終了';
 
   @override
-  String get supportReply => 'Team reply';
+  String get supportReply => 'チームの回答';
 
   @override
-  String get nkSupport => 'Support reply';
+  String get nkSupport => 'サポートの回答';
 
   @override
-  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+  String get errServerBusy => 'サーバーが混み合っています。数秒後に再度お試しください。';
 
   @override
-  String get notifTabInbox => 'Notifications';
+  String get notifTabInbox => '通知';
 
   @override
-  String get notifTabRewards => 'Rewards';
+  String get notifTabRewards => '報酬';
 
   @override
-  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+  String get rewardsNone => '報酬はまだありません。採集や戦闘で得たものはすべてここに表示されます（30日間保存）。';
 
   @override
   String rewardFromActivity(String name) {
-    return 'Gathering: $name';
+    return '採集：$name';
   }
 
   @override
   String rewardFromHunt(String name) {
-    return 'Hunt: $name';
+    return '狩猟：$name';
   }
 
   @override
   String rewardFromDungeon(String name) {
-    return 'Dungeon: $name';
+    return 'ダンジョン：$name';
   }
 
   @override
   String rewardLevelUp(int level) {
-    return 'Level $level!';
+    return 'レベル$level！';
   }
 
   @override
   String get levelMax => 'MAX';
 
   @override
-  String get promotionAvailable => 'PROMOTION AVAILABLE';
+  String get promotionAvailable => '昇格可能';
 
   @override
-  String get promotionChoose => 'Choose';
+  String get promotionChoose => '選択';
 
   @override
   String promotionConfirm(String name) {
-    return 'Become $name?';
+    return '$nameになりますか？';
   }
 
   @override
-  String get promotionBody => 'This choice shapes your class for good.';
+  String get promotionBody => 'この選択でクラスが永久に決まります。';
 
   @override
   String nextMilestone(int level, String what) {
-    return 'Next: Lv $level · $what';
+    return '次：Lv.$level · $what';
   }
 
   @override
-  String get msPromotion => 'Class promotion';
+  String get msPromotion => 'クラス昇格';
 
   @override
   String msAwakening(String name) {
-    return 'Awakening: $name';
+    return '覚醒：$name';
   }
 
   @override
   String msUltimate(String name) {
-    return 'Ultimate: $name';
+    return '奥義：$name';
   }
 
   @override
-  String get msCapstone => 'Talent capstone';
+  String get msCapstone => 'タレントの頂点';
 
   @override
-  String get msMastery => 'Class mastery';
+  String get msMastery => 'クラスマスタリー';
 
   @override
   String msTitle(String name) {
-    return 'Title: $name';
+    return '称号：$name';
   }
 
   @override
   String estMinutes(int n) {
-    return '~$n min';
+    return '約$n分';
   }
 
   @override
   String estHours(String h) {
-    return '~$h h';
+    return '約$h時間';
   }
 
   @override
   String overflowHeld(int xp) {
-    return '$xp XP is waiting for your choice';
+    return '$xp経験値が選択を待っています';
   }
 
   @override
   String attributePointsBtn(int n) {
-    return 'Attributes · $n points';
+    return '能力値 · $nポイント';
   }
 
   @override
   String talentPointsBtn(int n) {
-    return 'Talents · $n points';
+    return 'タレント · $nポイント';
   }
 
   @override
-  String get talentsTitle => 'Talents';
+  String get talentsTitle => 'タレント';
 
   @override
   String capstoneLocked(int level, int points) {
-    return 'Needs level $level and $points points in this tree';
+    return 'レベル$levelとこのツリーに$pointsポイントが必要';
   }
 
   @override
   String masteryUnlocked(String title) {
-    return 'Class mastery: $title';
+    return 'クラスマスタリー：$title';
   }
 
   @override
-  String get errPromotionUnavailable => 'That promotion is not available.';
+  String get errPromotionUnavailable => 'その昇格はできません。';
 
   @override
-  String get errNotEnoughPoints => 'Not enough points.';
+  String get errNotEnoughPoints => 'ポイントが足りません。';
 
   @override
-  String get errTalentMaxed => 'That talent is already at max rank.';
+  String get errTalentMaxed => 'このタレントは既に最大ランクです。';
 
   @override
-  String get errCapstoneLocked => 'The capstone needs its level and a full tree.';
+  String get errCapstoneLocked => '頂点にはレベルと完成したツリーが必要です。';
 
   @override
-  String get errSpecRequirement => 'Your specialization cannot use this item.';
+  String get errSpecRequirement => 'あなたの専門では使用できません。';
 
   @override
-  String get errAttributeRequirement => 'Your attributes are too low for this item.';
+  String get errAttributeRequirement => 'このアイテムには能力値が足りません。';
 
   @override
-  String get errBusyCombat => 'Not while in combat, AFK or a dungeon.';
+  String get errBusyCombat => '戦闘、放置活動、ダンジョン中はできません。';
 
   @override
   String skillGuard(int pct, int turns) {
-    return '+$pct% armor for $turns turns';
+    return '$turnsターンの間 防具 +$pct%';
   }
 
   @override
   String skillEmpower(int pct, int turns) {
-    return '+$pct% attack for $turns turns';
+    return '$turnsターンの間 攻撃力 +$pct%';
   }
 
   @override
-  String get classRanger => 'Ranger';
+  String get classRanger => 'レンジャー';
 
   @override
-  String get classCleric => 'Cleric';
+  String get classCleric => 'クレリック';
 
   @override
-  String get classMonk => 'Monk';
+  String get classMonk => 'モンク';
 
   @override
-  String get classPaladin => 'Paladin';
+  String get classPaladin => 'パラディン';
 
   @override
-  String get classDruid => 'Druid';
+  String get classDruid => 'ドルイド';
 
   @override
-  String get classBard => 'Bard';
+  String get classBard => '吟遊詩人';
 
   @override
-  String get classShaman => 'Shaman';
+  String get classShaman => 'シャーマン';
 
   @override
-  String get errEquipmentPermission => 'Your class cannot use this equipment type.';
+  String get errEquipmentPermission => 'このクラスはこの装備種類を使用できません。';
 
   @override
-  String get classResource => 'Resource';
+  String get classResource => 'リソース';
 
   @override
-  String get classFocus => 'Attribute focus';
+  String get classFocus => '主要能力値';
 
   @override
   String classSecondary(String names) {
-    return 'Secondary: $names';
+    return '副：$names';
   }
 
   @override
-  String get resStartsEmpty => 'Starts empty';
+  String get resStartsEmpty => '0から開始';
 
   @override
-  String get resStartsFull => 'Starts full';
+  String get resStartsFull => '満タンで開始';
 
   @override
   String resStartsAt(int pct) {
-    return 'Starts at $pct%';
+    return '$pct%から開始';
   }
 
   @override
   String resPerHit(int n) {
-    return '+$n per hit';
+    return '命中ごとに +$n';
   }
 
   @override
   String resPerTurn(int n) {
-    return '+$n per turn';
+    return 'ターンごとに +$n';
   }
 
   @override
   String baseAttributesHint(int total) {
-    return 'Base attributes · 1 point every 2 levels, $total in total';
+    return '基本能力値 · 2レベルごとに1ポイント、合計$total';
   }
 
   @override
-  String get classEquipment => 'Equipment';
+  String get classEquipment => '装備';
 
   @override
-  String get firstSkills => 'First skills';
+  String get firstSkills => '初期スキル';
 
   @override
-  String get classPath => 'Class path';
+  String get classPath => 'クラスの道';
 
   @override
-  String get classPathHint => 'Tap a class to see its skills.';
+  String get classPathHint => 'クラスをタップするとスキルが見られます。';
 
   @override
   String classMilestones(int awakening, int ultimate, int capstone, int mastery) {
-    return 'Lv $awakening Awakening · Lv $ultimate Ultimate · Lv $capstone talent capstone · Lv $mastery class mastery';
+    return 'Lv.$awakening 覚醒 · Lv.$ultimate 奥義 · Lv.$capstone タレントの頂点 · Lv.$mastery クラスマスタリー';
   }
 
   @override
-  String get skillTagActive => 'active';
+  String get skillTagActive => 'アクティブ';
 
   @override
-  String get skillTagPassive => 'passive';
+  String get skillTagPassive => 'パッシブ';
 
   @override
-  String get skillTagAwakening => 'awakening';
+  String get skillTagAwakening => '覚醒';
 
   @override
-  String get skillTagUltimate => 'ultimate';
+  String get skillTagUltimate => '奥義';
 
   @override
   String skillCostCd(int cost, int cd) {
-    return 'Cost $cost · cooldown $cd turns';
+    return 'コスト $cost · 再使用 $cdターン';
   }
 
   @override
   String masteryAt(int level, String title) {
-    return 'Lv $level mastery: $title';
+    return 'Lv.$levelマスタリー：$title';
   }
 
   @override
-  String get classInfoFailed => 'Class details couldn\'t load.';
+  String get classInfoFailed => 'クラス情報を読み込めませんでした。';
 
   @override
   String xpShare(int pct) {
-    return 'XP $pct%';
+    return '経験値 $pct%';
   }
 
   @override
-  String get dungeonsSolo => 'Dungeons';
+  String get dungeonsSolo => 'ダンジョン';
 
   @override
-  String get raidsTab => 'Raids';
+  String get raidsTab => 'レイド';
 
   @override
   String raidGroup(int min, int max) {
-    return 'Party of $min–$max';
+    return '$min～$max人パーティー';
   }
 
   @override
   String raidBossGear(int count) {
-    return 'Boss: $count gear pieces guaranteed';
+    return 'ボス：装備$count個確定';
   }
 
   @override
-  String get raidOpen => 'Open raid';
+  String get raidOpen => 'レイドを開く';
 
   @override
-  String get raidNeedParty =>
-      'Raids are for a party. Queue below for a random one, join a listing on the board, or advertise your own.';
+  String get raidNeedParty => 'レイドはパーティー向けです。下のキューでランダムパーティーに入るか、掲示板の募集に参加するか、自分で募集してください。';
 
   @override
-  String get raidLeaderOnly => 'Your party leader opens raids.';
+  String get raidLeaderOnly => 'レイドはパーティーリーダーが開きます。';
 
   @override
-  String get raidLobby => 'Raid lobby';
+  String get raidLobby => 'レイドロビー';
 
   @override
-  String get raidJoin => 'Join';
+  String get raidJoin => '参加';
 
   @override
-  String get raidLeave => 'Leave';
+  String get raidLeave => '退出';
 
   @override
-  String get raidCancel => 'Call off';
+  String get raidCancel => '中止';
 
   @override
-  String get raidCancelBody => 'The lobby closes for everyone.';
+  String get raidCancelBody => '全員のロビーが閉じます。';
 
   @override
-  String get raidStart => 'Start raid';
+  String get raidStart => 'レイド開始';
 
   @override
-  String get raidStartBody => 'Nobody can join or leave once it starts.';
+  String get raidStartBody => '開始後は誰も参加・退出できません。';
 
   @override
   String raidMembers(int count, int max) {
-    return 'Members ($count/$max)';
+    return 'メンバー（$count/$max）';
   }
 
   @override
   String raidNeedMore(int min) {
-    return 'At least $min members to start';
+    return '開始には$min人以上必要';
   }
 
   @override
-  String get raidWaitHint => 'Rewards open when the raid ends; every member collects their own.';
+  String get raidWaitHint => '報酬はレイド終了後に開放され、各メンバーが自分の分を受け取ります。';
 
   @override
-  String get raidDone => 'Raid over — collect your rewards';
+  String get raidDone => 'レイド終了 — 報酬を受け取る';
 
   @override
-  String get raidLocked => 'Cleared this week';
+  String get raidLocked => '今週クリア済み';
 
   @override
-  String get raidCollected => 'collected';
+  String get raidCollected => '受取済み';
 
   @override
-  String get errRaidNeedsParty => 'Join a party first.';
+  String get errRaidNeedsParty => '先にパーティーに参加してください。';
 
   @override
-  String get errRaidExists => 'Your party already has an open raid.';
+  String get errRaidExists => 'パーティーには既に開いているレイドがあります。';
 
   @override
-  String get errAlreadyInRaid => 'You are already in a raid.';
+  String get errAlreadyInRaid => '既にレイドに参加しています。';
 
   @override
-  String get errRaidNotOpen => 'This raid is no longer open.';
+  String get errRaidNotOpen => 'このレイドは既に開いていません。';
 
   @override
-  String get errRaidNotEnough => 'Not enough members to start.';
+  String get errRaidNotEnough => '開始に必要なメンバーが足りません。';
 
   @override
-  String get errRaidWeeklyLocked => 'You already cleared this raid this week.';
+  String get errRaidWeeklyLocked => '今週はこのレイドを既にクリアしています。';
 
   @override
   String errCharacterBusy(String action) {
-    return 'Finish what your character is doing first: $action.';
+    return '先にキャラクターの作業を終えてください：$action。';
   }
 
   @override
-  String get busyGathering => 'gathering';
+  String get busyGathering => '採集';
 
   @override
-  String get busyHunt => 'hunt';
+  String get busyHunt => '狩猟';
 
   @override
-  String get busyDungeon => 'dungeon';
+  String get busyDungeon => 'ダンジョン';
 
   @override
-  String get busyRaid => 'raid';
+  String get busyRaid => 'レイド';
 
   @override
-  String get busyTravel => 'travel';
+  String get busyTravel => '移動';
 
   @override
-  String get busyCrafting => 'crafting';
+  String get busyCrafting => '製作';
 
   @override
-  String get errCraftActive => 'A crafting job is already running.';
+  String get errCraftActive => '製作作業が既に進行中です。';
 
   @override
-  String get errCraftTooLong => 'That job would take more than 6 hours.';
+  String get errCraftTooLong => 'この作業は6時間を超えます。';
 
   @override
   String craftEach(String time) {
-    return '$time each';
+    return '1個 $time';
   }
 
   @override
   String craftTotal(String time) {
-    return 'Total $time';
+    return '合計 $time';
   }
 
   @override
   String craftRunning(String item, int count) {
-    return 'Crafting $item ×$count';
+    return '$item×$countを製作中';
   }
 
   @override
   String craftProgress(int done, int count) {
-    return '$done/$count ready';
+    return '$done/$count完了';
   }
 
   @override
-  String get craftDone => 'All done — collect';
+  String get craftDone => 'すべて完了 — 受け取る';
 
   @override
-  String get craftCollectEarlyTitle => 'Collect now?';
+  String get craftCollectEarlyTitle => '今すぐ受け取りますか？';
 
   @override
   String craftCollectEarlyBody(int done, int rest) {
-    return 'The $done finished items are delivered; the materials and gold of the other $rest come back.';
+    return '完成した$done個を受け取り、残り$rest個分の素材とゴールドは返還されます。';
   }
 
   @override
   String craftCollected(int made, int refunded) {
-    return '$made made, $refunded refunded';
+    return '$made個製作、$refunded個返還';
   }
 
   @override
-  String get craftBusyHint => 'Crafting takes time; your character does nothing else meanwhile.';
+  String get craftBusyHint => '製作には時間がかかり、その間キャラクターは他のことをしません。';
 
   @override
-  String get eventHowTitle => 'How to take part';
+  String get eventHowTitle => '参加方法';
 
   @override
-  String get eventRewardsTitle => 'Rewards';
+  String get eventRewardsTitle => '報酬';
 
   @override
   String eventStepEnlist(int level) {
-    return 'Enlist from 24 hours before it starts until it ends (level $level+).';
+    return '開始24時間前から終了まで参加できます（Lv.$level以上）。';
   }
 
   @override
   String eventStepRegion(String region) {
-    return 'Be in $region when you enlist.';
+    return '参加時に$regionにいる必要があります。';
   }
 
   @override
   String eventStepPower(int power) {
-    return 'Your power is frozen when you enlist: attack × 2 + defense + HP ÷ 10. Yours now: $power.';
+    return '参加時に戦闘力が固定されます：攻撃力 × 2 + 防御力 + HP ÷ 10。現在：$power。';
   }
 
   @override
   String eventStepScore(int tier) {
-    return 'Score = power × minutes attended, from the start (or from when you enlist, if later). It stops at tier $tier.';
+    return 'スコア = 戦闘力 × 参加分数。開始時（遅れて参加した場合はその時）から計算し、ランク$tierで止まります。';
   }
 
   @override
-  String get eventStepGoal =>
-      'If everyone together reaches the goal, rewards go up to the top tier; if not, they stop at tier 2.';
+  String get eventStepGoal => '全員で目標を達成すれば最高ランクまで報酬を得られ、未達ならランク2までです。';
 
   @override
-  String get eventStepPaid =>
-      'Rewards are paid automatically when it closes. Enlisting does not stop your other actions.';
+  String get eventStepPaid => '報酬は終了時に自動で支払われます。参加しても他の行動は止まりません。';
 
   @override
   String eventTier(int tier, String score) {
-    return 'Tier $tier · $score+ points';
+    return 'ランク$tier · $scoreポイント以上';
   }
 
   @override
   String eventTierTokens(int count) {
-    return '+$count event tokens';
+    return 'イベントトークン +$count';
   }
 
   @override
   String eventEstimate(String score, int tier) {
-    return 'Join now: about $score points → tier $tier';
+    return '今参加すると：約$scoreポイント → ランク$tier';
   }
 
   @override
   String eventEstimateNone(String score) {
-    return 'Join now: about $score points — not enough for a tier';
+    return '今参加すると：約$scoreポイント — ランクに届きません';
   }
 
   @override
   String seasonalHow(int count) {
-    return 'While the event runs, claim $count event tokens once a day (the day starts at 00:00 UTC).';
+    return 'イベント中は1日1回イベントトークンを$count個受け取れます（1日は00:00 UTCに開始）。';
   }
 
   @override
   String seasonalBenefit(int count) {
-    return 'Tokens stay on your account (balance: $count).';
+    return 'トークンはアカウントに残ります（残高：$count）。';
   }
 
   @override
-  String get eventDetails => 'Details';
+  String get eventDetails => '詳細';
 
   @override
-  String get createCharacterTitle => 'Create character';
+  String get createCharacterTitle => 'キャラクター作成';
 
   @override
-  String get classTraits => 'Class traits';
+  String get classTraits => 'クラス特性';
 
   @override
   String classResourceLine(String name) {
-    return 'Resource: $name';
+    return 'リソース：$name';
   }
 
   @override
   String classFocusLine(String primary, String secondary) {
-    return 'Main attribute: $primary · second: $secondary';
+    return '主能力値：$primary · 副：$secondary';
   }
 
   @override
   String classFocusOnly(String primary) {
-    return 'Main attribute: $primary';
+    return '主能力値：$primary';
   }
 
   @override
-  String get classDifficulty => 'Difficulty';
+  String get classDifficulty => '難易度';
 
   @override
-  String get difficultyEasy => 'Easy — forgiving, safe on AFK hunts';
+  String get difficultyEasy => '易しい — ミスに寛容で放置狩猟でも安全';
 
   @override
-  String get difficultyMedium => 'Medium — balanced; skill order matters';
+  String get difficultyMedium => '普通 — バランス型、スキルの順序が重要';
 
   @override
-  String get difficultyHard => 'Hard — fragile; needs the right gear';
+  String get difficultyHard => '難しい — 脆く、適切な装備が必要';
 
   @override
-  String get skillsTapHint => 'tap for details';
+  String get skillsTapHint => 'タップで詳細';
 
   @override
-  String get chooseRace => 'Choose your race';
+  String get chooseRace => '種族を選択';
 
   @override
   String continueAs(String name) {
-    return 'Continue as $name';
+    return '$nameで続ける';
   }
 
   @override
-  String get nameYourCharacter => 'Name your character';
+  String get nameYourCharacter => 'キャラクターに名前を付ける';
 
   @override
-  String get raceTroll => 'Troll';
+  String get raceTroll => 'トロール';
 
   @override
-  String get raceUndead => 'Undead';
+  String get raceUndead => 'アンデッド';
 
   @override
-  String get raceDarkElf => 'Dark Elf';
+  String get raceDarkElf => 'ダークエルフ';
 
   @override
-  String get raceDrakari => 'Drakari';
+  String get raceDrakari => 'ドラカリ';
 
   @override
-  String get raceTauren => 'Tauren';
+  String get raceTauren => 'タウレン';
 
   @override
-  String get raceGnome => 'Gnome';
+  String get raceGnome => 'ノーム';
 
   @override
   String foodBuffLine(int atk, int def, int minutes) {
-    return '+$atk% attack and +$def% defense for $minutes min';
+    return '$minutes分間 攻撃力 +$atk%、防御力 +$def%';
   }
 
   @override
   String fedToast(int atk, int def) {
-    return 'Fed: +$atk% attack, +$def% defense';
+    return '満腹：攻撃力 +$atk%、防御力 +$def%';
   }
 
   @override
   String fedActive(int atk, int def, String time) {
-    return 'Fed · +$atk% attack · +$def% defense · $time left';
+    return '満腹 · 攻撃力 +$atk% · 防御力 +$def% · 残り$time';
   }
 
   @override
   String huntReach(String regions) {
-    return 'Hunting from here: $regions';
+    return 'ここから狩猟可能：$regions';
   }
 
   @override
-  String get huntNoMobsHere => 'There is nothing to hunt here. Travel to a hunting ground first.';
+  String get huntNoMobsHere => 'ここには獲物がいません。先に狩り場へ移動してください。';
 
   @override
-  String get huntOtherRegions => 'Monsters in other regions';
+  String get huntOtherRegions => '他の地域のモンスター';
 
   @override
-  String get huntTravelHint => 'Travel to a monster\'s region, or a region linked to it by road, to hunt it.';
+  String get huntTravelHint => 'モンスターを狩るには、その地域か道でつながる地域へ移動してください。';
 
   @override
-  String get errMobRegion => 'This monster lives in another region. Travel there first.';
+  String get errMobRegion => 'このモンスターは別の地域にいます。先にそこへ移動してください。';
 
   @override
   String restoresHpPct(int pct) {
-    return 'Restores $pct% of max HP';
+    return '最大HPの$pct%を回復';
   }
 
   @override
-  String get statEvasion => '% Evasion';
+  String get statEvasion => '% 回避';
 
   @override
-  String get statBlock => '% Block';
+  String get statBlock => '% ブロック';
 
   @override
-  String get statCritDmg => '% Crit damage';
+  String get statCritDmg => '% クリティカルダメージ';
 
   @override
-  String get statLifesteal => '% Lifesteal';
+  String get statLifesteal => '% ライフスティール';
 
   @override
-  String get statDmgReduction => '% Damage reduction';
+  String get statDmgReduction => '% ダメージ軽減';
 
   @override
-  String get classJewelry => 'Jewelry';
+  String get classJewelry => 'アクセサリー';
 
   @override
-  String get mapHint =>
-      'You can travel straight to any region your level allows; the time follows the shortest road. Drag and pinch the map; tap a region.';
+  String get mapHint => 'レベルが許す地域ならどこへでも直接移動でき、時間は最短の道で決まります。地図をドラッグやピンチで動かし、地域をタップしてください。';
 
   @override
-  String get mapNoRoad => 'No direct road leads here. Travel through the glowing regions next to you.';
+  String get mapNoRoad => 'ここへの直通の道はありません。隣の光る地域を経由してください。';
 
   @override
-  String get youAreHere => 'You are here.';
+  String get youAreHere => '現在地です。';
 
   @override
   String travelTime(String time) {
-    return 'Travel time: $time';
+    return '移動時間：$time';
   }
 
   @override
   String xpPerKill(int xp) {
-    return '$xp XP';
+    return '経験値 $xp';
   }
 
   @override
-  String get deleteCharacter => 'Delete character';
+  String get deleteCharacter => 'キャラクターを削除';
 
   @override
   String deleteCharacterBody(String name) {
-    return '$name will be deleted right away, with all items and gold. This cannot be undone. Type the character\'s name to confirm.';
+    return '$nameはすべてのアイテムとゴールドごと直ちに削除されます。元に戻せません。確認のためキャラクター名を入力してください。';
   }
 
   @override
-  String get characterNameConfirm => 'Character name';
+  String get characterNameConfirm => 'キャラクター名';
 
   @override
   String characterDeletesAt(String when) {
-    return 'Deleted on $when';
+    return '$whenに削除';
   }
 
   @override
-  String get cancelCharacterDelete => 'Cancel deletion';
+  String get cancelCharacterDelete => '削除を取り消す';
 
   @override
   String characterDeleted(String name) {
-    return '$name was deleted.';
+    return '$nameを削除しました。';
   }
 
   @override
   String characterDeleteCancelled(String name) {
-    return '$name will not be deleted.';
+    return '$nameの削除を取り消しました。';
   }
 
   @override
-  String get errNameMismatch => 'The name does not match.';
+  String get errNameMismatch => '名前が一致しません。';
 
   @override
   String attrGainPerPoint(String gains) {
-    return 'Per point: $gains';
+    return '1ポイントあたり：$gains';
   }
 
   @override
   String attrGainPending(String gains) {
-    return 'Adding: $gains';
+    return '追加分：$gains';
   }
 
   @override
-  String get attrNoEffect => 'No effect for your class';
+  String get attrNoEffect => 'このクラスには効果なし';
 
   @override
-  String get attrInputHint => 'Type how many points each attribute gets';
+  String get attrInputHint => '各能力値に割り振るポイントを入力してください';
 
   @override
   String get gainHp => 'HP';
@@ -2415,727 +2405,719 @@ class AppLocalizationsJa extends AppLocalizations {
   String get gainMp => 'MP';
 
   @override
-  String get gainHpRegen => 'HP/s';
+  String get gainHpRegen => 'HP/秒';
 
   @override
-  String get huntSupplies => 'Supplies to take';
+  String get huntSupplies => '持参する補給品';
 
   @override
-  String get huntSuppliesHint =>
-      'Potions are drunk between fights when HP drops under half, food is eaten when its bonus runs out, mana potions when mana runs low. What is left comes back to your bag.';
+  String get huntSuppliesHint => 'HPが半分を切ると戦闘の合間にポーションを、効果が切れると料理を、マナが減るとマナポーションを使います。残りはバッグに戻ります。';
 
   @override
-  String get supplyHp => 'Healing potions';
+  String get supplyHp => '回復ポーション';
 
   @override
-  String get supplyMp => 'Mana potions';
+  String get supplyMp => 'マナポーション';
 
   @override
-  String get supplyMpHint => 'For classes using mana, energy, focus, nature energy or spirit';
+  String get supplyMpHint => 'マナ、気力、集中、自然の力、霊力を使うクラス向け';
 
   @override
-  String get supplyFood => 'Food';
+  String get supplyFood => '料理';
 
   @override
-  String get huntNoSupplies => 'No potions or food in your bag: buy them at the shop or craft them.';
+  String get huntNoSupplies => 'バッグにポーションや料理がありません。ショップで買うか製作してください。';
 
   @override
   String restoresMpPct(int pct) {
-    return 'Refills $pct% of your mana';
+    return 'マナを$pct%回復';
   }
 
   @override
-  String get huntSupplyOnly => 'Used only as a hunt supply';
+  String get huntSupplyOnly => '狩猟の補給品としてのみ使用';
 
   @override
-  String get errBadSupply => 'That item cannot be taken on a hunt.';
+  String get errBadSupply => 'このアイテムは狩猟に持参できません。';
 
   @override
-  String get errNotEnoughSupplies => 'Your bag holds fewer of that supply.';
+  String get errNotEnoughSupplies => 'バッグにその補給品が足りません。';
 
   @override
-  String get errHuntOnly => 'Take it on a hunt as a supply.';
+  String get errHuntOnly => '補給品として狩猟に持参してください。';
 
   @override
-  String get huntFled => 'Your HP fell under 5%: you broke off the fight';
+  String get huntFled => 'HPが5%を切り、戦闘から離脱しました';
 
   @override
   String suppliesUsed(String list) {
-    return 'Used: $list';
+    return '使用：$list';
   }
 
   @override
-  String get compareTitle => 'Compared with what you wear';
+  String get compareTitle => '装備中と比較';
 
   @override
   String compareWorn(String name) {
-    return 'Worn: $name';
+    return '装備中：$name';
   }
 
   @override
-  String get compareEmpty => 'That slot is empty: equipping adds all of these.';
+  String get compareEmpty => 'このスロットは空です。装備するとこれらがすべて加わります。';
 
   @override
-  String get compareColStat => 'Stat';
+  String get compareColStat => '能力';
 
   @override
-  String get compareColWorn => 'Worn';
+  String get compareColWorn => '装備中';
 
   @override
-  String get compareColThis => 'This';
+  String get compareColThis => 'これ';
 
   @override
-  String get compareColDiff => 'Change';
+  String get compareColDiff => '変化';
 
   @override
-  String get compareSame => 'Same stats as what you wear.';
+  String get compareSame => '装備中と同じ能力です。';
 
   @override
-  String get wearOk => 'Your class can wear this';
+  String get wearOk => 'このクラスで装備できます';
 
   @override
-  String get wearClass => 'Your class can\'t wear this';
+  String get wearClass => 'このクラスでは装備できません';
 
   @override
   String wearLevel(int level) {
-    return 'Needs level $level';
+    return 'レベル$levelが必要';
   }
 
   @override
-  String get wearAttribute => 'Your attributes are too low';
+  String get wearAttribute => '能力値が足りません';
 
   @override
-  String get wearLegendClass => 'not for your class';
+  String get wearLegendClass => 'クラス不一致';
 
   @override
-  String get wearLegendLater => 'not yet (level or attributes)';
+  String get wearLegendLater => 'まだ不可（レベルまたは能力値）';
 
   @override
-  String get enchantAction => 'Enchant';
+  String get enchantAction => 'エンチャント';
 
   @override
-  String get enchantPick => 'Choose the gear to enchant';
+  String get enchantPick => 'エンチャントする装備を選択';
 
   @override
-  String get enchantNone => 'None of your gear fits this scroll.';
+  String get enchantNone => 'この巻物に合う装備がありません。';
 
   @override
   String enchantFits(String groups) {
-    return 'Goes on: $groups';
+    return '対象：$groups';
   }
 
   @override
-  String get enchantGroupWeapon => 'weapons';
+  String get enchantGroupWeapon => '武器';
 
   @override
-  String get enchantGroupArmor => 'armor';
+  String get enchantGroupArmor => '防具';
 
   @override
-  String get enchantGroupJewelry => 'jewelry';
+  String get enchantGroupJewelry => 'アクセサリー';
 
   @override
-  String get enchantGroupAny => 'any gear';
+  String get enchantGroupAny => 'すべての装備';
 
   @override
-  String get enchantReplaceTitle => 'Replace the enchant?';
+  String get enchantReplaceTitle => 'エンチャントを置き換えますか？';
 
   @override
   String enchantReplaceBody(String old, String next) {
-    return '$old is lost and $next takes its place.';
+    return '$oldは失われ、$nextに置き換わります。';
   }
 
   @override
   String enchantDone(String item) {
-    return '$item enchanted';
+    return '$itemをエンチャントしました';
   }
 
   @override
   String enchantOn(String name) {
-    return 'Enchant: $name';
+    return 'エンチャント：$name';
   }
 
   @override
-  String get wornTag => 'worn';
+  String get wornTag => '装備中';
 
   @override
-  String get errNotEnchant => 'That is not an enchanting scroll.';
+  String get errNotEnchant => 'エンチャントの巻物ではありません。';
 
   @override
-  String get errEnchantSlot => 'The enchant doesn\'t fit that gear.';
+  String get errEnchantSlot => 'このエンチャントはその装備に合いません。';
 
   @override
-  String get statGatherMining => 'Mining yield';
+  String get statGatherMining => '採掘の産出量';
 
   @override
-  String get statGatherHerbalism => 'Herbalism yield';
+  String get statGatherHerbalism => '薬草採集の産出量';
 
   @override
-  String get statGatherWoodcutting => 'Woodcutting yield';
+  String get statGatherWoodcutting => '伐採の産出量';
 
   @override
-  String get statGatherFishing => 'Fishing yield';
+  String get statGatherFishing => '釣りの産出量';
 
   @override
-  String get statGatherHunting => 'Hunting yield';
+  String get statGatherHunting => '狩猟の産出量';
 
   @override
-  String get statCraftSpeed => 'Crafting speed';
+  String get statCraftSpeed => '製作速度';
 
   @override
   String diffXp(int pct) {
-    return '$pct% XP';
+    return '経験値 $pct%';
   }
 
   @override
-  String get diffNoXp => 'no XP';
+  String get diffNoXp => '経験値なし';
 
   @override
-  String get diffLegend => 'Recipe colors: the XP a craft teaches at your skill';
+  String get diffLegend => 'レシピの色：現在のスキルで製作から得られる経験値';
 
   @override
-  String get recipeGroupEnchantWeapon => 'Weapon enchants';
+  String get recipeGroupEnchantWeapon => '武器エンチャント';
 
   @override
-  String get recipeGroupEnchantArmor => 'Armor enchants';
+  String get recipeGroupEnchantArmor => '防具エンチャント';
 
   @override
-  String get recipeGroupEnchantJewelry => 'Jewelry enchants';
+  String get recipeGroupEnchantJewelry => 'アクセサリーエンチャント';
 
   @override
-  String get recipeGroupEnchantProfession => 'Profession enchants';
+  String get recipeGroupEnchantProfession => '職業エンチャント';
 
   @override
-  String get partyHint =>
-      'Members doing the same work at the same time (the same gathering kind, profession, hunt or dungeon) each earn +3% XP per member working: five together earn +15%. Nobody gives XP away.';
+  String get partyHint => '同じ作業（同じ採集、職業、狩猟、ダンジョン）を同時に行うメンバーは、作業中の人数ごとに経験値+3%を得ます。5人なら+15%。誰の経験値も減りません。';
 
   @override
-  String get partyChat => 'Party chat';
+  String get partyChat => 'パーティーチャット';
 
   @override
   String partyShared(String names, int kept, int earned) {
-    return 'Party bonus with $names: $earned → $kept XP';
+    return '$namesとのパーティーボーナス：$earned → $kept経験値';
   }
 
   @override
   String evRaidMatched(String raid) {
-    return 'A party was found for $raid. See Raids.';
+    return '$raidのパーティーが見つかりました。レイドを確認してください。';
   }
 
   @override
-  String get nkRaidMatched => 'Raid party found';
+  String get nkRaidMatched => 'レイドパーティー発見';
 
   @override
-  String get workHunt => 'Hunting';
+  String get workHunt => '狩猟';
 
   @override
-  String get workDungeon => 'Dungeon';
+  String get workDungeon => 'ダンジョン';
 
   @override
-  String get raidFind => 'Find a party';
+  String get raidFind => 'パーティーを探す';
 
   @override
-  String get raidQueueJoin => 'Queue';
+  String get raidQueueJoin => 'キューに入る';
 
   @override
-  String get raidQueueLeave => 'Leave queue';
+  String get raidQueueLeave => 'キューを出る';
 
   @override
   String raidQueued(String raid, int waiting) {
-    return 'Queued for $raid · $waiting waiting';
+    return '$raidのキュー · $waiting人待機中';
   }
 
   @override
-  String get raidQueueHint => 'A random party forms once 5 are waiting, or after 5 minutes with at least 2.';
+  String get raidQueueHint => '5人待機するか、2人以上で5分経つとランダムパーティーが組まれます。';
 
   @override
-  String get raidAdvertise => 'Advertise';
+  String get raidAdvertise => '募集する';
 
   @override
-  String get raidUnlist => 'Remove listing';
+  String get raidUnlist => '募集を取り消す';
 
   @override
   String raidListed(String raid) {
-    return 'Your party is on the board for $raid';
+    return 'パーティーが$raidの掲示板に載りました';
   }
 
   @override
-  String get raidBoard => 'Listing board';
+  String get raidBoard => '募集掲示板';
 
   @override
-  String get raidBoardEmpty => 'No open listings.';
+  String get raidBoardEmpty => '募集はありません。';
 
   @override
-  String get raidJoinParty => 'Join party';
+  String get raidJoinParty => 'パーティーに参加';
 
   @override
-  String get raidPickRaid => 'Raid';
+  String get raidPickRaid => 'レイド';
 
   @override
-  String get errListingGone => 'That listing is gone or full.';
+  String get errListingGone => 'その募集はなくなったか満員です。';
 
   @override
-  String get workGathering => 'Gathering';
+  String get workGathering => '採集';
 
   @override
-  String get workAdventure => 'Adventure';
+  String get workAdventure => '冒険';
 
   @override
-  String get workRaid => 'Raid';
+  String get workRaid => 'レイド';
 
   @override
-  String get workTravel => 'Travelling';
+  String get workTravel => '移動中';
 
   @override
-  String get workCrafting => 'Crafting';
+  String get workCrafting => '製作';
 
   @override
-  String get workIdle => 'Idle';
+  String get workIdle => '待機';
 
   @override
-  String get errDungeonRegion => 'Travel to this place on the map first.';
+  String get errDungeonRegion => '先に地図でこの場所へ移動してください。';
 
   @override
-  String get dungeonsElsewhere =>
-      'More dungeons and raids open as you travel: each is entered from its own region on the map.';
+  String get dungeonsElsewhere => '移動するほどダンジョンとレイドが増えます。それぞれ地図上の地域から入ります。';
 
   @override
-  String get dungeonNoneHere => 'No dungeon in reach here. Travel on the map to a dungeon region.';
+  String get dungeonNoneHere => 'ここから行けるダンジョンはありません。地図でダンジョンの地域へ移動してください。';
 
   @override
   String dungeonXp(int xp) {
-    return '≈ $xp XP for you';
+    return 'あなたには約$xp経験値';
   }
 
   @override
   String appVersionLine(String version) {
-    return 'Version $version';
+    return 'バージョン $version';
   }
 
   @override
-  String get updateButton => 'Update';
+  String get updateButton => 'アップデート';
 
   @override
   String updateAvailable(String version) {
-    return 'New version ready: $version';
+    return '新しいバージョンあり：$version';
   }
 
   @override
-  String get updateLatest => 'You have the latest version';
+  String get updateLatest => '最新バージョンです';
 
   @override
   String updateConfirm(String version, int size) {
-    return 'Download and install version $version ($size MB)?';
+    return 'バージョン$version（$size MB）をダウンロードしてインストールしますか？';
   }
 
   @override
-  String get updateDownloading => 'Downloading…';
+  String get updateDownloading => 'ダウンロード中…';
 
   @override
-  String get updatePermission => 'Allow installs from MeNa World, then tap Update again.';
+  String get updatePermission => 'MeNa Worldからのインストールを許可し、もう一度アップデートをタップしてください。';
 
   @override
-  String get updateFailed => 'Could not get the update. Check your connection.';
+  String get updateFailed => 'アップデートを取得できませんでした。接続を確認してください。';
 
   @override
-  String get fightReport => 'Fight report';
+  String get fightReport => '戦闘レポート';
 
   @override
-  String get endTimeUp => 'Time ran out: it went on to the planned end.';
+  String get endTimeUp => '時間切れ：予定の終わりまで続きました。';
 
   @override
-  String get endEarly => 'Collected early: stopped before the planned end.';
+  String get endEarly => '早めに受取：予定の終わりより前に停止しました。';
 
   @override
   String endFled(String mob) {
-    return 'HP fell below 5% against $mob: you broke off and came back.';
+    return '$mobとの戦闘でHPが5%を切り、離脱して戻りました。';
   }
 
   @override
   String endDefeat(String mob) {
-    return 'You fell to $mob.';
+    return '$mobに倒されました。';
   }
 
   @override
   String endPartyDefeat(String mob) {
-    return 'The party fell to $mob.';
+    return 'パーティーは$mobに倒されました。';
   }
 
   @override
   String endTimeout(String mob) {
-    return 'The fight with $mob went past the turn limit: it stopped.';
+    return '$mobとの戦闘がターン制限を超えたため停止しました。';
   }
 
   @override
-  String get endCleared => 'Cleared: every wave and the boss fell.';
+  String get endCleared => 'クリア：すべてのウェーブとボスを倒しました。';
 
   @override
-  String get repCampHint =>
-      'Under 50% HP the hunter camps back to full before the next fight, so a hunt rarely drops to 5%.';
+  String get repCampHint => 'HPが50%を切ると狩人は次の戦闘までキャンプで回復するため、5%まで落ちることはまれです。';
 
   @override
-  String get repYou => 'You';
+  String get repYou => 'あなた';
 
   @override
-  String get repLevel => 'Level';
+  String get repLevel => 'レベル';
 
   @override
   String get repHp => 'HP';
 
   @override
-  String get repAttack => 'Attack';
+  String get repAttack => '攻撃力';
 
   @override
-  String get repDefense => 'Defense';
+  String get repDefense => '防御力';
 
   @override
-  String get repEvasion => 'Evasion';
+  String get repEvasion => '回避';
 
   @override
-  String get repHitChance => 'Hit chance';
+  String get repHitChance => '命中率';
 
   @override
-  String get repCrit => 'Crit';
+  String get repCrit => 'クリティカル';
 
   @override
   String repFights(int n) {
-    return '$n fights';
+    return '戦闘$n回';
   }
 
   @override
   String repSwings(int hits, int swings, int pct, int avg, int max) {
-    return '$hits/$swings hits ($pct%), avg $avg, max $max';
+    return '命中 $hits/$swings（$pct%）、平均 $avg、最大 $max';
   }
 
   @override
-  String get repYourSwings => 'Your swings';
+  String get repYourSwings => 'あなたの攻撃';
 
   @override
-  String get repPartySwings => 'The party\'s swings';
+  String get repPartySwings => 'パーティーの攻撃';
 
   @override
-  String get repEnemySwings => 'Enemy swings';
+  String get repEnemySwings => '敵の攻撃';
 
   @override
   String repLowest(int pct) {
-    return 'Lowest HP in a fight: $pct%';
+    return '戦闘中の最低HP：$pct%';
   }
 
   @override
   String repRest(String time) {
-    return 'Camped: $time';
+    return 'キャンプ：$time';
   }
 
   @override
-  String get restart => 'Restart';
+  String get restart => '再開';
 
   @override
-  String get restartTitle => 'Collect and start again?';
+  String get restartTitle => '受け取ってやり直しますか？';
 
   @override
-  String get restartBody => 'What came in so far goes to your bag, and the same run starts again for the same time.';
+  String get restartBody => 'これまでの分はバッグに入り、同じ内容が同じ時間で再び始まります。';
 
   @override
-  String get dailyTitle => 'Daily login reward';
+  String get dailyTitle => 'デイリーログインボーナス';
 
   @override
-  String get dailyBody =>
-      'Claim once a day on any character. Each week in a row pays more and day 29 the most; a missed day starts the cycle again.';
+  String get dailyBody => 'どのキャラクターでも1日1回受け取れます。週が続くほど増え、29日目が最大です。1日でも逃すと最初からになります。';
 
   @override
-  String get dailyClaim => 'Claim';
+  String get dailyClaim => '受け取る';
 
   @override
-  String get dailyTomorrow => 'Come back tomorrow';
+  String get dailyTomorrow => 'また明日';
 
   @override
   String dailyDay(int n) {
-    return 'Day $n';
+    return '$n日目';
   }
 
   @override
-  String get dailyOpen => 'Daily reward';
+  String get dailyOpen => 'デイリー報酬';
 
   @override
   String chatMutedNotice(String name, int min) {
-    return '$name was muted for $min minutes for swearing.';
+    return '$nameは暴言により$min分間チャット制限されました。';
   }
 
   @override
-  String get storyTitle => 'Story';
+  String get storyTitle => 'ストーリー';
 
   @override
-  String get storyOpen => 'Story mode';
+  String get storyOpen => 'ストーリーモード';
 
   @override
-  String get storyComingSoon => 'Story mode is coming soon. Chapters will appear here as they are written.';
+  String get storyComingSoon => 'ストーリーモードは近日公開です。章が書かれ次第ここに表示されます。';
 
   @override
   String storyLocked(int level) {
-    return 'Opens at level $level';
+    return 'レベル$levelで開放';
   }
 
   @override
-  String get bankTitle => 'Bank';
+  String get bankTitle => '銀行';
 
   @override
-  String get bankHint =>
-      'Shared by all your characters. Tap an item in your bag to deposit it, or a banked one to take it. Bound items stay with their character.';
+  String get bankHint => '全キャラクター共通です。バッグのアイテムをタップで預け、銀行のアイテムをタップで引き出します。ソウルバウンドのアイテムはそのキャラクターに残ります。';
 
   @override
-  String get bankEmpty => 'The bank is empty.';
+  String get bankEmpty => '銀行は空です。';
 
   @override
-  String get bankDeposit => 'Deposit';
+  String get bankDeposit => '預ける';
 
   @override
-  String get bankWithdraw => 'Take';
+  String get bankWithdraw => '引き出す';
 
   @override
-  String get errBankFull => 'The bank is full.';
+  String get errBankFull => '銀行がいっぱいです。';
 
   @override
-  String get tabTrade => 'Trade';
+  String get tabTrade => '取引';
 
   @override
-  String get tradeHint =>
-      'Trade items with another player. Both put items up and confirm; each side pays a tax of 8% of the average market price of what it gives, per item.';
+  String get tradeHint => '他のプレイヤーとアイテムを取引します。双方がアイテムを出して確認し、それぞれ渡すアイテムの平均相場の8%を1個ごとに税として支払います。';
 
   @override
-  String get tradeWith => 'Player name';
+  String get tradeWith => 'プレイヤー名';
 
   @override
-  String get tradeOpen => 'Start trade';
+  String get tradeOpen => '取引を開始';
 
   @override
   String tradeTitle(String name) {
-    return 'Trade with $name';
+    return '$nameさんと取引';
   }
 
   @override
-  String get tradeYours => 'You give';
+  String get tradeYours => 'あなたが渡す';
 
   @override
   String tradeTheirs(String name) {
-    return '$name gives';
+    return '$nameさんが渡す';
   }
 
   @override
-  String get tradeNothing => 'Nothing yet.';
+  String get tradeNothing => 'まだありません。';
 
   @override
-  String get tradeAdd => 'Add item';
+  String get tradeAdd => 'アイテムを追加';
 
   @override
-  String get tradeRemove => 'Take back';
+  String get tradeRemove => '戻す';
 
   @override
-  String get tradeTax => 'Your tax';
+  String get tradeTax => 'あなたの税';
 
   @override
-  String get tradeReady => 'Ready';
+  String get tradeReady => '準備完了';
 
   @override
-  String get tradeWaiting => 'Not ready';
+  String get tradeWaiting => '未準備';
 
   @override
-  String get tradeConfirm => 'Confirm trade';
+  String get tradeConfirm => '取引を確定';
 
   @override
-  String get tradeWaitingThem => 'Waiting for the other player';
+  String get tradeWaitingThem => '相手を待っています';
 
   @override
-  String get tradeCancel => 'Cancel trade';
+  String get tradeCancel => '取引を中止';
 
   @override
-  String get tradeCancelBody => 'Nothing changes hands.';
+  String get tradeCancelBody => '何も交換されません。';
 
   @override
-  String get tradeDone => 'Trade complete.';
+  String get tradeDone => '取引が完了しました。';
 
   @override
-  String get errTradeBusy => 'One of you is already trading.';
+  String get errTradeBusy => 'どちらかが既に取引中です。';
 
   @override
-  String get errTradeClosed => 'That trade is over.';
+  String get errTradeClosed => 'この取引は終了しました。';
 
   @override
-  String get errTradeItem => 'That item cannot be traded now.';
+  String get errTradeItem => 'このアイテムは今は取引できません。';
 
   @override
-  String get errTradeEmpty => 'Put something up first.';
+  String get errTradeEmpty => '先に何か出してください。';
 
   @override
-  String get errTradeTooMany => 'Too many items in the trade.';
+  String get errTradeTooMany => '取引のアイテムが多すぎます。';
 
   @override
-  String get errCraftLevel => 'Your character\'s level is below this item\'s level.';
+  String get errCraftLevel => 'キャラクターのレベルがこのアイテムのレベルより低いです。';
 
   @override
-  String get gatherNoneHere => 'Your resources grow on other maps: travel to one shown beside them.';
+  String get gatherNoneHere => 'あなたの資源は他の地図にあります。横に表示された場所へ移動してください。';
 
   @override
-  String get errGatherRegion => 'That resource grows on another map.';
+  String get errGatherRegion => 'この資源は他の地図にあります。';
 
   @override
-  String get helpersOpen => 'Helpers';
+  String get helpersOpen => 'ヘルパー';
 
   @override
-  String get helpersTitle => 'Helpers';
+  String get helpersTitle => 'ヘルパー';
 
   @override
-  String get helpersHint =>
-      'Hire helpers to gather and craft beside you. They work at half your speed and earn half the XP, which goes to your profession; each kind has its own bonus.';
+  String get helpersHint => '採集や製作を手伝うヘルパーを雇いましょう。速度は半分、経験値も半分で、経験値はあなたの職業に入ります。種類ごとに固有のボーナスがあります。';
 
   @override
-  String get helpersGather => 'Gathering';
+  String get helpersGather => '採集';
 
   @override
-  String get helpersCraft => 'Crafting';
+  String get helpersCraft => '製作';
 
   @override
-  String get helperHire => 'Hire';
+  String get helperHire => '雇う';
 
   @override
   String helperHireBody(String name, String price) {
-    return 'Hire the $name for $price?';
+    return '$nameを$priceで雇いますか？';
   }
 
   @override
-  String get helperSend => 'Send to work';
+  String get helperSend => '仕事に送る';
 
   @override
-  String get helperCancel => 'Call back';
+  String get helperCancel => '呼び戻す';
 
   @override
-  String get helperCancelBody => 'A gathering run brings nothing back; a craft returns its materials and gold.';
+  String get helperCancelBody => '採集は何も戻らず、製作は素材とゴールドが戻ります。';
 
   @override
-  String get helperDone => 'Done — collect it';
+  String get helperDone => '完了 — 受け取る';
 
   @override
   String helperWorking(String time) {
-    return 'Working, $time left';
+    return '作業中、残り$time';
   }
 
   @override
   String helperCollected(int items, int xp, String profession) {
-    return '$items items, +$xp $profession XP';
+    return 'アイテム$items個、$profession経験値 +$xp';
   }
 
   @override
-  String get helperNoRecipes => 'No recipe at your level in this profession yet.';
+  String get helperNoRecipes => 'この職業にはまだレベルに合うレシピがありません。';
 
   @override
-  String get helperPickRecipe => 'Pick a recipe';
+  String get helperPickRecipe => 'レシピを選択';
 
   @override
   String helperBonusYield(int pct) {
-    return '+$pct% yield';
+    return '産出量 +$pct%';
   }
 
   @override
   String helperBonusSpeed(int pct) {
-    return '$pct% faster';
+    return '$pct%高速';
   }
 
   @override
   String helperBonusXp(int pct) {
-    return '+$pct% XP';
+    return '経験値 +$pct%';
   }
 
   @override
   String helperBonusGold(int pct) {
-    return '$pct% less gold cost';
+    return 'ゴールド費用 $pct%減';
   }
 
   @override
   String helperBonusDouble(int pct) {
-    return '$pct% chance of a double output';
+    return '$pct%の確率で2倍産出';
   }
 
   @override
-  String get helperMiner => 'Miner';
+  String get helperMiner => '鉱夫';
 
   @override
-  String get helperWoodsman => 'Woodsman';
+  String get helperWoodsman => '木こり';
 
   @override
-  String get helperAngler => 'Angler';
+  String get helperAngler => '釣り師';
 
   @override
-  String get helperHerbalist => 'Herbalist';
+  String get helperHerbalist => '薬草師';
 
   @override
-  String get helperTrapper => 'Trapper';
+  String get helperTrapper => '罠師';
 
   @override
-  String get helperSmith => 'Smith';
+  String get helperSmith => '鍛冶師';
 
   @override
-  String get helperTanner => 'Tanner';
+  String get helperTanner => '革職人';
 
   @override
-  String get helperWeaver => 'Weaver';
+  String get helperWeaver => '織工';
 
   @override
-  String get helperCarver => 'Carver';
+  String get helperCarver => '木工師';
 
   @override
-  String get helperApothecary => 'Apothecary';
+  String get helperApothecary => '薬剤師';
 
   @override
-  String get helperCook => 'Cook';
+  String get helperCook => '料理人';
 
   @override
-  String get helperSmelter => 'Smelter';
+  String get helperSmelter => '精錬工';
 
   @override
-  String get helperScribe => 'Scribe';
+  String get helperScribe => '写本師';
 
   @override
-  String get helperGemcutter => 'Gemcutter';
+  String get helperGemcutter => '宝石職人';
 
   @override
-  String get errHelperBusy => 'That helper is already working.';
+  String get errHelperBusy => 'このヘルパーは既に作業中です。';
 
   @override
-  String get errHelperNotReady => 'The helper is not done yet.';
+  String get errHelperNotReady => 'ヘルパーはまだ終わっていません。';
 
   @override
-  String get shopOpen => 'Shop';
+  String get shopOpen => 'ショップ';
 
   @override
-  String get shopTitle => 'Credit shop';
+  String get shopTitle => 'クレジットショップ';
 
   @override
-  String get shopCredits => 'Credits';
+  String get shopCredits => 'クレジット';
 
   @override
-  String get shopAvatars => 'Avatars';
+  String get shopAvatars => 'アバター';
 
   @override
-  String get shopBackgrounds => 'Backgrounds';
+  String get shopBackgrounds => '背景';
 
   @override
   String shopBalance(int n) {
-    return '$n credits';
+    return '$nクレジット';
   }
 
   @override
-  String get shopBuyCredits => 'Buy credits to unlock boosts and cosmetics.';
+  String get shopBuyCredits => 'クレジットを購入してブーストやコスメを解放しましょう。';
 
   @override
-  String get shopPaymentsSoon => 'Buying credits with money is coming soon.';
+  String get shopPaymentsSoon => 'クレジットの購入は近日公開です。';
 
   @override
-  String get shopBoosts => 'XP boosts';
+  String get shopBoosts => '経験値ブースト';
 
   @override
-  String get shopBuy => 'Buy';
+  String get shopBuy => '購入';
 
   @override
   String shopBuyBody(int n) {
-    return 'Spend $n credits?';
+    return '$nクレジットを使いますか？';
   }
 
   @override
@@ -3144,233 +3126,233 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get boostGather => 'Gathering';
+  String get boostGather => '採集';
 
   @override
-  String get boostAdventure => 'Combat';
+  String get boostAdventure => '戦闘';
 
   @override
-  String get boostCraft => 'Professions';
+  String get boostCraft => '職業';
 
   @override
-  String get boostDesc => '+100% XP for 2 hours';
+  String get boostDesc => '2時間 経験値 +100%';
 
   @override
-  String get boostShort => '+100% XP, 2 h';
+  String get boostShort => '経験値 +100%、2時間';
 
   @override
   String boostLeft(String time) {
-    return 'Active, $time left';
+    return '有効、残り$time';
   }
 
   @override
   String boostWatchAd(int n) {
-    return 'Watch ad ($n left)';
+    return '広告を見る（残り$n回）';
   }
 
   @override
-  String get boostAdsSoon => 'Ads coming soon';
+  String get boostAdsSoon => '広告は近日公開';
 
   @override
-  String get errInsufficientCredits => 'Not enough credits.';
+  String get errInsufficientCredits => 'クレジットが足りません。';
 
   @override
-  String get errBoostActive => 'That boost is already running.';
+  String get errBoostActive => 'このブーストは既に有効です。';
 
   @override
-  String get errAdLimit => 'No more ad boosts today.';
+  String get errAdLimit => '今日の広告ブーストは終わりました。';
 
   @override
   String helperCanMake(int n) {
-    return 'Can make: $n';
+    return '製作可能：$n';
   }
 
   @override
-  String get helperPickResource => 'What to gather';
+  String get helperPickResource => '採集するもの';
 
   @override
-  String get helperCraftHint => 'Materials and gold are taken now; you keep playing meanwhile.';
+  String get helperCraftHint => '素材とゴールドは今支払われ、その間もプレイを続けられます。';
 
   @override
-  String get petsOpen => 'Pets';
+  String get petsOpen => 'ペット';
 
   @override
   String get petsHint =>
-      'Pet eggs drop when you clear raids past level 400. An egg hatches in the incubator; a pet levels up on hunts of its own, and your active pet gives you its bonus. While active it also strikes in your fights, adding damage to every hit.';
+      'ペットの卵はレベル400以上のレイドをクリアすると手に入ります。卵は孵化器でかえり、ペットは自分の狩りで成長し、アクティブなペットはボーナスを与えます。さらに戦闘にも参加し、すべての攻撃にダメージを加えます。';
 
   @override
-  String get petsEggs => 'Eggs';
+  String get petsEggs => '卵';
 
   @override
-  String get petsNoEggs => 'No eggs. Clear raids past level 400 to find some.';
+  String get petsNoEggs => '卵がありません。レベル400以上のレイドをクリアして見つけましょう。';
 
   @override
   String petsMine(int n, int max) {
-    return 'My pets ($n/$max)';
+    return 'マイペット（$n/$max）';
   }
 
   @override
-  String get petHatch => 'Incubate';
+  String get petHatch => '孵化';
 
   @override
   String petHatchBody(String egg, String time) {
-    return 'Put a $egg in the incubator? It hatches in $time.';
+    return '$eggを孵化器に入れますか？$timeでかえります。';
   }
 
   @override
-  String get petHatching => 'In its egg';
+  String get petHatching => '卵の中';
 
   @override
-  String get petHatched => 'Hatched!';
+  String get petHatched => '孵化しました！';
 
   @override
   String petPower(int n) {
-    return 'Fights like a level $n monster';
+    return 'レベル$nのモンスターのように戦います';
   }
 
   @override
-  String get petActive => 'Active';
+  String get petActive => 'アクティブ';
 
   @override
-  String get petActivate => 'Make active';
+  String get petActivate => 'アクティブにする';
 
   @override
-  String get petDeactivate => 'Rest';
+  String get petDeactivate => '休ませる';
 
   @override
-  String get petHunt => 'Send hunting';
+  String get petHunt => '狩りに出す';
 
   @override
   String petHunting(String mob) {
-    return 'Hunting $mob';
+    return '$mobを狩猟中';
   }
 
   @override
-  String get petHuntDone => 'Hunt over';
+  String get petHuntDone => '狩り終了';
 
   @override
-  String get petCollectEarly => 'Ending the hunt now pays the fights so far.';
+  String get petCollectEarly => '今狩りを終えると、これまでの戦闘分が支払われます。';
 
   @override
   String petCollected(int wins, int xp) {
-    return '$wins wins, +$xp pet XP';
+    return '$wins勝、ペット経験値 +$xp';
   }
 
   @override
   String petLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '$nameがレベル$levelに到達！';
   }
 
   @override
-  String get petDied => 'Your pet was beaten; the hunt ended early.';
+  String get petDied => 'ペットが倒され、狩りは早く終わりました。';
 
   @override
-  String get petPickMob => 'Monster to hunt';
+  String get petPickMob => '狩るモンスター';
 
   @override
   String petXpPerWin(int n) {
-    return '+$n XP a win';
+    return '1勝ごとに経験値 +$n';
   }
 
   @override
-  String get errPetCap => 'You have as many pets as you can keep.';
+  String get errPetCap => '所持できるペットの上限です。';
 
   @override
-  String get errPetHatching => 'The pet has not hatched yet.';
+  String get errPetHatching => 'ペットはまだかえっていません。';
 
   @override
-  String get errPetHunting => 'The pet is already hunting.';
+  String get errPetHunting => 'ペットは既に狩りに出ています。';
 
   @override
   String petStageLevels(int from, int to) {
-    return 'Lvl $from–$to';
+    return 'Lv.$from–$to';
   }
 
   @override
-  String get regionMobs => 'Monsters';
+  String get regionMobs => 'モンスター';
 
   @override
-  String get regionDungeons => 'Dungeons';
+  String get regionDungeons => 'ダンジョン';
 
   @override
-  String get regionGather => 'Resources';
+  String get regionGather => '資源';
 
   @override
-  String get regionEmpty => 'No monsters, dungeons, resources or quests belong to this region.';
+  String get regionEmpty => 'この地域に属するモンスター、ダンジョン、資源、クエストはありません。';
 
   @override
-  String get regionRaids => 'Raids';
+  String get regionRaids => 'レイド';
 
   @override
-  String get tagUse => 'Use';
+  String get tagUse => '用途';
 
   @override
-  String get tagAllClasses => 'All classes';
+  String get tagAllClasses => '全クラス';
 
   @override
-  String get tagDrops => 'Dropped by';
+  String get tagDrops => 'ドロップ元';
 
   @override
-  String get tagRaid => 'Raid';
+  String get tagRaid => 'レイド';
 
   @override
-  String get tagDungeon => 'Dungeon';
+  String get tagDungeon => 'ダンジョン';
 
   @override
-  String get tagCrafted => 'Crafted by';
+  String get tagCrafted => '製作元';
 
   @override
   String tagSkill(int n) {
-    return 'skill $n';
+    return 'スキル$n';
   }
 
   @override
-  String get tagSold => 'Sold by';
+  String get tagSold => '販売元';
 
   @override
-  String get tagGathered => 'Gathered by';
+  String get tagGathered => '採集元';
 
   @override
-  String get tagUsedIn => 'Material for';
+  String get tagUsedIn => '素材の用途';
 
   @override
-  String get petEvolution => 'Evolution';
+  String get petEvolution => '進化';
 
   @override
-  String get petStrength => 'Strength details';
+  String get petStrength => '強さの詳細';
 
   @override
   String petAssistRange(int min, int max) {
-    return 'Combat assist: +$min% – +$max% damage on every hit';
+    return '戦闘支援：すべての攻撃にダメージ +$min% ～ +$max%';
   }
 
   @override
   String petBonusRange(String min, String max) {
-    return 'Bonus: $min – $max';
+    return 'ボーナス：$min ～ $max';
   }
 
   @override
   String petFightsRange(int min, int max) {
-    return 'Hunts like a level $min – $max monster';
+    return 'レベル$min～$maxのモンスターのように狩ります';
   }
 
   @override
-  String get petFind => 'Where to get it';
+  String get petFind => '入手方法';
 
   @override
   String petAssist(int pct) {
-    return 'Combat assist: +$pct% damage';
+    return '戦闘支援：ダメージ +$pct%';
   }
 
   @override
-  String get petLevelNote => 'From level 1 to 100';
+  String get petLevelNote => 'レベル1から100まで';
 
   @override
-  String get petIndex => 'Pet Index';
+  String get petIndex => 'ペット図鑑';
 
   @override
   String petIndexCount(int n, int max) {
-    return '$n / $max discovered';
+    return '$n / $max 発見';
   }
 
   @override
@@ -3379,171 +3361,171 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get petEggTapHint => 'Tap an egg to incubate it.';
+  String get petEggTapHint => '卵をタップすると孵化器に入れられます。';
 
   @override
-  String get petTapHint => 'Tap a pet to see it · the green dot marks the active pet.';
+  String get petTapHint => 'ペットをタップで表示 · 緑の点がアクティブなペットです。';
 
   @override
-  String get petIndexHint => 'Tap a pet to open its page.';
+  String get petIndexHint => 'ペットをタップするとページが開きます。';
 
   @override
-  String get petUnknown => 'Not discovered yet';
+  String get petUnknown => '未発見';
 
   @override
-  String get petAbout => 'About';
+  String get petAbout => '概要';
 
   @override
-  String get petHabitat => 'Habitat';
+  String get petHabitat => '生息地';
 
   @override
   String petElement(String name) {
-    return 'Element: $name';
+    return '属性：$name';
   }
 
   @override
-  String get petStage1 => 'Hatchling';
+  String get petStage1 => '幼体';
 
   @override
-  String get petStage2 => 'Young';
+  String get petStage2 => '若体';
 
   @override
-  String get petStage3 => 'Adult';
+  String get petStage3 => '成体';
 
   @override
-  String get bodyMale => 'Male';
+  String get bodyMale => '男性';
 
   @override
-  String get bodyFemale => 'Female';
+  String get bodyFemale => '女性';
 
   @override
-  String get bodyChoice => 'Appearance';
+  String get bodyChoice => '外見';
 
   @override
-  String get bodyChange => 'Change appearance';
+  String get bodyChange => '外見を変更';
 
   @override
-  String get portraitNoArmor => 'No armor';
+  String get portraitNoArmor => '防具なし';
 
   @override
-  String get combatPower => 'Combat power';
+  String get combatPower => '戦闘力';
 
   @override
-  String get combatTapHint => 'tap for details';
+  String get combatTapHint => 'タップで詳細';
 
   @override
   String statCap(int cap) {
-    return 'cap $cap%';
+    return '上限 $cap%';
   }
 
   @override
-  String get cEvasion => 'Evasion';
+  String get cEvasion => '回避';
 
   @override
-  String get cBlock => 'Block';
+  String get cBlock => 'ブロック';
 
   @override
-  String get cCritDmg => 'Crit damage';
+  String get cCritDmg => 'クリティカルダメージ';
 
   @override
-  String get cDmgReduction => 'Damage reduction';
+  String get cDmgReduction => 'ダメージ軽減';
 
   @override
-  String get cLifesteal => 'Lifesteal';
+  String get cLifesteal => 'ライフスティール';
 
   @override
-  String get cExecute => 'Execute';
+  String get cExecute => '処刑';
 
   @override
-  String get cMissingHp => 'Last stand';
+  String get cMissingHp => '背水';
 
   @override
-  String get cPetAssist => 'Pet assist';
+  String get cPetAssist => 'ペット支援';
 
   @override
-  String get xPower => 'The strength used in world events: 2 × attack + defense + max HP / 10.';
+  String get xPower => 'ワールドイベントで使う強さ：攻撃力×2 + 防御力 + 最大HP / 10。';
 
   @override
-  String get xAttack => 'Base damage of each hit before the enemy\'s defense.';
+  String get xAttack => '敵の防御を適用する前の各攻撃の基本ダメージ。';
 
   @override
-  String get xDefense => 'Each hit you take loses half of your defense.';
+  String get xDefense => '受ける攻撃ごとに防御力の半分だけ減ります。';
 
   @override
   String xCrit(int cap) {
-    return 'Chance that a hit is critical. At most $cap%.';
+    return '攻撃がクリティカルになる確率。最大$cap%。';
   }
 
   @override
-  String get xCritDmg => 'A critical hit deals this multiple of a normal one.';
+  String get xCritDmg => 'クリティカルは通常攻撃のこの倍率のダメージを与えます。';
 
   @override
-  String get xHit => 'Your chance to land a hit, minus the enemy\'s evasion (15–95%).';
+  String get xHit => '攻撃が当たる確率から敵の回避を引いた値（15～95%）。';
 
   @override
   String xEvasion(int cap) {
-    return 'Taken off the enemy\'s hit chance. At most $cap%.';
+    return '敵の命中率から引かれます。最大$cap%。';
   }
 
   @override
   String xBlock(int cap) {
-    return 'Chance to halve an incoming hit. At most $cap%.';
+    return '受ける攻撃を半減する確率。最大$cap%。';
   }
 
   @override
   String xDmgReduction(int cap) {
-    return 'Every hit you take is lowered by this share. At most $cap%.';
+    return '受ける攻撃はこの割合だけ減ります。最大$cap%。';
   }
 
   @override
-  String get xLifesteal => 'You heal this share of the damage you deal.';
+  String get xLifesteal => '与えたダメージのこの割合だけ回復します。';
 
   @override
   String xExecute(int pct) {
-    return 'Extra damage against enemies at or below $pct% HP.';
+    return 'HPが$pct%以下の敵への追加ダメージ。';
   }
 
   @override
-  String get xMissingHp => 'Up to this much extra damage as your own HP drops.';
+  String get xMissingHp => '自分のHPが減るほど、この値まで追加ダメージ。';
 
   @override
-  String get xPetAssist => 'Your active pet adds this share to each of your hits.';
+  String get xPetAssist => 'アクティブなペットが各攻撃にこの割合を加えます。';
 
   @override
-  String get lookFace => 'Face';
+  String get lookFace => '顔';
 
   @override
-  String get lookHairStyle => 'Hair style';
+  String get lookHairStyle => '髪型';
 
   @override
-  String get lookHairColor => 'Hair color';
+  String get lookHairColor => '髪の色';
 
   @override
-  String get lookEyeColor => 'Eye color';
+  String get lookEyeColor => '目の色';
 
   @override
-  String get lookSave => 'Save';
+  String get lookSave => '保存';
 
   @override
-  String get lookHumanOnly => 'Face and hair options for this race are coming soon.';
+  String get lookHumanOnly => 'この種族の顔と髪の選択肢は近日公開です。';
 
   @override
-  String get raceAbilities => 'Race abilities';
+  String get raceAbilities => '種族能力';
 
   @override
-  String get raceAbilitiesHint => 'all passive';
+  String get raceAbilitiesHint => 'すべてパッシブ';
 
   @override
-  String get chooseClass => 'Choose your class';
+  String get chooseClass => 'クラスを選択';
 
   @override
   String raceAttrBonus(int pct, String name) {
-    return '+$pct% $name';
+    return '$name +$pct%';
   }
 
   @override
   String raceProfessionXp(int pct, String name) {
-    return '+$pct% bonus XP in $name';
+    return '$nameのボーナス経験値 +$pct%';
   }
 
   @override

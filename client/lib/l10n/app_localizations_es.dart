@@ -13,111 +13,111 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'MeNa World';
 
   @override
-  String get tagline => 'Adventures that keep going while you\'re away.';
+  String get tagline => 'Aventuras que continúan mientras no estás.';
 
   @override
-  String get emailOrUsername => 'Email or username';
+  String get emailOrUsername => 'Correo o nombre de usuario';
 
   @override
-  String get email => 'Email';
+  String get email => 'Correo electrónico';
 
   @override
-  String get username => 'Username';
+  String get username => 'Nombre de usuario';
 
   @override
-  String get password => 'Password';
+  String get password => 'Contraseña';
 
   @override
-  String get passwordConfirm => 'Confirm password';
+  String get passwordConfirm => 'Confirmar contraseña';
 
   @override
-  String get showPassword => 'Show password';
+  String get showPassword => 'Mostrar contraseña';
 
   @override
-  String get hidePassword => 'Hide password';
+  String get hidePassword => 'Ocultar contraseña';
 
   @override
-  String get login => 'Log in';
+  String get login => 'Iniciar sesión';
 
   @override
-  String get register => 'Create account';
+  String get register => 'Crear cuenta';
 
   @override
-  String get noAccount => 'New here? Create an account';
+  String get noAccount => '¿Eres nuevo? Crea una cuenta';
 
   @override
-  String get haveAccount => 'Already have an account? Log in';
+  String get haveAccount => '¿Ya tienes cuenta? Inicia sesión';
 
   @override
-  String get acceptTerms => 'I am 13 or older and accept the Terms of Service and Privacy Policy';
+  String get acceptTerms => 'Tengo 13 años o más y acepto los Términos del servicio y la Política de privacidad';
 
   @override
-  String get fieldRequired => 'Required';
+  String get fieldRequired => 'Obligatorio';
 
   @override
-  String get invalidEmail => 'Enter a valid email';
+  String get invalidEmail => 'Introduce un correo válido';
 
   @override
-  String get usernameRule => '3–32 letters, digits, _ or .';
+  String get usernameRule => '3–32 letras, dígitos, _ o .';
 
   @override
-  String get passwordMin => 'At least 8 characters';
+  String get passwordMin => 'Al menos 8 caracteres';
 
   @override
-  String get passwordMismatch => 'Passwords do not match';
+  String get passwordMismatch => 'Las contraseñas no coinciden';
 
   @override
-  String get termsRequired => 'Please accept the terms to continue';
+  String get termsRequired => 'Acepta los términos para continuar';
 
   @override
-  String get logout => 'Log out';
+  String get logout => 'Cerrar sesión';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Reintentar';
 
   @override
-  String get offline => 'Can\'t reach the server. Check your connection.';
+  String get offline => 'No se puede conectar con el servidor. Revisa tu conexión.';
 
   @override
-  String get characters => 'Characters';
+  String get characters => 'Personajes';
 
   @override
   String slotsUsed(int used, int cap) {
-    return '$used/$cap slots';
+    return '$used/$cap espacios';
   }
 
   @override
-  String get newCharacter => 'New character';
+  String get newCharacter => 'Nuevo personaje';
 
   @override
-  String get noCharacters => 'No characters yet. Create your first hero.';
+  String get noCharacters => 'Aún no hay personajes. Crea tu primer héroe.';
 
   @override
-  String get create => 'Create';
+  String get create => 'Crear';
 
   @override
-  String get characterName => 'Name';
+  String get characterName => 'Nombre';
 
   @override
   String get nameRule => 'Hasta 16 caracteres de un solo alfabeto; empieza por una letra (se admiten cifras y _)';
 
   @override
-  String get race => 'Race';
+  String get race => 'Raza';
 
   @override
-  String get characterClass => 'Class';
+  String get characterClass => 'Clase';
 
   @override
-  String get raceHuman => 'Human';
+  String get raceHuman => 'Humano';
 
   @override
-  String get raceElf => 'Elf';
+  String get raceElf => 'Elfo';
 
   @override
-  String get raceDwarf => 'Dwarf';
+  String get raceDwarf => 'Enano';
 
   @override
-  String get raceOrc => 'Orc';
+  String get raceOrc => 'Orco';
 
   @override
   String get classWarrior => 'Guerrero';
@@ -130,22 +130,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String levelLine(int level, String cls, String race) {
-    return 'Lvl $level · $cls · $race';
+    return 'Nv. $level · $cls · $race';
   }
 
   @override
   String levelShort(int level) {
-    return 'Nv $level';
+    return 'Nv. $level';
   }
 
   @override
-  String get hp => 'HP';
+  String get hp => 'PV';
 
   @override
-  String get mp => 'MP';
+  String get mp => 'PM';
 
   @override
-  String get stamina => 'ST';
+  String get stamina => 'RE';
 
   @override
   String get energy => 'EN';
@@ -159,16 +159,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get attributes => 'Attributes';
+  String get attributes => 'Atributos';
 
   @override
-  String get combat => 'Combat';
+  String get combat => 'Combate';
 
   @override
-  String get statStr => 'STR';
+  String get statStr => 'FUE';
 
   @override
-  String get statAgi => 'DEX';
+  String get statAgi => 'DES';
 
   @override
   String get statInt => 'INT';
@@ -177,22 +177,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get statVit => 'VIT';
 
   @override
-  String get statCha => 'WIS';
+  String get statCha => 'SAB';
 
   @override
-  String get statLuck => 'LUCK';
+  String get statLuck => 'SUE';
 
   @override
-  String get attack => 'Attack';
+  String get attack => 'Ataque';
 
   @override
-  String get defense => 'Defense';
+  String get defense => 'Defensa';
 
   @override
-  String get crit => 'Crit';
+  String get crit => 'Crítico';
 
   @override
-  String get hit => 'Hit';
+  String get hit => 'Precisión';
 
   @override
   String percent(int value) {
@@ -200,78 +200,78 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get gold => 'Gold';
+  String get gold => 'Oro';
 
   @override
-  String get switchCharacter => 'Switch character';
+  String get switchCharacter => 'Cambiar de personaje';
 
   @override
-  String get statePendingDelete => 'Deletion pending';
+  String get statePendingDelete => 'Eliminación pendiente';
 
   @override
-  String get stateFrozen => 'Frozen';
+  String get stateFrozen => 'Congelado';
 
   @override
-  String get errInvalidCredentials => 'Wrong email/username or password.';
+  String get errInvalidCredentials => 'Correo, usuario o contraseña incorrectos.';
 
   @override
-  String get errAccountLocked => 'Your account is temporarily locked.';
+  String get errAccountLocked => 'Tu cuenta está bloqueada temporalmente.';
 
   @override
-  String get errAccountBanned => 'This account has been banned.';
+  String get errAccountBanned => 'Esta cuenta ha sido baneada.';
 
   @override
-  String get errAccountExists => 'That email or username is already taken.';
+  String get errAccountExists => 'Ese correo o nombre de usuario ya está en uso.';
 
   @override
-  String get errRateLimited => 'Too many attempts. Please wait a moment.';
+  String get errRateLimited => 'Demasiados intentos. Espera un momento.';
 
   @override
-  String get errNameTaken => 'That name is already taken.';
+  String get errNameTaken => 'Ese nombre ya está en uso.';
 
   @override
-  String get errSlotCap => 'All character slots are in use.';
+  String get errSlotCap => 'Todos los espacios de personaje están ocupados.';
 
   @override
-  String get errNotPlayable => 'This character can\'t be played right now.';
+  String get errNotPlayable => 'Este personaje no se puede jugar ahora.';
 
   @override
-  String get errSessionExpired => 'Your session expired. Please log in again.';
+  String get errSessionExpired => 'Tu sesión ha caducado. Inicia sesión de nuevo.';
 
   @override
   String errGeneric(String code) {
-    return 'Something went wrong ($code).';
+    return 'Algo salió mal ($code).';
   }
 
   @override
-  String get navCharacter => 'Character';
+  String get navCharacter => 'Personaje';
 
   @override
-  String get navActivity => 'Gather';
+  String get navActivity => 'Recolección';
 
   @override
-  String get actMining => 'Mining';
+  String get actMining => 'Minería';
 
   @override
-  String get actFishing => 'Fishing';
+  String get actFishing => 'Pesca';
 
   @override
-  String get actWoodcutting => 'Woodcutting';
+  String get actWoodcutting => 'Tala';
 
   @override
-  String get actHerbalism => 'Herbalism';
+  String get actHerbalism => 'Herboristería';
 
   @override
-  String get actHunting => 'Hunting';
+  String get actHunting => 'Caza';
 
   @override
-  String get activityChoose => 'Choose an activity';
+  String get activityChoose => 'Elige una actividad';
 
   @override
-  String get durationLabel => 'Duration';
+  String get durationLabel => 'Duración';
 
   @override
-  String get gatherResource => 'Resource';
+  String get gatherResource => 'Recurso';
 
   @override
   String gatherXp(int xp, int next) {
@@ -279,11 +279,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get gatherMax => 'Max level';
+  String get gatherMax => 'Nivel máximo';
 
   @override
   String gatherLocked(int level) {
-    return 'Unlocks at level $level';
+    return 'Se desbloquea en el nivel $level';
   }
 
   @override
@@ -293,69 +293,69 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String gatherLevelUp(String name, int level) {
-    return '$name reached level $level!';
+    return '¡$name alcanzó el nivel $level!';
   }
 
   @override
-  String get errGatherLevel => 'Your gathering level is too low for this resource.';
+  String get errGatherLevel => 'Tu nivel de recolección es demasiado bajo para este recurso.';
 
   @override
   String startActivity(String name) {
-    return 'Start $name';
+    return 'Empezar $name';
   }
 
   @override
-  String get collect => 'Collect';
+  String get collect => 'Recoger';
 
   @override
-  String get abandon => 'Abandon';
+  String get abandon => 'Abandonar';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Cancelar';
 
   @override
-  String get soFar => 'Gathered so far';
+  String get soFar => 'Recolectado hasta ahora';
 
   @override
-  String get activityDone => 'Complete — ready to collect';
+  String get activityDone => 'Completado: listo para recoger';
 
   @override
   String remaining(String time) {
-    return '$time left';
+    return 'Quedan $time';
   }
 
   @override
   String durHm(int h, String m) {
-    return '${h}h ${m}m';
+    return '$h h $m min';
   }
 
   @override
   String durM(int m) {
-    return '${m}m';
+    return '$m min';
   }
 
   @override
   String durS(int s) {
-    return '${s}s';
+    return '$s s';
   }
 
   @override
-  String get collectEarlyTitle => 'Collect early?';
+  String get collectEarlyTitle => '¿Recoger antes?';
 
   @override
-  String get collectEarlyBody => 'You get what has been gathered so far and the activity ends.';
+  String get collectEarlyBody => 'Recibes lo recolectado hasta ahora y la actividad termina.';
 
   @override
-  String get abandonTitle => 'Abandon activity?';
+  String get abandonTitle => '¿Abandonar la actividad?';
 
   @override
-  String get abandonBody => 'Everything gathered so far will be lost.';
+  String get abandonBody => 'Se perderá todo lo recolectado hasta ahora.';
 
   @override
-  String get lootCollect => 'Nice!';
+  String get lootCollect => '¡Genial!';
 
   @override
-  String get lootNothing => 'Nothing this time.';
+  String get lootNothing => 'Nada esta vez.';
 
   @override
   String xpGain(int xp) {
@@ -363,55 +363,55 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get rarityCommon => 'Common';
+  String get rarityCommon => 'Común';
 
   @override
-  String get rarityUncommon => 'Uncommon';
+  String get rarityUncommon => 'Poco común';
 
   @override
-  String get rarityRare => 'Rare';
+  String get rarityRare => 'Raro';
 
   @override
-  String get rarityEpic => 'Epic';
+  String get rarityEpic => 'Épico';
 
   @override
-  String get rarityLegendary => 'Legendary';
+  String get rarityLegendary => 'Legendario';
 
   @override
-  String get rarityMythic => 'Mythic';
+  String get rarityMythic => 'Mítico';
 
   @override
-  String get errSlotBusy => 'Another activity is already running.';
+  String get errSlotBusy => 'Ya hay otra actividad en curso.';
 
   @override
-  String get errNotActive => 'This activity has already ended.';
+  String get errNotActive => 'Esta actividad ya ha terminado.';
 
   @override
-  String get evAchievement => 'Achievement unlocked!';
+  String get evAchievement => '¡Logro desbloqueado!';
 
   @override
-  String get evMasteryTier => 'Mastery tier up!';
+  String get evMasteryTier => '¡Nuevo nivel de maestría!';
 
   @override
-  String get evMarketSold => 'One of your listings sold.';
+  String get evMarketSold => 'Se ha vendido uno de tus anuncios.';
 
   @override
-  String get evMailReceived => 'You have new mail.';
+  String get evMailReceived => 'Tienes correo nuevo.';
 
   @override
-  String get evPartyInvite => 'You were invited to a party.';
+  String get evPartyInvite => 'Te han invitado a un grupo.';
 
   @override
-  String get evGuildInvite => 'You were invited to a guild.';
+  String get evGuildInvite => 'Te han invitado a un gremio.';
 
   @override
-  String get navBag => 'Bag';
+  String get navBag => 'Bolsa';
 
   @override
-  String get equipment => 'Equipment';
+  String get equipment => 'Equipo';
 
   @override
-  String get bag => 'Bag';
+  String get bag => 'Bolsa';
 
   @override
   String weightKg(String cur, String cap) {
@@ -419,126 +419,126 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get slotHelm => 'Helm';
+  String get slotHelm => 'Casco';
 
   @override
-  String get slotNecklace => 'Neck';
+  String get slotNecklace => 'Cuello';
 
   @override
-  String get slotChest => 'Chest';
+  String get slotChest => 'Pecho';
 
   @override
-  String get slotGloves => 'Gloves';
+  String get slotGloves => 'Guantes';
 
   @override
-  String get slotLegs => 'Legs';
+  String get slotLegs => 'Piernas';
 
   @override
-  String get slotBoots => 'Boots';
+  String get slotBoots => 'Botas';
 
   @override
-  String get slotMainhand => 'Main hand';
+  String get slotMainhand => 'Mano principal';
 
   @override
-  String get slotOffhand => 'Off hand';
+  String get slotOffhand => 'Mano secundaria';
 
   @override
-  String get slotRing => 'Ring';
+  String get slotRing => 'Anillo';
 
   @override
-  String get slotTrinket => 'Trinket';
+  String get slotTrinket => 'Abalorio';
 
   @override
-  String get equip => 'Equip';
+  String get equip => 'Equipar';
 
   @override
-  String get unequip => 'Unequip';
+  String get unequip => 'Quitar';
 
   @override
-  String get sell => 'Sell';
+  String get sell => 'Vender';
 
   @override
-  String get sortLabel => 'Sort';
+  String get sortLabel => 'Ordenar';
 
   @override
-  String get sortSlot => 'Bag order';
+  String get sortSlot => 'Orden de la bolsa';
 
   @override
-  String get sortRarity => 'Rarity';
+  String get sortRarity => 'Rareza';
 
   @override
-  String get sortType => 'Type';
+  String get sortType => 'Tipo';
 
   @override
-  String get sortName => 'Name';
+  String get sortName => 'Nombre';
 
   @override
-  String get sortValue => 'Value';
+  String get sortValue => 'Valor';
 
   @override
   String selectedCount(int count) {
-    return '$count selected';
+    return '$count seleccionados';
   }
 
   @override
-  String get selectAll => 'Select all';
+  String get selectAll => 'Seleccionar todo';
 
   @override
-  String get clearSelection => 'Clear selection';
+  String get clearSelection => 'Borrar selección';
 
   @override
   String sellSelectedTitle(int count) {
-    return 'Sell $count items?';
+    return '¿Vender $count objetos?';
   }
 
   @override
   String destroySelectedTitle(int count) {
-    return 'Destroy $count items?';
+    return '¿Destruir $count objetos?';
   }
 
   @override
-  String get deleteEntry => 'Delete';
+  String get deleteEntry => 'Eliminar';
 
   @override
   String craftHowMany(String name) {
-    return 'How many $name?';
+    return '¿Cuántos $name?';
   }
 
   @override
   String craftCount(int count) {
-    return 'Craft ×$count';
+    return 'Fabricar ×$count';
   }
 
   @override
-  String get destroy => 'Destroy';
+  String get destroy => 'Destruir';
 
   @override
   String sellTitle(String name) {
-    return 'Sell $name?';
+    return '¿Vender $name?';
   }
 
   @override
-  String get sellBody => 'You can buy it back from the vendor for 2 hours.';
+  String get sellBody => 'Puedes recomprarlo al vendedor durante 2 horas.';
 
   @override
   String destroyTitle(String name) {
-    return 'Destroy $name?';
+    return '¿Destruir $name?';
   }
 
   @override
-  String get destroyBody => 'This cannot be undone.';
+  String get destroyBody => 'Esto no se puede deshacer.';
 
   @override
-  String get soldFor => 'Sold for';
+  String get soldFor => 'Vendido por';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Cantidad';
 
   @override
-  String get requiresLevel => 'Requires level';
+  String get requiresLevel => 'Nivel requerido';
 
   @override
-  String get weight => 'Weight';
+  String get weight => 'Peso';
 
   @override
   String weightGrams(int g) {
@@ -546,276 +546,276 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get sellValue => 'Sells for';
+  String get sellValue => 'Se vende por';
 
   @override
-  String get bound => 'Soulbound';
+  String get bound => 'Ligado al alma';
 
   @override
-  String get itemLocked => 'This item is held by a trade, mail or listing.';
+  String get itemLocked => 'Este objeto está retenido por un intercambio, correo o anuncio.';
 
   @override
-  String get errBagFull => 'Your bag is full.';
+  String get errBagFull => 'Tu bolsa está llena.';
 
   @override
-  String get errItemLocked => 'This item is locked.';
+  String get errItemLocked => 'Este objeto está bloqueado.';
 
   @override
-  String get errClassRestriction => 'Your class can\'t use this item.';
+  String get errClassRestriction => 'Tu clase no puede usar este objeto.';
 
   @override
-  String get errLevelRequirement => 'Your level is too low.';
+  String get errLevelRequirement => 'Tu nivel es demasiado bajo.';
 
   @override
-  String get errNotEquippable => 'This item can\'t be equipped.';
+  String get errNotEquippable => 'Este objeto no se puede equipar.';
 
   @override
-  String get navAdventure => 'Adventure';
+  String get navAdventure => 'Aventura';
 
   @override
-  String get segHunt => 'Hunt';
+  String get segHunt => 'Caza';
 
   @override
-  String get segDungeon => 'Dungeon';
+  String get segDungeon => 'Mazmorra';
 
   @override
-  String get segTravel => 'Travel';
+  String get segTravel => 'Viaje';
 
   @override
-  String get huntChoose => 'Choose your prey';
+  String get huntChoose => 'Elige tu presa';
 
   @override
-  String get startHunt => 'Start hunt';
+  String get startHunt => 'Empezar caza';
 
   @override
-  String get huntDone => 'Hunt over — collect your spoils';
+  String get huntDone => 'Caza terminada: recoge tu botín';
 
   @override
-  String get huntEarlyBody => 'You keep the fights won so far and the hunt ends.';
+  String get huntEarlyBody => 'Conservas los combates ganados hasta ahora y la caza termina.';
 
   @override
   String mobStats(int hp, int atk, int def) {
-    return 'HP $hp · ATK $atk · DEF $def';
+    return 'PV $hp · ATQ $atk · DEF $def';
   }
 
   @override
   String huntSummary(int won, int lost) {
-    return '$won won · $lost lost';
+    return '$won ganados · $lost perdidos';
   }
 
   @override
   String levelUp(int level) {
-    return 'Level up! Now level $level';
+    return '¡Subes de nivel! Ahora nivel $level';
   }
 
   @override
   String levelReq(int level) {
-    return 'Lvl $level+';
+    return 'Nv. $level+';
   }
 
   @override
   String dungeonEncounters(int count, String boss) {
-    return '$count fights · boss $boss';
+    return '$count combates · jefe $boss';
   }
 
   @override
-  String get dungeonEnter => 'Enter';
+  String get dungeonEnter => 'Entrar';
 
   @override
-  String get dungeonDone => 'Run complete — claim rewards';
+  String get dungeonDone => 'Expedición completada: reclama las recompensas';
 
   @override
-  String get dungeonWaitHint => 'Rewards unlock when the run ends.';
+  String get dungeonWaitHint => 'Las recompensas se desbloquean al terminar la expedición.';
 
   @override
-  String get dungeonCleared => 'Cleared!';
+  String get dungeonCleared => '¡Superada!';
 
   @override
-  String get dungeonFailed => 'Party wiped';
+  String get dungeonFailed => 'Grupo derrotado';
 
   @override
-  String get bossKilled => 'Boss defeated';
+  String get bossKilled => 'Jefe derrotado';
 
   @override
-  String get bonus => 'Clear bonus';
+  String get bonus => 'Bonificación por superarla';
 
   @override
-  String get youAreIn => 'You are in';
+  String get youAreIn => 'Estás en';
 
   @override
-  String get routes => 'Routes';
+  String get routes => 'Rutas';
 
   @override
-  String get noRoutes => 'No routes from here.';
+  String get noRoutes => 'No hay rutas desde aquí.';
 
   @override
-  String get travelTo => 'Go';
+  String get travelTo => 'Ir';
 
   @override
   String travelling(String place) {
-    return 'Travelling to $place';
+    return 'Viajando a $place';
   }
 
   @override
-  String get arrive => 'Arrive';
+  String get arrive => 'Llegar';
 
   @override
-  String get arrived => 'You have arrived';
+  String get arrived => 'Has llegado';
 
   @override
-  String get cancelTravel => 'Turn back';
+  String get cancelTravel => 'Dar la vuelta';
 
   @override
-  String get kindCity => 'City';
+  String get kindCity => 'Ciudad';
 
   @override
-  String get kindZone => 'Zone';
+  String get kindZone => 'Zona';
 
   @override
-  String get kindWilderness => 'Wilderness';
+  String get kindWilderness => 'Tierras salvajes';
 
   @override
-  String get kindDungeon => 'Dungeon';
+  String get kindDungeon => 'Mazmorra';
 
   @override
-  String get kindContinent => 'Continent';
+  String get kindContinent => 'Continente';
 
   @override
-  String get safeZone => 'safe';
+  String get safeZone => 'segura';
 
   @override
-  String get errBusy => 'Something is already in progress.';
+  String get errBusy => 'Ya hay algo en curso.';
 
   @override
-  String get errNotReady => 'Not finished yet.';
+  String get errNotReady => 'Aún no ha terminado.';
 
   @override
-  String get errWeeklyLocked => 'You already cleared this dungeon this week.';
+  String get errWeeklyLocked => 'Ya superaste esta mazmorra esta semana.';
 
   @override
-  String get errNoRoute => 'There is no direct route there.';
+  String get errNoRoute => 'No hay ruta directa hasta allí.';
 
   @override
-  String get navWorkshop => 'Workshop';
+  String get navWorkshop => 'Taller';
 
   @override
-  String get segCraft => 'Craft';
+  String get segCraft => 'Fabricar';
 
   @override
-  String get segShop => 'Shop';
+  String get segShop => 'Tienda';
 
   @override
-  String get profBlacksmithing => 'Blacksmithing';
+  String get profBlacksmithing => 'Herrería';
 
   @override
-  String get profAlchemy => 'Alchemy';
+  String get profAlchemy => 'Alquimia';
 
   @override
-  String get profCooking => 'Cooking';
+  String get profCooking => 'Cocina';
 
   @override
-  String get learn => 'Learn';
+  String get learn => 'Aprender';
 
   @override
   String recipeCount(int count) {
-    return '$count recipes';
+    return '$count recetas';
   }
 
   @override
-  String get itemType => 'Type';
+  String get itemType => 'Tipo';
 
   @override
-  String get stackSize => 'Stack';
+  String get stackSize => 'Pila';
 
   @override
-  String get skillXpReward => 'Skill XP';
+  String get skillXpReward => 'XP de habilidad';
 
   @override
-  String get learnHint => 'Learn this profession to unlock its recipes.';
+  String get learnHint => 'Aprende esta profesión para desbloquear sus recetas.';
 
   @override
-  String get craft => 'Craft';
+  String get craft => 'Fabricar';
 
   @override
   String crafted(String name, int count) {
-    return 'Crafted $name ×$count';
+    return 'Fabricado: $name ×$count';
   }
 
   @override
   String skillUp(String profession, int level) {
-    return '$profession is now level $level';
+    return '$profession ahora es nivel $level';
   }
 
   @override
   String requiresSkill(int level) {
-    return 'Needs skill $level';
+    return 'Requiere habilidad $level';
   }
 
   @override
-  String get buy => 'Buy';
+  String get buy => 'Comprar';
 
   @override
   String bought(String name) {
-    return 'Bought $name';
+    return 'Comprado: $name';
   }
 
   @override
-  String get buybacks => 'Buy back';
+  String get buybacks => 'Recompra';
 
   @override
-  String get buybackHint => 'Items you sold can be bought back for 2 hours.';
+  String get buybackHint => 'Los objetos vendidos se pueden recomprar durante 2 horas.';
 
   @override
-  String get errInsufficientGold => 'Not enough gold.';
+  String get errInsufficientGold => 'No tienes suficiente oro.';
 
   @override
-  String get errInsufficientMaterials => 'Faltan materiales.';
+  String get errInsufficientMaterials => 'Te faltan materiales.';
 
   @override
-  String get errSkillTooLow => 'Your skill is too low for this recipe.';
+  String get errSkillTooLow => 'Tu habilidad es demasiado baja para esta receta.';
 
   @override
-  String get errProfessionNotLearned => 'Learn the profession first.';
+  String get errProfessionNotLearned => 'Aprende primero la profesión.';
 
   @override
-  String get errPriceChanged => 'The price changed — check it and try again.';
+  String get errPriceChanged => 'El precio ha cambiado: compruébalo e inténtalo de nuevo.';
 
   @override
-  String get errCannotSell => 'This item can\'t be sold.';
+  String get errCannotSell => 'Este objeto no se puede vender.';
 
   @override
-  String get errBuybackExpired => 'The buy-back window has closed.';
+  String get errBuybackExpired => 'El plazo de recompra ha terminado.';
 
   @override
-  String get segMarket => 'Market';
+  String get segMarket => 'Mercado';
 
   @override
-  String get classWeapon => 'Weapons';
+  String get classWeapon => 'Armas';
 
   @override
-  String get classArmor => 'Armor';
+  String get classArmor => 'Armaduras';
 
   @override
-  String get classConsumable => 'Consumables';
+  String get classConsumable => 'Consumibles';
 
   @override
-  String get classMaterial => 'Materials';
+  String get classMaterial => 'Materiales';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'Todos';
 
   @override
-  String get sortCheapest => 'Cheapest';
+  String get sortCheapest => 'Más baratos';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => 'Más nuevos';
 
   @override
-  String get marketEmpty => 'No listings match.';
+  String get marketEmpty => 'No hay anuncios que coincidan.';
 
   @override
   String listingLine(String seller, String price) {
-    return '$seller · $price each';
+    return '$seller · $price c/u';
   }
 
   @override
@@ -823,72 +823,72 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String myListings(int count) {
-    return 'My listings ($count)';
+    return 'Mis anuncios ($count)';
   }
 
   @override
-  String get cancelListing => 'Cancel listing';
+  String get cancelListing => 'Retirar anuncio';
 
   @override
   String cancelListingTitle(String name) {
-    return 'Cancel $name?';
+    return '¿Retirar $name?';
   }
 
   @override
   String get cancelListingBody =>
-      'The item returns to your bag. Part of the listing fee is refunded only within the first 6 hours.';
+      'El objeto vuelve a tu bolsa. Parte de la tarifa solo se reembolsa en las primeras 6 horas.';
 
   @override
   String buyListingTitle(String name) {
-    return 'Buy $name?';
+    return '¿Comprar $name?';
   }
 
   @override
   String buyListingBody(String price, String seller) {
-    return 'Pay $price to $seller.';
+    return 'Pagar $price a $seller.';
   }
 
   @override
-  String get listOnMarket => 'List on market';
+  String get listOnMarket => 'Poner en el mercado';
 
   @override
   String listed(String name) {
-    return '$name listed on the market';
+    return '$name puesto en el mercado';
   }
 
   @override
   String quantityOf(int count, int max) {
-    return 'Quantity: $count of $max';
+    return 'Cantidad: $count de $max';
   }
 
   @override
-  String get unitPrice => 'Price per item';
+  String get unitPrice => 'Precio por unidad';
 
   @override
   String suggestedPrice(String price) {
-    return 'Market price: $price';
+    return 'Precio de mercado: $price';
   }
 
   @override
-  String get listingFee => 'Listing fee (non-refundable)';
+  String get listingFee => 'Tarifa de anuncio (no reembolsable)';
 
   @override
-  String get youReceive => 'You receive when sold';
+  String get youReceive => 'Recibes al vender';
 
   @override
-  String get errPriceOutOfRange => 'That price is outside the allowed range.';
+  String get errPriceOutOfRange => 'Ese precio está fuera del rango permitido.';
 
   @override
-  String get errListingCap => 'You have too many active listings.';
+  String get errListingCap => 'Tienes demasiados anuncios activos.';
 
   @override
-  String get errSelfBuy => 'You can\'t buy your own listing.';
+  String get errSelfBuy => 'No puedes comprar tu propio anuncio.';
 
   @override
-  String get errListingUnavailable => 'This listing is no longer available.';
+  String get errListingUnavailable => 'Este anuncio ya no está disponible.';
 
   @override
-  String get errNotTradable => 'This item can\'t be traded.';
+  String get errNotTradable => 'Este objeto no se puede intercambiar.';
 
   @override
   String get social => 'Social';
@@ -897,438 +897,438 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tabChat => 'Chat';
 
   @override
-  String get tabFriends => 'Friends';
+  String get tabFriends => 'Amigos';
 
   @override
-  String get tabMail => 'Mail';
+  String get tabMail => 'Correo';
 
   @override
-  String get chanGlobal => 'World';
+  String get chanGlobal => 'Mundo';
 
   @override
-  String get chanGuild => 'Guild';
+  String get chanGuild => 'Gremio';
 
   @override
-  String get chanParty => 'Party';
+  String get chanParty => 'Grupo';
 
   @override
-  String get chatEmpty => 'No messages yet. Say hello!';
+  String get chatEmpty => 'Aún no hay mensajes. ¡Saluda!';
 
   @override
   String chatHint(String channel) {
-    return 'Message $channel';
+    return 'Mensaje a $channel';
   }
 
   @override
-  String get send => 'Send';
+  String get send => 'Enviar';
 
   @override
-  String get addFriend => 'Add';
+  String get addFriend => 'Añadir';
 
   @override
   String friendAdded(String name) {
-    return 'You and $name are now friends';
+    return '$name y tú ya sois amigos';
   }
 
   @override
   String friendRequested(String name) {
-    return 'Friend request sent to $name';
+    return 'Solicitud de amistad enviada a $name';
   }
 
   @override
-  String get friendRequests => 'Friend requests';
+  String get friendRequests => 'Solicitudes de amistad';
 
   @override
   String friendsCount(int count) {
-    return 'Friends ($count)';
+    return 'Amigos ($count)';
   }
 
   @override
-  String get noFriends => 'No friends yet — add someone by name.';
+  String get noFriends => 'Aún no hay amigos: añade a alguien por su nombre.';
 
   @override
-  String get more => 'More';
+  String get more => 'Más';
 
   @override
-  String get whisper => 'Whisper';
+  String get whisper => 'Susurrar';
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'Quitar';
 
   @override
-  String get block => 'Block';
+  String get block => 'Bloquear';
 
   @override
-  String get unblock => 'Unblock';
+  String get unblock => 'Desbloquear';
 
   @override
-  String get blockedList => 'Blocked';
+  String get blockedList => 'Bloqueados';
 
   @override
   String removeFriendTitle(String name) {
-    return 'Remove $name?';
+    return '¿Quitar a $name?';
   }
 
   @override
-  String get removeFriendBody => 'You can send a new friend request later.';
+  String get removeFriendBody => 'Podrás enviar otra solicitud más adelante.';
 
   @override
   String blockTitle(String name) {
-    return 'Block $name?';
+    return '¿Bloquear a $name?';
   }
 
   @override
   String get blockBody =>
-      'They can\'t whisper you, their chat is hidden and their mail is dropped. This also ends your friendship.';
+      'No podrá susurrarte, su chat se ocultará y su correo se descartará. También termina vuestra amistad.';
 
   @override
-  String get accept => 'Accept';
+  String get accept => 'Aceptar';
 
   @override
-  String get decline => 'Decline';
+  String get decline => 'Rechazar';
 
   @override
-  String get newMail => 'Write mail';
+  String get newMail => 'Escribir correo';
 
   @override
-  String get inboxEmpty => 'Your mailbox is empty.';
+  String get inboxEmpty => 'Tu buzón está vacío.';
 
   @override
-  String get noSubject => '(no subject)';
+  String get noSubject => '(sin asunto)';
 
   @override
   String mailFrom(String name) {
-    return 'From $name';
+    return 'De $name';
   }
 
   @override
-  String get attachments => 'Attachments';
+  String get attachments => 'Adjuntos';
 
   @override
-  String get claim => 'Take attachments';
+  String get claim => 'Recoger adjuntos';
 
   @override
-  String get mailClaimed => 'Attachments moved to your bag and wallet';
+  String get mailClaimed => 'Adjuntos movidos a tu bolsa y monedero';
 
   @override
-  String get deleteMailTitle => 'Delete this mail?';
+  String get deleteMailTitle => '¿Eliminar este correo?';
 
   @override
-  String get deleteMailBody => 'Deleted mail can\'t be recovered.';
+  String get deleteMailBody => 'El correo eliminado no se puede recuperar.';
 
   @override
   String mailSent(String postage) {
-    return 'Mail sent (postage $postage)';
+    return 'Correo enviado (franqueo $postage)';
   }
 
   @override
-  String get mailTo => 'To (character name)';
+  String get mailTo => 'Para (nombre del personaje)';
 
   @override
-  String get mailSubject => 'Subject';
+  String get mailSubject => 'Asunto';
 
   @override
-  String get mailBody => 'Message';
+  String get mailBody => 'Mensaje';
 
   @override
-  String get attachGold => 'Attach gold';
+  String get attachGold => 'Adjuntar oro';
 
   @override
-  String get errAlreadyFriends => 'You\'re already friends.';
+  String get errAlreadyFriends => 'Ya sois amigos.';
 
   @override
-  String get errAlreadyRequested => 'A friend request is already pending.';
+  String get errAlreadyRequested => 'Ya hay una solicitud de amistad pendiente.';
 
   @override
-  String get errBlocked => 'You can\'t interact with this player.';
+  String get errBlocked => 'No puedes interactuar con este jugador.';
 
   @override
-  String get errFriendCap => 'Your friend list is full.';
+  String get errFriendCap => 'Tu lista de amigos está llena.';
 
   @override
-  String get errTargetNotFound => 'No character with that name.';
+  String get errTargetNotFound => 'No hay ningún personaje con ese nombre.';
 
   @override
-  String get errSelfTarget => 'You can\'t target yourself.';
+  String get errSelfTarget => 'No puedes elegirte a ti mismo.';
 
   @override
-  String get errInboxFull => 'Their mailbox is full.';
+  String get errInboxFull => 'Su buzón está lleno.';
 
   @override
-  String get errTooLong => 'That\'s too long.';
+  String get errTooLong => 'Es demasiado largo.';
 
   @override
-  String get errEmpty => 'Write something first.';
+  String get errEmpty => 'Escribe algo primero.';
 
   @override
-  String get errNotInChannel => 'You\'re not in that group.';
+  String get errNotInChannel => 'No perteneces a ese grupo.';
 
   @override
-  String get errMuted => 'You are muted and can\'t chat right now.';
+  String get errMuted => 'Estás silenciado y ahora no puedes chatear.';
 
   @override
-  String get errHasAttachments => 'Take the attachments before deleting.';
+  String get errHasAttachments => 'Recoge los adjuntos antes de eliminar.';
 
   @override
-  String get useItem => 'Use';
+  String get useItem => 'Usar';
 
   @override
   String restoresHp(int amount) {
-    return 'Restores $amount HP';
+    return 'Restaura $amount PV';
   }
 
   @override
   String usedItem(String name, int hp, int max) {
-    return 'Used $name · HP $hp/$max';
+    return 'Usado $name · PV $hp/$max';
   }
 
   @override
-  String get errHpFull => 'Your health is already full.';
+  String get errHpFull => 'Tu salud ya está completa.';
 
   @override
-  String get errInCombat => 'Finish your hunt or dungeon run first.';
+  String get errInCombat => 'Termina primero tu caza o expedición.';
 
   @override
-  String get errNotUsable => 'This item can\'t be used.';
+  String get errNotUsable => 'Este objeto no se puede usar.';
 
   @override
-  String get errTooWounded => 'You\'re too wounded to fight. Rest or drink a potion.';
+  String get errTooWounded => 'Estás demasiado herido para luchar. Descansa o bebe una poción.';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => '¿Olvidaste la contraseña?';
 
   @override
-  String get resetHint => 'Enter your account e-mail and we\'ll send you a link to set a new password.';
+  String get resetHint => 'Introduce el correo de tu cuenta y te enviaremos un enlace para crear una contraseña nueva.';
 
   @override
-  String get resetSent => 'If an account exists for that e-mail, a reset link is on its way. It expires in 1 hour.';
+  String get resetSent => 'Si existe una cuenta con ese correo, el enlace ya va de camino. Caduca en 1 hora.';
 
   @override
-  String get sendLink => 'Send link';
+  String get sendLink => 'Enviar enlace';
 
   @override
   String get close => 'Cerrar';
 
   @override
-  String get changePassword => 'Change password';
+  String get changePassword => 'Cambiar contraseña';
 
   @override
-  String get currentPassword => 'Current password';
+  String get currentPassword => 'Contraseña actual';
 
   @override
-  String get newPassword => 'New password';
+  String get newPassword => 'Contraseña nueva';
 
   @override
-  String get save => 'Save';
+  String get save => 'Guardar';
 
   @override
-  String get passwordChanged => 'Password changed. Your other devices were signed out.';
+  String get passwordChanged => 'Contraseña cambiada. Se cerró la sesión en tus otros dispositivos.';
 
   @override
-  String get verifyEmailBanner => 'Please confirm your e-mail address.';
+  String get verifyEmailBanner => 'Confirma tu dirección de correo.';
 
   @override
-  String get resend => 'Resend';
+  String get resend => 'Reenviar';
 
   @override
-  String get verificationSent => 'Verification e-mail sent.';
+  String get verificationSent => 'Correo de verificación enviado.';
 
   @override
-  String get errEmailNotVerified => 'Confirm your e-mail before creating a character.';
+  String get errEmailNotVerified => 'Confirma tu correo antes de crear un personaje.';
 
   @override
-  String get errAlreadyVerified => 'Your e-mail is already confirmed.';
+  String get errAlreadyVerified => 'Tu correo ya está confirmado.';
 
   @override
-  String get tabParty => 'Party';
+  String get tabParty => 'Grupo';
 
   @override
-  String get tabGuild => 'Guild';
+  String get tabGuild => 'Gremio';
 
   @override
-  String get invite => 'Invite';
+  String get invite => 'Invitar';
 
   @override
   String invitedBy(String name) {
-    return 'Invited by $name';
+    return 'Invitado por $name';
   }
 
   @override
-  String get noParty => 'You\'re not in a party. Invite someone and a party forms (2–5 members).';
+  String get noParty => 'No estás en un grupo. Invita a alguien y se formará uno (2–5 miembros).';
 
   @override
-  String get createParty => 'Create party';
+  String get createParty => 'Crear grupo';
 
   @override
-  String get pendingInvites => 'Invitations';
+  String get pendingInvites => 'Invitaciones';
 
   @override
   String partyMembers(int count, int cap) {
-    return 'Party ($count/$cap)';
+    return 'Grupo ($count/$cap)';
   }
 
   @override
-  String get makeLeader => 'Make leader';
+  String get makeLeader => 'Hacer líder';
 
   @override
-  String get kick => 'Remove';
+  String get kick => 'Expulsar';
 
   @override
-  String get leave => 'Leave';
+  String get leave => 'Salir';
 
   @override
-  String get disband => 'Disband';
+  String get disband => 'Disolver';
 
   @override
-  String get leavePartyTitle => 'Leave the party?';
+  String get leavePartyTitle => '¿Salir del grupo?';
 
   @override
   String get leavePartyBody =>
-      'If you are the leader, the longest-standing member takes over. A party left with one member disbands.';
+      'Si eres el líder, le sustituye el miembro más antiguo. Un grupo con un solo miembro se disuelve.';
 
   @override
-  String get disbandPartyTitle => 'Disband the party?';
+  String get disbandPartyTitle => '¿Disolver el grupo?';
 
   @override
-  String get disbandPartyBody => 'Everyone is removed from the party.';
+  String get disbandPartyBody => 'Todos saldrán del grupo.';
 
   @override
-  String get rankLeader => 'Leader';
+  String get rankLeader => 'Líder';
 
   @override
-  String get rankOfficer => 'Officer';
+  String get rankOfficer => 'Oficial';
 
   @override
-  String get rankVeteran => 'Veteran';
+  String get rankVeteran => 'Veterano';
 
   @override
-  String get rankMember => 'Member';
+  String get rankMember => 'Miembro';
 
   @override
-  String get rankInitiate => 'Initiate';
+  String get rankInitiate => 'Iniciado';
 
   @override
-  String get createGuild => 'Found a guild';
+  String get createGuild => 'Fundar un gremio';
 
   @override
   String createGuildBody(String fee) {
-    return 'Founding a guild costs $fee.';
+    return 'Fundar un gremio cuesta $fee.';
   }
 
   @override
   String createGuildFee(String fee) {
-    return 'Found guild ($fee)';
+    return 'Fundar gremio ($fee)';
   }
 
   @override
-  String get guildName => 'Guild name';
+  String get guildName => 'Nombre del gremio';
 
   @override
-  String get guildTag => 'Tag';
+  String get guildTag => 'Etiqueta';
 
   @override
-  String get guildTagHint => '2–5 letters or digits';
+  String get guildTagHint => '2–5 letras o dígitos';
 
   @override
   String guildMembers(int count, int cap) {
-    return '$count/$cap members';
+    return '$count/$cap miembros';
   }
 
   @override
   String disbandScheduled(String time) {
-    return 'Guild disbands in $time';
+    return 'El gremio se disuelve en $time';
   }
 
   @override
-  String get motd => 'Message of the day';
+  String get motd => 'Mensaje del día';
 
   @override
-  String get editMotd => 'Edit message of the day';
+  String get editMotd => 'Editar mensaje del día';
 
   @override
-  String get setRank => 'Change rank';
+  String get setRank => 'Cambiar rango';
 
   @override
   String setRankFor(String name) {
-    return 'New rank for $name';
+    return 'Nuevo rango para $name';
   }
 
   @override
   String transferTitle(String name) {
-    return 'Make $name guild leader?';
+    return '¿Hacer a $name líder del gremio?';
   }
 
   @override
-  String get transferBody => 'You become an officer. This can\'t be undone by you.';
+  String get transferBody => 'Pasas a ser oficial. No podrás deshacerlo tú.';
 
   @override
   String kickTitle(String name) {
-    return 'Remove $name from the guild?';
+    return '¿Expulsar a $name del gremio?';
   }
 
   @override
-  String get leaveGuildTitle => 'Leave the guild?';
+  String get leaveGuildTitle => '¿Salir del gremio?';
 
   @override
-  String get leaveGuildBody => 'You\'ll need a new invitation to rejoin.';
+  String get leaveGuildBody => 'Necesitarás otra invitación para volver.';
 
   @override
-  String get disbandGuildTitle => 'Disband the guild?';
+  String get disbandGuildTitle => '¿Disolver el gremio?';
 
   @override
-  String get disbandGuildBody => 'The guild disbands in 48 hours; you can cancel until then.';
+  String get disbandGuildBody => 'El gremio se disuelve en 48 horas; puedes cancelarlo hasta entonces.';
 
   @override
-  String get cancelDisband => 'Cancel disbanding';
+  String get cancelDisband => 'Cancelar disolución';
 
   @override
-  String get errAlreadyInGroup => 'They\'re already in a group.';
+  String get errAlreadyInGroup => 'Ya pertenece a un grupo.';
 
   @override
-  String get errNotLeader => 'Only the leader can do that.';
+  String get errNotLeader => 'Solo el líder puede hacer eso.';
 
   @override
-  String get errGroupFull => 'The group is full.';
+  String get errGroupFull => 'El grupo está lleno.';
 
   @override
-  String get errInviteInvalid => 'That invitation has expired.';
+  String get errInviteInvalid => 'Esa invitación ha caducado.';
 
   @override
-  String get errAlreadyInvited => 'An invitation is already pending.';
+  String get errAlreadyInvited => 'Ya hay una invitación pendiente.';
 
   @override
-  String get errGuildForbidden => 'Your rank can\'t do that.';
+  String get errGuildForbidden => 'Tu rango no puede hacer eso.';
 
   @override
-  String get errLeaderCannotLeave => 'Hand over leadership or disband the guild first.';
+  String get errLeaderCannotLeave => 'Cede el liderazgo o disuelve el gremio primero.';
 
   @override
-  String get errInvalidGuildName => '3–24 letters or digits.';
+  String get errInvalidGuildName => '3–24 letras o dígitos.';
 
   @override
-  String get errInvalidTag => 'The tag must be 2–5 letters or digits.';
+  String get errInvalidTag => 'La etiqueta debe tener 2–5 letras o dígitos.';
 
   @override
-  String get errTagTaken => 'That tag is taken.';
+  String get errTagTaken => 'Esa etiqueta ya está en uso.';
 
   @override
-  String get progress => 'Achievements & mastery';
+  String get progress => 'Logros y maestría';
 
   @override
-  String get tabAchievements => 'Achievements';
+  String get tabAchievements => 'Logros';
 
   @override
-  String get tabMastery => 'Mastery';
+  String get tabMastery => 'Maestría';
 
   @override
-  String get tabReputation => 'Reputation';
+  String get tabReputation => 'Reputación';
 
   @override
-  String get tabTitles => 'Titles';
+  String get tabTitles => 'Títulos';
 
   @override
   String achievementPoints(int points) {
-    return '$points achievement points';
+    return '$points puntos de logro';
   }
 
   @override
@@ -1338,187 +1338,187 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String rewardTitle(String title) {
-    return 'Title: $title';
+    return 'Título: $title';
   }
 
   @override
   String masteryTier(int tier, int max) {
-    return 'Tier $tier/$max';
+    return 'Nivel $tier/$max';
   }
 
   @override
   String repDailyLeft(int amount) {
-    return '+$amount today';
+    return '+$amount hoy';
   }
 
   @override
-  String get noTitle => 'No title';
+  String get noTitle => 'Sin título';
 
   @override
-  String get noTitlesYet => 'Titles unlock through achievements.';
+  String get noTitlesYet => 'Los títulos se desbloquean con logros.';
 
   @override
-  String get errTitleNotOwned => 'You haven\'t unlocked that title.';
+  String get errTitleNotOwned => 'No has desbloqueado ese título.';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => 'Notificaciones';
 
   @override
-  String get markAllRead => 'Mark all as read';
+  String get markAllRead => 'Marcar todo como leído';
 
   @override
-  String get inboxNothing => 'No notifications yet.';
+  String get inboxNothing => 'Aún no hay notificaciones.';
 
   @override
-  String get notifSettings => 'Notification settings';
+  String get notifSettings => 'Ajustes de notificaciones';
 
   @override
-  String get muteAll => 'Pause push notifications';
+  String get muteAll => 'Pausar notificaciones push';
 
   @override
-  String get muteHint => 'For 24 hours. The inbox keeps filling.';
+  String get muteHint => 'Durante 24 horas. La bandeja sigue llenándose.';
 
   @override
   String mutedFor(String time) {
-    return 'Paused for $time';
+    return 'En pausa durante $time';
   }
 
   @override
-  String get modePushInbox => 'Push + inbox';
+  String get modePushInbox => 'Push + bandeja';
 
   @override
-  String get modeInbox => 'Inbox only';
+  String get modeInbox => 'Solo bandeja';
 
   @override
-  String get modeSilent => 'Silent';
+  String get modeSilent => 'Silencio';
 
   @override
-  String get modeOff => 'Off';
+  String get modeOff => 'Desactivado';
 
   @override
-  String get nkActivity => 'Activity finished';
+  String get nkActivity => 'Actividad terminada';
 
   @override
-  String get nkDungeon => 'Dungeon run finished';
+  String get nkDungeon => 'Expedición terminada';
 
   @override
-  String get nkTravel => 'Arrived';
+  String get nkTravel => 'Llegada';
 
   @override
-  String get nkWorldEvent => 'World event started';
+  String get nkWorldEvent => 'Evento mundial iniciado';
 
   @override
-  String get nkMarketSold => 'Item sold';
+  String get nkMarketSold => 'Objeto vendido';
 
   @override
-  String get nkMail => 'New mail';
+  String get nkMail => 'Correo nuevo';
 
   @override
-  String get nkPartyInvite => 'Party invitation';
+  String get nkPartyInvite => 'Invitación de grupo';
 
   @override
-  String get nkGuildInvite => 'Guild invitation';
+  String get nkGuildInvite => 'Invitación de gremio';
 
   @override
-  String get nkAchievement => 'Achievement unlocked';
+  String get nkAchievement => 'Logro desbloqueado';
 
   @override
-  String get nkSystem => 'Announcement';
+  String get nkSystem => 'Anuncio';
 
   @override
   String timeAgo(String time) {
-    return '$time ago';
+    return 'Hace $time';
   }
 
   @override
-  String get segEvents => 'Events';
+  String get segEvents => 'Eventos';
 
   @override
-  String get eventsEmpty => 'No world events scheduled right now.';
+  String get eventsEmpty => 'No hay eventos mundiales programados ahora.';
 
   @override
-  String get worldBoss => 'World boss';
+  String get worldBoss => 'Jefe mundial';
 
   @override
-  String get invasion => 'Invasion';
+  String get invasion => 'Invasión';
 
   @override
   String startsIn(String time) {
-    return 'Starts in $time';
+    return 'Empieza en $time';
   }
 
   @override
   String endsIn(String time) {
-    return 'Ends in $time';
+    return 'Termina en $time';
   }
 
   @override
   String regionOnly(String region) {
-    return '$region only';
+    return 'Solo $region';
   }
 
   @override
-  String get eventGoal => 'Goal';
+  String get eventGoal => 'Objetivo';
 
   @override
-  String get enlist => 'Enlist';
+  String get enlist => 'Alistarse';
 
   @override
   String get enlistHint =>
-      'Your current power is locked in when you enlist. You score for every minute the event runs; rewards arrive when it ends.';
+      'Tu poder actual se fija al alistarte. Puntúas por cada minuto del evento; las recompensas llegan al terminar.';
 
   @override
   String enlistedPower(int power) {
-    return 'Enlisted · power $power';
+    return 'Alistado · poder $power';
   }
 
   @override
   String myContribution(int score, int tier) {
-    return 'Your score $score · reward tier $tier';
+    return 'Tu puntuación $score · nivel de recompensa $tier';
   }
 
   @override
-  String get eventSucceeded => 'Victory';
+  String get eventSucceeded => 'Victoria';
 
   @override
-  String get eventFailed => 'Failed';
+  String get eventFailed => 'Fracaso';
 
   @override
   String tokenBalance(int tokens) {
-    return '$tokens event tokens';
+    return '$tokens fichas de evento';
   }
 
   @override
   String claimDaily(int tokens) {
-    return 'Claim $tokens';
+    return 'Reclamar $tokens';
   }
 
   @override
-  String get claimedToday => 'Claimed';
+  String get claimedToday => 'Reclamado';
 
   @override
   String eventTokensGained(int tokens) {
-    return '+$tokens event tokens';
+    return '+$tokens fichas de evento';
   }
 
   @override
-  String get errEventNotOpen => 'Enlistment for this event is closed.';
+  String get errEventNotOpen => 'El alistamiento de este evento está cerrado.';
 
   @override
-  String get errWrongRegion => 'Este monstruo vive en otra zona. Viaja allí primero.';
+  String get errWrongRegion => 'Viaja primero a la región del evento.';
 
   @override
-  String get errAlreadyEnlisted => 'You\'re already enlisted.';
+  String get errAlreadyEnlisted => 'Ya estás alistado.';
 
   @override
-  String get errAlreadyClaimed => 'Already claimed today.';
+  String get errAlreadyClaimed => 'Ya reclamado hoy.';
 
   @override
-  String get errEventNotActive => 'This event isn\'t running.';
+  String get errEventNotActive => 'Este evento no está activo.';
 
   @override
   String gatherYield(String activity) {
-    return '$activity yield';
+    return 'Rendimiento de $activity';
   }
 
   @override
@@ -1527,252 +1527,253 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get quests => 'Quests';
+  String get quests => 'Misiones';
 
   @override
-  String get questsInProgress => 'In progress';
+  String get questsInProgress => 'En curso';
 
   @override
-  String get questsNoneOpen => 'No open quests. Pick one below.';
+  String get questsNoneOpen => 'No hay misiones abiertas. Elige una abajo.';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => 'Historia';
 
   @override
-  String get questsSide => 'Side quests';
+  String get questsSide => 'Misiones secundarias';
 
   @override
-  String get questsDaily => 'Daily';
+  String get questsDaily => 'Diarias';
 
   @override
   String resetsIn(String time) {
-    return 'Resets in $time';
+    return 'Se reinicia en $time';
   }
 
   @override
-  String get turnIn => 'Turn in';
+  String get turnIn => 'Entregar';
 
   @override
   String questRewarded(String rewards) {
-    return 'Quest complete: $rewards';
+    return 'Misión completada: $rewards';
   }
 
   @override
-  String get abandonQuestTitle => 'Abandon quest?';
+  String get abandonQuestTitle => '¿Abandonar la misión?';
 
   @override
-  String get abandonQuestBody => 'Progress is lost. You can take the quest again later.';
+  String get abandonQuestBody => 'Se pierde el progreso. Podrás volver a aceptarla más tarde.';
 
   @override
-  String get abandonDailyBody => 'Progress is lost and this daily can\'t be taken again today.';
+  String get abandonDailyBody => 'Se pierde el progreso y hoy no podrás volver a aceptar esta diaria.';
 
   @override
   String objGather(String activity) {
-    return 'Gather ($activity)';
+    return 'Recolectar ($activity)';
   }
 
   @override
-  String get objKillAny => 'Defeat enemies';
+  String get objKillAny => 'Derrotar enemigos';
 
   @override
   String objKill(String mob) {
-    return 'Defeat $mob';
+    return 'Derrotar a $mob';
   }
 
   @override
-  String get objBoss => 'Defeat a boss';
+  String get objBoss => 'Derrotar a un jefe';
 
   @override
-  String get objDungeonAny => 'Clear a dungeon';
+  String get objDungeonAny => 'Superar una mazmorra';
 
   @override
   String objDungeon(String dungeon) {
-    return 'Clear $dungeon';
+    return 'Superar $dungeon';
   }
 
   @override
-  String get objCraftAny => 'Craft items';
+  String get objCraftAny => 'Fabricar objetos';
 
   @override
   String objCraft(String item) {
-    return 'Craft $item';
+    return 'Fabricar $item';
   }
 
   @override
-  String get evQuestComplete => 'Quest objectives complete — turn it in!';
+  String get evQuestComplete => '¡Objetivos completados: entrega la misión!';
 
   @override
-  String get errQuestLocked => 'Finish the previous story quest first.';
+  String get errQuestLocked => 'Termina primero la misión anterior de la historia.';
 
   @override
-  String get errQuestTaken => 'You already took this quest.';
+  String get errQuestTaken => 'Ya aceptaste esta misión.';
 
   @override
-  String get errQuestNotOffered => 'That daily isn\'t on today\'s board.';
+  String get errQuestNotOffered => 'Esa diaria no está en el tablón de hoy.';
 
   @override
-  String get errQuestCap => 'Too many open quests. Finish or abandon one.';
+  String get errQuestCap => 'Demasiadas misiones abiertas. Termina o abandona una.';
 
   @override
-  String get errQuestNotActive => 'This quest isn\'t open.';
+  String get errQuestNotActive => 'Esta misión no está abierta.';
 
   @override
-  String get errQuestIncomplete => 'Objectives aren\'t complete yet.';
+  String get errQuestIncomplete => 'Los objetivos aún no están completos.';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'Habilidades';
 
   @override
-  String get skillActive => 'Active';
+  String get skillActive => 'Activa';
 
   @override
-  String get skillPassive => 'Passive';
+  String get skillPassive => 'Pasiva';
 
   @override
   String skillStrike(int power) {
-    return '$power% damage';
+    return '$power% de daño';
   }
 
   @override
   String skillHeal(int power) {
-    return 'Heals $power% HP when below half';
+    return 'Cura $power% de PV por debajo de la mitad';
   }
 
   @override
   String skillMp(int mp) {
-    return '$mp MP';
+    return '$mp PM';
   }
 
   @override
   String skillCooldown(int turns) {
-    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'every $turns turns', one: 'every turn');
+    String _temp0 = intl.Intl.pluralLogic(turns, locale: localeName, other: 'cada $turns turnos', one: 'cada turno');
     return '$_temp0';
   }
 
   @override
-  String get termsOfService => 'Terms of Service';
+  String get termsOfService => 'Términos del servicio';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Política de privacidad';
 
   @override
-  String get accountMenu => 'Account';
+  String get accountMenu => 'Cuenta';
 
   @override
-  String get downloadMyData => 'Download my data';
+  String get downloadMyData => 'Descargar mis datos';
 
   @override
-  String get exportOpened => 'The download link opened in your browser (valid for 15 minutes).';
+  String get exportOpened => 'El enlace de descarga se abrió en tu navegador (válido 15 minutos).';
 
   @override
-  String get linkOpenFailed => 'Could not open the link.';
+  String get linkOpenFailed => 'No se pudo abrir el enlace.';
 
   @override
-  String get deleteAccount => 'Delete my account';
+  String get deleteAccount => 'Eliminar mi cuenta';
 
   @override
   String get deleteAccountBody =>
-      'Your account and all characters will be permanently deleted after 30 days. Signing in again within that time cancels the deletion. Enter your password to confirm.';
+      'Tu cuenta y todos tus personajes se eliminarán definitivamente en 30 días. Iniciar sesión antes cancela la eliminación. Introduce tu contraseña para confirmar.';
 
   @override
-  String get deleteAccountConfirm => 'Delete account';
+  String get deleteAccountConfirm => 'Eliminar cuenta';
 
   @override
   String deleteScheduled(String date) {
-    return 'Your account will be deleted on $date. To cancel, just sign in before then.';
+    return 'Tu cuenta se eliminará el $date. Para cancelar, inicia sesión antes de esa fecha.';
   }
 
   @override
-  String get deletionCancelled => 'Your account deletion request was cancelled.';
+  String get deletionCancelled => 'Se canceló la solicitud de eliminación de tu cuenta.';
 
   @override
-  String get support => 'Support';
+  String get support => 'Soporte';
 
   @override
   String get supportIntro =>
-      'Found a bug or need help with your account? Write to us and the team answers here; you get a notification when they do.';
+      '¿Has encontrado un error o necesitas ayuda con tu cuenta? Escríbenos y el equipo responderá aquí; recibirás una notificación.';
 
   @override
-  String get supportNew => 'New request';
+  String get supportNew => 'Nueva solicitud';
 
   @override
-  String get supportNone => 'No requests yet.';
+  String get supportNone => 'Aún no hay solicitudes.';
 
   @override
-  String get supportSent => 'Request received. We\'ll let you know when there\'s an answer.';
+  String get supportSent => 'Solicitud recibida. Te avisaremos cuando haya respuesta.';
 
   @override
-  String get supportCategory => 'Topic';
+  String get supportCategory => 'Tema';
 
   @override
-  String get supportSubject => 'Subject';
+  String get supportSubject => 'Asunto';
 
   @override
-  String get supportMessage => 'What happened? Step by step if you can.';
+  String get supportMessage => '¿Qué pasó? Paso a paso si puedes.';
 
   @override
-  String get supportTooShort => 'Subject needs at least 3 characters, the message at least 10.';
+  String get supportTooShort => 'El asunto necesita al menos 3 caracteres y el mensaje al menos 10.';
 
   @override
-  String get supportBug => 'Bug';
+  String get supportBug => 'Error';
 
   @override
-  String get supportAccount => 'Account';
+  String get supportAccount => 'Cuenta';
 
   @override
-  String get supportAbuse => 'Abuse / report a player';
+  String get supportAbuse => 'Abuso / denunciar a un jugador';
 
   @override
-  String get supportFeedback => 'Suggestion';
+  String get supportFeedback => 'Sugerencia';
 
   @override
-  String get supportOther => 'Other';
+  String get supportOther => 'Otro';
 
   @override
-  String get supportOpen => 'Open';
+  String get supportOpen => 'Abierta';
 
   @override
-  String get supportAnswered => 'Answered';
+  String get supportAnswered => 'Respondida';
 
   @override
-  String get supportClosed => 'Closed';
+  String get supportClosed => 'Cerrada';
 
   @override
-  String get supportReply => 'Team reply';
+  String get supportReply => 'Respuesta del equipo';
 
   @override
-  String get nkSupport => 'Support reply';
+  String get nkSupport => 'Respuesta de soporte';
 
   @override
-  String get errServerBusy => 'The server is busy right now. Try again in a few seconds.';
+  String get errServerBusy => 'El servidor está ocupado. Inténtalo de nuevo en unos segundos.';
 
   @override
-  String get notifTabInbox => 'Notifications';
+  String get notifTabInbox => 'Notificaciones';
 
   @override
-  String get notifTabRewards => 'Rewards';
+  String get notifTabRewards => 'Recompensas';
 
   @override
-  String get rewardsNone => 'No rewards yet. Everything you gather or win in fights is listed here (kept for 30 days).';
+  String get rewardsNone =>
+      'Aún no hay recompensas. Aquí aparece todo lo que recolectas o ganas en combate (se guarda 30 días).';
 
   @override
   String rewardFromActivity(String name) {
-    return 'Gathering: $name';
+    return 'Recolección: $name';
   }
 
   @override
   String rewardFromHunt(String name) {
-    return 'Hunt: $name';
+    return 'Caza: $name';
   }
 
   @override
   String rewardFromDungeon(String name) {
-    return 'Dungeon: $name';
+    return 'Mazmorra: $name';
   }
 
   @override
   String rewardLevelUp(int level) {
-    return 'Level $level!';
+    return '¡Nivel $level!';
   }
 
   @override
