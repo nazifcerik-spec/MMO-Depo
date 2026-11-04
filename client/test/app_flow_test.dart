@@ -387,7 +387,7 @@ void main() {
     await tester.enterText(find.byType(TextFormField), '1bad');
     await tester.tap(find.text('Create'));
     await tester.pump();
-    expect(find.text('3–16 characters, starts with a letter (A–Z, 0–9, _)'), findsWidgets);
+    expect(find.text('Up to 16 characters in one alphabet, starts with a letter (digits and _ allowed)'), findsWidgets);
 
     await tester.enterText(find.byType(TextFormField), 'Grim');
     await tester.tap(find.text('Create'));

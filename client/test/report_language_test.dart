@@ -24,7 +24,9 @@ Widget _app(Widget Function(BuildContext) child) => MaterialApp(
 void main() {
   testWidgets('a report needs a reason and sends the chat line (DD-355)', (tester) async {
     final be = FakeBackend();
-    final repo = SocialRepository(be.api(MemoryTokenStore()), 'char-1');
+    final api = be.api(MemoryTokenStore());
+    await api.login('grim', 'correct-horse');
+    final repo = SocialRepository(api, 'char-1');
     await tester.pumpWidget(
       _app(
         (context) => TextButton(
