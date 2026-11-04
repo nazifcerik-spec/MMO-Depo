@@ -44,8 +44,6 @@ flutter:
     - assets/races/ # race portraits: <race_code>.png (DD-266)
     - assets/bodies/ # full-body portraits: <race>_<body>_<outfit>.webp (DD-344)
     - assets/heads/ # customization layers: <body>_face<n>_* and <body>_hair<n> (DD-346)
-    - assets/held/ # equipment sprites for the paper doll, cut out of their icons (DD-344, DD-347)
-    - assets/paperdoll.json # how equipment sits on the figure: scripts/paperdoll_editor.py (DD-347)
     - assets/branding/ # MeNa World logo (DD-270)
     - assets/backgrounds/ # page backgrounds: bg01..bg30.webp (DD-323)
     - assets/avatars/ # avatar portraits: av01..av80.webp (DD-324)

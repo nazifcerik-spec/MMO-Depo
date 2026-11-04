@@ -115,79 +115,76 @@ class BodyPortrait extends StatelessWidget {
     List<Widget> sprites(DollLayer d) => [sprite(d), if (d.mirrorAnchor != null) sprite(d, mirror: true)];
 
     final raceArt = ItemImages.racePath(race);
-    return Semantics(
-      label: chest == null ? l.portraitNoArmor : null,
-      child: Container(
-        key: const Key('body-portrait'),
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Palette.bgPrimary,
-          borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: frame.withValues(alpha: 0.9), width: 1.5),
-          boxShadow: [
-            if (chest != null && (chest.rarity == 'legendary' || chest.rarity == 'mythic'))
-              BoxShadow(color: frame.withValues(alpha: 0.35), blurRadius: 14),
-          ],
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            for (final d in layers)
-              if (d.behind) ...sprites(d),
-            if (figure != null)
-              Positioned.fill(
-                child: Image.asset(
-                  figure,
-                  key: ValueKey(figure),
-                  fit: BoxFit.cover,
-                  cacheWidth: (width * dpr).round(),
-                  filterQuality: FilterQuality.medium,
-                ),
-              )
-            else if (raceArt != null)
-              Positioned.fill(
-                child: Image.asset(raceArt, fit: BoxFit.cover, cacheWidth: (width * 2 * dpr).round()),
-              )
-            else
-              const Center(child: Icon(Icons.person, color: Palette.textMuted, size: 48)),
-            for (final d in layers)
-              if (!d.behind && d.zIndex < headZ) ...sprites(d),
-            if (figure != null && customizableRaces.contains(race))
-              Positioned(
-                left: _eyes.dx * width - width * _head / 2,
-                top: _eyes.dy * height - width * _head / 2,
-                child: HeadLayers(
-                  look: look,
-                  size: width * _head,
-                  onFigure: true,
-                  hideHair: layers.any((d) => d.hidesHair),
+    return Container(
+      key: const Key('body-portrait'),
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Palette.bgPrimary,
+        borderRadius: BorderRadius.circular(Radii.md),
+        border: Border.all(color: frame.withValues(alpha: 0.9), width: 1.5),
+        boxShadow: [
+          if (chest != null && (chest.rarity == 'legendary' || chest.rarity == 'mythic'))
+            BoxShadow(color: frame.withValues(alpha: 0.35), blurRadius: 14),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          for (final d in layers)
+            if (d.behind) ...sprites(d),
+          if (figure != null)
+            Positioned.fill(
+              child: Image.asset(
+                figure,
+                key: ValueKey(figure),
+                fit: BoxFit.cover,
+                cacheWidth: (width * dpr).round(),
+                filterQuality: FilterQuality.medium,
+              ),
+            )
+          else if (raceArt != null)
+            Positioned.fill(
+              child: Image.asset(raceArt, fit: BoxFit.cover, cacheWidth: (width * 2 * dpr).round()),
+            )
+          else
+            const Center(child: Icon(Icons.person, color: Palette.textMuted, size: 48)),
+          for (final d in layers)
+            if (!d.behind && d.zIndex < headZ) ...sprites(d),
+          if (figure != null && customizableRaces.contains(race))
+            Positioned(
+              left: _eyes.dx * width - width * _head / 2,
+              top: _eyes.dy * height - width * _head / 2,
+              child: HeadLayers(
+                look: look,
+                size: width * _head,
+                onFigure: true,
+                hideHair: layers.any((d) => d.hidesHair),
+              ),
+            ),
+          for (final d in layers)
+            if (!d.behind && d.zIndex >= headZ) ...sprites(d),
+          if (onEdit != null)
+            Positioned(
+              right: 2,
+              top: 2,
+              child: Material(
+                color: Colors.black45,
+                shape: const CircleBorder(),
+                child: IconButton(
+                  key: const Key('look-edit'),
+                  tooltip: l.bodyChange,
+                  visualDensity: VisualDensity.compact,
+                  iconSize: 16,
+                  constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+                  padding: EdgeInsets.zero,
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.face_retouching_natural, color: Palette.textSecondary),
                 ),
               ),
-            for (final d in layers)
-              if (!d.behind && d.zIndex >= headZ) ...sprites(d),
-            if (onEdit != null)
-              Positioned(
-                right: 2,
-                top: 2,
-                child: Material(
-                  color: Colors.black45,
-                  shape: const CircleBorder(),
-                  child: IconButton(
-                    key: const Key('look-edit'),
-                    tooltip: l.bodyChange,
-                    visualDensity: VisualDensity.compact,
-                    iconSize: 16,
-                    constraints: const BoxConstraints.tightFor(width: 28, height: 28),
-                    padding: EdgeInsets.zero,
-                    onPressed: onEdit,
-                    icon: const Icon(Icons.face_retouching_natural, color: Palette.textSecondary),
-                  ),
-                ),
-              ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

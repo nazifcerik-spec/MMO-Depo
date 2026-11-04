@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
-import '../inventory/inventory_models.dart' show EquippedItem, FoodBuff;
-import '../inventory/inventory_repository.dart';
+import '../inventory/inventory_models.dart' show FoodBuff;
 
 import 'package:flutter/material.dart';
 
@@ -88,8 +87,6 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   List<ClassSkill>? _skills;
   LevelingSummary? _leveling;
   FoodBuff? _buff;
-  Map<String, EquippedItem> _equipped = const {};
-  late final _inventory = InventoryRepository(widget.repo.api, widget.initial.id);
   late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
   late final _groups = GroupRepository(widget.repo.api, widget.initial.id);
 
@@ -149,12 +146,6 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
       if (mounted) setState(() => _buff = b);
     } on ApiError {
       // Optional line.
-    }
-    try {
-      final eq = await _inventory.equipment();
-      if (mounted) setState(() => _equipped = eq);
-    } on ApiError {
-      // The portrait keeps its last outfit.
     }
   }
 
@@ -273,7 +264,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  BodyPortrait(race: s.raceCode, look: s.look, equipped: _equipped, onEdit: _editLook),
+                  BodyPortrait(race: s.raceCode, look: s.look, onEdit: _editLook),
                   const SizedBox(width: Space.md),
                   Expanded(
                     child: Column(

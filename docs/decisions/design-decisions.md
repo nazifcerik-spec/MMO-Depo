@@ -3409,6 +3409,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-348 — Oluşturmada görünüm seçimi ve eşyaların avatara yansıması kapatıldı
+
+**Context:** Kullanıcı karakter oluşturmadaki Görünüm alanının pasife alınmasını ve eşyaların karakter avatarına yansımasının iptal edilmesini istedi.
+**Decision:** Oluşturma ekranından `AppearancePicker` kalktı; yeni karakter varsayılan görünümle (erkek, ilk seçenekler) başlar. Karakter sayfası `equipment` çekmez ve `BodyPortrait`'e ekipman vermez: figür hep zırhsız kıyafette, çerçeve nötr, silah/miğfer katmanı yok. `assets/held/` ve `paperdoll.json` APK'dan çıkarıldı, `PaperDoll.load` çağrılmıyor. DD-346 ve DD-347'nin kodu, verisi ve editörü duruyor: portredeki düzenleme düğmesi ile sunucu alanları çalışır.
+**Consequences:** Geri açmak için oluşturma ekranına `AppearancePicker`, sayfaya ekipman çekimi, `pubspec`'e iki asset ve `main`'e `PaperDoll.load` eklemek yeter. Görünüm portre düğmesinden hâlâ değiştirilebilir. Sprite'lar APK'ya girmediği için boyut yaklaşık 9 MB düşer.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

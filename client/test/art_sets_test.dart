@@ -100,7 +100,9 @@ void main() {
     final pubspec = File('pubspec.yaml').readAsStringSync();
     final missing = [
       for (final d in Directory('assets').listSync().whereType<Directory>())
-        if (!pubspec.contains('- assets/${d.uri.pathSegments.where((s) => s.isNotEmpty).last}/')) d.path,
+        if (!pubspec.contains('- assets/${d.uri.pathSegments.where((s) => s.isNotEmpty).last}/') &&
+            !d.path.endsWith('held')) // the paper doll's sprites: switched off, not shipped (DD-348)
+          d.path,
     ];
     expect(missing, isEmpty);
   });

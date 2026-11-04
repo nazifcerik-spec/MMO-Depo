@@ -301,12 +301,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dark Elf'));
     await tester.pump();
-    // The look: non-human races choose only the gender (DD-346).
-    await tester.ensureVisible(find.byKey(const Key('body-choice')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('look-face-1')), findsNothing);
-    await tester.tap(find.text('Female'));
-    await tester.pumpAndSettle();
+    // The look is not chosen at creation (DD-348).
+    expect(find.byKey(const Key('body-choice')), findsNothing);
     await tester.tap(find.text('Continue as Ranger'));
     await tester.pumpAndSettle();
     expect(find.text('Name your character'), findsOneWidget);
@@ -319,7 +315,7 @@ void main() {
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(be.characters.single['race_code'], 'dark_elf');
-    expect(be.characters.single['body'], 'female');
+    expect(be.characters.single['body'], 'male');
     expect(find.text('Lvl 1 · Ranger · Dark Elf'), findsOneWidget);
     expect(find.text('1/2 slots'), findsOneWidget);
 
@@ -334,13 +330,13 @@ void main() {
     expect(find.byKey(const Key('body-portrait')), findsOneWidget);
     await tester.tap(find.byKey(const Key('look-edit')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Male'));
+    await tester.tap(find.text('Female'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('look-save')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('look-save')));
     await tester.pumpAndSettle();
-    expect(be.characters.single['body'], 'male');
+    expect(be.characters.single['body'], 'female');
     await tester.scrollUntilVisible(find.text('90%'), 200, scrollable: _list); // below the boost boxes
     expect(find.text('90%'), findsOneWidget); // hit
     // Combat power = 2 × attack + defense + max HP / 10 (worldevent.Power).

@@ -308,6 +308,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 145. **Paper doll + konum editörü (bitti — yalnız insan)** — Sprint 145, DD-347. `assets/paperdoll.json` (çapa + yuva < `<yuva>.<alt sınıf>` < eşya kuralları), `PaperDoll.layerOf`, `BodyPortrait` katman sırası. Editör: `python scripts/paperdoll_editor.py` → http://127.0.0.1:5175, JSON'a kaydeder. `scripts/held_cutout.py` silah, kalkan, miğfer/başlık (açıklık kesilir), eldiven, kolye (1355 sprite). Bacak, çizme, kumaş/deri eldiven için ayrı sprite bekleniyor.
 
+146. **Görünüm seçimi + eşya yansıması kapalı (bitti)** — Sprint 146, DD-348. Oluşturmada `AppearancePicker` yok; karakter sayfası ekipman çekmez, figür zırhsız. `assets/held/`, `paperdoll.json` APK dışında; kod ve editör duruyor.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

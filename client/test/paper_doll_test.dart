@@ -229,7 +229,7 @@ void main() {
     });
   });
 
-  testWidgets('the character tab follows equip and unequip from the server', (tester) async {
+  testWidgets('the character tab does not draw equipment (DD-348)', (tester) async {
     PaperDoll.current = PaperDoll(_shipped());
     ItemImages.bodies = {'human_male_none'};
     addTearDown(() => PaperDoll.current = PaperDoll(const {}));
@@ -260,12 +260,9 @@ void main() {
     };
     version.value++;
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('doll-mainhand')), findsOneWidget);
-
-    be.equipped.remove('mainhand');
-    version.value++;
-    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('doll-mainhand')), findsNothing);
+    expect(tester.widget<BodyPortrait>(find.byType(BodyPortrait)).equipped, isEmpty);
+    expect(be.requests.where((r) => r.url.path.endsWith('/equipment')), isEmpty, reason: 'no call for nothing');
   });
 }
 
