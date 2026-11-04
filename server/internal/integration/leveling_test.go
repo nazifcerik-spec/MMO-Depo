@@ -98,16 +98,16 @@ func TestLevelUpSingleMultipleOverflow(t *testing.T) {
 	require.Less(t, res.Character.XP, cfg.XPToNext(int(res.Character.Level)), "overflow carried, not discarded")
 }
 
-// Level 100: the gate holds the extra XP; choosing the promotion pays it out.
+// Level 300: the gate holds the extra XP; choosing the promotion pays it out.
 func TestPromotionGateOverflowAndSelection(t *testing.T) {
 	w := newWorld(t)
-	p := w.warrior("warrior", 99)
-	res := w.grant(p, toLevel(99, 104)+100, "afk-3h")
-	require.Equal(t, int16(100), res.Character.Level, "stays at the gate")
+	p := w.warrior("warrior", 299)
+	res := w.grant(p, toLevel(299, 304)+100, "afk-3h")
+	require.Equal(t, int16(300), res.Character.Level, "stays at the gate")
 	require.True(t, res.PromotionAvailable)
-	require.Equal(t, toLevel(100, 104)+100, res.Character.OverflowXP, "the rest is stored")
+	require.Equal(t, toLevel(300, 304)+100, res.Character.OverflowXP, "the rest is stored")
 	require.Equal(t, []string{"tier:warrior"}, w.events(p, character.EventPromotionAvail))
-	require.True(t, w.titles(p)["veteran"])
+	require.True(t, w.titles(p)["champion"])
 
 	sum, err := w.chars.ProgressionSummary(w.ctx, p.ID, p.Account)
 	require.NoError(t, err)
@@ -124,7 +124,7 @@ func TestPromotionGateOverflowAndSelection(t *testing.T) {
 	g, err := w.chars.SelectPromotion(w.ctx, p.ID, p.Account, "guardian")
 	require.NoError(t, err)
 	require.Equal(t, "guardian", g.Character.Spec())
-	require.Equal(t, int16(104), g.Character.Level, "overflow processed at once")
+	require.Equal(t, int16(304), g.Character.Level, "overflow processed at once")
 	require.Equal(t, int64(100), g.Character.XP)
 	require.Zero(t, g.Character.OverflowXP)
 	require.Contains(t, w.events(p, character.EventSkillUnlocked), "guardian_shield_slam")
@@ -132,10 +132,10 @@ func TestPromotionGateOverflowAndSelection(t *testing.T) {
 	_, err = w.chars.SelectPromotion(w.ctx, p.ID, p.Account, "executioner")
 	require.ErrorIs(t, err, character.ErrInvalidPromotion, "one choice per gate")
 
-	// Level 300: the final specialization, same mechanism.
-	q := w.warrior("guardian", 299)
-	res = w.grant(q, toLevel(299, 300)+50, "b")
-	require.Equal(t, int16(300), res.Character.Level)
+	// Level 700: the final specialization, same mechanism.
+	q := w.warrior("guardian", 699)
+	res = w.grant(q, toLevel(699, 700)+50, "b")
+	require.Equal(t, int16(700), res.Character.Level)
 	require.Equal(t, int64(50), res.Character.OverflowXP)
 	_, err = w.chars.SelectPromotion(w.ctx, q.ID, q.Account, "berserker")
 	require.ErrorIs(t, err, character.ErrInvalidPromotion, "berserker is an Executioner branch")
@@ -143,23 +143,23 @@ func TestPromotionGateOverflowAndSelection(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, int64(50), g.Character.XP)
 	require.Contains(t, w.events(q, character.EventPassiveUnlocked), "iron_fortress_bulwark")
-	require.True(t, w.titles(q)["champion"])
+	require.True(t, w.titles(q)["ancient"])
 }
 
-// 600 awakening, 700 ultimate, 850 capstone, 1000 mastery + the cap.
+// 850 capstone, 900 awakening, 950 ultimate, 1000 mastery + the cap.
 func TestLateMilestonesAndCap(t *testing.T) {
 	w := newWorld(t)
-	p := w.warrior("iron_fortress", 599)
-	w.grant(p, toLevel(599, 600), "a")
-	require.Equal(t, []string{"iron_fortress_aegis_rebound"}, w.events(p, character.EventAwakening))
-	require.True(t, w.titles(p)["mythic"])
-
-	w.grant(p, toLevel(600, 700), "b")
-	require.Equal(t, []string{"iron_fortress_unbreakable"}, w.events(p, character.EventUltimate))
-	w.grant(p, toLevel(700, 850), "c")
+	p := w.warrior("iron_fortress", 849)
+	w.grant(p, toLevel(849, 850), "a")
 	require.Equal(t, []string{"capstone"}, w.events(p, character.EventCapstone))
 
-	res := w.grant(p, toLevel(850, 1000)+999_999, "d")
+	w.grant(p, toLevel(850, 900), "b")
+	require.Equal(t, []string{"iron_fortress_aegis_rebound"}, w.events(p, character.EventAwakening))
+	require.True(t, w.titles(p)["immortal"])
+	w.grant(p, toLevel(900, 950), "c")
+	require.Equal(t, []string{"iron_fortress_unbreakable"}, w.events(p, character.EventUltimate))
+
+	res := w.grant(p, toLevel(950, 1000)+999_999, "d")
 	require.Equal(t, int16(1000), res.Character.Level)
 	require.Zero(t, res.Character.XP)
 	require.Equal(t, int64(999_999), res.Character.PostCapXP, "post-cap XP is kept")
@@ -287,7 +287,7 @@ func ptr(s string) *string { return &s }
 // use goes back to the bag; level, XP and titles stay.
 func TestRespecAndEquipmentRequirements(t *testing.T) {
 	w := newWorld(t)
-	p := w.warrior("iron_fortress", 600)
+	p := w.warrior("iron_fortress", 700)
 	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET attr_str = 210, attr_vit = 290 WHERE id = $1`, p.ID)
 	require.NoError(t, err)
 	fetch := inventory.ProfileFetcher(func(ctx context.Context, id uuid.UUID) (inventory.Profile, error) {
@@ -331,7 +331,7 @@ func TestRespecAndEquipmentRequirements(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "berserker", c.Spec())
 	require.Equal(t, 1, removed, "the Guardian shield came off")
-	require.Equal(t, int16(600), c.Level)
+	require.Equal(t, int16(700), c.Level)
 	require.True(t, w.slotted(shield.ID), "back in the bag")
 	require.Contains(t, w.events(p, character.EventPassiveUnlocked), "berserker_blood_fury")
 }
@@ -353,22 +353,24 @@ func TestWarriorFixtures(t *testing.T) {
 	}{
 		{"warrior", 1, false, 10, "", false},
 		{"warrior", 99, false, 100, "", false},
-		{"warrior", 100, true, 100, "veteran", false},
-		{"guardian", 100, false, 150, "veteran", false},
-		{"guardian", 299, false, 300, "elite", false},
-		{"guardian", 300, true, 300, "champion", false},
-		{"iron_fortress", 300, false, 350, "champion", false},
-		{"iron_fortress", 599, false, 600, "legendary", false},
-		{"iron_fortress", 600, false, 700, "mythic", false},
-		{"iron_fortress", 699, false, 700, "mythic", false},
-		{"iron_fortress", 700, false, 800, "ancient", false},
+		{"warrior", 100, false, 200, "veteran", false},
+		{"warrior", 299, false, 300, "elite", false},
+		{"warrior", 300, true, 300, "champion", false},
+		{"guardian", 300, false, 400, "champion", false},
+		{"guardian", 699, false, 700, "mythic", false},
+		{"guardian", 700, true, 700, "ancient", false},
+		{"iron_fortress", 700, false, 725, "ancient", false},
 		{"iron_fortress", 849, false, 850, "ascendant", false},
 		{"iron_fortress", 850, false, 900, "ascendant", false},
+		{"iron_fortress", 899, false, 900, "ascendant", false},
+		{"iron_fortress", 900, false, 950, "immortal", false},
+		{"iron_fortress", 949, false, 950, "immortal", false},
+		{"iron_fortress", 950, false, 1000, "immortal", false},
 		{"iron_fortress", 999, false, 1000, "immortal", false},
 		{"iron_fortress", 1000, false, 0, "eternal", true},
-		{"warlord", 300, false, 350, "champion", false},
-		{"berserker", 300, false, 350, "champion", false},
-		{"weapon_master", 300, false, 350, "champion", false},
+		{"warlord", 700, false, 725, "ancient", false},
+		{"berserker", 700, false, 725, "ancient", false},
+		{"weapon_master", 700, false, 725, "ancient", false},
 		{"warlord", 1000, false, 0, "eternal", true},
 		{"berserker", 1000, false, 0, "eternal", true},
 		{"weapon_master", 1000, false, 0, "eternal", true},

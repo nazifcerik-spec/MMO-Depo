@@ -5,7 +5,7 @@ import '../../shared/widgets.dart';
 import 'models.dart' show classes;
 
 /// One node of the class tree (DD-253): a base class (tier 0), a promotion
-/// (tier 1, level 100) or a final specialization (tier 2, level 300).
+/// (tier 1, level 300) or a final specialization (tier 2, level 700).
 class ClassNode {
   const ClassNode({
     required this.code,

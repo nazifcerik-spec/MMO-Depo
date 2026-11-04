@@ -178,7 +178,7 @@ dungeons:
     waves:
       - { mob_code: young_dragon, count: 3 }
       - { mob_code: dragon_cultist, count: 3 }
-      - { mob_code: lava_lizard, count: 2 }
+      - { mob_code: lava_lizard, count: 1 }
     boss_mob_code: mother_dragon_vyrna
     bonus_gold_copper: 190000
     bonus_xp: 320000
@@ -348,7 +348,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 97
+    power_pct: 90
     waves:
       - { mob_code: keep_gargoyle, count: 3 }
       - { mob_code: fallen_commander, count: 3 }
@@ -364,7 +364,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 97
+    power_pct: 92
     waves:
       - { mob_code: tomb_keeper, count: 3 }
       - { mob_code: black_knight, count: 3 }
@@ -380,7 +380,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 87
+    power_pct: 70
     waves:
       - { mob_code: throne_guardian, count: 3 }
       - { mob_code: dragon_sorcerer, count: 3 }
@@ -396,7 +396,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 86
+    power_pct: 70
     waves:
       - { mob_code: stone_gargoyle, count: 3 }
       - { mob_code: cursed_sorcerer, count: 3 }
@@ -412,7 +412,7 @@ dungeons:
     duration_seconds: 3600         # 60 minutes
     group_min: 2
     group_max: 5
-    power_pct: 86
+    power_pct: 82
     waves:
       - { mob_code: light_hunter, count: 3 }
       - { mob_code: celestial_dragon, count: 3 }

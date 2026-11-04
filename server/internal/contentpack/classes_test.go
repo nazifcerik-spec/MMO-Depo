@@ -43,18 +43,18 @@ func TestClassTreeShipped(t *testing.T) {
 	require.Len(t, bases, 10, "all 10 base classes load")
 	require.Len(t, promos, 20, "all 20 promotions load")
 	require.Len(t, specs, 40, "all 40 final specializations load")
-	require.Empty(t, tierNodes(c, 3), "no class branches after level 300")
+	require.Empty(t, tierNodes(c, 3), "no class branches after level 700")
 	for _, b := range bases {
 		require.True(t, character.KnownClass(b.Code), b.Code)
 		require.True(t, slices.Contains(baseClasses, b.Code), b.Code)
-		kids := c.Choices(b.Code, 100)
-		require.Len(t, kids, 2, "%s: two promotions at 100", b.Code)
-		require.Empty(t, c.Choices(b.Code, 99))
+		kids := c.Choices(b.Code, 300)
+		require.Len(t, kids, 2, "%s: two promotions at 300", b.Code)
+		require.Empty(t, c.Choices(b.Code, 299))
 		for _, k := range kids {
-			require.Equal(t, 100, k.RequiredLevel)
+			require.Equal(t, 300, k.RequiredLevel)
 			require.Equal(t, b.Code, k.Parent)
-			gs := c.Choices(k.Code, 300)
-			require.Len(t, gs, 2, "%s: two specializations at 300", k.Code)
+			gs := c.Choices(k.Code, 700)
+			require.Len(t, gs, 2, "%s: two specializations at 700", k.Code)
 			for _, g := range gs {
 				require.Equal(t, []string{b.Code, k.Code, g.Code}, c.Path(g.Code), "parent chain (no cycles)")
 				require.Empty(t, c.Choices(g.Code, 1000))
@@ -120,20 +120,20 @@ func TestRequiredSkillsPerMilestone(t *testing.T) {
 		require.True(t, has(b.Code, 50, "passive", ""), "%s Lv50 passive", b.Code)
 	}
 	for _, pr := range tierNodes(c, 1) {
-		require.True(t, has(pr.Code, 100, "passive", ""), "%s promotion passive", pr.Code)
-		for _, lv := range []int{100, 150, 200, 250} {
+		require.True(t, has(pr.Code, 300, "passive", ""), "%s promotion passive", pr.Code)
+		for _, lv := range []int{300, 400, 500, 600} {
 			require.True(t, has(pr.Code, lv, "", ""), "%s Lv%d skill", pr.Code, lv)
 		}
 	}
 	for _, sp := range tierNodes(c, 2) {
-		for _, lv := range []int{300, 450, 550} {
+		for _, lv := range []int{700, 775, 850} {
 			require.True(t, has(sp.Code, lv, "passive", ""), "%s Lv%d passive", sp.Code, lv)
 		}
-		for _, lv := range []int{350, 400, 500} {
+		for _, lv := range []int{725, 750, 800} {
 			require.True(t, has(sp.Code, lv, "", ""), "%s Lv%d skill", sp.Code, lv)
 		}
-		require.True(t, has(sp.Code, 600, "", "awakening"), "%s awakening", sp.Code)
-		require.True(t, has(sp.Code, 700, "active", "ultimate"), "%s ultimate", sp.Code)
+		require.True(t, has(sp.Code, 900, "", "awakening"), "%s awakening", sp.Code)
+		require.True(t, has(sp.Code, 950, "active", "ultimate"), "%s ultimate", sp.Code)
 		n := 0
 		for k, list := range cats {
 			if k.spec == sp.Code {

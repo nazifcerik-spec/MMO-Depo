@@ -189,6 +189,11 @@ def nodes(c):
             yield s, 2, p
 
 
+# class_data.py lists unlocks in its own scale; promotions open at 300 and
+# specializations at 700 (DD-351).
+UNLOCK_LEVEL = {100: 300, 150: 400, 200: 500, 250: 600, 300: 700, 350: 725, 400: 750, 450: 775,
+                500: 800, 550: 850, 600: 900, 700: 950}
+
 skills_out, classes_out, trees_out = [], [], []
 for c in CLASSES:
     res_names = RESOURCE_NAMES[c['resource']['kind']]
@@ -199,7 +204,7 @@ for c in CLASSES:
         # class node yaml
         lines = ['  - code: ' + code]
         if parent:
-            lines += ['    parent: ' + parent['code'], '    required_level: %d' % (100 if tier == 1 else 300)]
+            lines += ['    parent: ' + parent['code'], '    required_level: %d' % (300 if tier == 1 else 700)]
         lines += ['    name_key: class.' + code, '    role_tags: [%s]' % ', '.join(node['roles'])]
         if tier == 0:
             r = c['resource']
@@ -245,6 +250,7 @@ for c in CLASSES:
             names = dict(zip(LANG_ORDER, names))
             scode = code + '_' + key
             category = {600: 'awakening', 700: 'ultimate'}.get(lvl)
+            lvl = UNLOCK_LEVEL.get(lvl, lvl)
             put('skill.' + scode, names)
             sl = ['  - code: ' + scode, '    display_name_key: skill.' + scode, '    class: ' + c['code']]
             if tier > 0:

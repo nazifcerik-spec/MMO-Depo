@@ -34,8 +34,8 @@ func firstChild(spec string) string {
 	return leveling.Current().Choices(spec, 1000)[0].Code
 }
 
-// Every base class at the DD-252 checkpoints: 1, 99, 100, 299, 300, 599,
-// 600, 699, 700, 849, 850, 999, 1000.
+// Every base class at the checkpoints: 1, 99, 299, 300, 699, 700, 849, 850,
+// 949, 950, 999, 1000 (DD-351).
 func TestAllClassLevelFixtures(t *testing.T) {
 	w := newWorld(t)
 	cfg := leveling.Current()
@@ -51,15 +51,15 @@ func TestAllClassLevelFixtures(t *testing.T) {
 		}{
 			{class, 1, false, 10, ""},
 			{class, 99, false, 100, ""},
-			{class, 100, true, 100, "veteran"},
-			{promo, 299, false, 300, "elite"},
-			{promo, 300, true, 300, "champion"},
-			{spec, 599, false, 600, "legendary"},
-			{spec, 600, false, 700, "mythic"},
-			{spec, 699, false, 700, "mythic"},
-			{spec, 700, false, 800, "ancient"},
+			{class, 299, false, 300, "elite"},
+			{class, 300, true, 300, "champion"},
+			{promo, 699, false, 700, "mythic"},
+			{promo, 700, true, 700, "ancient"},
+			{spec, 700, false, 725, "ancient"},
 			{spec, 849, false, 850, "ascendant"},
 			{spec, 850, false, 900, "ascendant"},
+			{spec, 949, false, 950, "immortal"},
+			{spec, 950, false, 1000, "immortal"},
 			{spec, 999, false, 1000, "immortal"},
 			{spec, 1000, false, 0, "eternal"},
 		} {
@@ -90,20 +90,20 @@ func TestAllClassLevelFixtures(t *testing.T) {
 func TestPromotionOverflowEveryClass(t *testing.T) {
 	w := newWorld(t)
 	for _, class := range allBaseClasses {
-		p := w.classFixture(class, 99)
-		res := w.grant(p, toLevel(99, 104)+100, class+"-afk")
-		require.Equal(t, int16(100), res.Character.Level, class)
+		p := w.classFixture(class, 299)
+		res := w.grant(p, toLevel(299, 304)+100, class+"-afk")
+		require.Equal(t, int16(300), res.Character.Level, class)
 		require.True(t, res.PromotionAvailable, class)
-		require.Equal(t, toLevel(100, 104)+100, res.Character.OverflowXP, class)
+		require.Equal(t, toLevel(300, 304)+100, res.Character.OverflowXP, class)
 		promo := firstChild(class)
 		g, err := w.chars.SelectPromotion(w.ctx, p.ID, p.Account, promo)
 		require.NoError(t, err, class)
-		require.Equal(t, int16(104), g.Character.Level, class)
+		require.Equal(t, int16(304), g.Character.Level, class)
 		require.Zero(t, g.Character.OverflowXP, class)
 
-		q := w.classFixture(promo, 299)
-		res = w.grant(q, toLevel(299, 300)+77, class+"-gate2")
-		require.Equal(t, int16(300), res.Character.Level, class)
+		q := w.classFixture(promo, 699)
+		res = w.grant(q, toLevel(699, 700)+77, class+"-gate2")
+		require.Equal(t, int16(700), res.Character.Level, class)
 		require.Equal(t, int64(77), res.Character.OverflowXP, class)
 		g, err = w.chars.SelectPromotion(w.ctx, q.ID, q.Account, firstChild(promo))
 		require.NoError(t, err, class)
@@ -113,9 +113,9 @@ func TestPromotionOverflowEveryClass(t *testing.T) {
 		{"mage", "guardian"}, {"cleric", "berserker"}, {"guardian", "pyromancer"},
 		{"assassin", "beastmaster"}, {"rogue", "nightblade"},
 	} {
-		lvl := int16(100)
-		if leveling.Current().Choices(bad.node, 1000)[0].RequiredLevel == 300 {
-			lvl = 300
+		lvl := int16(300)
+		if leveling.Current().Choices(bad.node, 1000)[0].RequiredLevel == 700 {
+			lvl = 700
 		}
 		p := w.classFixture(bad.node, lvl)
 		_, err := w.chars.SelectPromotion(w.ctx, p.ID, p.Account, bad.choice)
@@ -212,7 +212,7 @@ func TestHTTPClassCatalog(t *testing.T) {
 		}
 		if c["code"] == "berserker" {
 			require.Equal(t, "executioner", c["parent"])
-			require.Equal(t, 300.0, c["required_level"])
+			require.Equal(t, 700.0, c["required_level"])
 			require.Equal(t, "bloodbound", c["mastery_title"])
 			require.NotContains(t, c["equipment"], "shield")
 		}

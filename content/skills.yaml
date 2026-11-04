@@ -77,7 +77,7 @@ skills:
     display_name_key: skill.guardian_unyielding
     class: warrior
     spec: guardian
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     modifiers:
       - { kind: mult_add, target: defense, amount: 0.12 }
@@ -86,7 +86,7 @@ skills:
     display_name_key: skill.guardian_shield_slam
     class: warrior
     spec: guardian
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     sort_order: 35
     effect: strike
@@ -99,7 +99,7 @@ skills:
     display_name_key: skill.guardian_taunt
     class: warrior
     spec: guardian
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     sort_order: 87
     effect: guard
@@ -112,7 +112,7 @@ skills:
     display_name_key: skill.guardian_last_stand
     class: warrior
     spec: guardian
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     sort_order: 5
     effect: guard
@@ -125,7 +125,7 @@ skills:
     display_name_key: skill.guardian_counterguard
     class: warrior
     spec: guardian
-    unlock_level: 250
+    unlock_level: 600
     kind: passive
     modifiers:
       - { kind: flat, target: block_pct, amount: 5 }
@@ -136,7 +136,7 @@ skills:
     display_name_key: skill.executioner_instinct
     class: warrior
     spec: executioner
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     modifiers:
       - { kind: flat, target: execute_pct, amount: 15 }
@@ -145,7 +145,7 @@ skills:
     display_name_key: skill.executioner_reckless_strike
     class: warrior
     spec: executioner
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     sort_order: 35
     effect: strike
@@ -157,7 +157,7 @@ skills:
     display_name_key: skill.executioner_rend
     class: warrior
     spec: executioner
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     sort_order: 45
     effect: strike
@@ -169,7 +169,7 @@ skills:
     display_name_key: skill.executioner_blood_rush
     class: warrior
     spec: executioner
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     sort_order: 86
     effect: empower
@@ -182,7 +182,7 @@ skills:
     display_name_key: skill.executioner_finishing_blow
     class: warrior
     spec: executioner
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     sort_order: 8
     effect: strike
@@ -196,7 +196,7 @@ skills:
     display_name_key: skill.iron_fortress_bulwark
     class: warrior
     spec: iron_fortress
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     modifiers:
       - { kind: flat, target: dmg_reduction_pct, amount: 8 }
@@ -205,7 +205,7 @@ skills:
     display_name_key: skill.iron_fortress_fortress_stance
     class: warrior
     spec: iron_fortress
-    unlock_level: 300
+    unlock_level: 700
     kind: active
     activation_mode: stance
     sort_order: 87
@@ -219,7 +219,7 @@ skills:
     display_name_key: skill.iron_fortress_shield_wall
     class: warrior
     spec: iron_fortress
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     sort_order: 4
     effect: guard
@@ -232,21 +232,21 @@ skills:
     display_name_key: skill.iron_fortress_retaliation
     class: warrior
     spec: iron_fortress
-    unlock_level: 400
+    unlock_level: 750
     kind: passive
     modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }]
   - code: iron_fortress_stoneheart
     display_name_key: skill.iron_fortress_stoneheart
     class: warrior
     spec: iron_fortress
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     modifiers: [{ kind: mult_add, target: hp_max, amount: 0.05 }]
   - code: iron_fortress_bastion
     display_name_key: skill.iron_fortress_bastion
     class: warrior
     spec: iron_fortress
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     sort_order: 6
     effect: heal
@@ -258,14 +258,14 @@ skills:
     display_name_key: skill.iron_fortress_deflect
     class: warrior
     spec: iron_fortress
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     modifiers: [{ kind: flat, target: dmg_reduction_pct, amount: 4 }]
   - code: iron_fortress_aegis_rebound
     display_name_key: skill.iron_fortress_aegis_rebound
     class: warrior
     spec: iron_fortress
-    unlock_level: 600
+    unlock_level: 900
     category: awakening
     kind: passive
     modifiers:
@@ -275,7 +275,7 @@ skills:
     display_name_key: skill.iron_fortress_unbreakable
     class: warrior
     spec: iron_fortress
-    unlock_level: 700
+    unlock_level: 950
     category: ultimate
     kind: active
     sort_order: 2
@@ -291,7 +291,7 @@ skills:
     display_name_key: skill.warlord_commanding_presence
     class: warrior
     spec: warlord
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     modifiers:
       - { kind: mult_add, target: attack, amount: 0.05 }
@@ -300,7 +300,7 @@ skills:
     display_name_key: skill.warlord_rallying_cry
     class: warrior
     spec: warlord
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     sort_order: 86
     effect: empower
@@ -313,7 +313,7 @@ skills:
     display_name_key: skill.warlord_banner_of_war
     class: warrior
     spec: warlord
-    unlock_level: 400
+    unlock_level: 750
     kind: passive
     modifiers:
       - { kind: mult_add, target: attack, amount: 0.04 }
@@ -322,14 +322,14 @@ skills:
     display_name_key: skill.warlord_tactical_command
     class: warrior
     spec: warlord
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     modifiers: [{ kind: flat, target: crit_pct, amount: 3 }]
   - code: warlord_challenge
     display_name_key: skill.warlord_challenge
     class: warrior
     spec: warlord
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     sort_order: 87
     effect: guard
@@ -342,7 +342,7 @@ skills:
     display_name_key: skill.warlord_frontline_leader
     class: warrior
     spec: warlord
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     modifiers:
       - { kind: mult_add, target: hp_max, amount: 0.05 }
@@ -351,7 +351,7 @@ skills:
     display_name_key: skill.warlord_war_banner
     class: warrior
     spec: warlord
-    unlock_level: 600
+    unlock_level: 900
     category: awakening
     kind: active
     sort_order: 86
@@ -365,7 +365,7 @@ skills:
     display_name_key: skill.warlord_march_of_conquest
     class: warrior
     spec: warlord
-    unlock_level: 700
+    unlock_level: 950
     category: ultimate
     kind: active
     sort_order: 3
@@ -381,14 +381,14 @@ skills:
     display_name_key: skill.berserker_blood_fury
     class: warrior
     spec: berserker
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     modifiers: [{ kind: flat, target: missing_hp_dmg_pct, amount: 30 }]
   - code: berserker_frenzy
     display_name_key: skill.berserker_frenzy
     class: warrior
     spec: berserker
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     sort_order: 86
     effect: empower
@@ -401,21 +401,21 @@ skills:
     display_name_key: skill.berserker_bloodthirst
     class: warrior
     spec: berserker
-    unlock_level: 400
+    unlock_level: 750
     kind: passive
     modifiers: [{ kind: flat, target: lifesteal_pct, amount: 5 }]
   - code: berserker_pain_is_power
     display_name_key: skill.berserker_pain_is_power
     class: warrior
     spec: berserker
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     modifiers: [{ kind: mult_add, target: attack, amount: 0.06 }]
   - code: berserker_reckless_onslaught
     display_name_key: skill.berserker_reckless_onslaught
     class: warrior
     spec: berserker
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     sort_order: 34
     effect: strike
@@ -427,7 +427,7 @@ skills:
     display_name_key: skill.berserker_death_defiance
     class: warrior
     spec: berserker
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_LOW_HP, condition: self_hp_below_25, scaling: steady_state }
@@ -438,7 +438,7 @@ skills:
     display_name_key: skill.berserker_last_breath
     class: warrior
     spec: berserker
-    unlock_level: 600
+    unlock_level: 900
     category: awakening
     kind: passive
     modifiers:
@@ -448,7 +448,7 @@ skills:
     display_name_key: skill.berserker_avatar_of_rage
     class: warrior
     spec: berserker
-    unlock_level: 700
+    unlock_level: 950
     category: ultimate
     kind: active
     sort_order: 3
@@ -464,7 +464,7 @@ skills:
     display_name_key: skill.weapon_master_adaptive_arsenal
     class: warrior
     spec: weapon_master
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     modifiers:
       - { kind: flat, target: crit_pct, amount: 5 }
@@ -473,7 +473,7 @@ skills:
     display_name_key: skill.weapon_master_precision_strike
     class: warrior
     spec: weapon_master
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     sort_order: 33
     effect: strike
@@ -485,35 +485,35 @@ skills:
     display_name_key: skill.weapon_master_weapon_shift
     class: warrior
     spec: weapon_master
-    unlock_level: 400
+    unlock_level: 750
     kind: passive
     modifiers: [{ kind: mult_add, target: attack, amount: 0.05 }]
   - code: weapon_master_flow_state
     display_name_key: skill.weapon_master_flow_state
     class: warrior
     spec: weapon_master
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     modifiers: [{ kind: flat, target: crit_dmg_pct, amount: 15 }]
   - code: weapon_master_perfect_counter
     display_name_key: skill.weapon_master_perfect_counter
     class: warrior
     spec: weapon_master
-    unlock_level: 500
+    unlock_level: 800
     kind: passive
     modifiers: [{ kind: flat, target: evasion_pct, amount: 5 }]
   - code: weapon_master_arsenal_mastery
     display_name_key: skill.weapon_master_arsenal_mastery
     class: warrior
     spec: weapon_master
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     modifiers: [{ kind: mult_add, target: attack, amount: 0.06 }]
   - code: weapon_master_perfect_sequence
     display_name_key: skill.weapon_master_perfect_sequence
     class: warrior
     spec: weapon_master
-    unlock_level: 600
+    unlock_level: 900
     category: awakening
     kind: passive
     modifiers:
@@ -523,7 +523,7 @@ skills:
     display_name_key: skill.weapon_master_thousand_cuts
     class: warrior
     spec: weapon_master
-    unlock_level: 700
+    unlock_level: 950
     category: ultimate
     kind: active
     sort_order: 3
@@ -623,7 +623,7 @@ skills:
     display_name_key: skill.assassin_lethal_opening
     class: rogue
     spec: assassin
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -636,7 +636,7 @@ skills:
     display_name_key: skill.assassin_ambush
     class: rogue
     spec: assassin
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 61
@@ -655,7 +655,7 @@ skills:
     display_name_key: skill.assassin_shadowstep
     class: rogue
     spec: assassin
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 86
@@ -674,7 +674,7 @@ skills:
     display_name_key: skill.assassin_expose_weakness
     class: rogue
     spec: assassin
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 86
@@ -693,7 +693,7 @@ skills:
     display_name_key: skill.assassin_death_mark
     class: rogue
     spec: assassin
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 10
@@ -712,7 +712,7 @@ skills:
     display_name_key: skill.nightblade_shadow_momentum
     class: rogue
     spec: nightblade
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -724,7 +724,7 @@ skills:
     display_name_key: skill.nightblade_shadow_strike
     class: rogue
     spec: nightblade
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 55
@@ -743,7 +743,7 @@ skills:
     display_name_key: skill.nightblade_dark_veil
     class: rogue
     spec: nightblade
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -762,7 +762,7 @@ skills:
     display_name_key: skill.nightblade_silent_killer
     class: rogue
     spec: nightblade
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -774,7 +774,7 @@ skills:
     display_name_key: skill.nightblade_nightfall
     class: rogue
     spec: nightblade
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 47
@@ -793,7 +793,7 @@ skills:
     display_name_key: skill.nightblade_predators_patience
     class: rogue
     spec: nightblade
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_LOW_HP, scaling: steady_state }
@@ -806,7 +806,7 @@ skills:
     display_name_key: skill.nightblade_shadow_execution
     class: rogue
     spec: nightblade
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -820,7 +820,7 @@ skills:
     display_name_key: skill.nightblade_dance_of_death
     class: rogue
     spec: nightblade
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -840,7 +840,7 @@ skills:
     display_name_key: skill.poison_master_toxic_expertise
     class: rogue
     spec: poison_master
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_DEBUFF_APPLIED, stack_limit: 10, scaling: steady_state }
@@ -852,7 +852,7 @@ skills:
     display_name_key: skill.poison_master_venomous_blade
     class: rogue
     spec: poison_master
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 30
@@ -872,7 +872,7 @@ skills:
     display_name_key: skill.poison_master_toxic_cloud
     class: rogue
     spec: poison_master
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -891,7 +891,7 @@ skills:
     display_name_key: skill.poison_master_corrosive_venom
     class: rogue
     spec: poison_master
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -903,7 +903,7 @@ skills:
     display_name_key: skill.poison_master_catalyst
     class: rogue
     spec: poison_master
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 57
@@ -922,7 +922,7 @@ skills:
     display_name_key: skill.poison_master_persistent_toxin
     class: rogue
     spec: poison_master
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -935,7 +935,7 @@ skills:
     display_name_key: skill.poison_master_toxic_detonation
     class: rogue
     spec: poison_master
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -948,7 +948,7 @@ skills:
     display_name_key: skill.poison_master_plaguebringer
     class: rogue
     spec: poison_master
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -969,7 +969,7 @@ skills:
     display_name_key: skill.duelist_combat_rhythm
     class: rogue
     spec: duelist
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 5, scaling: steady_state }
@@ -981,7 +981,7 @@ skills:
     display_name_key: skill.duelist_riposte
     class: rogue
     spec: duelist
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 67
@@ -1000,7 +1000,7 @@ skills:
     display_name_key: skill.duelist_flurry
     class: rogue
     spec: duelist
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 59
@@ -1019,7 +1019,7 @@ skills:
     display_name_key: skill.duelist_perfect_footwork
     class: rogue
     spec: duelist
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 6
@@ -1038,7 +1038,7 @@ skills:
     display_name_key: skill.duelist_duelists_challenge
     class: rogue
     spec: duelist
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1057,7 +1057,7 @@ skills:
     display_name_key: skill.blade_dancer_blade_tempo
     class: rogue
     spec: blade_dancer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 10, scaling: steady_state }
@@ -1069,7 +1069,7 @@ skills:
     display_name_key: skill.blade_dancer_twin_slash
     class: rogue
     spec: blade_dancer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 61
@@ -1088,7 +1088,7 @@ skills:
     display_name_key: skill.blade_dancer_whirling_blades
     class: rogue
     spec: blade_dancer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 55
@@ -1107,7 +1107,7 @@ skills:
     display_name_key: skill.blade_dancer_perfect_rhythm
     class: rogue
     spec: blade_dancer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1120,7 +1120,7 @@ skills:
     display_name_key: skill.blade_dancer_blade_cascade
     class: rogue
     spec: blade_dancer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 49
@@ -1139,7 +1139,7 @@ skills:
     display_name_key: skill.blade_dancer_relentless_motion
     class: rogue
     spec: blade_dancer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1151,7 +1151,7 @@ skills:
     display_name_key: skill.blade_dancer_infinite_tempo
     class: rogue
     spec: blade_dancer
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -1165,7 +1165,7 @@ skills:
     display_name_key: skill.blade_dancer_blade_storm
     class: rogue
     spec: blade_dancer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -1185,7 +1185,7 @@ skills:
     display_name_key: skill.trickster_elusive_counter
     class: rogue
     spec: trickster
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_DODGE, scaling: steady_state }
@@ -1198,7 +1198,7 @@ skills:
     display_name_key: skill.trickster_feint
     class: rogue
     spec: trickster
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1217,7 +1217,7 @@ skills:
     display_name_key: skill.trickster_smoke_bomb
     class: rogue
     spec: trickster
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -1237,7 +1237,7 @@ skills:
     display_name_key: skill.trickster_misdirection
     class: rogue
     spec: trickster
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1249,7 +1249,7 @@ skills:
     display_name_key: skill.trickster_dirty_trick
     class: rogue
     spec: trickster
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 55
@@ -1268,7 +1268,7 @@ skills:
     display_name_key: skill.trickster_untouchable
     class: rogue
     spec: trickster
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1281,7 +1281,7 @@ skills:
     display_name_key: skill.trickster_perfect_evasion
     class: rogue
     spec: trickster
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -1295,7 +1295,7 @@ skills:
     display_name_key: skill.trickster_grand_illusion
     class: rogue
     spec: trickster
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -1401,7 +1401,7 @@ skills:
     display_name_key: skill.marksman_steady_aim
     class: ranger
     spec: marksman
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1414,7 +1414,7 @@ skills:
     display_name_key: skill.marksman_piercing_shot
     class: ranger
     spec: marksman
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 61
@@ -1433,7 +1433,7 @@ skills:
     display_name_key: skill.marksman_deadeye
     class: ranger
     spec: marksman
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1452,7 +1452,7 @@ skills:
     display_name_key: skill.marksman_rapid_volley
     class: ranger
     spec: marksman
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 56
@@ -1471,7 +1471,7 @@ skills:
     display_name_key: skill.marksman_armor_breaker
     class: ranger
     spec: marksman
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1490,7 +1490,7 @@ skills:
     display_name_key: skill.sharpshooter_perfect_aim
     class: ranger
     spec: sharpshooter
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 5, scaling: steady_state }
@@ -1503,7 +1503,7 @@ skills:
     display_name_key: skill.sharpshooter_aimed_shot
     class: ranger
     spec: sharpshooter
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 53
@@ -1522,7 +1522,7 @@ skills:
     display_name_key: skill.sharpshooter_critical_focus
     class: ranger
     spec: sharpshooter
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1541,7 +1541,7 @@ skills:
     display_name_key: skill.sharpshooter_steady_hand
     class: ranger
     spec: sharpshooter
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1553,7 +1553,7 @@ skills:
     display_name_key: skill.sharpshooter_deadly_precision
     class: ranger
     spec: sharpshooter
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 10
@@ -1572,7 +1572,7 @@ skills:
     display_name_key: skill.sharpshooter_long_range_mastery
     class: ranger
     spec: sharpshooter
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1584,7 +1584,7 @@ skills:
     display_name_key: skill.sharpshooter_bullseye
     class: ranger
     spec: sharpshooter
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -1598,7 +1598,7 @@ skills:
     display_name_key: skill.sharpshooter_one_perfect_shot
     class: ranger
     spec: sharpshooter
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -1618,7 +1618,7 @@ skills:
     display_name_key: skill.crossbow_master_heavy_bolts
     class: ranger
     spec: crossbow_master
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, scaling: steady_state }
@@ -1631,7 +1631,7 @@ skills:
     display_name_key: skill.crossbow_master_crushing_bolt
     class: ranger
     spec: crossbow_master
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 55
@@ -1650,7 +1650,7 @@ skills:
     display_name_key: skill.crossbow_master_rapid_reload
     class: ranger
     spec: crossbow_master
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1670,7 +1670,7 @@ skills:
     display_name_key: skill.crossbow_master_reinforced_mechanism
     class: ranger
     spec: crossbow_master
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1684,7 +1684,7 @@ skills:
     display_name_key: skill.crossbow_master_siege_bolt
     class: ranger
     spec: crossbow_master
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 47
@@ -1703,7 +1703,7 @@ skills:
     display_name_key: skill.crossbow_master_ballistic_expertise
     class: ranger
     spec: crossbow_master
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1717,7 +1717,7 @@ skills:
     display_name_key: skill.crossbow_master_armor_break_sequence
     class: ranger
     spec: crossbow_master
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -1737,7 +1737,7 @@ skills:
     display_name_key: skill.crossbow_master_rain_of_steel
     class: ranger
     spec: crossbow_master
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -1757,7 +1757,7 @@ skills:
     display_name_key: skill.scout_survival_instinct
     class: ranger
     spec: scout
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1770,7 +1770,7 @@ skills:
     display_name_key: skill.scout_snare_trap
     class: ranger
     spec: scout
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 30
@@ -1790,7 +1790,7 @@ skills:
     display_name_key: skill.scout_camouflage
     class: ranger
     spec: scout
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -1809,7 +1809,7 @@ skills:
     display_name_key: skill.scout_tracking
     class: ranger
     spec: scout
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1828,7 +1828,7 @@ skills:
     display_name_key: skill.scout_hunters_preparation
     class: ranger
     spec: scout
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 6
@@ -1847,7 +1847,7 @@ skills:
     display_name_key: skill.beastmaster_beast_bond
     class: ranger
     spec: beastmaster
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1860,7 +1860,7 @@ skills:
     display_name_key: skill.beastmaster_command_attack
     class: ranger
     spec: beastmaster
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 59
@@ -1879,7 +1879,7 @@ skills:
     display_name_key: skill.beastmaster_bestial_roar
     class: ranger
     spec: beastmaster
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -1898,7 +1898,7 @@ skills:
     display_name_key: skill.beastmaster_shared_instinct
     class: ranger
     spec: beastmaster
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1911,7 +1911,7 @@ skills:
     display_name_key: skill.beastmaster_pack_assault
     class: ranger
     spec: beastmaster
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 49
@@ -1930,7 +1930,7 @@ skills:
     display_name_key: skill.beastmaster_alpha_bond
     class: ranger
     spec: beastmaster
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1943,7 +1943,7 @@ skills:
     display_name_key: skill.beastmaster_primal_connection
     class: ranger
     spec: beastmaster
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -1957,7 +1957,7 @@ skills:
     display_name_key: skill.beastmaster_call_of_the_wild
     class: ranger
     spec: beastmaster
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -1977,7 +1977,7 @@ skills:
     display_name_key: skill.trapper_prepared_ground
     class: ranger
     spec: trapper
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -1989,7 +1989,7 @@ skills:
     display_name_key: skill.trapper_explosive_trap
     class: ranger
     spec: trapper
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2009,7 +2009,7 @@ skills:
     display_name_key: skill.trapper_frost_trap
     class: ranger
     spec: trapper
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2029,7 +2029,7 @@ skills:
     display_name_key: skill.trapper_trap_network
     class: ranger
     spec: trapper
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2042,7 +2042,7 @@ skills:
     display_name_key: skill.trapper_chain_trap
     class: ranger
     spec: trapper
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2062,7 +2062,7 @@ skills:
     display_name_key: skill.trapper_master_preparation
     class: ranger
     spec: trapper
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2075,7 +2075,7 @@ skills:
     display_name_key: skill.trapper_rapid_reset
     class: ranger
     spec: trapper
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -2089,7 +2089,7 @@ skills:
     display_name_key: skill.trapper_killing_ground
     class: ranger
     spec: trapper
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -2193,7 +2193,7 @@ skills:
     display_name_key: skill.arcanist_arcane_efficiency
     class: mage
     spec: arcanist
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2206,7 +2206,7 @@ skills:
     display_name_key: skill.arcanist_arcane_missile
     class: mage
     spec: arcanist
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 61
@@ -2225,7 +2225,7 @@ skills:
     display_name_key: skill.arcanist_mana_channel
     class: mage
     spec: arcanist
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 86
@@ -2244,7 +2244,7 @@ skills:
     display_name_key: skill.arcanist_arcane_barrier
     class: mage
     spec: arcanist
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 6
@@ -2263,7 +2263,7 @@ skills:
     display_name_key: skill.arcanist_arcane_echo
     class: mage
     spec: arcanist
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 53
@@ -2282,7 +2282,7 @@ skills:
     display_name_key: skill.rune_master_runic_knowledge
     class: mage
     spec: rune_master
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_SKILL_CAST, stack_limit: 3, scaling: steady_state }
@@ -2294,7 +2294,7 @@ skills:
     display_name_key: skill.rune_master_rune_of_power
     class: mage
     spec: rune_master
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -2313,7 +2313,7 @@ skills:
     display_name_key: skill.rune_master_rune_prison
     class: mage
     spec: rune_master
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2333,7 +2333,7 @@ skills:
     display_name_key: skill.rune_master_runic_resonance
     class: mage
     spec: rune_master
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2346,7 +2346,7 @@ skills:
     display_name_key: skill.rune_master_rune_detonation
     class: mage
     spec: rune_master
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 45
@@ -2365,7 +2365,7 @@ skills:
     display_name_key: skill.rune_master_runic_mastery
     class: mage
     spec: rune_master
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2377,7 +2377,7 @@ skills:
     display_name_key: skill.rune_master_runic_overload
     class: mage
     spec: rune_master
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -2390,7 +2390,7 @@ skills:
     display_name_key: skill.rune_master_arcane_singularity
     class: mage
     spec: rune_master
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -2410,7 +2410,7 @@ skills:
     display_name_key: skill.chronomancer_temporal_insight
     class: mage
     spec: chronomancer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2423,7 +2423,7 @@ skills:
     display_name_key: skill.chronomancer_time_dilation
     class: mage
     spec: chronomancer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -2442,7 +2442,7 @@ skills:
     display_name_key: skill.chronomancer_temporal_shield
     class: mage
     spec: chronomancer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -2461,7 +2461,7 @@ skills:
     display_name_key: skill.chronomancer_accelerated_casting
     class: mage
     spec: chronomancer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2474,7 +2474,7 @@ skills:
     display_name_key: skill.chronomancer_rewind
     class: mage
     spec: chronomancer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -2492,7 +2492,7 @@ skills:
     display_name_key: skill.chronomancer_temporal_echo
     class: mage
     spec: chronomancer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2505,7 +2505,7 @@ skills:
     display_name_key: skill.chronomancer_time_loop
     class: mage
     spec: chronomancer
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -2519,7 +2519,7 @@ skills:
     display_name_key: skill.chronomancer_time_stop
     class: mage
     spec: chronomancer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -2540,7 +2540,7 @@ skills:
     display_name_key: skill.elementalist_elemental_affinity
     class: mage
     spec: elementalist
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2553,7 +2553,7 @@ skills:
     display_name_key: skill.elementalist_elemental_bolt
     class: mage
     spec: elementalist
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 60
@@ -2572,7 +2572,7 @@ skills:
     display_name_key: skill.elementalist_elemental_surge
     class: mage
     spec: elementalist
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2592,7 +2592,7 @@ skills:
     display_name_key: skill.elementalist_elemental_ward
     class: mage
     spec: elementalist
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 6
@@ -2611,7 +2611,7 @@ skills:
     display_name_key: skill.elementalist_elemental_convergence
     class: mage
     spec: elementalist
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 51
@@ -2630,7 +2630,7 @@ skills:
     display_name_key: skill.pyromancer_ignition
     class: mage
     spec: pyromancer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 10, scaling: steady_state }
@@ -2642,7 +2642,7 @@ skills:
     display_name_key: skill.pyromancer_fireball
     class: mage
     spec: pyromancer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 53
@@ -2661,7 +2661,7 @@ skills:
     display_name_key: skill.pyromancer_flame_wave
     class: mage
     spec: pyromancer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2681,7 +2681,7 @@ skills:
     display_name_key: skill.pyromancer_kindling
     class: mage
     spec: pyromancer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2694,7 +2694,7 @@ skills:
     display_name_key: skill.pyromancer_combustion
     class: mage
     spec: pyromancer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 43
@@ -2713,7 +2713,7 @@ skills:
     display_name_key: skill.pyromancer_living_flame
     class: mage
     spec: pyromancer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2725,7 +2725,7 @@ skills:
     display_name_key: skill.pyromancer_inferno
     class: mage
     spec: pyromancer
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -2746,7 +2746,7 @@ skills:
     display_name_key: skill.pyromancer_meteor_storm
     class: mage
     spec: pyromancer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -2766,7 +2766,7 @@ skills:
     display_name_key: skill.cryomancer_deep_freeze
     class: mage
     spec: cryomancer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 5, scaling: steady_state }
@@ -2779,7 +2779,7 @@ skills:
     display_name_key: skill.cryomancer_ice_lance
     class: mage
     spec: cryomancer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 57
@@ -2798,7 +2798,7 @@ skills:
     display_name_key: skill.cryomancer_frost_nova
     class: mage
     spec: cryomancer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -2818,7 +2818,7 @@ skills:
     display_name_key: skill.cryomancer_frozen_core
     class: mage
     spec: cryomancer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2831,7 +2831,7 @@ skills:
     display_name_key: skill.cryomancer_ice_barrier
     class: mage
     spec: cryomancer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -2850,7 +2850,7 @@ skills:
     display_name_key: skill.cryomancer_permafrost
     class: mage
     spec: cryomancer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -2863,7 +2863,7 @@ skills:
     display_name_key: skill.cryomancer_absolute_zero
     class: mage
     spec: cryomancer
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -2883,7 +2883,7 @@ skills:
     display_name_key: skill.cryomancer_frozen_world
     class: mage
     spec: cryomancer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -2990,7 +2990,7 @@ skills:
     display_name_key: skill.disciple_balanced_spirit
     class: monk
     spec: disciple
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3003,7 +3003,7 @@ skills:
     display_name_key: skill.disciple_chi_guard
     class: monk
     spec: disciple
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3022,7 +3022,7 @@ skills:
     display_name_key: skill.disciple_inner_healing
     class: monk
     spec: disciple
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3040,7 +3040,7 @@ skills:
     display_name_key: skill.disciple_deflecting_palm
     class: monk
     spec: disciple
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 65
@@ -3059,7 +3059,7 @@ skills:
     display_name_key: skill.disciple_focused_meditation
     class: monk
     spec: disciple
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3078,7 +3078,7 @@ skills:
     display_name_key: skill.iron_body_iron_skin
     class: monk
     spec: iron_body
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_RESOURCE_SPENT, stack_limit: 3, scaling: steady_state }
@@ -3090,7 +3090,7 @@ skills:
     display_name_key: skill.iron_body_stone_stance
     class: monk
     spec: iron_body
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3109,7 +3109,7 @@ skills:
     display_name_key: skill.iron_body_iron_counter
     class: monk
     spec: iron_body
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 59
@@ -3128,7 +3128,7 @@ skills:
     display_name_key: skill.iron_body_unshaken
     class: monk
     spec: iron_body
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3141,7 +3141,7 @@ skills:
     display_name_key: skill.iron_body_fortified_chi
     class: monk
     spec: iron_body
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3160,7 +3160,7 @@ skills:
     display_name_key: skill.iron_body_diamond_resilience
     class: monk
     spec: iron_body
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3172,7 +3172,7 @@ skills:
     display_name_key: skill.iron_body_adamant_body
     class: monk
     spec: iron_body
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -3186,7 +3186,7 @@ skills:
     display_name_key: skill.iron_body_mountain_that_walks
     class: monk
     spec: iron_body
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -3206,7 +3206,7 @@ skills:
     display_name_key: skill.spirit_walker_spirit_balance
     class: monk
     spec: spirit_walker
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, scaling: steady_state }
@@ -3219,7 +3219,7 @@ skills:
     display_name_key: skill.spirit_walker_spirit_step
     class: monk
     spec: spirit_walker
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3238,7 +3238,7 @@ skills:
     display_name_key: skill.spirit_walker_healing_palm
     class: monk
     spec: spirit_walker
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3256,7 +3256,7 @@ skills:
     display_name_key: skill.spirit_walker_spiritual_harmony
     class: monk
     spec: spirit_walker
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3269,7 +3269,7 @@ skills:
     display_name_key: skill.spirit_walker_astral_guard
     class: monk
     spec: spirit_walker
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3288,7 +3288,7 @@ skills:
     display_name_key: skill.spirit_walker_flowing_spirit
     class: monk
     spec: spirit_walker
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3301,7 +3301,7 @@ skills:
     display_name_key: skill.spirit_walker_transcendent_flow
     class: monk
     spec: spirit_walker
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -3321,7 +3321,7 @@ skills:
     display_name_key: skill.spirit_walker_spirit_ascension
     class: monk
     spec: spirit_walker
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -3341,7 +3341,7 @@ skills:
     display_name_key: skill.fighter_martial_rhythm
     class: monk
     spec: fighter
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, stack_limit: 5, scaling: steady_state }
@@ -3353,7 +3353,7 @@ skills:
     display_name_key: skill.fighter_combo_strike
     class: monk
     spec: fighter
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 62
@@ -3372,7 +3372,7 @@ skills:
     display_name_key: skill.fighter_rapid_fists
     class: monk
     spec: fighter
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 57
@@ -3391,7 +3391,7 @@ skills:
     display_name_key: skill.fighter_rising_kick
     class: monk
     spec: fighter
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 52
@@ -3410,7 +3410,7 @@ skills:
     display_name_key: skill.fighter_finishing_palm
     class: monk
     spec: fighter
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 10
@@ -3429,7 +3429,7 @@ skills:
     display_name_key: skill.combo_master_perfect_combination
     class: monk
     spec: combo_master
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_SKILL_CAST, stack_limit: 5, scaling: steady_state }
@@ -3441,7 +3441,7 @@ skills:
     display_name_key: skill.combo_master_triple_strike
     class: monk
     spec: combo_master
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 58
@@ -3460,7 +3460,7 @@ skills:
     display_name_key: skill.combo_master_flowing_kick
     class: monk
     spec: combo_master
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 52
@@ -3479,7 +3479,7 @@ skills:
     display_name_key: skill.combo_master_combo_memory
     class: monk
     spec: combo_master
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3492,7 +3492,7 @@ skills:
     display_name_key: skill.combo_master_perfect_finisher
     class: monk
     spec: combo_master
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 10
@@ -3511,7 +3511,7 @@ skills:
     display_name_key: skill.combo_master_endless_sequence
     class: monk
     spec: combo_master
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3523,7 +3523,7 @@ skills:
     display_name_key: skill.combo_master_perfect_technique
     class: monk
     spec: combo_master
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -3537,7 +3537,7 @@ skills:
     display_name_key: skill.combo_master_hundred_fist_sequence
     class: monk
     spec: combo_master
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -3557,7 +3557,7 @@ skills:
     display_name_key: skill.storm_fist_storm_tempo
     class: monk
     spec: storm_fist
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_CRIT, stack_limit: 5, scaling: steady_state }
@@ -3570,7 +3570,7 @@ skills:
     display_name_key: skill.storm_fist_thunder_fist
     class: monk
     spec: storm_fist
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 55
@@ -3589,7 +3589,7 @@ skills:
     display_name_key: skill.storm_fist_storm_kick
     class: monk
     spec: storm_fist
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -3609,7 +3609,7 @@ skills:
     display_name_key: skill.storm_fist_static_charge
     class: monk
     spec: storm_fist
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3621,7 +3621,7 @@ skills:
     display_name_key: skill.storm_fist_lightning_barrage
     class: monk
     spec: storm_fist
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 43
@@ -3640,7 +3640,7 @@ skills:
     display_name_key: skill.storm_fist_tempest_rhythm
     class: monk
     spec: storm_fist
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3652,7 +3652,7 @@ skills:
     display_name_key: skill.storm_fist_living_tempest
     class: monk
     spec: storm_fist
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -3666,7 +3666,7 @@ skills:
     display_name_key: skill.storm_fist_heavenly_storm
     class: monk
     spec: storm_fist
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -3769,7 +3769,7 @@ skills:
     display_name_key: skill.saint_sacred_grace
     class: cleric
     spec: saint
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3782,7 +3782,7 @@ skills:
     display_name_key: skill.saint_healing_prayer
     class: cleric
     spec: saint
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3800,7 +3800,7 @@ skills:
     display_name_key: skill.saint_renew
     class: cleric
     spec: saint
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3819,7 +3819,7 @@ skills:
     display_name_key: skill.saint_divine_light
     class: cleric
     spec: saint
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 59
@@ -3838,7 +3838,7 @@ skills:
     display_name_key: skill.saint_guardian_angel
     class: cleric
     spec: saint
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3857,7 +3857,7 @@ skills:
     display_name_key: skill.high_priest_greater_grace
     class: cleric
     spec: high_priest
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, scaling: steady_state }
@@ -3870,7 +3870,7 @@ skills:
     display_name_key: skill.high_priest_greater_heal
     class: cleric
     spec: high_priest
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3888,7 +3888,7 @@ skills:
     display_name_key: skill.high_priest_prayer_of_recovery
     class: cleric
     spec: high_priest
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -3907,7 +3907,7 @@ skills:
     display_name_key: skill.high_priest_overflowing_grace
     class: cleric
     spec: high_priest
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3920,7 +3920,7 @@ skills:
     display_name_key: skill.high_priest_divine_intervention
     class: cleric
     spec: high_priest
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 1
@@ -3939,7 +3939,7 @@ skills:
     display_name_key: skill.high_priest_endless_mercy
     class: cleric
     spec: high_priest
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3952,7 +3952,7 @@ skills:
     display_name_key: skill.high_priest_divine_grace
     class: cleric
     spec: high_priest
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -3966,7 +3966,7 @@ skills:
     display_name_key: skill.high_priest_miracle
     class: cleric
     spec: high_priest
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -3985,7 +3985,7 @@ skills:
     display_name_key: skill.aegis_priest_sacred_barrier
     class: cleric
     spec: aegis_priest
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -3998,7 +3998,7 @@ skills:
     display_name_key: skill.aegis_priest_holy_shield
     class: cleric
     spec: aegis_priest
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4017,7 +4017,7 @@ skills:
     display_name_key: skill.aegis_priest_aegis_field
     class: cleric
     spec: aegis_priest
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4036,7 +4036,7 @@ skills:
     display_name_key: skill.aegis_priest_reinforced_faith
     class: cleric
     spec: aegis_priest
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4049,7 +4049,7 @@ skills:
     display_name_key: skill.aegis_priest_barrier_of_light
     class: cleric
     spec: aegis_priest
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4068,7 +4068,7 @@ skills:
     display_name_key: skill.aegis_priest_protective_grace
     class: cleric
     spec: aegis_priest
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4080,7 +4080,7 @@ skills:
     display_name_key: skill.aegis_priest_aegis_rebirth
     class: cleric
     spec: aegis_priest
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -4094,7 +4094,7 @@ skills:
     display_name_key: skill.aegis_priest_divine_fortress
     class: cleric
     spec: aegis_priest
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -4114,7 +4114,7 @@ skills:
     display_name_key: skill.oracle_foresight
     class: cleric
     spec: oracle
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4127,7 +4127,7 @@ skills:
     display_name_key: skill.oracle_prophecy
     class: cleric
     spec: oracle
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4146,7 +4146,7 @@ skills:
     display_name_key: skill.oracle_mass_cleanse
     class: cleric
     spec: oracle
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4164,7 +4164,7 @@ skills:
     display_name_key: skill.oracle_divine_insight
     class: cleric
     spec: oracle
-    unlock_level: 200
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4183,7 +4183,7 @@ skills:
     display_name_key: skill.oracle_sanctified_ground
     class: cleric
     spec: oracle
-    unlock_level: 250
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 30
@@ -4203,7 +4203,7 @@ skills:
     display_name_key: skill.prophet_revelation
     class: cleric
     spec: prophet
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4216,7 +4216,7 @@ skills:
     display_name_key: skill.prophet_prophetic_strength
     class: cleric
     spec: prophet
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4235,7 +4235,7 @@ skills:
     display_name_key: skill.prophet_blessing_of_wisdom
     class: cleric
     spec: prophet
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: stance
     sort_order: 87
@@ -4254,7 +4254,7 @@ skills:
     display_name_key: skill.prophet_divine_inspiration
     class: cleric
     spec: prophet
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4266,7 +4266,7 @@ skills:
     display_name_key: skill.prophet_mass_revelation
     class: cleric
     spec: prophet
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 53
@@ -4285,7 +4285,7 @@ skills:
     display_name_key: skill.prophet_enduring_blessing
     class: cleric
     spec: prophet
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4298,7 +4298,7 @@ skills:
     display_name_key: skill.prophet_true_revelation
     class: cleric
     spec: prophet
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -4312,7 +4312,7 @@ skills:
     display_name_key: skill.prophet_voice_of_heaven
     class: cleric
     spec: prophet
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -4332,7 +4332,7 @@ skills:
     display_name_key: skill.exorcist_purification
     class: cleric
     spec: exorcist
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_DEBUFF_APPLIED, scaling: steady_state }
@@ -4345,7 +4345,7 @@ skills:
     display_name_key: skill.exorcist_holy_seal
     class: cleric
     spec: exorcist
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4364,7 +4364,7 @@ skills:
     display_name_key: skill.exorcist_banish
     class: cleric
     spec: exorcist
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -4384,7 +4384,7 @@ skills:
     display_name_key: skill.exorcist_purging_light
     class: cleric
     spec: exorcist
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4397,7 +4397,7 @@ skills:
     display_name_key: skill.exorcist_exorcism
     class: cleric
     spec: exorcist
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 43
@@ -4416,7 +4416,7 @@ skills:
     display_name_key: skill.exorcist_uncorrupted
     class: cleric
     spec: exorcist
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4429,7 +4429,7 @@ skills:
     display_name_key: skill.exorcist_absolute_purification
     class: cleric
     spec: exorcist
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -4450,7 +4450,7 @@ skills:
     display_name_key: skill.exorcist_judgment_of_light
     class: cleric
     spec: exorcist
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -4555,7 +4555,7 @@ skills:
     display_name_key: skill.protector_sacred_defense
     class: paladin
     spec: protector
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4568,7 +4568,7 @@ skills:
     display_name_key: skill.protector_holy_shield
     class: paladin
     spec: protector
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4587,7 +4587,7 @@ skills:
     display_name_key: skill.protector_guardian_aura
     class: paladin
     spec: protector
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: stance
     sort_order: 87
@@ -4606,7 +4606,7 @@ skills:
     display_name_key: skill.protector_sacred_taunt
     class: paladin
     spec: protector
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 87
@@ -4625,7 +4625,7 @@ skills:
     display_name_key: skill.protector_blessed_bulwark
     class: paladin
     spec: protector
-    unlock_level: 250
+    unlock_level: 600
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4638,7 +4638,7 @@ skills:
     display_name_key: skill.aegis_knight_aegis_bond
     class: paladin
     spec: aegis_knight
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_BLOCK, scaling: steady_state }
@@ -4651,7 +4651,7 @@ skills:
     display_name_key: skill.aegis_knight_divine_block
     class: paladin
     spec: aegis_knight
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4670,7 +4670,7 @@ skills:
     display_name_key: skill.aegis_knight_shield_of_faith
     class: paladin
     spec: aegis_knight
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4689,7 +4689,7 @@ skills:
     display_name_key: skill.aegis_knight_shared_protection
     class: paladin
     spec: aegis_knight
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4702,7 +4702,7 @@ skills:
     display_name_key: skill.aegis_knight_sacred_bastion
     class: paladin
     spec: aegis_knight
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4720,7 +4720,7 @@ skills:
     display_name_key: skill.aegis_knight_holy_bulwark
     class: paladin
     spec: aegis_knight
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4732,7 +4732,7 @@ skills:
     display_name_key: skill.aegis_knight_aegis_guardian
     class: paladin
     spec: aegis_knight
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -4746,7 +4746,7 @@ skills:
     display_name_key: skill.aegis_knight_citadel_of_light
     class: paladin
     spec: aegis_knight
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -4766,7 +4766,7 @@ skills:
     display_name_key: skill.lightwarden_healing_guard
     class: paladin
     spec: lightwarden
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, scaling: steady_state }
@@ -4779,7 +4779,7 @@ skills:
     display_name_key: skill.lightwarden_healing_light
     class: paladin
     spec: lightwarden
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4797,7 +4797,7 @@ skills:
     display_name_key: skill.lightwarden_guardian_blessing
     class: paladin
     spec: lightwarden
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4816,7 +4816,7 @@ skills:
     display_name_key: skill.lightwarden_radiant_armor
     class: paladin
     spec: lightwarden
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4829,7 +4829,7 @@ skills:
     display_name_key: skill.lightwarden_beacon_of_hope
     class: paladin
     spec: lightwarden
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -4848,7 +4848,7 @@ skills:
     display_name_key: skill.lightwarden_sacred_recovery
     class: paladin
     spec: lightwarden
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4861,7 +4861,7 @@ skills:
     display_name_key: skill.lightwarden_radiant_guardian
     class: paladin
     spec: lightwarden
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -4875,7 +4875,7 @@ skills:
     display_name_key: skill.lightwarden_light_of_salvation
     class: paladin
     spec: lightwarden
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -4894,7 +4894,7 @@ skills:
     display_name_key: skill.crusader_zealous_justice
     class: paladin
     spec: crusader
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -4906,7 +4906,7 @@ skills:
     display_name_key: skill.crusader_crusader_strike
     class: paladin
     spec: crusader
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 62
@@ -4925,7 +4925,7 @@ skills:
     display_name_key: skill.crusader_holy_charge
     class: paladin
     spec: crusader
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 30
@@ -4945,7 +4945,7 @@ skills:
     display_name_key: skill.crusader_judgment
     class: paladin
     spec: crusader
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4964,7 +4964,7 @@ skills:
     display_name_key: skill.crusader_zeal
     class: paladin
     spec: crusader
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -4983,7 +4983,7 @@ skills:
     display_name_key: skill.templar_holy_assault
     class: paladin
     spec: templar
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, scaling: steady_state }
@@ -4995,7 +4995,7 @@ skills:
     display_name_key: skill.templar_templar_strike
     class: paladin
     spec: templar
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 57
@@ -5014,7 +5014,7 @@ skills:
     display_name_key: skill.templar_battle_prayer
     class: paladin
     spec: templar
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5033,7 +5033,7 @@ skills:
     display_name_key: skill.templar_zealous_aura
     class: paladin
     spec: templar
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5046,7 +5046,7 @@ skills:
     display_name_key: skill.templar_sacred_assault
     class: paladin
     spec: templar
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 47
@@ -5065,7 +5065,7 @@ skills:
     display_name_key: skill.templar_templar_discipline
     class: paladin
     spec: templar
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5078,7 +5078,7 @@ skills:
     display_name_key: skill.templar_holy_vanguard
     class: paladin
     spec: templar
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -5092,7 +5092,7 @@ skills:
     display_name_key: skill.templar_march_of_the_templar
     class: paladin
     spec: templar
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -5112,7 +5112,7 @@ skills:
     display_name_key: skill.justicar_judgment_mark
     class: paladin
     spec: justicar
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5125,7 +5125,7 @@ skills:
     display_name_key: skill.justicar_condemn
     class: paladin
     spec: justicar
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5144,7 +5144,7 @@ skills:
     display_name_key: skill.justicar_hammer_of_justice
     class: paladin
     spec: justicar
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -5164,7 +5164,7 @@ skills:
     display_name_key: skill.justicar_righteous_fury
     class: paladin
     spec: justicar
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5176,7 +5176,7 @@ skills:
     display_name_key: skill.justicar_execution_of_light
     class: paladin
     spec: justicar
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 10
@@ -5195,7 +5195,7 @@ skills:
     display_name_key: skill.justicar_divine_sentence
     class: paladin
     spec: justicar
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5208,7 +5208,7 @@ skills:
     display_name_key: skill.justicar_final_judgment
     class: paladin
     spec: justicar
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -5222,7 +5222,7 @@ skills:
     display_name_key: skill.justicar_wrath_of_heaven
     class: paladin
     spec: justicar
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -5327,7 +5327,7 @@ skills:
     display_name_key: skill.grove_keeper_keeper_of_life
     class: druid
     spec: grove_keeper
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5340,7 +5340,7 @@ skills:
     display_name_key: skill.grove_keeper_regrowth
     class: druid
     spec: grove_keeper
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5358,7 +5358,7 @@ skills:
     display_name_key: skill.grove_keeper_natures_gift
     class: druid
     spec: grove_keeper
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5377,7 +5377,7 @@ skills:
     display_name_key: skill.grove_keeper_thorn_shield
     class: druid
     spec: grove_keeper
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5396,7 +5396,7 @@ skills:
     display_name_key: skill.grove_keeper_bloom
     class: druid
     spec: grove_keeper
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 59
@@ -5415,7 +5415,7 @@ skills:
     display_name_key: skill.life_binder_living_network
     class: druid
     spec: life_binder
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, stack_limit: 3, scaling: steady_state }
@@ -5428,7 +5428,7 @@ skills:
     display_name_key: skill.life_binder_lifebloom
     class: druid
     spec: life_binder
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5447,7 +5447,7 @@ skills:
     display_name_key: skill.life_binder_healing_vines
     class: druid
     spec: life_binder
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5465,7 +5465,7 @@ skills:
     display_name_key: skill.life_binder_natural_harmony
     class: druid
     spec: life_binder
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5478,7 +5478,7 @@ skills:
     display_name_key: skill.life_binder_mass_regrowth
     class: druid
     spec: life_binder
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5496,7 +5496,7 @@ skills:
     display_name_key: skill.life_binder_evergreen
     class: druid
     spec: life_binder
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5509,7 +5509,7 @@ skills:
     display_name_key: skill.life_binder_worldroot_connection
     class: druid
     spec: life_binder
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -5523,7 +5523,7 @@ skills:
     display_name_key: skill.life_binder_world_tree
     class: druid
     spec: life_binder
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -5543,7 +5543,7 @@ skills:
     display_name_key: skill.thorn_sage_thorn_wisdom
     class: druid
     spec: thorn_sage
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_DAMAGE_TAKEN, scaling: steady_state }
@@ -5556,7 +5556,7 @@ skills:
     display_name_key: skill.thorn_sage_thorn_lash
     class: druid
     spec: thorn_sage
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 57
@@ -5575,7 +5575,7 @@ skills:
     display_name_key: skill.thorn_sage_bramble_field
     class: druid
     spec: thorn_sage
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -5595,7 +5595,7 @@ skills:
     display_name_key: skill.thorn_sage_poisoned_thorns
     class: druid
     spec: thorn_sage
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5607,7 +5607,7 @@ skills:
     display_name_key: skill.thorn_sage_natures_retribution
     class: druid
     spec: thorn_sage
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 45
@@ -5626,7 +5626,7 @@ skills:
     display_name_key: skill.thorn_sage_ancient_bramble
     class: druid
     spec: thorn_sage
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5639,7 +5639,7 @@ skills:
     display_name_key: skill.thorn_sage_living_thorns
     class: druid
     spec: thorn_sage
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -5653,7 +5653,7 @@ skills:
     display_name_key: skill.thorn_sage_wrath_of_the_wild
     class: druid
     spec: thorn_sage
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -5674,7 +5674,7 @@ skills:
     display_name_key: skill.shapeshifter_primal_instinct
     class: druid
     spec: shapeshifter
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5687,7 +5687,7 @@ skills:
     display_name_key: skill.shapeshifter_bear_form
     class: druid
     spec: shapeshifter
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: stance
     sort_order: 6
@@ -5706,7 +5706,7 @@ skills:
     display_name_key: skill.shapeshifter_wild_charge
     class: druid
     spec: shapeshifter
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 30
@@ -5726,7 +5726,7 @@ skills:
     display_name_key: skill.shapeshifter_predator_form
     class: druid
     spec: shapeshifter
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5745,7 +5745,7 @@ skills:
     display_name_key: skill.shapeshifter_primal_roar
     class: druid
     spec: shapeshifter
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5764,7 +5764,7 @@ skills:
     display_name_key: skill.bearwarden_guardian_form
     class: druid
     spec: bearwarden
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5777,7 +5777,7 @@ skills:
     display_name_key: skill.bearwarden_maul
     class: druid
     spec: bearwarden
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 59
@@ -5796,7 +5796,7 @@ skills:
     display_name_key: skill.bearwarden_iron_fur
     class: druid
     spec: bearwarden
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5815,7 +5815,7 @@ skills:
     display_name_key: skill.bearwarden_primal_endurance
     class: druid
     spec: bearwarden
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5828,7 +5828,7 @@ skills:
     display_name_key: skill.bearwarden_savage_guard
     class: druid
     spec: bearwarden
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -5847,7 +5847,7 @@ skills:
     display_name_key: skill.bearwarden_ancient_hide
     class: druid
     spec: bearwarden
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5859,7 +5859,7 @@ skills:
     display_name_key: skill.bearwarden_elder_bear
     class: druid
     spec: bearwarden
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -5873,7 +5873,7 @@ skills:
     display_name_key: skill.bearwarden_avatar_of_the_great_bear
     class: druid
     spec: bearwarden
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -5893,7 +5893,7 @@ skills:
     display_name_key: skill.mooncaller_lunar_cycle
     class: druid
     spec: mooncaller
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5906,7 +5906,7 @@ skills:
     display_name_key: skill.mooncaller_moonfire
     class: druid
     spec: mooncaller
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 30
@@ -5926,7 +5926,7 @@ skills:
     display_name_key: skill.mooncaller_lunar_blessing
     class: druid
     spec: mooncaller
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 86
@@ -5945,7 +5945,7 @@ skills:
     display_name_key: skill.mooncaller_moonlit_grace
     class: druid
     spec: mooncaller
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5958,7 +5958,7 @@ skills:
     display_name_key: skill.mooncaller_starfall
     class: druid
     spec: mooncaller
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 43
@@ -5977,7 +5977,7 @@ skills:
     display_name_key: skill.mooncaller_celestial_alignment
     class: druid
     spec: mooncaller
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -5989,7 +5989,7 @@ skills:
     display_name_key: skill.mooncaller_full_moon
     class: druid
     spec: mooncaller
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -6003,7 +6003,7 @@ skills:
     display_name_key: skill.mooncaller_celestial_eclipse
     class: druid
     spec: mooncaller
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -6108,7 +6108,7 @@ skills:
     display_name_key: skill.minstrel_melodic_inspiration
     class: bard
     spec: minstrel
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6121,7 +6121,7 @@ skills:
     display_name_key: skill.minstrel_song_of_courage
     class: bard
     spec: minstrel
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6140,7 +6140,7 @@ skills:
     display_name_key: skill.minstrel_healing_melody
     class: bard
     spec: minstrel
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -6158,7 +6158,7 @@ skills:
     display_name_key: skill.minstrel_song_of_speed
     class: bard
     spec: minstrel
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 87
@@ -6177,7 +6177,7 @@ skills:
     display_name_key: skill.minstrel_harmonic_resonance
     class: bard
     spec: minstrel
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 59
@@ -6196,7 +6196,7 @@ skills:
     display_name_key: skill.virtuoso_complex_harmony
     class: bard
     spec: virtuoso
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6209,7 +6209,7 @@ skills:
     display_name_key: skill.virtuoso_grand_melody
     class: bard
     spec: virtuoso
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6228,7 +6228,7 @@ skills:
     display_name_key: skill.virtuoso_songweaving
     class: bard
     spec: virtuoso
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 87
@@ -6247,7 +6247,7 @@ skills:
     display_name_key: skill.virtuoso_perfect_pitch
     class: bard
     spec: virtuoso
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6260,7 +6260,7 @@ skills:
     display_name_key: skill.virtuoso_master_performance
     class: bard
     spec: virtuoso
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 49
@@ -6279,7 +6279,7 @@ skills:
     display_name_key: skill.virtuoso_endless_song
     class: bard
     spec: virtuoso
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6291,7 +6291,7 @@ skills:
     display_name_key: skill.virtuoso_grand_harmony
     class: bard
     spec: virtuoso
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -6305,7 +6305,7 @@ skills:
     display_name_key: skill.virtuoso_grand_symphony
     class: bard
     spec: virtuoso
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -6325,7 +6325,7 @@ skills:
     display_name_key: skill.harmonist_healing_harmony
     class: bard
     spec: harmonist
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, stack_limit: 5, scaling: steady_state }
@@ -6338,7 +6338,7 @@ skills:
     display_name_key: skill.harmonist_restorative_chorus
     class: bard
     spec: harmonist
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -6357,7 +6357,7 @@ skills:
     display_name_key: skill.harmonist_protective_melody
     class: bard
     spec: harmonist
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -6376,7 +6376,7 @@ skills:
     display_name_key: skill.harmonist_resonant_healing
     class: bard
     spec: harmonist
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6389,7 +6389,7 @@ skills:
     display_name_key: skill.harmonist_song_of_renewal
     class: bard
     spec: harmonist
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -6407,7 +6407,7 @@ skills:
     display_name_key: skill.harmonist_endless_harmony
     class: bard
     spec: harmonist
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6420,7 +6420,7 @@ skills:
     display_name_key: skill.harmonist_perfect_resonance
     class: bard
     spec: harmonist
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -6434,7 +6434,7 @@ skills:
     display_name_key: skill.harmonist_song_of_salvation
     class: bard
     spec: harmonist
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -6453,7 +6453,7 @@ skills:
     display_name_key: skill.skald_battle_verse
     class: bard
     spec: skald
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6465,7 +6465,7 @@ skills:
     display_name_key: skill.skald_war_song
     class: bard
     spec: skald
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6484,7 +6484,7 @@ skills:
     display_name_key: skill.skald_mocking_verse
     class: bard
     spec: skald
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6503,7 +6503,7 @@ skills:
     display_name_key: skill.skald_drum_of_battle
     class: bard
     spec: skald
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 60
@@ -6522,7 +6522,7 @@ skills:
     display_name_key: skill.skald_discordant_note
     class: bard
     spec: skald
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 30
@@ -6542,7 +6542,7 @@ skills:
     display_name_key: skill.war_chanter_battle_rhythm
     class: bard
     spec: war_chanter
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_CRIT, stack_limit: 5, scaling: steady_state }
@@ -6555,7 +6555,7 @@ skills:
     display_name_key: skill.war_chanter_war_chant
     class: bard
     spec: war_chanter
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6574,7 +6574,7 @@ skills:
     display_name_key: skill.war_chanter_drums_of_fury
     class: bard
     spec: war_chanter
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 55
@@ -6593,7 +6593,7 @@ skills:
     display_name_key: skill.war_chanter_marching_tempo
     class: bard
     spec: war_chanter
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6606,7 +6606,7 @@ skills:
     display_name_key: skill.war_chanter_heroic_chorus
     class: bard
     spec: war_chanter
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 87
@@ -6625,7 +6625,7 @@ skills:
     display_name_key: skill.war_chanter_warriors_rhythm
     class: bard
     spec: war_chanter
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6637,7 +6637,7 @@ skills:
     display_name_key: skill.war_chanter_battle_anthem
     class: bard
     spec: war_chanter
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -6651,7 +6651,7 @@ skills:
     display_name_key: skill.war_chanter_song_of_conquest
     class: bard
     spec: war_chanter
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -6671,7 +6671,7 @@ skills:
     display_name_key: skill.dirge_singer_song_of_weakness
     class: bard
     spec: dirge_singer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6684,7 +6684,7 @@ skills:
     display_name_key: skill.dirge_singer_dirge_of_frailty
     class: bard
     spec: dirge_singer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6703,7 +6703,7 @@ skills:
     display_name_key: skill.dirge_singer_song_of_despair
     class: bard
     spec: dirge_singer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -6723,7 +6723,7 @@ skills:
     display_name_key: skill.dirge_singer_crushing_discord
     class: bard
     spec: dirge_singer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6736,7 +6736,7 @@ skills:
     display_name_key: skill.dirge_singer_final_verse
     class: bard
     spec: dirge_singer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 10
@@ -6755,7 +6755,7 @@ skills:
     display_name_key: skill.dirge_singer_dissonant_mastery
     class: bard
     spec: dirge_singer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6768,7 +6768,7 @@ skills:
     display_name_key: skill.dirge_singer_deaths_melody
     class: bard
     spec: dirge_singer
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -6782,7 +6782,7 @@ skills:
     display_name_key: skill.dirge_singer_final_dirge
     class: bard
     spec: dirge_singer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -6887,7 +6887,7 @@ skills:
     display_name_key: skill.totemist_totemic_knowledge
     class: shaman
     spec: totemist
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6900,7 +6900,7 @@ skills:
     display_name_key: skill.totemist_earth_totem
     class: shaman
     spec: totemist
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: stance
     sort_order: 6
@@ -6919,7 +6919,7 @@ skills:
     display_name_key: skill.totemist_storm_totem
     class: shaman
     spec: totemist
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 30
@@ -6939,7 +6939,7 @@ skills:
     display_name_key: skill.totemist_protection_totem
     class: shaman
     spec: totemist
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 6
@@ -6958,7 +6958,7 @@ skills:
     display_name_key: skill.totemist_totemic_surge
     class: shaman
     spec: totemist
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 86
@@ -6977,7 +6977,7 @@ skills:
     display_name_key: skill.earthwarden_stone_totem
     class: shaman
     spec: earthwarden
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -6990,7 +6990,7 @@ skills:
     display_name_key: skill.earthwarden_stone_skin_totem
     class: shaman
     spec: earthwarden
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7009,7 +7009,7 @@ skills:
     display_name_key: skill.earthwarden_earthbind
     class: shaman
     spec: earthwarden
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -7029,7 +7029,7 @@ skills:
     display_name_key: skill.earthwarden_earthen_protection
     class: shaman
     spec: earthwarden
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7042,7 +7042,7 @@ skills:
     display_name_key: skill.earthwarden_mountain_spirit
     class: shaman
     spec: earthwarden
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7061,7 +7061,7 @@ skills:
     display_name_key: skill.earthwarden_living_stone
     class: shaman
     spec: earthwarden
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7073,7 +7073,7 @@ skills:
     display_name_key: skill.earthwarden_earths_protection
     class: shaman
     spec: earthwarden
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -7087,7 +7087,7 @@ skills:
     display_name_key: skill.earthwarden_world_pillar
     class: shaman
     spec: earthwarden
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -7107,7 +7107,7 @@ skills:
     display_name_key: skill.storm_totemist_storm_conduit
     class: shaman
     spec: storm_totemist
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HIT, scaling: steady_state }
@@ -7120,7 +7120,7 @@ skills:
     display_name_key: skill.storm_totemist_lightning_totem
     class: shaman
     spec: storm_totemist
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 30
@@ -7140,7 +7140,7 @@ skills:
     display_name_key: skill.storm_totemist_thunder_field
     class: shaman
     spec: storm_totemist
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 53
@@ -7159,7 +7159,7 @@ skills:
     display_name_key: skill.storm_totemist_static_resonance
     class: shaman
     spec: storm_totemist
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7172,7 +7172,7 @@ skills:
     display_name_key: skill.storm_totemist_chain_lightning_totem
     class: shaman
     spec: storm_totemist
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 43
@@ -7191,7 +7191,7 @@ skills:
     display_name_key: skill.storm_totemist_storm_conduit_mastery
     class: shaman
     spec: storm_totemist
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7203,7 +7203,7 @@ skills:
     display_name_key: skill.storm_totemist_living_storm
     class: shaman
     spec: storm_totemist
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -7217,7 +7217,7 @@ skills:
     display_name_key: skill.storm_totemist_spirit_tempest
     class: shaman
     spec: storm_totemist
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -7237,7 +7237,7 @@ skills:
     display_name_key: skill.spirit_caller_ancestral_bond
     class: shaman
     spec: spirit_caller
-    unlock_level: 100
+    unlock_level: 300
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7250,7 +7250,7 @@ skills:
     display_name_key: skill.spirit_caller_ancestral_heal
     class: shaman
     spec: spirit_caller
-    unlock_level: 100
+    unlock_level: 300
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7268,7 +7268,7 @@ skills:
     display_name_key: skill.spirit_caller_spirit_ward
     class: shaman
     spec: spirit_caller
-    unlock_level: 150
+    unlock_level: 400
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7287,7 +7287,7 @@ skills:
     display_name_key: skill.spirit_caller_ancestors_voice
     class: shaman
     spec: spirit_caller
-    unlock_level: 200
+    unlock_level: 500
     kind: active
     activation_mode: active
     sort_order: 86
@@ -7306,7 +7306,7 @@ skills:
     display_name_key: skill.spirit_caller_spirit_link
     class: shaman
     spec: spirit_caller
-    unlock_level: 250
+    unlock_level: 600
     kind: active
     activation_mode: active
     sort_order: 59
@@ -7325,7 +7325,7 @@ skills:
     display_name_key: skill.ancestor_sage_ancestral_wisdom
     class: shaman
     spec: ancestor_sage
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_HEAL, stack_limit: 5, scaling: steady_state }
@@ -7338,7 +7338,7 @@ skills:
     display_name_key: skill.ancestor_sage_ancestors_blessing
     class: shaman
     spec: ancestor_sage
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -7357,7 +7357,7 @@ skills:
     display_name_key: skill.ancestor_sage_spirit_mend
     class: shaman
     spec: ancestor_sage
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7375,7 +7375,7 @@ skills:
     display_name_key: skill.ancestor_sage_guidance_of_the_ancients
     class: shaman
     spec: ancestor_sage
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7388,7 +7388,7 @@ skills:
     display_name_key: skill.ancestor_sage_ancestral_protection
     class: shaman
     spec: ancestor_sage
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 6
@@ -7407,7 +7407,7 @@ skills:
     display_name_key: skill.ancestor_sage_enduring_spirit
     class: shaman
     spec: ancestor_sage
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7420,7 +7420,7 @@ skills:
     display_name_key: skill.ancestor_sage_ancient_communion
     class: shaman
     spec: ancestor_sage
-    unlock_level: 600
+    unlock_level: 900
     kind: active
     category: awakening
     activation_mode: active
@@ -7440,7 +7440,7 @@ skills:
     display_name_key: skill.ancestor_sage_council_of_ancestors
     class: shaman
     spec: ancestor_sage
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active
@@ -7459,7 +7459,7 @@ skills:
     display_name_key: skill.hexer_cumulative_hex
     class: shaman
     spec: hexer
-    unlock_level: 300
+    unlock_level: 700
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_DEBUFF_APPLIED, stack_limit: 5, scaling: steady_state }
@@ -7471,7 +7471,7 @@ skills:
     display_name_key: skill.hexer_weakening_hex
     class: shaman
     spec: hexer
-    unlock_level: 350
+    unlock_level: 725
     kind: active
     activation_mode: active
     sort_order: 86
@@ -7490,7 +7490,7 @@ skills:
     display_name_key: skill.hexer_spirit_curse
     class: shaman
     spec: hexer
-    unlock_level: 400
+    unlock_level: 750
     kind: active
     activation_mode: active
     sort_order: 30
@@ -7510,7 +7510,7 @@ skills:
     display_name_key: skill.hexer_lingering_curse
     class: shaman
     spec: hexer
-    unlock_level: 450
+    unlock_level: 775
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7523,7 +7523,7 @@ skills:
     display_name_key: skill.hexer_doom_hex
     class: shaman
     spec: hexer
-    unlock_level: 500
+    unlock_level: 800
     kind: active
     activation_mode: active
     sort_order: 10
@@ -7542,7 +7542,7 @@ skills:
     display_name_key: skill.hexer_hex_mastery
     class: shaman
     spec: hexer
-    unlock_level: 550
+    unlock_level: 850
     kind: passive
     type: STAT_MODIFIER
     passive: { trigger: ON_COMBAT_START, scaling: steady_state }
@@ -7555,7 +7555,7 @@ skills:
     display_name_key: skill.hexer_perfect_curse
     class: shaman
     spec: hexer
-    unlock_level: 600
+    unlock_level: 900
     kind: passive
     category: awakening
     type: STAT_MODIFIER
@@ -7569,7 +7569,7 @@ skills:
     display_name_key: skill.hexer_spirit_storm
     class: shaman
     spec: hexer
-    unlock_level: 700
+    unlock_level: 950
     kind: active
     category: ultimate
     activation_mode: active

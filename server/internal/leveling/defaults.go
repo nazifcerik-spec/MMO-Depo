@@ -11,7 +11,7 @@ var defaultConfig = func() *Config {
 		AttributePoints:      AttributeRule{Every: 1, Amount: 3, Milestones: map[int]int{100: 5, 300: 5, 600: 5, 850: 5, 1000: 5}},
 		TalentPoints:         TalentRule{From: 100, Every: 20, Until: 980, Amount: 1},
 		TalentTreePoints:     25,
-		Milestones:           Milestones{Awakening: 600, Ultimate: 700, Capstone: 850, Mastery: 1000},
+		Milestones:           Milestones{Awakening: 900, Ultimate: 950, Capstone: 850, Mastery: 1000},
 		Scaling:              []Bracket{{100, 1}, {250, 0.8}, {400, 0.55}, {0, 0.35}},
 		Caps:                 map[string]float64{"crit_pct": 60, "evasion_pct": 40, "block_pct": 60, "dmg_reduction_pct": 75},
 	}

@@ -3436,6 +3436,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-351 — Terfi seviyeleri: ilk terfi Sv 300, ikinci terfi Sv 700
+
+**Context:** Kullanıcı ilk terfinin Sv 100 yerine Sv 300'de, ikinci terfinin Sv 300 yerine Sv 700'de olmasını istedi. İçerik doğrulaması bir yeteneğin sınıfından önce açılmasını reddettiği için terfi ve uzmanlık yetenekleri de taşınmak zorundaydı; oyuncu bu güçleri daha geç aldığı için denge hedefleri de bozuldu.
+**Decision:** `required_level` 300 / 700. Yetenek açılımları: terfi 100/150/200/250 → 300/400/500/600, uzmanlık 300/350/400/450/500/550 → 700/725/750/775/800/850, uyanış 600 → 900, nihai 700 → 950 (`gen_classes.py` `UNLOCK_LEVEL`; `class_data.py` eski ölçekte kalır, Savaşçı elle). `milestones` uyanış 900, nihai 950; kapstone 850 ve ustalık 1000 aynı. Temel sınıf yetenekleri (Sv 1–75), unvanlar ve nitelik kilometre taşları aynı. Denge: baskın `power_pct` 90/92/70/70/82/90 (`RAID_POWER`); Kâhin'de Kutsanmış Toprak Sv 500, İlahi Kavrayış Sv 600 (hasar yeteneği olmadan Sv 528–578 zindanlarını geçemiyordu); `brood_cavern` son dalga 1 düşman (`last_wave`). Uzmanlık uygulanabilirlik kontrolü tüm yetenekler açıkken ölçülür: Sv 950 ve 1000.
+**Consequences:** Sv 75 ile 300 arasında yeni yetenek açılmaz. Sv 110–295 Koruyucu kalkanları durur ama Koruyucu ancak Sv 300'de olunduğu için o zamana kadar kimse takamaz. Var olan karakterler terfilerini korur, ama yeni açılım seviyesinin altındaysa o yetenekleri geçici olarak kaybeder; Sv 100 kapısında bekleyen XP bir sonraki terfide ödenir. Av XP'si değişmedi (`hunt_xp.yaml` yeniden ayarı Sv 1 bandını hızlandırıp `TestHuntPace`'i düşürdü); Sv 100–700 kesintisiz av biraz yavaşladı, hedef bandı içinde. `reports/class_balance_report` yenilendi.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

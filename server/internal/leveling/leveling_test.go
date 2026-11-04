@@ -83,25 +83,26 @@ func TestAdvance_SingleMultipleOverflowCap(t *testing.T) {
 	}
 	require.Equal(t, total, st.XP, "overflow XP carried into the new level")
 
-	// Promotion gate: stops at 100, the rest is held — even across calls.
-	st, gained = c.Advance(leveling.State{Spec: "warrior", Level: 99}, c.XPToNext(99)+12_000)
-	require.Equal(t, []int{100}, gained)
-	require.Equal(t, 100, st.Level)
+	// Promotion gate: stops at 300, the rest is held — even across calls.
+	st, gained = c.Advance(leveling.State{Spec: "warrior", Level: 299}, c.XPToNext(299)+12_000)
+	require.Equal(t, []int{300}, gained)
+	require.Equal(t, 300, st.Level)
 	require.Zero(t, st.XP)
 	require.Equal(t, int64(12_000), st.Overflow)
 	st2, gained := c.Advance(st, 1234)
 	require.Empty(t, gained)
 	require.Equal(t, st.Overflow+1234, st2.Overflow)
-	require.True(t, c.PromotionPending("warrior", 100))
-	require.False(t, c.PromotionPending("guardian", 100))
+	require.True(t, c.PromotionPending("warrior", 300))
+	require.False(t, c.PromotionPending("warrior", 299))
+	require.False(t, c.PromotionPending("guardian", 300))
 
-	// Level 300 is the final specialization gate.
-	st, _ = c.Advance(leveling.State{Spec: "guardian", Level: 299}, c.XPToNext(299)+5)
-	require.Equal(t, 300, st.Level)
+	// Level 700 is the final specialization gate.
+	st, _ = c.Advance(leveling.State{Spec: "guardian", Level: 699}, c.XPToNext(699)+5)
+	require.Equal(t, 700, st.Level)
 	require.Equal(t, int64(5), st.Overflow)
-	require.ElementsMatch(t, []string{"iron_fortress", "warlord"}, codes(c.Choices("guardian", 300)))
-	require.ElementsMatch(t, []string{"berserker", "weapon_master"}, codes(c.Choices("executioner", 300)))
-	require.Empty(t, c.Choices("iron_fortress", 1000), "no class branch after 300")
+	require.ElementsMatch(t, []string{"iron_fortress", "warlord"}, codes(c.Choices("guardian", 700)))
+	require.ElementsMatch(t, []string{"berserker", "weapon_master"}, codes(c.Choices("executioner", 700)))
+	require.Empty(t, c.Choices("iron_fortress", 1000), "no class branch after 700")
 
 	// Cap: 999 → 1000, never 1001; extra XP is kept as post-cap.
 	st, gained = c.Advance(leveling.State{Spec: "iron_fortress", Level: 999}, c.XPToNext(999)*3)
@@ -158,13 +159,14 @@ func TestPointSchedules(t *testing.T) {
 		}
 		return out
 	}
-	want := []string{"ATTRIBUTE_POINTS:", "TALENT_POINT:", "TITLE:veteran"}
+	require.ElementsMatch(t, []string{"ATTRIBUTE_POINTS:", "TALENT_POINT:", "TITLE:veteran"}, types(100))
+	want := []string{"ATTRIBUTE_POINTS:", "TALENT_POINT:", "TITLE:champion"}
 	for _, class := range []string{"warrior", "rogue", "ranger", "mage", "monk", "cleric", "paladin", "druid", "bard", "shaman"} {
 		want = append(want, "PROMOTION_UNLOCK:"+class)
 	}
-	require.ElementsMatch(t, want, types(100))
-	require.Contains(t, types(600), "AWAKENING:")
-	require.Contains(t, types(700), "ULTIMATE:")
+	require.ElementsMatch(t, want, types(300))
+	require.Contains(t, types(900), "AWAKENING:")
+	require.Contains(t, types(950), "ULTIMATE:")
 	require.Contains(t, types(850), "CAPSTONE_ELIGIBLE:")
 	require.Contains(t, types(1000), "CLASS_MASTERY:")
 	require.Contains(t, types(1000), "TITLE:eternal")
@@ -188,11 +190,12 @@ func TestNextMilestone(t *testing.T) {
 		kind  string
 	}{
 		{"warrior", 73, 75, "skill"},
-		{"warrior", 99, 100, "promotion"},
-		{"warrior", 100, 100, "promotion"}, // pending choice is the objective
-		{"guardian", 287, 300, "promotion"},
-		{"iron_fortress", 584, 600, "awakening"},
-		{"iron_fortress", 671, 700, "ultimate"},
+		{"warrior", 99, 100, "title"},
+		{"warrior", 299, 300, "promotion"},
+		{"warrior", 300, 300, "promotion"}, // pending choice is the objective
+		{"guardian", 687, 700, "promotion"},
+		{"iron_fortress", 884, 900, "awakening"},
+		{"iron_fortress", 941, 950, "ultimate"},
 		{"iron_fortress", 823, 850, "capstone"},
 		{"iron_fortress", 963, 1000, "mastery"},
 	} {

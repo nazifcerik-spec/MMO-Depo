@@ -232,7 +232,7 @@ List<int> pyramidRows(int n, {int width = 4}) {
 }
 
 /// The class path as a pyramid: the base class on top, its two promotions
-/// (level 100) below, their four specializations (level 300) at the base.
+/// (level 300) below, their four specializations (level 700) at the base.
 class ClassPathPyramid extends StatelessWidget {
   const ClassPathPyramid({super.key, required this.catalog, required this.root, required this.onTap});
 
@@ -375,7 +375,7 @@ class _PathNode extends StatelessWidget {
 }
 
 /// A small window with the skills a class node unlocks (base class: levels
-/// 1–75, promotion: 100–250, specialization: 300–700 + its mastery title).
+/// 1–75, promotion: 300–600, specialization: 700–950 + its mastery title).
 Future<void> showClassNodeSkills(BuildContext context, ClassCatalog catalog, ClassNode node, List<ClassSkill> all) {
   final l = AppLocalizations.of(context);
   final text = Theme.of(context).textTheme;

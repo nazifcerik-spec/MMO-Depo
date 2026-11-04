@@ -544,8 +544,8 @@ CLASSES = [
                      (100, 'foresight', 'P eva3,crit3', 'Foresight', 'Önsezi', '预知', 'Previsión'),
                      (100, 'prophecy', 'E25/8 d3', 'Prophecy', 'Kehanet', '预言', 'Profecía'),
                      (150, 'mass_cleanse', 'H20/8 a60 T:DISPEL', 'Mass Cleanse', 'Toplu Arındırma', '群体净化', 'Limpieza Masiva'),
-                     (200, 'divine_insight', 'W25/7 d3', 'Divine Insight', 'İlahi Kavrayış', '神圣洞察', 'Perspicacia Divina'),
-                     (250, 'sanctified_ground', 'D80/7 d4', 'Sanctified Ground', 'Kutsanmış Toprak', '圣化之地', 'Suelo Santificado'),
+                     (250, 'divine_insight', 'W25/7 d3', 'Divine Insight', 'İlahi Kavrayış', '神圣洞察', 'Perspicacia Divina'),
+                     (200, 'sanctified_ground', 'D80/7 d4', 'Sanctified Ground', 'Kutsanmış Toprak', '圣化之地', 'Suelo Santificado'),
                  ],
                  specs=[
                      dict(code='prophet', name=L('Prophet', 'Kehanetçi', '先知', 'Profeta'), support=0.7,

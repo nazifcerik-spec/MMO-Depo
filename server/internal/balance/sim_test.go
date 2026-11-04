@@ -152,8 +152,8 @@ func simAlloc(class string, level int) leveling.Stats {
 }
 
 // builds are what the targets test at a level: every class path open at it
-// — the base class below 100, its two promotions from 100
-// ("class/promotion"), the four specializations from 300 (DD-255, DD-256).
+// — the base class below 300, its two promotions from 300
+// ("class/promotion"), the four specializations from 700 (DD-351).
 func builds(level int) []string {
 	cfg := leveling.Current()
 	var expand func(path string, node string) []string

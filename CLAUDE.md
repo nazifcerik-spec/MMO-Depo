@@ -314,6 +314,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 148. **Irk kartları 5'li (bitti)** — Sprint 148, DD-350. `_Races` satır başına 5 kart, yalnız portre + ad; sloganlar ve açıklama notu silindi.
 
+149. **Terfi seviyeleri 300 / 700 (bitti)** — Sprint 149, DD-351. Terfi yetenekleri Sv 300–600, uzmanlık 700–850, uyanış 900, nihai 950 (`gen_classes.py` `UNLOCK_LEVEL`). Baskın gücü yeniden ayarlandı, Kâhin hasar yeteneği Sv 500, `brood_cavern` son dalga 1. Uzmanlık kontrolü Sv 950/1000.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

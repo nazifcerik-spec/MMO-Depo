@@ -10,23 +10,23 @@ import (
 )
 
 // Progression through the real router (DD-250): summary, dev XP across the
-// level-100 gate, promotion, attributes, talents, events, public config, and
+// level-300 gate, promotion, attributes, talents, events, public config, and
 // an AFK hunt paying through the canonical XP grant.
 func TestHTTPProgression(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
-	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 99 WHERE id = $1`, p.char)
+	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET level = 299 WHERE id = $1`, p.char)
 	require.NoError(t, err)
 
 	sum := p.ok("GET", p.path("/leveling"), nil)
-	require.Equal(t, 99.0, sum["level"])
+	require.Equal(t, 299.0, sum["level"])
 	require.Equal(t, 1000.0, sum["level_cap"])
 	require.Equal(t, "warrior", sum["spec_code"])
 	require.Equal(t, "promotion", sum["next_milestone"].(map[string]any)["kind"])
 	require.Equal(t, "rage", sum["resource"].(map[string]any)["kind"])
 
-	res := p.ok("POST", "/v1/dev/character/"+p.char+"/xp", map[string]any{"amount": 200_000})
-	require.Equal(t, 100.0, res["level"])
+	res := p.ok("POST", "/v1/dev/character/"+p.char+"/xp", map[string]any{"amount": 20_000_000})
+	require.Equal(t, 300.0, res["level"])
 	require.Equal(t, true, res["promotion_available"])
 	require.Positive(t, res["overflow_xp"])
 
@@ -34,13 +34,13 @@ func TestHTTPProgression(t *testing.T) {
 	promo := sum["promotion"].(map[string]any)
 	require.Equal(t, true, promo["available"])
 	require.Len(t, promo["choices"], 2)
-	require.Equal(t, "veteran", sum["title"])
+	require.Equal(t, "champion", sum["title"])
 
 	p.fail("POST", p.path("/promotion"), map[string]any{"choice": "warlord"}, 409, "E_PROMOTION_UNAVAILABLE")
 	p.fail("POST", p.path("/promotion"), map[string]any{}, 400, "E_VALIDATION")
 	pr := p.ok("POST", p.path("/promotion"), map[string]any{"choice": "executioner"})
 	require.Equal(t, "executioner", pr["spec_code"])
-	require.Greater(t, pr["level"], 100.0, "held XP paid out")
+	require.Greater(t, pr["level"], 300.0, "held XP paid out")
 
 	p.fail("POST", p.path("/attributes"), map[string]any{"strength": 9999}, 409, "E_NOT_ENOUGH_POINTS")
 	p.fail("POST", p.path("/attributes"), map[string]any{"charisma": 1}, 400, "E_UNKNOWN_ATTRIBUTE")
@@ -59,8 +59,10 @@ func TestHTTPProgression(t *testing.T) {
 	require.Len(t, tal["trees"], 3)
 	avail := int(tal["available"].(float64))
 	require.GreaterOrEqual(t, avail, 1, "a talent point every 20 levels from 100")
+	require.LessOrEqual(t, avail, 15, "three talents of five ranks hold them all")
 	for i := 0; i < avail; i++ {
-		p.ok("POST", p.path("/talents/warrior_blood_cruelty"), map[string]any{})
+		talent := []string{"warrior_blood_cruelty", "warrior_defense_toughness", "warrior_defense_plating"}[i/5]
+		p.ok("POST", p.path("/talents/"+talent), map[string]any{})
 	}
 	p.fail("POST", p.path("/talents/warrior_blood_fury"), map[string]any{}, 409, "E_NOT_ENOUGH_POINTS")
 	p.fail("POST", p.path("/talents/nope"), map[string]any{}, 404, "E_UNKNOWN_TALENT")

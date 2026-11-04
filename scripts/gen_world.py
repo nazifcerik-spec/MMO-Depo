@@ -167,7 +167,7 @@ ZONES += [
              ('winged_wyvern', 390, 'evasive', L('Winged Wyvern', 'Kanatlı Wyvern', '飞翼双足龙', 'Guiverno Alado')),
              ('dragon_guard', 400, 'elite', L('Dragon Guard', 'Ejder Muhafızı', '龙之卫士', 'Guardia del Dragón')),
          ],
-         dungeon=dict(code='brood_cavern', level=378, minutes=60, waves=['young_dragon', 'dragon_cultist', 'lava_lizard'],
+         dungeon=dict(code='brood_cavern', level=378, minutes=60, last_wave=1, waves=['young_dragon', 'dragon_cultist', 'lava_lizard'],
                       boss='mother_dragon_vyrna', gold=190000, xp=320000,
                       name=L('Brood Cavern', 'Kuluçka Mağarası', '巢穴洞窟', 'Caverna de la Nidada'))),
     dict(code='mist_forest', parent='dragonspine_isles', level=400, travel=420, link='dragon_slopes',
@@ -424,15 +424,15 @@ for z in ZONES:
                                '    waves:',
                                '      - { mob_code: %s, count: 3 }' % d['waves'][0],
                                '      - { mob_code: %s, count: 3 }' % d['waves'][1],
-                               '      - { mob_code: %s, count: 2 }' % d['waves'][2],
+                               '      - { mob_code: %s, count: %d }' % (d['waves'][2], d.get('last_wave', 2)),
                                '    boss_mob_code: ' + d['boss'], '    bonus_gold_copper: %d' % d['gold'],
                                '    bonus_xp: %d' % d['xp']]))
 
 raids = []
 # Each raid's enemy strength in percent (DD-307), tuned by the balance
 # simulation so a full party at the raid's level clears about 40% of runs.
-RAID_POWER = {'north_keep_siege': 97, 'crownless_palace': 97, 'dragon_king_lair': 87,
-              'time_lord_tower': 86, 'archangels_fall': 86, 'fallen_god_throne': 90}
+RAID_POWER = {'north_keep_siege': 90, 'crownless_palace': 92, 'dragon_king_lair': 70,
+              'time_lord_tower': 70, 'archangels_fall': 82, 'fallen_god_throne': 90}
 # A raid sits where its wave mobs live (DD-302).
 MOB_ZONE = {code: z['code'] for z in ZONES for code, _, _, _ in z['mobs']}
 for r in RAIDS:

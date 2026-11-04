@@ -41,7 +41,7 @@ func TestXPRollover(t *testing.T) {
 	// A warrior stops at its first promotion gate instead.
 	g, err = chars.GrantXP(w.ctx, p.ID, 1<<40, src, cfg)
 	require.NoError(t, err)
-	require.Equal(t, int16(100), g.Character.Level)
+	require.Equal(t, int16(300), g.Character.Level)
 	require.True(t, g.PromotionAvailable)
 	require.Positive(t, g.Character.OverflowXP)
 

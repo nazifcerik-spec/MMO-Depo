@@ -40,7 +40,7 @@ titles:
   900: immortal
   1000: eternal
 
-milestones: { awakening: 600, ultimate: 700, capstone: 850, mastery: 1000 }
+milestones: { awakening: 900, ultimate: 950, capstone: 850, mastery: 1000 }
 
 # Raw attribute points count at decreasing effectiveness (combat scaling only;
 # requirements use raw values).
@@ -172,21 +172,21 @@ classes:
 
   - code: guardian
     parent: warrior
-    required_level: 100
+    required_level: 300
     name_key: class.guardian
     role_tags: [tank, afk_safe]
     equipment_permissions: [plate_armor, sword, axe, shield]
 
   - code: executioner
     parent: warrior
-    required_level: 100
+    required_level: 300
     name_key: class.executioner
     role_tags: [melee_dps, burst]
     equipment_permissions: [plate_armor, sword, axe]
 
   - code: iron_fortress
     parent: guardian
-    required_level: 300
+    required_level: 700
     name_key: class.iron_fortress
     role_tags: [tank, barrier_support, afk_safe]
     equipment_permissions: [plate_armor, sword, axe, shield]
@@ -205,7 +205,7 @@ classes:
 
   - code: warlord
     parent: guardian
-    required_level: 300
+    required_level: 700
     name_key: class.warlord
     role_tags: [tank, bruiser, buff_support, group_support]
     equipment_permissions: [plate_armor, sword, axe, shield]
@@ -224,7 +224,7 @@ classes:
 
   - code: berserker
     parent: executioner
-    required_level: 300
+    required_level: 700
     name_key: class.berserker
     role_tags: [melee_dps, burst]
     equipment_permissions: [plate_armor, sword, axe]
@@ -242,7 +242,7 @@ classes:
 
   - code: weapon_master
     parent: executioner
-    required_level: 300
+    required_level: 700
     name_key: class.weapon_master
     role_tags: [melee_dps, sustained_dps]
     equipment_permissions: [plate_armor, sword, axe]
@@ -279,13 +279,13 @@ classes:
 
   - code: assassin
     parent: rogue
-    required_level: 100
+    required_level: 300
     name_key: class.assassin
     role_tags: [melee_dps, burst]
 
   - code: nightblade
     parent: assassin
-    required_level: 300
+    required_level: 700
     name_key: class.nightblade
     role_tags: [melee_dps, burst]
     afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 2, afk_safety: 2 }
@@ -303,7 +303,7 @@ classes:
 
   - code: poison_master
     parent: assassin
-    required_level: 300
+    required_level: 700
     name_key: class.poison_master
     role_tags: [dot, debuff_support, sustained_dps]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 4, group_value: 3, boss_value: 5, aoe_value: 3, afk_safety: 3 }
@@ -320,13 +320,13 @@ classes:
 
   - code: duelist
     parent: rogue
-    required_level: 100
+    required_level: 300
     name_key: class.duelist
     role_tags: [melee_dps, sustained_dps]
 
   - code: blade_dancer
     parent: duelist
-    required_level: 300
+    required_level: 700
     name_key: class.blade_dancer
     role_tags: [melee_dps, sustained_dps]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 2, boss_value: 3, aoe_value: 5, afk_safety: 3 }
@@ -343,7 +343,7 @@ classes:
 
   - code: trickster
     parent: duelist
-    required_level: 300
+    required_level: 700
     name_key: class.trickster
     role_tags: [control, melee_dps, afk_safe]
     afk_profile: { kill_speed: 3, survivability: 5, resource_efficiency: 3, group_value: 2, boss_value: 3, aoe_value: 2, afk_safety: 5 }
@@ -378,13 +378,13 @@ classes:
 
   - code: marksman
     parent: ranger
-    required_level: 100
+    required_level: 300
     name_key: class.marksman
     role_tags: [ranged_dps, burst]
 
   - code: sharpshooter
     parent: marksman
-    required_level: 300
+    required_level: 700
     name_key: class.sharpshooter
     role_tags: [ranged_dps, burst]
     afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 2, afk_safety: 3 }
@@ -402,7 +402,7 @@ classes:
 
   - code: crossbow_master
     parent: marksman
-    required_level: 300
+    required_level: 700
     name_key: class.crossbow_master
     role_tags: [ranged_dps, sustained_dps]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 5, aoe_value: 3, afk_safety: 3 }
@@ -419,13 +419,13 @@ classes:
 
   - code: scout
     parent: ranger
-    required_level: 100
+    required_level: 300
     name_key: class.scout
     role_tags: [ranged_dps, control, afk_safe]
 
   - code: beastmaster
     parent: scout
-    required_level: 300
+    required_level: 700
     name_key: class.beastmaster
     role_tags: [pet, ranged_dps, afk_safe]
     afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 2, boss_value: 3, aoe_value: 3, afk_safety: 5 }
@@ -443,7 +443,7 @@ classes:
 
   - code: trapper
     parent: scout
-    required_level: 300
+    required_level: 700
     name_key: class.trapper
     role_tags: [control, ranged_dps, dot]
     afk_profile: { kill_speed: 3, survivability: 3, resource_efficiency: 4, group_value: 3, boss_value: 2, aoe_value: 5, afk_safety: 4 }
@@ -477,13 +477,13 @@ classes:
 
   - code: arcanist
     parent: mage
-    required_level: 100
+    required_level: 300
     name_key: class.arcanist
     role_tags: [magic_dps, sustained_dps]
 
   - code: rune_master
     parent: arcanist
-    required_level: 300
+    required_level: 700
     name_key: class.rune_master
     role_tags: [magic_dps, burst]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 3, boss_value: 4, aoe_value: 4, afk_safety: 3 }
@@ -500,7 +500,7 @@ classes:
 
   - code: chronomancer
     parent: arcanist
-    required_level: 300
+    required_level: 700
     name_key: class.chronomancer
     role_tags: [control, magic_dps, afk_safe]
     afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 4, group_value: 4, boss_value: 3, aoe_value: 3, afk_safety: 4 }
@@ -518,13 +518,13 @@ classes:
 
   - code: elementalist
     parent: mage
-    required_level: 100
+    required_level: 300
     name_key: class.elementalist
     role_tags: [magic_dps, dot]
 
   - code: pyromancer
     parent: elementalist
-    required_level: 300
+    required_level: 700
     name_key: class.pyromancer
     role_tags: [magic_dps, dot, burst]
     afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 2, group_value: 2, boss_value: 4, aoe_value: 5, afk_safety: 2 }
@@ -541,7 +541,7 @@ classes:
 
   - code: cryomancer
     parent: elementalist
-    required_level: 300
+    required_level: 700
     name_key: class.cryomancer
     role_tags: [control, magic_dps, afk_safe]
     afk_profile: { kill_speed: 3, survivability: 4, resource_efficiency: 3, group_value: 3, boss_value: 3, aoe_value: 4, afk_safety: 5 }
@@ -576,13 +576,13 @@ classes:
 
   - code: disciple
     parent: monk
-    required_level: 100
+    required_level: 300
     name_key: class.disciple
     role_tags: [tank, bruiser, afk_safe]
 
   - code: iron_body
     parent: disciple
-    required_level: 300
+    required_level: 700
     name_key: class.iron_body
     role_tags: [tank, afk_safe]
     afk_profile: { kill_speed: 2, survivability: 5, resource_efficiency: 4, group_value: 4, boss_value: 4, aoe_value: 2, afk_safety: 5 }
@@ -600,7 +600,7 @@ classes:
 
   - code: spirit_walker
     parent: disciple
-    required_level: 300
+    required_level: 700
     name_key: class.spirit_walker
     role_tags: [bruiser, hot, afk_safe]
     support_power: 0.2
@@ -619,13 +619,13 @@ classes:
 
   - code: fighter
     parent: monk
-    required_level: 100
+    required_level: 300
     name_key: class.fighter
     role_tags: [melee_dps, burst]
 
   - code: combo_master
     parent: fighter
-    required_level: 300
+    required_level: 700
     name_key: class.combo_master
     role_tags: [melee_dps, sustained_dps]
     afk_profile: { kill_speed: 4, survivability: 3, resource_efficiency: 3, group_value: 2, boss_value: 5, aoe_value: 3, afk_safety: 3 }
@@ -642,7 +642,7 @@ classes:
 
   - code: storm_fist
     parent: fighter
-    required_level: 300
+    required_level: 700
     name_key: class.storm_fist
     role_tags: [melee_dps, burst]
     afk_profile: { kill_speed: 5, survivability: 2, resource_efficiency: 3, group_value: 2, boss_value: 4, aoe_value: 4, afk_safety: 2 }
@@ -678,14 +678,14 @@ classes:
 
   - code: saint
     parent: cleric
-    required_level: 100
+    required_level: 300
     name_key: class.saint
     role_tags: [healer, barrier_support, group_support]
     support_power: 0.6
 
   - code: high_priest
     parent: saint
-    required_level: 300
+    required_level: 700
     name_key: class.high_priest
     role_tags: [healer, hot, group_support]
     support_power: 0.7
@@ -703,7 +703,7 @@ classes:
 
   - code: aegis_priest
     parent: saint
-    required_level: 300
+    required_level: 700
     name_key: class.aegis_priest
     role_tags: [barrier_support, afk_safe, group_support]
     support_power: 0.6
@@ -722,14 +722,14 @@ classes:
 
   - code: oracle
     parent: cleric
-    required_level: 100
+    required_level: 300
     name_key: class.oracle
     role_tags: [buff_support, control, group_support]
     support_power: 0.5
 
   - code: prophet
     parent: oracle
-    required_level: 300
+    required_level: 700
     name_key: class.prophet
     role_tags: [buff_support, group_support]
     support_power: 0.7
@@ -747,7 +747,7 @@ classes:
 
   - code: exorcist
     parent: oracle
-    required_level: 300
+    required_level: 700
     name_key: class.exorcist
     role_tags: [magic_dps, debuff_support, control]
     support_power: 0.3
@@ -783,13 +783,13 @@ classes:
 
   - code: protector
     parent: paladin
-    required_level: 100
+    required_level: 300
     name_key: class.protector
     role_tags: [tank, barrier_support, afk_safe]
 
   - code: aegis_knight
     parent: protector
-    required_level: 300
+    required_level: 700
     name_key: class.aegis_knight
     role_tags: [tank, barrier_support, group_support, afk_safe]
     support_power: 0.35
@@ -807,7 +807,7 @@ classes:
 
   - code: lightwarden
     parent: protector
-    required_level: 300
+    required_level: 700
     name_key: class.lightwarden
     role_tags: [tank, healer, group_support]
     support_power: 0.45
@@ -825,13 +825,13 @@ classes:
 
   - code: crusader
     parent: paladin
-    required_level: 100
+    required_level: 300
     name_key: class.crusader
     role_tags: [melee_dps, bruiser]
 
   - code: templar
     parent: crusader
-    required_level: 300
+    required_level: 700
     name_key: class.templar
     role_tags: [melee_dps, buff_support, group_support]
     support_power: 0.35
@@ -849,7 +849,7 @@ classes:
 
   - code: justicar
     parent: crusader
-    required_level: 300
+    required_level: 700
     name_key: class.justicar
     role_tags: [melee_dps, burst, debuff_support]
     support_power: 0.2
@@ -885,14 +885,14 @@ classes:
 
   - code: grove_keeper
     parent: druid
-    required_level: 100
+    required_level: 300
     name_key: class.grove_keeper
     role_tags: [healer, hot, group_support]
     support_power: 0.55
 
   - code: life_binder
     parent: grove_keeper
-    required_level: 300
+    required_level: 700
     name_key: class.life_binder
     role_tags: [healer, hot, group_support]
     support_power: 0.7
@@ -910,7 +910,7 @@ classes:
 
   - code: thorn_sage
     parent: grove_keeper
-    required_level: 300
+    required_level: 700
     name_key: class.thorn_sage
     role_tags: [dot, debuff_support, magic_dps]
     support_power: 0.3
@@ -928,14 +928,14 @@ classes:
 
   - code: shapeshifter
     parent: druid
-    required_level: 100
+    required_level: 300
     name_key: class.shapeshifter
     role_tags: [bruiser, tank, melee_dps]
     support_power: 0.1
 
   - code: bearwarden
     parent: shapeshifter
-    required_level: 300
+    required_level: 700
     name_key: class.bearwarden
     role_tags: [tank, afk_safe]
     support_power: 0.05
@@ -954,7 +954,7 @@ classes:
 
   - code: mooncaller
     parent: shapeshifter
-    required_level: 300
+    required_level: 700
     name_key: class.mooncaller
     role_tags: [magic_dps, burst]
     support_power: 0.15
@@ -990,14 +990,14 @@ classes:
 
   - code: minstrel
     parent: bard
-    required_level: 100
+    required_level: 300
     name_key: class.minstrel
     role_tags: [buff_support, healer, group_support]
     support_power: 0.6
 
   - code: virtuoso
     parent: minstrel
-    required_level: 300
+    required_level: 700
     name_key: class.virtuoso
     role_tags: [buff_support, group_support]
     support_power: 0.8
@@ -1016,7 +1016,7 @@ classes:
 
   - code: harmonist
     parent: minstrel
-    required_level: 300
+    required_level: 700
     name_key: class.harmonist
     role_tags: [healer, hot, group_support]
     support_power: 0.7
@@ -1034,14 +1034,14 @@ classes:
 
   - code: skald
     parent: bard
-    required_level: 100
+    required_level: 300
     name_key: class.skald
     role_tags: [debuff_support, buff_support, melee_dps]
     support_power: 0.4
 
   - code: war_chanter
     parent: skald
-    required_level: 300
+    required_level: 700
     name_key: class.war_chanter
     role_tags: [buff_support, melee_dps, group_support]
     support_power: 0.5
@@ -1059,7 +1059,7 @@ classes:
 
   - code: dirge_singer
     parent: skald
-    required_level: 300
+    required_level: 700
     name_key: class.dirge_singer
     role_tags: [debuff_support, dot, control]
     support_power: 0.4
@@ -1095,14 +1095,14 @@ classes:
 
   - code: totemist
     parent: shaman
-    required_level: 100
+    required_level: 300
     name_key: class.totemist
     role_tags: [buff_support, group_support, afk_safe]
     support_power: 0.5
 
   - code: earthwarden
     parent: totemist
-    required_level: 300
+    required_level: 700
     name_key: class.earthwarden
     role_tags: [tank, barrier_support, afk_safe]
     support_power: 0.4
@@ -1121,7 +1121,7 @@ classes:
 
   - code: storm_totemist
     parent: totemist
-    required_level: 300
+    required_level: 700
     name_key: class.storm_totemist
     role_tags: [magic_dps, burst]
     support_power: 0.3
@@ -1139,14 +1139,14 @@ classes:
 
   - code: spirit_caller
     parent: shaman
-    required_level: 100
+    required_level: 300
     name_key: class.spirit_caller
     role_tags: [healer, buff_support, group_support]
     support_power: 0.55
 
   - code: ancestor_sage
     parent: spirit_caller
-    required_level: 300
+    required_level: 700
     name_key: class.ancestor_sage
     role_tags: [healer, hot, group_support]
     support_power: 0.7
@@ -1164,7 +1164,7 @@ classes:
 
   - code: hexer
     parent: spirit_caller
-    required_level: 300
+    required_level: 700
     name_key: class.hexer
     role_tags: [debuff_support, dot, magic_dps]
     support_power: 0.35

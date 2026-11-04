@@ -26,7 +26,7 @@ import (
 // numbers compare specializations with each other (the shipped mob content
 // ends at level 25).
 
-var specLevels = []int{700, 1000}
+var specLevels = []int{950, 1000}
 
 const specSeeds = 60
 
