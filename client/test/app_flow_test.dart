@@ -218,16 +218,17 @@ void main() {
     await tester.tap(find.text('New character'));
     await tester.pumpAndSettle();
 
+    final list = find
+        .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
+        .first;
     // Hero (DD-266): tagline under the name, role chips, the saying under all.
+    await tester.scrollUntilVisible(find.text('Master of steel and fury'), 200, scrollable: list);
     expect(find.text('Master of steel and fury'), findsOneWidget);
     expect(find.text('Melee'), findsOneWidget);
     expect(find.text('Physical'), findsOneWidget);
     expect(find.text('A heavily armored frontline fighter.'), findsOneWidget);
     expect(find.text('"Shields break. Warriors don\'t."'), findsOneWidget);
 
-    final list = find
-        .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
-        .first;
     await tester.scrollUntilVisible(find.text('Difficulty'), 200, scrollable: list);
     expect(find.text('Resource: Rage'), findsOneWidget);
     expect(find.text('Starts empty · +12 per hit'), findsOneWidget);
@@ -268,7 +269,48 @@ void main() {
   });
 
   testWidgets('create a character, enter it, and read the sheet', (tester) async {
-    final be = FakeBackend();
+    addTearDown(ClassCatalog.reset);
+    final be = FakeBackend()
+      ..classCatalog = {
+        'classes': [
+          for (final c in [
+            'warrior',
+            'rogue',
+            'ranger',
+            'mage',
+            'monk',
+            'cleric',
+            'paladin',
+            'druid',
+            'bard',
+            'shaman',
+          ])
+            {'code': c, 'tier': 0},
+        ],
+        'races': {
+          'human': {
+            'classes': ['warrior', 'rogue', 'ranger', 'mage', 'monk', 'cleric', 'paladin', 'bard'],
+            'passives': [
+              {'kind': 'mult_add', 'target': 'str', 'amount': 0.01},
+              {'kind': 'mult_add', 'target': 'int', 'amount': 0.01},
+            ],
+            'profession_xp': {'cooking': 0.02},
+          },
+          'dark_elf': {
+            'classes': ['warrior', 'rogue', 'ranger', 'mage'],
+            'passives': [
+              {'kind': 'mult_add', 'target': 'agi', 'amount': 0.02},
+            ],
+            'profession_xp': {'alchemy': 0.02},
+          },
+          'tauren': {
+            'classes': ['warrior', 'monk', 'druid', 'shaman'],
+          },
+          'gnome': {
+            'classes': ['rogue', 'mage', 'bard'],
+          },
+        },
+      };
     final store = MemoryTokenStore();
     await be.api(store).login('grim', 'correct-horse'); // persisted session → restore on boot
     await _boot(tester, be, store: store);
@@ -276,31 +318,64 @@ void main() {
 
     await tester.tap(find.text('New character'));
     await tester.pumpAndSettle();
-    // Class strip, race cards, then the name (DD-266).
-    final strip = find
-        .descendant(of: find.byKey(const ValueKey('class-strip')), matching: find.byType(Scrollable))
-        .first;
-    await tester.scrollUntilVisible(find.text('Shaman'), 200, scrollable: strip);
-    expect(find.text('Shaman'), findsOneWidget, reason: 'all ten classes are offered');
-    await tester.scrollUntilVisible(find.text('Ranger'), -200, scrollable: strip);
-    await tester.tap(find.text('Ranger').first);
-    await tester.pumpAndSettle();
+    // Race first, then the class from its pyramid, then the name (DD-349).
     final list = find
         .descendant(of: find.byKey(const ValueKey('create-character-list')), matching: find.byType(Scrollable))
         .first;
-    await tester.scrollUntilVisible(find.text('Gnome'), 200, scrollable: list);
+    Future<void> show(Finder f) async {
+      await tester.scrollUntilVisible(f, 200, scrollable: list);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> showAbove(Finder f) async {
+      await tester.scrollUntilVisible(f, -200, scrollable: list);
+      await tester.pumpAndSettle();
+    }
+
+    expect(find.text('Human'), findsWidgets, reason: 'the race is the first choice');
+    await show(find.text('Gnome'));
     for (final r in ['Human', 'Elf', 'Dwarf', 'Orc', 'Troll', 'Undead', 'Dark Elf', 'Drakari', 'Tauren', 'Gnome']) {
-      expect(find.text(r), findsOneWidget, reason: 'race $r (DD-267)');
+      expect(find.text(r), findsWidgets, reason: 'race $r (DD-267)');
     }
     // One size for every card, however long the name or lore.
     final cards = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_RaceCard');
     final sizes = {for (final e in cards.evaluate()) tester.getSize(find.byWidget(e.widget))};
     expect(sizes, hasLength(1), reason: '$sizes');
-    expect(find.text('Your race sets your look; it does not change attributes.'), findsOneWidget);
-    await tester.ensureVisible(find.text('Dark Elf'));
+    expect(find.text('Your race decides which classes you can pick and its passive abilities.'), findsOneWidget);
+
+    // Human: its passives, and only its classes.
+    await show(find.byKey(const ValueKey('race-abilities-human')));
+    expect(find.text('+1% Strength'), findsOneWidget);
+    expect(find.text('+1% Intelligence'), findsOneWidget);
+    expect(find.text('+2% bonus XP in Cooking'), findsOneWidget);
+    await show(find.byKey(const ValueKey('class-warrior')));
+    expect(find.byKey(const ValueKey('class-shaman')), findsNothing);
+    expect(find.byKey(const ValueKey('class-druid')), findsNothing);
+    // One size for every class tile.
+    final tiles = ['warrior', 'rogue', 'ranger', 'mage'].map((c) => find.byKey(ValueKey('class-$c')));
+    expect({for (final t in tiles) tester.getSize(t)}, hasLength(1));
+    await tester.tap(find.byKey(const ValueKey('class-ranger')));
     await tester.pumpAndSettle();
+    expect(find.text('Continue as Ranger'), findsOneWidget);
+
+    // A race without that class moves to its first one.
+    await showAbove(find.text('Tauren'));
+    await tester.tap(find.text('Tauren'));
+    await tester.pumpAndSettle();
+    expect(find.text('Continue as Warrior'), findsOneWidget);
+    await show(find.byKey(const ValueKey('class-shaman')));
+    expect(find.byKey(const ValueKey('class-ranger')), findsNothing);
+
+    await showAbove(find.text('Dark Elf'));
     await tester.tap(find.text('Dark Elf'));
-    await tester.pump();
+    await tester.pumpAndSettle();
+    await show(find.byKey(const ValueKey('race-abilities-dark_elf')));
+    expect(find.text('+2% Dexterity'), findsOneWidget);
+    expect(find.text('+2% bonus XP in Alchemy'), findsOneWidget);
+    await show(find.byKey(const ValueKey('class-ranger')));
+    expect(find.byKey(const ValueKey('class-bard')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('class-ranger')));
+    await tester.pumpAndSettle();
     // The look is not chosen at creation (DD-348).
     expect(find.byKey(const Key('body-choice')), findsNothing);
     await tester.tap(find.text('Continue as Ranger'));

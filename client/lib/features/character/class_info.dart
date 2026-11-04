@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
@@ -173,6 +175,60 @@ IconData skillIcon(ClassSkill s) {
     'stun' => Icons.flare,
     _ => Icons.flash_on,
   };
+}
+
+/// A race's passives as pills (DD-349): its attributes and its extra XP.
+class RaceAbilities extends StatelessWidget {
+  const RaceAbilities({super.key, required this.race});
+
+  final RaceInfo race;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Wrap(
+      spacing: Space.xs,
+      runSpacing: Space.xs,
+      children: [
+        for (final e in race.attributes.entries)
+          _AbilityPill(l.raceAttrBonus(e.value, ContentNames.of('attribute', e.key))),
+        for (final e in race.professionXp.entries)
+          _AbilityPill(l.raceProfessionXp(e.value, ContentNames.of('profession', e.key))),
+      ],
+    );
+  }
+}
+
+class _AbilityPill extends StatelessWidget {
+  const _AbilityPill(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 3),
+    decoration: BoxDecoration(
+      color: Palette.accent.withValues(alpha: 0.10),
+      borderRadius: BorderRadius.circular(999),
+      border: Border.all(color: Palette.accent.withValues(alpha: 0.45)),
+    ),
+    child: Text(label, style: const TextStyle(fontSize: 12, color: Palette.textPrimary)),
+  );
+}
+
+/// Sizes of a pyramid's rows for [n] items, top row first: the base holds up
+/// to [width] and each row above is narrower (8 → 1, 3, 4).
+List<int> pyramidRows(int n, {int width = 4}) {
+  final rows = <int>[];
+  var left = n;
+  var w = width;
+  while (left > 0) {
+    final take = math.min(w, left);
+    rows.insert(0, take);
+    left -= take;
+    w = math.max(1, take - 1);
+  }
+  return rows;
 }
 
 /// The class path as a pyramid: the base class on top, its two promotions

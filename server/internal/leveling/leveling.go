@@ -70,6 +70,14 @@ type Modifier struct {
 	Amount float64 `yaml:"amount" json:"amount"`
 }
 
+// Race is what a race brings (DD-349): the base classes it may start as, sheet
+// passives and a share of extra XP per crafting profession.
+type Race struct {
+	Classes      []string           `yaml:"classes" json:"classes"`
+	Passives     []Modifier         `yaml:"passives" json:"passives"`
+	ProfessionXP map[string]float64 `yaml:"profession_xp" json:"profession_xp"`
+}
+
 // Stats are the six raw attributes.
 type Stats struct {
 	Strength     int `yaml:"strength" json:"strength"`
@@ -309,6 +317,8 @@ type Config struct {
 	Curve                Curve   `yaml:"xp_curve" json:"xp_curve"`
 	XPMultiplier         float64 `yaml:"xp_multiplier" json:"xp_multiplier"`
 	AFKCombatXPPerMinute float64 `yaml:"afk_combat_xp_per_minute" json:"afk_combat_xp_per_minute"`
+	// Races by code (DD-349). A race not listed has no limits or passives.
+	Races map[string]Race `yaml:"races" json:"races"`
 	// SoloDungeonXP is the share of that XP (and the boss bonus) a solo
 	// dungeon pays (DD-343); 0 = all of it. Raids are not affected.
 	SoloDungeonXP    float64            `yaml:"solo_dungeon_xp" json:"solo_dungeon_xp"`
@@ -396,6 +406,12 @@ func (d DungeonXPScale) Factor(playerLevel, mobLevel int) float64 {
 		return 1
 	}
 	return math.Min(d.UpCap, 1+float64(gap-free)/float64(playerLevel))
+}
+
+// RaceAllows reports whether a race may start as a base class (DD-349).
+func (c *Config) RaceAllows(race, class string) bool {
+	r, ok := c.Races[race]
+	return !ok || slices.Contains(r.Classes, class)
 }
 
 // SoloDungeonXPFactor is the share of XP a solo dungeon pays (DD-343).
@@ -543,6 +559,16 @@ func (c *Config) Prepare() error {
 	for _, k := range c.classes {
 		if err := validateClass(k, families); err != nil {
 			return err
+		}
+	}
+	for code, r := range c.Races {
+		if len(r.Classes) == 0 {
+			return fmt.Errorf("leveling: race %s has no classes", code)
+		}
+		for _, class := range r.Classes {
+			if k, ok := c.classes[class]; !ok || k.Parent != "" {
+				return fmt.Errorf("leveling: race %s: %q is not a base class", code, class)
+			}
 		}
 	}
 	if c.SoloDungeonXP < 0 || c.SoloDungeonXP > 1 {

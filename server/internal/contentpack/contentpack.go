@@ -644,6 +644,15 @@ func validateRefs(p *Pack, r refs) error {
 		}
 	}
 	profs := codeSet(p.Professions, func(x Profession) string { return x.Code })
+	if p.Progression != nil {
+		for code, race := range p.Progression.Races {
+			for prof := range race.ProfessionXP {
+				if !profs[prof] {
+					return fmt.Errorf("race %s: unknown profession %q", code, prof)
+				}
+			}
+		}
+	}
 	levels := map[string]int16{}
 	for _, it := range p.Items {
 		levels[it.Code] = it.MinLevel

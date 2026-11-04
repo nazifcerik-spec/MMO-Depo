@@ -17,7 +17,7 @@ var (
 		"elf":   true,
 		"dwarf": true,
 		"orc":   true,
-		// DD-267: six more races (looks only, like the first four).
+		// DD-267: six more races. What each one brings is in progression.yaml (DD-349).
 		"troll":    true,
 		"undead":   true,
 		"dark_elf": true,
@@ -155,3 +155,6 @@ func validateClass(raw string) (string, error) {
 
 // KnownClass reports whether code is a playable class (content validation).
 func KnownClass(code string) bool { return knownClasses[code] }
+
+// KnownRace reports whether a code is a playable race.
+func KnownRace(code string) bool { return knownRaces[code] }

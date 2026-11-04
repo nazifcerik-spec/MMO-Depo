@@ -12,8 +12,9 @@ import 'class_catalog.dart';
 import 'class_info.dart';
 import 'models.dart';
 
-/// Character creation (DD-266): pick a class — portrait, tagline, saying,
-/// traits, skills (tap for a bubble), class path — and a race, then name the
+/// Character creation (DD-266, DD-349): pick a race — its passives and the
+/// classes it may start as — then a class from its pyramid — portrait, tagline,
+/// saying, traits, skills (tap for a bubble), class path — and name the
 /// character. Pops with the created character.
 class CreateCharacterScreen extends StatefulWidget {
   const CreateCharacterScreen({super.key, required this.repo});
@@ -47,7 +48,9 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
     try {
       final loads = await Future.wait([ClassCatalog.load(api), if (!ContentNames.loaded) ContentNames.load(api, lang)]);
       if (!mounted) return;
-      setState(() => _catalog = loads.first as ClassCatalog);
+      final cat = loads.first as ClassCatalog;
+      setState(() => _catalog = cat);
+      _pickRace(_race);
       await _loadSkills(_class);
     } on ApiError {
       if (mounted) setState(() => _catalogFailed = true);
@@ -62,6 +65,13 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
     } on ApiError {
       if (mounted) setState(() => _skills[cls] = const []);
     }
+  }
+
+  /// Picking a race whose list leaves out the class moves to its first class.
+  void _pickRace(String r) {
+    final allowed = _catalog?.classesOf(r) ?? classes;
+    setState(() => _race = r);
+    if (!allowed.contains(_class)) _pickClass(allowed.first);
   }
 
   void _pickClass(String c) {
@@ -92,14 +102,31 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
         child: PageFrame(
           child: Column(
             children: [
-              _ClassStrip(selected: _class, onPick: _pickClass),
-              const Divider(height: 1),
               Expanded(
                 child: ListView(
                   key: const ValueKey('create-character-list'),
                   padding: const EdgeInsets.only(bottom: Space.lg),
                   children: [
+                    _Section(
+                      title: l.chooseRace,
+                      child: _Races(selected: _race, onPick: _pickRace),
+                    ),
+                    if (cat?.races[_race] case final race?)
+                      _Section(
+                        title: l.raceAbilities,
+                        hint: l.raceAbilitiesHint,
+                        child: RaceAbilities(key: ValueKey('race-abilities-$_race'), race: race),
+                      ),
                     if (cat != null && node != null) ...[
+                      _Section(
+                        title: l.chooseClass,
+                        child: _ClassPyramid(
+                          race: _race,
+                          classes: cat.classesOf(_race),
+                          selected: _class,
+                          onPick: _pickClass,
+                        ),
+                      ),
                       _Hero(key: ValueKey('class-info-$_class'), classCode: _class),
                       _Section(
                         title: l.classTraits,
@@ -146,10 +173,6 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
                                 ),
                               ),
                       ),
-                    _Section(
-                      title: l.chooseRace,
-                      child: _Races(selected: _race, onPick: (r) => setState(() => _race = r)),
-                    ),
                   ],
                 ),
               ),
@@ -172,63 +195,146 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   }
 }
 
-/// The ten base classes as round icons; the chosen one in its colour.
-class _ClassStrip extends StatelessWidget {
-  const _ClassStrip({required this.selected, required this.onPick});
+/// The classes a race may start as, as a pyramid under the race (DD-349):
+/// one size for every tile, the chosen one in its colour.
+class _ClassPyramid extends StatelessWidget {
+  const _ClassPyramid({required this.race, required this.classes, required this.selected, required this.onPick});
 
+  final String race;
+  final List<String> classes;
   final String selected;
   final ValueChanged<String> onPick;
+
+  static const _gap = Space.xs;
+  static const _apex = 56.0;
+  static const _emblem = 40.0;
+  static const _linkHeight = 18.0;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return SizedBox(
-      height: 84,
-      child: ListView(
-        key: const ValueKey('class-strip'),
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: Space.md, vertical: Space.sm),
-        children: [
-          for (final c in classes)
-            Semantics(
-              button: true,
-              selected: c == selected,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(Radii.md),
-                onTap: () => onPick(c),
-                child: SizedBox(
-                  width: 68,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: c == selected ? classColor(c).withValues(alpha: 0.18) : Palette.bgElevated,
-                          border: Border.all(
-                            color: c == selected ? classColor(c) : Palette.borderStrong,
-                            width: _border,
-                          ),
-                        ),
-                        child: ClassEmblem(root: c, size: 44 - 2 * _border),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        className(l, c),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 11, color: c == selected ? classColor(c) : Palette.textMuted),
-                      ),
-                    ],
-                  ),
-                ),
+    final art = ItemImages.racePath(race);
+    return LayoutBuilder(
+      builder: (context, box) {
+        final cell = (box.maxWidth - 3 * _gap) / 4;
+        final sizes = pyramidRows(classes.length);
+        // Column centres of a row of [k] tiles.
+        List<double> centres(int k) {
+          final start = (box.maxWidth - (k * cell + (k - 1) * _gap)) / 2;
+          return [for (var i = 0; i < k; i++) start + cell / 2 + i * (cell + _gap)];
+        }
+
+        final rows = <Widget>[];
+        var from = 0;
+        var parents = [box.maxWidth / 2];
+        for (final k in sizes) {
+          final xs = centres(k);
+          rows.add(
+            SizedBox(
+              height: _linkHeight,
+              width: double.infinity,
+              child: CustomPaint(painter: _BusPainter(parents, xs, Palette.accent.withValues(alpha: 0.6))),
+            ),
+          );
+          rows.add(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var i = 0; i < k; i++) ...[
+                  if (i > 0) const SizedBox(width: _gap),
+                  SizedBox(width: cell, child: _classTile(l, classes[from + i])),
+                ],
+              ],
+            ),
+          );
+          from += k;
+          parents = xs;
+        }
+        return Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Palette.accent, width: _border),
+              ),
+              child: CircleArt(
+                asset: art ?? '',
+                size: _apex - 2 * _border,
+                fallback: const Icon(Icons.person_outline, color: Palette.textMuted),
               ),
             ),
-        ],
+            const SizedBox(height: 2),
+            Text(raceName(l, race), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+            ...rows,
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _classTile(AppLocalizations l, String c) {
+    final on = c == selected;
+    final color = classColor(c);
+    return Semantics(
+      button: true,
+      selected: on,
+      child: Material(
+        color: on ? color.withValues(alpha: 0.16) : Colors.transparent,
+        borderRadius: BorderRadius.circular(Radii.md),
+        child: InkWell(
+          key: ValueKey('class-$c'),
+          borderRadius: BorderRadius.circular(Radii.md),
+          onTap: () => onPick(c),
+          child: Container(
+            padding: const EdgeInsets.all(Space.xs),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Radii.md),
+              border: Border.all(color: on ? color : Palette.borderSubtle, width: _border),
+            ),
+            child: Column(
+              children: [
+                ClassEmblem(root: c, size: _emblem),
+                const SizedBox(height: 4),
+                _Lines(
+                  ContentNames.of('class', c, className(l, c)),
+                  lines: 1,
+                  style: TextStyle(fontSize: 12, color: on ? color : Palette.textSecondary),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
+}
+
+/// Lines from the parent columns down to one bus and on to the child columns.
+class _BusPainter extends CustomPainter {
+  _BusPainter(this.parents, this.children, this.color);
+
+  final List<double> parents;
+  final List<double> children;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = color
+      ..strokeWidth = 1.2;
+    final mid = size.height / 2;
+    for (final x in parents) {
+      canvas.drawLine(Offset(x, 0), Offset(x, mid), p);
+    }
+    final all = [...parents, ...children]..sort();
+    canvas.drawLine(Offset(all.first, mid), Offset(all.last, mid), p);
+    for (final x in children) {
+      canvas.drawLine(Offset(x, mid), Offset(x, size.height), p);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_BusPainter old) => old.parents != parents || old.children != children || old.color != color;
 }
 
 /// Portrait, name, tagline, role chips, introduction; the class saying under
@@ -671,7 +777,7 @@ class _BubblePainter extends CustomPainter {
   bool shouldRepaint(_BubblePainter old) => old.arrowX != arrowX || old.color != color;
 }
 
-/// The four races: portrait (or icon), name, a line of lore. Looks only.
+/// The races: portrait (or icon), name, a line of lore.
 class _Races extends StatelessWidget {
   const _Races({required this.selected, required this.onPick});
 
@@ -722,7 +828,7 @@ class _Races extends StatelessWidget {
         ),
         const SizedBox(height: Space.sm),
         Text(
-          l.raceCosmeticHint,
+          l.raceHint,
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 11, color: Palette.textMuted),
         ),

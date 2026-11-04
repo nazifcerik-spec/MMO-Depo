@@ -3418,6 +3418,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-349 — Irk önce: ırka özel sınıf piramidi ve pasif ırk yetenekleri
+
+**Context:** Kullanıcı karakter oluşturmada ilk tercihin ırk olmasını, her ırkın yalnız belirlediği sınıfları seçebilmesini (ırka özel piramit) ve ırklara pasif yetenekler verilmesini istedi; tablo kullanıcının. Bu karar DD-267'deki 'ırk yalnız görünüştür' kuralının yerini alır.
+**Decision:** `content/progression.yaml` `races`: sınıf listesi, nitelik pasifleri (`mult_add`) ve meslek XP payı (`profession_xp`). Sınıf kapısı sunucuda: `character.Service.Create` izin verilmeyen birleşimi 400 `E_VALIDATION` (`class_code`) ile reddeder. Nitelik pasifleri ekipmanla aynı modifier yığınına `WithModifierSource` ile girer (sheet, av, zindan, etkinlik gücü). Meslek XP'si `crafting.Service.WithXPBonus`: üretim toplamada ve yardımcı XP'sinde uygulanır, yukarı yuvarlanır (küçük üretimde de görünsün), bonus okunamazsa düz XP ödenir. `GET /v1/classes` `races` döner. İstemci: ekran sırası ırk kartları → ırk yetenekleri → sınıf piramidi (`pyramidRows`: taban 4, yukarı daralır; 3→3, 4→4, 5→1+4, 6→2+4, 8→1+3+4) → sınıf tanıtımı, özellikler, yetenekler, sınıf yolu. Sınıf şeridi kalktı. İzinsiz sınıfa düşen ırk seçimi ırkın ilk sınıfına geçer. Karakter sayfasında katlanır 'Irk yetenekleri'.
+**Consequences:** Var olan karakterlerin izinsiz ırk/sınıf birleşimleri korunur (kapı yalnız oluşturmada), pasifleri hepsine işler. Denge simülasyonu ırk pasiflerini saymaz (%1-2 nitelik, hedef bantlarını etkilemez). Toplama mesleklerinde pasif yok: tablodaki meslekler hep üretim. Tablo testle sabit (`TestRaceTableShipped`); her temel sınıf en az bir ırkta açık. Katalog sunucudan okunamazsa istemci tüm sınıfları gösterir, son söz sunucunun.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

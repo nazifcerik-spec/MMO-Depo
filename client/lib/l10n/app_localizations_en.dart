@@ -2260,7 +2260,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseRace => 'Choose your race';
 
   @override
-  String get raceCosmeticHint => 'Your race sets your look; it does not change attributes.';
+  String get raceHint => 'Your race decides which classes you can pick and its passive abilities.';
 
   @override
   String get raceHumanDesc => 'People of the cities';
@@ -3565,4 +3565,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lookHumanOnly => 'Face and hair options for this race are coming soon.';
+
+  @override
+  String get raceAbilities => 'Race abilities';
+
+  @override
+  String get raceAbilitiesHint => 'all passive';
+
+  @override
+  String get chooseClass => 'Choose your class';
+
+  @override
+  String raceAttrBonus(int pct, String name) {
+    return '+$pct% $name';
+  }
+
+  @override
+  String raceProfessionXp(int pct, String name) {
+    return '+$pct% bonus XP in $name';
+  }
 }

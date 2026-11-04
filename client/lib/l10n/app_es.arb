@@ -134,7 +134,7 @@
   "difficultyHard": "Difícil — frágil; necesita el equipo adecuado",
   "skillsTapHint": "toca para ver detalles",
   "chooseRace": "Elige tu raza",
-  "raceCosmeticHint": "Tu raza define tu aspecto; no cambia los atributos.",
+  "raceHint": "Tu raza decide qué clases puedes elegir y sus habilidades pasivas.",
   "raceHumanDesc": "Gente de las ciudades",
   "raceElfDesc": "Hijos de los bosques antiguos",
   "raceDwarfDesc": "Herreros de las montañas",
@@ -515,5 +515,10 @@
   "lookHairColor": "Color de pelo",
   "lookEyeColor": "Color de ojos",
   "lookSave": "Guardar",
-  "lookHumanOnly": "Las opciones de rostro y pelo de esta raza llegarán pronto."
+  "lookHumanOnly": "Las opciones de rostro y pelo de esta raza llegarán pronto.",
+  "raceAbilities": "Habilidades de raza",
+  "raceAbilitiesHint": "todas pasivas",
+  "chooseClass": "Elige tu clase",
+  "raceAttrBonus": "+{pct} % {name}",
+  "raceProfessionXp": "+{pct} % de XP extra en {name}"
 }

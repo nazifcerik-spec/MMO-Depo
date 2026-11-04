@@ -66,6 +66,7 @@ type Service struct {
 	speed    SpeedSource     // worn enchants' crafting speed (DD-293); nil = none
 	party    partyxp.Booster // party XP bonus (DD-305); nil = none
 	boost    boost.Applier   // timed XP boosts (DD-320); nil = none
+	xpBonus  XPBonus
 }
 
 // WithBoost applies timed XP boosts (DD-320).
@@ -88,14 +89,43 @@ type SpeedSource interface {
 func (s *Service) WithSpeed(src SpeedSource) *Service { s.speed = src; return s }
 
 // GrantXP adds profession XP from outside a craft: a party member's share
-// (DD-296). The profession's level cap applies.
+// (DD-296) or a helper's work. The profession's level cap applies.
 func (s *Service) GrantXP(ctx context.Context, characterID uuid.UUID, profession string, xp int32) error {
 	maxLevel := int16(100)
 	if p, ok := s.catalog.Catalog().Profession(profession); ok {
 		maxLevel = p.MaxLevel
 	}
-	_, _, err := s.repo.AddXP(ctx, characterID, profession, xp, maxLevel)
+	_, _, err := s.repo.AddXP(ctx, characterID, profession, s.withXPBonus(ctx, characterID, profession, xp), maxLevel)
 	return err
+}
+
+// XPBonus reports a character's share of extra XP in a profession (the race
+// passive, DD-349).
+type XPBonus func(ctx context.Context, characterID uuid.UUID, profession string) (float64, error)
+
+// WithXPBonus adds the extra XP share to everything the profession earns.
+func (s *Service) WithXPBonus(f XPBonus) *Service { s.xpBonus = f; return s }
+
+// AddXPShare adds a share to XP, rounding up: XP is whole, and a small craft
+// would otherwise never see its bonus.
+func AddXPShare(xp int32, share float64) int32 {
+	if xp <= 0 || share <= 0 {
+		return xp
+	}
+	return int32(math.Ceil(float64(xp)*(1+share) - 1e-9))
+}
+
+// withXPBonus never fails the craft: XP is paid without it on an error.
+func (s *Service) withXPBonus(ctx context.Context, characterID uuid.UUID, profession string, xp int32) int32 {
+	if s.xpBonus == nil {
+		return xp
+	}
+	share, err := s.xpBonus(ctx, characterID, profession)
+	if err != nil {
+		s.log.WarnContext(ctx, "crafting: xp bonus not read", slog.String("err", err.Error()))
+		return xp
+	}
+	return AddXPShare(xp, share)
 }
 
 // MaxCraftSpeed caps how much enchants shorten a craft.
@@ -354,6 +384,7 @@ func (s *Service) Collect(ctx context.Context, characterID, accountID, jobID uui
 		}
 		res.XPGained = int32(boost.ApplyIf(ctx, s.boost, characterID, boost.CatCraft, job.StartedAt, end,
 			int64(res.XPGained))) // DD-320
+		res.XPGained = s.withXPBonus(ctx, characterID, rec.ProfessionCode, res.XPGained) // DD-349
 		updated, leveled, err := s.repo.AddXP(ctx, characterID, rec.ProfessionCode, res.XPGained, maxLevel)
 		if err != nil {
 			s.log.WarnContext(ctx, "crafting: xp grant failed after a collected job",

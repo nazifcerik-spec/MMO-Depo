@@ -50,6 +50,72 @@ attribute_scaling:
   - { up_to: 400, effectiveness: 0.55 }
   - { up_to: 0,   effectiveness: 0.35 }
 
+# Races (DD-349): the base classes each may start as (checked when a character
+# is created), attribute passives on the sheet (amount 0.01 = +1%) and extra
+# XP in one crafting profession.
+races:
+  human:
+    classes: [warrior, rogue, ranger, mage, monk, cleric, paladin, bard]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: int, amount: 0.01 }
+    profession_xp: { cooking: 0.02 }
+  elf:
+    classes: [warrior, rogue, ranger, mage, druid, bard]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: agi, amount: 0.02 }
+    profession_xp: { enchanting: 0.02 }
+  dwarf:
+    classes: [warrior, cleric, paladin, bard]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: vit, amount: 0.01 }
+    profession_xp: { blacksmithing: 0.02 }
+  orc:
+    classes: [warrior, mage, shaman]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.02 }
+      - { kind: mult_add, target: vit, amount: 0.01 }
+    profession_xp: { smelting: 0.02 }
+  troll:
+    classes: [rogue, ranger, bard, shaman]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: agi, amount: 0.01 }
+    profession_xp: { leatherworking: 0.02 }
+  undead:
+    classes: [warrior, rogue, ranger, mage]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: agi, amount: 0.01 }
+      - { kind: mult_add, target: luck, amount: 0.01 }
+    profession_xp: { alchemy: 0.02 }
+  dark_elf:
+    classes: [warrior, rogue, ranger, mage]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: agi, amount: 0.02 }
+    profession_xp: { alchemy: 0.02 }
+  drakari:
+    classes: [mage, monk, cleric, bard, shaman]
+    passives:
+      - { kind: mult_add, target: int, amount: 0.01 }
+      - { kind: mult_add, target: cha, amount: 0.02 }
+    profession_xp: { enchanting: 0.02 }
+  tauren:
+    classes: [warrior, monk, druid, shaman]
+    passives:
+      - { kind: mult_add, target: str, amount: 0.01 }
+      - { kind: mult_add, target: vit, amount: 0.02 }
+    profession_xp: { woodworking: 0.02 }
+  gnome:
+    classes: [rogue, mage, bard]
+    passives:
+      - { kind: mult_add, target: int, amount: 0.01 }
+      - { kind: mult_add, target: agi, amount: 0.01 }
+    profession_xp: { jewelcrafting: 0.02 }
+
 caps: { crit_pct: 60, evasion_pct: 40, block_pct: 60, dmg_reduction_pct: 75, hit_pct: 100 }
 
 # Equipment families (item subclasses) that class permissions govern, and

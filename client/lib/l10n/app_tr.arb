@@ -652,7 +652,7 @@
   "difficultyHard": "Zor — kırılgan; doğru ekipman ister",
   "skillsTapHint": "açıklama için dokun",
   "chooseRace": "Irkını seç",
-  "raceCosmeticHint": "Irk görünüşünü belirler; nitelikleri değiştirmez.",
+  "raceHint": "Irkın seçebileceğin sınıfları ve pasif yeteneklerini belirler.",
   "raceHumanDesc": "Kentlerin halkı",
   "raceElfDesc": "Kadim ormanların çocukları",
   "raceDwarfDesc": "Dağların demircileri",
@@ -1030,5 +1030,10 @@
   "lookHairColor": "Saç rengi",
   "lookEyeColor": "Göz rengi",
   "lookSave": "Kaydet",
-  "lookHumanOnly": "Bu ırkın yüz ve saç seçenekleri yakında."
+  "lookHumanOnly": "Bu ırkın yüz ve saç seçenekleri yakında.",
+  "raceAbilities": "Irk yetenekleri",
+  "raceAbilitiesHint": "hepsi pasif",
+  "chooseClass": "Sınıfını seç",
+  "raceAttrBonus": "+%{pct} {name}",
+  "raceProfessionXp": "{name} becerisinde +%{pct} bonus XP"
 }

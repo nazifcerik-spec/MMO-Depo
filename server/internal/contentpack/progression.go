@@ -58,6 +58,14 @@ func loadProgressionFile(path string, skills []ClassSkill) (*leveling.Config, er
 			}
 		}
 	}
+	for code, r := range c.Races {
+		if !character.KnownRace(code) {
+			return nil, fmt.Errorf("validate %s: race %s is not a playable race", path, code)
+		}
+		if err := checkMods("race "+code, r.Passives); err != nil {
+			return nil, err
+		}
+	}
 	c.Unlocks = skillUnlocks(skills)
 	if err := c.Prepare(); err != nil {
 		return nil, fmt.Errorf("validate %s: %w", path, err)

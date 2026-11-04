@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/otter/server/internal/leveling"
 )
 
 // ServiceConfig tunes the character service.
@@ -91,6 +93,9 @@ func (s *Service) Create(ctx context.Context, req CreateRequest) (*Character, er
 	class, err := validateClass(req.ClassCode)
 	if err != nil {
 		return nil, err
+	}
+	if !leveling.Current().RaceAllows(race, class) { // DD-349
+		return nil, &ValidationError{Field: "class_code", Message: "this race cannot be this class"}
 	}
 
 	if s.verified != nil {
@@ -277,6 +282,15 @@ func (s *Service) Rename(ctx context.Context, characterID, accountID uuid.UUID, 
 	c.Name = name
 	c.NameNormalized = normalized
 	return c, nil
+}
+
+// ProfessionXPBonus is the race's share of extra XP in a profession (DD-349).
+func (s *Service) ProfessionXPBonus(ctx context.Context, characterID uuid.UUID, profession string) (float64, error) {
+	c, err := s.repo.Get(ctx, characterID)
+	if err != nil {
+		return 0, err
+	}
+	return leveling.Current().Races[c.RaceCode].ProfessionXP[profession], nil
 }
 
 // SetAppearance changes the character's look (DD-344, DD-346).

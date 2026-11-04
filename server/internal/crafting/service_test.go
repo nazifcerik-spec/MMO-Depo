@@ -2,6 +2,7 @@ package crafting
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
@@ -320,6 +321,44 @@ func TestJob_CollectDeliversFinishedAndRefundsTheRest(t *testing.T) {
 
 	_, err = svc.Collect(ctx, uuid.New(), acct, job.ID)
 	require.ErrorIs(t, err, ErrNotFound, "someone else's job")
+}
+
+// DD-349: the race's extra XP reaches what a craft earns, rounded up.
+func TestJob_CollectPaysTheXPBonus(t *testing.T) {
+	svc, _, _, _ := newTestSvc(t)
+	ctx := context.Background()
+	charID, acct := learned(t, svc)
+	svc.WithXPBonus(func(_ context.Context, id uuid.UUID, profession string) (float64, error) {
+		require.Equal(t, charID, id)
+		require.Equal(t, "alchemy", profession)
+		return 0.02, nil
+	})
+
+	job, err := svc.Start(ctx, charID, acct, "recipe_potion", 2)
+	require.NoError(t, err)
+	clock = job.ReadyAt
+	res, err := svc.Collect(ctx, charID, acct, job.ID)
+	require.NoError(t, err)
+	require.Equal(t, int32(204), res.XPGained)
+
+	clock = now
+	svc.WithXPBonus(func(context.Context, uuid.UUID, string) (float64, error) { return 0, errors.New("down") })
+	job, err = svc.Start(ctx, charID, acct, "recipe_potion", 1)
+	require.NoError(t, err)
+	clock = job.ReadyAt
+	res, err = svc.Collect(ctx, charID, acct, job.ID)
+	require.NoError(t, err)
+	require.Equal(t, int32(100), res.XPGained, "a failed read pays plain XP")
+}
+
+func TestAddXPShare(t *testing.T) {
+	for _, c := range []struct {
+		xp    int32
+		share float64
+		want  int32
+	}{{100, 0, 100}, {100, 0.02, 102}, {10, 0.02, 11}, {1, 0.02, 2}, {50, 0.02, 51}, {0, 0.02, 0}, {100, -1, 100}} {
+		require.Equal(t, c.want, AddXPShare(c.xp, c.share), "%d + %v", c.xp, c.share)
+	}
 }
 
 func TestJob_ConsumeRaceUndoesTheStart(t *testing.T) {

@@ -2259,7 +2259,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chooseRace => 'Elige tu raza';
 
   @override
-  String get raceCosmeticHint => 'Tu raza define tu aspecto; no cambia los atributos.';
+  String get raceHint => 'Tu raza decide qué clases puedes elegir y sus habilidades pasivas.';
 
   @override
   String get raceHumanDesc => 'Gente de las ciudades';
@@ -3565,4 +3565,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lookHumanOnly => 'Las opciones de rostro y pelo de esta raza llegarán pronto.';
+
+  @override
+  String get raceAbilities => 'Habilidades de raza';
+
+  @override
+  String get raceAbilitiesHint => 'todas pasivas';
+
+  @override
+  String get chooseClass => 'Elige tu clase';
+
+  @override
+  String raceAttrBonus(int pct, String name) {
+    return '+$pct % $name';
+  }
+
+  @override
+  String raceProfessionXp(int pct, String name) {
+    return '+$pct % de XP extra en $name';
+  }
 }

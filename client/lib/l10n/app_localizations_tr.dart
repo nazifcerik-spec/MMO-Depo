@@ -2259,7 +2259,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chooseRace => 'Irkını seç';
 
   @override
-  String get raceCosmeticHint => 'Irk görünüşünü belirler; nitelikleri değiştirmez.';
+  String get raceHint => 'Irkın seçebileceğin sınıfları ve pasif yeteneklerini belirler.';
 
   @override
   String get raceHumanDesc => 'Kentlerin halkı';
@@ -3564,4 +3564,23 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get lookHumanOnly => 'Bu ırkın yüz ve saç seçenekleri yakında.';
+
+  @override
+  String get raceAbilities => 'Irk yetenekleri';
+
+  @override
+  String get raceAbilitiesHint => 'hepsi pasif';
+
+  @override
+  String get chooseClass => 'Sınıfını seç';
+
+  @override
+  String raceAttrBonus(int pct, String name) {
+    return '+%$pct $name';
+  }
+
+  @override
+  String raceProfessionXp(int pct, String name) {
+    return '$name becerisinde +%$pct bonus XP';
+  }
 }

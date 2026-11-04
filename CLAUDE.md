@@ -310,6 +310,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 146. **Görünüm seçimi + eşya yansıması kapalı (bitti)** — Sprint 146, DD-348. Oluşturmada `AppearancePicker` yok; karakter sayfası ekipman çekmez, figür zırhsız. `assets/held/`, `paperdoll.json` APK dışında; kod ve editör duruyor.
 
+147. **Irk önce + ırk sınıfları + ırk pasifleri (bitti)** — Sprint 147, DD-349. `content/progression.yaml` `races` (sınıf listesi, `mult_add` nitelik pasifleri, `profession_xp`); oluşturmada sunucu kapısı (`E_VALIDATION`), pasifler sheet modifier'ı, `crafting.WithXPBonus`, `/v1/classes` `races`. İstemci: önce ırk kartları + `RaceAbilities`, sonra ırka özel sınıf piramidi (`pyramidRows`), karakter sayfasında katlanır bölüm. Var olan karakterler korunur.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

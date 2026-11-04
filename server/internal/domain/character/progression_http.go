@@ -406,7 +406,8 @@ func ClassCatalog(w http.ResponseWriter, _ *http.Request) {
 	}
 	w.Header().Set("Cache-Control", "public, max-age=300")
 	apierr.WriteJSON(w, http.StatusOK, map[string]any{"classes": out,
-		"attribute_points_total": cfg.AttributePointsEarned(cfg.LevelCap), "milestones": cfg.Milestones})
+		"attribute_points_total": cfg.AttributePointsEarned(cfg.LevelCap), "milestones": cfg.Milestones,
+		"races": cfg.Races})
 }
 
 func writeProgErr(w http.ResponseWriter, r *http.Request, err error) {

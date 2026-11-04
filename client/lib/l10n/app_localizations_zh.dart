@@ -2257,7 +2257,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chooseRace => '选择种族';
 
   @override
-  String get raceCosmeticHint => '种族决定外观，不影响属性。';
+  String get raceHint => '种族决定可选职业和被动能力。';
 
   @override
   String get raceHumanDesc => '城邦之民';
@@ -3552,4 +3552,23 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lookHumanOnly => '该种族的脸型和发型选项即将推出。';
+
+  @override
+  String get raceAbilities => '种族能力';
+
+  @override
+  String get raceAbilitiesHint => '均为被动';
+
+  @override
+  String get chooseClass => '选择职业';
+
+  @override
+  String raceAttrBonus(int pct, String name) {
+    return '$name +$pct%';
+  }
+
+  @override
+  String raceProfessionXp(int pct, String name) {
+    return '$name技能经验 +$pct%';
+  }
 }

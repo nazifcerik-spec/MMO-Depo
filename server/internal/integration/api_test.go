@@ -160,7 +160,11 @@ func newHTTPPlayer(t *testing.T, class string) *hc {
 	})
 	c.token = s["access_token"].(string)
 	c.name = "H" + suffix
-	ch := c.ok("POST", "/v1/character", map[string]any{"name": c.name, "race_code": "human", "class_code": class})
+	race := "human"
+	if class == "druid" || class == "shaman" { // humans cannot start as these (DD-349)
+		race = "tauren"
+	}
+	ch := c.ok("POST", "/v1/character", map[string]any{"name": c.name, "race_code": race, "class_code": class})
 	c.char = ch["id"].(string)
 	c.ok("POST", "/v1/character/"+c.char+"/enter", map[string]any{})
 	return c

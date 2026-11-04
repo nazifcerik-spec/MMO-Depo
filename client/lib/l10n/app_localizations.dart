@@ -4006,11 +4006,11 @@ abstract class AppLocalizations {
   /// **'Choose your race'**
   String get chooseRace;
 
-  /// No description provided for @raceCosmeticHint.
+  /// No description provided for @raceHint.
   ///
   /// In en, this message translates to:
-  /// **'Your race sets your look; it does not change attributes.'**
-  String get raceCosmeticHint;
+  /// **'Your race decides which classes you can pick and its passive abilities.'**
+  String get raceHint;
 
   /// No description provided for @raceHumanDesc.
   ///
@@ -6279,6 +6279,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Face and hair options for this race are coming soon.'**
   String get lookHumanOnly;
+
+  /// No description provided for @raceAbilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Race abilities'**
+  String get raceAbilities;
+
+  /// No description provided for @raceAbilitiesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'all passive'**
+  String get raceAbilitiesHint;
+
+  /// No description provided for @chooseClass.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your class'**
+  String get chooseClass;
+
+  /// No description provided for @raceAttrBonus.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% {name}'**
+  String raceAttrBonus(int pct, String name);
+
+  /// No description provided for @raceProfessionXp.
+  ///
+  /// In en, this message translates to:
+  /// **'+{pct}% bonus XP in {name}'**
+  String raceProfessionXp(int pct, String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api_client.dart';
 import '../../shared/widgets.dart';
+import 'models.dart' show classes;
 
 /// One node of the class tree (DD-253): a base class (tier 0), a promotion
 /// (tier 1, level 100) or a final specialization (tier 2, level 300).
@@ -70,16 +71,58 @@ class ClassNode {
   final String masteryTitle;
 }
 
+/// What a race brings (DD-349): the base classes it may start as and its
+/// passives, in percent.
+class RaceInfo {
+  const RaceInfo({this.classes = const [], this.attributes = const {}, this.professionXp = const {}});
+
+  factory RaceInfo.fromJson(Map<String, dynamic> j) {
+    int pct(Object? v) => ((v as num) * 100).round();
+    return RaceInfo(
+      classes: [for (final c in (j['classes'] as List? ?? const [])) '$c'],
+      attributes: {
+        for (final m in (j['passives'] as List? ?? const []).cast<Map<String, dynamic>>())
+          _attributeOf[m['target']] ?? '${m['target']}': pct(m['amount']),
+      },
+      professionXp: {
+        for (final e in (j['profession_xp'] as Map<String, dynamic>? ?? const {}).entries) e.key: pct(e.value),
+      },
+    );
+  }
+
+  /// Sheet targets by the attribute names the content is translated under.
+  static const _attributeOf = {
+    'str': 'strength',
+    'agi': 'dexterity',
+    'int': 'intelligence',
+    'vit': 'vitality',
+    'cha': 'wisdom',
+    'luck': 'luck',
+  };
+
+  final List<String> classes;
+
+  /// Attribute code → percent.
+  final Map<String, int> attributes;
+
+  /// Profession code → percent of extra XP.
+  final Map<String, int> professionXp;
+}
+
 /// The class tree, fetched once per app session (content; changes only on
 /// a content reload).
 class ClassCatalog {
-  ClassCatalog(this.nodes, {this.attributePointsTotal = 0, this.milestones = const {}});
+  ClassCatalog(this.nodes, {this.attributePointsTotal = 0, this.milestones = const {}, this.races = const {}});
 
   factory ClassCatalog.fromJson(Map<String, dynamic> j) => ClassCatalog(
     [for (final c in (j['classes'] as List? ?? const []).cast<Map<String, dynamic>>()) ClassNode.fromJson(c)],
     attributePointsTotal: (j['attribute_points_total'] as num?)?.toInt() ?? 0,
     milestones: {
       for (final e in (j['milestones'] as Map<String, dynamic>? ?? const {}).entries) e.key: (e.value as num).toInt(),
+    },
+    races: {
+      for (final e in (j['races'] as Map<String, dynamic>? ?? const {}).entries)
+        e.key: RaceInfo.fromJson(e.value as Map<String, dynamic>),
     },
   );
 
@@ -90,6 +133,13 @@ class ClassCatalog {
 
   /// awakening / ultimate / capstone / mastery levels.
   final Map<String, int> milestones;
+
+  /// What each race brings, by race code.
+  final Map<String, RaceInfo> races;
+
+  /// The base classes a race may start as (all, for a race not listed: the
+  /// server has the last word).
+  List<String> classesOf(String race) => races[race]?.classes ?? classes;
 
   static ClassCatalog? _cached;
 

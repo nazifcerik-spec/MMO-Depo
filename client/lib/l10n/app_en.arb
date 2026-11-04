@@ -1772,7 +1772,7 @@
   "difficultyHard": "Hard — fragile; needs the right gear",
   "skillsTapHint": "tap for details",
   "chooseRace": "Choose your race",
-  "raceCosmeticHint": "Your race sets your look; it does not change attributes.",
+  "raceHint": "Your race decides which classes you can pick and its passive abilities.",
   "raceHumanDesc": "People of the cities",
   "raceElfDesc": "Children of the old woods",
   "raceDwarfDesc": "Smiths of the mountains",
@@ -2794,5 +2794,30 @@
   "lookHairColor": "Hair color",
   "lookEyeColor": "Eye color",
   "lookSave": "Save",
-  "lookHumanOnly": "Face and hair options for this race are coming soon."
+  "lookHumanOnly": "Face and hair options for this race are coming soon.",
+  "raceAbilities": "Race abilities",
+  "raceAbilitiesHint": "all passive",
+  "chooseClass": "Choose your class",
+  "raceAttrBonus": "+{pct}% {name}",
+  "@raceAttrBonus": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "raceProfessionXp": "+{pct}% bonus XP in {name}",
+  "@raceProfessionXp": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -15,7 +15,8 @@ import '../social/group_repository.dart';
 import 'character_repository.dart';
 import 'appearance_picker.dart';
 import 'body_portrait.dart';
-import 'class_info.dart' show SkillArt;
+import 'class_catalog.dart';
+import 'class_info.dart' show RaceAbilities, SkillArt;
 import 'leveling.dart';
 import 'models.dart';
 import '../../shared/content_names.dart';
@@ -85,6 +86,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   late CharacterSheet _sheet = widget.initial;
   int? _gold;
   List<ClassSkill>? _skills;
+  RaceInfo? _race;
   LevelingSummary? _leveling;
   FoodBuff? _buff;
   late final _levelingRepo = LevelingRepository(widget.repo.api, widget.initial.id);
@@ -99,9 +101,19 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
     widget.dataVersion.addListener(_reload);
     _reload();
     _loadSkills();
+    _loadRace();
   }
 
   /// Content only — a failure just hides the section.
+  Future<void> _loadRace() async {
+    try {
+      final cat = await ClassCatalog.load(widget.repo.api);
+      if (mounted) setState(() => _race = cat.races[_sheet.raceCode]);
+    } on ApiError {
+      // The section stays away; the passives still count on the server.
+    }
+  }
+
   Future<void> _loadSkills() async {
     try {
       final list = await widget.repo.classSkills(_sheet.classCode);
@@ -353,6 +365,15 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
                 for (final k in _skills!)
                   if (_onPath(k)) _SkillRow(skill: k, level: s.level),
               ],
+            ),
+          ],
+          if (_race case final race?) ...[
+            const SizedBox(height: Space.lg),
+            _Section(
+              key: const Key('race-section'),
+              title: l.raceAbilities,
+              collapsible: true,
+              children: [RaceAbilities(race: race)],
             ),
           ],
           if (widget.onOpenDaily != null) ...[

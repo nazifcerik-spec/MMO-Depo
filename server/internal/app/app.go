@@ -285,6 +285,10 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Class skills (DD-222): passives → sheet stack, actives → combat snapshots.
 	classSkills := classskill.NewService(pool)
 	sheetAdapter.WithModifierSource(classSkills.PassiveModifiers)
+	// Race passives (DD-349).
+	sheetAdapter.WithModifierSource(func(_ context.Context, _ uuid.UUID, sheet character.Sheet) ([]skill.Modifier, error) {
+		return skill.FromLeveling(leveling.Current().Races[sheet.Race].Passives), nil
+	})
 	// Promotion stat modifiers, talents and class mastery (DD-250).
 	sheetAdapter.WithModifierSource(func(ctx context.Context, id uuid.UUID, sheet character.Sheet) ([]skill.Modifier, error) {
 		mods, err := charSvc.ProgressionModifiers(ctx, id, sheet)
@@ -309,7 +313,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	activitySvc.WithBoost(boostSvc)
 	huntSvc.WithBoost(boostSvc)
 	dungSvc.WithBoost(boostSvc)
-	craftSvc.WithBoost(boostSvc)
+	craftSvc.WithBoost(boostSvc).WithXPBonus(charSvc.ProfessionXPBonus) // race passive (DD-349)
 	huntSvc.WithPartyBonus(partySvcXP)
 	dungSvc.WithPartyBonus(partySvcXP)
 	craftSvc.WithPartyBonus(partySvcXP)

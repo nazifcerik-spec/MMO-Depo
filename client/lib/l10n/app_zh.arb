@@ -134,7 +134,7 @@
   "difficultyHard": "困难——脆弱；需要合适的装备",
   "skillsTapHint": "点击查看说明",
   "chooseRace": "选择种族",
-  "raceCosmeticHint": "种族决定外观，不影响属性。",
+  "raceHint": "种族决定可选职业和被动能力。",
   "raceHumanDesc": "城邦之民",
   "raceElfDesc": "远古森林之子",
   "raceDwarfDesc": "群山的铁匠",
@@ -515,5 +515,10 @@
   "lookHairColor": "发色",
   "lookEyeColor": "瞳色",
   "lookSave": "保存",
-  "lookHumanOnly": "该种族的脸型和发型选项即将推出。"
+  "lookHumanOnly": "该种族的脸型和发型选项即将推出。",
+  "raceAbilities": "种族能力",
+  "raceAbilitiesHint": "均为被动",
+  "chooseClass": "选择职业",
+  "raceAttrBonus": "{name} +{pct}%",
+  "raceProfessionXp": "{name}技能经验 +{pct}%"
 }
