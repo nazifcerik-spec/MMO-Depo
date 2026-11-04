@@ -819,7 +819,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Daha fazla';
+  String get loadMore => 'Daha fazla yükle';
 
   @override
   String myListings(int count) {
@@ -3594,4 +3594,264 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nkReportReviewed => 'Şikâyetin incelendi';
+
+  @override
+  String get guide => 'Rehber';
+
+  @override
+  String get guideSearch => 'Rehberde ara';
+
+  @override
+  String get guideNoMatch => 'Sonuç bulunamadı.';
+
+  @override
+  String get guideShowMe => 'Göster';
+
+  @override
+  String get next => 'İleri';
+
+  @override
+  String get back => 'Geri';
+
+  @override
+  String get tutorialSkip => 'Eğitimi atla';
+
+  @override
+  String get tutorialStart => 'Oynamaya başla';
+
+  @override
+  String get tutorialReplay => 'Eğitimi yeniden izle';
+
+  @override
+  String get tutorialWelcomeTitle => 'MeNa World\'e hoş geldin';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'Karakterin uygulama kapalıyken de çalışır. Ona bir iş ver, sonra dönüp kazandıklarını topla.';
+
+  @override
+  String get tutorialCharacterBody =>
+      'Değerlerin, nitelik puanların ve yeteneklerin burada. Her seviyede kazandığın puanları dağıt; 300. ve 700. seviyede terfini seç.';
+
+  @override
+  String get tutorialGatherBody =>
+      'Bir kaynak ve süre seç, sonra dönüp topla. Madencilik, balıkçılık, odunculuk, şifalı ot toplama ve avcılık ayrı ayrı seviye atlar.';
+
+  @override
+  String get tutorialBagBody =>
+      'Bir eşyaya dokunarak kuşan, kullan, sat veya pazara koy. Karşılaştırma tablosu giydiğinden iyi olup olmadığını gösterir.';
+
+  @override
+  String get tutorialAdventureBody =>
+      'Canavar avla, zindan temizle, baskın ve etkinliklere katıl, haritada yolculuk et. Canavarlar ve zindanlar bulunduğun bölgeye bağlıdır.';
+
+  @override
+  String get tutorialWorkshopBody =>
+      'Mesleklerinle üretim yap, dükkândan alışveriş et, pazarda diğer oyuncularla ticaret yap.';
+
+  @override
+  String get tutorialTopBarTitle => 'Üst çubuk';
+
+  @override
+  String get tutorialTopBarBody =>
+      'Görevler, bildirimler ve sosyal (sohbet, arkadaşlar, posta, lonca, takas) sağ üstte. Karakter aynı anda tek iş yapar; yenisine başlamadan önce mevcut işi bitir veya topla.';
+
+  @override
+  String get tutorialDoneTitle => 'Hazırsın';
+
+  @override
+  String get tutorialDoneBody => 'Bir şeyin yerini unutursan Karakter sekmesinin altındaki Rehber\'i aç.';
+
+  @override
+  String get guideCharacterTitle => 'Değerler, nitelikler ve yetenekler';
+
+  @override
+  String get guideCharacterBody =>
+      'Karakter sekmesi. Nitelik puanlarını ilerleme kartından dağıt. Yeteneklerin katlanır bölümde; aynı işi yapan yeteneklerin en güçlüsü kalır.';
+
+  @override
+  String get guidePromotionTitle => 'Terfiler';
+
+  @override
+  String get guidePromotionBody =>
+      'Karakter sekmesi, ilerleme kartı. 300. ve 700. seviyede iki yoldan birini seçene kadar XP bekler. Bu arada kazandığın XP seçim yapınca ödenir.';
+
+  @override
+  String get guideGatherTitle => 'Toplama';
+
+  @override
+  String get guideGatherBody =>
+      'Toplama sekmesi. Meslek, erişimindeki bir kaynak ve 1, 3 veya 6 saat seç. Kaynaklar bölgelere bağlıdır; daha iyisi için yolculuk et.';
+
+  @override
+  String get guideBagTitle => 'Çanta ve ekipman';
+
+  @override
+  String get guideBagBody =>
+      'Çanta sekmesi. Ayrıntı ve karşılaştırma için eşyaya dokun. Uzun basıp sürükleyerek çoklu seç, birlikte sat veya yok et. Dolu çanta yeni işi durdurur.';
+
+  @override
+  String get guideBankTitle => 'Hesap bankası';
+
+  @override
+  String get guideBankBody =>
+      'Çanta sekmesi, Banka düğmesi. Tüm karakterlerin ortak kullanır, eşyaları aralarında taşır. Bağlı ve kuşanılmış eşya girmez.';
+
+  @override
+  String get guideHuntTitle => 'Av';
+
+  @override
+  String get guideHuntBody =>
+      'Macera sekmesi, Av. Erişimindeki bir canavar, süre ve yanına alacağın iksir ve yemeği seç. Karakterin çok yaralanınca kendi çekilir.';
+
+  @override
+  String get guideDungeonTitle => 'Zindan ve baskınlar';
+
+  @override
+  String get guideDungeonBody =>
+      'Macera sekmesi, Zindan. Zindanlar tek kişilik. Baskınlar 2–5 kişilik parti ister; eşleşmek için Parti bul\'u kullan. Baskın boss\'ları set parçası ve pet yumurtası düşürür.';
+
+  @override
+  String get guideTravelTitle => 'Yolculuk ve harita';
+
+  @override
+  String get guideTravelBody =>
+      'Macera sekmesi, Yolculuk. Canavarlarını, zindanlarını, kaynaklarını ve görevlerini görmek için bir bölgeye dokun, sonra Git. Seviye şartı yalnız varış noktasında.';
+
+  @override
+  String get guideEventsTitle => 'Etkinlikler';
+
+  @override
+  String get guideEventsBody =>
+      'Macera sekmesi, Etkinlik. Dünya bossu ve istilalara katıl, günlük sezon jetonunu al. Nasıl çalıştığını ve ödülünü görmek için karta dokun.';
+
+  @override
+  String get guideCraftTitle => 'Meslekler ve üretim';
+
+  @override
+  String get guideCraftBody =>
+      'Atölye sekmesi, Üretim. Tarifleri görmek için bir mesleği aç. Renkler tarifin ne kadar XP verdiğini gösterir. Efsun parşömenleri Çanta\'dan kullanılır.';
+
+  @override
+  String get guideVendorTitle => 'Dükkân ve geri alım';
+
+  @override
+  String get guideVendorBody =>
+      'Atölye sekmesi, Dükkân. Satışı Çanta\'dan yap. Sattığını 2 saat boyunca geri alabilirsin.';
+
+  @override
+  String get guideMarketTitle => 'Pazar ve açık artırma';
+
+  @override
+  String get guideMarketBody =>
+      'Atölye sekmesi, Pazar. Sabit fiyata al veya açık artırmada teklif ver. Eşyayı Çanta\'dan listele: sabit fiyat ya da başlangıç teklifli, isteğe bağlı hemen al fiyatlı artırma. Son dakikalardaki teklif artırmayı uzatır.';
+
+  @override
+  String get guideQuestsTitle => 'Görevler';
+
+  @override
+  String get guideQuestsBody =>
+      'Sağ üstteki pano simgesi. Hikâye, yan ve günlük görevler; rozet teslime hazır olanları sayar.';
+
+  @override
+  String get guideNotificationsTitle => 'Bildirimler ve kazanımlar';
+
+  @override
+  String get guideNotificationsBody =>
+      'Sağ üstteki zil simgesi. Kazanımlar sekmesi topladıklarını 30 gün saklar. Ayarlardan neyin geleceğini seç.';
+
+  @override
+  String get guideSocialTitle => 'Sohbet, arkadaş, posta ve takas';
+
+  @override
+  String get guideSocialBody =>
+      'Sağ üstteki konuşma balonları. Takası iki taraf onaylar ve vergilidir. Engellemek oyuncuyu sohbetinden, arkadaşlarından ve postandan çıkarır.';
+
+  @override
+  String get guidePartyTitle => 'Parti';
+
+  @override
+  String get guidePartyBody =>
+      'Karakter sekmesi, Parti bölümü. İsimle davet et. Aynı tür işi yapan üyeler birlikte bonus XP kazanır.';
+
+  @override
+  String get guideGuildTitle => 'Lonca, kasa ve lonca bankası';
+
+  @override
+  String get guideGuildBody =>
+      'Sağ üstteki konuşma balonları, Lonca sekmesi. Üyeler altın ve eşya yatırır; kimin ne kadar çekebileceğini rütbe belirler. Her hareket kayda geçer.';
+
+  @override
+  String get guideRankingTitle => 'Sıralama';
+
+  @override
+  String get guideRankingBody =>
+      'Karakter sekmesi, Sıralama düğmesi. Puanın seviye, başarım, ustalık, meslek ve baskın ile zindan temizlemelerinden gelir. Sınıfa veya tabloya göre süz.';
+
+  @override
+  String get guidePetsTitle => 'Petler';
+
+  @override
+  String get guidePetsBody =>
+      'Karakter sekmesi, Petler düğmesi. Yumurtalar yüksek seviyeli baskın boss\'larından düşer. Kuluçkaya koy, avda seviye atlat, bonusu ve savaş desteği için birini aktif yap.';
+
+  @override
+  String get guideHelpersTitle => 'Yardımcılar';
+
+  @override
+  String get guideHelpersBody =>
+      'Karakter sekmesi, Yardımcılar düğmesi. Bir meslek için yardımcı kirala. Karakterin ne yaparsa yapsın o da kendi başına çalışır.';
+
+  @override
+  String get guideReportTitle => 'Oyuncu şikâyeti';
+
+  @override
+  String get guideReportBody =>
+      'Sohbet satırına uzun bas veya arkadaş menüsünü kullan. Bir neden seç; ekip inceler ve incelendiğinde sana bildirir.';
+
+  @override
+  String get guideAccountTitle => 'Hesap, dil ve destek';
+
+  @override
+  String get guideAccountBody =>
+      'Karakter listesi, üstteki hesap simgesi. Dilini veya şifreni değiştir, destekle iletişime geç, verilerini indir ya da hesabını sil.';
+
+  @override
+  String get ranking => 'Sıralama';
+
+  @override
+  String get rankingScore => 'Puan';
+
+  @override
+  String get rankingLevel => 'Seviye';
+
+  @override
+  String get rankingAchievements => 'Başarımlar';
+
+  @override
+  String get rankingMastery => 'Ustalık';
+
+  @override
+  String get rankingProfessions => 'Meslekler';
+
+  @override
+  String get rankingClears => 'Temizleme';
+
+  @override
+  String get rankingDungeons => 'Zindanlar';
+
+  @override
+  String get rankingRaids => 'Baskınlar';
+
+  @override
+  String get rankingAllClasses => 'Tüm sınıflar';
+
+  @override
+  String get rankingHowScore => 'Puan nasıl hesaplanır';
+
+  @override
+  String get rankingScoreNote => 'Her zindan ve baskın bir kez sayılır. Birkaç dakikada bir güncellenir.';
+
+  @override
+  String get rankingEmpty => 'Tablo henüz hesaplanıyor.';
 }

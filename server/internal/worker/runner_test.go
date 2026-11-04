@@ -121,7 +121,7 @@ func TestAll_UniqueNamesAndPositiveIntervals(t *testing.T) {
 		seen[j.Name()] = true
 		require.Positive(t, j.Interval())
 	}
-	require.Len(t, seen, 17)
+	require.Len(t, seen, 18)
 }
 
 // slowJob records how many runs overlap.

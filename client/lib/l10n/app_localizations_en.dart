@@ -3595,4 +3595,264 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nkReportReviewed => 'Your report was reviewed';
+
+  @override
+  String get guide => 'Guide';
+
+  @override
+  String get guideSearch => 'Search the guide';
+
+  @override
+  String get guideNoMatch => 'Nothing found.';
+
+  @override
+  String get guideShowMe => 'Show me';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get tutorialSkip => 'Skip tutorial';
+
+  @override
+  String get tutorialStart => 'Start playing';
+
+  @override
+  String get tutorialReplay => 'Watch the tutorial again';
+
+  @override
+  String get tutorialWelcomeTitle => 'Welcome to MeNa World';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'Your character keeps working while the app is closed. Give it a job, come back later and collect what it earned.';
+
+  @override
+  String get tutorialCharacterBody =>
+      'Your stats, attribute points and skills live here. Spend the points you earn each level, and choose your promotions at levels 300 and 700.';
+
+  @override
+  String get tutorialGatherBody =>
+      'Pick a resource and a duration, then come back to collect. Mining, fishing, woodcutting, herbalism and hunting each level up on their own.';
+
+  @override
+  String get tutorialBagBody =>
+      'Tap an item to equip, use, sell or list it. The comparison table shows whether it beats what you are wearing.';
+
+  @override
+  String get tutorialAdventureBody =>
+      'Hunt monsters, clear dungeons, join raids and events, and travel the map. Monsters and dungeons depend on the region you are in.';
+
+  @override
+  String get tutorialWorkshopBody =>
+      'Craft with your professions, buy from the shop and trade with other players on the market.';
+
+  @override
+  String get tutorialTopBarTitle => 'The top bar';
+
+  @override
+  String get tutorialTopBarBody =>
+      'Quests, notifications and social (chat, friends, mail, guild, trade) are at the top right. A character does one job at a time, so finish or collect before starting another.';
+
+  @override
+  String get tutorialDoneTitle => 'You\'re ready';
+
+  @override
+  String get tutorialDoneBody => 'Forgot where something is? Open the Guide at the bottom of the Character tab.';
+
+  @override
+  String get guideCharacterTitle => 'Stats, attributes and skills';
+
+  @override
+  String get guideCharacterBody =>
+      'Character tab. Spend attribute points from the progress card. Your skills are in their own folded section; of the skills that do the same job, the strongest stays.';
+
+  @override
+  String get guidePromotionTitle => 'Promotions';
+
+  @override
+  String get guidePromotionBody =>
+      'Character tab, progress card. At levels 300 and 700 your XP waits until you pick one of two paths. XP earned in the meantime is paid out when you choose.';
+
+  @override
+  String get guideGatherTitle => 'Gathering';
+
+  @override
+  String get guideGatherBody =>
+      'Gather tab. Choose a profession, a resource from your reach and 1, 3 or 6 hours. Resources belong to regions, so travel for better ones.';
+
+  @override
+  String get guideBagTitle => 'Bag and equipment';
+
+  @override
+  String get guideBagBody =>
+      'Bag tab. Tap an item for details and a comparison. Hold and drag to select many, then sell or destroy them together. A full bag stops new work.';
+
+  @override
+  String get guideBankTitle => 'Account bank';
+
+  @override
+  String get guideBankBody =>
+      'Bag tab, Bank button. Shared by all your characters, so it moves items between them. Bound and equipped items cannot enter.';
+
+  @override
+  String get guideHuntTitle => 'Hunting';
+
+  @override
+  String get guideHuntBody =>
+      'Adventure tab, Hunt. Choose a monster in your reach, a duration and the potions and food to take. Your character retreats by itself when badly hurt.';
+
+  @override
+  String get guideDungeonTitle => 'Dungeons and raids';
+
+  @override
+  String get guideDungeonBody =>
+      'Adventure tab, Dungeon. Dungeons are solo. Raids take a party of 2 to 5; use Find party to be matched. Raid bosses drop set pieces and pet eggs.';
+
+  @override
+  String get guideTravelTitle => 'Travel and the map';
+
+  @override
+  String get guideTravelBody =>
+      'Adventure tab, Travel. Tap a region to see its monsters, dungeons, resources and quests, then Go. Only the destination has a level requirement.';
+
+  @override
+  String get guideEventsTitle => 'Events';
+
+  @override
+  String get guideEventsBody =>
+      'Adventure tab, Events. Enlist in world bosses and invasions, and collect the daily seasonal token. Tap a card to see how it works and what it pays.';
+
+  @override
+  String get guideCraftTitle => 'Professions and crafting';
+
+  @override
+  String get guideCraftBody =>
+      'Workshop tab, Crafting. Open a profession to see recipes. Colours show how much XP a recipe still gives. Scrolls from Enchanting are used from the Bag.';
+
+  @override
+  String get guideVendorTitle => 'Shop and buyback';
+
+  @override
+  String get guideVendorBody =>
+      'Workshop tab, Shop. Sell from the Bag. Anything you sold can be bought back for 2 hours.';
+
+  @override
+  String get guideMarketTitle => 'Market and auctions';
+
+  @override
+  String get guideMarketBody =>
+      'Workshop tab, Market. Buy at a fixed price or bid at auction. List items from the Bag: fixed price or auction with a starting bid and an optional buyout. A bid in the last minutes extends the auction.';
+
+  @override
+  String get guideQuestsTitle => 'Quests';
+
+  @override
+  String get guideQuestsBody =>
+      'Clipboard icon at the top right. Story, side and daily quests; the badge counts those ready to hand in.';
+
+  @override
+  String get guideNotificationsTitle => 'Notifications and rewards';
+
+  @override
+  String get guideNotificationsBody =>
+      'Bell icon at the top right. The Rewards tab keeps what you collected for 30 days. Settings choose what reaches you.';
+
+  @override
+  String get guideSocialTitle => 'Chat, friends, mail and trade';
+
+  @override
+  String get guideSocialBody =>
+      'Speech bubbles at the top right. Trades are confirmed by both sides and taxed. Blocking hides a player from your chat, friends and mail.';
+
+  @override
+  String get guidePartyTitle => 'Party';
+
+  @override
+  String get guidePartyBody =>
+      'Character tab, Party section. Invite by name. Members doing the same kind of work earn bonus XP together.';
+
+  @override
+  String get guideGuildTitle => 'Guild, treasury and guild bank';
+
+  @override
+  String get guideGuildBody =>
+      'Speech bubbles at the top right, Guild tab. Members deposit gold and items; ranks decide who can withdraw and how much per day. Every movement is logged.';
+
+  @override
+  String get guideRankingTitle => 'Ranking';
+
+  @override
+  String get guideRankingBody =>
+      'Character tab, Ranking button. Your score comes from level, achievements, masteries, professions and raid and dungeon clears. Filter by class or by board.';
+
+  @override
+  String get guidePetsTitle => 'Pets';
+
+  @override
+  String get guidePetsBody =>
+      'Character tab, Pets button. Eggs come from high-level raid bosses. Hatch them, level them on hunts and set one active for its bonus and combat help.';
+
+  @override
+  String get guideHelpersTitle => 'Helpers';
+
+  @override
+  String get guideHelpersBody =>
+      'Character tab, Helpers button. Hire a helper for a profession. It works on its own, alongside whatever your character does.';
+
+  @override
+  String get guideReportTitle => 'Reporting a player';
+
+  @override
+  String get guideReportBody =>
+      'Hold a chat line, or use the menu on a friend. Choose a reason; the team reviews it and tells you when it has been looked at.';
+
+  @override
+  String get guideAccountTitle => 'Account, language and support';
+
+  @override
+  String get guideAccountBody =>
+      'Character list, account icon at the top. Change your language or password, contact support, download your data or delete your account.';
+
+  @override
+  String get ranking => 'Ranking';
+
+  @override
+  String get rankingScore => 'Score';
+
+  @override
+  String get rankingLevel => 'Level';
+
+  @override
+  String get rankingAchievements => 'Achievements';
+
+  @override
+  String get rankingMastery => 'Mastery';
+
+  @override
+  String get rankingProfessions => 'Professions';
+
+  @override
+  String get rankingClears => 'Clears';
+
+  @override
+  String get rankingDungeons => 'Dungeons';
+
+  @override
+  String get rankingRaids => 'Raids';
+
+  @override
+  String get rankingAllClasses => 'All classes';
+
+  @override
+  String get rankingHowScore => 'How the score adds up';
+
+  @override
+  String get rankingScoreNote => 'Each dungeon and raid counts once. Updated every few minutes.';
+
+  @override
+  String get rankingEmpty => 'The table is still being counted.';
 }

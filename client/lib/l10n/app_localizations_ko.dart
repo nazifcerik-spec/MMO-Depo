@@ -819,7 +819,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => '더 보기';
 
   @override
   String myListings(int count) {
@@ -3595,4 +3595,238 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nkReportReviewed => '신고가 검토되었습니다';
+
+  @override
+  String get guide => '안내서';
+
+  @override
+  String get guideSearch => '안내서 검색';
+
+  @override
+  String get guideNoMatch => '결과가 없습니다.';
+
+  @override
+  String get guideShowMe => '바로 가기';
+
+  @override
+  String get next => '다음';
+
+  @override
+  String get back => '이전';
+
+  @override
+  String get tutorialSkip => '튜토리얼 건너뛰기';
+
+  @override
+  String get tutorialStart => '게임 시작';
+
+  @override
+  String get tutorialReplay => '튜토리얼 다시 보기';
+
+  @override
+  String get tutorialWelcomeTitle => 'MeNa World에 오신 것을 환영합니다';
+
+  @override
+  String get tutorialWelcomeBody => '앱을 닫아도 캐릭터는 계속 일합니다. 할 일을 맡기고 나중에 돌아와 보상을 받으세요.';
+
+  @override
+  String get tutorialCharacterBody => '능력치, 특성 포인트, 스킬을 여기서 확인합니다. 레벨마다 얻는 포인트를 분배하고 300, 700레벨에서 승급을 선택하세요.';
+
+  @override
+  String get tutorialGatherBody => '자원과 시간을 고른 뒤 돌아와서 수령하세요. 채광, 낚시, 벌목, 약초 채집, 사냥은 각각 따로 레벨이 오릅니다.';
+
+  @override
+  String get tutorialBagBody => '아이템을 눌러 장착, 사용, 판매하거나 거래소에 올리세요. 비교표에서 착용 중인 장비보다 나은지 볼 수 있습니다.';
+
+  @override
+  String get tutorialAdventureBody => '몬스터 사냥, 던전 공략, 레이드와 이벤트 참여, 지도 여행을 합니다. 몬스터와 던전은 현재 지역에 따라 달라집니다.';
+
+  @override
+  String get tutorialWorkshopBody => '전문 기술로 제작하고, 상점에서 구매하고, 거래소에서 다른 플레이어와 거래하세요.';
+
+  @override
+  String get tutorialTopBarTitle => '상단 바';
+
+  @override
+  String get tutorialTopBarBody =>
+      '퀘스트, 알림, 소셜(채팅, 친구, 우편, 길드, 교환)은 오른쪽 위에 있습니다. 캐릭터는 한 번에 한 가지 일만 하므로 새 일을 시작하기 전에 끝내거나 수령하세요.';
+
+  @override
+  String get tutorialDoneTitle => '준비 완료';
+
+  @override
+  String get tutorialDoneBody => '위치가 기억나지 않으면 캐릭터 탭 아래쪽의 안내서를 여세요.';
+
+  @override
+  String get guideCharacterTitle => '능력치, 특성, 스킬';
+
+  @override
+  String get guideCharacterBody => '캐릭터 탭. 진행 카드에서 특성 포인트를 분배합니다. 스킬은 접을 수 있는 영역에 있으며, 같은 역할의 스킬은 가장 강한 것만 남습니다.';
+
+  @override
+  String get guidePromotionTitle => '승급';
+
+  @override
+  String get guidePromotionBody => '캐릭터 탭의 진행 카드. 300, 700레벨에서는 두 경로 중 하나를 고를 때까지 경험치가 대기합니다. 그동안 얻은 경험치는 선택 후 지급됩니다.';
+
+  @override
+  String get guideGatherTitle => '채집';
+
+  @override
+  String get guideGatherBody => '채집 탭. 전문 기술, 도달 가능한 자원, 1·3·6시간을 고릅니다. 자원은 지역에 속하므로 더 좋은 자원은 여행해서 찾으세요.';
+
+  @override
+  String get guideBagTitle => '가방과 장비';
+
+  @override
+  String get guideBagBody =>
+      '가방 탭. 아이템을 누르면 상세 정보와 비교가 나옵니다. 길게 눌러 끌면 여러 개를 골라 함께 판매하거나 파괴합니다. 가방이 가득 차면 새 작업을 시작할 수 없습니다.';
+
+  @override
+  String get guideBankTitle => '계정 은행';
+
+  @override
+  String get guideBankBody => '가방 탭의 은행 버튼. 모든 캐릭터가 함께 쓰므로 아이템을 옮길 수 있습니다. 귀속되었거나 착용 중인 아이템은 넣을 수 없습니다.';
+
+  @override
+  String get guideHuntTitle => '사냥';
+
+  @override
+  String get guideHuntBody => '모험 탭의 사냥. 도달 가능한 몬스터, 시간, 가져갈 물약과 음식을 고릅니다. 캐릭터는 크게 다치면 스스로 후퇴합니다.';
+
+  @override
+  String get guideDungeonTitle => '던전과 레이드';
+
+  @override
+  String get guideDungeonBody => '모험 탭의 던전. 던전은 혼자 합니다. 레이드는 2~5인 파티가 필요하며 파티 찾기로 매칭됩니다. 레이드 보스는 세트 아이템과 펫 알을 떨어뜨립니다.';
+
+  @override
+  String get guideTravelTitle => '여행과 지도';
+
+  @override
+  String get guideTravelBody => '모험 탭의 여행. 지역을 누르면 몬스터, 던전, 자원, 퀘스트가 보이고 이동할 수 있습니다. 레벨 조건은 목적지에만 있습니다.';
+
+  @override
+  String get guideEventsTitle => '이벤트';
+
+  @override
+  String get guideEventsBody => '모험 탭의 이벤트. 월드 보스와 침공에 참가하고 매일 시즌 토큰을 받으세요. 카드를 누르면 방법과 보상이 나옵니다.';
+
+  @override
+  String get guideCraftTitle => '전문 기술과 제작';
+
+  @override
+  String get guideCraftBody => '공방 탭의 제작. 전문 기술을 열면 제작법이 보입니다. 색은 해당 제작법이 주는 경험치를 나타냅니다. 마법 부여 두루마리는 가방에서 사용합니다.';
+
+  @override
+  String get guideVendorTitle => '상점과 재구매';
+
+  @override
+  String get guideVendorBody => '공방 탭의 상점. 판매는 가방에서 합니다. 판 물건은 2시간 동안 다시 살 수 있습니다.';
+
+  @override
+  String get guideMarketTitle => '거래소와 경매';
+
+  @override
+  String get guideMarketBody =>
+      '공방 탭의 거래소. 고정가로 구매하거나 경매에 입찰하세요. 가방에서 아이템을 올립니다: 고정가 또는 시작가와 선택적 즉시 구매가가 있는 경매. 마지막 몇 분의 입찰은 경매를 연장합니다.';
+
+  @override
+  String get guideQuestsTitle => '퀘스트';
+
+  @override
+  String get guideQuestsBody => '오른쪽 위 클립보드 아이콘. 스토리, 서브, 일일 퀘스트가 있으며 배지는 완료 가능한 수를 보여 줍니다.';
+
+  @override
+  String get guideNotificationsTitle => '알림과 보상';
+
+  @override
+  String get guideNotificationsBody => '오른쪽 위 종 아이콘. 보상 탭에는 받은 내용이 30일간 남습니다. 설정에서 받을 알림을 고릅니다.';
+
+  @override
+  String get guideSocialTitle => '채팅, 친구, 우편, 교환';
+
+  @override
+  String get guideSocialBody => '오른쪽 위 말풍선. 교환은 양쪽이 확인해야 하며 세금이 붙습니다. 차단하면 채팅, 친구, 우편에서 해당 플레이어가 사라집니다.';
+
+  @override
+  String get guidePartyTitle => '파티';
+
+  @override
+  String get guidePartyBody => '캐릭터 탭의 파티 영역. 이름으로 초대합니다. 같은 종류의 일을 하는 파티원은 추가 경험치를 얻습니다.';
+
+  @override
+  String get guideGuildTitle => '길드, 금고, 길드 은행';
+
+  @override
+  String get guideGuildBody => '오른쪽 위 말풍선의 길드 탭. 길드원은 골드와 아이템을 맡기고, 등급에 따라 하루 인출 가능 여부와 한도가 정해집니다. 모든 내역이 기록됩니다.';
+
+  @override
+  String get guideRankingTitle => '랭킹';
+
+  @override
+  String get guideRankingBody => '캐릭터 탭의 랭킹 버튼. 점수는 레벨, 업적, 숙련, 전문 기술, 던전과 레이드 공략으로 쌓입니다. 직업이나 표별로 볼 수 있습니다.';
+
+  @override
+  String get guidePetsTitle => '펫';
+
+  @override
+  String get guidePetsBody => '캐릭터 탭의 펫 버튼. 알은 고레벨 레이드 보스에게서 나옵니다. 부화시켜 사냥으로 키우고, 보너스와 전투 지원을 위해 하나를 활성화하세요.';
+
+  @override
+  String get guideHelpersTitle => '도우미';
+
+  @override
+  String get guideHelpersBody => '캐릭터 탭의 도우미 버튼. 전문 기술별로 도우미를 고용합니다. 캐릭터가 무엇을 하든 따로 일합니다.';
+
+  @override
+  String get guideReportTitle => '플레이어 신고';
+
+  @override
+  String get guideReportBody => '채팅 줄을 길게 누르거나 친구 메뉴를 사용하세요. 사유를 고르면 팀이 검토한 뒤 알려 드립니다.';
+
+  @override
+  String get guideAccountTitle => '계정, 언어, 고객 지원';
+
+  @override
+  String get guideAccountBody => '캐릭터 목록 위쪽의 계정 아이콘. 언어나 비밀번호 변경, 고객 지원 문의, 데이터 다운로드, 계정 삭제를 할 수 있습니다.';
+
+  @override
+  String get ranking => '랭킹';
+
+  @override
+  String get rankingScore => '점수';
+
+  @override
+  String get rankingLevel => '레벨';
+
+  @override
+  String get rankingAchievements => '업적';
+
+  @override
+  String get rankingMastery => '숙련';
+
+  @override
+  String get rankingProfessions => '전문 기술';
+
+  @override
+  String get rankingClears => '공략';
+
+  @override
+  String get rankingDungeons => '던전';
+
+  @override
+  String get rankingRaids => '레이드';
+
+  @override
+  String get rankingAllClasses => '모든 직업';
+
+  @override
+  String get rankingHowScore => '점수 계산 방법';
+
+  @override
+  String get rankingScoreNote => '던전과 레이드는 종류별로 한 번만 계산됩니다. 몇 분마다 갱신됩니다.';
+
+  @override
+  String get rankingEmpty => '순위표를 집계하는 중입니다.';
 }

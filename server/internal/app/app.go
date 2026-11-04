@@ -38,6 +38,7 @@ import (
 	"github.com/otter/server/internal/idempotency"
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
+	"github.com/otter/server/internal/leaderboard"
 	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
@@ -443,10 +444,11 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		PetHandler:        pet.NewHandler(petSvc),
 		HelperHandler: helper.NewHandler(helper.NewService(pool, txnSvc, charSvc, gatherSvc, itemSvc, invSvc,
 			craftCatSvc, craftRepo, craftSvc, logger)),
-		AdminHandler:     adminHandler,
-		SupportHandler:   support.NewHandler(supportSvc),
-		ReportHandler:    report.NewHandler(reportSvc),
-		ClientErrHandler: clienterr.NewHandler(clientErrSvc),
+		AdminHandler:       adminHandler,
+		SupportHandler:     support.NewHandler(supportSvc),
+		ReportHandler:      report.NewHandler(reportSvc),
+		LeaderboardHandler: leaderboard.NewHandler(leaderboard.NewService(pool)),
+		ClientErrHandler:   clienterr.NewHandler(clientErrSvc),
 		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
 			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,
 		}, logger),

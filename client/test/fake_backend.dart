@@ -64,6 +64,8 @@ class FakeBackend {
   /// null = endpoint missing: the creation screen shows a notice instead.
   Map<String, dynamic>? classCatalog;
   Map<String, dynamic>? lastReport;
+  Map<String, dynamic>? rankingPage;
+  Map<String, String>? lastRankingQuery;
   List<Map<String, dynamic>>? warriorSkills;
 
   // --- leveling (DD-250) ---
@@ -1315,6 +1317,9 @@ class FakeBackend {
     switch ((req.method, path)) {
       case ('GET', '/v1/support/tickets'):
         return json(200, {'tickets': tickets});
+      case ('GET', '/v1/leaderboard'):
+        lastRankingQuery = req.url.queryParameters;
+        return json(200, rankingPage ?? {'entries': []});
       case ('POST', '/v1/reports'):
         lastReport = Map<String, dynamic>.from(body);
         return json(202, {'status': 'received'});

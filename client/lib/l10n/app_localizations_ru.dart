@@ -819,7 +819,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => 'Загрузить ещё';
 
   @override
   String myListings(int count) {
@@ -3595,4 +3595,264 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nkReportReviewed => 'Ваша жалоба рассмотрена';
+
+  @override
+  String get guide => 'Справочник';
+
+  @override
+  String get guideSearch => 'Поиск по справочнику';
+
+  @override
+  String get guideNoMatch => 'Ничего не найдено.';
+
+  @override
+  String get guideShowMe => 'Показать';
+
+  @override
+  String get next => 'Далее';
+
+  @override
+  String get back => 'Назад';
+
+  @override
+  String get tutorialSkip => 'Пропустить обучение';
+
+  @override
+  String get tutorialStart => 'Начать игру';
+
+  @override
+  String get tutorialReplay => 'Пройти обучение ещё раз';
+
+  @override
+  String get tutorialWelcomeTitle => 'Добро пожаловать в MeNa World';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'Персонаж работает, даже когда приложение закрыто. Дайте ему задание, вернитесь позже и заберите добычу.';
+
+  @override
+  String get tutorialCharacterBody =>
+      'Здесь ваши показатели, очки характеристик и умения. Распределяйте очки за каждый уровень, а на 300 и 700 уровнях выбирайте повышение.';
+
+  @override
+  String get tutorialGatherBody =>
+      'Выберите ресурс и длительность, затем вернитесь за добычей. Горное дело, рыбалка, лесорубство, травничество и охота развиваются отдельно.';
+
+  @override
+  String get tutorialBagBody =>
+      'Нажмите на предмет, чтобы надеть, использовать, продать или выставить его. Таблица сравнения покажет, лучше ли он надетого.';
+
+  @override
+  String get tutorialAdventureBody =>
+      'Охотьтесь на монстров, проходите подземелья, участвуйте в рейдах и событиях, путешествуйте по карте. Монстры и подземелья зависят от региона.';
+
+  @override
+  String get tutorialWorkshopBody =>
+      'Создавайте предметы с помощью профессий, покупайте в лавке и торгуйте с игроками на рынке.';
+
+  @override
+  String get tutorialTopBarTitle => 'Верхняя панель';
+
+  @override
+  String get tutorialTopBarBody =>
+      'Задания, уведомления и общение (чат, друзья, почта, гильдия, обмен) находятся справа вверху. Персонаж занят одним делом за раз: завершите его или заберите результат, прежде чем начать новое.';
+
+  @override
+  String get tutorialDoneTitle => 'Всё готово';
+
+  @override
+  String get tutorialDoneBody => 'Забыли, где что находится? Откройте Справочник внизу вкладки «Персонаж».';
+
+  @override
+  String get guideCharacterTitle => 'Показатели, характеристики и умения';
+
+  @override
+  String get guideCharacterBody =>
+      'Вкладка «Персонаж». Очки характеристик распределяются в карточке прогресса. Умения — в отдельном разделе; из умений с одной ролью остаётся самое сильное.';
+
+  @override
+  String get guidePromotionTitle => 'Повышения';
+
+  @override
+  String get guidePromotionBody =>
+      'Вкладка «Персонаж», карточка прогресса. На 300 и 700 уровнях опыт ждёт, пока вы не выберете один из двух путей. Накопленный опыт начисляется после выбора.';
+
+  @override
+  String get guideGatherTitle => 'Сбор';
+
+  @override
+  String get guideGatherBody =>
+      'Вкладка «Сбор». Выберите профессию, доступный ресурс и 1, 3 или 6 часов. Ресурсы привязаны к регионам: для лучших придётся путешествовать.';
+
+  @override
+  String get guideBagTitle => 'Сумка и снаряжение';
+
+  @override
+  String get guideBagBody =>
+      'Вкладка «Сумка». Нажмите на предмет, чтобы увидеть детали и сравнение. Удерживайте и ведите, чтобы выбрать несколько и продать или уничтожить их разом. С полной сумкой новые дела не начать.';
+
+  @override
+  String get guideBankTitle => 'Банк аккаунта';
+
+  @override
+  String get guideBankBody =>
+      'Вкладка «Сумка», кнопка «Банк». Общий для всех ваших персонажей, так можно передавать предметы между ними. Привязанные и надетые предметы не принимаются.';
+
+  @override
+  String get guideHuntTitle => 'Охота';
+
+  @override
+  String get guideHuntBody =>
+      'Вкладка «Приключения», «Охота». Выберите доступного монстра, длительность, зелья и еду. Тяжело раненный персонаж отступает сам.';
+
+  @override
+  String get guideDungeonTitle => 'Подземелья и рейды';
+
+  @override
+  String get guideDungeonBody =>
+      'Вкладка «Приключения», «Подземелье». Подземелья одиночные. Для рейдов нужна группа из 2–5 игроков; «Найти группу» подберёт её. С боссов рейдов падают части комплектов и яйца питомцев.';
+
+  @override
+  String get guideTravelTitle => 'Путешествия и карта';
+
+  @override
+  String get guideTravelBody =>
+      'Вкладка «Приключения», «Путешествие». Нажмите на регион, чтобы увидеть монстров, подземелья, ресурсы и задания, затем «В путь». Требование к уровню есть только у пункта назначения.';
+
+  @override
+  String get guideEventsTitle => 'События';
+
+  @override
+  String get guideEventsBody =>
+      'Вкладка «Приключения», «События». Записывайтесь на мировых боссов и вторжения, получайте ежедневный сезонный жетон. Нажмите на карточку, чтобы узнать правила и награды.';
+
+  @override
+  String get guideCraftTitle => 'Профессии и создание предметов';
+
+  @override
+  String get guideCraftBody =>
+      'Вкладка «Мастерская», «Создание». Откройте профессию, чтобы увидеть рецепты. Цвет показывает, сколько опыта ещё даёт рецепт. Свитки зачарования используются из сумки.';
+
+  @override
+  String get guideVendorTitle => 'Лавка и выкуп';
+
+  @override
+  String get guideVendorBody =>
+      'Вкладка «Мастерская», «Лавка». Продавайте из сумки. Проданное можно выкупить в течение 2 часов.';
+
+  @override
+  String get guideMarketTitle => 'Рынок и аукционы';
+
+  @override
+  String get guideMarketBody =>
+      'Вкладка «Мастерская», «Рынок». Покупайте по фиксированной цене или делайте ставки на аукционе. Выставляйте предметы из сумки: по цене или на аукцион со стартовой ставкой и необязательным выкупом. Ставка в последние минуты продлевает аукцион.';
+
+  @override
+  String get guideQuestsTitle => 'Задания';
+
+  @override
+  String get guideQuestsBody =>
+      'Значок планшета справа вверху. Сюжетные, побочные и ежедневные задания; счётчик показывает готовые к сдаче.';
+
+  @override
+  String get guideNotificationsTitle => 'Уведомления и награды';
+
+  @override
+  String get guideNotificationsBody =>
+      'Значок колокольчика справа вверху. Вкладка «Награды» хранит полученное 30 дней. В настройках выберите, что получать.';
+
+  @override
+  String get guideSocialTitle => 'Чат, друзья, почта и обмен';
+
+  @override
+  String get guideSocialBody =>
+      'Значок диалога справа вверху. Обмен подтверждают обе стороны, он облагается налогом. Блокировка скрывает игрока из чата, друзей и почты.';
+
+  @override
+  String get guidePartyTitle => 'Группа';
+
+  @override
+  String get guidePartyBody =>
+      'Вкладка «Персонаж», раздел «Группа». Приглашайте по имени. Участники за одним типом дел получают бонус к опыту.';
+
+  @override
+  String get guideGuildTitle => 'Гильдия, казна и банк гильдии';
+
+  @override
+  String get guideGuildBody =>
+      'Значок диалога справа вверху, вкладка «Гильдия». Участники вносят золото и предметы; звание определяет, кто и сколько может снимать в день. Все операции записываются.';
+
+  @override
+  String get guideRankingTitle => 'Рейтинг';
+
+  @override
+  String get guideRankingBody =>
+      'Вкладка «Персонаж», кнопка «Рейтинг». Очки складываются из уровня, достижений, мастерства, профессий и пройденных подземелий и рейдов. Есть фильтры по классу и таблице.';
+
+  @override
+  String get guidePetsTitle => 'Питомцы';
+
+  @override
+  String get guidePetsBody =>
+      'Вкладка «Персонаж», кнопка «Питомцы». Яйца падают с высокоуровневых боссов рейдов. Выведите питомца, прокачайте на охоте и активируйте ради бонуса и помощи в бою.';
+
+  @override
+  String get guideHelpersTitle => 'Помощники';
+
+  @override
+  String get guideHelpersBody =>
+      'Вкладка «Персонаж», кнопка «Помощники». Наймите помощника для профессии. Он работает сам, чем бы ни был занят персонаж.';
+
+  @override
+  String get guideReportTitle => 'Жалоба на игрока';
+
+  @override
+  String get guideReportBody =>
+      'Удерживайте строку чата или используйте меню друга. Выберите причину: команда рассмотрит жалобу и сообщит, когда это сделает.';
+
+  @override
+  String get guideAccountTitle => 'Аккаунт, язык и поддержка';
+
+  @override
+  String get guideAccountBody =>
+      'Список персонажей, значок аккаунта вверху. Смените язык или пароль, напишите в поддержку, скачайте данные или удалите аккаунт.';
+
+  @override
+  String get ranking => 'Рейтинг';
+
+  @override
+  String get rankingScore => 'Очки';
+
+  @override
+  String get rankingLevel => 'Уровень';
+
+  @override
+  String get rankingAchievements => 'Достижения';
+
+  @override
+  String get rankingMastery => 'Мастерство';
+
+  @override
+  String get rankingProfessions => 'Профессии';
+
+  @override
+  String get rankingClears => 'Прохождения';
+
+  @override
+  String get rankingDungeons => 'Подземелья';
+
+  @override
+  String get rankingRaids => 'Рейды';
+
+  @override
+  String get rankingAllClasses => 'Все классы';
+
+  @override
+  String get rankingHowScore => 'Из чего складываются очки';
+
+  @override
+  String get rankingScoreNote => 'Каждое подземелье и рейд засчитываются один раз. Обновляется раз в несколько минут.';
+
+  @override
+  String get rankingEmpty => 'Таблица ещё подсчитывается.';
 }

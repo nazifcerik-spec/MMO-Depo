@@ -40,6 +40,7 @@ import (
 	"github.com/otter/server/internal/inventory"
 	"github.com/otter/server/internal/item"
 	"github.com/otter/server/internal/itemset"
+	"github.com/otter/server/internal/leaderboard"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
 	"github.com/otter/server/internal/observability"
@@ -64,55 +65,56 @@ import (
 
 // Deps is the dependency bag passed to the router.
 type Deps struct {
-	Logger            *slog.Logger
-	DB                *pgxpool.Pool
-	Redis             *redis.Client
-	CommitSHA         string
-	Env               string
-	IdempotencyStore  idempotency.Store
-	RateLimitStore    ratelimit.Store
-	AuthService       *auth.Service
-	CharacterService  *character.Service
-	TxnService        economy.TxnService
-	ActivityService   *activity.Service
-	ItemService       *item.Service
-	InventoryService  *inventory.Service
-	EquipmentService  *inventory.EquipmentService
-	VendorService     *vendor.Service
-	ContentLoader     *contentpack.Loader
-	CombatHandler     *combat.Handler
-	HuntHandler       *hunt.Handler
-	DungeonHandler    *dungeon.Handler
-	RaidHandler       *raid.Handler
-	WorldHandler      *world.Handler
-	CraftingHandler   *crafting.Handler
-	ProgressionDev    ProgressionDev // dev-only XP grant + respec (DD-250)
-	GatheringHandler  *gathering.Handler
-	WSHandler         *wsgateway.Handler
-	PartyHandler      *party.Handler
-	GuildHandler      *guild.Handler
-	SocialHandler     *social.Handler
-	MarketHandler     *market.Handler
-	NotifHandler      *notification.Handler
-	ProgHandler       *progression.Handler
-	QuestHandler      *quest.Handler
-	ClassSkills       *classskill.Service
-	WorldEventHandler *worldevent.Handler
-	AdminHandler      *admin.Handler
-	PrivacyHandler    *privacy.Handler   // DD-231: export download + legal pages
-	SupportHandler    *support.Handler   // DD-234: player support tickets
-	ReportHandler     *report.Handler    // DD-355: player reports
-	ClientErrHandler  *clienterr.Handler // DD-235: app crash reports
-	Metrics           *observability.Metrics
-	CORSOrigins       []string
-	TrustedProxies    []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
-	ConsumableHandler *consumable.Handler
-	DailyHandler      *dailyreward.Handler // DD-311
-	TradeHandler      *trade.Handler       // DD-315
-	HelperHandler     *helper.Handler      // DD-319
-	BoostHandler      *boost.Handler       // DD-320
-	ShopHandler       *shop.Handler        // DD-321
-	PetHandler        *pet.Handler         // DD-328
+	Logger             *slog.Logger
+	DB                 *pgxpool.Pool
+	Redis              *redis.Client
+	CommitSHA          string
+	Env                string
+	IdempotencyStore   idempotency.Store
+	RateLimitStore     ratelimit.Store
+	AuthService        *auth.Service
+	CharacterService   *character.Service
+	TxnService         economy.TxnService
+	ActivityService    *activity.Service
+	ItemService        *item.Service
+	InventoryService   *inventory.Service
+	EquipmentService   *inventory.EquipmentService
+	VendorService      *vendor.Service
+	ContentLoader      *contentpack.Loader
+	CombatHandler      *combat.Handler
+	HuntHandler        *hunt.Handler
+	DungeonHandler     *dungeon.Handler
+	RaidHandler        *raid.Handler
+	WorldHandler       *world.Handler
+	CraftingHandler    *crafting.Handler
+	ProgressionDev     ProgressionDev // dev-only XP grant + respec (DD-250)
+	GatheringHandler   *gathering.Handler
+	WSHandler          *wsgateway.Handler
+	PartyHandler       *party.Handler
+	GuildHandler       *guild.Handler
+	SocialHandler      *social.Handler
+	MarketHandler      *market.Handler
+	NotifHandler       *notification.Handler
+	ProgHandler        *progression.Handler
+	QuestHandler       *quest.Handler
+	ClassSkills        *classskill.Service
+	WorldEventHandler  *worldevent.Handler
+	AdminHandler       *admin.Handler
+	PrivacyHandler     *privacy.Handler     // DD-231: export download + legal pages
+	SupportHandler     *support.Handler     // DD-234: player support tickets
+	ReportHandler      *report.Handler      // DD-355: player reports
+	LeaderboardHandler *leaderboard.Handler // DD-357: character score and tables
+	ClientErrHandler   *clienterr.Handler   // DD-235: app crash reports
+	Metrics            *observability.Metrics
+	CORSOrigins        []string
+	TrustedProxies     []netip.Prefix // RealIP: peers allowed to set X-Forwarded-For
+	ConsumableHandler  *consumable.Handler
+	DailyHandler       *dailyreward.Handler // DD-311
+	TradeHandler       *trade.Handler       // DD-315
+	HelperHandler      *helper.Handler      // DD-319
+	BoostHandler       *boost.Handler       // DD-320
+	ShopHandler        *shop.Handler        // DD-321
+	PetHandler         *pet.Handler         // DD-328
 }
 
 // NewRouter builds the top-level chi.Mux. Every non-liveness route sits under /v1.
@@ -252,6 +254,10 @@ func NewRouter(d Deps) http.Handler {
 					Endpoint: "POST /v1/support/tickets", PerAccount: ptrBucket(ratelimit.PerHour(5)),
 				}, d.Logger), appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/support/tickets", h.Create)
 			})
+		}
+		// --- Ranking tables (DD-357) ---
+		if h := d.LeaderboardHandler; h != nil {
+			r.With(appmw.RequireAuth(d.AuthService, d.Logger)).Get("/leaderboard", h.Board)
 		}
 		// --- Player reports (DD-355) ---
 		if h := d.ReportHandler; h != nil {

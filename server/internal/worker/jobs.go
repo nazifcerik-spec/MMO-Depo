@@ -13,6 +13,7 @@ import (
 	"github.com/otter/server/internal/domain/character"
 	"github.com/otter/server/internal/economy"
 	"github.com/otter/server/internal/inventory"
+	"github.com/otter/server/internal/leaderboard"
 	"github.com/otter/server/internal/mail"
 	"github.com/otter/server/internal/market"
 	"github.com/otter/server/internal/notification"
@@ -227,6 +228,15 @@ func (j WorldEvents) Run(ctx context.Context) (int64, error) {
 		log = slog.Default()
 	}
 	return worldevent.Tick(ctx, j.Pool, j.Txn, j.Notifier, log)
+}
+
+// LeaderboardRefresh recomputes the character scores (DD-357).
+type LeaderboardRefresh struct{ Pool *pgxpool.Pool }
+
+func (LeaderboardRefresh) Name() string            { return "leaderboard_refresh" }
+func (LeaderboardRefresh) Interval() time.Duration { return 5 * time.Minute }
+func (j LeaderboardRefresh) Run(ctx context.Context) (int64, error) {
+	return leaderboard.NewService(j.Pool).Refresh(ctx)
 }
 
 // SanctionExpire closes elapsed mutes/bans and reactivates accounts whose
@@ -498,6 +508,7 @@ func All(pool *pgxpool.Pool, d Deps) []Job {
 		NotificationGC(pool),
 		ClientErrorGC(pool),
 		SanctionExpire(pool),
+		LeaderboardRefresh{Pool: pool},
 		IdempotencyGC(pool),
 		BuybackGC(pool),
 		GuildDisbandExpire(pool),

@@ -32,6 +32,8 @@ class CharacterSheetView extends StatefulWidget {
     required this.dataVersion,
     this.onOpenProgress,
     this.onOpenDaily,
+    this.onOpenGuide,
+    this.onOpenRanking,
     this.onOpenStory,
     this.onOpenHelpers,
     this.onOpenPets,
@@ -59,6 +61,12 @@ class CharacterSheetView extends StatefulWidget {
 
   /// Opens the daily login reward (DD-311).
   final VoidCallback? onOpenDaily;
+
+  /// Opens the Guide (DD-356).
+  final VoidCallback? onOpenGuide;
+
+  /// Opens the ranking tables (DD-357).
+  final VoidCallback? onOpenRanking;
 
   /// Opens story mode (DD-313).
   final VoidCallback? onOpenStory;
@@ -418,6 +426,24 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
               icon: const Icon(Icons.emoji_events_outlined),
               label: Text(l.progress),
             ),
+            if (widget.onOpenRanking != null) ...[
+              const SizedBox(height: Space.sm),
+              OutlinedButton.icon(
+                key: const Key('open-ranking'),
+                onPressed: widget.onOpenRanking,
+                icon: const Icon(Icons.leaderboard_outlined),
+                label: Text(l.ranking),
+              ),
+            ],
+            if (widget.onOpenGuide != null) ...[
+              const SizedBox(height: Space.sm),
+              OutlinedButton.icon(
+                key: const Key('open-guide'),
+                onPressed: widget.onOpenGuide,
+                icon: const Icon(Icons.menu_book_outlined),
+                label: Text(l.guide),
+              ),
+            ],
           ],
           if (widget.onLogout != null) ...[
             const SizedBox(height: Space.lg),

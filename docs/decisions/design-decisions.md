@@ -3481,6 +3481,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-356 — Yeni oyuncu eğitimi ve Rehber
+
+**Context:** Kullanıcı yeni oyuncu eğitimi istedi: tamamı atlanabilsin, Profil içinde neyin nerede olduğunu gösteren bir Rehber olsun. Oyunda ilk girişte yol gösteren bir şey yoktu.
+**Decision:** `features/guide/guide.dart`. Eğitim: oyunun üstünde 8 sayfalık kart, sekmeleri gerçekten gezer, her sayfada Eğitimi atla (son sayfa hariç), Geri, İleri. Yalnız Sv 5'e kadarki karakterde, cihazda bir kez; günlük ödül penceresi eğitimden sonra açılır. Rehber: Karakter sekmesinin altındaki düğme; 22 konu, aramalı, her konuda yeri ve işlevi, sekmesi olanlarda Göster düğmesi, Eğitimi yeniden izle. Metinler yedi dilde.
+**Consequences:** Durum cihazda tutulur: başka cihazda eğitim yeniden çıkabilir, atlanabilir. Depolama okunamazsa eğitim açılmaz.
+**Tarih:** 2026-11-04
+
+---
+
+## DD-357 — Karakter puanı ve sıralama tabloları
+
+**Context:** Kullanıcı rekabet için karakter puanlama ve başarı tablosu istedi, PvP'nin şimdilik kodlanmamasını söyledi.
+**Decision:** Migration 0066 `progression.character_score`. Worker `leaderboard_refresh` 5 dakikada bir tek sorguyla yeniden hesaplar; okuma oyun tablolarına dokunmaz. Puan = seviye×10 + başarım puanı×5 + ustalık kademesi×25 + meslek seviyeleri×3 + farklı zindan×20 + farklı baskın×100; aynı zindan bir kez sayılır, başarısız koşu sayılmaz, kilitli hesap tablodan çıkar. `GET /v1/leaderboard?board=score|level|achievements|mastery|professions|clears&class=&limit=&offset=&character_id=` (giriş gerekir), `me` sıra + kırılım. İstemci `RankingScreen`: tablolar, sınıf süzgeci, üstte kendi satırın, dokununca puan kırılımı, başkasının satırına uzun basınca şikâyet.
+**Consequences:** PvP ve lonca savaşı yok. Tablo en çok 5 dakika gecikmeli. Yeni karakter ilk hesaptan önce tabloda görünmez. Toplu hesap karakter sayısıyla büyür; oyuncu sayısı artınca artımlı güncellemeye geçilebilir.
+**Tarih:** 2026-11-04
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

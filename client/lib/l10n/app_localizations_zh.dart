@@ -819,7 +819,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => '加载更多';
 
   @override
   String myListings(int count) {
@@ -3582,4 +3582,235 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nkReportReviewed => '你的举报已处理';
+
+  @override
+  String get guide => '指南';
+
+  @override
+  String get guideSearch => '搜索指南';
+
+  @override
+  String get guideNoMatch => '没有找到结果。';
+
+  @override
+  String get guideShowMe => '带我去';
+
+  @override
+  String get next => '下一步';
+
+  @override
+  String get back => '上一步';
+
+  @override
+  String get tutorialSkip => '跳过教程';
+
+  @override
+  String get tutorialStart => '开始游戏';
+
+  @override
+  String get tutorialReplay => '重新观看教程';
+
+  @override
+  String get tutorialWelcomeTitle => '欢迎来到 MeNa World';
+
+  @override
+  String get tutorialWelcomeBody => '即使关闭应用，你的角色也会继续工作。给它安排任务，稍后回来领取收益。';
+
+  @override
+  String get tutorialCharacterBody => '这里有你的属性、属性点和技能。分配每级获得的点数，并在 300 级和 700 级选择转职。';
+
+  @override
+  String get tutorialGatherBody => '选择资源和时长，之后回来领取。采矿、钓鱼、伐木、采药和狩猎各自独立升级。';
+
+  @override
+  String get tutorialBagBody => '点击物品可以装备、使用、出售或上架。对比表会显示它是否优于当前装备。';
+
+  @override
+  String get tutorialAdventureBody => '狩猎怪物、攻略地下城、参加团本和活动，并在地图上旅行。怪物和地下城取决于你所在的区域。';
+
+  @override
+  String get tutorialWorkshopBody => '用职业技能制作物品，在商店购买，并在市场上与其他玩家交易。';
+
+  @override
+  String get tutorialTopBarTitle => '顶部栏';
+
+  @override
+  String get tutorialTopBarBody => '任务、通知和社交（聊天、好友、邮件、公会、交易）在右上角。角色一次只能做一件事，请先完成或领取当前任务再开始新的。';
+
+  @override
+  String get tutorialDoneTitle => '准备就绪';
+
+  @override
+  String get tutorialDoneBody => '忘记某个功能在哪里？打开角色页底部的指南。';
+
+  @override
+  String get guideCharacterTitle => '属性、属性点和技能';
+
+  @override
+  String get guideCharacterBody => '角色页。在进度卡中分配属性点。技能位于可折叠区域；作用相同的技能只保留最强的一个。';
+
+  @override
+  String get guidePromotionTitle => '转职';
+
+  @override
+  String get guidePromotionBody => '角色页的进度卡。到 300 和 700 级时，需要从两条路线中选择一条才能继续获得经验。期间获得的经验会在选择后发放。';
+
+  @override
+  String get guideGatherTitle => '采集';
+
+  @override
+  String get guideGatherBody => '采集页。选择职业、可到达的资源以及 1、3 或 6 小时。资源属于不同区域，想要更好的就去旅行。';
+
+  @override
+  String get guideBagTitle => '背包和装备';
+
+  @override
+  String get guideBagBody => '背包页。点击物品查看详情和对比。长按并拖动可多选，一起出售或摧毁。背包满时无法开始新任务。';
+
+  @override
+  String get guideBankTitle => '账号银行';
+
+  @override
+  String get guideBankBody => '背包页的银行按钮。你的所有角色共用，可在角色间转移物品。绑定和已装备的物品不能存入。';
+
+  @override
+  String get guideHuntTitle => '狩猎';
+
+  @override
+  String get guideHuntBody => '冒险页的狩猎。选择可到达的怪物、时长以及携带的药水和食物。角色重伤时会自动撤退。';
+
+  @override
+  String get guideDungeonTitle => '地下城和团本';
+
+  @override
+  String get guideDungeonBody => '冒险页的地下城。地下城为单人。团本需要 2 到 5 人队伍，可用“寻找队伍”匹配。团本首领掉落套装部件和宠物蛋。';
+
+  @override
+  String get guideTravelTitle => '旅行和地图';
+
+  @override
+  String get guideTravelBody => '冒险页的旅行。点击区域查看怪物、地下城、资源和任务，然后前往。只有目的地有等级要求。';
+
+  @override
+  String get guideEventsTitle => '活动';
+
+  @override
+  String get guideEventsBody => '冒险页的活动。报名世界首领和入侵，并领取每日赛季代币。点击卡片查看规则和奖励。';
+
+  @override
+  String get guideCraftTitle => '职业和制作';
+
+  @override
+  String get guideCraftBody => '工坊页的制作。打开职业查看配方，颜色表示配方还能提供多少经验。附魔卷轴在背包中使用。';
+
+  @override
+  String get guideVendorTitle => '商店和回购';
+
+  @override
+  String get guideVendorBody => '工坊页的商店。在背包中出售。售出的物品 2 小时内可以回购。';
+
+  @override
+  String get guideMarketTitle => '市场和拍卖';
+
+  @override
+  String get guideMarketBody => '工坊页的市场。可一口价购买或参与拍卖。在背包中上架物品：一口价，或设置起拍价和可选一口价的拍卖。最后几分钟出价会延长拍卖。';
+
+  @override
+  String get guideQuestsTitle => '任务';
+
+  @override
+  String get guideQuestsBody => '右上角的剪贴板图标。包含主线、支线和每日任务；徽标显示可提交的数量。';
+
+  @override
+  String get guideNotificationsTitle => '通知和收益';
+
+  @override
+  String get guideNotificationsBody => '右上角的铃铛图标。收益页保留 30 天内领取的物品。在设置中选择接收哪些通知。';
+
+  @override
+  String get guideSocialTitle => '聊天、好友、邮件和交易';
+
+  @override
+  String get guideSocialBody => '右上角的对话气泡。交易需双方确认并收税。屏蔽会将玩家从聊天、好友和邮件中移除。';
+
+  @override
+  String get guidePartyTitle => '队伍';
+
+  @override
+  String get guidePartyBody => '角色页的队伍区域。按名称邀请。做同类工作的成员可获得额外经验。';
+
+  @override
+  String get guideGuildTitle => '公会、金库和公会银行';
+
+  @override
+  String get guideGuildBody => '右上角对话气泡的公会页。成员可存入金币和物品；职位决定谁可以取用以及每日上限。所有操作都有记录。';
+
+  @override
+  String get guideRankingTitle => '排行榜';
+
+  @override
+  String get guideRankingBody => '角色页的排行榜按钮。积分来自等级、成就、专精、职业以及地下城和团本通关。可按职业或榜单筛选。';
+
+  @override
+  String get guidePetsTitle => '宠物';
+
+  @override
+  String get guidePetsBody => '角色页的宠物按钮。蛋来自高等级团本首领。孵化后通过狩猎升级，并激活一只以获得加成和战斗支援。';
+
+  @override
+  String get guideHelpersTitle => '助手';
+
+  @override
+  String get guideHelpersBody => '角色页的助手按钮。为某一职业雇用助手。无论角色在做什么，它都会独立工作。';
+
+  @override
+  String get guideReportTitle => '举报玩家';
+
+  @override
+  String get guideReportBody => '长按聊天内容，或使用好友菜单。选择原因后，团队会审核并在处理后通知你。';
+
+  @override
+  String get guideAccountTitle => '账号、语言和客服';
+
+  @override
+  String get guideAccountBody => '角色列表顶部的账号图标。可更改语言或密码、联系客服、下载数据或删除账号。';
+
+  @override
+  String get ranking => '排行榜';
+
+  @override
+  String get rankingScore => '积分';
+
+  @override
+  String get rankingLevel => '等级';
+
+  @override
+  String get rankingAchievements => '成就';
+
+  @override
+  String get rankingMastery => '专精';
+
+  @override
+  String get rankingProfessions => '职业技能';
+
+  @override
+  String get rankingClears => '通关';
+
+  @override
+  String get rankingDungeons => '地下城';
+
+  @override
+  String get rankingRaids => '团本';
+
+  @override
+  String get rankingAllClasses => '所有职业';
+
+  @override
+  String get rankingHowScore => '积分如何计算';
+
+  @override
+  String get rankingScoreNote => '每个地下城和团本只计一次。每隔几分钟更新。';
+
+  @override
+  String get rankingEmpty => '榜单正在统计中。';
 }

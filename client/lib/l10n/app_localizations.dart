@@ -6338,6 +6338,468 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your report was reviewed'**
   String get nkReportReviewed;
+
+  /// No description provided for @guide.
+  ///
+  /// In en, this message translates to:
+  /// **'Guide'**
+  String get guide;
+
+  /// No description provided for @guideSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the guide'**
+  String get guideSearch;
+
+  /// No description provided for @guideNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found.'**
+  String get guideNoMatch;
+
+  /// No description provided for @guideShowMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me'**
+  String get guideShowMe;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @tutorialSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip tutorial'**
+  String get tutorialSkip;
+
+  /// No description provided for @tutorialStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start playing'**
+  String get tutorialStart;
+
+  /// No description provided for @tutorialReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch the tutorial again'**
+  String get tutorialReplay;
+
+  /// No description provided for @tutorialWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to MeNa World'**
+  String get tutorialWelcomeTitle;
+
+  /// No description provided for @tutorialWelcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your character keeps working while the app is closed. Give it a job, come back later and collect what it earned.'**
+  String get tutorialWelcomeBody;
+
+  /// No description provided for @tutorialCharacterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your stats, attribute points and skills live here. Spend the points you earn each level, and choose your promotions at levels 300 and 700.'**
+  String get tutorialCharacterBody;
+
+  /// No description provided for @tutorialGatherBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a resource and a duration, then come back to collect. Mining, fishing, woodcutting, herbalism and hunting each level up on their own.'**
+  String get tutorialGatherBody;
+
+  /// No description provided for @tutorialBagBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an item to equip, use, sell or list it. The comparison table shows whether it beats what you are wearing.'**
+  String get tutorialBagBody;
+
+  /// No description provided for @tutorialAdventureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunt monsters, clear dungeons, join raids and events, and travel the map. Monsters and dungeons depend on the region you are in.'**
+  String get tutorialAdventureBody;
+
+  /// No description provided for @tutorialWorkshopBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft with your professions, buy from the shop and trade with other players on the market.'**
+  String get tutorialWorkshopBody;
+
+  /// No description provided for @tutorialTopBarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The top bar'**
+  String get tutorialTopBarTitle;
+
+  /// No description provided for @tutorialTopBarBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Quests, notifications and social (chat, friends, mail, guild, trade) are at the top right. A character does one job at a time, so finish or collect before starting another.'**
+  String get tutorialTopBarBody;
+
+  /// No description provided for @tutorialDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re ready'**
+  String get tutorialDoneTitle;
+
+  /// No description provided for @tutorialDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot where something is? Open the Guide at the bottom of the Character tab.'**
+  String get tutorialDoneBody;
+
+  /// No description provided for @guideCharacterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats, attributes and skills'**
+  String get guideCharacterTitle;
+
+  /// No description provided for @guideCharacterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab. Spend attribute points from the progress card. Your skills are in their own folded section; of the skills that do the same job, the strongest stays.'**
+  String get guideCharacterBody;
+
+  /// No description provided for @guidePromotionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions'**
+  String get guidePromotionTitle;
+
+  /// No description provided for @guidePromotionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab, progress card. At levels 300 and 700 your XP waits until you pick one of two paths. XP earned in the meantime is paid out when you choose.'**
+  String get guidePromotionBody;
+
+  /// No description provided for @guideGatherTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering'**
+  String get guideGatherTitle;
+
+  /// No description provided for @guideGatherBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Gather tab. Choose a profession, a resource from your reach and 1, 3 or 6 hours. Resources belong to regions, so travel for better ones.'**
+  String get guideGatherBody;
+
+  /// No description provided for @guideBagTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag and equipment'**
+  String get guideBagTitle;
+
+  /// No description provided for @guideBagBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag tab. Tap an item for details and a comparison. Hold and drag to select many, then sell or destroy them together. A full bag stops new work.'**
+  String get guideBagBody;
+
+  /// No description provided for @guideBankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account bank'**
+  String get guideBankTitle;
+
+  /// No description provided for @guideBankBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag tab, Bank button. Shared by all your characters, so it moves items between them. Bound and equipped items cannot enter.'**
+  String get guideBankBody;
+
+  /// No description provided for @guideHuntTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hunting'**
+  String get guideHuntTitle;
+
+  /// No description provided for @guideHuntBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure tab, Hunt. Choose a monster in your reach, a duration and the potions and food to take. Your character retreats by itself when badly hurt.'**
+  String get guideHuntBody;
+
+  /// No description provided for @guideDungeonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeons and raids'**
+  String get guideDungeonTitle;
+
+  /// No description provided for @guideDungeonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure tab, Dungeon. Dungeons are solo. Raids take a party of 2 to 5; use Find party to be matched. Raid bosses drop set pieces and pet eggs.'**
+  String get guideDungeonBody;
+
+  /// No description provided for @guideTravelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel and the map'**
+  String get guideTravelTitle;
+
+  /// No description provided for @guideTravelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure tab, Travel. Tap a region to see its monsters, dungeons, resources and quests, then Go. Only the destination has a level requirement.'**
+  String get guideTravelBody;
+
+  /// No description provided for @guideEventsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get guideEventsTitle;
+
+  /// No description provided for @guideEventsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure tab, Events. Enlist in world bosses and invasions, and collect the daily seasonal token. Tap a card to see how it works and what it pays.'**
+  String get guideEventsBody;
+
+  /// No description provided for @guideCraftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Professions and crafting'**
+  String get guideCraftTitle;
+
+  /// No description provided for @guideCraftBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Workshop tab, Crafting. Open a profession to see recipes. Colours show how much XP a recipe still gives. Scrolls from Enchanting are used from the Bag.'**
+  String get guideCraftBody;
+
+  /// No description provided for @guideVendorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop and buyback'**
+  String get guideVendorTitle;
+
+  /// No description provided for @guideVendorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Workshop tab, Shop. Sell from the Bag. Anything you sold can be bought back for 2 hours.'**
+  String get guideVendorBody;
+
+  /// No description provided for @guideMarketTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Market and auctions'**
+  String get guideMarketTitle;
+
+  /// No description provided for @guideMarketBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Workshop tab, Market. Buy at a fixed price or bid at auction. List items from the Bag: fixed price or auction with a starting bid and an optional buyout. A bid in the last minutes extends the auction.'**
+  String get guideMarketBody;
+
+  /// No description provided for @guideQuestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quests'**
+  String get guideQuestsTitle;
+
+  /// No description provided for @guideQuestsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard icon at the top right. Story, side and daily quests; the badge counts those ready to hand in.'**
+  String get guideQuestsBody;
+
+  /// No description provided for @guideNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications and rewards'**
+  String get guideNotificationsTitle;
+
+  /// No description provided for @guideNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Bell icon at the top right. The Rewards tab keeps what you collected for 30 days. Settings choose what reaches you.'**
+  String get guideNotificationsBody;
+
+  /// No description provided for @guideSocialTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat, friends, mail and trade'**
+  String get guideSocialTitle;
+
+  /// No description provided for @guideSocialBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech bubbles at the top right. Trades are confirmed by both sides and taxed. Blocking hides a player from your chat, friends and mail.'**
+  String get guideSocialBody;
+
+  /// No description provided for @guidePartyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Party'**
+  String get guidePartyTitle;
+
+  /// No description provided for @guidePartyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab, Party section. Invite by name. Members doing the same kind of work earn bonus XP together.'**
+  String get guidePartyBody;
+
+  /// No description provided for @guideGuildTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guild, treasury and guild bank'**
+  String get guideGuildTitle;
+
+  /// No description provided for @guideGuildBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech bubbles at the top right, Guild tab. Members deposit gold and items; ranks decide who can withdraw and how much per day. Every movement is logged.'**
+  String get guideGuildBody;
+
+  /// No description provided for @guideRankingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranking'**
+  String get guideRankingTitle;
+
+  /// No description provided for @guideRankingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab, Ranking button. Your score comes from level, achievements, masteries, professions and raid and dungeon clears. Filter by class or by board.'**
+  String get guideRankingBody;
+
+  /// No description provided for @guidePetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pets'**
+  String get guidePetsTitle;
+
+  /// No description provided for @guidePetsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab, Pets button. Eggs come from high-level raid bosses. Hatch them, level them on hunts and set one active for its bonus and combat help.'**
+  String get guidePetsBody;
+
+  /// No description provided for @guideHelpersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Helpers'**
+  String get guideHelpersTitle;
+
+  /// No description provided for @guideHelpersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character tab, Helpers button. Hire a helper for a profession. It works on its own, alongside whatever your character does.'**
+  String get guideHelpersBody;
+
+  /// No description provided for @guideReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting a player'**
+  String get guideReportTitle;
+
+  /// No description provided for @guideReportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a chat line, or use the menu on a friend. Choose a reason; the team reviews it and tells you when it has been looked at.'**
+  String get guideReportBody;
+
+  /// No description provided for @guideAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account, language and support'**
+  String get guideAccountTitle;
+
+  /// No description provided for @guideAccountBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Character list, account icon at the top. Change your language or password, contact support, download your data or delete your account.'**
+  String get guideAccountBody;
+
+  /// No description provided for @ranking.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranking'**
+  String get ranking;
+
+  /// No description provided for @rankingScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score'**
+  String get rankingScore;
+
+  /// No description provided for @rankingLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get rankingLevel;
+
+  /// No description provided for @rankingAchievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get rankingAchievements;
+
+  /// No description provided for @rankingMastery.
+  ///
+  /// In en, this message translates to:
+  /// **'Mastery'**
+  String get rankingMastery;
+
+  /// No description provided for @rankingProfessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Professions'**
+  String get rankingProfessions;
+
+  /// No description provided for @rankingClears.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears'**
+  String get rankingClears;
+
+  /// No description provided for @rankingDungeons.
+  ///
+  /// In en, this message translates to:
+  /// **'Dungeons'**
+  String get rankingDungeons;
+
+  /// No description provided for @rankingRaids.
+  ///
+  /// In en, this message translates to:
+  /// **'Raids'**
+  String get rankingRaids;
+
+  /// No description provided for @rankingAllClasses.
+  ///
+  /// In en, this message translates to:
+  /// **'All classes'**
+  String get rankingAllClasses;
+
+  /// No description provided for @rankingHowScore.
+  ///
+  /// In en, this message translates to:
+  /// **'How the score adds up'**
+  String get rankingHowScore;
+
+  /// No description provided for @rankingScoreNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Each dungeon and raid counts once. Updated every few minutes.'**
+  String get rankingScoreNote;
+
+  /// No description provided for @rankingEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The table is still being counted.'**
+  String get rankingEmpty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

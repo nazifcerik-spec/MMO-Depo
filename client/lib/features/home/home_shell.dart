@@ -8,6 +8,7 @@ import '../helpers/helpers_screen.dart';
 import '../pets/pets_screen.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
+import '../guide/guide.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/live_events.dart';
@@ -28,6 +29,7 @@ import '../notifications/notification_repository.dart';
 import '../notifications/notifications_screen.dart';
 import '../progression/progression_repository.dart';
 import '../progression/progression_screen.dart';
+import '../ranking/ranking_screen.dart';
 import '../quests/quest_repository.dart';
 import '../quests/quests_screen.dart';
 import '../social/social_repository.dart';
@@ -73,7 +75,7 @@ class _HomeShellState extends State<HomeShell> {
     _live.start();
     _refreshUnread();
     _refreshQuests();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _openDaily(onlyClaimable: true));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _firstScreen());
     _loadProfile();
     _lifecycle = AppLifecycleListener(
       onResume: () {
@@ -85,6 +87,34 @@ class _HomeShellState extends State<HomeShell> {
       onHide: _live.stop,
       onShow: _live.start,
     );
+  }
+
+  /// The tutorial first for a new player (DD-356), then the daily reward.
+  bool _tutorial = false;
+
+  Future<void> _firstScreen() async {
+    final pending = await TutorialState.pending(widget.initial.level);
+    if (!mounted) return;
+    if (pending) {
+      setState(() => _tutorial = true);
+    } else {
+      _openDaily(onlyClaimable: true);
+    }
+  }
+
+  void _showTab(int i) => setState(() {
+    _tab = i;
+    _visited.add(i);
+  });
+
+  void _endTutorial() {
+    final first = _tutorial;
+    setState(() {
+      _tutorial = false;
+      _tab = 0;
+    });
+    TutorialState.finish();
+    if (first) _openDaily(onlyClaimable: true);
   }
 
   bool _namesRequested = false;
@@ -211,6 +241,14 @@ class _HomeShellState extends State<HomeShell> {
         ),
       ),
       onOpenDaily: _openDaily,
+      onOpenRanking: () => _push(
+        RankingScreen(
+          repo: RankingRepository(widget.auth.api, widget.initial.id),
+          social: SocialRepository(widget.auth.api, widget.initial.id),
+        ),
+      ),
+      onOpenGuide: () =>
+          _push(GuideScreen(onOpenTab: _showTab, onReplayTutorial: () => setState(() => _tutorial = true))),
       onLogout: widget.auth.logout,
       onOpenStory: () => _push(StoryScreen(api: widget.auth.api, level: _level.value)),
       boosts: BoostBar(repo: _shop),
@@ -316,15 +354,27 @@ class _HomeShellState extends State<HomeShell> {
             ),
           ],
         ),
-        body: profile == null ? body : BackgroundArt(code: profile.background, child: body),
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: profile == null ? body : BackgroundArt(code: profile.background, child: body),
+            ),
+            if (_tutorial) ...[
+              const Positioned.fill(child: ModalBarrier(color: Colors.black38, dismissible: false)),
+              Positioned(
+                left: Space.md,
+                right: Space.md,
+                bottom: Space.md,
+                child: TutorialCard(onTab: _showTab, onClose: _endTutorial),
+              ),
+            ],
+          ],
+        ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _tab,
           backgroundColor: Palette.bgSurface,
           indicatorColor: accent.withValues(alpha: 0.18),
-          onDestinationSelected: (i) => setState(() {
-            _tab = i;
-            _visited.add(i);
-          }),
+          onDestinationSelected: _showTab,
           destinations: [
             for (final (icon, selected, label) in tabs)
               NavigationDestination(

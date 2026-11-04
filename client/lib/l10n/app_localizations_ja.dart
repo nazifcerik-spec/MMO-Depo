@@ -819,7 +819,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => 'さらに読み込む';
 
   @override
   String myListings(int count) {
@@ -3595,4 +3595,237 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nkReportReviewed => '通報が確認されました';
+
+  @override
+  String get guide => 'ガイド';
+
+  @override
+  String get guideSearch => 'ガイドを検索';
+
+  @override
+  String get guideNoMatch => '見つかりませんでした。';
+
+  @override
+  String get guideShowMe => '見に行く';
+
+  @override
+  String get next => '次へ';
+
+  @override
+  String get back => '戻る';
+
+  @override
+  String get tutorialSkip => 'チュートリアルをスキップ';
+
+  @override
+  String get tutorialStart => 'プレイ開始';
+
+  @override
+  String get tutorialReplay => 'チュートリアルをもう一度見る';
+
+  @override
+  String get tutorialWelcomeTitle => 'MeNa World へようこそ';
+
+  @override
+  String get tutorialWelcomeBody => 'アプリを閉じていてもキャラクターは働き続けます。仕事を任せて、あとで戻って成果を受け取りましょう。';
+
+  @override
+  String get tutorialCharacterBody => 'ステータス、能力ポイント、スキルはここにあります。レベルごとに得るポイントを割り振り、レベル300と700で昇格を選びましょう。';
+
+  @override
+  String get tutorialGatherBody => '資源と時間を選び、あとで受け取りに戻りましょう。採掘・釣り・伐採・薬草採取・狩猟はそれぞれ別にレベルが上がります。';
+
+  @override
+  String get tutorialBagBody => 'アイテムをタップして装備・使用・売却・出品ができます。比較表で今の装備より良いか確認できます。';
+
+  @override
+  String get tutorialAdventureBody => 'モンスター狩り、ダンジョン攻略、レイドやイベント参加、マップの旅ができます。モンスターとダンジョンは今いる地域で変わります。';
+
+  @override
+  String get tutorialWorkshopBody => '職業で製作し、ショップで購入し、マーケットで他のプレイヤーと取引しましょう。';
+
+  @override
+  String get tutorialTopBarTitle => '上部バー';
+
+  @override
+  String get tutorialTopBarBody =>
+      'クエスト、通知、ソーシャル（チャット、フレンド、メール、ギルド、トレード）は右上にあります。キャラクターは同時に1つの作業しかできないので、次を始める前に完了するか受け取りましょう。';
+
+  @override
+  String get tutorialDoneTitle => '準備完了';
+
+  @override
+  String get tutorialDoneBody => '場所を忘れたら、キャラクタータブの下にあるガイドを開いてください。';
+
+  @override
+  String get guideCharacterTitle => 'ステータス・能力・スキル';
+
+  @override
+  String get guideCharacterBody => 'キャラクタータブ。能力ポイントは進行カードで割り振ります。スキルは折りたたみ欄にあり、同じ役割のスキルは最も強いものだけが残ります。';
+
+  @override
+  String get guidePromotionTitle => '昇格';
+
+  @override
+  String get guidePromotionBody => 'キャラクタータブの進行カード。レベル300と700では2つの道から1つ選ぶまで経験値が保留され、選択時に支払われます。';
+
+  @override
+  String get guideGatherTitle => '採集';
+
+  @override
+  String get guideGatherBody => '採集タブ。職業、手の届く資源、1・3・6時間を選びます。資源は地域ごとにあるので、良いものは旅をして探しましょう。';
+
+  @override
+  String get guideBagTitle => 'バッグと装備';
+
+  @override
+  String get guideBagBody => 'バッグタブ。アイテムをタップすると詳細と比較が見られます。長押ししてドラッグで複数選択し、まとめて売却や破棄ができます。バッグが満杯だと新しい作業を始められません。';
+
+  @override
+  String get guideBankTitle => 'アカウント銀行';
+
+  @override
+  String get guideBankBody => 'バッグタブの銀行ボタン。全キャラクターで共有するので、アイテムの受け渡しに使えます。バインド済みや装備中のアイテムは入れられません。';
+
+  @override
+  String get guideHuntTitle => '狩り';
+
+  @override
+  String get guideHuntBody => '冒険タブの狩り。手の届くモンスター、時間、持っていくポーションと食事を選びます。キャラクターは重傷になると自動で撤退します。';
+
+  @override
+  String get guideDungeonTitle => 'ダンジョンとレイド';
+
+  @override
+  String get guideDungeonBody => '冒険タブのダンジョン。ダンジョンはソロです。レイドは2〜5人のパーティが必要で、パーティ検索でマッチできます。レイドボスはセット装備とペットの卵を落とします。';
+
+  @override
+  String get guideTravelTitle => '旅とマップ';
+
+  @override
+  String get guideTravelBody => '冒険タブの旅。地域をタップするとモンスター、ダンジョン、資源、クエストが表示され、移動できます。レベル条件は目的地だけです。';
+
+  @override
+  String get guideEventsTitle => 'イベント';
+
+  @override
+  String get guideEventsBody => '冒険タブのイベント。ワールドボスや侵攻に参加し、毎日のシーズントークンを受け取りましょう。カードをタップすると内容と報酬が見られます。';
+
+  @override
+  String get guideCraftTitle => '職業と製作';
+
+  @override
+  String get guideCraftBody => '工房タブの製作。職業を開くとレシピが見られます。色はそのレシピで得られる経験値を示します。付呪の巻物はバッグから使います。';
+
+  @override
+  String get guideVendorTitle => 'ショップと買い戻し';
+
+  @override
+  String get guideVendorBody => '工房タブのショップ。売却はバッグから行います。売ったものは2時間以内なら買い戻せます。';
+
+  @override
+  String get guideMarketTitle => 'マーケットとオークション';
+
+  @override
+  String get guideMarketBody =>
+      '工房タブのマーケット。固定価格で購入するか、オークションに入札します。バッグから出品できます：固定価格、または開始価格と任意の即決価格を付けたオークション。終了間際の入札で時間が延長されます。';
+
+  @override
+  String get guideQuestsTitle => 'クエスト';
+
+  @override
+  String get guideQuestsBody => '右上のクリップボードアイコン。ストーリー、サブ、デイリークエストがあり、バッジは報告可能な数を示します。';
+
+  @override
+  String get guideNotificationsTitle => '通知と報酬';
+
+  @override
+  String get guideNotificationsBody => '右上のベルアイコン。報酬タブは受け取った内容を30日間保存します。設定で受け取る通知を選べます。';
+
+  @override
+  String get guideSocialTitle => 'チャット・フレンド・メール・トレード';
+
+  @override
+  String get guideSocialBody => '右上の吹き出し。トレードは双方の確認が必要で、税がかかります。ブロックするとチャット、フレンド、メールから相手が消えます。';
+
+  @override
+  String get guidePartyTitle => 'パーティ';
+
+  @override
+  String get guidePartyBody => 'キャラクタータブのパーティ欄。名前で招待します。同じ種類の作業をするメンバーはボーナス経験値を得ます。';
+
+  @override
+  String get guideGuildTitle => 'ギルド・金庫・ギルド銀行';
+
+  @override
+  String get guideGuildBody => '右上の吹き出しのギルドタブ。メンバーはゴールドとアイテムを預け、階級によって引き出しの可否と1日の上限が決まります。すべて記録されます。';
+
+  @override
+  String get guideRankingTitle => 'ランキング';
+
+  @override
+  String get guideRankingBody => 'キャラクタータブのランキングボタン。スコアはレベル、実績、熟練、職業、ダンジョンとレイドの攻略で決まります。職業や表で絞り込めます。';
+
+  @override
+  String get guidePetsTitle => 'ペット';
+
+  @override
+  String get guidePetsBody => 'キャラクタータブのペットボタン。卵は高レベルのレイドボスから入手します。孵化させて狩りで育て、ボーナスと戦闘支援のために1体を有効にしましょう。';
+
+  @override
+  String get guideHelpersTitle => 'ヘルパー';
+
+  @override
+  String get guideHelpersBody => 'キャラクタータブのヘルパーボタン。職業ごとにヘルパーを雇えます。キャラクターの作業とは別に働きます。';
+
+  @override
+  String get guideReportTitle => 'プレイヤーの通報';
+
+  @override
+  String get guideReportBody => 'チャットの行を長押しするか、フレンドのメニューを使います。理由を選ぶとチームが確認し、確認後に通知します。';
+
+  @override
+  String get guideAccountTitle => 'アカウント・言語・サポート';
+
+  @override
+  String get guideAccountBody => 'キャラクター一覧の上にあるアカウントアイコン。言語やパスワードの変更、サポートへの連絡、データのダウンロード、アカウント削除ができます。';
+
+  @override
+  String get ranking => 'ランキング';
+
+  @override
+  String get rankingScore => 'スコア';
+
+  @override
+  String get rankingLevel => 'レベル';
+
+  @override
+  String get rankingAchievements => '実績';
+
+  @override
+  String get rankingMastery => '熟練';
+
+  @override
+  String get rankingProfessions => '職業';
+
+  @override
+  String get rankingClears => '攻略';
+
+  @override
+  String get rankingDungeons => 'ダンジョン';
+
+  @override
+  String get rankingRaids => 'レイド';
+
+  @override
+  String get rankingAllClasses => 'すべてのクラス';
+
+  @override
+  String get rankingHowScore => 'スコアの内訳';
+
+  @override
+  String get rankingScoreNote => '各ダンジョンとレイドは1回だけ数えます。数分ごとに更新されます。';
+
+  @override
+  String get rankingEmpty => 'ランキングを集計中です。';
 }

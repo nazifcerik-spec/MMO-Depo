@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:otter/features/guide/guide.dart';
 import 'package:otter/features/adventure/adventure_models.dart';
 import 'package:otter/shared/content_names.dart';
 import 'package:otter/features/character/class_catalog.dart';
@@ -69,6 +70,8 @@ final _list = find
     .last;
 
 void main() {
+  setUpAll(() => TutorialState.debugPending = false);
+
   testWidgets('login validates, shows server errors, then lands on character select', (tester) async {
     final be = FakeBackend();
     await _boot(tester, be);

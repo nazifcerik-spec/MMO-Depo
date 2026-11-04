@@ -819,7 +819,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => 'Cargar más';
 
   @override
   String myListings(int count) {
@@ -3595,4 +3595,264 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nkReportReviewed => 'Tu denuncia se ha revisado';
+
+  @override
+  String get guide => 'Guía';
+
+  @override
+  String get guideSearch => 'Buscar en la guía';
+
+  @override
+  String get guideNoMatch => 'No se ha encontrado nada.';
+
+  @override
+  String get guideShowMe => 'Muéstramelo';
+
+  @override
+  String get next => 'Siguiente';
+
+  @override
+  String get back => 'Atrás';
+
+  @override
+  String get tutorialSkip => 'Saltar tutorial';
+
+  @override
+  String get tutorialStart => 'Empezar a jugar';
+
+  @override
+  String get tutorialReplay => 'Ver el tutorial otra vez';
+
+  @override
+  String get tutorialWelcomeTitle => 'Te damos la bienvenida a MeNa World';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'Tu personaje sigue trabajando con la aplicación cerrada. Dale una tarea, vuelve más tarde y recoge lo que haya ganado.';
+
+  @override
+  String get tutorialCharacterBody =>
+      'Aquí están tus estadísticas, puntos de atributo y habilidades. Reparte los puntos que ganas en cada nivel y elige tus ascensos en los niveles 300 y 700.';
+
+  @override
+  String get tutorialGatherBody =>
+      'Elige un recurso y una duración, y vuelve a recogerlo. Minería, pesca, tala, herboristería y caza suben de nivel por separado.';
+
+  @override
+  String get tutorialBagBody =>
+      'Toca un objeto para equiparlo, usarlo, venderlo o publicarlo. La tabla comparativa muestra si supera a lo que llevas puesto.';
+
+  @override
+  String get tutorialAdventureBody =>
+      'Caza monstruos, supera mazmorras, únete a incursiones y eventos, y viaja por el mapa. Los monstruos y mazmorras dependen de la región en la que estés.';
+
+  @override
+  String get tutorialWorkshopBody =>
+      'Fabrica con tus profesiones, compra en la tienda y comercia con otros jugadores en el mercado.';
+
+  @override
+  String get tutorialTopBarTitle => 'La barra superior';
+
+  @override
+  String get tutorialTopBarBody =>
+      'Misiones, notificaciones y social (chat, amigos, correo, gremio, intercambio) están arriba a la derecha. Un personaje hace una sola tarea a la vez: termínala o recógela antes de empezar otra.';
+
+  @override
+  String get tutorialDoneTitle => 'Ya estás listo';
+
+  @override
+  String get tutorialDoneBody => '¿Has olvidado dónde está algo? Abre la Guía al final de la pestaña Personaje.';
+
+  @override
+  String get guideCharacterTitle => 'Estadísticas, atributos y habilidades';
+
+  @override
+  String get guideCharacterBody =>
+      'Pestaña Personaje. Reparte los puntos de atributo desde la tarjeta de progreso. Tus habilidades están en su propia sección plegable; de las que hacen lo mismo, se queda la más fuerte.';
+
+  @override
+  String get guidePromotionTitle => 'Ascensos';
+
+  @override
+  String get guidePromotionBody =>
+      'Pestaña Personaje, tarjeta de progreso. En los niveles 300 y 700 la XP espera hasta que elijas uno de dos caminos. La XP ganada mientras tanto se paga al elegir.';
+
+  @override
+  String get guideGatherTitle => 'Recolección';
+
+  @override
+  String get guideGatherBody =>
+      'Pestaña Recolección. Elige profesión, un recurso a tu alcance y 1, 3 o 6 horas. Los recursos pertenecen a regiones: viaja para conseguir mejores.';
+
+  @override
+  String get guideBagTitle => 'Bolsa y equipo';
+
+  @override
+  String get guideBagBody =>
+      'Pestaña Bolsa. Toca un objeto para ver detalles y comparar. Mantén pulsado y arrastra para seleccionar varios y venderlos o destruirlos juntos. Con la bolsa llena no puedes empezar tareas.';
+
+  @override
+  String get guideBankTitle => 'Banco de la cuenta';
+
+  @override
+  String get guideBankBody =>
+      'Pestaña Bolsa, botón Banco. Lo comparten todos tus personajes, así que sirve para pasarles objetos. No admite objetos ligados ni equipados.';
+
+  @override
+  String get guideHuntTitle => 'Caza';
+
+  @override
+  String get guideHuntBody =>
+      'Pestaña Aventura, Caza. Elige un monstruo a tu alcance, una duración y las pociones y comida que llevarás. Tu personaje se retira solo si queda muy herido.';
+
+  @override
+  String get guideDungeonTitle => 'Mazmorras e incursiones';
+
+  @override
+  String get guideDungeonBody =>
+      'Pestaña Aventura, Mazmorra. Las mazmorras son en solitario. Las incursiones piden un grupo de 2 a 5; usa Buscar grupo para emparejarte. Los jefes de incursión sueltan piezas de conjunto y huevos de mascota.';
+
+  @override
+  String get guideTravelTitle => 'Viajes y mapa';
+
+  @override
+  String get guideTravelBody =>
+      'Pestaña Aventura, Viaje. Toca una región para ver sus monstruos, mazmorras, recursos y misiones, y luego Ir. Solo el destino exige un nivel.';
+
+  @override
+  String get guideEventsTitle => 'Eventos';
+
+  @override
+  String get guideEventsBody =>
+      'Pestaña Aventura, Eventos. Alístate en jefes de mundo e invasiones y recoge la ficha diaria de temporada. Toca una tarjeta para ver cómo funciona y qué paga.';
+
+  @override
+  String get guideCraftTitle => 'Profesiones y fabricación';
+
+  @override
+  String get guideCraftBody =>
+      'Pestaña Taller, Fabricación. Abre una profesión para ver las recetas. Los colores indican cuánta XP da aún una receta. Los pergaminos de encantamiento se usan desde la Bolsa.';
+
+  @override
+  String get guideVendorTitle => 'Tienda y recompra';
+
+  @override
+  String get guideVendorBody =>
+      'Pestaña Taller, Tienda. Vende desde la Bolsa. Puedes recomprar lo vendido durante 2 horas.';
+
+  @override
+  String get guideMarketTitle => 'Mercado y subastas';
+
+  @override
+  String get guideMarketBody =>
+      'Pestaña Taller, Mercado. Compra a precio fijo o puja en subastas. Publica objetos desde la Bolsa: precio fijo o subasta con puja inicial y compra inmediata opcional. Una puja en los últimos minutos alarga la subasta.';
+
+  @override
+  String get guideQuestsTitle => 'Misiones';
+
+  @override
+  String get guideQuestsBody =>
+      'Icono de portapapeles arriba a la derecha. Misiones de historia, secundarias y diarias; la insignia cuenta las listas para entregar.';
+
+  @override
+  String get guideNotificationsTitle => 'Notificaciones y recompensas';
+
+  @override
+  String get guideNotificationsBody =>
+      'Icono de campana arriba a la derecha. La pestaña Recompensas guarda lo recogido durante 30 días. En Ajustes eliges qué te llega.';
+
+  @override
+  String get guideSocialTitle => 'Chat, amigos, correo e intercambio';
+
+  @override
+  String get guideSocialBody =>
+      'Globos de diálogo arriba a la derecha. Los intercambios los confirman ambas partes y pagan impuesto. Bloquear oculta a un jugador de tu chat, amigos y correo.';
+
+  @override
+  String get guidePartyTitle => 'Grupo';
+
+  @override
+  String get guidePartyBody =>
+      'Pestaña Personaje, sección Grupo. Invita por nombre. Los miembros que hacen el mismo tipo de tarea ganan XP adicional.';
+
+  @override
+  String get guideGuildTitle => 'Gremio, tesorería y banco del gremio';
+
+  @override
+  String get guideGuildBody =>
+      'Globos de diálogo arriba a la derecha, pestaña Gremio. Los miembros depositan oro y objetos; el rango decide quién retira y cuánto al día. Todo movimiento queda registrado.';
+
+  @override
+  String get guideRankingTitle => 'Clasificación';
+
+  @override
+  String get guideRankingBody =>
+      'Pestaña Personaje, botón Clasificación. Tu puntuación viene del nivel, logros, maestrías, profesiones y mazmorras e incursiones superadas. Filtra por clase o por tabla.';
+
+  @override
+  String get guidePetsTitle => 'Mascotas';
+
+  @override
+  String get guidePetsBody =>
+      'Pestaña Personaje, botón Mascotas. Los huevos salen de jefes de incursión de nivel alto. Incúbalos, súbelos de nivel cazando y activa uno por su bonificación y su ayuda en combate.';
+
+  @override
+  String get guideHelpersTitle => 'Ayudantes';
+
+  @override
+  String get guideHelpersBody =>
+      'Pestaña Personaje, botón Ayudantes. Contrata un ayudante para una profesión. Trabaja por su cuenta, haga lo que haga tu personaje.';
+
+  @override
+  String get guideReportTitle => 'Denunciar a un jugador';
+
+  @override
+  String get guideReportBody =>
+      'Mantén pulsada una línea del chat o usa el menú de un amigo. Elige un motivo; el equipo lo revisa y te avisa cuando lo haya visto.';
+
+  @override
+  String get guideAccountTitle => 'Cuenta, idioma y soporte';
+
+  @override
+  String get guideAccountBody =>
+      'Lista de personajes, icono de cuenta arriba. Cambia el idioma o la contraseña, contacta con soporte, descarga tus datos o elimina la cuenta.';
+
+  @override
+  String get ranking => 'Clasificación';
+
+  @override
+  String get rankingScore => 'Puntuación';
+
+  @override
+  String get rankingLevel => 'Nivel';
+
+  @override
+  String get rankingAchievements => 'Logros';
+
+  @override
+  String get rankingMastery => 'Maestría';
+
+  @override
+  String get rankingProfessions => 'Profesiones';
+
+  @override
+  String get rankingClears => 'Superadas';
+
+  @override
+  String get rankingDungeons => 'Mazmorras';
+
+  @override
+  String get rankingRaids => 'Incursiones';
+
+  @override
+  String get rankingAllClasses => 'Todas las clases';
+
+  @override
+  String get rankingHowScore => 'Cómo se calcula la puntuación';
+
+  @override
+  String get rankingScoreNote => 'Cada mazmorra e incursión cuenta una vez. Se actualiza cada pocos minutos.';
+
+  @override
+  String get rankingEmpty => 'La tabla aún se está calculando.';
 }

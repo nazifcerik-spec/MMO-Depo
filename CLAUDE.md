@@ -322,6 +322,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 152. **İsim alfabeleri + dil seçimi + oyuncu şikâyeti (bitti)** — Sprint 152, DD-354..355. `character.NameKey`, `AppLocale`, migration 0065 `ops.player_report`, `POST /v1/reports`, ops kuyruğu. Çeviriler sonraki adımda.
 
+153. **Eğitim + Rehber + sıralama (bitti)** — Sprint 153, DD-356..357. `features/guide/guide.dart` (atlanabilir eğitim kartı, Karakter sekmesinde Rehber), migration 0066 `progression.character_score`, worker `leaderboard_refresh`, `GET /v1/leaderboard`, `RankingScreen`.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
