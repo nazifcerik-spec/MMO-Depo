@@ -3571,6 +3571,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-366 — CI yeniden yeşil: lint, güvenlik uyarısı, worker kapsamı
+
+**Context:** main'de CI üç işte kırmızıydı: staticcheck iki bulgu (S1016, ST1018), govulncheck `klauspost/compress` v1.17.9 için erişilebilir açık (GO-2026-6865), kapsam kapısı `internal/worker` %50,4 (eşik 51). Testlerin kendisi geçiyordu.
+**Decision:** Lint bulguları düzeltildi. `klauspost/compress` v1.20.2. Eşik düşürülmedi, test eklendi: `TestPgLockerIsExclusive` (işi tek kopyada tutan danışma kilidi hiç sınanmıyordu) ve `TestEveryWorkerJobRuns` (her işin SQL'i güncel şemaya karşı koşar, migration'ın bozduğu iş fark edilir). Worker %78,7, eşik 76.
+**Consequences:** Worker işleri artık her CI koşusunda gerçek veritabanında çalışır. `crypto/x509` açığı (GO-2026-6809) Go 1.27.3'te kapalı: CI ve imajlar son yamayı alır, yerel Go 1.27.1 eski.
+**Tarih:** 2026-11-06
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

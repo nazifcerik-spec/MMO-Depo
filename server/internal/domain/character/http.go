@@ -179,8 +179,7 @@ type appearanceReq struct {
 }
 
 func (a appearanceReq) look() Appearance {
-	return Appearance{Body: a.Body, FaceID: a.FaceID, HairStyleID: a.HairStyleID,
-		HairColorID: a.HairColorID, EyeColorID: a.EyeColorID}
+	return Appearance(a)
 }
 
 // Appearance changes the character's look.

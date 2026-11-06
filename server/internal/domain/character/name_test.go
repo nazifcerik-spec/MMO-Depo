@@ -27,7 +27,7 @@ func TestValidateNameRefuses(t *testing.T) {
 		"", " ", "ab", "明", // too short
 		"abcdefghijklmnopq",    // 17
 		"1abc", "_abc", "1234", // must start with a letter
-		"a b", "a-b", "a.b", "a@b", "<b>x", "a​b", // spaces, punctuation, invisible
+		"a b", "a-b", "a.b", "a@b", "<b>x", "a\u200bb", // spaces, punctuation, invisible
 		"Аli", "Иvan", "민su", "山田Taro", // mixed alphabets
 		"Ａｂｃ", "ｻｸﾗ", // full and half width
 		"ㅋㅋㅋ",   // bare Hangul letters
