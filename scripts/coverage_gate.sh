@@ -32,7 +32,11 @@ compare() {
       if (!(pkg in cov)) { printf "FAIL %-32s no coverage reported (min %.1f%%)\n", pkg, min; bad = 1; next }
       got = cov[pkg] + 0
       status = (got + 0.0001 < min) ? "FAIL" : "ok  "
-      if (status == "FAIL") bad = 1
+      if (status == "FAIL") {
+        bad = 1
+        if (ENVIRON["GITHUB_ACTIONS"] != "") printf "::error::coverage %s %.1f%% is under its floor %.1f%%
+", pkg, got, min
+      }
       printf "%s %-32s %5.1f%% (min %.1f%%)\n", status, pkg, got, min
     }
     END { exit bad }
