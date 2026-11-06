@@ -97,7 +97,7 @@ func TestStart_FreezesSkillsAndGuards(t *testing.T) {
 
 type gate []string
 
-func (g gate) HuntRegions(context.Context, uuid.UUID) ([]string, error) { return g, nil }
+func (g gate) MobRegions(context.Context, uuid.UUID) ([]string, error) { return g, nil }
 
 // A gated hunt only starts on mobs in reach of where the character stands
 // (DD-273); mobs without a region (old content) are never gated.

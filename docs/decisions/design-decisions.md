@@ -3562,6 +3562,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-365 — Av listesi ve harita kartı tek kural: bir bölge kendi canavarlarını avlar
+
+**Context:** Kullanıcı Av ile Yolculuk haritasındaki canavarların uyuşmadığını bildirdi. Av listesi bulunulan bölge + yolla bağlı komşuların canavarlarını gösteriyordu (DD-273), harita kartı yalnız bölgenin kendi canavarlarını; şehirde ve Fısıltı Kıyısı'nda kart boşken Av'da canavar vardı, av bölgelerinde Av üç bölgenin listesini gösteriyordu.
+**Decision:** `world.MobReach` tek kural: kendi avlanan canavarı olan bölge yalnız onları avlar, olmayan bölge (şehir, Fısıltı Kıyısı) yolla bağlı bölgelerin canavarlarını avlar. `Catalog.MobRegions` + `/location` `mob_regions` + av başlatma kapısı (`hunt.RegionGate`, `E_MOB_REGION`) ve `contentpack.BuildRegionContent` aynı fonksiyonu kullanır. `LoadCatalog` avlanan canavarı olan bölgeleri okur. İstemci Av listesi `mob_regions` (eski sunucuda `hunt_regions`). `huntTravelHint` 7 dilde sadeleşti. `hunt_regions` kalır: toplama ve zindan erişimi değişmedi.
+**Consequences:** Her bölgede Av = harita kartı. Canavar sayısı bölge başına 2–3'te kalır; 20 seviye merdiveni değişmedi. Oyuncu bir sonraki bölgenin canavarına geçmek için yolculuk etmek zorunda (önceden komşudan avlanabiliyordu); örn. Sv 115 Kuzey Kalesi'ndeki Sv 100 canavarını bırakıp Taç Ovası'na gider. Eski istemci komşu canavarı listeler ama başlatınca `E_MOB_REGION` alır. Testler: `TestCatalog_MobRegions`, `TestRegionContentShipped`, her bölge için `TestHTTPMapCardMatchesHunt`.
+**Tarih:** 2026-11-06
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

@@ -66,8 +66,21 @@ func TestCatalog_Neighbors_ReturnsNilForUnknown(t *testing.T) {
 	require.Nil(t, c.Neighbors("ghost"))
 }
 
-// Hunting reaches the region itself and its road links, never a parent or
+// Work reaches the region itself and its road links, never a parent or
 // child (DD-273): a continent must not reach every zone on it.
+// DD-365: a region with mobs hunts only those; one without hunts its linked
+// regions'; a region with neither hunts nothing.
+func TestCatalog_MobRegions(t *testing.T) {
+	c := fakeCatalog(t).WithHuntedRegions([]string{"wild_b"})
+	require.Equal(t, []string{"wild_b"}, c.MobRegions("wild_b"))
+	require.Equal(t, []string{"wild_b"}, c.MobRegions("wild_a"), "no mobs of its own: the road's")
+	require.Empty(t, c.MobRegions("city"))
+	require.Nil(t, c.MobRegions("nowhere"))
+
+	c = fakeCatalog(t).WithHuntedRegions([]string{"wild_a", "wild_b"})
+	require.Equal(t, []string{"wild_a"}, c.MobRegions("wild_a"), "own mobs only, not the neighbour's")
+}
+
 func TestCatalog_HuntRegions(t *testing.T) {
 	c := fakeCatalog(t)
 	require.ElementsMatch(t, []string{"wild_a", "wild_b"}, c.HuntRegions("wild_a"))

@@ -4104,7 +4104,7 @@ abstract class AppLocalizations {
   /// No description provided for @huntTravelHint.
   ///
   /// In en, this message translates to:
-  /// **'Travel to a monster\'s region, or a region linked to it by road, to hunt it.'**
+  /// **'Travel to a monster\'s region to hunt it.'**
   String get huntTravelHint;
 
   /// No description provided for @errMobRegion.

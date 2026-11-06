@@ -666,7 +666,7 @@
   "huntReach": "Zonas de caza desde aquí: {regions}",
   "huntNoMobsHere": "Aquí no hay nada que cazar. Viaja primero a una zona de caza.",
   "huntOtherRegions": "Monstruos de otras zonas",
-  "huntTravelHint": "Para cazar un monstruo, viaja a su zona o a una zona unida a ella por camino.",
+  "huntTravelHint": "Para cazar un monstruo, viaja a su zona.",
   "errMobRegion": "Este monstruo vive en otra zona. Viaja allí primero.",
   "restoresHpPct": "Restaura el {pct}% de la vida máxima",
   "statEvasion": "% Evasión",

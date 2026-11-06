@@ -3,10 +3,12 @@ package contentpack
 import (
 	"sort"
 	"strings"
+
+	"github.com/otter/server/internal/world"
 )
 
 // RegionContent is everything found in one region (DD-338), for the map's
-// region card: the monsters hunted there, the dungeons and raids entered
+// region card: the monsters hunted there (the hunt list's, DD-365), the dungeons and raids entered
 // there, the resources that grow there and the quests sent there.
 type RegionContent struct {
 	Mobs     []RegionMob     `json:"mobs"`
@@ -55,11 +57,21 @@ func BuildRegionContent(p *Pack) map[string]*RegionContent {
 		at(r.Code)
 	}
 	mobRegion := make(map[string]string, len(p.Mobs))
+	own := map[string][]RegionMob{}
 	for _, m := range p.Mobs {
 		mobRegion[m.Code] = m.RegionCode
 		if m.RegionCode != "" && m.Hunted() { // raid bosses and waves show as their raid/dungeon
-			c := at(m.RegionCode)
-			c.Mobs = append(c.Mobs, RegionMob{Code: m.Code, Level: m.Level})
+			own[m.RegionCode] = append(own[m.RegionCode], RegionMob{Code: m.Code, Level: m.Level})
+		}
+	}
+	linked := map[string][]string{}
+	for _, l := range p.RegionLinks {
+		linked[l.RegionACode] = append(linked[l.RegionACode], l.RegionBCode)
+		linked[l.RegionBCode] = append(linked[l.RegionBCode], l.RegionACode)
+	}
+	for _, r := range p.Regions {
+		for _, from := range world.MobReach(r.Code, linked[r.Code], func(c string) bool { return len(own[c]) > 0 }) {
+			at(r.Code).Mobs = append(at(r.Code).Mobs, own[from]...)
 		}
 	}
 	dungeonRegion := make(map[string]string, len(p.Dungeons))

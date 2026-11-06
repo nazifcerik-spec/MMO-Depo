@@ -2312,7 +2312,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get huntOtherRegions => 'Monstruos de otras zonas';
 
   @override
-  String get huntTravelHint => 'Para cazar un monstruo, viaja a su zona o a una zona unida a ella por camino.';
+  String get huntTravelHint => 'Para cazar un monstruo, viaja a su zona.';
 
   @override
   String get errMobRegion => 'Este monstruo vive en otra zona. Viaja allí primero.';

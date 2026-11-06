@@ -8,15 +8,43 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Hunting is regional (DD-273): from the starting city the road to
+// Hunting is regional (DD-273, DD-365): from the starting city the road to
 // Greenwood is in reach, Emberpeak is not until the character stands in it
-// or in a region linked to it. Every huntable mob has a region.
+// or in a linked region without mobs of its own. Every huntable mob has a
+// region, and what a region hunts is what its map card shows.
+func TestHTTPMapCardMatchesHunt(t *testing.T) {
+	w := newWorld(t)
+	p := newHTTPPlayer(t, "warrior")
+	content := p.ok("GET", "/v1/world/content", nil)["regions"].(map[string]any)
+	byRegion := map[string][]string{}
+	for _, m := range items(p.ok("GET", "/v1/mobs", nil), "mobs") {
+		byRegion[m["region_code"].(string)] = append(byRegion[m["region_code"].(string)], m["code"].(string))
+	}
+	require.NotEmpty(t, content)
+	for region, c := range content {
+		_, err := w.p.Exec(w.ctx, `UPDATE character.character SET location_region_code = $2 WHERE id = $1`, p.char, region)
+		require.NoError(t, err)
+		loc := p.ok("GET", p.path("/location"), nil)
+		hunted := []string{}
+		for _, r := range loc["mob_regions"].([]any) {
+			hunted = append(hunted, byRegion[r.(string)]...)
+		}
+		card := []string{}
+		for _, m := range c.(map[string]any)["mobs"].([]any) {
+			card = append(card, m.(map[string]any)["code"].(string))
+		}
+		require.ElementsMatch(t, hunted, card, "%s: the hunt list and the map card", region)
+	}
+}
+
+// A region with mobs of its own hunts only those.
 func TestHTTPHuntRegionGate(t *testing.T) {
 	w := newWorld(t)
 	p := newHTTPPlayer(t, "warrior")
 	loc := p.ok("GET", p.path("/location"), nil)
 	require.Equal(t, "ironhold_city", loc["region"].(map[string]any)["code"])
 	require.ElementsMatch(t, []any{"ironhold_city", "greenwood"}, loc["hunt_regions"])
+	require.Equal(t, []any{"greenwood"}, loc["mob_regions"])
 
 	mobs := items(p.ok("GET", "/v1/mobs", nil), "mobs")
 	for _, m := range mobs {
@@ -34,17 +62,22 @@ func TestHTTPHuntRegionGate(t *testing.T) {
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
 
-	// Whispering Reach is linked to Emberpeak by road.
+	// Whispering Reach has no mobs of its own: it hunts its roads', Emberpeak's.
 	_, err := w.p.Exec(w.ctx, `UPDATE character.character SET location_region_code = 'whispering_reach' WHERE id = $1`, p.char)
 	require.NoError(t, err)
 	code, out = hunt("shadow_stalker")
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
-	// Greenwood is linked too; the Misty Marshes are two roads away.
+	// Greenwood's too; the Misty Marshes are two roads away.
 	code, out = hunt("young_boar")
 	require.Equal(t, 201, code, "%v", out)
 	p.ok("POST", "/v1/hunt/"+out["contract"].(map[string]any)["id"].(string)+"/stop", map[string]any{})
 	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "bog_witch", "duration_seconds": 600}, 409, "E_MOB_REGION")
+
+	// Emberpeak has its own: Whispering Reach's Greenwood is no longer in reach.
+	_, err = w.p.Exec(w.ctx, `UPDATE character.character SET location_region_code = 'emberpeak' WHERE id = $1`, p.char)
+	require.NoError(t, err)
+	p.fail("POST", p.path("/hunt"), map[string]any{"mob_code": "young_boar", "duration_seconds": 600}, 409, "E_MOB_REGION")
 }
 
 // The world catalog carries what the travel map draws (DD-279): every

@@ -2303,7 +2303,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get huntOtherRegions => '他の地域のモンスター';
 
   @override
-  String get huntTravelHint => 'モンスターを狩るには、その地域か道でつながる地域へ移動してください。';
+  String get huntTravelHint => 'モンスターを狩るには、その地域へ移動してください。';
 
   @override
   String get errMobRegion => 'このモンスターは別の地域にいます。先にそこへ移動してください。';

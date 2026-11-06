@@ -390,6 +390,7 @@ class Location {
     required this.neighbors,
     this.travel,
     this.huntRegions = const [],
+    this.mobRegions = const [],
     this.dungeonRegions = const [],
     this.routes = const {},
   });
@@ -402,6 +403,7 @@ class Location {
     ],
     travel: j['travel'] is Map<String, dynamic> ? TravelInfo.fromJson(j['travel'] as Map<String, dynamic>) : null,
     huntRegions: [for (final r in (j['hunt_regions'] as List? ?? const [])) r as String],
+    mobRegions: [for (final r in (j['mob_regions'] ?? j['hunt_regions'] ?? const []) as List) r as String],
     dungeonRegions: [for (final r in (j['dungeon_regions'] as List? ?? const [])) r as String],
     routes: {
       for (final e in (j['routes'] as Map<String, dynamic>? ?? const {}).entries)
@@ -414,8 +416,12 @@ class Location {
 
   final RegionInfo region;
 
-  /// Regions whose mobs can be hunted from here: this one and its road links (DD-273).
+  /// This region and its road links (DD-273): gathering reaches this far.
   final List<String> huntRegions;
+
+  /// Regions whose mobs can be hunted from here (DD-365), the same ones the
+  /// map's region card lists: this one, or its road links if it has no mobs.
+  final List<String> mobRegions;
 
   /// Regions whose dungeons and raids are in reach from here (DD-302).
   final List<String> dungeonRegions;

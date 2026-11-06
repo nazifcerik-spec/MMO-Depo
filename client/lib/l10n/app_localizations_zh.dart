@@ -2303,7 +2303,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get huntOtherRegions => '其他区域的怪物';
 
   @override
-  String get huntTravelHint => '要狩猎某只怪物，请前往它所在的区域或有道路相连的相邻区域。';
+  String get huntTravelHint => '要狩猎某只怪物，请前往它所在的区域。';
 
   @override
   String get errMobRegion => '这只怪物在其他区域。请先前往那里。';

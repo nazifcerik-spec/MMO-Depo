@@ -132,14 +132,15 @@ type BagRoom interface {
 
 func (s *Service) WithSkills(src SkillSource) *Service { s.skills = src; return s }
 
-// RegionGate lists the regions a character can hunt in from where it stands
-// (DD-273); world.Service implements it.
+// RegionGate lists the regions whose mobs a character can hunt from where it
+// stands (DD-273, DD-365); world.Service implements it.
 type RegionGate interface {
-	HuntRegions(ctx context.Context, characterID uuid.UUID) ([]string, error)
+	MobRegions(ctx context.Context, characterID uuid.UUID) ([]string, error)
 }
 
-// WithRegionGate makes hunting regional: a mob is hunted only from its own
-// region or one linked to it. Without a gate every mob is in reach.
+// WithRegionGate makes hunting regional: a mob is hunted from its own region,
+// or from a linked region without mobs of its own. Without a gate every mob is
+// in reach.
 func (s *Service) WithRegionGate(g RegionGate) *Service { s.regions = g; return s }
 
 // NewService wires the service. rngNew is the RNG factory (activity.NewRNG in
@@ -268,7 +269,7 @@ func (s *Service) Start(ctx context.Context, req StartRequest) (*StartResult, er
 		return nil, ErrUnknownMob
 	}
 	if s.regions != nil && mob.RegionCode != "" {
-		reach, err := s.regions.HuntRegions(ctx, req.CharacterID)
+		reach, err := s.regions.MobRegions(ctx, req.CharacterID)
 		if err != nil {
 			return nil, err
 		}

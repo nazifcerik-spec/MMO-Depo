@@ -666,7 +666,7 @@
   "huntReach": "ここから狩猟可能：{regions}",
   "huntNoMobsHere": "ここには獲物がいません。先に狩り場へ移動してください。",
   "huntOtherRegions": "他の地域のモンスター",
-  "huntTravelHint": "モンスターを狩るには、その地域か道でつながる地域へ移動してください。",
+  "huntTravelHint": "モンスターを狩るには、その地域へ移動してください。",
   "errMobRegion": "このモンスターは別の地域にいます。先にそこへ移動してください。",
   "restoresHpPct": "最大HPの{pct}%を回復",
   "statEvasion": "% 回避",

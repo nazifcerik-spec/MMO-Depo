@@ -2303,7 +2303,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get huntOtherRegions => '다른 지역의 몬스터';
 
   @override
-  String get huntTravelHint => '몬스터를 사냥하려면 그 지역이나 도로로 연결된 지역으로 이동하세요.';
+  String get huntTravelHint => '몬스터를 사냥하려면 그 지역으로 이동하세요.';
 
   @override
   String get errMobRegion => '이 몬스터는 다른 지역에 삽니다. 먼저 그곳으로 이동하세요.';

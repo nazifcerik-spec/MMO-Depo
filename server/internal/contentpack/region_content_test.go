@@ -19,18 +19,31 @@ func TestRegionContentShipped(t *testing.T) {
 		}
 		return n
 	}
-	mobs, nodes := 0, 0
-	for _, m := range p.Mobs {
-		if m.RegionCode != "" && m.Hunted() {
-			mobs++
-		}
-	}
+	nodes := 0
 	for _, it := range p.Items {
 		if it.Gather != nil && it.Gather.Region != "" {
 			nodes++
 		}
 	}
-	require.Equal(t, mobs, count(func(c *RegionContent) int { return len(c.Mobs) }))
+	// A region with its own hunted mobs shows only those (DD-365); one without
+	// shows those of the regions linked to it.
+	codes := func(r string) []string {
+		var out []string
+		for _, m := range rc[r].Mobs {
+			out = append(out, m.Code)
+		}
+		return out
+	}
+	for _, m := range p.Mobs {
+		if m.Hunted() {
+			require.Contains(t, codes(m.RegionCode), m.Code, "%s shows in its region", m.Code)
+		}
+	}
+	require.Equal(t, []string{"young_boar"}, codes("ironhold_city"), "the city hunts Greenwood's")
+	require.Equal(t, []string{"young_boar"}, codes("greenwood"))
+	require.Equal(t, []string{"young_boar", "shadow_stalker"}, codes("whispering_reach"))
+	require.Equal(t, []string{"shadow_stalker"}, codes("emberpeak"), "not the neighbours'")
+	require.Empty(t, codes("sundermere"), "a continent has no road")
 	require.Equal(t, nodes, count(func(c *RegionContent) int { return len(c.Gather) }))
 	for _, reg := range p.Regions {
 		if reg.Kind == "dungeon" {

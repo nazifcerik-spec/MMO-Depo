@@ -336,6 +336,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 159. **Kalkan şartı + Sv 100–250 ikonları (bitti)** — Sprint 159, DD-364. `requires` artık savaşta geçerli: sheet `equipment_tags`, `Catalog.Actives(path, level, equipment...)` şartı karşılanmayanı `strongest`'tan önce eler (Ağır Kesik kalır); istemci soluk gösterir + 'Kalkan gerekir'. 40 ikon `art_sets.py gap_skills`.
 
+160. **Av = harita kartı (bitti)** — Sprint 160, DD-365. `world.MobReach`: kendi canavarı olan bölge yalnız onları avlar, olmayan yolla bağlı bölgeninkileri. `/location` `mob_regions`, av kapısı, `BuildRegionContent` aynı kural; `hunt_regions` toplama + zindan için kalır.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

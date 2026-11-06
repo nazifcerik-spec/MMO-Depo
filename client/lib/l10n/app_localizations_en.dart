@@ -2312,7 +2312,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get huntOtherRegions => 'Monsters in other regions';
 
   @override
-  String get huntTravelHint => 'Travel to a monster\'s region, or a region linked to it by road, to hunt it.';
+  String get huntTravelHint => 'Travel to a monster\'s region to hunt it.';
 
   @override
   String get errMobRegion => 'This monster lives in another region. Travel there first.';

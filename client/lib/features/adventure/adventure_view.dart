@@ -229,7 +229,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
   CombatContract? _active;
   String? _mob;
 
-  /// Regions in reach from where the character stands (DD-273).
+  /// Regions whose mobs are in reach from where the character stands (DD-365).
   List<String> _reach = const [];
 
   /// The player picked [_mob] themselves; otherwise it follows the level.
@@ -285,7 +285,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
     ]);
     _mobs = r[0]! as List<MobInfo>;
     _active = r[1] as CombatContract?;
-    _reach = (r[2]! as Location).huntRegions;
+    _reach = (r[2]! as Location).mobRegions;
     _stock = r[3]! as List<SupplyStock>;
     final have = {for (final s in _stock) s.code: s.stock};
     _take.removeWhere((code, _) => !have.containsKey(code));

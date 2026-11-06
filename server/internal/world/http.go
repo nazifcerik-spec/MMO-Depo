@@ -84,6 +84,7 @@ func (h *Handler) Location(w http.ResponseWriter, r *http.Request) {
 		"region":          regionRow(view.Region),
 		"neighbors":       neighbors,
 		"hunt_regions":    view.HuntRegions,
+		"mob_regions":     view.MobRegions,
 		"dungeon_regions": view.DungeonRegions,
 		"routes":          view.Routes,
 		"starting_code":   view.StartingCode,

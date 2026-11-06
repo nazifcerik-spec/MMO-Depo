@@ -2310,8 +2310,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get huntOtherRegions => 'Монстры в других регионах';
 
   @override
-  String get huntTravelHint =>
-      'Чтобы охотиться на монстра, отправьтесь в его регион или в регион, связанный с ним дорогой.';
+  String get huntTravelHint => 'Чтобы охотиться на монстра, отправьтесь в его регион.';
 
   @override
   String get errMobRegion => 'Этот монстр живёт в другом регионе. Сначала отправьтесь туда.';

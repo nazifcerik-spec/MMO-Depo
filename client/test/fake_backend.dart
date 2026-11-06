@@ -950,6 +950,7 @@ class FakeBackend {
         ],
         'travel': ?travel,
         'hunt_regions': [region, 'whisperwood'],
+        'mob_regions': [region, 'whisperwood'],
         'dungeon_regions': [region, 'whisperwood'],
         'routes': {
           'heartland': {

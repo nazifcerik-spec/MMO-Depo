@@ -16,6 +16,7 @@ type Catalog struct {
 	links    []RegionLink            // every link once (the map's roads)
 	linksBy  map[string][]RegionLink // code → all links touching this region
 	starting string                  // code of the starting region (empty if none)
+	hunted   map[string]bool         // regions with hunted mobs of their own (DD-365)
 }
 
 // NewCatalog builds the in-memory graph. Links get indexed under BOTH
@@ -152,10 +153,53 @@ type Route struct {
 	Path    []string `json:"path"`
 }
 
-// HuntRegions are the regions whose mobs a character standing in `code` may
-// hunt (DD-273): the region itself and those linked to it by road. Parent
-// and child edges do not count — a continent would otherwise reach every
-// zone on it.
+// MobReach is the one rule behind the hunt list and the map's region card
+// (DD-365): the regions whose mobs are hunted from `code`. A region with mobs
+// of its own hunts only those; one without (a city, Whispering Reach) hunts
+// those of the regions linked to it by road.
+func MobReach(code string, linked []string, hasMobs func(string) bool) []string {
+	if hasMobs(code) {
+		return []string{code}
+	}
+	out := []string{}
+	for _, l := range linked {
+		if hasMobs(l) {
+			out = append(out, l)
+		}
+	}
+	return out
+}
+
+// WithHuntedRegions sets the regions that have hunted mobs of their own.
+func (c *Catalog) WithHuntedRegions(regions []string) *Catalog {
+	c.hunted = make(map[string]bool, len(regions))
+	for _, r := range regions {
+		c.hunted[r] = true
+	}
+	return c
+}
+
+// MobRegions are the regions whose mobs a character standing in `code` may
+// hunt (DD-365).
+func (c *Catalog) MobRegions(code string) []string {
+	if _, ok := c.regions[code]; !ok {
+		return nil
+	}
+	var linked []string
+	for _, l := range c.linksBy[code] {
+		other := l.RegionA
+		if other == code {
+			other = l.RegionB
+		}
+		linked = append(linked, other)
+	}
+	return MobReach(code, linked, func(r string) bool { return c.hunted[r] })
+}
+
+// HuntRegions are the regions a character standing in `code` works in: the
+// region itself and those linked to it by road (DD-273). Gathering and
+// dungeons reach this far; hunting is MobRegions. Parent and child edges do
+// not count — a continent would otherwise reach every zone on it.
 func (c *Catalog) HuntRegions(code string) []string {
 	if _, ok := c.regions[code]; !ok {
 		return nil
@@ -265,5 +309,24 @@ func LoadCatalog(ctx context.Context, pool *pgxpool.Pool) (*Catalog, error) {
 	if err := linkRows.Err(); err != nil {
 		return nil, err
 	}
-	return NewCatalog(regions, links), nil
+
+	mobRows, err := pool.Query(ctx, `
+		SELECT DISTINCT region_code FROM content.mob_template
+		 WHERE region_code IS NOT NULL AND NOT raid_boss AND NOT dungeon_only`)
+	if err != nil {
+		return nil, fmt.Errorf("mob region query: %w", err)
+	}
+	defer mobRows.Close()
+	var hunted []string
+	for mobRows.Next() {
+		var r string
+		if err := mobRows.Scan(&r); err != nil {
+			return nil, fmt.Errorf("mob region scan: %w", err)
+		}
+		hunted = append(hunted, r)
+	}
+	if err := mobRows.Err(); err != nil {
+		return nil, err
+	}
+	return NewCatalog(regions, links).WithHuntedRegions(hunted), nil
 }

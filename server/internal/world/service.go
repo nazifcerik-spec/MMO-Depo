@@ -60,6 +60,7 @@ type LocationView struct {
 	Region      Region         `json:"region"`
 	Neighbors   []NeighborInfo `json:"neighbors"`
 	HuntRegions []string       `json:"hunt_regions"`
+	MobRegions  []string       `json:"mob_regions"` // whose mobs are hunted from here (DD-365)
 	// DungeonRegions: whose dungeons and raids are in reach (DD-302).
 	DungeonRegions []string         `json:"dungeon_regions"`
 	Routes         map[string]Route `json:"routes"`           // every reachable region (DD-280)
@@ -84,8 +85,18 @@ func (s *Service) CurrentRegionCode(ctx context.Context, characterID uuid.UUID) 
 	return code, nil
 }
 
-// HuntRegions lists the regions the character can hunt in from where it
-// stands (DD-273).
+// MobRegions lists the regions whose mobs the character can hunt from where
+// it stands (DD-365).
+func (s *Service) MobRegions(ctx context.Context, characterID uuid.UUID) ([]string, error) {
+	code, err := s.CurrentRegionCode(ctx, characterID)
+	if err != nil {
+		return nil, err
+	}
+	return s.catalog.Catalog().MobRegions(code), nil
+}
+
+// HuntRegions lists the regions the character works in from where it stands
+// (DD-273).
 func (s *Service) HuntRegions(ctx context.Context, characterID uuid.UUID) ([]string, error) {
 	code, err := s.CurrentRegionCode(ctx, characterID)
 	if err != nil {
@@ -126,6 +137,7 @@ func (s *Service) Location(ctx context.Context, characterID, accountID uuid.UUID
 		Region:         region,
 		Neighbors:      cat.Neighbors(code),
 		HuntRegions:    cat.HuntRegions(code),
+		MobRegions:     cat.MobRegions(code),
 		DungeonRegions: cat.DungeonRegions(code),
 		Routes:         cat.Routes(code),
 		StartingCode:   cat.StartingCode(),

@@ -2311,7 +2311,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get huntOtherRegions => 'Diğer bölgelerdeki canavarlar';
 
   @override
-  String get huntTravelHint => 'Bir canavarı avlamak için onun bölgesine ya da o bölgeye yolu olan bir komşusuna git.';
+  String get huntTravelHint => 'Bir canavarı avlamak için onun bölgesine git.';
 
   @override
   String get errMobRegion => 'Bu canavar başka bir bölgede. Önce Yolculuk sekmesinden oraya git.';
