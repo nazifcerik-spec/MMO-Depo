@@ -338,7 +338,7 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 160. **Av = harita kartı (bitti)** — Sprint 160, DD-365. `world.MobReach`: kendi canavarı olan bölge yalnız onları avlar, olmayan yolla bağlı bölgeninkileri. `/location` `mob_regions`, av kapısı, `BuildRegionContent` aynı kural; `hunt_regions` toplama + zindan için kalır.
 
-161. **CI yeşil (bitti)** — Sprint 161, DD-366. Lint düzeltmeleri, `klauspost/compress` v1.20.2, `TestPgLockerIsExclusive` + `TestEveryWorkerJobRuns`; worker kapsamı %78,7, eşik 76.
+161. **CI yeşil (bitti)** — Sprint 161, DD-366. Lint düzeltmeleri, `klauspost/compress` v1.20.2, `TestPgLockerIsExclusive` + `TestEveryWorkerJobRuns` + `TestGuildRules`; worker kapsamı %78,7, eşik 76; kapı düşen paketi CI uyarısı olarak yazar.
 
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
