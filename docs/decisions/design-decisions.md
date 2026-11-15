@@ -3580,6 +3580,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-367 — Hikâye tercih sistemi + önsöz ve I. Bölüm oyunda
+
+**Context:** DD-313 hikâye ekranı yalnız bölüm listesiydi ve içerik boştu; docs/story/ altında yazılan 'Yedi Parçalı Taç' tercihlere ve bayraklara dayanıyor. Oyunda karakter başına tercih durumu ve hikâyeye bağlı görev yoktu.
+**Decision:** Hikâye sıralı sahnelerden oluşur (content/story.yaml): her sahnede min_level, isteğe bağlı when koşulu (bayrak a|b / !a, sayaç >=N / <N; tutmazsa atlanır), zorunlu ve isteğe bağlı hikâye görevleri, ek paragraflar (koşul ya da ırk), tek bir tercih (set bayrak, add sayaç, when, requires_quest, reputation). Görünür seçenek yoksa sahne 'devam' ile geçilir. Karakter başına yalnız geçilen sahne + seçenek saklanır (progression.story_scene); bayrak ve sayaçlar her istekte bu kayıtlardan yeniden oynatılır, ayrı bayrak deposu yok. Hikâye görevleri yeni 'story' görev kategorisi (story.yaml → quests): görev panosu yalnız mevcut sahnesininkileri sunar ve kabul eder (quest.StoryGate), ödülleri içeriktekidir. Uçlar: GET /v1/character/{id}/story (günlük), POST /v1/character/{id}/story/{scene}/advance {option} (sıra, seviye, görev ve seçenek kontrolü, aynı cevap tekrarı no-op, farklı cevap E_STORY_CHOSEN), GET /v1/story/text?lang= (ETag; sahne metni ayrı indirilir). Tercihin itibar ödülü aynı tx'te (progression.GrantReputation, günlük tavan geçerli). Metin content/story/<dil>.yaml; en + tr tam olmalı, diğer diller anahtar anahtar İngilizceye düşer. Görev hedeflerine raid_cleared:<baskın> eklendi. İçerik: önsöz (4 sahne) + I. Bölüm (19 sahne, 17 hikâye görevi, Sv 1–100).
+**Consequences:** Yeni bölüm eklemek yalnız içerik işi (sahne + görev + metin). Bayrak mantığı değişirse eski kayıtlar yeni kurala göre yeniden oynatılır; geçilmiş sahne koşulu değişse de geçilmiş sayılır. Zindan-içi canavarlar avlanamadığı için bazı hikâye hedefleri genel canavar sayısıdır. Tercih ödülü eşyalar (arma, pelerin, yüzük) şimdilik yalnız metinde. İstemci: Hikâye ekranı günlük (geçilen sahneler katlanır, mevcut sahnede görevler kabul/teslim, tercih onayı + sonuç penceresi); görev ekranında Hikâye bölümü, ana zincir 'Ana görevler' oldu. Migration 0070.
+**Tarih:** 2026-11-16
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

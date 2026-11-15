@@ -1536,7 +1536,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get questsNoneOpen => 'No hay misiones abiertas. Elige una abajo.';
 
   @override
-  String get questsStory => 'Historia';
+  String get questsStory => 'Misiones principales';
 
   @override
   String get questsSide => 'Misiones secundarias';
@@ -3993,4 +3993,43 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get skillNeedsShield => 'Requiere escudo';
+
+  @override
+  String get storyContinue => 'Continuar';
+
+  @override
+  String get storyChoiceTitle => 'Tu elección';
+
+  @override
+  String get storyChoiceConfirm => 'Esta elección da forma a la historia y no se puede deshacer.';
+
+  @override
+  String get storyChoose => 'Elegir';
+
+  @override
+  String storyYourChoice(String option) {
+    return 'Elegiste: $option';
+  }
+
+  @override
+  String get storyQuests => 'Misiones de la historia';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return 'Primero: $quest';
+  }
+
+  @override
+  String get storyQuestDone => 'Entregada';
+
+  @override
+  String objRaid(String raid) {
+    return 'Completa la incursión $raid';
+  }
+
+  @override
+  String get errStoryQuests => 'Primero entrega la misión necesaria.';
+
+  @override
+  String get errStoryMoved => 'La historia ha avanzado; se actualizó la página.';
 }

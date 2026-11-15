@@ -1,0 +1,442 @@
+# Story scene text (en), DD-367. Keys come from the scenes of
+# content/story.yaml: <scene>, <scene>.body, .after, .x.<extra>, .<option>,
+# .<option>.result. Format: a blank line splits paragraphs; **Name:** marks
+# the speaker, *...* the inner voice (italic). Languages without a file or a
+# key fall back to this one.
+
+# --- Prologue ------------------------------------------------------------
+
+p_star: "The Falling Star"
+p_star.body: |
+  That night the sky split in two.
+
+  It is all you remember. A light, not white but amber, like an ember. It passed over the treetops and warmed the leaves without setting them alight. Then warmth in your right palm, then darkness.
+
+  You wake with wet pine needles on your face. You are at the edge of the Greenwood; trees on one side, on the other the path down to the grey walls of Ironhold. You open your hand. In its middle, under the skin, a light the size of a lentil is beating. Like a heart. But not in time with yours.
+
+  Footsteps. Short, heavy, certain. Before you stands a dwarf woman half your height: red braids knotted at her waist, a leather apron that smells of soot, a hammer as thick as your leg. She looks at you, then at your palm.
+
+  **Hedda Stonehand:** "So you're the one who fell. The dogs howled all night and my anvil rang by itself. Can you stand? If not I'll carry you, but I'll grumble."
+
+  You stand. Your legs shake, but they hold.
+
+  **Hedda:** "I won't ask your name. You'll tell me when you're ready. But don't show anyone what's in that hand. In Ironhold everything has a price, light included."
+p_star.x.dwarf: |
+  Hedda narrows her eyes: "Not of the Stonehand line, but your beard says it: a child of the mountain. Come along, kinsfolk."
+p_star.x.undead: |
+  Hedda takes a step back, then lowers her hammer: "The dead don't usually fall. They rise. You've done both. Interesting."
+p_star.x.big: |
+  Hedda has to tilt her head back to look at you: "Ah, a big one. Good. You carry the heavy things."
+
+p_ironhold: "Ironhold"
+p_ironhold.body: |
+  You enter Ironhold through a narrow gate in the walls. The city is heavy, loud, alive: smoke rising from the foundries, hammers in the streets, hawkers shouting. At the street corners stand the Ironhold Guard, anvil and shield on their breastplates.
+
+  Hedda takes you to the room behind her forge. A bed, a basin, half-finished swords on the shelves.
+
+  **Hedda:** "You can stay here. But not for free. Nobody eats for free in this city. Bring me stone and herbs from the Greenwood, and I'll find you work that fills your belly."
+p_ironhold.after: |
+  When you hand over the stones Hedda piles them by the anvil, takes one and cracks it with her hammer. She stares a long time at the small crystal shards inside.
+
+  **Hedda:** "These weren't here yesterday. There's light inside the stone. Like crumbs of what's in your hand. It must have scattered across the whole forest when you fell."
+
+p_voice: "The Voice in Your Palm"
+p_voice.body: |
+  That night you cannot sleep. The light in your palm beats and beats. Then, for the first time, it speaks.
+
+  These are not words. More like a memory; as if you had always known something and were only now remembering it.
+
+  **Voice:** *"You're awake. Good. I have waited a very long time. Don't be afraid, I won't hurt you. I am the shard. You are the bearer. Once we were whole: the smallest light of the crown. The others are waking too. They will call you. You must find them."*
+
+  **Voice:** *"And tell no one. They won't understand. They'll want to lock it away. Burn it. Bury it. Only you understand."*
+
+  In the morning Hedda makes breakfast: black bread, goat cheese, very strong tea. She looks at you.
+
+  **Hedda:** "You slept badly. I can see it in your eyes. Did you see something?"
+p_voice.tell: "Tell her: \"The light in my palm spoke.\""
+p_voice.tell.result: |
+  "The light in my palm spoke. It wants me to find other shards."
+
+  Hedda is silent for a long while. Then: "My grandmother used to say: if the light speaks, listen, but don't trust its word. Keep telling me everything, will you? Don't walk alone."
+p_voice.hide: "Hide it: \"Just a nightmare.\""
+p_voice.hide.result: |
+  "No, just a nightmare."
+
+  Hedda nods but doesn't take her eyes off you. "Nightmares shrink when you tell them. Never mind."
+
+  **Voice:** *"Wise."*
+
+p_inn: "The Rusty Ladle"
+p_inn.body: |
+  Hedda sends you to the busiest inn in the city: the Rusty Ladle. "Say hello to Nell. Whatever happens in this city, she hears first."
+
+  The inn is smoky, warm and loud. Behind the counter a broad-armed woman, Nell Cauldron, fills three mugs at once, argues with two customers and winks at you.
+
+  **Nell:** "Hedda's new apprentice! I heard, I heard. They say a star fell in the forest. The Guard's been combing the edge since morning. The Greenwood Wardens too. And the red robes, the Ember Covenant. All looking for the same thing and none saying what."
+
+  Nell lowers her voice.
+
+  **Nell:** "A word of advice: whichever of them finds you, don't say yes straight away. This city has three doors and each opens only one way. Now, my cauldron's empty. Bring me boar meat and I'll teach you to cook your first meal."
+p_inn.after: |
+  In the evening, as the inn closes, Nell hands you a sheet of paper. A hastily drawn map: the Greenwood, a stream, the mouth of a cave.
+
+  **Nell:** "A kid left this here this morning. Said 'where the star fell'. Grey-haired, thin, a fast runner, a girl. And two silvers are missing from my pocket."
+
+  The Spark beats in your palm. The cross on the map lies deep in the forest.
+
+# --- Chapter I: Bearer of the Spark ---------------------------------------
+
+c1_wolves: "Wolves Running to the Light"
+c1_wolves.body: |
+  The cross on the map leads you into the forest, to the bank of a mossy stream. On the way wolves roam in packs. Animals that normally flee from people are strange today; their eyes shine, as if something were pulling them. Some carry shards of stone in their jaws, glowing faintly.
+c1_wolves.after: |
+  On the bank of the stream, the mouth of a cave. Inside, a pit scorched by the fall; the earth has turned to glass, its edges still warm. At the bottom of the pit someone kneels with both hands in the soil, searching.
+
+  A girl. Barely seventeen. Her hair is greyer than her youth should allow, almost silver. When she sees you she leaps up, a short knife in her hand.
+
+  **Mirel:** "You'd never have found it before me anyway. There's nothing here. Go."
+
+  The Spark in your palm grows hot. Mirel's eyes slide to your hand; light is leaking between your fingers.
+
+  **Mirel:** "...You have it. So you have it. I ran all night for this."
+
+  And she runs. Taking the purse from your belt with her.
+
+c1_cage: "The Grey-Haired Thief"
+c1_cage.body: |
+  Mirel's trail runs north through the forest. But beside it are other tracks: heavy boots, a dragged sack. The bandits blocking the road meant to sell "the silver-haired girl" to someone; to whom, they don't know. Only that the pay was good.
+c1_cage.after: |
+  When you clear the camp you find Mirel in a cage. She is still holding your purse.
+
+  **Mirel:** "Fine. Granted. You saved me. Take your purse. ...But know this: all my life I've been looking for something, and last night I felt it for the first time. That light. The one in your hand. It tells me something."
+c1_cage.companion: "\"Come with me.\""
+c1_cage.companion.result: |
+  You open the cage and hold out your hand.
+
+  **Mirel:** "Really? I'm a thief, you know."
+
+  She comes anyway. From now on she will read tracks and locks better than you.
+c1_cage.free: "Open the cage and leave."
+c1_cage.free.result: |
+  "You're free. But stay out of my pockets."
+
+  Mirel smiles and vanishes among the trees. "See you, bright one."
+c1_cage.guards: "Hand her to the Guard."
+c1_cage.guards.result: |
+  She stole; Ironhold's law is clear.
+
+  Mirel gives you a long look and says nothing. The Guard takes her away. The command marks you down in its records: a useful person.
+
+c1_crypt: "The Crypt of Ashes"
+c1_crypt.body: |
+  North of the forest, beneath a ruined chapel, lie the Crypt Gates. Goblins have been carrying things there for days. A wounded scout of the Greenwood Wardens hands you a scrap of dark red cloth.
+
+  **Wounded Scout:** "It was on the goblins. That's an Ember Covenant robe. Goblins don't work this orderly on their own. Someone is paying them."
+c1_crypt.after: |
+  On the Goblin Raider you find a half-burnt letter. It can still be read:
+
+  *"...bring all the glowing stones to the caravan road in the Whispering Reach. Grosk will pay. If you find the bearer, don't touch them; the High Priest wants them alive. — T."*
+
+  The bearer. You.
+
+  **Voice:** *"Do you see? They want you. They all will."*
+
+c1_caravan: "The Caravan Road and the Inventor"
+c1_caravan.body: |
+  In the Whispering Reach the wind really does whisper; passing between the rocks it makes sounds like human voices.
+
+  In the middle of the caravan road an orc merchant sits on top of a huge cart, counting his goods: Grosk Salttooth. One of his teeth is as white as if it were carved from salt.
+
+  **Grosk:** "Selling stones? I'll buy. Glowing? Double. Don't ask who I sell to. I don't sell answers, only buy stones."
+
+  A bang from behind the cart. Smoke. Coughing. Then from under the cart crawls a gnome with goggles bigger than his head and a pack full of pipes on his back.
+
+  **Pip Cogtooth:** "It's fine! It's fine! Just the third prototype of the Sky-Measuring Device. Well, not anymore. Hello! Who are you? There's a star in your hand! That's wonderful! That's terrible! That's wonderful!"
+
+  **Pip:** "There's a crack in the sky. Look at night, between the stars. It's been there a thousand years and every year it grows a little. Nobody looks up. I do! And that crack shines the same colour as the light in your hand. So the two are connected. So you are the most important person of my life. For the fourth prototype I need branches, stone and an ingot. Will you help?"
+c1_caravan.after: |
+  When the device works it sends a beam of light into the sky. The beam is the same amber as the Spark. And far away, to the north, where the Northern Keep Ruins lie, an answer comes: a second light.
+
+  **Pip:** "Another one! There's another one in the north! I knew it! ...Actually I didn't, but I hoped!"
+
+  From that day on Pip does not leave your side.
+c1_caravan.x.mirel: |
+  Rummaging through Grosk's cart, Mirel finds a chest. Inside, glowing stones stamped with the seal of the Ember Covenant. "The caravan works for the Covenant. Clearly Grosk doesn't sell answers."
+
+c1_ledger: "Grosk's Ledger"
+c1_ledger.body: |
+  Red-robed cult acolytes guard the caravan. Grosk's ledger is in their hands: the only record of who sold what to whom.
+c1_ledger.after: |
+  The ledger holds a name: **High Priest Ansel**. And a place: **Ironhold, the Ember Temple**.
+
+  Caught, Grosk shrugs.
+
+  **Grosk:** "I'm a merchant. The Covenant wanted stones, I sold stones. If the Guard wanted them I'd sell to the Guard. If the Wardens wanted them, to the Wardens. My side is gold's side. Now let me sell you a secret, free of charge: all three factions are looking for you, and all three will tell you the same lie. 'We want to protect you.'"
+
+c1_doors: "Three Doors"
+c1_doors.body: |
+  Back in Ironhold, three invitations wait for you. Nell has put three separate letters in the inn's back room. "Told you. Three doors."
+
+  In the command tower above the walls, **Commander Brannoc Heavyshield**. His face is woven with scars, his voice dry as sand.
+
+  **Brannoc:** "I know what you carry. In the Northern Keep there was a lord, Varn. He found a shard like yours. He died in one night with his garrison and still stands there dead. That light isn't a weapon. It's a sickness. Ironhold's vault is the strongest in the world. Give it to me and I'll lock it away."
+
+  Deep in the Greenwood, under an old oak with tangled roots, **Liora Leafsong**. Hair the colour of autumn leaves, the ageless calm of an elf on her face.
+
+  **Liora:** "That light fell into the forest. Into the soil. Into Mena. What falls to the earth belongs to the earth. The roots drink it and give a little to every leaf of the forest. No one should carry a piece of a god alone. Least of all a mortal."
+
+  In the Ember Temple beneath the city, **High Priest Ansel**. His voice is soft, his eyes reflect the fire. Beside him a cold-eyed priestess: Tamsin.
+
+  **Ansel:** "I apologise for the goblins. My servants were too eager. But I won't lie to you: I want that light. Because the world is growing cold. Every winter a little longer, every year a few stars fewer. Mena is dying. And you carry the seed of a sun in your hand."
+
+  **Priestess Tamsin** (whispering as you leave): "The High Priest means well. But well-meaning fire burns too."
+
+  **Voice:** *"One wants to lock it away. One wants to bury it. One wants to burn it. Choose, then, whose side you'll walk on. I'll be with you either way."*
+c1_doors.x.hedda: |
+  Hedda reads all three letters. "Whichever you choose, don't give them the light. Stand beside them, but keep your hand closed."
+c1_doors.guard: "The Ironhold Guard"
+c1_doors.guard.result: |
+  "I want to protect the city. But the light stays with me, not in the vault."
+
+  Brannoc frowns, then nods. "Agreed. But I'm watching you." An anvil-and-shield badge is pinned to your chest.
+c1_doors.wardens: "The Greenwood Wardens"
+c1_doors.wardens.result: |
+  "I want to protect the forest and the soil. But I will carry the light."
+
+  Liora smiles, sadly. "One day it will grow heavy. That day, we are here." She lays a leaf-coloured cloak on your shoulders.
+c1_doors.covenant: "The Ember Covenant"
+c1_doors.covenant.result: |
+  "I feel the world growing cold too. But I won't give the light before I see Ignar."
+
+  Ansel opens his hands. "That is all I ask. That you see." He slips a warm ring with a red stone onto your finger.
+
+c1_peak: "The Mountain's Ache"
+c1_peak.body: |
+  Emberpeak is a mountain of red rock. Rock Ogres lie on its slopes as if asleep; when they wake the mountain itself shifts. Shadow Stalkers in the passes. And at the summit, the Obsidian Spire.
+
+  A troll shaman, Toran Asheye, sits in a cloud of incense among the rocks. One of his eyes truly looks like ash, grey and blind.
+
+  **Toran:** "The mountain weeps, little light. Because of the dead one in the tower. The Ashen Lich. It slept a thousand years and woke the night you fell. Clear the passes and bring me ore for the incense. Then we'll talk."
+c1_peak.after: |
+  As the incense burns, a woman appears in the smoke. Tall, her skin dried, two pale blue lights where her eyes should be. One of the undead. But unlike most of the dead she is neither angry nor hungry; only very tired.
+
+  **Ihra:** "You. Of course, you. I haven't heard the song in your hand for a thousand years."
+
+  **Ihra:** "The one in the tower was called Caelum. He was a priest with me in Aethon's temple. When the crown broke he touched a shard and turned to ash. But he could not die. The crown lets no one die. It only spoils."
+
+c1_spire: "The Obsidian Spire"
+c1_spire.body: |
+  The steps of the tower are hot; ash rises with every step. Ihra leaves you at the door. "I can't go up. He would know me."
+c1_spire.after: |
+  As the Ashen Lich falls, the top of the tower goes quiet. Ihra comes to your side. Among the lich's bones a light still flickers; not amber, but pale blue. Caelum's soul.
+c1_spire.purify: "Purify it: lend it your light for a moment."
+c1_spire.purify.result: |
+  You speak an old prayer Ihra taught you. The Spark aches; you feel you have lost something. Caelum's face appears in the smoke for a moment, smiles, and fades.
+
+  **Ihra:** "Thank you. I have waited a thousand years for someone to do that."
+
+  From that day on, Ihra walks beside you.
+c1_spire.destroy: "Destroy it: let it never wake again."
+c1_spire.destroy.result: |
+  You crush the light. The Spark swallows it and grows warm. For a moment you feel stronger.
+
+  **Voice:** *"Good."*
+
+  Ihra turns without a word and vanishes into the smoke.
+
+c1_descent: "Down the Mountain"
+c1_descent.body: |
+  As you come down from Emberpeak, the mountain is silent. Toran's incense still burns; its smoke now rises straight up.
+c1_descent.x.wardens: |
+  Liora is waiting for you at the foot of the mountain. The Wardens light Toran's incense anew. "The earth remembers. It will remember what you did today."
+c1_descent.x.guard: |
+  Brannoc's men chain the tower door. "No one goes up. Orders."
+c1_descent.x.covenant: |
+  A red-robed messenger blocks your path. "The High Priest asks for the lich's ash. So it may be reborn in the fire."
+
+  Toran watches you through the smoke. He says nothing.
+c1_descent.give_ash: "Send the ash to Ansel."
+c1_descent.give_ash.result: |
+  The messenger places the ash in a red box and bows. The Covenant will not forget you.
+
+  Toran puts out his incense. He never speaks to you again.
+c1_descent.keep_ash: "Let the ash stay on the mountain."
+c1_descent.keep_ash.result: |
+  "Let the mountain carry it."
+
+  The messenger purses his lips and leaves. Toran closes his one eye and bows his head: the greatest thanks a troll shaman can give.
+
+c1_marsh: "Into the Mist"
+c1_marsh.body: |
+  In the Misty Marshes the mist never lifts. Leeches, Mud Golems, Bog Witches whispering among the trees. And in the middle of the mist, a temple half sunk in the water: the Sunken Temple, once Aethon's greatest.
+
+  A local healer says the mist seeps into the lungs. Lavender and a potion; only so can one go in.
+c1_marsh.x.ihra: |
+  Ihra stops before stepping into the water. "I lived here. I died here. And I was not buried here, because the crown would not allow it. Go first, I'm behind you."
+c1_marsh.after: |
+  The potion's vapour opens a path through the mist. The temple's sunken gate stands before you.
+
+c1_temple: "The Walls of the Sunken Temple"
+c1_temple.body: |
+  Inside, the temple is cold and silent. A queen rises from the water; her crown is moss, her palace mud. No one reaches the inner chamber without passing her.
+c1_temple.after: |
+  When the queen falls you pass into the inner chamber. The walls are covered in paintings from end to end; barely saved from the water and moss, but still legible.
+
+  **The first wall:** A god, a seven-pointed crown on his head, the sky in his hands. The stars hang on threads from the points of the crown.
+
+  **The second wall:** The god bends over a mortal woman. Healing herbs in her hands. Beneath, a single word: NERIS.
+
+  **The third wall:** The woman lies with her eyes closed. The god stands at her head. The stars in the sky have stopped; all in the same place, as if there were no time.
+
+  **The fourth wall:** Winged figures, six of them. In their midst the greatest, a chain in its hands. The crown is broken into seven pieces, falling to the world.
+
+  **The fifth wall** is broken. Only a corner remains: a hand, a small light in its palm.
+c1_temple.x.ihra: |
+  **Ihra:** "Neris was my teacher. A healer. Aethon loved her, as much as a god can love. When she died, Aethon wanted to stop death. The only way to do it was to stop everything. Breath, water, time. The archangels stopped him. They did the right thing. And I still haven't forgiven them."
+c1_temple.x.voice: |
+  **Voice** (trembling for the first time): *"...Neris."*
+c1_temple.take: "Take the piece of the fifth wall."
+c1_temple.take.result: |
+  You scrape the broken fresco free of the moss and put it in your bag. A picture of the light in the palm; the only trace of the Spark's past. One day it will open a door.
+c1_temple.leave: "Leave it: the temple belongs to the dead."
+c1_temple.leave.result: |
+  You leave the fresco on the wall. The water carries the moss back over it.
+
+  Behind you someone takes a deep breath; as if a hand were laid on your shoulder.
+
+c1_hedda: "The Iron King's Granddaughter"
+c1_hedda.body: |
+  The Iron Mountains are cold, steep and silent. Mountain Trolls, Rock Eagles, Iron Spiders. And Dwarf Ghosts; Hedda's clan, the dead who could not be buried.
+
+  At the mine entrance, the last living miner, Master Bodri, Hedda's cousin.
+
+  **Bodri:** "Hedda sent you, didn't she? She never comes herself. She can't. She doesn't want to see her grandfather like that. I see him every day. Every day I leave him food, knowing he's iron. First bring the ghosts to rest. They are our dead."
+c1_hedda.x.told: |
+  Before you set out, Hedda stops you in Ironhold. For the first time she looks tired.
+
+  **Hedda:** "You told me your secret. Now I'll tell you mine. The Stonehand line comes from the Iron Mountains. My grandfather Thrain Stonehand was their king. In the mine they found a light; not a shard like yours, only a crumb. My grandfather set it in his crown. And he became iron. Literally. The whole clan with him. My family were the last who escaped."
+c1_hedda.x.hid: |
+  Before you set out, Hedda stops you in Ironhold.
+
+  **Hedda** (curtly): "If you go into the Forgotten Mine, know that the king inside is my grandfather. Go without asking the rest."
+c1_hedda.after: |
+  Some of the ghosts fade, some only fall silent. Bodri unfolds an old, greasy sheet: the recipe of the Anvil of Cleansing.
+
+  **Bodri:** "The clan's legend: a chain forged on this anvil can draw the crumb in the king's crown out of the iron. Maybe. No one has tried. No one dared."
+
+c1_iron_king: "The Iron King"
+c1_iron_king.body: |
+  The mouth of the Forgotten Mine breathes cold. Bodri calls after you: "If you want to forge the chain, bring the ingots and we'll forge it together. If not... give my grandfather my regards."
+c1_iron_king.after: |
+  The Iron King falls to his knees. An iron face, an iron beard; but in his eyes something remains. A dwarf. Old, tired, wanting to die.
+c1_iron_king.save: "Save him: wind the Chain of Cleansing around his crown."
+c1_iron_king.save.result: |
+  You wind the chain around his crown and pull. The crumb flows into your palm, into the Spark. The iron cracks and falls away in flakes. Beneath it, an old dwarf.
+
+  Thrain Stonehand lives for one minute. He holds Bodri's hand. "Tell Hedda..." he says, and dies before he can say what. Truly dies. And through the whole mine the Dwarf Ghosts go out one by one.
+
+  When Hedda hears the news she weeps; the first and last time.
+c1_iron_king.shatter: "Shatter him: break the king as he is, in iron."
+c1_iron_king.shatter.result: |
+  Your hammer falls. The Iron King breaks apart; the crumb flows into the Spark. The ghosts fall silent, but they do not fade.
+
+  Bodri thanks you but avoids your eyes. In Ironhold, Hedda only says: "Maybe that was right. Maybe."
+
+c1_keep: "The Garrison"
+c1_keep.body: |
+  Pip's device points north, and with every step the Spark beats faster.
+
+  In the Northern Keep Ruins it is dark even by day. Ghost Guards keep watch on the walls, Cursed Archers in the towers, Bone Riders on the roads. All of them Lord Varn's garrison. Still on duty.
+
+  In the outer yard a young woman in a black cloak has made camp with a few loyal soldiers.
+
+  **Isolde Varn:** "My father is inside that keep. Not a thousand years; eleven. The thousand years is legend. Eleven years ago my father found a shard and swore to guard it: 'Not even death will get me past this gate.' Death couldn't. Nor could his garrison."
+
+  **Isolde:** "I came to break my father's oath. If you take the shard from him, the oath ends. They all truly die. And at last I can bury them. First we have to clear the walls."
+c1_keep.after: |
+  The walls fall silent. The gargoyles before the gate have turned back to stone. Isolde sheathes her sword. "The throne room. My father is there."
+
+c1_varn: "The Fallen Lord"
+c1_varn.body: |
+  Varn sits in the throne room, his sword across his knees. His armour is rusted, his face bone. In his chest, at the very centre of the armour, an amber light is beating: the First Crown Shard.
+c1_varn.after: |
+  When the fight is over, Varn lays his sword on the floor.
+
+  **Varn:** "No one was to pass. No one. That was my oath. ...Isolde? Is Isolde there? She's grown. How long has it been?"
+
+  **Isolde:** "Eleven years, father."
+
+  **Varn:** "Eleven years. I thought it was a thousand."
+
+  Varn draws the shard from his chest and holds it out to you. The Spark in your palm flares; the two lights know each other.
+
+  **Voice** (very close, very sweet): *"Ah. My first sibling. Take it. Bring it to me. Let us be one."*
+c1_varn.peace: "Hold his hands: let him break his oath."
+c1_varn.peace.result: |
+  As you take the shard you hold Varn's hands. "The oath is over, lord. You may go."
+
+  Varn and his garrison turn to dust. For the first time in eleven years the watch on the walls ends. Isolde lifts her father's sword from the floor.
+c1_varn.bound: "Take the shard and go."
+c1_varn.bound.result: |
+  You take the shard and turn away. Varn stays where he is; his light gone, his eyes empty. The garrison does not disperse.
+
+  Isolde watches you go but says nothing.
+
+c1_keep_future: "The Future of the Northern Keep"
+c1_keep_future.body: |
+  In the morning Isolde's soldiers count the dead in the yard. The keep needs a master; otherwise within a year it will belong to bandits.
+c1_keep_future.x.guard: |
+  A letter comes from Brannoc: "The Northern Keep is Ironhold's northern gate. It cannot be a girl's toy. Bind the keep to us."
+c1_keep_future.ruler: "Recognise Isolde as ruler."
+c1_keep_future.ruler.result: |
+  "The keep is yours. Carry your father's name, not his oath."
+
+  Isolde does not kneel; she holds out her hand. You shake it. That day the Northern Keep begins to be rebuilt.
+c1_keep_future.annex: "Let the keep pass to Ironhold."
+c1_keep_future.annex.result: |
+  The Ironhold banner is raised on the walls. Isolde fastens her father's sword at her waist and walks south without looking back.
+
+c1_shard: "The First Shard"
+c1_shard.body: |
+  At night, in the keep's tower, the First Crown Shard lies in your palm. The Spark pulls at it; the two lights want to flow into each other.
+
+  Pip tinkers with his device. "We know the old sealing words. There's a lead box too." He pauses. "Or... I don't know. It's your hand."
+
+  **Voice:** *"Let us be one."*
+c1_shard.seal: "Seal it"
+c1_shard.seal.result: |
+  You speak the sealing words. The shard is locked in the lead box. The Spark trembles for a moment, as if left alone.
+
+  **Voice:** *"...Why?"*
+c1_shard.devour: "Devour it"
+c1_shard.devour.result: |
+  You press the shard into your palm. Light spreads to your arm, your chest, your eyes. For a moment you see every mountain of the north at once.
+
+  **Voice:** *"Yes. Yes. One step more."*
+c1_shard.release: "Release it"
+c1_shard.release.result: |
+  You break the shard with Varn's old sword. The light scatters into the air. For the first time in eleven years the clouds above the keep part; sunlight strikes the walls.
+
+  The Voice says nothing. For a long time.
+
+c1_siege: "The Siege of the Northern Keep"
+c1_siege.body: |
+  The night you take the shard, the keep wakes again.
+c1_siege.x.bound: |
+  Varn's soul turned to rage when his shard was taken. The garrison did not disperse. Undying Varn attacks Isolde's camp.
+
+  **Isolde:** "You killed my father once. You'll have to do it again. This time not because of me, but because of you."
+c1_siege.x.peace: |
+  Varn is at peace, but the crown woke something else: the shadow left by an eleven-year oath. There is no Varn in it, only the oath. Undying Varn comes all the same; this time Isolde fights at your side.
+
+  **Isolde:** "That isn't my father. It's my father's fear. Let's burn it together."
+c1_siege.after: |
+  When the siege is over, Pip looks at the sky.
+
+  **Pip:** "The rift grew. A little. A finger. Maybe one and a half. I don't know if that's good or bad. But my device shows a second light: to the south, across the sea. The Broken Crown Kingdom."
+c1_siege.x.mirel_companion: |
+  Every time Mirel looks at the shard her head aches. "This light reminds me of something. A crown. A throne. A life that isn't mine."
+c1_siege.x.mirel_free: |
+  You find a note on the keep wall: *"I'm going south. Someone there is looking for me. — M."*
+c1_siege.x.mirel_jailed: |
+  News comes from Nell: Mirel has escaped Ironhold's dungeon. She carved something on the wall: *"Bright one, I'll repay my debt."*

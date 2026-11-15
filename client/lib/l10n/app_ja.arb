@@ -454,7 +454,7 @@
   "quests": "クエスト",
   "questsInProgress": "進行中",
   "questsNoneOpen": "進行中のクエストはありません。下から選んでください。",
-  "questsStory": "ストーリー",
+  "questsStory": "メインクエスト",
   "questsSide": "サブクエスト",
   "questsDaily": "デイリー",
   "resetsIn": "{time}後にリセット",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "入札額を上回られました",
   "nkMarketWon": "オークションに落札しました",
   "evMarketOutbid": "入札額を上回られ、ゴールドが返金されました。",
-  "skillNeedsShield": "盾が必要"
+  "skillNeedsShield": "盾が必要",
+  "storyContinue": "続ける",
+  "storyChoiceTitle": "あなたの選択",
+  "storyChoiceConfirm": "この選択は物語の行方を決め、取り消せない。",
+  "storyChoose": "選ぶ",
+  "storyYourChoice": "選択：{option}",
+  "storyQuests": "ストーリークエスト",
+  "storyNeedsQuest": "先に：{quest}",
+  "storyQuestDone": "報告済み",
+  "objRaid": "レイド「{raid}」を攻略",
+  "errStoryQuests": "先に必要なクエストを報告しよう。",
+  "errStoryMoved": "物語が進んだため、画面を更新した。"
 }

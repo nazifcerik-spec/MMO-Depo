@@ -454,7 +454,7 @@
   "quests": "Görevler",
   "questsInProgress": "Devam eden",
   "questsNoneOpen": "Açık görev yok. Aşağıdan birini seç.",
-  "questsStory": "Hikâye",
+  "questsStory": "Ana görevler",
   "questsSide": "Yan görevler",
   "questsDaily": "Günlük",
   "resetsIn": "{time} sonra yenilenir",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "Teklifin geçildi",
   "nkMarketWon": "Açık artırmayı kazandın",
   "evMarketOutbid": "Teklifin geçildi, altının geri döndü.",
-  "skillNeedsShield": "Kalkan gerekir"
+  "skillNeedsShield": "Kalkan gerekir",
+  "storyContinue": "Devam et",
+  "storyChoiceTitle": "Seçimin",
+  "storyChoiceConfirm": "Bu seçim hikâyenin gidişini belirler ve geri alınamaz.",
+  "storyChoose": "Seç",
+  "storyYourChoice": "Seçimin: {option}",
+  "storyQuests": "Hikâye görevleri",
+  "storyNeedsQuest": "Önce: {quest}",
+  "storyQuestDone": "Teslim edildi",
+  "objRaid": "{raid} baskınını tamamla",
+  "errStoryQuests": "Önce gereken görevi teslim et.",
+  "errStoryMoved": "Hikâye ilerledi; sayfa yenilendi."
 }

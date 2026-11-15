@@ -454,7 +454,7 @@
   "quests": "Задания",
   "questsInProgress": "В процессе",
   "questsNoneOpen": "Открытых заданий нет. Выберите одно ниже.",
-  "questsStory": "Сюжет",
+  "questsStory": "Основные задания",
   "questsSide": "Побочные задания",
   "questsDaily": "Ежедневные",
   "resetsIn": "Обновление через {time}",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "Вашу ставку перебили",
   "nkMarketWon": "Вы выиграли аукцион",
   "evMarketOutbid": "Вашу ставку перебили, золото возвращено.",
-  "skillNeedsShield": "Нужен щит"
+  "skillNeedsShield": "Нужен щит",
+  "storyContinue": "Продолжить",
+  "storyChoiceTitle": "Твой выбор",
+  "storyChoiceConfirm": "Этот выбор определит ход истории, и его нельзя отменить.",
+  "storyChoose": "Выбрать",
+  "storyYourChoice": "Твой выбор: {option}",
+  "storyQuests": "Сюжетные задания",
+  "storyNeedsQuest": "Сначала: {quest}",
+  "storyQuestDone": "Сдано",
+  "objRaid": "Пройти рейд «{raid}»",
+  "errStoryQuests": "Сначала сдай нужное задание.",
+  "errStoryMoved": "История продвинулась; страница обновлена."
 }

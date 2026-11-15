@@ -1,9 +1,399 @@
-# Story mode chapters (DD-313), shown in this order in the game's Story
-# screen. Each chapter:
-#   - code: chapter_01          # unique; names come from content/i18n:
-#                               #   story.chapter_01       (title)
-#                               #   story.chapter_01.body  (the text)
-#     min_level: 1              # opens at this character level
-#     requires: chapter_00      # optional: an earlier chapter read first
-# Empty for now: the game shows "coming soon".
-chapters: []
+# Story mode (DD-313, DD-367). The full text: docs/story/. Scene text:
+# content/story/<lang>.yaml (en + tr complete; other languages fall back
+# to en key by key).
+#
+# chapters: code + min_level (titles: content/i18n story.<code>, .body)
+# scenes, read in this order:
+#   code, chapter, min_level        min_level never drops along the list
+#   when: {flag: a|b, flag: "!a", counter: ">=8"}
+#                                   shown only when it holds (else skipped)
+#   quests: [..]                    story quests to turn in before passing
+#   optional_quests: [..]           offered alongside (an option may need one)
+#   after: true                     has a text shown once the quests are in
+#   extras: [{key, when, race, after}]
+#                                   extra paragraph when it holds; after: below
+#                                   the quests
+#   options: [{code, set: {flag: v}, add: {counter: n}, when, requires_quest,
+#              reputation: {faction: n}}]
+#                                   the choice; none visible = "continue"
+# Text keys per scene: <code> (title), <code>.body, <code>.after,
+# <code>.x.<extra>, <code>.<option> (label), <code>.<option>.result.
+# Flags and counters: docs/story/README.md.
+#
+# quests: story quests (category story), same shape as quests.yaml; the
+# quest board offers each one only while its scene is current.
+
+chapters:
+  - code: prologue
+    min_level: 1
+  - code: chapter_1
+    min_level: 2
+    requires: prologue
+
+scenes:
+  # --- Prologue: Külden Uyanış -------------------------------------------
+  - code: p_star
+    chapter: prologue
+    min_level: 1
+    extras:
+      - { key: dwarf, race: [dwarf] }
+      - { key: undead, race: [undead] }
+      - { key: big, race: [orc, troll, tauren] }
+
+  - code: p_ironhold
+    chapter: prologue
+    min_level: 1
+    quests: [story_p_bread]
+    after: true
+
+  - code: p_voice
+    chapter: prologue
+    min_level: 1
+    options:
+      - { code: tell, set: { ses_sir: anlatti } }
+      - { code: hide, set: { ses_sir: sakladi } }
+
+  - code: p_inn
+    chapter: prologue
+    min_level: 1
+    quests: [story_p_kettle]
+    after: true
+
+  # --- Chapter I: Kıvılcımın Taşıyıcısı (Sundermere, 2–100) ------------------
+  - code: c1_wolves
+    chapter: chapter_1
+    min_level: 2
+    quests: [story_c1_wolves]
+    after: true
+
+  - code: c1_cage
+    chapter: chapter_1
+    min_level: 5
+    quests: [story_c1_bandits]
+    after: true
+    options:
+      - { code: companion, set: { mirel: yoldas }, add: { merhamet: 1 } }
+      - { code: free, set: { mirel: serbest } }
+      - { code: guards, set: { mirel: tutuklu }, reputation: { ironhold_guard: 300 } }
+
+  - code: c1_crypt
+    chapter: chapter_1
+    min_level: 6
+    quests: [story_c1_crypt]
+    after: true
+
+  - code: c1_caravan
+    chapter: chapter_1
+    min_level: 8
+    quests: [story_c1_prototype]
+    after: true
+    extras:
+      - { key: mirel, when: { mirel: yoldas }, after: true }
+
+  - code: c1_ledger
+    chapter: chapter_1
+    min_level: 12
+    quests: [story_c1_ledger]
+    after: true
+
+  - code: c1_doors
+    chapter: chapter_1
+    min_level: 15
+    extras:
+      - { key: hedda, when: { ses_sir: anlatti } }
+    options:
+      - { code: guard, set: { taraf: demirkale }, reputation: { ironhold_guard: 500 } }
+      - { code: wardens, set: { taraf: yesilorman }, reputation: { greenwood_wardens: 500 } }
+      - { code: covenant, set: { taraf: kor_ahdi }, reputation: { ember_covenant: 500 } }
+
+  - code: c1_peak
+    chapter: chapter_1
+    min_level: 18
+    quests: [story_c1_peak]
+    after: true
+
+  - code: c1_spire
+    chapter: chapter_1
+    min_level: 23
+    quests: [story_c1_spire]
+    after: true
+    options:
+      - { code: purify, set: { kul_olusu: arindi, ihra: yoldas }, add: { merhamet: 1 } }
+      - { code: destroy, set: { kul_olusu: yok_edildi, ihra: yok } }
+
+  - code: c1_descent
+    chapter: chapter_1
+    min_level: 23
+    extras:
+      - { key: wardens, when: { taraf: yesilorman } }
+      - { key: guard, when: { taraf: demirkale } }
+      - { key: covenant, when: { taraf: kor_ahdi } }
+    options: # only the covenant's messenger asks
+      - { code: give_ash, when: { taraf: kor_ahdi }, set: { kul: ansel }, reputation: { ember_covenant: 300 } }
+      - { code: keep_ash, when: { taraf: kor_ahdi }, set: { kul: toran } }
+
+  - code: c1_marsh
+    chapter: chapter_1
+    min_level: 30
+    quests: [story_c1_marsh]
+    after: true
+    extras:
+      - { key: ihra, when: { ihra: yoldas } }
+
+  - code: c1_temple
+    chapter: chapter_1
+    min_level: 38
+    quests: [story_c1_temple]
+    after: true
+    extras:
+      - { key: ihra, when: { ihra: yoldas }, after: true }
+      - { key: voice, after: true }
+    options:
+      - { code: take, set: { duvar_resmi: alindi } }
+      - { code: leave, set: { duvar_resmi: birakildi }, add: { merhamet: 1 } }
+
+  - code: c1_hedda
+    chapter: chapter_1
+    min_level: 55
+    quests: [story_c1_buried]
+    after: true
+    extras:
+      - { key: told, when: { ses_sir: anlatti } }
+      - { key: hid, when: { ses_sir: sakladi } }
+
+  - code: c1_iron_king
+    chapter: chapter_1
+    min_level: 63
+    quests: [story_c1_mine]
+    optional_quests: [story_c1_anvil]
+    after: true
+    options:
+      - { code: save, requires_quest: story_c1_anvil, set: { hedda_klan: kurtarildi }, add: { merhamet: 1 } }
+      - { code: shatter, set: { hedda_klan: yikildi } }
+
+  - code: c1_keep
+    chapter: chapter_1
+    min_level: 80
+    quests: [story_c1_garrison]
+    after: true
+
+  - code: c1_varn
+    chapter: chapter_1
+    min_level: 88
+    quests: [story_c1_varn]
+    after: true
+    options:
+      - { code: peace, set: { varn_ruhu: huzurda }, add: { merhamet: 1 } }
+      - { code: bound, set: { varn_ruhu: bagli } }
+
+  - code: c1_keep_future
+    chapter: chapter_1
+    min_level: 88
+    extras:
+      - { key: guard, when: { taraf: demirkale } }
+    options:
+      - { code: ruler, set: { isolde: hukumdar } }
+      - { code: annex, set: { isolde: surgun }, reputation: { ironhold_guard: 400 } }
+
+  - code: c1_shard
+    chapter: chapter_1
+    min_level: 88
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c1_siege
+    chapter: chapter_1
+    min_level: 100
+    quests: [story_c1_siege]
+    after: true
+    extras:
+      - { key: bound, when: { varn_ruhu: bagli } }
+      - { key: peace, when: { varn_ruhu: huzurda } }
+      - { key: mirel_companion, when: { mirel: yoldas }, after: true }
+      - { key: mirel_free, when: { mirel: serbest }, after: true }
+      - { key: mirel_jailed, when: { mirel: tutuklu }, after: true }
+
+quests:
+  - code: story_p_bread
+    display_name_key: quest.story_p_bread
+    category: story
+    min_level: 1
+    objectives:
+      - { event: "gather_mining", count: 10 }
+      - { event: "gather_herbalism", count: 5 }
+    reward_xp: 1126
+    reward_gold_copper: 50
+    sort_order: 2000
+
+  - code: story_p_kettle
+    display_name_key: quest.story_p_kettle
+    category: story
+    min_level: 1
+    objectives:
+      - { event: "mob_killed:young_boar", count: 6 }
+      - { event: "item_crafted:food_grilled_guppy", count: 1 }
+    reward_xp: 1126
+    reward_gold_copper: 50
+    sort_order: 2010
+
+  - code: story_c1_wolves
+    display_name_key: quest.story_c1_wolves
+    category: story
+    min_level: 2
+    objectives:
+      - { event: "mob_killed", count: 8 }
+      - { event: "gather_hunting", count: 3 }
+    reward_xp: 1183
+    reward_gold_copper: 142
+    sort_order: 2020
+
+  - code: story_c1_bandits
+    display_name_key: quest.story_c1_bandits
+    category: story
+    min_level: 5
+    objectives:
+      - { event: "mob_killed", count: 12 }
+    reward_xp: 1357
+    reward_gold_copper: 562
+    sort_order: 2030
+
+  - code: story_c1_crypt
+    display_name_key: quest.story_c1_crypt
+    category: story
+    min_level: 6
+    objectives:
+      - { event: "dungeon_cleared:crypt_of_ashes", count: 1 }
+    reward_xp: 2360
+    reward_gold_copper: 1183
+    sort_order: 2040
+
+  - code: story_c1_prototype
+    display_name_key: quest.story_c1_prototype
+    category: story
+    min_level: 8
+    objectives:
+      - { event: "gather_woodcutting", count: 10 }
+      - { event: "gather_mining", count: 10 }
+      - { event: "item_crafted:aluminium_bar", count: 1 }
+    reward_xp: 1536
+    reward_gold_copper: 1138
+    sort_order: 2050
+
+  - code: story_c1_ledger
+    display_name_key: quest.story_c1_ledger
+    category: story
+    min_level: 12
+    objectives:
+      - { event: "mob_killed", count: 15 }
+    reward_xp: 1782
+    reward_gold_copper: 2091
+    sort_order: 2060
+
+  - code: story_c1_peak
+    display_name_key: quest.story_c1_peak
+    category: story
+    min_level: 18
+    objectives:
+      - { event: "mob_killed:shadow_stalker", count: 6 }
+      - { event: "gather_mining", count: 20 }
+    reward_xp: 2172
+    reward_gold_copper: 3842
+    sort_order: 2070
+
+  - code: story_c1_spire
+    display_name_key: quest.story_c1_spire
+    category: story
+    min_level: 23
+    objectives:
+      - { event: "dungeon_cleared:obsidian_spire", count: 1 }
+    reward_xp: 4196
+    reward_gold_copper: 8878
+    sort_order: 2080
+
+  - code: story_c1_marsh
+    display_name_key: quest.story_c1_marsh
+    category: story
+    min_level: 30
+    objectives:
+      - { event: "mob_killed", count: 25 }
+      - { event: "gather_herbalism", count: 10 }
+      - { event: "item_crafted:potion_hp_small", count: 1 }
+    reward_xp: 3040
+    reward_gold_copper: 8265
+    sort_order: 2090
+
+  - code: story_c1_temple
+    display_name_key: quest.story_c1_temple
+    category: story
+    min_level: 38
+    objectives:
+      - { event: "dungeon_cleared:sunken_temple", count: 1 }
+    reward_xp: 6166
+    reward_gold_copper: 18852
+    sort_order: 2100
+
+  - code: story_c1_buried
+    display_name_key: quest.story_c1_buried
+    category: story
+    min_level: 55
+    objectives:
+      - { event: "mob_killed:dwarf_ghost", count: 10 }
+      - { event: "gather_mining", count: 10 }
+    reward_xp: 5360
+    reward_gold_copper: 20517
+    sort_order: 2110
+
+  - code: story_c1_mine
+    display_name_key: quest.story_c1_mine
+    category: story
+    min_level: 63
+    objectives:
+      - { event: "dungeon_cleared:forgotten_mine", count: 1 }
+    reward_xp: 10471
+    reward_gold_copper: 40244
+    sort_order: 2120
+
+  - code: story_c1_anvil
+    display_name_key: quest.story_c1_anvil
+    category: story
+    min_level: 63
+    objectives:
+      - { event: "item_crafted:iron_bar", count: 10 }
+      - { event: "item_crafted:copper_bar", count: 5 }
+    reward_xp: 6283
+    reward_gold_copper: 25152
+    sort_order: 2130
+
+  - code: story_c1_garrison
+    display_name_key: quest.story_c1_garrison
+    category: story
+    min_level: 80
+    objectives:
+      - { event: "mob_killed:ghost_guard", count: 10 }
+      - { event: "mob_killed", count: 30 }
+    reward_xp: 8590
+    reward_gold_copper: 35992
+    sort_order: 2140
+
+  - code: story_c1_varn
+    display_name_key: quest.story_c1_varn
+    category: story
+    min_level: 88
+    objectives:
+      - { event: "dungeon_cleared:northern_keep", count: 1 }
+    reward_xp: 16428
+    reward_gold_copper: 66438
+    sort_order: 2150
+
+  - code: story_c1_siege
+    display_name_key: quest.story_c1_siege
+    category: story
+    min_level: 100
+    objectives:
+      - { event: "raid_cleared:north_keep_siege", count: 1 }
+    reward_xp: 19988
+    reward_gold_copper: 80480
+    sort_order: 2160
+

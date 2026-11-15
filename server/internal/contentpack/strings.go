@@ -162,8 +162,10 @@ func validateStrings(s *Strings, p *Pack) error {
 		add("pet", x.Code, x.Code+".creature", x.Code+".habitat", x.Code+".story") // pet index (DD-342)
 		add("element", x.Element)
 	}
-	for _, x := range p.Story {
-		add("story", x.Code, x.Code+".body") // title and text (DD-313)
+	if p.Story != nil {
+		for _, x := range p.Story.Chapters {
+			add("story", x.Code, x.Code+".body") // title and blurb (DD-313)
+		}
 	}
 	var missing []string
 	for _, k := range keys {

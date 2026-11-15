@@ -262,10 +262,12 @@ Hikâye ekranının son sayfası, seçilen sona göre:
 
 ## Ek — Uygulama notları
 
-Bu bölüm kod değildir; hikâyeyi oyuna aktarırken izlenecek yolu not eder.
+Önsöz ve I. Bölüm oyunda (DD-367). Nasıl bağlandığı:
 
-- **Bölüm kodları:** Her ana sahne (`0.1`, `1.1` …) bir `story.<kod>` bölümü olabilir. `min_level` sahne başlığındaki seviyenin alt sınırıdır. `requires` bir önceki sahne.
-- **Görevler:** Sahnelerdeki görev kutuları mevcut görev grameriyle (canavar avla, kaynak topla, eşya üret, zindan/baskın temizle) yazılabilecek şekilde hazırlandı. Görevlerin hepsi mevcut canavar, zindan ve baskın adlarını kullanır. Bazıları (Arınma Zinciri, Kök Mührü, Anı Merceği …) yeni görev tarifi ister.
-- **Tercihler ve bayraklar:** Hikâye tercihleri için karakter başına bir bayrak deposu ve bir tercih ucu gerekir. Bu, şu anki görev sisteminde yok.
+- **Sahneler:** `content/story.yaml`, sahne sırayla okunur; her sahne `min_level`, isteğe bağlı `when` koşulu (tutmazsa atlanır), hikâye görevleri, ek paragraflar (`extras`) ve tercih (`options`) taşır. Bir belge sahnesi birden çok tercih içeriyorsa oyunda ayrı sahnelere bölündü (1.8 → `c1_varn`, `c1_keep_future`, `c1_shard`).
+- **Metin:** `content/story/tr.yaml` + `en.yaml` (diğer diller İngilizceye düşer). Belgedeki metnin oyuna uyarlanmış hâli; görev kutuları metinde değil, görev kartı olarak gösterilir.
+- **Görevler:** `story` kategorili görevler (`story.yaml` → `quests`), görev panosunda yalnız sahnesi açıkken çıkar. Hedefler oyunda sayılabilen olaylardan seçildi: zindan-içi canavarlar avlanamadığı için bazı "X avla" görevleri genel canavar sayısına çevrildi; "Sis İksiri" küçük can iksiri, "Gümüş Külçesi" bakır külçesi oldu.
+- **Bayraklar:** Saklanmaz; seçilen seçeneklerden (`progression.story_scene`) her istekte yeniden hesaplanır. Sayaçlar: `merhamet`, `muhur`, `yut`, `birak`.
+- **Oyun etkisi:** Hizip seçimi ve bazı tercihler hizip itibarı verir (`reputation`). Ödül eşyaları (arma, pelerin, yüzük, fresk) şimdilik yalnız metinde.
 - **Boss tekrarları:** Hikâyede ilk yenilgi bir sınav ya da düello olarak anlatılır; bağışlama tercihi o yenilgiden sonra gelir. Zindan ve baskınların tekrar oynanması bununla çelişmez.
-- **Yedi dil:** Hikâye şu an yalnızca Türkçe. Yayından önce diğer altı dile çevrilmeli (DD-361: yeni içerik İngilizceye düşer).
+- **Kalan:** II.–VI. Bölüm ve sonlar aynı biçimle eklenecek; Arınma Zinciri dışındaki özel görev tarifleri (Kök Mührü, Anı Merceği …) yeni görev türü ister.

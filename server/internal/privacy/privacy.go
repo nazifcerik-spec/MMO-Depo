@@ -41,6 +41,8 @@ var exportSections = []struct{ name, sql string }{
 	        FROM crafting.character_profession WHERE character_id IN ` + chars},
 	{"quests", `SELECT character_id, quest_code, state, progress, accepted_at, completed_at
 	        FROM progression.character_quest WHERE character_id IN ` + chars + ` ORDER BY accepted_at DESC LIMIT 2000`},
+	{"story", `SELECT character_id, scene_code, option_code, done_at
+	        FROM progression.story_scene WHERE character_id IN ` + chars + ` ORDER BY done_at`},
 	{"achievements", `SELECT character_id, achievement_code, progress_current, unlocked_at
 	        FROM progression.achievement_progress WHERE character_id IN ` + chars},
 	{"titles", `SELECT character_id, title_code, unlocked_at FROM progression.character_title WHERE character_id IN ` + chars},

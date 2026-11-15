@@ -55,6 +55,7 @@ import (
 	"github.com/otter/server/internal/shop"
 	"github.com/otter/server/internal/skill"
 	"github.com/otter/server/internal/social"
+	"github.com/otter/server/internal/story"
 	"github.com/otter/server/internal/support"
 	"github.com/otter/server/internal/trade"
 	"github.com/otter/server/internal/vendor"
@@ -270,6 +271,9 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 	// Quests tick from the same event stream as mastery/achievements (DD-221).
 	questSvc := quest.NewService(pool, charSvc, txnSvc, charSvc, logger).WithPublisher(wsPub).
 		WithGatherXP(gatherSvc) // quest profession XP (DD-318)
+	// Story scenes offer the story quests (DD-367).
+	storySvc := story.NewService(pool, charSvc, progSvc)
+	questSvc.WithStoryGate(storySvc)
 	recorder := progression.Recorders(progSvc, questSvc)
 	activitySvc.WithRecorder(recorder).WithGatherBonus(gatherBonus{progSvc, equipSvc}).WithNotifier(notifSvc)
 	// Mastery bonuses feed the sheet's modifier stack (DD-220).
@@ -434,6 +438,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		NotifHandler:      notifHandler,
 		ProgHandler:       progHandler,
 		QuestHandler:      quest.NewHandler(questSvc),
+		StoryHandler:      story.NewHandler(storySvc),
 		ClassSkills:       classSkills,
 		WorldEventHandler: worldEventHandler,
 		ConsumableHandler: consumable.NewHandler(consumableSvc),

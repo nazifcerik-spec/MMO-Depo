@@ -175,6 +175,8 @@ String errorText(AppLocalizations l, Object error) {
     'E_ALREADY_CLAIMED' => l.errAlreadyClaimed,
     'E_EVENT_NOT_ACTIVE' => l.errEventNotActive,
     'E_QUEST_LOCKED' => l.errQuestLocked,
+    'E_STORY_QUESTS' || 'E_STORY_OPTION_LOCKED' => l.errStoryQuests,
+    'E_STORY_NOT_CURRENT' || 'E_STORY_CHOSEN' || 'E_STORY_OPTION' => l.errStoryMoved,
     'E_QUEST_TAKEN' => l.errQuestTaken,
     'E_QUEST_NOT_OFFERED' => l.errQuestNotOffered,
     'E_QUEST_CAP' => l.errQuestCap,

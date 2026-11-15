@@ -3,6 +3,7 @@ package progression
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"strings"
@@ -336,8 +337,8 @@ func (s *Service) recordAchievements(ctx context.Context, tx pgx.Tx, char uuid.U
 }
 
 func (s *Service) recordReputation(ctx context.Context, tx pgx.Tx, char uuid.UUID, events []Event) error {
-	now := s.now().UTC()
-	for _, f := range s.cat.factions {
+	for i := range s.cat.factions {
+		f := &s.cat.factions[i]
 		delta := 0
 		for _, e := range events {
 			delta += f.Sources[e.Kind] * int(e.Amount)
@@ -345,31 +346,51 @@ func (s *Service) recordReputation(ctx context.Context, tx pgx.Tx, char uuid.UUI
 		if delta == 0 {
 			continue
 		}
-		var rep, used int
-		var resetOn time.Time
-		if _, err := tx.Exec(ctx, `
-			INSERT INTO progression.character_reputation (character_id, faction_code)
-			VALUES ($1, $2) ON CONFLICT DO NOTHING`, char, f.Code); err != nil {
-			return err
-		}
-		if err := tx.QueryRow(ctx, `
-			SELECT rep_xp, daily_gain_used, daily_reset_on FROM progression.character_reputation
-			 WHERE character_id = $1 AND faction_code = $2 FOR UPDATE`, char, f.Code).Scan(&rep, &used, &resetOn); err != nil {
-			return err
-		}
-		if !SameUTCDay(resetOn, now) {
-			used = 0
-		}
-		rep, used = ApplyRepGain(rep, used, delta, f.DailyCap)
-		if _, err := tx.Exec(ctx, `
-			UPDATE progression.character_reputation
-			   SET rep_xp = $3, current_tier = $4, daily_gain_used = $5, daily_reset_on = $6, last_gain_at = now()
-			 WHERE character_id = $1 AND faction_code = $2`,
-			char, f.Code, rep, RepTier(rep), used, now); err != nil {
+		if err := s.addReputation(ctx, tx, char, f, delta); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+// ErrUnknownFaction: GrantReputation names no faction of the catalog.
+var ErrUnknownFaction = errors.New("progression: unknown faction")
+
+// GrantReputation adds reputation to one faction inside the caller's tx (a
+// story choice, DD-367); the daily cap applies as for any gain.
+func (s *Service) GrantReputation(ctx context.Context, tx pgx.Tx, char uuid.UUID, faction string, delta int) error {
+	for i := range s.cat.factions {
+		if s.cat.factions[i].Code == faction {
+			return s.addReputation(ctx, tx, char, &s.cat.factions[i], delta)
+		}
+	}
+	return fmt.Errorf("%w: %s", ErrUnknownFaction, faction)
+}
+
+func (s *Service) addReputation(ctx context.Context, tx pgx.Tx, char uuid.UUID, f *faction, delta int) error {
+	now := s.now().UTC()
+	var rep, used int
+	var resetOn time.Time
+	if _, err := tx.Exec(ctx, `
+		INSERT INTO progression.character_reputation (character_id, faction_code)
+		VALUES ($1, $2) ON CONFLICT DO NOTHING`, char, f.Code); err != nil {
+		return err
+	}
+	if err := tx.QueryRow(ctx, `
+		SELECT rep_xp, daily_gain_used, daily_reset_on FROM progression.character_reputation
+		 WHERE character_id = $1 AND faction_code = $2 FOR UPDATE`, char, f.Code).Scan(&rep, &used, &resetOn); err != nil {
+		return err
+	}
+	if !SameUTCDay(resetOn, now) {
+		used = 0
+	}
+	rep, used = ApplyRepGain(rep, used, delta, f.DailyCap)
+	_, err := tx.Exec(ctx, `
+		UPDATE progression.character_reputation
+		   SET rep_xp = $3, current_tier = $4, daily_gain_used = $5, daily_reset_on = $6, last_gain_at = now()
+		 WHERE character_id = $1 AND faction_code = $2`,
+		char, f.Code, rep, RepTier(rep), used, now)
+	return err
 }
 
 // --- reads ------------------------------------------------------------------

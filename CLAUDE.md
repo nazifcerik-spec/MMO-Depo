@@ -340,6 +340,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 161. **CI yeşil (bitti)** — Sprint 161, DD-366. Lint düzeltmeleri, `klauspost/compress` v1.20.2, `TestPgLockerIsExclusive` + `TestEveryWorkerJobRuns` + `TestGuildRules`; worker kapsamı %78,7, eşik 76; kapı düşen paketi CI uyarısı olarak yazar.
 
+162. **Hikâye tercihleri + önsöz ve I. Bölüm (bitti)** — Sprint 162, DD-367. Migration 0070 (`progression.story_scene`, görev kategorisi `story`). `content/story.yaml` sahneler (`when` koşulu, hikâye görevleri, `extras`, `options`: bayrak/sayaç/itibar/`requires_quest`) + `quests`; metin `content/story/{tr,en}.yaml` (diğer diller İngilizceye). `internal/story`: bayraklar seçilen seçeneklerden yeniden oynatılır, `GET /character/{id}/story`, `POST .../story/{scene}/advance`, `GET /v1/story/text`; `quest.WithStoryGate` hikâye görevlerini yalnız mevcut sahnede sunar; `progression.GrantReputation`; hedef `raid_cleared:<baskın>`. İstemci: hikâye günlüğü (sahne metni, görev kabul/teslim, tercih onayı + sonuç), görev ekranında Hikâye bölümü. İçerik: önsöz + I. Bölüm (23 sahne, 17 görev).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -1535,7 +1535,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get questsNoneOpen => 'Açık görev yok. Aşağıdan birini seç.';
 
   @override
-  String get questsStory => 'Hikâye';
+  String get questsStory => 'Ana görevler';
 
   @override
   String get questsSide => 'Yan görevler';
@@ -3991,4 +3991,43 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillNeedsShield => 'Kalkan gerekir';
+
+  @override
+  String get storyContinue => 'Devam et';
+
+  @override
+  String get storyChoiceTitle => 'Seçimin';
+
+  @override
+  String get storyChoiceConfirm => 'Bu seçim hikâyenin gidişini belirler ve geri alınamaz.';
+
+  @override
+  String get storyChoose => 'Seç';
+
+  @override
+  String storyYourChoice(String option) {
+    return 'Seçimin: $option';
+  }
+
+  @override
+  String get storyQuests => 'Hikâye görevleri';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return 'Önce: $quest';
+  }
+
+  @override
+  String get storyQuestDone => 'Teslim edildi';
+
+  @override
+  String objRaid(String raid) {
+    return '$raid baskınını tamamla';
+  }
+
+  @override
+  String get errStoryQuests => 'Önce gereken görevi teslim et.';
+
+  @override
+  String get errStoryMoved => 'Hikâye ilerledi; sayfa yenilendi.';
 }

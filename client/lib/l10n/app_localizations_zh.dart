@@ -1532,7 +1532,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get questsNoneOpen => '没有进行中的任务，请在下方选择。';
 
   @override
-  String get questsStory => '主线';
+  String get questsStory => '主线任务';
 
   @override
   String get questsSide => '支线任务';
@@ -3943,4 +3943,43 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get skillNeedsShield => '需要盾牌';
+
+  @override
+  String get storyContinue => '继续';
+
+  @override
+  String get storyChoiceTitle => '你的选择';
+
+  @override
+  String get storyChoiceConfirm => '这个选择将影响故事的走向，且无法撤销。';
+
+  @override
+  String get storyChoose => '选择';
+
+  @override
+  String storyYourChoice(String option) {
+    return '你选择了：$option';
+  }
+
+  @override
+  String get storyQuests => '剧情任务';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return '先完成：$quest';
+  }
+
+  @override
+  String get storyQuestDone => '已提交';
+
+  @override
+  String objRaid(String raid) {
+    return '通关团队副本 $raid';
+  }
+
+  @override
+  String get errStoryQuests => '请先提交所需的任务。';
+
+  @override
+  String get errStoryMoved => '故事已推进，页面已刷新。';
 }

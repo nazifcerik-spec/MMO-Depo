@@ -1534,7 +1534,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get questsNoneOpen => 'Открытых заданий нет. Выберите одно ниже.';
 
   @override
-  String get questsStory => 'Сюжет';
+  String get questsStory => 'Основные задания';
 
   @override
   String get questsSide => 'Побочные задания';
@@ -3991,4 +3991,43 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillNeedsShield => 'Нужен щит';
+
+  @override
+  String get storyContinue => 'Продолжить';
+
+  @override
+  String get storyChoiceTitle => 'Твой выбор';
+
+  @override
+  String get storyChoiceConfirm => 'Этот выбор определит ход истории, и его нельзя отменить.';
+
+  @override
+  String get storyChoose => 'Выбрать';
+
+  @override
+  String storyYourChoice(String option) {
+    return 'Твой выбор: $option';
+  }
+
+  @override
+  String get storyQuests => 'Сюжетные задания';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return 'Сначала: $quest';
+  }
+
+  @override
+  String get storyQuestDone => 'Сдано';
+
+  @override
+  String objRaid(String raid) {
+    return 'Пройти рейд «$raid»';
+  }
+
+  @override
+  String get errStoryQuests => 'Сначала сдай нужное задание.';
+
+  @override
+  String get errStoryMoved => 'История продвинулась; страница обновлена.';
 }

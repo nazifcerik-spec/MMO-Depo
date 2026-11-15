@@ -97,6 +97,7 @@ type Deps struct {
 	NotifHandler       *notification.Handler
 	ProgHandler        *progression.Handler
 	QuestHandler       *quest.Handler
+	StoryHandler       *story.Handler
 	ClassSkills        *classskill.Service
 	WorldEventHandler  *worldevent.Handler
 	AdminHandler       *admin.Handler
@@ -528,6 +529,12 @@ func NewRouter(d Deps) http.Handler {
 					r.With(idem).Post("/quests/{code}/turn-in", h.TurnIn)
 				}
 
+				// --- Story choices (DD-367) ---
+				if h := d.StoryHandler; h != nil {
+					r.Get("/story", h.Journal)
+					r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).Post("/story/{scene}/advance", h.Advance)
+				}
+
 				// --- Marketplace (Sprint 22) ---
 				if h := d.MarketHandler; h != nil {
 					idem := appmw.Idempotency(d.IdempotencyStore, d.Logger)
@@ -564,7 +571,8 @@ func NewRouter(d Deps) http.Handler {
 
 			// --- Public item set catalog (DD-277) ---
 			r.Get("/item-sets", itemset.CatalogHandler)
-			r.Get("/story", story.CatalogHandler) // story mode chapters (DD-313)
+			r.Get("/story", story.CatalogHandler)   // story mode chapters (DD-313)
+			r.Get("/story/text", story.TextHandler) // scene text per language (DD-367)
 			if h := d.PetHandler; h != nil {
 				r.Get("/pets", h.Species) // pet species (DD-328)
 			}

@@ -24,6 +24,7 @@ String objectiveText(AppLocalizations l, String event) {
     'mob_killed' => target == null ? l.objKillAny : l.objKill(ContentNames.of('mob', target)),
     'boss_killed' => l.objBoss,
     'dungeon_cleared' => target == null ? l.objDungeonAny : l.objDungeon(ContentNames.of('dungeon', target)),
+    'raid_cleared' => l.objRaid(ContentNames.of('dungeon', target ?? '')),
     'item_crafted' => target == null ? l.objCraftAny : l.objCraft(itemName(target)),
     _ => humanize(event),
   };
@@ -93,7 +94,7 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
             final open = [...b.open]
               ..sort((a, c) => (a.state == 'completed' ? 0 : 1) - (c.state == 'completed' ? 0 : 1));
             final byCat = {
-              for (final cat in const ['main', 'side', 'daily'])
+              for (final cat in const ['story', 'main', 'side', 'daily'])
                 cat: b.available.where((q) => q.category == cat).toList(),
             };
             final text = Theme.of(context).textTheme;
@@ -112,7 +113,7 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
               header(l.questsInProgress),
               if (open.isEmpty) Text(l.questsNoneOpen, style: text.bodySmall),
               for (final q in open)
-                _QuestCard(
+                QuestCard(
                   // keyed so a card keeps its element and its border turns green in place
                   key: ValueKey('open-${q.code}'),
                   q: q,
@@ -120,7 +121,12 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
                   primaryLabel: l.turnIn,
                   onAbandon: () => _abandon(q),
                 ),
-              for (final (cat, title) in [('main', l.questsStory), ('side', l.questsSide), ('daily', l.questsDaily)])
+              for (final (cat, title) in [
+                ('story', l.storyTitle),
+                ('main', l.questsStory),
+                ('side', l.questsSide),
+                ('daily', l.questsDaily),
+              ])
                 if (byCat[cat]!.isNotEmpty) ...[
                   header(
                     title,
@@ -129,11 +135,7 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
                         : null,
                   ),
                   for (final q in byCat[cat]!)
-                    _QuestCard(
-                      q: q,
-                      onPrimary: () => _mutate(() => widget.repo.accept(q.code)),
-                      primaryLabel: l.accept,
-                    ),
+                    QuestCard(q: q, onPrimary: () => _mutate(() => widget.repo.accept(q.code)), primaryLabel: l.accept),
                 ],
             ];
           }),
@@ -143,8 +145,10 @@ class _QuestsScreenState extends State<QuestsScreen> with PanelState {
   }
 }
 
-class _QuestCard extends StatelessWidget {
-  const _QuestCard({super.key, required this.q, required this.primaryLabel, this.onPrimary, this.onAbandon});
+/// One quest with its objectives, rewards and one action (accept / turn in);
+/// the story screen shows its scene quests with it too (DD-367).
+class QuestCard extends StatelessWidget {
+  const QuestCard({super.key, required this.q, required this.primaryLabel, this.onPrimary, this.onAbandon});
 
   final Quest q;
   final String primaryLabel;
@@ -201,6 +205,7 @@ class _QuestCard extends StatelessWidget {
                         value: (o.progress / o.count).clamp(0, 1).toDouble(),
                         color: o.progress >= o.count ? Palette.success : Palette.accent,
                         valueText: '${o.progress}/${o.count}',
+                        stacked: true, // objective labels are long ("Gather (Mining)")
                       )
                     : Text('• ${objectiveText(l, o.event)} ×${o.count}', style: text.bodyMedium),
               ),

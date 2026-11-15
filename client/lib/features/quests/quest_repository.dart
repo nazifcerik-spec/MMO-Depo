@@ -42,7 +42,7 @@ class Quest {
   );
 
   final String code;
-  final String category; // main | side | daily
+  final String category; // story | main | side | daily
   final String state; // available | active | completed
   final List<QuestObjective> objectives;
   final int rewardXp;

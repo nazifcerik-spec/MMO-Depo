@@ -454,7 +454,7 @@
   "quests": "任务",
   "questsInProgress": "进行中",
   "questsNoneOpen": "没有进行中的任务，请在下方选择。",
-  "questsStory": "主线",
+  "questsStory": "主线任务",
   "questsSide": "支线任务",
   "questsDaily": "每日",
   "resetsIn": "{time}后重置",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "你的出价被超过",
   "nkMarketWon": "你赢得了拍卖",
   "evMarketOutbid": "你的出价被超过，金币已退还。",
-  "skillNeedsShield": "需要盾牌"
+  "skillNeedsShield": "需要盾牌",
+  "storyContinue": "继续",
+  "storyChoiceTitle": "你的选择",
+  "storyChoiceConfirm": "这个选择将影响故事的走向，且无法撤销。",
+  "storyChoose": "选择",
+  "storyYourChoice": "你选择了：{option}",
+  "storyQuests": "剧情任务",
+  "storyNeedsQuest": "先完成：{quest}",
+  "storyQuestDone": "已提交",
+  "objRaid": "通关团队副本 {raid}",
+  "errStoryQuests": "请先提交所需的任务。",
+  "errStoryMoved": "故事已推进，页面已刷新。"
 }

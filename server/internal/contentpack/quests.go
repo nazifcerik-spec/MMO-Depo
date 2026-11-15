@@ -35,7 +35,7 @@ type questsFile struct {
 }
 
 var (
-	questCategories = map[string]bool{"main": true, "side": true, "daily": true}
+	questCategories = map[string]bool{"main": true, "side": true, "daily": true, "story": true}
 	gatherKinds     = map[string]bool{"mining": true, "fishing": true, "woodcutting": true, "herbalism": true, "hunting": true}
 )
 
@@ -73,7 +73,7 @@ func validateQuests(quests []Quest, r refs) error {
 			return fmt.Errorf("quest %s: display_name_key required", q.Code)
 		}
 		if !questCategories[q.Category] {
-			return fmt.Errorf("quest %s: category %q not in main|side|daily", q.Code, q.Category)
+			return fmt.Errorf("quest %s: category %q not in main|side|daily|story", q.Code, q.Category)
 		}
 		if q.MinLevel < 1 || q.MinLevel > 1000 { // the character cap (DD-278)
 			return fmt.Errorf("quest %s: min_level must be 1..1000", q.Code)
@@ -137,7 +137,7 @@ func validateQuestEvent(ev string, r refs) error {
 	switch kind {
 	case "mob_killed":
 		return check(r.hunted, "hunted mob") // only hunts count kills per mob (DD-343)
-	case "dungeon_cleared":
+	case "dungeon_cleared", "raid_cleared": // raids are dungeon templates (DD-261)
 		return check(r.dungeons, "dungeon")
 	case "item_crafted":
 		return check(r.items, "item")

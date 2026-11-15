@@ -454,7 +454,7 @@
   "quests": "퀘스트",
   "questsInProgress": "진행 중",
   "questsNoneOpen": "진행 중인 퀘스트가 없습니다. 아래에서 고르세요.",
-  "questsStory": "스토리",
+  "questsStory": "메인 퀘스트",
   "questsSide": "서브 퀘스트",
   "questsDaily": "일일",
   "resetsIn": "{time} 후 초기화",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "입찰가를 추월당했습니다",
   "nkMarketWon": "경매에서 낙찰되었습니다",
   "evMarketOutbid": "입찰가를 추월당해 골드가 반환되었습니다.",
-  "skillNeedsShield": "방패 필요"
+  "skillNeedsShield": "방패 필요",
+  "storyContinue": "계속",
+  "storyChoiceTitle": "너의 선택",
+  "storyChoiceConfirm": "이 선택은 이야기의 흐름을 바꾸며 되돌릴 수 없다.",
+  "storyChoose": "선택",
+  "storyYourChoice": "선택: {option}",
+  "storyQuests": "이야기 퀘스트",
+  "storyNeedsQuest": "먼저: {quest}",
+  "storyQuestDone": "완료함",
+  "objRaid": "{raid} 레이드 완료",
+  "errStoryQuests": "먼저 필요한 퀘스트를 완료해.",
+  "errStoryMoved": "이야기가 진행되어 화면을 새로 고쳤다."
 }

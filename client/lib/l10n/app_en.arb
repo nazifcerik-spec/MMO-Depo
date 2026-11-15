@@ -1086,7 +1086,7 @@
   "quests": "Quests",
   "questsInProgress": "In progress",
   "questsNoneOpen": "No open quests. Pick one below.",
-  "questsStory": "Story",
+  "questsStory": "Main quests",
   "questsSide": "Side quests",
   "questsDaily": "Daily",
   "resetsIn": "Resets in {time}",
@@ -3017,5 +3017,37 @@
   "nkMarketOutbid": "You were outbid",
   "nkMarketWon": "You won an auction",
   "evMarketOutbid": "You were outbid; your gold is back.",
-  "skillNeedsShield": "Shield required"
+  "skillNeedsShield": "Shield required",
+  "storyContinue": "Continue",
+  "storyChoiceTitle": "Your choice",
+  "storyChoiceConfirm": "This choice shapes how the story unfolds and cannot be undone.",
+  "storyChoose": "Choose",
+  "storyYourChoice": "You chose: {option}",
+  "@storyYourChoice": {
+    "placeholders": {
+      "option": {
+        "type": "String"
+      }
+    }
+  },
+  "storyQuests": "Story quests",
+  "storyNeedsQuest": "First: {quest}",
+  "@storyNeedsQuest": {
+    "placeholders": {
+      "quest": {
+        "type": "String"
+      }
+    }
+  },
+  "storyQuestDone": "Turned in",
+  "objRaid": "Clear the {raid} raid",
+  "@objRaid": {
+    "placeholders": {
+      "raid": {
+        "type": "String"
+      }
+    }
+  },
+  "errStoryQuests": "Turn in the quest this needs first.",
+  "errStoryMoved": "The story has moved on; the page was refreshed."
 }

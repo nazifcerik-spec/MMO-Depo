@@ -19,6 +19,9 @@ const (
 	CategoryMain  = "main"
 	CategorySide  = "side"
 	CategoryDaily = "daily"
+	// CategoryStory quests are offered by the story's current scene only
+	// (DD-367); their rewards are the content's, like main quests.
+	CategoryStory = "story"
 
 	// DailySlots is how many dailies each character is offered per UTC day.
 	DailySlots = 3

@@ -56,8 +56,10 @@ type Service struct {
 	// gather pays gathering profession XP (DD-318); nil = none.
 	gather GatherXP
 	pub    EventPublisher
-	now    func() time.Time
-	log    *slog.Logger
+	// story offers the story quests (DD-367); nil = none offered.
+	story StoryGate
+	now   func() time.Time
+	log   *slog.Logger
 }
 
 func NewService(pool *pgxpool.Pool, chars CharacterFetcher, txn economy.TxnService, xp XPGranter, logger *slog.Logger) *Service {
@@ -70,6 +72,23 @@ func NewService(pool *pgxpool.Pool, chars CharacterFetcher, txn economy.TxnServi
 }
 
 func (s *Service) WithPublisher(p EventPublisher) *Service { s.pub = p; return s }
+
+// StoryGate names the story quests a character's current scene offers
+// (story.Service).
+type StoryGate interface {
+	StoryQuests(ctx context.Context, char uuid.UUID, level int16) (map[string]bool, error)
+}
+
+// WithStoryGate lets the story offer its quests (DD-367).
+func (s *Service) WithStoryGate(g StoryGate) *Service { s.story = g; return s }
+
+// storyOffer is the story quests offered now (none without a gate).
+func (s *Service) storyOffer(ctx context.Context, char uuid.UUID, level int16) (map[string]bool, error) {
+	if s.story == nil {
+		return map[string]bool{}, nil
+	}
+	return s.story.StoryQuests(ctx, char, level)
+}
 
 // WithClock injects the clock (tests: day rollover).
 func (s *Service) WithClock(now func() time.Time) *Service { s.now = now; return s }
@@ -222,12 +241,19 @@ func (s *Service) List(ctx context.Context, char, account uuid.UUID) (*Board, er
 	for _, code := range cat.DailyOffer(char, c.Level, today) {
 		offered[code] = true
 	}
+	story, err := s.storyOffer(ctx, char, c.Level)
+	if err != nil {
+		return nil, err
+	}
 	for i := range cat.list {
 		t := &cat.list[i]
 		if taken[t.Code] || done[t.Code] || t.MinLevel > c.Level {
 			continue
 		}
 		if t.Category == CategoryDaily && !offered[t.Code] {
+			continue
+		}
+		if t.Category == CategoryStory && !story[t.Code] {
 			continue
 		}
 		if t.Requires != "" && !done[t.Requires] { // prerequisites are never dailies
@@ -267,6 +293,15 @@ func (s *Service) Accept(ctx context.Context, char, account uuid.UUID, code stri
 			return nil, ErrNotOffered
 		}
 		dayKey = &today
+	}
+	if t.Category == CategoryStory {
+		story, err := s.storyOffer(ctx, char, c.Level)
+		if err != nil {
+			return nil, err
+		}
+		if !story[code] {
+			return nil, ErrLocked
+		}
 	}
 	progress := make([]int64, len(t.Objectives))
 	raw, _ := json.Marshal(progress)

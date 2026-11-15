@@ -1532,7 +1532,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get questsNoneOpen => '진행 중인 퀘스트가 없습니다. 아래에서 고르세요.';
 
   @override
-  String get questsStory => '스토리';
+  String get questsStory => '메인 퀘스트';
 
   @override
   String get questsSide => '서브 퀘스트';
@@ -3947,4 +3947,43 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get skillNeedsShield => '방패 필요';
+
+  @override
+  String get storyContinue => '계속';
+
+  @override
+  String get storyChoiceTitle => '너의 선택';
+
+  @override
+  String get storyChoiceConfirm => '이 선택은 이야기의 흐름을 바꾸며 되돌릴 수 없다.';
+
+  @override
+  String get storyChoose => '선택';
+
+  @override
+  String storyYourChoice(String option) {
+    return '선택: $option';
+  }
+
+  @override
+  String get storyQuests => '이야기 퀘스트';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return '먼저: $quest';
+  }
+
+  @override
+  String get storyQuestDone => '완료함';
+
+  @override
+  String objRaid(String raid) {
+    return '$raid 레이드 완료';
+  }
+
+  @override
+  String get errStoryQuests => '먼저 필요한 퀘스트를 완료해.';
+
+  @override
+  String get errStoryMoved => '이야기가 진행되어 화면을 새로 고쳤다.';
 }

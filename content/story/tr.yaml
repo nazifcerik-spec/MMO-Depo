@@ -1,0 +1,441 @@
+# Hikâye sahne metinleri (tr), DD-367. Anahtarlar content/story.yaml'daki
+# sahnelerden gelir: <sahne>, <sahne>.body, .after, .x.<ek>, .<seçenek>,
+# .<seçenek>.result. Biçim: boş satır paragraf ayırır; **Ad:** konuşanı,
+# *...* iç sesi (italik) gösterir.
+
+# --- Önsöz ---------------------------------------------------------------
+
+p_star: "Düşen Yıldız"
+p_star.body: |
+  Gece gökyüzü ikiye ayrıldı.
+
+  Hatırladığın tek şey bu. Bir ışık, beyaz değil, kehribar rengi, kor gibi. Ağaçların tepesinden geçerken yaprakları tutuşturmadan ısıttı. Sonra sağ avucunda bir sıcaklık, sonra karanlık.
+
+  Uyandığında yüzünde ıslak çam iğneleri var. Yeşilorman'ın kıyısındasın; bir yanda ağaçlar, öbür yanda Demirkale'nin gri surlarına inen patika. Avucunu açıyorsun. Ortasında, derinin altında, mercimek tanesi kadar bir ışık atıyor. Kalp gibi. Ama senin kalbinle aynı ritimde değil.
+
+  Ayak sesleri. Kısa, ağır, kararlı adımlar. Karşında boyunun yarısı kadar bir cüce kadın duruyor: kızıl örgüleri belinde düğümlü, deri önlüğü is kokuyor, elinde bacağın kalınlığında bir çekiç. Önce sana, sonra avucuna bakıyor.
+
+  **Hedda Taşelli:** "Demek düşen sendin. Bütün gece köpekler uludu, örsüm kendi kendine çınladı. Kalkabiliyor musun? Kalkamıyorsan sırtlarım, ama söylenirim."
+
+  Kalkıyorsun. Bacakların titriyor ama tutuyor.
+
+  **Hedda:** "Adını sormayacağım. Kendin söyleyeceğin zaman söylersin. Ama o avucundakini kimseye gösterme. Demirkale'de her şeyin bir fiyatı vardır, ışığın da."
+p_star.x.dwarf: |
+  Hedda gözlerini kısıyor: "Taşelli soyundan değilsin ama sakalından belli, dağın çocuğusun. Gel bakalım, hemşerim."
+p_star.x.undead: |
+  Hedda bir adım geri çekiliyor, sonra çekicini indiriyor: "Ölüler genelde düşmez, kalkar. Sen ikisini de yapmışsın. İlginç."
+p_star.x.big: |
+  Hedda başını kaldırıp sana bakmak zorunda kalıyor: "Ah, iri. Güzel. Ağır şeyleri sen taşırsın."
+
+p_ironhold: "Demirkale"
+p_ironhold.body: |
+  Demirkale'ye surlardaki dar bir kapıdan giriyorsunuz. Şehir ağır, gürültülü, canlı: dökümhanelerden duman yükseliyor, sokaklarda çekiç sesleri, satıcıların bağırışları. Sokak başlarında göğüslerinde örs ve kalkan arması taşıyan Demirkale Muhafızları.
+
+  Hedda seni dökümhanesinin arkasındaki odaya götürüyor. Bir yatak, bir lavabo, raflarda yarım kalmış kılıçlar.
+
+  **Hedda:** "Burada kalabilirsin. Ama bedava değil. Bu şehirde kimse bedava yemez. Bana Yeşilorman'dan taş ve ot getir, ben de sana karnını doyuracak işler bulayım."
+p_ironhold.after: |
+  Taşları teslim ettiğinde Hedda onları örsün yanına yığıyor, birini alıp çekiçle kırıyor. İçinden çıkan küçük kristal parçalarına uzun uzun bakıyor.
+
+  **Hedda:** "Bunlar düne kadar burada değildi. Taşın içinde ışık var. Senin avucundakinin kırıntıları gibi. Sen düşerken bütün ormana dağılmış olmalı."
+
+p_voice: "Avucundaki Ses"
+p_voice.body: |
+  O gece uyuyamıyorsun. Avucundaki ışık atıyor, atıyor. Sonra ilk kez konuşuyor.
+
+  Kelimeler değil bunlar. Daha çok bir hatıra gibi; sanki bir şeyi hep biliyormuşsun da şimdi hatırlıyormuşsun gibi.
+
+  **Ses:** *"Uyandın. Güzel. Çok uzun zamandır bekliyordum. Korkma, sana zarar vermeyeceğim. Ben parçayım. Sen taşıyıcısın. Bir zamanlar bir bütündük; tacın en küçük ışığı. Ötekiler de uyanıyor. Seni çağıracaklar. Onları bulmalısın."*
+
+  **Ses:** *"Ve kimseye söyleme. Onlar anlamaz. Kilitlemek isterler. Yakmak isterler. Gömmek isterler. Sadece sen anlarsın."*
+
+  Sabah Hedda kahvaltı hazırlıyor: kara ekmek, keçi peyniri, çok koyu bir çay. Sana bakıyor.
+
+  **Hedda:** "Kötü uyudun. Gözlerinden belli. Bir şey mi gördün?"
+p_voice.tell: "Anlat: \"Avucumdaki ışık konuştu.\""
+p_voice.tell.result: |
+  "Avucumdaki ışık konuştu. Benden başka parçaları bulmamı istiyor."
+
+  Hedda uzun süre susuyor. Sonra: "Ninem derdi ki, ışık konuşursa dinle ama sözüne güvenme. Bana her şeyi anlatmaya devam et, olur mu? Yalnız yürüme."
+p_voice.hide: "Sakla: \"Sadece kâbus.\""
+p_voice.hide.result: |
+  "Hayır, sadece kâbus."
+
+  Hedda başını sallıyor ama gözlerini senden ayırmıyor. "Kâbuslar da anlatılınca küçülür. Neyse."
+
+  **Ses:** *"Akıllıca."*
+
+p_inn: "Paslı Kepçe"
+p_inn.body: |
+  Hedda seni şehrin en kalabalık hanına yolluyor: Paslı Kepçe. "Nell'e selam söyle. Bu şehirde ne oluyorsa önce o duyar."
+
+  Han dumanlı, sıcak, gürültülü. Tezgâhın arkasında iri kollu bir kadın, Nell Kazanbaş, aynı anda üç bardak dolduruyor, iki müşteriyle tartışıyor ve sana göz kırpıyor.
+
+  **Nell:** "Hedda'nın yeni çırağı! Duydum, duydum. Ormana yıldız düşmüş diyorlar. Muhafızlar sabahtan beri kıyıyı arıyor. Yeşilorman Bekçileri de. Bir de kırmızı cüppeliler, Kor Ahdi. Hepsi aynı şeyi arıyor ve kimse ne aradığını söylemiyor."
+
+  Nell sesini alçaltıyor.
+
+  **Nell:** "Bir öğüt vereyim: hangisi seni bulursa bulsun, hemen evet deme. Bu şehirde üç kapı var ve üçü de sadece bir yöne açılıyor. Şimdi, kazanım boş. Bana yaban domuzu eti getir, sana da ilk yemeğini pişirmeyi öğreteyim."
+p_inn.after: |
+  Akşam, han kapanırken Nell sana bir kâğıt uzatıyor. Üzerinde aceleyle çizilmiş bir harita: Yeşilorman, bir dere, bir mağara ağzı.
+
+  **Nell:** "Bir çocuk bunu sabah buraya bıraktı. 'Yıldızın düştüğü yer' dedi. Kır saçlı, ince, hızlı koşan bir kızdı. Cebimden de iki gümüş eksik."
+
+  Kıvılcım avucunda atıyor. Haritadaki çarpı işareti ormanın derinliğinde.
+
+# --- I. Bölüm: Kıvılcımın Taşıyıcısı ---------------------------------------
+
+c1_wolves: "Işığa Koşan Kurtlar"
+c1_wolves.body: |
+  Haritadaki çarpı seni ormanın içine, yosunlu bir derenin kıyısına götürüyor. Yolda kurtlar sürü halinde dolaşıyor. Normalde insandan kaçan hayvanlar bugün tuhaf; gözleri parlak, sanki bir şeyin çekimine kapılmışlar. Bazılarının ağzında taş parçaları var, içleri hafifçe ışıyor.
+c1_wolves.after: |
+  Derenin kıyısında bir mağara ağzı. İçeride, düşüşün kavurduğu bir çukur; toprak camlaşmış, kenarları hâlâ ılık. Çukurun dibinde biri diz çökmüş, ellerini toprağa sokmuş, bir şey arıyor.
+
+  Bir kız. On yedisinde var yok. Saçları gençliğine yakışmayacak kadar kır, neredeyse gümüş. Seni görünce ayağa fırlıyor, elinde kısa bir bıçak.
+
+  **Mirel:** "Benden önce bulamazdın zaten. Burada hiçbir şey yok. Git."
+
+  Avucundaki Kıvılcım ısınıyor. Mirel'in gözleri avucuna kayıyor; ışık parmaklarının arasından sızıyor.
+
+  **Mirel:** "...Sende. Demek sende. Bütün gece bunun için koştum."
+
+  Ve koşuyor. Senin kemerindeki keseyi de alarak.
+
+c1_cage: "Kır Saçlı Hırsız"
+c1_cage.body: |
+  Mirel'in izi ormanın içinden kuzeye uzanıyor. Ama izin yanında başka izler de var: ağır botlar, sürüklenmiş bir çuval. Yolu kesen haydutlar "gümüş saçlı kızı" birine satacaklarmış; kime, bilmiyorlar. Sadece iyi para verildiğini biliyorlar.
+c1_cage.after: |
+  Kampı temizlediğinde Mirel'i bir kafesin içinde buluyorsun. Keseni hâlâ elinde tutuyor.
+
+  **Mirel:** "Tamam. Kabul. Kurtardın beni. Al keseni. ...Ama şunu bil: bütün hayatım boyunca bir şey arıyorum ve dün gece onu ilk kez hissettim. O ışık. Senin avucundaki. Bana bir şey söylüyor."
+c1_cage.companion: "\"Benimle gel.\""
+c1_cage.companion.result: |
+  Kafesi açıp elini uzatıyorsun.
+
+  **Mirel:** "Sahiden mi? Hırsızım, biliyorsun."
+
+  Yine de geliyor. Bundan sonra izlerin ve kilitlerin dilini senden iyi biliyor olacak.
+c1_cage.free: "Kafesi aç ve git."
+c1_cage.free.result: |
+  "Özgürsün. Ama bir daha cebime girme."
+
+  Mirel gülümsüyor ve ağaçların arasında kayboluyor. "Görüşürüz, ışıklı."
+c1_cage.guards: "Muhafızlara teslim et."
+c1_cage.guards.result: |
+  Hırsızlık yaptı; Demirkale'nin kanunu açık.
+
+  Mirel sana uzun uzun bakıyor, tek kelime etmiyor. Muhafızlar onu götürüyor. Komutanlık seni bir kayda geçiriyor: yararlı biri.
+
+c1_crypt: "Kül Mahzeni"
+c1_crypt.body: |
+  Ormanın kuzeyinde, yıkık bir şapelin altında Mahzen Kapıları var. Goblinler son günlerde buraya bir şeyler taşıyor. Yeşilorman Bekçileri'nden yaralı bir izci sana koyu kırmızı bir kumaş parçası uzatıyor.
+
+  **Yaralı İzci:** "Goblinlerin üzerindeydi. Kor Ahdi'nin cüppesi bu. Goblinler kendi başına bu kadar düzenli çalışmaz. Biri onlara para veriyor."
+c1_crypt.after: |
+  Goblin Yağmacı'nın üzerinden yarı yanmış bir mektup çıkıyor. Hâlâ okunuyor:
+
+  *"...ışıklı taşların hepsini Fısıltı Vadisi'ndeki kervan yoluna getirin. Grosk ödeyecek. Taşıyıcıyı bulursanız dokunmayın; Başrahip onu canlı istiyor. — T."*
+
+  Taşıyıcı. Sen.
+
+  **Ses:** *"Görüyor musun? Seni istiyorlar. Hepsi isteyecek."*
+
+c1_caravan: "Kervan Yolu ve Mucit"
+c1_caravan.body: |
+  Fısıltı Vadisi'nde rüzgâr gerçekten fısıldıyor; kayaların arasından geçerken insan sesine benzer sesler çıkarıyor.
+
+  Kervan yolunun ortasında bir ork tüccar, kocaman bir arabanın tepesine oturmuş, mallarını sayıyor: Grosk Tuzdişi. Dişlerinden biri gerçekten tuzdan oyulmuş gibi beyaz.
+
+  **Grosk:** "Taş mı satacaksın? Alırım. Işıklı mı? İki katı. Kime satacağımı sorma. Ben sorulara cevap satmam, sadece taş alırım."
+
+  Arabanın arkasından bir patlama sesi geliyor. Duman. Öksürük. Sonra arabanın altından, kafasında kendi kafasından büyük bir gözlük, sırtında borulu bir çanta taşıyan bir gnom sürünerek çıkıyor.
+
+  **Pip Çarkdişi:** "Sorun yok! Sorun yok! Sadece Göğü Ölçen Aletin üçüncü prototipi. Eh, artık yok. Merhaba! Sen kimsin? Avucunda bir yıldız var! Bu harika! Bu korkunç! Bu harika!"
+
+  **Pip:** "Gökyüzünde bir çatlak var. Gece bak, yıldızların arasında. Bin yıldır orada ve her yıl biraz daha büyüyor. Kimse yukarı bakmıyor. Ben bakıyorum! Ve o çatlak, senin avucundaki ışıkla aynı renkte parlıyor. Demek ki ikisi bağlantılı. Demek ki sen benim hayatımın en önemli kişisisin. Dördüncü prototip için dal, taş ve bir külçe lazım. Yardım eder misin?"
+c1_caravan.after: |
+  Alet çalıştığında gökyüzüne bir ışık huzmesi gönderiyor. Huzme, Kıvılcımla aynı kehribar renginde. Ve uzakta, kuzeyde, Kuzey Kalesi Harabeleri'nin olduğu yönde, bir cevap geliyor: ikinci bir ışık.
+
+  **Pip:** "Bir tane daha! Kuzeyde bir tane daha var! Biliyordum! ...Aslında bilmiyordum ama umuyordum!"
+
+  O günden sonra Pip peşinden ayrılmıyor.
+c1_caravan.x.mirel: |
+  Mirel, Grosk'un arabasını kurcalarken bir sandık buluyor. İçinde, Kor Ahdi'nin mührüyle damgalanmış ışıklı taşlar. "Kervan Kor Ahdi'ye çalışıyor. Grosk'un sorulara cevap satmadığı belli."
+
+c1_ledger: "Grosk'un Defteri"
+c1_ledger.body: |
+  Kervanı kırmızı cüppeli tarikat müritleri koruyor. Grosk'un defteri onların elinde; kimin neyi kime sattığını söyleyen tek kayıt.
+c1_ledger.after: |
+  Defterde bir isim var: **Başrahip Ansel**. Ve bir yer: **Demirkale, Kor Tapınağı**.
+
+  Grosk yakalanınca omuz silkiyor.
+
+  **Grosk:** "Ben tüccarım. Kor Ahdi taş istedi, taş sattım. Muhafızlar isteseydi onlara satardım. Bekçiler isteseydi onlara. Benim tarafım altının tarafı. Şimdi sana bir sır satayım, bedavaya: üç hizip de seni arıyor ve üçü de sana aynı yalanı söyleyecek. 'Seni korumak istiyoruz.'"
+
+c1_doors: "Üç Kapı"
+c1_doors.body: |
+  Demirkale'ye döndüğünde üç davet seni bekliyor. Nell, hanın arka odasına üç ayrı mektup koymuş. "Dedim sana, üç kapı."
+
+  Surların üstündeki komuta kulesinde **Komutan Brannoc Ağırkalkan**. Yüzü yara izleriyle örülmüş, sesi kum kadar kuru.
+
+  **Brannoc:** "Ne taşıdığını biliyorum. Kuzey Kalesi'nde bir lord vardı, Varn. O da senin gibi bir parça buldu. Garnizonuyla birlikte bir gecede öldü ve hâlâ ölü olarak orada duruyor. O ışık bir silah değil. Bir hastalık. Demirkale'nin kasası dünyadaki en sağlam kasadır. Ver bana, kilitleyeyim."
+
+  Yeşilorman'ın içinde, kökleri birbirine dolanmış yaşlı bir meşenin altında **Liora Yaprakses**. Saçları sonbahar yaprağı renginde, yüzünde yaşsız elf sakinliği.
+
+  **Liora:** "O ışık ormana düştü. Toprağa. Mena'ya. Toprağa düşen toprağa aittir. Kökler onu emer, ormanın her yaprağına biraz verir. Kimse bir tanrının parçasını tek başına taşımamalı. Hele bir ölümlü."
+
+  Şehrin altındaki Kor Tapınağı'nda **Başrahip Ansel**. Sesi yumuşak, gözleri ateşi yansıtıyor. Yanında soğuk bakışlı bir rahibe: Tamsin.
+
+  **Ansel:** "Goblinler için özür dilerim. Hizmetkârlarım fazla hevesliydi. Ama yalan söylemeyeceğim: o ışığı istiyorum. Çünkü dünya soğuyor. Her kış biraz daha uzun, yıldızlar her yıl biraz daha az. Mena ölüyor. Ve sen avucunda bir güneşin tohumunu taşıyorsun."
+
+  **Rahibe Tamsin** (sen çıkarken, fısıltıyla): "Başrahip iyi niyetlidir. Ama iyi niyetli ateş de yakar."
+
+  **Ses:** *"Biri kilitlemek istiyor. Biri gömmek istiyor. Biri yakmak istiyor. Seç bakalım, kimin yanında yürüyeceğini. Ben yine de seninle olacağım."*
+c1_doors.x.hedda: |
+  Hedda üç mektubu da okuyor. "Hangisini seçersen seç, ışığı onlara verme. Yanlarında dur, ama avucunu kapalı tut."
+c1_doors.guard: "Demirkale Muhafızları"
+c1_doors.guard.result: |
+  "Şehri korumak istiyorum. Ama ışık bende kalacak, kasaya değil."
+
+  Brannoc kaşlarını çatıyor, sonra başını sallıyor. "Kabul. Ama gözüm üzerinde." Göğsüne örs ve kalkan arması iğneleniyor.
+c1_doors.wardens: "Yeşilorman Bekçileri"
+c1_doors.wardens.result: |
+  "Ormanı ve toprağı korumak istiyorum. Ama ışığı ben taşıyacağım."
+
+  Liora gülümsüyor, hüzünle. "Bir gün ağır gelecek. O gün buradayız." Omzuna yaprak renginde bir pelerin bırakıyor.
+c1_doors.covenant: "Kor Ahdi"
+c1_doors.covenant.result: |
+  "Dünyanın soğuduğunu ben de hissediyorum. Ama Ignar'ı görmeden ışığı vermem."
+
+  Ansel ellerini açıyor. "Tek istediğim bu. Görmen." Parmağına sıcak, kırmızı taşlı bir yüzük takıyor.
+
+c1_peak: "Dağın Ağrısı"
+c1_peak.body: |
+  Közdoruk kızıl kayalık bir dağ. Kaya Devleri yamaçlarda uyuyor gibi duruyor; uyandıklarında dağın kendisi yerinden oynuyor. Geçitlerde Gölge Avcıları. Ve dağın tepesinde, Obsidyen Kule.
+
+  Bir trol şaman, Toran Külgözü, kayaların arasındaki tütsü dumanının içinde oturuyor. Gözlerinden biri gerçekten küle benziyor, gri ve kör.
+
+  **Toran:** "Dağ ağlıyor, küçük ışık. Kuledeki ölü yüzünden. Kül Ölüsü. Bin yıldır uyuyordu, sen düştüğün gece uyandı. Geçitleri temizle, bana tütsü için cevher getir. Sonra konuşuruz."
+c1_peak.after: |
+  Tütsü yanarken dumanın içinde bir kadın beliriyor. Uzun boylu, derisi kurumuş, gözlerinin yerinde iki soluk mavi ışık. Bir hortlak. Ama ölülerin çoğu gibi ne öfkeli ne aç; sadece çok yorgun.
+
+  **Ihra:** "Sen. Tabii ki sen. Avucundaki şarkıyı bin yıldır duymamıştım."
+
+  **Ihra:** "Kuledekinin adı Caelum'du. Aethon'un tapınağında benimle birlikte rahipti. Taç kırıldığında bir parçasına dokundu ve kül oldu. Ama ölemedi. Taç kimsenin ölmesine izin vermez, sadece bozar."
+
+c1_spire: "Obsidyen Kule"
+c1_spire.body: |
+  Kulenin basamakları sıcak; her adımda kül kalkıyor. Ihra seni kapıda bırakıyor. "Ben yukarı çıkamam. O beni tanır."
+c1_spire.after: |
+  Kül Ölüsü düşerken kulenin tepesi sessizleşiyor. Ihra yanına geliyor. Lich'in kemikleri arasında hâlâ bir ışık titriyor; kehribar değil, soluk mavi. Caelum'un ruhu.
+c1_spire.purify: "Arındır: ışığını bir anlığına ona ver."
+c1_spire.purify.result: |
+  Ihra'nın anlattığı eski bir duayı söylüyorsun. Kıvılcım sızlıyor; bir şey kaybettiğini hissediyorsun. Caelum'un yüzü dumanın içinde bir an görünüyor, gülümsüyor, sönüyor.
+
+  **Ihra:** "Teşekkür ederim. Bin yıldır bunu yapacak birini bekliyordum."
+
+  Ihra o günden sonra yanında yürüyor.
+c1_spire.destroy: "Yok et: bir daha uyanmasın."
+c1_spire.destroy.result: |
+  Işığı eziyorsun. Kıvılcım onu yutuyor, ısınıyor. Bir anlığına daha güçlü hissediyorsun.
+
+  **Ses:** *"Güzel."*
+
+  Ihra sessizce dönüyor ve dumanın içinde kayboluyor.
+
+c1_descent: "Dağdan İniş"
+c1_descent.body: |
+  Közdoruk'tan inerken dağ susmuş. Toran'ın tütsüsü hâlâ yanıyor; dumanı artık dimdik yükseliyor.
+c1_descent.x.wardens: |
+  Liora dağın eteğinde seni bekliyor. Toran'ın tütsüsünü Bekçiler yeniden yakıyor. "Toprak hatırlar. Bugün yaptığını da hatırlayacak."
+c1_descent.x.guard: |
+  Brannoc'un adamları kulenin kapısını zincirliyor. "Kimse yukarı çıkmayacak. Emir."
+c1_descent.x.covenant: |
+  Kırmızı cüppeli bir haberci yolunu kesiyor. "Başrahip, lich'in külünü istiyor. Ateşe yeniden doğsun diye."
+
+  Toran, dumanın içinden sana bakıyor. Hiçbir şey söylemiyor.
+c1_descent.give_ash: "Külü Ansel'e gönder."
+c1_descent.give_ash.result: |
+  Haberci külü kırmızı bir kutuya koyup eğiliyor. Kor Ahdi seni unutmayacak.
+
+  Toran tütsüsünü söndürüyor. O günden sonra sana bir daha konuşmuyor.
+c1_descent.keep_ash: "Kül dağda kalsın."
+c1_descent.keep_ash.result: |
+  "Dağ onu taşısın."
+
+  Haberci dudaklarını büzüp gidiyor. Toran tek gözünü kapatıp başını eğiyor: bir trol şamanın verebileceği en büyük teşekkür.
+
+c1_marsh: "Sisin İçinde"
+c1_marsh.body: |
+  Sisli Bataklıklar'da sis hiç kalkmıyor. Sülükler, Çamur Golemleri, ağaçların arasında fısıldaşan Bataklık Cadıları. Ve sisin ortasında, yarısı suya gömülmüş bir tapınak: Batık Tapınak, bin yıl önce Aethon'un en büyük tapınağı.
+
+  Yerel bir şifacı sisin ciğerlere işlediğini söylüyor. Lavanta ve bir iksir; ancak öyle girilir.
+c1_marsh.x.ihra: |
+  Ihra suya girmeden önce duruyor. "Burada yaşadım. Burada öldüm. Ve burada gömülmedim, çünkü taç izin vermedi. Önden git, ben arkandayım."
+c1_marsh.after: |
+  İksirin buğusu sisin arasında bir yol açıyor. Tapınağın batık kapısı karşında.
+
+c1_temple: "Batık Tapınak'ın Duvarları"
+c1_temple.body: |
+  Tapınağın içi soğuk ve sessiz. Sudan bir kraliçe yükseliyor; yosundan tacı, çamurdan sarayı var. Onu geçmeden iç odaya ulaşılmıyor.
+c1_temple.after: |
+  Kraliçe düştüğünde iç odaya geçiyorsun. Duvarlar baştan sona resimlerle kaplı; sudan ve yosundan ancak kurtulmuş, ama hâlâ okunuyor.
+
+  **Birinci duvar:** Bir tanrı, başında yedi köşeli bir taç, ellerinde gökyüzü. Yıldızlar tacın köşelerinden sarkan iplere bağlı.
+
+  **İkinci duvar:** Tanrı ölümlü bir kadına eğilmiş. Kadının ellerinde şifa otları. Altında tek bir kelime: NERİS.
+
+  **Üçüncü duvar:** Kadın yatıyor, gözleri kapalı. Tanrı onun başında. Gökyüzündeki yıldızlar duruyor; hepsi aynı konumda, sanki zaman yok.
+
+  **Dördüncü duvar:** Kanatlı figürler, altısı. Ortalarında en büyüğü, ellerinde zincir. Taç yedi parçaya bölünmüş, parçalar dünyaya düşüyor.
+
+  **Beşinci duvar** kırılmış. Sadece bir köşe kalmış: bir el, avucunda küçük bir ışık.
+c1_temple.x.ihra: |
+  **Ihra:** "Neris benim hocamdı. Şifacıydı. Aethon onu sevdi; bir tanrının sevebileceği kadar. Öldüğünde Aethon ölümü durdurmak istedi. Bunu yapmanın tek yolu her şeyi durdurmaktı. Nefesi, suyu, zamanı. Başmelekler onu durdurdu. Doğru olanı yaptılar. Ve ben hâlâ onları affetmedim."
+c1_temple.x.voice: |
+  **Ses** (ilk kez titreyerek): *"...Neris."*
+c1_temple.take: "Beşinci duvarın parçasını al."
+c1_temple.take.result: |
+  Kırık freski yosundan sıyırıp çantana koyuyorsun. Avuçtaki ışığın resmi; Kıvılcımın geçmişine dair tek iz. Bir gün bir kapıyı açacak.
+c1_temple.leave: "Bırak: tapınak ölülerindir."
+c1_temple.leave.result: |
+  Freski duvarda bırakıyorsun. Su yeniden yosunu taşıyor üzerine.
+
+  Arkanda biri derin bir nefes alıyor; sanki omzuna bir el konuyor.
+
+c1_hedda: "Demir Kral'ın Torunu"
+c1_hedda.body: |
+  Demir Dağlar soğuk, sarp, sessiz. Dağ Trolleri, Kaya Kartalları, Demir Örümcekler. Ve Cüce Hayaletleri; Hedda'nın klanından, ölüp de gömülemeyenler.
+
+  Madenin girişinde son yaşayan madenci, Usta Bodri, Hedda'nın kuzeni.
+
+  **Bodri:** "Hedda yolladı seni, değil mi? Hiç gelmez kendisi. Gelemez. Dedesini o halde görmek istemez. Ben her gün görüyorum. Her gün ona yemek bırakıyorum, demir olduğunu bile bile. Önce hayaletleri huzura erdir. Onlar bizim ölülerimiz."
+c1_hedda.x.told: |
+  Yola çıkmadan Hedda seni Demirkale'de durduruyor. İlk kez yorgun görünüyor.
+
+  **Hedda:** "Sen bana sırrını söyledin. Şimdi ben sana benimkini söyleyeyim. Taşelli soyu Demir Dağlar'dan gelir. Büyükbabam Thrain Taşelli oranın kralıydı. Madende bir ışık buldular; seninki gibi bir parça değil, sadece bir kırıntı. Büyükbabam onu tacına taktı. Ve demir oldu. Kelimenin tam anlamıyla. Bütün klan onunla birlikte. Ailem kaçabilen son kişilerdi."
+c1_hedda.x.hid: |
+  Yola çıkmadan Hedda seni Demirkale'de durduruyor.
+
+  **Hedda** (kısa): "Unutulmuş Maden'e gireceksen bil ki içerdeki kral benim büyükbabam. Gerisini sormadan git."
+c1_hedda.after: |
+  Hayaletlerin bir kısmı sönüyor, bir kısmı sadece susuyor. Bodri eski, yağlı bir kâğıt açıyor: Arınma Örsü'nün tarifi.
+
+  **Bodri:** "Klanın efsanesi: bu örste dövülen bir zincir, kralın tacındaki kırıntıyı demirden çekip çıkarabilir. Belki. Kimse denemedi. Kimse cesaret edemedi."
+
+c1_iron_king: "Demir Kral"
+c1_iron_king.body: |
+  Unutulmuş Maden'in ağzı soğuk bir nefes veriyor. Bodri arkandan sesleniyor: "Zinciri dövmek istersen külçeleri getir, birlikte döveriz. İstemezsen... dedeme benden selam söyle."
+c1_iron_king.after: |
+  Demir Kral düşüyor, dizlerinin üstüne. Demirden bir yüz, demirden bir sakal; ama gözlerinin içinde hâlâ bir şey var. Bir cüce. Yaşlı, yorgun, ölmek isteyen.
+c1_iron_king.save: "Kurtar: Arınma Zinciri'ni tacına dola."
+c1_iron_king.save.result: |
+  Zinciri tacına doluyorsun ve çekiyorsun. Kırıntı avucuna, Kıvılcıma akıyor. Demir çatlıyor, döküntüler halinde düşüyor. Altından yaşlı bir cüce çıkıyor.
+
+  Thrain Taşelli bir dakika yaşıyor. Bodri'nin elini tutuyor. "Hedda'ya söyle..." diyor, ne söyleyeceğini söyleyemeden ölüyor. Gerçekten ölüyor. Ve maden boyunca Cüce Hayaletleri birer birer sönüyor.
+
+  Hedda bu haberi aldığında ağlıyor; ilk ve son kez.
+c1_iron_king.shatter: "Yık: kralı demir haliyle parçala."
+c1_iron_king.shatter.result: |
+  Çekicin iniyor. Demir Kral parçalara ayrılıyor; kırıntı Kıvılcıma akıyor. Hayaletler susuyor ama sönmüyor.
+
+  Bodri teşekkür ediyor ama gözlerini kaçırıyor. Demirkale'de Hedda yalnızca "Belki de doğrusu buydu. Belki." diyor.
+
+c1_keep: "Garnizon"
+c1_keep.body: |
+  Pip'in aleti kuzeyi gösteriyor ve Kıvılcım her adımda daha hızlı atıyor.
+
+  Kuzey Kalesi Harabeleri'nde gündüz bile karanlık. Hayalet Muhafızlar surlarda nöbet tutuyor, Lanetli Okçular kulelerde, Kemik Atlılar yollarda. Hepsi Lord Varn'ın garnizonu. Hâlâ görevde.
+
+  Kalenin dış avlusunda siyah pelerinli genç bir kadın kamp kurmuş, yanında birkaç sadık asker.
+
+  **Isolde Varn:** "Babam o kalenin içinde. Bin yıl değil; on bir yıl. Bin yıl efsane. Babam on bir yıl önce bir parça buldu ve onu korumak için yemin etti: 'Ölüm beni bile bu kapıdan geçiremeyecek.' Ölüm geçiremedi. Garnizonu da geçiremedi."
+
+  **Isolde:** "Ben babamın yeminini bozmaya geldim. Parçayı ondan alırsan yemin biter. Hepsi gerçekten ölür. Ve ben de nihayet onları gömebilirim. Önce surları temizlememiz lazım."
+c1_keep.after: |
+  Surlar sessizleşiyor. Kale kapısının önündeki gargoyller taşa dönmüş. Isolde kılıcını kınına koyuyor. "Taht salonu. Babam orada."
+
+c1_varn: "Düşmüş Lord"
+c1_varn.body: |
+  Varn taht salonunda, kılıcı dizlerinin üstünde. Zırhı paslı, yüzü kemik. Göğsünde, zırhın tam ortasında, kehribar bir ışık atıyor: Birinci Taç Parçası.
+c1_varn.after: |
+  Dövüş bittiğinde Varn kılıcını yere bırakıyor.
+
+  **Varn:** "Kimse geçemeyecekti. Kimse. Yeminim böyleydi. ...Isolde? Isolde orada mı? Büyümüş. Ne kadar zaman geçti?"
+
+  **Isolde:** "On bir yıl, baba."
+
+  **Varn:** "On bir yıl. Ben bin yıl sandım."
+
+  Varn parçayı göğsünden çekip sana uzatıyor. Avucundaki Kıvılcım yanıyor; iki ışık birbirini tanıyor.
+
+  **Ses** (çok yakın, çok tatlı): *"Ah. İlk kardeşim. Al onu. Bana getir. Bir olalım."*
+c1_varn.peace: "Ellerini tut: yeminini bozmasına izin ver."
+c1_varn.peace.result: |
+  Parçayı alırken Varn'ın ellerini tutuyorsun. "Yemin bitti, lord. Gidebilirsin."
+
+  Varn ve garnizonu toz oluyor. Surlardaki nöbet on bir yıl sonra ilk kez bitiyor. Isolde babasının kılıcını yerden alıyor.
+c1_varn.bound: "Parçayı al ve git."
+c1_varn.bound.result: |
+  Parçayı alıp dönüyorsun. Varn olduğu yerde kalıyor; ışığı gitmiş, gözleri boş. Garnizon dağılmıyor.
+
+  Isolde arkandan bakıyor ama bir şey söylemiyor.
+
+c1_keep_future: "Kuzey Kalesi'nin Geleceği"
+c1_keep_future.body: |
+  Sabah kalenin avlusunda Isolde'nin askerleri ölüleri sayıyor. Kalenin bir efendiye ihtiyacı var; yoksa bir yıl içinde haydutların olur.
+c1_keep_future.x.guard: |
+  Brannoc'tan bir mektup geliyor: "Kuzey Kalesi Demirkale'nin kuzey kapısıdır. Bir kızın oyuncağı olamaz. Kaleyi bize bağla."
+c1_keep_future.ruler: "Isolde'yi hükümdar olarak tanı."
+c1_keep_future.ruler.result: |
+  "Kale senin. Babanın yeminini değil, adını taşı."
+
+  Isolde diz çökmüyor; elini uzatıyor. Sıkıyorsun. Kuzey Kalesi o gün yeniden kurulmaya başlıyor.
+c1_keep_future.annex: "Kale Demirkale'ye geçsin."
+c1_keep_future.annex.result: |
+  Demirkale bayrağı surlara çekiliyor. Isolde babasının kılıcını beline takıp güneye yürüyor; arkasına bakmadan.
+
+c1_shard: "Birinci Parça"
+c1_shard.body: |
+  Gece, kalenin kulesinde, Birinci Taç Parçası avucunda. Kıvılcım onu kendine çekiyor; iki ışık birbirine doğru akmak istiyor.
+
+  Pip aletini kurcalıyor. "Eski mühür sözlerini biliyoruz. Kurşun bir kutu da var." Bir an duruyor. "Ya da... bilmiyorum. Senin avucun."
+
+  **Ses:** *"Bir olalım."*
+c1_shard.seal: "Mühürle"
+c1_shard.seal.result: |
+  Mühür sözlerini söylüyorsun. Parça kurşun kutuda kilitleniyor. Kıvılcım bir an yalnız kalmış gibi titriyor.
+
+  **Ses:** *"...Neden?"*
+c1_shard.devour: "Yut"
+c1_shard.devour.result: |
+  Parçayı avucuna bastırıyorsun. Işık koluna, göğsüne, gözlerine yayılıyor. Bir anlığına kuzeyin bütün dağlarını aynı anda görüyorsun.
+
+  **Ses:** *"Evet. Evet. Bir adım daha."*
+c1_shard.release: "Bırak"
+c1_shard.release.result: |
+  Parçayı Varn'ın eski kılıcıyla kırıyorsun. Işık havaya dağılıyor. Kalenin üstündeki bulutlar on bir yıl sonra ilk kez açılıyor; güneş surlara vuruyor.
+
+  Ses hiçbir şey söylemiyor. Uzun süre.
+
+c1_siege: "Kuzey Kalesi Kuşatması"
+c1_siege.body: |
+  Parçayı aldığın gece kale yeniden uyanıyor.
+c1_siege.x.bound: |
+  Varn'ın ruhu, parçası alınınca öfkeye dönüştü. Garnizon dağılmadı. Ölümsüz Varn, Isolde'nin kampına saldırıyor.
+
+  **Isolde:** "Babamı bir kez öldürdün. Bir kez daha yapman gerekecek. Bu sefer benim yüzümden değil, senin yüzünden."
+c1_siege.x.peace: |
+  Varn huzurda, ama taç başka bir şeyi uyandırdı: on bir yıllık yeminden kalan gölge. İçinde Varn yok, sadece yemin. Ölümsüz Varn yine geliyor; bu kez Isolde yanında savaşıyor.
+
+  **Isolde:** "O babam değil. Babamın korkusu. Birlikte yakalım."
+c1_siege.after: |
+  Kuşatma bittiğinde Pip gökyüzüne bakıyor.
+
+  **Pip:** "Yarık büyüdü. Biraz. Bir parmak. Belki bir buçuk. Bilmiyorum bu iyi mi kötü mü. Ama aletim ikinci bir ışık gösteriyor: güneyde, denizi geçince. Kırık Taç Krallığı."
+c1_siege.x.mirel_companion: |
+  Mirel parçaya her baktığında başı ağrıyor. "Bu ışık bana bir şey hatırlatıyor. Bir taç. Bir taht. Benim olmayan bir hayat."
+c1_siege.x.mirel_free: |
+  Kale duvarında bir not buluyorsun: *"Güneye gidiyorum. Orada beni arayan biri var. — M."*
+c1_siege.x.mirel_jailed: |
+  Nell'den haber geliyor: Mirel, Demirkale zindanından kaçmış. Duvara bir şey kazımış: *"Işıklı, borcumu ödeyeceğim."*

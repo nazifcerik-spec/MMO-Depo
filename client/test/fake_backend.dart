@@ -31,8 +31,12 @@ class FakeBackend {
   /// no window.
   bool dailyClaimable = false;
 
-  /// Story mode chapters (DD-313).
-  List<Map<String, dynamic>> story = [];
+  /// Story mode (DD-313, DD-367): the journal, its text and the journal an
+  /// advance answers with; advances are recorded as "scene option".
+  Map<String, dynamic> storyJournal = {'chapters': [], 'scenes': [], 'finished': false, 'text_version': 'v1'};
+  Map<String, dynamic>? storyNext;
+  Map<String, String> storyText = {};
+  final storyAdvances = <String>[];
 
   /// Credit shop (DD-321) and boosts (DD-320).
   int credits = 50;
@@ -251,7 +255,15 @@ class FakeBackend {
       if (body['password'] != 'correct-horse') return error(401, 'E_INVALID_CREDENTIALS');
       return json(200, _session());
     }
-    if (path == '/v1/story') return json(200, {'chapters': story});
+    if (path == '/v1/story/text') return json(200, {'version': 'v1', 'text': storyText});
+    final story = RegExp(r'^/v1/character/[^/]+/story(?:/([^/]+)/advance)?$').firstMatch(path);
+    if (story != null) {
+      if (story[1] != null) {
+        storyAdvances.add('${story[1]} ${body['option']}');
+        storyJournal = storyNext ?? storyJournal;
+      }
+      return json(200, storyJournal);
+    }
     if (path.contains('/guild/bank') || path.contains('/guild/treasury')) {
       if (path.endsWith('/treasury/deposit')) vaultCopper += body['copper'] as int;
       if (path.endsWith('/treasury/withdraw')) {

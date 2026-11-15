@@ -407,7 +407,7 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	if err := itemset.Install(p.ItemSets); err != nil {
 		return res, fmt.Errorf("contentpack: item sets: %w", err)
 	}
-	if err := story.Install(p.Story); err != nil {
+	if err := story.Install(p.Story, storyQuestSet(p.Quests), p.StoryText); err != nil {
 		return res, fmt.Errorf("contentpack: story: %w", err)
 	}
 	if err := pet.Install(p.Pets); err != nil {
@@ -455,7 +455,8 @@ type Pack struct {
 	Progression *leveling.Config // nil = engine defaults (no progression.yaml)
 	ItemSets    []itemset.Set    // raid sets (DD-277)
 	Pets        []pet.Species    // pet species (DD-328)
-	Story       []story.Chapter  // story mode chapters (DD-313)
+	Story       *story.Book      // story mode chapters and scenes (DD-313, DD-367)
+	StoryText   *story.Text      // scene text, content/story/<lang>.yaml
 	Strings     *Strings
 }
 
@@ -509,7 +510,11 @@ func Read(dir string) (*Pack, error) {
 	if p.Pets, err = loadPetsFile(f("pets.yaml")); err != nil {
 		return nil, err
 	}
-	if p.Story, err = loadStoryFile(f("story.yaml")); err != nil {
+	var storyQuests []Quest
+	if p.Story, storyQuests, err = loadStoryFile(f("story.yaml")); err != nil {
+		return nil, err
+	}
+	if p.StoryText, err = story.LoadText(f("story")); err != nil {
 		return nil, err
 	}
 	if err := validateItems(p.Items); err != nil {
@@ -554,6 +559,7 @@ func Read(dir string) (*Pack, error) {
 	if p.Quests, err = loadQuestsFile(f("quests.yaml")); err != nil {
 		return nil, err
 	}
+	p.Quests = append(p.Quests, storyQuests...)
 	if p.Skills, err = loadSkillsFile(f("skills.yaml")); err != nil {
 		return nil, err
 	}
@@ -590,6 +596,12 @@ func Read(dir string) (*Pack, error) {
 	}
 	if err := validateQuests(p.Quests, r); err != nil {
 		return nil, fmt.Errorf("validate quests.yaml: %w", err)
+	}
+	if err := story.Validate(p.Story, storyQuestSet(p.Quests)); err != nil {
+		return nil, fmt.Errorf("validate story.yaml: %w", err)
+	}
+	if err := p.StoryText.Validate(p.Story); err != nil {
+		return nil, err
 	}
 	if err := validateRefs(p, r); err != nil {
 		return nil, err
@@ -729,25 +741,41 @@ func loadItemsFile(path string) ([]Item, error) {
 	return f.Items, nil
 }
 
-// loadStoryFile reads the story mode chapters (DD-313); no file = none.
-func loadStoryFile(path string) ([]story.Chapter, error) {
+// loadStoryFile reads the story (DD-313, DD-367): chapters, scenes and the
+// story quests (category "story", checked with the other quests); no file =
+// no story.
+func loadStoryFile(path string) (*story.Book, []Quest, error) {
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			return nil, nil
+			return &story.Book{}, nil, nil
 		}
-		return nil, fmt.Errorf("read %s: %w", path, err)
+		return nil, nil, fmt.Errorf("read %s: %w", path, err)
 	}
 	var f struct {
-		Chapters []story.Chapter `yaml:"chapters"`
+		story.Book `yaml:",inline"`
+		Quests     []Quest `yaml:"quests"`
 	}
 	if err := yaml.Unmarshal(raw, &f); err != nil {
-		return nil, fmt.Errorf("parse %s: %w", path, err)
+		return nil, nil, fmt.Errorf("parse %s: %w", path, err)
 	}
-	if err := story.Validate(f.Chapters); err != nil {
-		return nil, fmt.Errorf("validate %s: %w", path, err)
+	for _, q := range f.Quests {
+		if q.Category != "story" {
+			return nil, nil, fmt.Errorf("%s: quest %s must be category story", path, q.Code)
+		}
 	}
-	return f.Chapters, nil
+	return &f.Book, f.Quests, nil
+}
+
+// storyQuestSet is the codes of the story quests.
+func storyQuestSet(quests []Quest) map[string]bool {
+	out := map[string]bool{}
+	for _, q := range quests {
+		if q.Category == "story" {
+			out[q.Code] = true
+		}
+	}
+	return out
 }
 
 // loadSetsFile reads the `sets` list of sets.yaml (DD-277); the file's

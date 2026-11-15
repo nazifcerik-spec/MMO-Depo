@@ -1532,7 +1532,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get questsNoneOpen => '進行中のクエストはありません。下から選んでください。';
 
   @override
-  String get questsStory => 'ストーリー';
+  String get questsStory => 'メインクエスト';
 
   @override
   String get questsSide => 'サブクエスト';
@@ -3946,4 +3946,43 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get skillNeedsShield => '盾が必要';
+
+  @override
+  String get storyContinue => '続ける';
+
+  @override
+  String get storyChoiceTitle => 'あなたの選択';
+
+  @override
+  String get storyChoiceConfirm => 'この選択は物語の行方を決め、取り消せない。';
+
+  @override
+  String get storyChoose => '選ぶ';
+
+  @override
+  String storyYourChoice(String option) {
+    return '選択：$option';
+  }
+
+  @override
+  String get storyQuests => 'ストーリークエスト';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return '先に：$quest';
+  }
+
+  @override
+  String get storyQuestDone => '報告済み';
+
+  @override
+  String objRaid(String raid) {
+    return 'レイド「$raid」を攻略';
+  }
+
+  @override
+  String get errStoryQuests => '先に必要なクエストを報告しよう。';
+
+  @override
+  String get errStoryMoved => '物語が進んだため、画面を更新した。';
 }

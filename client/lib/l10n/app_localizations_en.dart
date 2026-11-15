@@ -1536,7 +1536,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get questsNoneOpen => 'No open quests. Pick one below.';
 
   @override
-  String get questsStory => 'Story';
+  String get questsStory => 'Main quests';
 
   @override
   String get questsSide => 'Side quests';
@@ -3992,4 +3992,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillNeedsShield => 'Shield required';
+
+  @override
+  String get storyContinue => 'Continue';
+
+  @override
+  String get storyChoiceTitle => 'Your choice';
+
+  @override
+  String get storyChoiceConfirm => 'This choice shapes how the story unfolds and cannot be undone.';
+
+  @override
+  String get storyChoose => 'Choose';
+
+  @override
+  String storyYourChoice(String option) {
+    return 'You chose: $option';
+  }
+
+  @override
+  String get storyQuests => 'Story quests';
+
+  @override
+  String storyNeedsQuest(String quest) {
+    return 'First: $quest';
+  }
+
+  @override
+  String get storyQuestDone => 'Turned in';
+
+  @override
+  String objRaid(String raid) {
+    return 'Clear the $raid raid';
+  }
+
+  @override
+  String get errStoryQuests => 'Turn in the quest this needs first.';
+
+  @override
+  String get errStoryMoved => 'The story has moved on; the page was refreshed.';
 }

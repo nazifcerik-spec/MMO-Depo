@@ -454,7 +454,7 @@
   "quests": "Misiones",
   "questsInProgress": "En curso",
   "questsNoneOpen": "No hay misiones abiertas. Elige una abajo.",
-  "questsStory": "Historia",
+  "questsStory": "Misiones principales",
   "questsSide": "Misiones secundarias",
   "questsDaily": "Diarias",
   "resetsIn": "Se reinicia en {time}",
@@ -1155,5 +1155,16 @@
   "nkMarketOutbid": "Han superado tu puja",
   "nkMarketWon": "Has ganado una subasta",
   "evMarketOutbid": "Han superado tu puja; tu oro ha vuelto.",
-  "skillNeedsShield": "Requiere escudo"
+  "skillNeedsShield": "Requiere escudo",
+  "storyContinue": "Continuar",
+  "storyChoiceTitle": "Tu elección",
+  "storyChoiceConfirm": "Esta elección da forma a la historia y no se puede deshacer.",
+  "storyChoose": "Elegir",
+  "storyYourChoice": "Elegiste: {option}",
+  "storyQuests": "Misiones de la historia",
+  "storyNeedsQuest": "Primero: {quest}",
+  "storyQuestDone": "Entregada",
+  "objRaid": "Completa la incursión {raid}",
+  "errStoryQuests": "Primero entrega la misión necesaria.",
+  "errStoryMoved": "La historia ha avanzado; se actualizó la página."
 }

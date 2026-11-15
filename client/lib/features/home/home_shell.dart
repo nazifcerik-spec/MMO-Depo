@@ -6,6 +6,7 @@ import '../shop/cosmetics.dart';
 import '../shop/shop_screen.dart';
 import '../helpers/helpers_screen.dart';
 import '../pets/pets_screen.dart';
+import '../story/story_repository.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
 import '../guide/guide.dart';
@@ -251,7 +252,13 @@ class _HomeShellState extends State<HomeShell> {
       onOpenGuide: () =>
           _push(GuideScreen(onOpenTab: _showTab, onReplayTutorial: () => setState(() => _tutorial = true))),
       onLogout: widget.auth.logout,
-      onOpenStory: () => _push(StoryScreen(api: widget.auth.api, level: _level.value)),
+      onOpenStory: () => _push(
+        StoryScreen(
+          repo: StoryRepository(widget.auth.api, widget.initial.id),
+          quests: _quests,
+          dataVersion: _dataVersion,
+        ),
+      ),
       boosts: BoostBar(repo: _shop),
       onOpenShop: () => _push(ShopScreen(repo: _shop, onProfile: (p) => setState(() => _profile = p))),
       onOpenHelpers: () => _push(

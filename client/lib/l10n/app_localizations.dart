@@ -2832,7 +2832,7 @@ abstract class AppLocalizations {
   /// No description provided for @questsStory.
   ///
   /// In en, this message translates to:
-  /// **'Story'**
+  /// **'Main quests'**
   String get questsStory;
 
   /// No description provided for @questsSide.
@@ -7040,6 +7040,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shield required'**
   String get skillNeedsShield;
+
+  /// No description provided for @storyContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get storyContinue;
+
+  /// No description provided for @storyChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your choice'**
+  String get storyChoiceTitle;
+
+  /// No description provided for @storyChoiceConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This choice shapes how the story unfolds and cannot be undone.'**
+  String get storyChoiceConfirm;
+
+  /// No description provided for @storyChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get storyChoose;
+
+  /// No description provided for @storyYourChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'You chose: {option}'**
+  String storyYourChoice(String option);
+
+  /// No description provided for @storyQuests.
+  ///
+  /// In en, this message translates to:
+  /// **'Story quests'**
+  String get storyQuests;
+
+  /// No description provided for @storyNeedsQuest.
+  ///
+  /// In en, this message translates to:
+  /// **'First: {quest}'**
+  String storyNeedsQuest(String quest);
+
+  /// No description provided for @storyQuestDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Turned in'**
+  String get storyQuestDone;
+
+  /// No description provided for @objRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the {raid} raid'**
+  String objRaid(String raid);
+
+  /// No description provided for @errStoryQuests.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn in the quest this needs first.'**
+  String get errStoryQuests;
+
+  /// No description provided for @errStoryMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'The story has moved on; the page was refreshed.'**
+  String get errStoryMoved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
