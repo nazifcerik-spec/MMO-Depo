@@ -262,12 +262,12 @@ Hikâye ekranının son sayfası, seçilen sona göre:
 
 ## Ek — Uygulama notları
 
-Önsöz ve I. Bölüm oyunda (DD-367). Nasıl bağlandığı:
+Hikâyenin tamamı oyunda (DD-367, DD-368): önsöz, altı bölüm ve sonlar; 79 sahne, 63 hikâye görevi. Nasıl bağlandığı:
 
-- **Sahneler:** `content/story.yaml`, sahne sırayla okunur; her sahne `min_level`, isteğe bağlı `when` koşulu (tutmazsa atlanır), hikâye görevleri, ek paragraflar (`extras`) ve tercih (`options`) taşır. Bir belge sahnesi birden çok tercih içeriyorsa oyunda ayrı sahnelere bölündü (1.8 → `c1_varn`, `c1_keep_future`, `c1_shard`).
-- **Metin:** `content/story/tr.yaml` + `en.yaml` (diğer diller İngilizceye düşer). Belgedeki metnin oyuna uyarlanmış hâli; görev kutuları metinde değil, görev kartı olarak gösterilir.
-- **Görevler:** `story` kategorili görevler (`story.yaml` → `quests`), görev panosunda yalnız sahnesi açıkken çıkar. Hedefler oyunda sayılabilen olaylardan seçildi: zindan-içi canavarlar avlanamadığı için bazı "X avla" görevleri genel canavar sayısına çevrildi; "Sis İksiri" küçük can iksiri, "Gümüş Külçesi" bakır külçesi oldu.
-- **Bayraklar:** Saklanmaz; seçilen seçeneklerden (`progression.story_scene`) her istekte yeniden hesaplanır. Sayaçlar: `merhamet`, `muhur`, `yut`, `birak`.
-- **Oyun etkisi:** Hizip seçimi ve bazı tercihler hizip itibarı verir (`reputation`). Ödül eşyaları (arma, pelerin, yüzük, fresk) şimdilik yalnız metinde.
-- **Boss tekrarları:** Hikâyede ilk yenilgi bir sınav ya da düello olarak anlatılır; bağışlama tercihi o yenilgiden sonra gelir. Zindan ve baskınların tekrar oynanması bununla çelişmez.
-- **Kalan:** II.–VI. Bölüm ve sonlar aynı biçimle eklenecek; Arınma Zinciri dışındaki özel görev tarifleri (Kök Mührü, Anı Merceği …) yeni görev türü ister.
+- **Sahneler:** `content/story.yaml`, sahne sırayla okunur; her sahne `min_level`, isteğe bağlı `when` koşulu (tutmazsa atlanır), hikâye görevleri, ek paragraflar (`extras`) ve tercih (`options`) taşır. Bir belge sahnesi birden çok tercih içeriyorsa oyunda ayrı sahnelere bölündü; her bölümün parça kararı ayrı bir `cX_shard` sahnesi.
+- **"Ya da" koşulları:** Koşul dili yalnız "ve" bilir. Belgedeki "A ya da B" şartları aynı sonuca giden ayrı seçeneklerle yazıldı (ör. Leviathan: `true_name` Seth-Ka bağlıysa, `stars` herkese; Ansel'i kurtarmak: `save` tohum kurtarıldıysa, `save_faith` Kor Ahdi'deysen).
+- **Sonlar:** `e_choice` seçimi `son` bayrağını koyar; `e_ending` sayaçlara göre varyantı (Sağlam/Çatlak Zincir, Bekçi/Kül/Yarım Taç, Tam/Yarım Nefes, Son Ninni), `e_epilogue` kişi sonlarını ve son sayfa satırını gösterir. `TestShippedStoryEveryPathEnds` binlerce rastgele oyunla her yolun tek sonla bittiğini ve her varyantın ulaşılabilir olduğunu sınar.
+- **Metin:** `content/story/<dil>/NN-*.yaml` (bölüm başına dosya); tr + en tam, diğer diller İngilizceye düşer. Eksik/fazla anahtar: `python scripts/story_text_check.py`.
+- **Görevler:** `story` kategorili görevler, `python scripts/gen_story_quests.py` ile (ödül XP eğrisinden). Hedefler oyunda sayılabilen olaylar: zindan-içi canavarlar avlanamadığı için bazı "X avla" görevleri genel canavar sayısı; özel görev eşyaları (Kök Mührü, Anı Merceği, Ejder Kancası …) genel "eşya üret" hedefi oldu.
+- **Bayraklar:** Saklanmaz; seçilen seçeneklerden (`progression.story_scene`) her istekte yeniden hesaplanır.
+- **Basitleştirmeler:** Uriel'le ittifak şartı üç seçeneğe indirildi (sesi anlattıysan ve az yuttuysan serbest; sakladıysan merhamet ≥ 6; çok yuttuysan merhamet ≥ 7), Ilvar'ın gölgesi şartı düşürmüyor. Ödül eşyaları yalnız metinde. Bölüm sonu baskınları zorunlu (parti bulma ile tamamlanabilir).

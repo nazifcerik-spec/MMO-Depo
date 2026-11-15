@@ -1,0 +1,241 @@
+# Endings and epilogue (level 1000). DD-367.
+
+e_unbound: "Unbound"
+e_unbound.body: |
+  Aethon holds out his hand. The Spark in your palm is drawn toward him; the other shards, wherever you kept them, all tremble at once.
+
+  And the chain breaks.
+
+  You did nothing. Neither did Aethon. The shards are this close for the first time in a thousand years, and the crown itself, apart from the god's will, wants to complete itself.
+
+  Something rises behind Aethon. Not Aethon himself; Aethon sits on his throne, stunned, afraid. What rises is what gathered under the chain for a thousand years: a god's rage, torn from his grief, torn from his mind. Aethon Unbound.
+
+  **Aethon:** "That isn't me. That's everything I've screamed for a thousand years. Stop it. Please. I can't."
+e_unbound.x.uriel_ally: |
+  Uriel fights at your side.
+e_unbound.x.uriel_foe: |
+  Uriel watches from the far side of the chasm; he won't step in until the battle is over.
+e_unbound.x.ihra_morvath: |
+  Ihra and Morvath stand before the throne, beside Aethon. They don't fight. They hold him.
+e_unbound.after: |
+  When Aethon Unbound scatters, silence falls over the chasm of light. Seven shards turn in the air before you, in the shape of a crown. Its middle is empty; just big enough for a head.
+
+  Aethon on his throne. Unchained now. But he doesn't rise.
+
+  **Aethon:** "Now you decide. I decided a thousand years ago, and I decided wrong. Maybe you know what is right."
+
+e_choice: "The Last Choice"
+e_choice.body: |
+  The seven points of the crown turn before you. Some are wrapped in silver chain: the ones you sealed. Some are dark, the colour of your blood: the ones you devoured. Some are broken, hollow, only a trace of light: the ones you released.
+
+  That is your road. Now choose its end.
+e_choice.chain: "The Chain: \"Seal the crown. Let Aethon stay in chains.\""
+e_choice.chain.result: |
+  Silver chains wind around the crown. Aethon closes his eyes.
+
+  **Aethon:** "I expected this. Maybe I deserve it. I'll never see Neris again. But you saved a world."
+e_choice.crown: "A New Crown: \"Put the crown on my head.\""
+e_choice.crown.result: |
+  The crown descends onto your head. Seven points. Amber light pours from your eyes, your mouth, your palms. For a moment you see the whole world: Ironhold's hammers, the Greenwood's roots, the Ash Sea's souls, the rift in the sky. All of it. At once.
+
+  **Aethon:** "Ah. There. Now what will you do with it? On the first day, I wanted to stop death. What will you want?"
+e_choice.breath: "Mena's Breath: \"Break the crown. Forever.\""
+e_choice.breath.result: |
+  You lay your hand in the middle of the crown. One by one, its seven points crack. The light spills out; not up, but down. Down the chasm, into the world. Into the soil. The sea. Into Mena.
+
+  **Aethon:** "...Yes. I should have done this. A thousand years ago. Instead of putting a shard in Neris's hand, I should have broken the crown. I should have accepted I would lose her."
+
+  Aethon rises from the throne; for the first time in a thousand years. Unchained, uncrowned, just a man. He walks to the edge of the chasm and sits. And watches the sun rise.
+e_choice.lullaby: "The Last Lullaby: \"Give him Neris.\""
+e_choice.lullaby.result: |
+  You take out the Memory Crystal and hold it out to Aethon.
+
+  Inside the crystal, this time not broken, not feared: Neris. The real Neris. In her room, by the window, old and smiling.
+
+  **Neris:** *"I never wanted eternity, Aethon. I wanted you. For one lifetime. And I had it. That was enough."*
+
+  Ihra steps forward and sings Neris's lullaby. With the right notes. After a thousand years. Pip kneels beside Aethon.
+
+  **Pip:** "Stopped time doesn't come back. But right now I know: it doesn't need to stop. Remembering is better than stopping."
+
+  Aethon weeps. A god. And as he weeps, he smiles.
+
+  **Aethon:** "For a thousand years I wanted to bring her back. Now I understand: she never left. I was afraid of forgetting her, that's all. I haven't."
+
+e_ending: "The End"
+e_ending.body: |
+  The choice is made. Over the chasm of light, the wind changes direction.
+e_ending.x.chain_strong: |
+  **The Unbroken Chain.** The chain closes, never to break again. Uriel takes hold of its other end once more.
+
+  **Uriel:** "Another thousand years. Maybe another thousand. But this time I'm not alone; I know who sealed this chain."
+
+  The rift closes halfway. The sky over the Starless Lands is still empty, but no star goes out again. The world is safe. Frozen. The same.
+e_ending.x.chain_cracked: |
+  **The Cracked Chain.** The chain closes, but some of the shards were already broken or devoured; the seal doesn't fully hold. Aethon's voice no longer speaks to anyone, only to the wind.
+
+  **Aethon:** "Not a thousand years. A hundred, perhaps. Then someone else will come. With the seventh shard."
+
+  A hundred years from now, a star will fall at the edge of the Greenwood.
+e_ending.x.chain_uriel: |
+  Uriel comes from the far side of the chasm, looks at the seal and nods. He is no longer your enemy.
+e_ending.x.crown_keeper: |
+  **The Keeper God.** You don't stop death. You don't stop time. You hang the stars again; one by one, a few each night. You send the souls of the Leviathan's sea into the void; death is whole again. Your throne stays at the Edge of Eternity, but there is no chain. A keeper god. Alone.
+
+  **Aethon:** "You're better than me. Knowing that is enough."
+
+  Aethon dies as a mortal. In your hands.
+e_ending.x.crown_ash: |
+  **The Ash God.** You want to change something. Something small at first. You stop a death; someone you knew. Then another. Then a city. Every stopped moment, a little more stillness. A thousand years later: a throne at the Edge of Eternity, a god in chains, and an amber star falling at the edge of a green forest. This time the falling star is a piece of you.
+
+  **Aethon** (dying): "That's how I began too."
+e_ending.x.crown_saved: |
+  The crown is heavier than you can carry; your blood doesn't know it. The crown settles on your head and will never come off; like Varn, like Aldric.
+
+  But Pip grabs the crown's last point. "I know time. I can take this moment back a little. Just one second." In that second, you pull the crown from your head.
+
+  **The Keeper God.** You don't stop death. You don't stop time. You hang the stars again; one by one, a few each night. You send the souls into the void; death is whole again. A keeper god. Alone.
+
+  **Aethon:** "You're better than me. Knowing that is enough."
+e_ending.x.crown_half: |
+  **The Half Crown.** The crown is heavier than you can carry. You didn't devour enough shards; your blood doesn't know it. The crown settles on your head and never comes off. Like Varn. Like Aldric. You don't die; but you are no longer you.
+
+  **Aethon:** "No. No. I didn't want to do this to you."
+e_ending.x.crown_uriel: |
+  Uriel comes and draws his sword. He looks at your crowned head for a long time. What he does will depend on what you have become.
+e_ending.x.breath_full: |
+  **The Full Breath.** The stars return. All of them. On the first night the sky over the Starless Lands is so full that people weep. The rift closes. Death is whole again; the souls of the Leviathan's sea walk one by one into the void, and the Leviathan, Thalassar, last of all, laughing.
+
+  But magic fades. No god, no crown. The priests' prayers are weaker than before, the mages' fires smaller. Mena lives on its own breath now.
+
+  **Aethon:** "Now the world belongs to no one. Neris would have loved that."
+e_ending.x.breath_half: |
+  **The Half Breath.** The crown breaks, but only a few points break; the rest of the light is sealed or inside you. Half the stars return. The rift closes but leaves a scar, a silver line across the sky. Magic fades, but not completely.
+
+  **Aethon:** "Half. Still, half."
+e_ending.x.breath_uriel: |
+  Uriel comes, sees the broken crown, and looks at it for a long time. "I held the chain for a thousand years. It never occurred to me to break it." He folds his wings. He never opens them again.
+e_ending.x.lullaby: |
+  **The Last Lullaby.** Aethon looks at the middle of the crown, then at you.
+
+  **Aethon:** "Do something for me, Bearer. Something I couldn't do. Break the crown. But give its light to the sky, not to Mena. After I die."
+
+  And Aethon dies as a mortal. Truly. For the first time. On the last note of Ihra's lullaby. Smiling.
+
+  The crown breaks. Seven shards rise; up from the chasm, into the sky. They pass through the rift, and the rift closes behind them. In the sky, visible from every corner of every continent, seven new stars light up. You name them. But a tradition takes hold: one is called Neris. One Aethon. The rest are yours.
+
+  After a thousand years, Ihra and Morvath walk into the void together. The Leviathan carries them from the shore.
+
+  The stars return, all of them. Magic doesn't fade; but now it belongs not to a god, but to seven stars. Death is whole. Time flows.
+
+  **Uriel:** "I held the chain for a thousand years. I cleaned her room for a thousand years. I wish I had visited her once. Just once."
+
+  Uriel spreads his wings and returns to Neris's room. This time he leaves the door open.
+
+e_epilogue: "Epilogue"
+e_epilogue.body: |
+  Years pass. Stories are told; some true, most exaggerated. Here is how it ended for those you met on the road.
+e_epilogue.x.hedda_clan: |
+  **Hedda Stonehand** returns to the Iron Mountains. She reopens the mine. She sets an anvil at her grandfather's grave and strikes it once every morning.
+e_epilogue.x.hedda_alone: |
+  **Hedda Stonehand** stays in Ironhold. She hangs a new sign over her forge door: "The Bearer's Smith". She doubles her prices. She gives you no discount.
+e_epilogue.x.hedda_told: |
+  Hedda: "You told me everything. Now I'll tell everyone. With a little exaggeration."
+e_epilogue.x.pip: |
+  **Pip Cogtooth** builds the ninth prototype of the Sky-Measuring Device. This time it measures not the sky but the stars. He never winds his clock. He keeps the eighth prototype in Hedda's forge, in a locked box.
+e_epilogue.x.pip_merged: |
+  **Pip** opens a school and teaches gnome children about time. He talks little. But now and then, out of nowhere, he makes a thousand-year-old joke and no one gets it.
+e_epilogue.x.pip_kaedrin: |
+  **Pip** becomes Hedda's apprentice. Kaedrin's grave lies at the foot of the Clock Tower. Pip visits every year, and every year leaves a clock; wound, ticking.
+e_epilogue.x.pip_gone: |
+  In the square of the Lost City stands a statue of a gnome. No one knows who he was. The children call him Pip, without knowing why.
+e_epilogue.x.mirel_queen: |
+  **Mirel** is the first queen of the Kingdom of the Broken Crown. Her first law: the throne belongs to no one; the queen holds it in trust while she sits. Her second: thieves are pardoned for their first offence.
+e_epilogue.x.mirel_road: |
+  **Mirel** keeps travelling with you. Once a year she returns to the plains; a grey-haired woman no one recognises.
+e_epilogue.x.mirel_inn: |
+  **Mirel** opens an inn between the two banks of the plains. Corva and Orrin meet there every month, argue, and eat at the same table.
+e_epilogue.x.mirel_guild: |
+  **Mirel** founds an archers' guild; for those who escape from Ironhold's dungeon. Over its door: "Everyone escapes a cage once."
+e_epilogue.x.ihra_lullaby: |
+  **Ihra and Morvath** walked into the void together. Behind them, a lullaby remained.
+e_epilogue.x.ihra_bastion: |
+  **Ihra and Morvath** stay in the Last Bastion; this time not as keepers, but as two old friends at the edge of the void.
+e_epilogue.x.ihra_temple: |
+  **Ihra** returns to the Sunken Temple. Before Neris's wall paintings, she waits for the next thousand years.
+e_epilogue.x.ihra_void: |
+  **Ihra and Morvath** walk into the void together. No one sees.
+e_epilogue.x.isolde_lady: |
+  **Isolde Varn** is the lady of the Northern Keep. She changes her garrison's oath: not "No one shall pass," but "Everyone shall find help."
+e_epilogue.x.isolde_bridge: |
+  **Isolde Varn** stays with the rebels. She drives her father's sword into the middle of the plains' bridge. "A lord's sword now binds the two banks together."
+e_epilogue.x.isolde_father: |
+  One night every winter, Isolde hears her father's voice. Not angry. Proud.
+e_epilogue.x.brannoc_alive: |
+  **Brannoc Heavyshield** retires. He sits by Nell's counter in the Rusty Ladle and tells everyone who comes in about the gate on the plains. Every time, the gate gets a little bigger.
+e_epilogue.x.brannoc_statue: |
+  In Ironhold's square stands a statue of **Brannoc Heavyshield**. On his shield, a single sentence: "He held the gate."
+e_epilogue.x.sylwen_forest: |
+  **The Mist Forest** grows in the sun. Liora and Sylwen, descendant and ancestor, keep it together.
+e_epilogue.x.sylwen_garden: |
+  **Sylwen** plants a small garden outside Ironhold instead of a forest. Liora becomes her gardener.
+e_epilogue.x.sylwen_dream: |
+  **The Mist Forest** goes on dreaming. One day Liora's grandchild finds a small grove at the forest's edge.
+e_epilogue.x.ansel_star: |
+  **Ignar** returns to the sky and becomes one of the stars. The Ember Covenant becomes not a temple but an observatory. Ansel is its first watcher.
+e_epilogue.x.ansel_sun: |
+  **The red sun** stays in the sky. Sundermere's summers are hot, its winters short. One year the harvest is rich, the next it burns. Some bless Ansel; some curse him.
+e_epilogue.x.ansel_cell: |
+  **Ansel** is in Ironhold's dungeon. Tamsin visits him every week. Years later Ansel writes a book about light rather than fire.
+e_epilogue.x.yssa_fleet: |
+  **The Red Fleet** rules every sea. Yssa makes a law: a sunken ship's treasure goes first to the crew's families. She never says why.
+e_epilogue.x.yssa_ship: |
+  **Yssa** lives her own way, with one ship and one crew. If she sees you in a harbour she buys you a drink. You pay for it.
+e_epilogue.x.dragon_kor: |
+  **Kor** grows up. The Dragon Slopes fill with dragon voices again. Moru's grandchildren become dragon shepherds. Once a year Kor flies over Ironhold; the people of the city wave.
+e_epilogue.x.dragon_sold: |
+  **The Dragon Cult** has scattered. There are no dragons on the slopes. Moru's hut is empty.
+e_epilogue.x.dragon_grave: |
+  **The Dragon Slopes** are silent. Moru sits by a grave at the top of the mountain. Every day.
+e_epilogue.x.ilvar_book: |
+  **Ilvar** keeps the record of the new stars. His book is called *The Return*. Your name is on its first page.
+e_epilogue.x.ilvar_star: |
+  Over the Starless Lands a star appears that isn't in Ilvar's records. People call it **Ilvar**.
+e_epilogue.x.selin: |
+  **Selin Windborn** puts her sky ship in a museum on the Floating Isles. On its door, a note: "This ship went up to the sky and came back. No other ship has done that. Yet."
+e_epilogue.x.uriel_tea: |
+  **Uriel** leaves the door of Neris's room open. Visitors come. Uriel serves them tea.
+e_epilogue.x.uriel_gone: |
+  **Uriel** returns to the sky and is never seen again.
+e_epilogue.x.zephyros_flies: |
+  **Zephyros** heals his wings and, for the first time in a thousand years, flies through a sky without a storm.
+e_epilogue.x.zephyros_ruin: |
+  The ruins of **the Storm Fortress** drift beside the Floating Isles. No one is inside.
+e_epilogue.x.leviathan_sleeps: |
+  After carrying the last soul, **Thalassar** sinks to the bottom of the Ash Sea and sleeps. In time, the Ash Sea turns back into water.
+e_epilogue.x.leviathan_wound: |
+  **The Leviathan's** wound never heals. The souls find another way. It takes a thousand years.
+e_epilogue.x.seth_free: |
+  **Seth-Ka** was at the very front of the line. He walked into the void first. He left a note: "Thank you, child of the crown. I had a story too. Someday someone will write it."
+e_epilogue.x.seth_bound: |
+  **Seth-Ka** waits in the Buried Palace, awake, for his questions. Ask him one more and the answer is always the same: "Will you let me go?"
+e_epilogue.x.nell: |
+  **Nell Cauldron** hangs a new map on the wall of the Rusty Ladle: the map of your journey. Beneath it: "Ate here. Wasn't free."
+e_epilogue.x.grosk: |
+  **Grosk Salttooth's** caravan now sells "Shards of the Bearer". All fake. All selling very well.
+e_epilogue.x.toran: |
+  **Toran Asheye** lights his incense on Emberpeak. The mountain doesn't weep anymore. For the first time Toran hears something else: the mountain is laughing. He tells no one; no one would believe him.
+e_epilogue.x.last_chain: |
+  *That night the sky was closed. And you slept. Peacefully.*
+e_epilogue.x.last_keeper: |
+  *That night the sky was full of stars. You had hung every one.*
+e_epilogue.x.last_keeper_pip: |
+  *That night the sky was full of stars. You had hung every one.*
+e_epilogue.x.last_ash: |
+  *That night the sky split in two.*
+e_epilogue.x.last_half: |
+  *That night the sky was heavy. And under the crown, somewhere, you were still there.*
+e_epilogue.x.last_breath: |
+  *That night the sky belonged to no one. And it was beautiful.*
+e_epilogue.x.last_lullaby: |
+  *That night there were seven new stars in the sky. One of them winked at you.*

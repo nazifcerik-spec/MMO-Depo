@@ -1,0 +1,166 @@
+# Chapter IV: The One Who Stopped the Clock (Starless Lands, levels 600–700). DD-367.
+
+c4_plains: "The Place Without a Sky"
+c4_plains.body: |
+  Here night and day are the same. The sun rises, yes, but the rest of the sky is pitch black; no cloud, no blue, no star. Daylight is like a lantern, lighting only the ground in front of it.
+
+  Shadow riders roam the plain. Void wolves; their mouths open, no sound comes out. And star gnawers, creatures that eat light.
+
+  In the middle of the plain, the dome of a ruined observatory. Inside, buried to the knees in paper, an old dark elf: Ilvar the Watcher. He has no shadow.
+
+  **Ilvar:** "Another star. Another star went out tonight. Four hundred and twelve. In my lifetime four hundred and twelve stars have gone out. I recorded every one. Everyone thinks the stars went out a thousand years ago. Wrong. They're still going out. Someone is eating them. In my old observatory. I call it Omh. The Star Eater. Bring herbs for my lamp; I can't write in the dark."
+c4_plains.x.dark_elf: |
+  Ilvar looks at you. "Our people found their way by the stars. We see in the dark. But without stars, seeing in the dark only means seeing more dark."
+c4_plains.after: |
+  The lamp burns. Pip leafs through Ilvar's records and suddenly stops.
+
+  **Pip:** "Wait. Wait. The dates the stars went out... they're the same as the dates the rift grew! As the rift grows, a star goes out. So maybe Omh isn't a creature. Omh is a wound. The lower mouth of the wound in the sky."
+
+  **Ilvar:** "If you're going to the observatory, I'm coming. I've waited two hundred years for this."
+
+c4_observatory: "The Star Eater"
+c4_observatory.body: |
+  The Darkened Observatory's telescopes are blind, its dome cracked. Inside, darkness moves in the darkness. Ilvar unrolls his star charts. "Every star whose name I say will shine inside it for a moment. And it will hurt."
+c4_observatory.after: |
+  When Omh is defeated it doesn't explode, doesn't die; it scatters. As it scatters, hundreds of small lights rise from it: swallowed stars. They climb to the sky through the crack in the dome.
+
+  But something goes wrong. The last piece of Omh reaches for Ilvar.
+c4_observatory.save_ilvar: "Save Ilvar: draw the darkness into the Spark."
+c4_observatory.save_ilvar.result: |
+  You pull the last piece of Omh into yourself with the Spark. It hurts; for a moment you feel the darkness inside you. Ilvar is saved.
+
+  Ilvar hands you his star chart. "Keep this. One day you'll need to cross a starless sea."
+
+  There is a small shadow in the Spark now.
+c4_observatory.save_stars: "Save the stars."
+c4_observatory.save_stars.result: |
+  You let Ilvar go; the last stars escape.
+
+  Ilvar smiles. "The right choice. I am one man; they are stars." Omh takes him. His papers whirl through the air.
+
+  That night a few stars appear over the Starless Lands.
+
+c4_lost_map: "The Lost Map"
+c4_lost_map.body: |
+  Ilvar's chart went with him. But Pip finds a note: years ago Ilvar left a copy in the library of the Lost City. The time thieves have stolen its pages.
+c4_lost_map.after: |
+  The pages are complete. In the margin, Ilvar's handwriting: *"To whoever finds this: if the stars return, count me too."*
+
+c4_city: "The Stopped City"
+c4_city.body: |
+  The Lost City is lost in time. There are people in the streets, stopped mid-step. A woman about to open a door, hand on the knocker. A child about to kick a ball, foot in the air. A dog about to bark, mouth open. None of them move. For a thousand years.
+
+  Among them wander the time thieves, stealing the frozen people's moments.
+
+  In the middle of the city stands a tower: the Clock Tower. Its minute hand stopped at one minute to twelve.
+
+  **Pip** (silent for a while): "I know this tower. I shouldn't, but I do. From my dreams, since I was a child. In every dream I go inside and wind a clock. And when the clock stops, I cry. I don't know why. Make me a clock gear. Just... so I have it in my hand."
+c4_city.after: |
+  Pip puts the gear in his pocket. The tower door is open. A tick-tock sound comes down the stairs; a sound a stopped clock shouldn't make.
+
+c4_tower: "The Time Lord"
+c4_tower.body: |
+  At the top of the tower stands a giant clockwork: gears, springs, pendulums, all stopped. In its middle, woven into the machine, pipes and cables coming out of his back, an old gnome. Beard to the floor. Goggles bigger than his head.
+
+  Pip freezes.
+c4_tower.after: |
+  Kaedrin fought by playing with time; undoing his blows, winding his wounds forward. Defeated, he sinks back into the machine. He takes off his goggles. His face is Pip's face. Old, tired, a thousand years old.
+
+  **Kaedrin:** "Hello, Pip. Ah, how young you are. How much you talk. I used to talk a lot too."
+
+  **Kaedrin:** "Bearer, let me explain. I am Pip. From another time. A time in which you died; here, in this tower. I wanted to save you. I wound time back with my Sky-Measuring Device. And wound it back. Every time you died again. Every time I grew a little older. In the end I stopped time completely. With the whole city. Stopped time flows backward; I flowed a thousand years back and waited for you. This time you won."
+
+  In his chest, in the middle of the machine, beats the Fourth Crown Shard: the power that stops time.
+
+  **Kaedrin:** "Which means I don't have to stop it anymore."
+
+c4_two_pips: "Two Pips"
+c4_two_pips.body: |
+  Pip is crying. Just like in his dreams.
+
+  **Pip:** "Is that what I'm going to do? Me? A whole city? All those people? To save you?"
+
+  **Kaedrin:** "Maybe. Maybe not. Your time is different from mine. For now."
+
+  The Spark reaches for the Fourth Shard.
+
+  **Voice:** *"Time. Ah, time. I know it best. Take it. Leave Kaedrin. Leave Pip. They're only gnomes."*
+c4_two_pips.keep_pip: "Free Kaedrin; Pip stays with you."
+c4_two_pips.keep_pip.result: |
+  You stop the machine. As Kaedrin dies in peace he turns to Pip.
+
+  **Kaedrin:** "Don't wind your clock, Pip. No matter what. Even if your friend dies. Promise."
+
+  **Pip:** "...I can't promise."
+
+  **Kaedrin:** "I know. I couldn't either."
+
+  Pip takes Kaedrin's eighth prototype on his back. When the machine stops, the city flows again: the woman opens the door, the child kicks the ball, the dog barks. For them a second has passed. A thousand years later.
+c4_two_pips.merge: "Merge Kaedrin with Pip."
+c4_two_pips.merge.result: |
+  You give a piece of the Spark's power; your palm aches. Kaedrin's thousand years of knowledge flow into Pip's young body. The merging hurts.
+
+  The Pip who remains talks less and knows more.
+
+  **Pip:** "Strange. I've known you for a thousand years and we met yesterday. Both are true."
+
+  When the machine stops, the city flows again; after a thousand years the streets fill with voices.
+c4_two_pips.send_pip: "Send Pip home; Kaedrin comes with you."
+c4_two_pips.send_pip.result: |
+  So that Pip never becomes Kaedrin, you send him back to Sundermere, to Hedda.
+
+  **Pip:** "You're sending me away? I... fine. I understand. But I don't want to."
+
+  Kaedrin leaves the machine; he will age fast, but he comes with you. "I'll tell you the secret of the shards: if all seven come together, time stops again."
+
+  The city flows again.
+c4_two_pips.abandon: "Take the shard; leave them both."
+c4_two_pips.abandon.result: |
+  You pull the shard from Kaedrin's chest. Kaedrin turns into a statue of sand and crumbles. Pip freezes with the frozen city; for a moment, then forever.
+
+  The Spark grows stronger.
+
+  **Voice:** *"Don't cry. One doesn't cry for a gnome."*
+
+  The city flows again. In the square, only one gnome does not move.
+
+c4_shard: "The Fourth Shard"
+c4_shard.body: |
+  The Fourth Shard ticks in your palm; not in time with your heart, but with the tower's clock.
+c4_shard.seal: "Seal it"
+c4_shard.seal.result: |
+  You seal the shard among Kaedrin's own gears, inside a stopped moment. The seal stays outside of time.
+c4_shard.devour: "Devour it"
+c4_shard.devour.result: |
+  You feel time in your palm. A second stretches, shrinks. For a moment the space between your heartbeats is endless.
+
+  **Voice:** *"Four. Now you can stop it too. Do you know that?"*
+c4_shard.release: "Release it"
+c4_shard.release.result: |
+  You break the shard at the top of the Clock Tower. The light flows into the clock face; the minute hand reaches twelve. The clock strikes. For the first time in a thousand years. Every bell in the city with it.
+
+c4_timeless: "Kaedrin the Timeless"
+c4_timeless.body: |
+  Once the shard is taken the tower collapses, but time doesn't quite heal. Every moment wound back over a thousand years, every death, every attempt, has piled up inside the tower. Not one Kaedrin's echo, but all of them: Kaedrin the Timeless.
+c4_timeless.x.merged: |
+  Pip recognises the echoes. "This time it'll come from the right. I know because that's what I would do."
+c4_timeless.x.pip: |
+  Pip can't look at the echoes. But at the end he says something to the oldest: "I can't promise you. But I'll try."
+c4_timeless.x.kaedrin: |
+  Kaedrin fights his own echoes. "These are my mistakes. I made all of them. Let me fix them one last time."
+c4_timeless.x.gone: |
+  The echoes speak in Pip's voice. Through the whole battle.
+c4_timeless.after: |
+  As you come down from the tower you look at the sky. The rift is visible even by day now. Huge. A warm, amber light seeps from inside it.
+
+  The Sky-Measuring Device points only upward now. The next shard is inside the rift. Inside the sky.
+
+  **Voice:** *"We're getting close to home."*
+c4_timeless.x.ilvar_yours: |
+  Ilvar climbs onto the tower's ruins and, for the first time in his two hundred years, sees a star in the sky of the Starless Lands. A single star, to the north.
+
+  **Ilvar:** "That's new. It's not in my records. Did you leave it?" You nod. "Yes."
+c4_timeless.x.ilvar_other: |
+  Ilvar climbs onto the tower's ruins and, for the first time in his two hundred years, sees a star in the sky of the Starless Lands. A single star, to the north.
+
+  **Ilvar:** "That's new. Did you leave it?" You shake your head: "No. Someone else."

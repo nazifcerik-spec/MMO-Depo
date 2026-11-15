@@ -3589,6 +3589,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-368 — Hikâyenin tamamı oyunda: II.–VI. Bölüm ve sonlar
+
+**Context:** DD-367 tercih sistemini kurup önsöz ve I. Bölüm'ü bağladı; docs/story'deki II.–VI. Bölüm ve dört son (varyantlarıyla) oyunda yoktu. Belgedeki bazı şartlar 'A ya da B' biçiminde, koşul dili ise yalnız 've' biliyor; sonlar sayaç karşılaştırmasına ve çok sayıda bayrağa dayanıyor.
+**Decision:** 56 yeni sahne (toplam 79) ve 46 yeni hikâye görevi (toplam 63), Sv 100–1000. Her bölümün parça kararı ayrı sahne. 'Ya da' şartları aynı sonuca giden ayrı seçeneklerle (farklı etiketle) yazıldı; koşul dili değişmedi. Sonlar: e_choice 'son' bayrağı (gizli Son Ninni beş şartla görünür), e_ending sayaçlara göre varyant paragrafı, e_epilogue kişi sonları + son sayfa satırı (hepsi extras). Sahne metni bölüm başına dosya: content/story/<dil>/NN-*.yaml (LoadText tek dosya ya da dil klasörünü okur, aynı anahtar iki dosyada olamaz). Görev listesi scripts/gen_story_quests.py ile (ödül XP eğrisinden: zindan/baskın seviyenin %50'si, diğerleri %30), metin denetimi scripts/story_text_check.py. Özel görev eşyaları genel 'eşya üret' hedefi. Uriel ittifak şartı üç seçeneğe basitleştirildi.
+**Consequences:** Hikâye Sv 1000'e kadar oynanabilir; tr + en tam, diğer diller İngilizce metni gösterir. TestShippedStoryEveryPathEnds 6000 rastgele oyunla her yolun tam bir son ve tek son sayfa satırıyla bittiğini, dokuz son varyantının da ulaşılabildiğini sınar. Bölüm sonu baskınları (Sv 300/600/700/850/1000) zorunlu. Hikâye bitince istemcideki 'yakında' satırı kalktı.
+**Tarih:** 2026-11-16
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

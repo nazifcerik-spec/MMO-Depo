@@ -133,11 +133,6 @@ class _StoryScreenState extends State<StoryScreen> with PanelState {
                   for (final s in j.scenes)
                     if (s.chapter == c.code) s,
                 ]),
-              if (j.finished)
-                Padding(
-                  padding: const EdgeInsets.all(Space.lg),
-                  child: Text(l.storyComingSoon, textAlign: TextAlign.center),
-                ),
             ];
           }),
         ),

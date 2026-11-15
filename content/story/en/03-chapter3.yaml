@@ -1,0 +1,276 @@
+# Chapter III: The Dragons' Grief (Dragonspine Isles, levels 300–600). DD-367.
+
+c3_coast: "Redscale"
+c3_coast.body: |
+  No ship goes to the Dragonspine Isles; the storms snap every mast. Only one ship gets through: the Red Wind. Her captain, Yssa Redscale, sits in the harbour's most expensive tavern with her feet on the table.
+
+  Yssa is a drakari: red scales from neck to shoulder, amber eyes, a split at the tip of her tongue.
+
+  **Yssa:** "Want to go to Dragonspine? Everyone does. Nobody pays. Pay and I'll take you. Don't, and you swim. I'd recommend paying; the kraken spawn are hungry."
+
+  **Yssa:** "But do me a favour and I'll take you for free. A fleet sank off the coast. Admiral Drask's fleet. Its holds carry a kingdom's treasure. And the admiral, dead as he is, still guards it. Clear the coast first and bring my crew fish. Then we talk."
+c3_coast.x.drakari: |
+  Yssa narrows her eyes. "Your scales are pale. You grew up on the mainland. Here on the isles, dragons were our ancestors. Remember that."
+c3_coast.after: |
+  The sirens fall silent, the storm birds scatter. The crew salts the fish. Yssa unrolls her map: the sunken fleet is marked in red ink.
+
+c3_fleet: "The Sunken Fleet"
+c3_fleet.body: |
+  The Red Wind drops anchor above the sunken fleet. Under the water: hundred-year-old masts, broken hulls, cannons crusted with coral. And on the flagship's deck a shadow, its sword still drawn.
+c3_fleet.after: |
+  Defeated, Drask sinks onto the flagship's deck. Under the water, but he can speak; water is no barrier to the dead.
+
+  **Drask:** "The treasure isn't mine. It's my crew's. Each of them put a year's wages into that voyage. We were going to take it home to their families. We were going to beat the storm. We didn't. If you take the treasure to their families, my crew will rest. If not, we stay here."
+
+  **Yssa** (eyes shining as she looks into the hold): "With this much gold I could buy ten ships. A fleet. The Red Fleet. Half is yours, bright one. Half."
+c3_fleet.share: "Share it with Yssa."
+c3_fleet.share.result: |
+  "Deal. Half and half."
+
+  Yssa hugs you, patting your back with her scaled arms. "From now on I owe you. And I'm one of the rare pirates who pay their debts."
+
+  Drask's crew stays beneath the water.
+c3_fleet.families: "Take the treasure to the families."
+c3_fleet.families.result: |
+  You carry it to the coastal villages, name by name.
+
+  Yssa shouts for a while, then laughs, then falls silent. "You're a fool. A huge fool. But I'll still take you. For a price."
+
+  That night everyone on the coast hears a song coming from the sea. Drask and his crew are at peace.
+
+c3_slopes: "The Mother Dragon"
+c3_slopes.body: |
+  The Dragon Slopes are a range of fiery mountains; a nest on every peak, but most of the nests are empty. Young dragons scream in the sky; not hunting cries, but fleeing ones. Among the slopes walk hooded people with dragon teeth carved into their foreheads: the Dragon Cultists.
+
+  At the foot of the slope, a shepherd's hut. Inside, an old tauren, one horn broken, eyes milky: Old Moru.
+
+  **Moru:** "I'm the last dragon shepherd of these mountains. We tend the dragons, we guard the eggs. But now the queen weeps and the king has gone mad. Azhorath, the Dragon King. Three hundred years ago a shard of the crown fell beneath his throne. Azhorath found it, hid it, loved it. And the shard ate him. Now he eats his own children. Vyrna, his mate, hid the last eggs in the Brood Cavern. The cultists want to take the eggs to the king as an offering."
+c3_slopes.after: |
+  A map falls from the cultists' bodies: the way to the Brood Cavern. Moru looks at it for a long time. "You go first. I'm slow."
+
+c3_brood: "The Brood Cavern"
+c3_brood.body: |
+  The cavern is hot and dark. Claw marks on the walls. At the very bottom a dragon has spread her wings; she thinks you are a cultist.
+c3_brood.after: |
+  Defeated, wings broken, Vyrna folds herself over her eggs. Three eggs. Two have darkened, amber veins in their shells; Azhorath's madness has seeped into them too. The third is clean, warm, beating.
+
+  **Vyrna** (speaking into your mind, her voice like a mountain falling): *"Kill me. But don't touch my last child. For a thousand years dragons have been dying. This is the last. The very last."*
+
+  **Cult Leader** (at the cavern mouth): "Give us the eggs, Bearer. In return we'll give you the secret path to the Throne Peaks. And gold. Much gold."
+c3_brood.save_egg: "Take the clean egg to Moru."
+c3_brood.save_egg.result: |
+  You leave the darkened eggs untouched beside Vyrna.
+
+  Vyrna looks at you one last time. *"Thank you, little light."* She closes her eyes but does not die; she sleeps.
+
+  Moru lays the egg by his hearth to hatch.
+c3_brood.sell: "Sell the eggs to the cultists."
+c3_brood.sell.result: |
+  Vyrna screams; the cavern ceiling cracks. The cultists carry the eggs away. Your purse grows heavy, and a short path to the Throne Peaks appears on your map.
+c3_brood.smash: "Break the darkened eggs."
+c3_brood.smash.result: |
+  So the madness won't spread, you break the darkened shells. Amber smoke rises from them and flows into the Spark.
+
+  Vyrna doesn't stop you. She only watches. Then she dies of grief; the clean egg goes cold with her. When Moru learns of it, he says nothing.
+
+c3_mist: "The Forest's Dream"
+c3_mist.body: |
+  The Mist Forest isn't real. Not entirely, anyway. Trees change places, paths turn back on themselves, faces appear in the mist. Fey wolves, mist stalkers, ancient treants. And the Shadow Elves; an old branch broken off from Liora's line.
+c3_mist.x.liora: |
+  Liora comes with you. For the first time she looks afraid. "I grew up on the tales of this forest. This is our ancestor's dream, Sylwen's. Sylwen fell asleep a thousand years ago, and the forest remained as her dream."
+c3_mist.x.letter: |
+  At the forest's edge a warden reads you Liora's letter: *"Approach Sylwen with respect. She sleeps. And her dream is our forest's last fortress."*
+c3_mist.after: |
+  The mist thins. For a moment the paths straighten, and they all lead to the same place: a grove where the trees close like a crown.
+
+c3_grove: "The Lost Grove"
+c3_grove.body: |
+  In the grove a woman of light and leaves is waiting; neither woman nor tree, something in between. Her dream wants to cast you out.
+c3_grove.after: |
+  When Sylwen is defeated, the dream stops for a moment and the mist thins.
+
+  **Sylwen:** "Ah. You woke me. Halfway. A thousand years ago I saw Aethon's grief, when the stars stopped. I couldn't bear it. I fled into sleep, and my forest became my dream. If I wake, the dream ends. And so does the forest."
+c3_grove.x.seed: |
+  The Mother Tree's seed trembles in your bag. Sylwen looks at it and laughs; her first laugh in a thousand years. "My sister's seed. From the Burnt Forest. If we plant it in the heart of the forest, the forest will live even if I wake."
+c3_grove.wake: "Wake her, and plant the seed."
+c3_grove.wake.result: |
+  You plant the seed in the heart of the forest. Sylwen wakes fully. The mist lifts; sunlight strikes this forest for the first time, and the forest turns green in the sun.
+
+  **Sylwen:** "I'll come with you, Bearer. In the last battle I'll be at your side."
+c3_grove.wake_barren: "Wake her."
+c3_grove.wake_barren.result: |
+  Sylwen wakes fully. The mist lifts. But when the dream ends, the trees wither; the Shadow Elves weep.
+
+  **Sylwen:** "I'm doing this for you. But I won't forgive myself."
+c3_grove.sleep: "Let her sleep: \"Keep your dream.\""
+c3_grove.sleep.result: |
+  Sylwen closes her eyes. The mist thickens again. The forest lives; the dream goes on.
+
+c3_caves: "The Archive of Light"
+c3_caves.body: |
+  The Crystal Caves are lit from within; every wall is a source of light. Crystal spiders, light elementals, sleeping cave titans. And at the cave's heart, a transparent giant as big as a mountain.
+
+  **Pip:** "It's an archive. These aren't crystals, they're memories. Each one a moment. They recorded the light that fell from the sky a thousand years ago. Aethon's fall is in here. To look we need a lens; jeweller's work."
+c3_caves.after: |
+  The lens is in your hand; its glass thin, its rim silver. Pip holds his breath as he looks through it. "The Titan's heart. The real memory is there."
+
+c3_heart: "A God's Memory"
+c3_heart.body: |
+  The Crystal Titan wakes. The cave lights tremble with every step. It wants to protect its archive.
+c3_heart.after: |
+  As the Titan falls, its chest cracks. A clear crystal the size of a palm falls out: a Memory Crystal. You look into it through your lens.
+
+  *A room. The sky through the window. The stars shine, move, flow. In the bed, a woman: Neris. Old, hair snow white, hands thin. Smiling. Someone kneels beside her; you can't see the face, there is too much light. But the voice is familiar. The voice you hear in your palm.*
+
+  *"Don't go. Please. I'll give you eternity. I'll give you the stars. Everything."*
+
+  **Neris:** *"I never wanted eternity, Aethon. I wanted you. For one lifetime. And I had it. That was enough."*
+
+  *Neris's hand falls. Aethon cries out. And every star in the sky stops. A bird hangs in the air. Aethon breaks the smallest shard from his crown, amber coloured, and places it in Neris's palm: "Keep it. Until I find you."*
+
+  The image fades. The Spark in your palm is warmer than it has ever been.
+
+  **Voice** (after a long silence, very quietly): *"Keep it. That crystal. Please. Give it to no one."*
+c3_heart.x.ihra: |
+  Ihra's eye-lights flicker; the undead cannot weep. "I was in that room. By the door. I wanted to hold my teacher's hand, but Aethon was holding it. That night the archangels came."
+c3_heart.x.fresco: |
+  You set the Broken Fresco beside the crystal and the fresco is complete. The fifth wall: a light in Neris's palm. The Spark. You carry the shard that was placed in Neris's hand.
+c3_heart.x.ansel: |
+  A sealed letter from Ansel: *"I hear you found what was inside the Crystal Titan. Bring it to me. To wake Ignar, a god's memory is needed."*
+c3_heart.keep: "Keep the crystal."
+c3_heart.keep.result: |
+  You wrap the crystal in cloth and keep it close to your chest. You'll give it to no one. Maybe one day it will be needed.
+c3_heart.smash: "Break the crystal."
+c3_heart.smash.result: |
+  You don't want to carry a god's grief. No one should.
+
+  As the crystal breaks, a woman's voice laughs, far away.
+
+  **Voice:** *"...No."*
+
+  Then the Voice is silent for a long time.
+
+c3_volcano: "The Seed of a Sun"
+c3_volcano.body: |
+  The Volcanic Isle is a mountain burning in the middle of the sea. Lava flows, magma golems, fire giants. At the summit, in the Volcano Heart, the Ember Covenant's god sleeps: Ignar, the Fire Lord.
+
+  High Priest Ansel is here. Before him, a fire the size of a lake.
+
+  **Ansel:** "You've come. Look. Ignar is waking. The Burnt Forest's vein, all the coal in the world; we've fed him for a year. Now only one thing is missing: a god's light. The one in your hand. If Ignar rises, there will be a second sun in the sky. Mena will never grow cold again. Winters will end. Hunger will end."
+c3_volcano.x.tamsin_with_you: |
+  Tamsin is beside you, without the Covenant's robe. "A second sun will burn Sundermere, High Priest. The forests, the plains, Ironhold. I calculated it. Three times."
+
+  **Ansel:** "There is a price. One continent, for the whole world."
+c3_volcano.x.tamsin_order: |
+  Tamsin's place at Ansel's side is empty. A priest whispers: "The priestess left her calculations and walked away. She said we'd burn the continent."
+c3_volcano.x.covenant: |
+  Ansel holds out his hand to you. "You are one of us. Place the shard with me. Be the fire's first priest."
+c3_volcano.x.burned: |
+  Ignar is even stronger; the Mother Tree's fire runs in his veins. Ansel's eyes shine. "Thanks to you."
+c3_volcano.after: |
+  Those who fed the fire lakes have been silenced. The road to the summit is open; a red light rises from the mouth of the Volcano Heart.
+
+c3_ignar: "The Fire Lord"
+c3_ignar.body: |
+  In the Volcano Heart, Ignar wakes. A giant of fire; every breath a summer.
+c3_ignar.after: |
+  When Ignar is defeated, his fire doesn't go out, but it shrinks. A flame the height of a man.
+
+  **Ignar:** "I am no god, mortal. I was one of Aethon's stars. When the crown broke, I fell. I became fire. These priests want to make me a sun. I only want to go back to the sky."
+c3_ignar.stop: "Stop it: cut the fire, arrest Ansel."
+c3_ignar.stop.result: |
+  You cut off the fire lake's flow. Ansel falls to his knees. "We could have saved the world." The priests scatter; Ansel goes to Ironhold in chains.
+c3_ignar.let_win: "Let him win."
+c3_ignar.let_win.result: |
+  You don't give him the shard, but you don't stop Ansel's fire either. Ignar rises halfway; a red second sun in the sky, small and pale.
+
+  From now on Sundermere's summers are hotter. The droughts begin.
+c3_ignar.save: "Save him: show Tamsin's calculations."
+c3_ignar.save.result: |
+  You show Ansel Tamsin's calculations. Ignar's own words. "He doesn't want to be a sun, Ansel. He wants to go home."
+
+  Ansel looks at Ignar for a long time. Then he overturns his brazier. "I turned a star into fire. What have I done."
+
+  **Ignar:** "When the stars return, I will be with them. I promise."
+c3_ignar.save_faith: "Save him: \"He wants to go home.\""
+c3_ignar.save_faith.result: |
+  You stand before Ansel as a priest of the Covenant. "As the fire's first priest I tell you: he doesn't want to be a sun. He wants to go home."
+
+  Ansel looks at Ignar for a long time. Then he overturns his brazier. "I turned a star into fire. What have I done."
+
+  **Ignar:** "When the stars return, I will be with them. I promise."
+
+c3_peaks: "The Mad King"
+c3_peaks.body: |
+  The Throne Peaks are the highest mountains in the world; above the clouds, the air thin and cold. Dragon knights, dragon sorcerers, throne guards. And at the summit, a throne carved from rock. To climb you'll need a dragon hook; smith's work.
+c3_peaks.x.sold: |
+  The secret path the cultists gave you leads straight to the foot of the throne. But at the end of the path lie broken eggshells. Azhorath ate them.
+c3_peaks.x.sylwen: |
+  A bird flies toward the peaks; up close its feathers are leaves. Sylwen. "I'll wait for you here. The Dragon King's madness burns forests too."
+c3_peaks.after: |
+  The hook bites into the rock. Above, among the clouds, a black shadow spreads its wings.
+
+c3_throne: "The Dragon Throne"
+c3_throne.body: |
+  Azhorath is huge, black, amber-eyed. In his chest, among the scales, beats the Third Crown Shard. He talks all through the fight, but his words make no sense; mad, to himself.
+c3_throne.after: |
+  At last the Dragon King collapses; the summit shakes.
+c3_throne.x.saved: |
+  Moru has climbed up with something wrapped in cloth, warm and stirring. A sound from inside the egg. Azhorath lifts his head; the amber in his eyes fades for a moment.
+
+  **Azhorath:** *"...Vyrna? Is this... ours?"*
+
+  For a moment his mind returns. He tears the shard from his chest with his own claw and holds it out to you. *"Take it. Take it from me. Never again."*
+c3_throne.x.broken: |
+  Azhorath weeps; when dragons weep, mountains fall. *"Vyrna is dead. I felt it. My children are dead. You did this."*
+
+  You have to tear the shard from his chest yourself.
+c3_throne.x.sold: |
+  Azhorath laughs. The power of three eggs is inside him. *"You can't take my shard. I am the shard now."*
+
+  You manage to tear it out, but Azhorath lives, spreads his wings and flees.
+
+c3_shard: "The Third Shard"
+c3_shard.body: |
+  In the summit wind, the Third Crown Shard burns in your palm. A three-hundred-year-old dragon's fire is still inside it.
+c3_shard.seal: "Seal it"
+c3_shard.seal.result: |
+  With Moru's dragon-shepherd knots and the words Ihra knows, you seal the shard. As the knots tighten, a dragon sighs far away.
+c3_shard.devour: "Devour it"
+c3_shard.devour.result: |
+  Azhorath's three hundred years of strength flow into your arms. For a moment you feel you have wings.
+
+  **Voice:** *"Three. Nearly halfway. Do you feel it?"*
+c3_shard.release: "Release it"
+c3_shard.release.result: |
+  You set the shard on the summit's highest rock and break it. The light scatters above the clouds, and across all the isles, for the first time in a hundred years, young dragons sing in the sky instead of screaming.
+
+c3_lair: "The Lair of the Dragon King"
+c3_lair.body: |
+  Even with his shard taken, something rises within Azhorath. Three hundred years of madness, the crown's hunger. Azhorath the Ascended.
+c3_lair.x.saved: |
+  Moru's egg cracks. A small, red dragon hatchling. You name it Kor. The hatchling doesn't fight, but it stands where its mother would; at the very end Azhorath stops once and looks at it.
+c3_lair.x.broken: |
+  Nothing but rage is left in Azhorath.
+c3_lair.x.sold: |
+  The cultists have "ascended" Azhorath. Even their leader is afraid: "We did this."
+c3_lair.after: |
+  When Azhorath the Ascended falls, silence settles on the summit. The amber in the Dragon King's eyes goes out, and beneath it an old, tired gold appears. He is at peace.
+c3_lair.x.yssa_friend: |
+  The Red Wind pulls in at the foot of the mountain. Yssa takes you aboard her own ship. "You beat a dragon king. I'll tell the story for a hundred years. With a little exaggeration."
+c3_lair.x.yssa_rival: |
+  The Red Wind comes, but Yssa doesn't come up on deck. Her crew counts the money and takes you aboard.
+
+c3_onward: "Where the Stars Went Out"
+c3_onward.body: |
+  The ship carries you to the mainland, to the southeast, somewhere you have never been. Pip's device glows bright red.
+
+  **Pip:** "The next shard is in the Starless Lands. There's no sky there. Well, there is, but it's empty. No stars, no moon. And there's a clock tower. When my device points there, it trembles. As if... as if it knows me."
+c3_onward.x.scale: |
+  Moru says he can't give you the hatchling; "Dragons stay with their shepherds the first year." But he leaves a scale in your palm. "The hatchling's first scale. Call, and it will hear."
+c3_onward.x.voice_silent: |
+  The Voice is still silent. Your palm has been cold since the crystal broke.
+c3_onward.x.voice: |
+  **Voice:** *"We're halfway. I can feel you. Your heartbeat. You know, don't you? Who I am."*
+
+  You don't answer. The Voice doesn't insist.

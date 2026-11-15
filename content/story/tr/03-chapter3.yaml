@@ -1,0 +1,276 @@
+# III. Bölüm: Ejderlerin Yası (Ejdersırtı Adaları, Sv 300–600). DD-367.
+
+c3_coast: "Kızılpul"
+c3_coast.body: |
+  Ejdersırtı Adaları'na giden gemi yok; fırtınalar her geminin direğini kırıyor. Yalnız bir gemi geçebiliyor: Kızıl Rüzgâr. Kaptanı Yssa Kızılpul, limanın en pahalı meyhanesinde, ayaklarını masaya uzatmış.
+
+  Yssa bir drakari: boynundan omzuna kızıl pullar, kehribar gözler, dilinin ucunda bir yarık.
+
+  **Yssa:** "Ejdersırtı'na gitmek mi istiyorsun? Herkes ister. Kimse ödemez. Ödersen götürürüm. Ödemezsen yüzerek gidersin. Öneririm ödemeyi; Kraken yavruları aç."
+
+  **Yssa:** "Ama bana bir iyilik yaparsan ücretsiz götürürüm. Kıyının açığında bir filo battı. Amiral Drask'ın filosu. Ambarında bir krallığın hazinesi var. Ve amiral, ölü haliyle, hâlâ onu koruyor. Önce kıyıyı temizle, tayfama balık getir. Sonra konuşuruz."
+c3_coast.x.drakari: |
+  Yssa gözlerini kısıyor. "Pulların solgun. Anakarada büyümüşsün. Burada, adalarda, ejderler bizim atalarımızdı. Bunu hatırla."
+c3_coast.after: |
+  Sirenlerin şarkısı susuyor, fırtına kuşları dağılıyor. Tayfa balığı tuzluyor. Yssa haritayı açıyor: batık filonun yeri kırmızı mürekkeple işaretli.
+
+c3_fleet: "Batık Filo"
+c3_fleet.body: |
+  Kızıl Rüzgâr batık filonun üstünde demir atıyor. Suyun altında yüz yıllık direkler, kırık gövdeler, mercanlarla kaplı toplar. Ve amiral gemisinin güvertesinde bir gölge, kılıcını hâlâ çekmiş.
+c3_fleet.after: |
+  Drask yenildiğinde amiral gemisinin güvertesine çöküyor. Suyun altında, ama konuşabiliyor; ölüler için su engel değil.
+
+  **Drask:** "Hazine benim değil. Tayfamın. Her biri bir yıllık maaşını yatırdı o sefere. Ailelerine götürecektik. Fırtınayı yenecektik. Yenemedik. Hazineyi ailelerine götürürsen tayfam huzura erer. Götürmezsen biz burada kalırız."
+
+  **Yssa** (ambara bakarken gözleri parlıyor): "Bu kadar altınla on gemi alırım. Bir filo. Kızıl Filo. Yarısı senin, ışıklı. Yarısı."
+c3_fleet.share: "Yssa'yla paylaş."
+c3_fleet.share.result: |
+  "Anlaştık. Yarı yarıya."
+
+  Yssa sana sarılıyor, pullu kollarıyla sırtını sıvazlıyor. "Bundan sonra sana borçluyum. Ve ben borcunu ödeyen nadir korsanlardanım."
+
+  Drask'ın tayfası suyun altında kalıyor.
+c3_fleet.families: "Hazineyi ailelere götür."
+c3_fleet.families.result: |
+  Kıyıdaki köylere, isim isim götürüyorsun.
+
+  Yssa bir süre bağırıyor, sonra gülüyor, sonra susuyor. "Ahmaksın. Çok ahmaksın. Ama yine de seni götüreceğim. Fiyatıyla."
+
+  O gece kıyıdaki herkes denizden gelen bir şarkı duyuyor. Drask ve tayfası huzura eriyor.
+
+c3_slopes: "Ana Ejder"
+c3_slopes.body: |
+  Ejder Yamaçları ateşli bir dağ silsilesi; her tepede bir yuva, ama yuvaların çoğu boş. Genç ejderler gökyüzünde çığlık atıyor; avlanan değil, kaçan çığlıklar. Yamaçların arasında, alnına ejder dişi kazınmış kapüşonlu insanlar: Ejder Kültistleri.
+
+  Yamacın dibinde bir çoban kulübesi. İçinde yaşlı bir tauren, boynuzlarından biri kırık, gözleri sütlü: Yaşlı Moru.
+
+  **Moru:** "Ben bu dağların son ejder çobanıyım. Ejderlere bakarız, yumurtaları koruruz. Ama artık kraliçe ağlıyor ve kral delirdi. Azhorath, Ejder Kral. Üç yüz yıl önce tacın bir parçası tahtının altına düştü. Azhorath onu buldu, sakladı, sevdi. Ve parça onu yedi. Şimdi kendi çocuklarını yiyor. Vyrna, karısı, son yumurtaları Kuluçka Mağarası'na sakladı. Kültistler yumurtaları kurban olarak krala götürmek istiyor."
+c3_slopes.after: |
+  Kültistlerin cesetlerinden bir harita çıkıyor: Kuluçka Mağarası'nın yolu. Moru haritaya uzun uzun bakıyor. "Önce sen git. Ben yavaşım."
+
+c3_brood: "Kuluçka Mağarası"
+c3_brood.body: |
+  Mağara sıcak ve karanlık. Duvarlarda pençe izleri. En dipte bir ejder kanatlarını açmış; seni kültist sanıyor.
+c3_brood.after: |
+  Vyrna yenildiğinde, kanatları kırık, yumurtalarının üstüne kapanıyor. Üç yumurta. İkisi kararmış, kabuklarında kehribar damarlar; Azhorath'ın deliliği onlara da sızmış. Üçüncüsü temiz, sıcak, atıyor.
+
+  **Vyrna** (zihnine konuşuyor; sesi bir dağ çökmesi gibi): *"Öldür beni. Ama son çocuğuma dokunma. Bin yıldır ejderler ölüyor. Bu son. Bu en son."*
+
+  **Kültist Başı** (mağaranın ağzında): "Yumurtaları bize ver, Taşıyıcı. Karşılığında sana Taht Zirveleri'nin gizli yolunu veririz. Ve altın. Çok altın."
+c3_brood.save_egg: "Temiz yumurtayı Moru'ya götür."
+c3_brood.save_egg.result: |
+  Kararmış yumurtalara dokunmuyorsun; Vyrna'nın yanında kalıyorlar.
+
+  Vyrna son kez sana bakıyor. *"Teşekkür ederim, küçük ışık."* Gözlerini kapıyor ama ölmüyor; uyuyor.
+
+  Moru yumurtayı ocağının yanında kuluçkaya yatırıyor.
+c3_brood.sell: "Yumurtaları kültistlere sat."
+c3_brood.sell.result: |
+  Vyrna çığlık atıyor; mağaranın tavanı çatlıyor. Kültistler yumurtaları taşıyıp gidiyor. Kesen ağırlaşıyor, ve haritanda Taht Zirveleri'ne kısa bir yol beliriyor.
+c3_brood.smash: "Kararmış yumurtaları kır."
+c3_brood.smash.result: |
+  Delilik yayılmasın diye kararmış kabukları kırıyorsun. İçlerinden kehribar duman çıkıyor, Kıvılcıma akıyor.
+
+  Vyrna seni durdurmuyor. Sadece izliyor. Sonra kederden ölüyor; temiz yumurta da onunla birlikte soğuyor. Moru bunu öğrendiğinde konuşmuyor.
+
+c3_mist: "Ormanın Rüyası"
+c3_mist.body: |
+  Sis Ormanı gerçek değil. En azından tam olarak değil. Ağaçlar yer değiştiriyor, patikalar kendi üstüne dönüyor, sisin içinde yüzler beliriyor. Peri kurtları, sis avcıları, kadim treantlar. Ve Gölge Elfleri; Liora'nın soyundan ayrılmış eski bir kol.
+c3_mist.x.liora: |
+  Liora seninle geliyor. İlk kez korkmuş görünüyor. "Ben bu ormanın masallarıyla büyüdüm. Burası atamızın, Sylwen'in rüyası. Sylwen bin yıl önce uykuya daldı ve orman onun rüyası olarak kaldı."
+c3_mist.x.letter: |
+  Ormanın girişinde bir bekçi Liora'nın mektubunu okuyor: *"Sylwen'e saygıyla yaklaş. O uyuyor. Ve rüyası, bizim ormanımızın son kalesi."*
+c3_mist.after: |
+  Sis inceliyor. Patikalar bir an düzeliyor ve hepsi aynı yere çıkıyor: ağaçların bir taç gibi kapandığı bir koru.
+
+c3_grove: "Kayıp Koru"
+c3_grove.body: |
+  Koruda ışıktan ve yapraktan bir kadın bekliyor; ne bir kadın ne bir ağaç, ikisi arası. Rüyası seni dışarı atmak istiyor.
+c3_grove.after: |
+  Sylwen yenildiğinde rüya bir an duruyor, sis inceliyor.
+
+  **Sylwen:** "Ah. Uyandırdın beni. Yarım. Bin yıl önce Aethon'un yasını gördüm; yıldızlar durduğunda. Dayanamadım. Uykuya kaçtım ve ormanım benim rüyam oldu. Uyanırsam rüya biter. Orman da biter."
+c3_grove.x.seed: |
+  Çantandaki Ana Ağaç tohumu titriyor. Sylwen ona bakıyor ve gülüyor; bin yılın ilk gülüşü. "Kız kardeşimin tohumu. Yanık Orman'dan. Bunu ormanın ortasına dikersek, ben uyansam da orman yaşar."
+c3_grove.wake: "Uyandır ve tohumu dik."
+c3_grove.wake.result: |
+  Tohumu ormanın ortasına dikiyorsun. Sylwen tamamen uyanıyor. Sis kalkıyor; güneş ilk kez bu ormana vuruyor ve orman güneşte yeşeriyor.
+
+  **Sylwen:** "Seninle geleceğim, Taşıyıcı. Son savaşta yanında olacağım."
+c3_grove.wake_barren: "Uyandır."
+c3_grove.wake_barren.result: |
+  Sylwen tamamen uyanıyor. Sis kalkıyor. Ama rüya bitince ağaçlar kuruyor; Gölge Elfleri ağlıyor.
+
+  **Sylwen:** "Bunu senin için yapıyorum. Ama kendimi affetmeyeceğim."
+c3_grove.sleep: "Uyusun: \"Rüyanı koru.\""
+c3_grove.sleep.result: |
+  Sylwen gözlerini kapıyor. Sis yeniden kalınlaşıyor. Orman yaşıyor; rüya sürüyor.
+
+c3_caves: "Işığın Arşivi"
+c3_caves.body: |
+  Kristal Mağaralar içeriden aydınlık; her duvar bir ışık kaynağı. Kristal örümcekler, ışık elementalleri, uyuyan mağara titanları. Ve mağaranın kalbinde, bir dağ kadar büyük, şeffaf bir dev.
+
+  **Pip:** "Bu bir arşiv. Bunlar kristal değil, hafıza. Her biri bir an. Bin yıl önce gökyüzünden düşen ışığı kaydetmişler. Burada Aethon'un düşüşü var. Bakmak için bir mercek lazım; kuyumcu işi."
+c3_caves.after: |
+  Mercek elinde; camı ince, kenarları gümüş. Pip ona nefesini tutarak bakıyor. "Titan'ın kalbi. Asıl hatıra orada."
+
+c3_heart: "Bir Tanrının Hatırası"
+c3_heart.body: |
+  Kristal Titan uyanıyor. Her adımında mağaranın ışıkları titriyor. Arşivini korumak istiyor.
+c3_heart.after: |
+  Titan düşerken göğsü çatlıyor. İçinden avuç büyüklüğünde berrak bir kristal düşüyor: bir Anı Kristali. Merceğinle içine bakıyorsun.
+
+  *Bir oda. Pencereden gökyüzü. Yıldızlar parlıyor, kımıldıyor, akıyor. Yatakta bir kadın: Neris. Yaşlı, saçları bembeyaz, elleri ince. Gülümsüyor. Yanında biri diz çökmüş; yüzünü göremiyorsun, ışık çok fazla. Ama sesi tanıdık. Avucunda duyduğun ses.*
+
+  *"Gitme. Lütfen. Ben sana sonsuzluğu veririm. Yıldızları veririm. Her şeyi."*
+
+  **Neris:** *"Sonsuzluğu istemedim ki, Aethon. Seni istedim. Bir hayat boyu. Ve aldım. Bu yeterdi."*
+
+  *Neris'in eli düşüyor. Aethon bağırıyor. Ve gökyüzündeki bütün yıldızlar duruyor. Bir kuş havada asılı kalıyor. Aethon tacından en küçük parçayı kırıyor, kehribar renkli, ve Neris'in avucuna koyuyor: "Sende kalsın. Ben seni bulana kadar."*
+
+  Görüntü sönüyor. Avucundaki Kıvılcım hiç olmadığı kadar sıcak.
+
+  **Ses** (uzun bir sessizlikten sonra, çok kısık): *"Onu sakla. O kristali. Lütfen. Kimseye verme."*
+c3_heart.x.ihra: |
+  Ihra'nın göz ışıkları titriyor; hortlaklar ağlayamaz. "Ben o odadaydım. Kapının yanında. Hocamın elini tutmak istedim ama Aethon tutuyordu. O gece başmelekler geldi."
+c3_heart.x.fresco: |
+  Kırık Fresk'i kristalin yanına koyuyorsun ve fresk tamamlanıyor. Beşinci duvar: Neris'in avucunda bir ışık. Kıvılcım. Sen Neris'in avucuna konan parçayı taşıyorsun.
+c3_heart.x.ansel: |
+  Ansel'den mühürlü bir mektup: *"Kristal Titan'ın içindekini bulduğunu duydum. Bana getir. Ignar'ı uyandırmak için bir tanrının hatırası gerekiyor."*
+c3_heart.keep: "Kristali sakla."
+c3_heart.keep.result: |
+  Kristali bir beze sarıp göğsüne yakın saklıyorsun. Kimseye vermeyeceksin. Belki bir gün lazım olur.
+c3_heart.smash: "Kristali kır."
+c3_heart.smash.result: |
+  Bir tanrının yasını taşımak istemiyorsun. Kimse taşımamalı.
+
+  Kristal kırılırken uzaktan bir kadın sesi gülüyor.
+
+  **Ses:** *"...Hayır."*
+
+  Sonra Ses uzun süre susuyor.
+
+c3_volcano: "Güneşin Tohumu"
+c3_volcano.body: |
+  Volkanik Ada denizin ortasında yanan bir dağ. Lav akıntıları, magma golemleri, ateş devleri. Dağın tepesinde, Volkan Kalbi'nde, Kor Ahdi'nin tanrısı uyuyor: Ateş Lordu Ignar.
+
+  Başrahip Ansel burada. Önünde bir göl büyüklüğünde ateş.
+
+  **Ansel:** "Geldin. Bak. Ignar uyanıyor. Yanık Orman'ın damarı, dünyanın bütün kömürleri; bir yıldır besliyoruz onu. Şimdi tek eksik bir tanrı ışığı. Senin avucundaki. Ignar yükselirse gökyüzünde ikinci bir güneş olacak. Mena bir daha soğumayacak. Kışlar bitecek. Açlık bitecek."
+c3_volcano.x.tamsin_with_you: |
+  Tamsin yanında, Ahdi'nin cüppesi olmadan. "İkinci güneş Sundermere'yi yakar, Başrahip. Ormanları, ovaları, Demirkale'yi. Hesapladım. Üç kez hesapladım."
+
+  **Ansel:** "Bedeli var. Bir kıta, bütün dünya için."
+c3_volcano.x.tamsin_order: |
+  Ansel'in yanında Tamsin'in yeri boş. Bir rahip fısıldıyor: "Rahibe hesaplarını bırakıp gitti. Kıtayı yakacağımızı söyledi."
+c3_volcano.x.covenant: |
+  Ansel sana elini uzatıyor. "Sen bizden birisin. Benimle birlikte koy parçayı. Ateşin ilk rahibi sen ol."
+c3_volcano.x.burned: |
+  Ignar daha da güçlü; Ana Ağacın ateşi onun damarında. Ansel'in gözleri parlıyor. "Senin sayende."
+c3_volcano.after: |
+  Ateş göllerini besleyenler susturuldu. Dağın tepesine giden yol açık; Volkan Kalbi'nin ağzından kızıl bir ışık yükseliyor.
+
+c3_ignar: "Ateş Lordu"
+c3_ignar.body: |
+  Volkan Kalbi'nde Ignar uyanıyor. Ateşten bir dev; her nefesi bir yaz.
+c3_ignar.after: |
+  Ignar yenildiğinde ateşi sönmüyor, ama küçülüyor. Bir alev, bir insan boyunda.
+
+  **Ignar:** "Ben bir tanrı değilim, ölümlü. Ben Aethon'un yıldızlarından biriydim. Taç kırıldığında düştüm. Ateş oldum. Bu rahipler beni güneş yapmak istiyor. Ben sadece gökyüzüne geri dönmek istiyorum."
+c3_ignar.stop: "Durdur: ateşi kes, Ansel'i tutukla."
+c3_ignar.stop.result: |
+  Ateş gölünün akışını kesiyorsun. Ansel diz çöküyor. "Dünyayı kurtarabilirdik." Rahipler dağılıyor; Ansel zincirle Demirkale'ye gidiyor.
+c3_ignar.let_win: "Bırak kazansın."
+c3_ignar.let_win.result: |
+  Parçayı vermiyorsun ama Ansel'in ateşini de durdurmuyorsun. Ignar yarı yarıya yükseliyor; gökyüzünde kızıl bir ikinci güneş, küçük, solgun.
+
+  Sundermere'nin yazları bundan sonra daha sıcak. Kuraklıklar başlıyor.
+c3_ignar.save: "Kurtar: Tamsin'in hesaplarını göster."
+c3_ignar.save.result: |
+  Tamsin'in hesaplarını Ansel'e gösteriyorsun. Ignar'ın kendi sözlerini. "O güneş olmak istemiyor, Ansel. O eve dönmek istiyor."
+
+  Ansel uzun süre Ignar'a bakıyor. Sonra mangalını deviriyor. "Bir yıldızı ateşe çevirmişim. Ben ne yaptım."
+
+  **Ignar:** "Yıldızlar döndüğünde ben de onlarla olacağım. Söz."
+c3_ignar.save_faith: "Kurtar: \"O eve dönmek istiyor.\""
+c3_ignar.save_faith.result: |
+  Ahdin rahibi olarak Ansel'in önüne çıkıyorsun. "Ateşin ilk rahibi olarak söylüyorum: O güneş olmak istemiyor. Eve dönmek istiyor."
+
+  Ansel uzun süre Ignar'a bakıyor. Sonra mangalını deviriyor. "Bir yıldızı ateşe çevirmişim. Ben ne yaptım."
+
+  **Ignar:** "Yıldızlar döndüğünde ben de onlarla olacağım. Söz."
+
+c3_peaks: "Delirmiş Kral"
+c3_peaks.body: |
+  Taht Zirveleri dünyanın en yüksek dağları; bulutların üstünde, havası ince, soğuk. Ejder şövalyeleri, ejder büyücüleri, taht muhafızları. Ve zirvede kayadan oyulmuş bir taht. Tırmanmak için ejder kancası gerekiyor; demirci işi.
+c3_peaks.x.sold: |
+  Kültistlerin verdiği gizli yol seni doğrudan tahtın dibine çıkarıyor. Ama yolun sonunda kırık yumurta kabukları var. Azhorath onları yemiş.
+c3_peaks.x.sylwen: |
+  Bir kuş zirvelere doğru uçuyor; yakından bakınca yaprak tüyleri var. Sylwen. "Seni burada bekleyeceğim. Ejder Kral'ın deliliği ormanları da yakar."
+c3_peaks.after: |
+  Kanca kayaya oturuyor. Yukarıda, bulutların arasında, kara bir gölge kanatlarını açıyor.
+
+c3_throne: "Ejder Tahtı"
+c3_throne.body: |
+  Azhorath dev, kara, gözleri kehribar. Göğsünde, pulların arasında, Üçüncü Taç Parçası atıyor. Dövüş boyunca konuşuyor ama kelimeleri anlamsız, kendi kendine, çılgın.
+c3_throne.after: |
+  Ejder Kral sonunda yere çöküyor; zirve sarsılıyor.
+c3_throne.x.saved: |
+  Moru bir bezle sarılı, sıcak, kıpırdayan bir şeyle tırmanmış. Yumurtanın içinden bir ses. Azhorath başını kaldırıyor; gözlerindeki kehribar bir an soluklaşıyor.
+
+  **Azhorath:** *"...Vyrna? Bu... bizim mi?"*
+
+  Bir an aklı yerine geliyor. Parçayı göğsünden kendi pençesiyle söküp sana uzatıyor. *"Al. Al şunu benden. Bir daha asla."*
+c3_throne.x.broken: |
+  Azhorath ağlıyor; ejderler ağlayınca dağlar çöker. *"Vyrna öldü. Hissettim. Çocuklarım öldü. Bunu sen yaptın."*
+
+  Parçayı göğsünden sen sökmek zorunda kalıyorsun.
+c3_throne.x.sold: |
+  Azhorath gülüyor. Üç yumurtanın gücü onun içinde. *"Parçamı alamazsın. Ben artık parçayım."*
+
+  Parçayı sökmeyi başarıyorsun, ama Azhorath yaşıyor ve kanatlarını açıp kaçıyor.
+
+c3_shard: "Üçüncü Parça"
+c3_shard.body: |
+  Zirvenin rüzgârında Üçüncü Taç Parçası avucunda yanıyor. Üç yüz yıllık bir ejderin ateşi hâlâ içinde.
+c3_shard.seal: "Mühürle"
+c3_shard.seal.result: |
+  Moru'nun ejder çobanı düğümleriyle, Ihra'nın bildiği sözlerle parçayı mühürlüyorsun. Düğümler sıkılaşırken uzaktan bir ejder iç çekiyor.
+c3_shard.devour: "Yut"
+c3_shard.devour.result: |
+  Azhorath'ın üç yüz yıllık gücü kollarına akıyor. Bir an kanatların olduğunu hissediyorsun.
+
+  **Ses:** *"Üç. Yarıya yakın. Hissediyor musun?"*
+c3_shard.release: "Bırak"
+c3_shard.release.result: |
+  Parçayı zirvenin en yüksek kayasına koyup kırıyorsun. Işık bulutların üstüne dağılıyor ve bütün adalarda, yüz yıl sonra ilk kez, genç ejderler gökyüzünde çığlık değil şarkı söylüyor.
+
+c3_lair: "Ejder Kral'ın İni"
+c3_lair.body: |
+  Parçası alındıktan sonra bile Azhorath'ın içinde bir şey yükseliyor. Üç yüz yılın deliliği, tacın açlığı. Yükselmiş Azhorath.
+c3_lair.x.saved: |
+  Moru'nun yumurtası çatlıyor. Küçük, kızıl bir ejder yavrusu. Adını Kor koyuyorsun. Yavru savaşmıyor ama annesinin yerinde duruyor; Azhorath son anda bir kez durup ona bakıyor.
+c3_lair.x.broken: |
+  Azhorath'ta öfkeden başka bir şey kalmamış.
+c3_lair.x.sold: |
+  Kültistler Azhorath'ı "yükseltmiş". Kültistlerin başı bile korkuyor: "Bunu biz yaptık."
+c3_lair.after: |
+  Yükselmiş Azhorath düştüğünde zirvede bir sessizlik. Ejder Kral'ın gözlerindeki kehribar sönüyor ve altından eski, yorgun bir altın rengi çıkıyor. Huzura eriyor.
+c3_lair.x.yssa_friend: |
+  Kızıl Rüzgâr dağın eteğine yanaşıyor. Yssa sizi kendi gemisiyle alıyor. "Bir ejder kralı yenmişsin. Hikâyesini yüz yıl anlatacağım. Biraz abartarak."
+c3_lair.x.yssa_rival: |
+  Kızıl Rüzgâr geliyor ama Yssa güverteye çıkmıyor. Tayfası parayı sayıp sizi alıyor.
+
+c3_onward: "Yıldızların Söndüğü Yer"
+c3_onward.body: |
+  Gemi seni ana karaya, güneydoğuya, hiç gitmediğin bir yere götürüyor. Pip'in aleti kıpkırmızı yanıyor.
+
+  **Pip:** "Bir sonraki parça Yıldızsız Topraklar'da. Orada gökyüzü yok. Yani var ama boş. Yıldız yok, ay yok. Ve orada bir saat kulesi var. Aletim oraya bakınca titriyor. Sanki... sanki beni tanıyor."
+c3_onward.x.scale: |
+  Moru yavruyu sana veremeyeceğini söylüyor; "Ejderler ilk yıl çobanlarıyla kalır." Ama avucuna bir pul bırakıyor. "Yavrunun ilk pulu. Çağırırsan duyar."
+c3_onward.x.voice_silent: |
+  Ses hâlâ susuyor. Kristal kırıldığından beri avucun soğuk.
+c3_onward.x.voice: |
+  **Ses:** *"Yarı yoldayız. Hissediyorum seni. Kalbinin atışını. Biliyorsun, değil mi? Kim olduğumu."*
+
+  Cevap vermiyorsun. Ses de ısrar etmiyor.

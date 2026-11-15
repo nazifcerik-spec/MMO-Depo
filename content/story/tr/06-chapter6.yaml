@@ -1,0 +1,253 @@
+# VI. Bölüm: Son Kalenin Bekçisi (Boşluğun Kıyısı, Sv 850–1000). DD-367.
+
+c6_sea: "Kül Denizi"
+c6_sea.body: |
+  Deniz su değil, kül. Gri, ince, dalgalanan. Üstünde yürünemiyor; batıyorsun. Selin gemisini külün üstünde yüzecek şekilde değiştiriyor; yavaş, tehlikeli.
+
+  Külün içinde kül leviathanları yüzüyor. Külün altından ölümsüz askerler yürüyor. Ve denizin ortasında, külün altına gömülmüş bir taht. Üstünde bir dev: Leviathan Kral.
+c6_sea.x.yssa_friend: |
+  Ufukta kızıl bir yelken. Kızıl Rüzgâr, ve arkasında dokuz gemi daha. Kızıl Filo.
+
+  **Yssa:** "Drask'ın altınıyla aldım. Sana borçluyum demiştim. Kül de bir deniz, değil mi? Rüzgâr her yerde rüzgâr."
+c6_sea.x.yssa_rival: |
+  Kızıl Rüzgâr tek başına geliyor. Yssa güvertede.
+
+  **Yssa:** "Fiyatı yüksek bu seferin. Çok yüksek. ...Ama bu sefer ödeme. Drask'ın tayfasından birinin kızı benim tayfamda. Babasının şarkısını duyduğu gece bana katıldı. Bu sefer bedava."
+c6_sea.after: |
+  Külün askerleri geri çekiliyor. Denizin ortasından bir ses yükseliyor; bütün denizi titreten bir ses.
+
+  **Leviathan Kral:** *"Ölümlüler. Benim denizimde ölümlüler. Burası ölülerin yolu. Ölemeyen ölülerin. Taç kırıldığından beri ölüm yarım. Ruhlar ölüyor ama gidemiyor. Ben onları taşıyorum, denizin öbür kıyısına, boşluğa. Bin yıldır. Hiç bitmiyor."*
+
+c6_leviathan: "Leviathan Kral"
+c6_leviathan.body: |
+  Leviathan'ın gözleri külün içinden yükseliyor; her biri bir ada kadar. Geçmek için ya onu ikna edeceksin ya da onunla savaşacaksın.
+
+  Çantandaki harita kıpırdıyor; yıldızların gösterdiği bir yol, Leviathan'ın en yavaş olduğu sularda.
+c6_leviathan.x.seth: |
+  O gece rüyanda Gömülü Saray'daki firavun beliriyor; bir sorusu daha var sende.
+
+  **Seth-Ka:** *"Leviathan'ın sırrı: o da bir ölü. Tacın ilk kurbanı. Aethon yıldızları durdurduğunda okyanus da durdu ve en büyük canlısı boğuldu. Ona gerçek adını söyle: Thalassar. Ve sana yol verecek."*
+c6_leviathan.true_name: "Gerçek adını söyle: \"Thalassar.\""
+c6_leviathan.true_name.result: |
+  "Thalassar."
+
+  Deniz bir an duruyor. Leviathan'ın gözleri kırpılıyor; bin yıldır ilk kez.
+
+  "Ruhları taşımaya devam edeceksin. Ama yükünü hafifletebilirim. Tacı tamamlayıp bir karar verdiğimde ölüm yeniden bütün olabilir."
+
+  *"Bin yıldır kimse bana adımla seslenmedi. Kimse bunu vaat etmedi. Geç. Ve vaadini unutma."*
+c6_leviathan.stars: "Geçit iste: yıldız yolunu göster."
+c6_leviathan.stars.result: |
+  Haritayı açıyorsun; yıldızlar külün üstüne bir yol çiziyor.
+
+  "Ruhları taşımaya devam edeceksin. Ama yükünü hafifletebilirim. Tacı tamamlayıp bir karar verdiğimde ölüm yeniden bütün olabilir."
+
+  Leviathan uzun süre sana bakıyor. *"Bin yıldır kimse bana bunu vaat etmedi. Geç. Ama önce gücünü görmek isterim. Ve vaadini unutma."*
+c6_leviathan.fight: "Savaşarak geç."
+c6_leviathan.fight.result: |
+  Kılıcını çekiyorsun. Leviathan'ın gözleri kararıyor. *"Öyle olsun, ölümlü."* Kül dalgaları yükseliyor.
+
+c6_throne: "Batık Taht"
+c6_throne.body: |
+  Külün altına gömülü tahta iniyorsun. Leviathan Kral orada bekliyor.
+c6_throne.x.trial: |
+  Bu bir savaş değil, bir sınav. Leviathan her darbesinden sonra bekliyor, gücünü tartıyor.
+c6_throne.x.war: |
+  Bu gerçek bir savaş. Leviathan'ın her darbesi bir deniz kadar ağır.
+c6_throne.after: |
+  Sonunda Leviathan geri çekiliyor. Kül Denizi sana bir yol açıyor; öbür kıyıda, kara bir kalenin gölgesinde, ruhlar bekliyor.
+
+c6_shore: "Ölülerin Kıyısı"
+c6_shore.body: |
+  Kül Denizi'nin öbür kıyısında, Son Kale'nin gölgesinde, ruhlar bekliyor. Bin yılın ölmeyen ölüleri. Leviathan'ın taşıdığı ama boşluğa bırakamadığı. Aralarında tanıdık yüzler var.
+c6_shore.x.caelum_lost: |
+  Bir ruh, yarım, soluk mavi, yüzü yok. Caelum'un kalıntısı. Seni tanımıyor; Ihra'yı arıyor. Kıvılcım onun yanından geçerken ağırlaşıyor.
+c6_shore.x.caelum_gone: |
+  Ruhlar arasında bir fısıltı: "Bir rahip geçti buradan. Gülümseyerek. Boşluğa. Gerçekten gitti."
+c6_shore.x.seth: |
+  Seth-Ka'nın ruhu burada, sıranın en önünde. Bandajları yok; genç bir kral yüzü. "Tacın çocuğu! Sırada bekliyorum. Üç bin yıl yaşadım, birkaç gün daha beklerim. Ama vaadini tut."
+c6_shore.x.names: |
+  Leviathan ruhları kıyıya bırakırken her birine bir isim söylüyor. Bin yıldır yapmadığı bir şey.
+c6_shore.x.ihra_alone: |
+  Ruhların arasında bir kadın: uzun boylu, derisi kurumuş, gözlerinde iki soluk mavi ışık. Ihra. Hayalet değil, hâlâ hortlak; Son Kale'ye doğru yürüyor.
+
+  **Ihra:** "Sen. Caelum'u yok ettin, ben de gittim. Ama yolum buraya çıktı. Bin yıldır kaçtığım yere. Son Kale'de biri var. Onu görmem lazım. Benimle gelme. Ya da gel; ne fark eder."
+
+  Ihra senden önce kaleye giriyor.
+c6_shore.x.ihra_secret: |
+  Ihra kaleye bakıyor ve yüzü değişiyor.
+
+  **Ihra:** "Bunu sana hiç söylemedim. Bin yıl önce Neris'in yanında iki öğrenci vardı. Ben ve bir genç asker. Neris öldüğünde, taç kırıldığında, o genç asker parçaları toplamaya karar verdi. İlk Taşıyıcı oldu. Adı Morvath'tı. Ben onu sevdim. O da beni. Ve bir gün Ebediyet Kıyısı'na gitti ve geri gelmedi."
+
+c6_walls: "Son Kale Surları"
+c6_walls.body: |
+  Son Kale boşluğun ağzında duruyor. Bir yanında dünya, bir yanında hiçlik. Surları kara taştan, bin yıllık. Ve surlar dışarıyı değil, içeriyi tutuyor: Ebediyet Kıyısı'na giden yolu. Ebedi bekçiler, boşluk titanları, ruh biçenler; hepsi Morvath'ın askerleri.
+
+  Kapının yanında küçük bir taş kulübe. İçinde bir hortlak, kâğıtlar, mürekkep: Kâtip Oen.
+
+  **Oen:** "Morvath'ın günlüğü. Bin yıl, her gün bir satır. İster misin okumayı? Kimse istemedi. Kimse gelmedi."
+
+  *1. gün. Altı parçayı topladım. Yedinciyi bulamadım; Neris'in mezarında değildi. Yine de Ebediyet Kıyısı'na gidiyorum. Aethon'u kurtaracağım. Ihra'ya söylemedim. Söyleseydim beni durdururdu.*
+
+  *3. gün. Aethon'u gördüm. Zincirde. Bana "Tacı ver bana. Neris'i geri getireceğim." dedi. Sonra gözlerine baktım. Neris'i geri getirmeyecek. Bir daha hiç kimsenin gitmemesini sağlayacak. Her şeyi durduracak. Herkesi, sonsuza dek.*
+
+  *4. gün. Parçaları yeniden dağıttım. Bir kısmını okyanusa, bir kısmını göğe. Tek birini tuttum; kalenin taşlarına koydum. Kapı onunla duruyor.*
+
+  *700. gün. Ihra'yı rüyamda gördüm. Ölmüş. Hayır. Ölmemiş. Daha kötüsü.*
+
+  *Bin yılın son günü. Ses kesildi. Aethon'un sesi. Bin yıldır her gece duyuyordum. Bu gece duymadım. Demek ki başka birini buldu. Demek ki geliyor.*
+
+  Kapıyı açmak için bir kuşatma kancası lazım; demirci işi.
+c6_walls.after: |
+  Kanca surların dişlerine oturuyor. Kapı gıcırdıyor.
+c6_walls.x.varn_peace: |
+  Surların üstünde bir an paslı zırhlı bir siluet beliriyor. Lord Varn. Huzurda bir ruh; yalnızca bir anlık.
+
+  **Varn:** "Kimse geçemeyecekti. Benim yeminim buydu. Sen geç. Senin için yemini bozuyorum."
+
+  Kapı bir aralık açılıyor.
+c6_walls.x.varn_bound: |
+  Surların üstünde Varn'ın garnizonunun yankıları beliriyor: hayalet muhafızlar, lanetli okçular. Kuzey Kalesi'nde bıraktığın ruhlar, parçanın peşinden buraya kadar gelmiş. Kapıyı zorla açmak zorunda kalıyorsun.
+
+c6_bastion: "İlk Taşıyıcı"
+c6_bastion.body: |
+  Kalenin kalbinde bir taht değil, bir nöbet yeri var. Tek bir sandalye, bir kılıç, bir pencere. Pencereden Ebediyet Kıyısı görünüyor: dünyanın sonu, ışıktan bir uçurum, ve uçurumun kenarında zincirli bir siluet.
+
+  Morvath bin yaşında. Zırhı kara, yüzü yok; miğferinin altında yalnızca iki kehribar ışık. Kapının üstünde, kalenin taşlarında, Altıncı Taç Parçası atıyor.
+
+  **Morvath:** "Yedinci parça. Sonunda. Bin yıl."
+c6_bastion.after: |
+  Morvath bin yılın bütün tekniğiyle savaştı ve bir an bile öfkelenmedi. Yenildiğinde kılıcını bırakıyor.
+
+  **Morvath:** "Beni geçtin. Benim geçmediğim kadar güçlüsün. Şimdi bana bir şey söyle: Aethon'a gittiğinde ona ne vereceksin?"
+c6_bastion.x.ihra: |
+  Ihra öne çıkıyor. Miğferin içindeki iki ışık titriyor.
+
+  **Morvath:** "...Ihra?"
+
+  **Ihra:** "Bin yıl. Bin yıl ve bir mektup bile yazmadın."
+
+  **Morvath:** "Kâtibe yazdırdım. Her gün."
+
+  **Ihra:** "Bana değil."
+
+  **Morvath:** "Sana yazamadım. Seni korumak için gittim, sonra seni korumak için kaldım. Ve korumak için seni hiç görmedim."
+
+  Ihra miğferini çıkarıyor. Altında bir yüz yok; bin yıllık bir ruhun soluk ışığı. Ihra ellerini onun yüzüne koyuyor.
+c6_bastion.x.ihra_alone: |
+  Ihra senden önce gelmiş. Morvath'ın yanında diz çökmüş.
+
+  **Ihra:** "Ben geç kaldım. Ama sen de geç kaldın."
+
+  Ihra seninle konuşmuyor. Ama son kararı sana bırakıyor.
+c6_bastion.peace: "Huzur ver: yemin bitsin."
+c6_bastion.peace.result: |
+  Altıncı parçayı kalenin taşlarından çekiyorsun. Kale titriyor ama yıkılmıyor. Morvath'ın zırhı toz oluyor; altından yaşlı bir adamın ruhu çıkıyor ve Ihra'nın elini tutuyor.
+
+  Bin yıllık nöbet bitiyor.
+c6_bastion.destroy: "Yık: bekçi bir daha uyanmasın."
+c6_bastion.destroy.result: |
+  Kalenin taşlarını Morvath'la birlikte parçalıyorsun. Duvarlar çöküyor.
+
+  Morvath'ın son sözü: "Onu durdur. Benim yapamadığımı yap."
+
+c6_shard: "Altıncı Parça"
+c6_shard.body: |
+  Altıncı parça avucunda. Kıvılcımla birlikte altı ışık, bir taç olmak için birbirine çekiliyor.
+
+  **Ses:** *"Az kaldı. Çok az."*
+c6_shard.seal: "Mühürle"
+c6_shard.seal.result: |
+  Parçayı Morvath'ın kılıcına, bin yıllık nöbetin hatırasıyla mühürlüyorsun.
+c6_shard.devour: "Yut"
+c6_shard.devour.result: |
+  Bin yıllık nöbetin bütün yorgunluğu bir saniyede içine akıyor. Bir an Morvath'ın gözleriyle görüyorsun: Aethon'un yüzü, bin yıl önce.
+
+  **Ses:** *"Altı. Bir tek sen kaldın, küçük parçam. Ve sen."*
+c6_shard.release: "Bırak"
+c6_shard.release.result: |
+  Parçayı kalenin tepesinde kırıyorsun. Işık boşluğa düşüyor ve boşlukta, ilk kez, bir yıldız yanıyor.
+
+c6_gate: "Kapıyı Tutanlar"
+c6_gate.body: |
+  Altıncı parça çekildiğinde kapı açılıyor ve boşluk kalenin içine taşmaya başlıyor. Bin yıl boyunca dışarıda tuttuğu her şey: hiçlik ejderleri, taht gözcüleri, ebedi büyücüler, tanrı gölgeleri. Biri kapıyı tutmalı, sen Ebediyet Kıyısı'na yürürken.
+
+  Ve sen tek değilsin.
+c6_gate.x.hedda_clan: |
+  Kalenin arkasından çekiç sesleri. Hedda Taşelli, yanında Usta Bodri ve Demir Dağ cüceleri. Yıkılan duvarları yerinde dövüp örüyorlar. "Taşelli soyu bir kez kaçtı. Bir daha kaçmayacak."
+c6_gate.x.hedda_alone: |
+  Hedda yalnız geliyor. Yaşlanmış. "Klanım yok. Ama çekicim var."
+c6_gate.x.brannoc: |
+  Komutan Brannoc, yaralı bacağıyla, yüz muhafızla. "Kasama koymana izin vermedin. Ben de seni buraya kadar yalnız bırakmadım."
+c6_gate.x.guard: |
+  Demirkale Muhafızları geliyor; ön safta Brannoc'un kalkanını taşıyan genç bir muhafız. "Komutan bize 'O dönüp gelirse arkasında durun' demişti."
+c6_gate.x.liora: |
+  Liora Yaprakses ve Bekçiler. Kökler kalenin taşlarının arasından çıkıp boşluğu tutuyor.
+c6_gate.x.liora_burned: |
+  Liora Yaprakses ve Bekçiler. Kökler kalenin taşlarının arasından çıkıp boşluğu tutuyor. "Ormanımı yaktın. Ama boşluk ateşten de kötü."
+c6_gate.x.covenant: |
+  Kor Ahdi'nin rahipleri kalenin ateşlerini yakarak geliyor.
+c6_gate.x.isolde: |
+  Isolde Varn, babasının kılıcıyla, Kuzey Kalesi'nin yeniden kurulmuş garnizonuyla; yaşayan askerlerle. "Babamın garnizonu kimseyi geçirmezdi. Bizimki de geçirmeyecek."
+c6_gate.x.isolde_rebels: |
+  Isolde, Orrin'in asileriyle birlikte geliyor; kılıcı kırık köprü taşlarından yapılma bir kınta.
+c6_gate.x.nell: |
+  Nell Kazanbaş bir arabayla geliyor. İçinde yemek. "Savaşçılar aç savaşmaz. Paslı Kepçe'nin kazanını getirdim."
+c6_gate.x.queen: |
+  Kraliçe Mirel, demir çemberiyle; Kara Mızraklar ve asiler bir arada. "Hırsız bir kraliçe, kendi krallığını getirdi. Gülme."
+c6_gate.x.council: |
+  Orrin ve Sera Boynuzyürek, ovanın konseyinden gönüllülerle. "Kral değiliz. Hepimiz geldik."
+c6_gate.x.rivals: |
+  Corva ve Orrin ayrı ayrı ama aynı anda geliyor. Birbirlerine bakmadan aynı kapıyı tutuyorlar.
+c6_gate.x.mirel_debt: |
+  Mirel bir okla geliyor ve ilk okunu sana değil, arkandaki bir tanrı gölgesine atıyor. "Borcumu ödedim, ışıklı. Artık eşitiz."
+c6_gate.x.fleet: |
+  Kızıl Filo kül denizinden kalenin dibine yanaşıyor, toplarını kapıya çeviriyor.
+c6_gate.x.dragons: |
+  Moru'nun verdiği pulu çağırıyorsun. Gökyüzünde küçük ama kızıl bir ejder: Kor. Arkasında Moru, ve onun arkasında, uyandığı yerden kalkmış olan Ana Ejder Vyrna. "Çocuğumu kurtardın. Ben de sana bir gün kazandırayım."
+c6_gate.x.sylwen: |
+  Sylwen bir orman gibi geliyor; boşluğun üstüne kökler, sisler, yapraklar örüyor.
+c6_gate.x.ignar_star: |
+  Ansel ve Ignar. Ignar bir yıldız gibi parlıyor. "Söz verdim. Yıldızlar döndüğünde onlarla olacağım. Bugün dönüyorlar mı bilmiyorum. Ama ben buradayım."
+c6_gate.x.red_sun: |
+  Kızıl güneş gökyüzünde yükseliyor; Ignar, Kor Ahdi'yle birlikte, boşluğun üstüne ateş yağdırıyor. Etkili. Korkunç.
+c6_gate.x.uriel: |
+  Uriel altı kanadını açıp kapının önüne iniyor. "Ben bin yıl bu kapının öbür ucunu tuttum. Bu ucunu da tutarım."
+c6_gate.x.zephyros: |
+  Fırtına kalenin üstünde dönüyor; Zephyros ve Fırtına Kalesi'nin şövalyeleri.
+c6_gate.x.ilvar: |
+  Ilvar kalenin tepesinde, yıldız haritasıyla, boşluğa düşen yeni yıldızları sayıyor. "Bir. İki. Üç. Kayda geçiriyorum."
+c6_gate.x.pip: |
+  Pip, Kaedrin'in sekizinci prototipini sırtında taşıyor. Bir an, yalnızca bir an, ellerini çarklarına koyuyor. Sonra çekiyor. "Kurmayacağım. Söz verdim. Kendime."
+c6_gate.x.pip_merged: |
+  Pip kapıyı tutmuyor. Seninle geliyor. "Zamanın nasıl çalıştığını biliyorum. Aethon'un yanında buna ihtiyacın olacak."
+c6_gate.x.pip_returns: |
+  Pip, Hedda'nın arkasında, bir arabanın üstünde, hiç görmediğin bir icatla geliyor. "Beni gönderdin. Ben de geldim. İkisi de olabilir."
+c6_gate.x.pip_shadow: |
+  Kapının yanında, kimsenin fark etmediği bir an, bir gnomun gölgesi. Sonra kayboluyor.
+c6_gate.after: |
+  Kapı tutuluyor. Arkanda çelik, ateş, kök ve şarkı sesleri. Önünde ışıktan bir uçurum.
+
+  Yürüyorsun.
+
+c6_edge: "Ebediyet Kıyısı"
+c6_edge.body: |
+  Kapının ötesinde yol yok. Işıktan bir uçurumun kenarı. Ayaklarının altında hiçbir şey; ama yürüyorsun, çünkü avucundaki parçalar seni taşıyor.
+
+  Uçurumun sonunda, kenarın tam üstünde, bir taht. Taştan değil, zamandan; kımıldamayan bir anın içine oyulmuş. Üstünde, zincirli, oturmuş: Aethon.
+
+  Bir tanrı. Ama büyük değil; bir insan boyunda. Yorgun. Saçları uzun, gümüşi; yüzü genç ve yaşlı aynı anda. Gözleri kehribar. Avucundaki ışığın gözleri.
+
+  **Aethon:** "Sonunda. Sonunda seni görüyorum. Sesimi duydun. Bin yıldır kimse duymamıştı, Morvath'tan sonra."
+c6_edge.after: |
+  Zincir onun gücünün ancak bir kısmını bırakıyordu; ama o kısım bile bir dağ kadardı. Yenildiğinde Aethon gülüyor; yorgun, rahatlamış bir gülüş.
+
+  **Aethon:** "İyi. Gerçekten güçlüsün. Şimdi ne olacak, Taşıyıcı? Bin yıldır bekledim. Ver bana parçaları. Ve ben Neris'i geri getireyim."
+c6_edge.x.uriel_ally: |
+  Uriel arkanda, kılıcı çekik. "Bin yıl önce sana inanmadım, Aethon. Bugün de inanmıyorum."
+c6_edge.x.uriel_foe: |
+  Uriel uçurumun öbür tarafında. Bekliyor.
+c6_edge.x.ihra_morvath: |
+  Ihra ve Morvath yanında. Aethon onları görünce yüzü değişiyor. "Ihra. Morvath. Neris'in çocukları." Sesi kırılıyor.
+c6_edge.x.pip: |
+  **Pip:** "Aethon, sana bir şey söyleyeceğim. Zamanı durdurdum. Bin yıl. Bir gnom olarak. Ve şunu öğrendim: durmuş zaman geri gelmez. Geriye akar. Ama içindeki hiç kimse onu hatırlamaz."

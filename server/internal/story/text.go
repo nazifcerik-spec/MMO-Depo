@@ -22,35 +22,68 @@ const DefaultLang = "en"
 
 var CompleteLangs = []string{"en", "tr"}
 
-// Text is the scene text per language (content/story/<lang>.yaml), served
+// Text is the scene text per language (content/story/<lang>/*.yaml), served
 // apart from the content names so the long text is only fetched by readers.
 type Text struct {
 	ByLang  map[string]map[string]string
 	Version string
 }
 
-// LoadText reads dir/*.yaml; a missing dir is no text.
+// LoadText reads the scene text of each language: dir/<lang>.yaml or the
+// files of dir/<lang>/ (one per chapter, a key in only one of them). A
+// missing dir is no text.
 func LoadText(dir string) (*Text, error) {
-	files, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
+	entries, err := os.ReadDir(dir)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return &Text{ByLang: map[string]map[string]string{}}, nil
+		}
 		return nil, err
 	}
-	sort.Strings(files)
 	t := &Text{ByLang: map[string]map[string]string{}}
 	h := sha256.New()
-	for _, f := range files {
-		raw, err := os.ReadFile(f)
+	read := func(lang, path string) error {
+		raw, err := os.ReadFile(path)
 		if err != nil {
-			return nil, fmt.Errorf("read %s: %w", f, err)
+			return fmt.Errorf("read %s: %w", path, err)
 		}
 		var m map[string]string
 		if err := yaml.Unmarshal(raw, &m); err != nil {
-			return nil, fmt.Errorf("parse %s: %w", f, err)
+			return fmt.Errorf("parse %s: %w", path, err)
 		}
-		lang := strings.ToLower(strings.TrimSuffix(filepath.Base(f), ".yaml"))
-		t.ByLang[lang] = m
+		if t.ByLang[lang] == nil {
+			t.ByLang[lang] = map[string]string{}
+		}
+		for k, v := range m {
+			if _, dup := t.ByLang[lang][k]; dup {
+				return fmt.Errorf("story text %s: %s twice (%s)", lang, k, path)
+			}
+			t.ByLang[lang][k] = v
+		}
 		h.Write([]byte(lang))
 		h.Write(raw)
+		return nil
+	}
+	for _, e := range entries { // ReadDir is sorted by name
+		name := e.Name()
+		if e.IsDir() {
+			files, err := filepath.Glob(filepath.Join(dir, name, "*.yaml"))
+			if err != nil {
+				return nil, err
+			}
+			sort.Strings(files)
+			for _, f := range files {
+				if err := read(strings.ToLower(name), f); err != nil {
+					return nil, err
+				}
+			}
+			continue
+		}
+		if strings.HasSuffix(name, ".yaml") {
+			if err := read(strings.ToLower(strings.TrimSuffix(name, ".yaml")), filepath.Join(dir, name)); err != nil {
+				return nil, err
+			}
+		}
 	}
 	t.Version = hex.EncodeToString(h.Sum(nil))[:16]
 	return t, nil

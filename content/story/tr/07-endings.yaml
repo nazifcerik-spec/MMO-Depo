@@ -1,0 +1,241 @@
+# Sonlar ve sonsöz (Sv 1000). DD-367.
+
+e_unbound: "Zincirsiz"
+e_unbound.body: |
+  Aethon elini uzatıyor. Avucundaki Kıvılcım ona doğru çekiliyor; öteki parçalar nerede tuttuysan oradan, hepsi aynı anda titriyor.
+
+  Ve zincir kopuyor.
+
+  Sen bir şey yapmadın. Aethon da. Parçalar bin yıl sonra ilk kez bu kadar yakın ve tacın kendisi, tanrının iradesinden bağımsız, kendini tamamlamak istiyor.
+
+  Aethon'un arkasında bir şey yükseliyor. Aethon'un kendisi değil; Aethon tahtında oturuyor, şaşkın, korkmuş. Yükselen, bin yıl boyunca zincirin altında birikmiş olan: bir tanrının öfkesi, yasından ayrılmış, aklından ayrılmış. Zincirsiz Aethon.
+
+  **Aethon:** "Bu ben değilim. Bu benim bin yıl boyunca bağırdığım her şey. Durdur onu. Lütfen. Ben durduramıyorum."
+e_unbound.x.uriel_ally: |
+  Uriel yanında savaşıyor.
+e_unbound.x.uriel_foe: |
+  Uriel uçurumun öbür tarafında izliyor; savaş bitene kadar karışmayacak.
+e_unbound.x.ihra_morvath: |
+  Ihra ve Morvath tahtın önünde, Aethon'un yanında. Savaşmıyorlar. Onu tutuyorlar.
+e_unbound.after: |
+  Zincirsiz Aethon dağıldığında ışıktan uçurumun üstünde bir sessizlik. Yedi parça havada, önünde, bir taç şeklinde dönüyor. Ortası boş; bir başın sığacağı kadar.
+
+  Aethon tahtında. Artık zincirsiz. Ama kalkmıyor.
+
+  **Aethon:** "Şimdi sen karar ver. Ben bin yıl önce karar verdim ve yanlış verdim. Belki sen doğrusunu bilirsin."
+
+e_choice: "Son Karar"
+e_choice.body: |
+  Önündeki tacın yedi köşesi dönüyor. Bazıları gümüş zincirle sarılı: mühürlediklerin. Bazıları karanlık, kanının renginde: yuttukların. Bazıları kırık, içi boş, yalnızca bir ışık izi: bıraktıkların.
+
+  Yolun bu. Şimdi sonu seç.
+e_choice.chain: "Zincir: \"Tacı mühürle. Aethon zincirde kalsın.\""
+e_choice.chain.result: |
+  Gümüş zincirler tacın etrafında dolanıyor. Aethon gözlerini kapıyor.
+
+  **Aethon:** "Bunu bekliyordum. Belki bunu hak ediyorum. Neris'i bir daha göremeyeceğim. Ama sen bir dünya kurtardın."
+e_choice.crown: "Yeni Taç: \"Tacı başıma tak.\""
+e_choice.crown.result: |
+  Taç başına iniyor. Yedi köşe. Kehribar ışık gözlerinden, ağzından, avuçlarından taşıyor. Bir an bütün dünyayı görüyorsun: Demirkale'nin çekiçlerini, Yeşilorman'ın köklerini, Kül Denizi'nin ruhlarını, gökyüzünün yarığını. Hepsini. Aynı anda.
+
+  **Aethon:** "Ah. İşte. Şimdi ne yapacaksın onunla? Ben ilk gün ölümü durdurmak istedim. Sen ne isteyeceksin?"
+e_choice.breath: "Mena'nın Nefesi: \"Tacı kır. Sonsuza dek.\""
+e_choice.breath.result: |
+  Elini tacın ortasına koyuyorsun. Yedi köşe birer birer çatlıyor. Işık dışarı taşıyor; yukarı değil, aşağı. Uçurumdan aşağı, dünyaya. Toprağa. Denize. Mena'ya.
+
+  **Aethon:** "...Evet. Bunu ben yapmalıydım. Bin yıl önce. Neris'in avucuna bir parça koymak yerine tacı kırmalıydım. Onu kaybedeceğimi kabul etmeliydim."
+
+  Aethon tahttan kalkıyor; bin yıl sonra ilk kez. Zincirsiz, taçsız, sadece bir adam. Uçurumun kenarına yürüyüp oturuyor. Ve güneşin doğuşunu izliyor.
+e_choice.lullaby: "Son Ninni: \"Ona Neris'i ver.\""
+e_choice.lullaby.result: |
+  Anı Kristali'ni çıkarıp Aethon'a uzatıyorsun.
+
+  Kristalin içinde bu sefer bozuk değil, korkulan değil: Neris. Gerçek Neris. Odasında, pencerenin önünde, yaşlı ve gülümseyen.
+
+  **Neris:** *"Sonsuzluğu istemedim ki, Aethon. Seni istedim. Bir hayat boyu. Ve aldım. Bu yeterdi."*
+
+  Ihra öne çıkıyor ve Neris'in ninnisini söylüyor. Doğru notalarla. Bin yıl sonra. Pip Aethon'un yanına diz çöküyor.
+
+  **Pip:** "Durmuş zaman geri gelmez. Ama şu anda biliyorum: durmasına gerek yok. Hatırlamak, durdurmaktan iyidir."
+
+  Aethon ağlıyor. Bir tanrı. Ve ağlarken gülümsüyor.
+
+  **Aethon:** "Bin yıl boyunca onu geri getirmek istedim. Şimdi anlıyorum: hiç gitmemişti. Ben onu unutmaktan korktum, o kadar. Unutmamışım."
+
+e_ending: "Son"
+e_ending.body: |
+  Karar verildi. Işıktan uçurumun üstünde rüzgâr yön değiştiriyor.
+e_ending.x.chain_strong: |
+  **Sağlam Zincir.** Zincir bir daha kopmamak üzere kapanıyor. Uriel zincirin öbür ucunu yeniden tutuyor.
+
+  **Uriel:** "Bin yıl daha. Belki bin yıl daha. Ama bu sefer yalnız değilim; bu zinciri kimin mühürlediğini biliyorum."
+
+  Yarık yarı yarıya kapanıyor. Yıldızsız Topraklar'da gökyüzü hâlâ boş, ama bir daha yıldız sönmüyor. Dünya güvende. Donuk. Aynı.
+e_ending.x.chain_cracked: |
+  **Çatlak Zincir.** Zincir kapanıyor ama parçalardan bazıları zaten kırılmış ya da yutulmuş; mühür tam tutmuyor. Aethon'un sesi artık kimseye değil, rüzgâra konuşuyor.
+
+  **Aethon:** "Bin yıl değil. Yüz yıl belki. Sonra bir başkası gelecek. Yedinci parçayla."
+
+  Yüz yıl sonra Yeşilorman'ın kıyısına bir yıldız düşecek.
+e_ending.x.chain_uriel: |
+  Uriel uçurumun öbür tarafından geliyor, mühre bakıyor, başını sallıyor. Artık düşman değil.
+e_ending.x.crown_keeper: |
+  **Bekçi Tanrı.** Ölümü durdurmuyorsun. Zamanı durdurmuyorsun. Yıldızları yeniden asıyorsun; birer birer, her gece birkaç tane. Leviathan'ın denizindeki ruhları boşluğa gönderiyorsun; ölüm yeniden bütün oluyor. Tahtın Ebediyet Kıyısı'nda kalıyor ama zincir yok. Bir bekçi tanrı. Yalnız.
+
+  **Aethon:** "Benden iyisin. Bunu bilmek bana yetiyor."
+
+  Aethon ölümlü olarak ölüyor. Senin elinde.
+e_ending.x.crown_ash: |
+  **Kül Tanrı.** Bir şeyi değiştirmek istiyorsun. Önce küçük bir şey. Bir ölümü durduruyorsun; tanıdığın birinin. Sonra bir başkasını. Sonra bir şehri. Her durdurulan an biraz daha durgunluk. Bin yıl sonra Ebediyet Kıyısı'nda bir taht, zincirli bir tanrı, ve yeşil bir ormanın kıyısına düşen kehribar bir yıldız. Bu sefer düşen yıldız senin bir parçan.
+
+  **Aethon** (ölürken): "Ben de böyle başlamıştım."
+e_ending.x.crown_saved: |
+  Taç senin taşıyabileceğinden ağır; kanın onu tanımıyor. Taç başına oturuyor ve bir daha çıkmayacak; Varn gibi, Aldric gibi.
+
+  Ama Pip tacın son köşesini tutuyor. "Zamanı biliyorum. Bu anı biraz geri alabilirim. Sadece bir saniye." O saniyede tacı başından çekiyorsun.
+
+  **Bekçi Tanrı.** Ölümü durdurmuyorsun. Zamanı durdurmuyorsun. Yıldızları yeniden asıyorsun; birer birer, her gece birkaç tane. Ruhları boşluğa gönderiyorsun; ölüm yeniden bütün oluyor. Bir bekçi tanrı. Yalnız.
+
+  **Aethon:** "Benden iyisin. Bunu bilmek bana yetiyor."
+e_ending.x.crown_half: |
+  **Yarım Taç.** Taç senin taşıyabileceğinden ağır. Yeterince parça yutmadın; kanın onu tanımıyor. Taç başına oturuyor ve bir daha çıkmıyor. Varn gibi. Aldric gibi. Ölmüyorsun; ama artık sen değilsin.
+
+  **Aethon:** "Hayır. Hayır. Bunu sana yapmak istemedim."
+e_ending.x.crown_uriel: |
+  Uriel geliyor ve kılıcını çekiyor. Taçlı başına uzun uzun bakıyor. Ne yapacağını, ne olduğuna göre seçecek.
+e_ending.x.breath_full: |
+  **Tam Nefes.** Yıldızlar dönüyor. Hepsi. Yıldızsız Topraklar'da ilk gece gökyüzü o kadar dolu ki insanlar ağlıyor. Yarık kapanıyor. Ölüm yeniden bütün; Leviathan'ın denizindeki ruhlar birer birer boşluğa yürüyor, ve Leviathan, Thalassar, en son, gülerek.
+
+  Ama büyü azalıyor. Tanrı yok, taç yok. Rahiplerin duaları eskisinden zayıf, büyücülerin ateşleri küçük. Mena kendi nefesiyle yaşıyor artık.
+
+  **Aethon:** "Artık dünya kimsenin değil. Neris buna bayılırdı."
+e_ending.x.breath_half: |
+  **Yarım Nefes.** Taç kırılıyor ama kırılan köşeler az; geri kalan ışık mühürlü ya da senin içinde. Yıldızların yarısı dönüyor. Yarık kapanıyor ama izi kalıyor, gökyüzünde gümüş bir çizgi. Büyü azalıyor, ama tamamen değil.
+
+  **Aethon:** "Yarısı. Yine de yarısı."
+e_ending.x.breath_uriel: |
+  Uriel geliyor, kırılmış tacı görüyor, uzun süre bakıyor. "Bin yıl zincir tuttum. Kırmak hiç aklıma gelmedi." Kanatlarını katlıyor. Bir daha açmıyor.
+e_ending.x.lullaby: |
+  **Son Ninni.** Aethon tacın ortasına, sonra sana bakıyor.
+
+  **Aethon:** "Bana bir şey yap, Taşıyıcı. Benim yapamadığım bir şeyi. Tacı kır. Ama ışığını Mena'ya değil, göğe ver. Ben öldükten sonra."
+
+  Ve Aethon ölümlü olarak ölüyor. Gerçekten. İlk kez. Ihra'nın ninnisinin son notasında. Gülümseyerek.
+
+  Taç kırılıyor. Yedi parça yükseliyor; uçurumdan, gökyüzüne. Yarığın içinden geçiyor ve yarık arkalarından kapanıyor. Gökyüzünde, bütün kıtaların her yerinden görünen yedi yeni yıldız yanıyor. Adlarını sen veriyorsun. Ama gelenek oluyor: birine Neris deniyor. Birine Aethon. Gerisi senin.
+
+  Ihra ile Morvath, bin yıl sonra, birlikte boşluğa yürüyor. Leviathan onları kıyıdan taşıyor.
+
+  Yıldızlar dönüyor, hepsi. Büyü azalmıyor; ama artık bir tanrının değil, yedi yıldızın. Ölüm bütün. Zaman akıyor.
+
+  **Uriel:** "Bin yıl zincir tuttum. Bin yıl odayı temizledim. Keşke onu bir kez ziyaret etseydim. Bir kez."
+
+  Uriel kanatlarını açıp Neris'in odasına dönüyor. Bu sefer kapıyı açık bırakıyor.
+
+e_epilogue: "Sonsöz"
+e_epilogue.body: |
+  Yıllar geçiyor. Hikâyeler anlatılıyor; bazıları doğru, çoğu abartılı. İşte yolda karşılaştıklarının sonu.
+e_epilogue.x.hedda_clan: |
+  **Hedda Taşelli** Demir Dağlar'a dönüyor. Madeni yeniden açıyor. Büyükbabasının mezarının başına bir örs koyuyor; her sabah bir kez vuruyor.
+e_epilogue.x.hedda_alone: |
+  **Hedda Taşelli** Demirkale'de kalıyor. Dökümhanesinin kapısına yeni bir tabela asıyor: "Taşıyıcının Demircisi". Fiyatlarını ikiye katlıyor. Sana indirim yapmıyor.
+e_epilogue.x.hedda_told: |
+  Hedda: "Bana her şeyi anlattın. Ben de herkese anlatacağım. Biraz abartarak."
+e_epilogue.x.pip: |
+  **Pip Çarkdişi** Göğü Ölçen Alet'in dokuzuncu prototipini yapıyor. Bu sefer gökyüzünü değil, yıldızları ölçüyor. Saatini hiç kurmuyor. Sekizinci prototipi Hedda'nın dökümhanesinde, kilitli bir kutuda saklıyor.
+e_epilogue.x.pip_merged: |
+  **Pip** bir okul açıyor; gnom çocuklarına zamanı öğretiyor. Az konuşuyor. Ama ara sıra, birden, bin yıllık bir şaka yapıyor ve kimse anlamıyor.
+e_epilogue.x.pip_kaedrin: |
+  **Pip** Hedda'nın çırağı oluyor. Kaedrin'in mezarı Saat Kulesi'nin dibinde. Pip her yıl ziyaret ediyor ve her yıl bir saat bırakıyor; kurulu, çalışan.
+e_epilogue.x.pip_gone: |
+  Kayıp Şehir'in meydanında bir gnom heykeli duruyor. Kimse kim olduğunu bilmiyor. Çocuklar ona Pip diyor, nedenini bilmeden.
+e_epilogue.x.mirel_queen: |
+  **Mirel** Kırık Taç Krallığı'nın ilk kraliçesi. İlk yasası: taht kimsenin değildir; kraliçe oturduğu sürece emanettir. İkinci yasası: hırsızlar ilk suçlarında affedilir.
+e_epilogue.x.mirel_road: |
+  **Mirel** seninle yolculuklarına devam ediyor. Ovaya her yıl bir kez dönüyor; kimsenin tanımadığı kır saçlı bir kadın olarak.
+e_epilogue.x.mirel_inn: |
+  **Mirel** ovanın iki yakası arasında bir han açıyor. Corva ve Orrin her ay orada buluşuyor, kavga ediyor, aynı masada yemek yiyor.
+e_epilogue.x.mirel_guild: |
+  **Mirel** bir okçular loncası kuruyor; Demirkale'nin zindanından kaçanlar için. Kapısının üstünde: "Herkes bir kez kafesten kaçar."
+e_epilogue.x.ihra_lullaby: |
+  **Ihra ve Morvath** birlikte boşluğa yürüdü. Arkalarında bir ninni kaldı.
+e_epilogue.x.ihra_bastion: |
+  **Ihra ve Morvath** Son Kale'de kalıyor; bu sefer bekçi olarak değil, iki eski dost olarak, boşluğun kıyısında.
+e_epilogue.x.ihra_temple: |
+  **Ihra** Batık Tapınak'a dönüyor. Neris'in duvar resimlerinin önünde bir sonraki bin yılı bekliyor.
+e_epilogue.x.ihra_void: |
+  **Ihra ve Morvath** birlikte boşluğa yürüyor. Kimse görmüyor.
+e_epilogue.x.isolde_lady: |
+  **Isolde Varn** Kuzey Kalesi'nin leydisi. Garnizonunun yeminini değiştiriyor: "Kimse geçemeyecek" değil, "Herkes yardım bulacak."
+e_epilogue.x.isolde_bridge: |
+  **Isolde Varn** asilerle kalıyor. Babasının kılıcını ovanın köprüsünün ortasına saplıyor. "Bir lordun kılıcı artık iki yakayı birbirine bağlıyor."
+e_epilogue.x.isolde_father: |
+  Isolde her kış bir gece babasının sesini duyuyor. Kızgın değil. Gururlu.
+e_epilogue.x.brannoc_alive: |
+  **Brannoc Ağırkalkan** emekli oluyor. Paslı Kepçe'de, Nell'in tezgâhının yanında oturup her gelene ovadaki kapıyı anlatıyor. Her seferinde kapı biraz daha büyüyor.
+e_epilogue.x.brannoc_statue: |
+  Demirkale'nin meydanında **Brannoc Ağırkalkan**'ın heykeli var. Kalkanının üstünde tek bir cümle: "Kapıyı tuttu."
+e_epilogue.x.sylwen_forest: |
+  **Sis Ormanı** güneşte büyüyor. Liora ve Sylwen, torun ve ata, ormanı birlikte bekliyor.
+e_epilogue.x.sylwen_garden: |
+  **Sylwen** orman yerine Demirkale'nin dışında küçük bir bahçe dikiyor. Liora onun bahçıvanı oluyor.
+e_epilogue.x.sylwen_dream: |
+  **Sis Ormanı** rüya görmeye devam ediyor. Liora'nın torunu bir gün ormanın kenarında küçük bir koru buluyor.
+e_epilogue.x.ansel_star: |
+  **Ignar** göğe dönüyor, yıldızlardan biri oluyor. Kor Ahdi bir tapınak değil, bir rasathane oluyor. Ansel ilk gözlemcisi.
+e_epilogue.x.ansel_sun: |
+  **Kızıl güneş** gökyüzünde kalıyor. Sundermere'nin yazları sıcak, kışları kısa. Ekinler bir yıl bol, bir yıl yanık. Bazıları Ansel'i kutsuyor; bazıları lanetliyor.
+e_epilogue.x.ansel_cell: |
+  **Ansel** Demirkale'nin zindanında. Tamsin onu her hafta ziyaret ediyor. Yıllar sonra Ansel ateşi değil, ışığı anlatan bir kitap yazıyor.
+e_epilogue.x.yssa_fleet: |
+  **Kızıl Filo** bütün denizlerin hâkimi. Yssa bir yasa koyuyor: batan geminin hazinesi önce tayfanın ailesine. Neden koyduğunu kimseye söylemiyor.
+e_epilogue.x.yssa_ship: |
+  **Yssa** tek gemisiyle, tek tayfasıyla, kendi bildiği gibi yaşıyor. Bir limanda seni görürse sana bir içki ısmarlıyor. Parasını sen ödüyorsun.
+e_epilogue.x.dragon_kor: |
+  **Kor** büyüyor. Ejder Yamaçları yeniden ejder sesleriyle doluyor. Moru'nun torunları ejder çobanı oluyor. Kor her yıl bir kez Demirkale'nin üstünden uçuyor; şehir halkı ona el sallıyor.
+e_epilogue.x.dragon_sold: |
+  **Ejder Kültü** dağıldı. Yamaçlarda ejder yok. Moru'nun kulübesi boş.
+e_epilogue.x.dragon_grave: |
+  **Ejder Yamaçları** sessiz. Moru dağın tepesinde bir mezar başında oturuyor. Her gün.
+e_epilogue.x.ilvar_book: |
+  **Ilvar** yeni yıldızların kaydını tutuyor. Kitabının adı: *Dönüş*. İlk sayfasında senin adın.
+e_epilogue.x.ilvar_star: |
+  Yıldızsız Topraklar'da, Ilvar'ın kayıtlarında olmayan bir yıldız görülüyor. İnsanlar ona **Ilvar** diyor.
+e_epilogue.x.selin: |
+  **Selin Rüzgârdoğan** gök gemisini Uçan Adalar'da bir müzeye koyuyor. Kapısına bir not: "Bu gemi göğe çıktı ve geri döndü. Bunu başka hiçbir gemi yapamadı. Henüz."
+e_epilogue.x.uriel_tea: |
+  **Uriel** Neris'in odasının kapısını açık bırakıyor. Ziyaretçiler geliyor. Uriel onlara çay ikram ediyor.
+e_epilogue.x.uriel_gone: |
+  **Uriel** göğe dönüyor ve bir daha görünmüyor.
+e_epilogue.x.zephyros_flies: |
+  **Zephyros** kanatlarını iyileştiriyor ve bin yıl sonra ilk kez fırtınasız bir gökte uçuyor.
+e_epilogue.x.zephyros_ruin: |
+  **Fırtına Kalesi**'nin yıkıntıları Uçan Adalar'ın yanında yüzüyor. İçinde kimse yok.
+e_epilogue.x.leviathan_sleeps: |
+  **Thalassar** son ruhu taşıdıktan sonra Kül Denizi'nin dibine inip uyuyor. Kül Denizi zamanla suya dönüyor.
+e_epilogue.x.leviathan_wound: |
+  **Leviathan**'ın yarası iyileşmiyor. Ruhlar başka bir yol buluyor. Bin yıl sürüyor.
+e_epilogue.x.seth_free: |
+  **Seth-Ka** sıranın en önündeydi. Boşluğa ilk o yürüdü. Geride bir not: "Teşekkürler, tacın çocuğu. Benim de bir hikâyem vardı. Bir gün biri yazar."
+e_epilogue.x.seth_bound: |
+  **Seth-Ka** Gömülü Saray'da, uyanık, sorularını bekliyor. Bir soru daha sorarsan cevabı hep aynı: "Beni bırakacak mısın?"
+e_epilogue.x.nell: |
+  **Nell Kazanbaş** Paslı Kepçe'nin duvarına yeni bir harita asıyor: senin yolculuğunun haritası. Altında: "Burada yemek yedi. Bedava değildi."
+e_epilogue.x.grosk: |
+  **Grosk Tuzdişi**'nin kervanı artık "Taşıyıcının Parçaları" satıyor. Hepsi sahte. Hepsi çok iyi satıyor.
+e_epilogue.x.toran: |
+  **Toran Külgözü** Közdoruk'ta tütsüsünü yakıyor. Dağ ağlamıyor artık. Toran ilk kez başka bir şey duyuyor: dağ gülüyor. Bunu kimseye söylemiyor; kimse inanmaz.
+e_epilogue.x.last_chain: |
+  *Gece gökyüzü kapalıydı. Ve sen uyudun. Rahat.*
+e_epilogue.x.last_keeper: |
+  *Gece gökyüzü yıldızlarla doluydu. Her birini sen asmıştın.*
+e_epilogue.x.last_keeper_pip: |
+  *Gece gökyüzü yıldızlarla doluydu. Her birini sen asmıştın.*
+e_epilogue.x.last_ash: |
+  *Gece gökyüzü ikiye ayrıldı.*
+e_epilogue.x.last_half: |
+  *Gece gökyüzü ağırdı. Ve tacın altında, bir yerde, sen hâlâ vardın.*
+e_epilogue.x.last_breath: |
+  *Gece gökyüzü kimsenin değildi. Ve çok güzeldi.*
+e_epilogue.x.last_lullaby: |
+  *Gece gökyüzünde yedi yeni yıldız vardı. Biri sana göz kırptı.*

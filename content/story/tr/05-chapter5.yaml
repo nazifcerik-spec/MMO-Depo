@@ -1,0 +1,209 @@
+# V. Bölüm: Gökteki Yara (Gök Yarığı, Sv 700–850). DD-367.
+
+c5_isles: "Göğe Giden Gemi"
+c5_isles.body: |
+  Yarığa yürüyerek gidilmiyor. Uçarak gidiliyor. Göğe uçan tek gemiyi yapan kişi Pip'in eski hocası: Selin Rüzgârdoğan. Yaşlı bir gnom kadın; saçları rüzgârdan hep arkaya yatık, iki kolunda da yanık izleri. Atölyesi bir dağın tepesinde, ama dağın tepesi yere bağlı değil; havada asılı bir ada.
+
+  **Selin:** "Uçan Adalar gökten düşmüş toprak. Yarık açıldığında başmeleklerin dünyası parçalandı ve parçalar aşağı düştü. Ama tam düşmedi. Havada kaldılar. Burası yerle gök arası. Gemi mi istiyorsun? Omurgası için kereste, pervanesi için maden, bir de ustalık. Ve bulut devlerinden kurtulmamız lazım; her gece direklerimi kırıyorlar."
+c5_isles.x.pip: |
+  **Selin:** "Pip! Çocuk! Hâlâ konuşuyor musun? Konuşuyorsun. Tabii ki konuşuyorsun."
+c5_isles.x.merged: |
+  Pip, Selin'e uzun uzun bakıyor. "Hocam. Sen öldüğünde ben oradaydım. Başka bir zamanda." Selin bir şey sormuyor. Sadece Pip'in elini tutuyor.
+c5_isles.x.kaedrin: |
+  Selin Kaedrin'e bakıyor, sonra sana. "Bu Pip değil. Bu Pip'in ne olabileceği. Ben bu yüzü çok kâbuslarımda gördüm."
+c5_isles.x.gone: |
+  Selin seni dinliyor. Pip'i soruyor. Cevabını duyunca atölyesinin kapısını kapatıyor. "Gemi orada. Al. Benimle konuşma."
+c5_isles.after: |
+  Gemi havalanıyor. Ada küçülüyor, bulutlar aşağıda kalıyor. Selin dümende, gözlüğü alnında. "Tutunun. Yukarısı daha kötü."
+
+c5_fortress: "İsyancı General"
+c5_fortress.body: |
+  Gemi yükselirken gökyüzü siyaha dönüyor. Fırtına ejderleri bulutların arasında. Gök şövalyeleri; kanatlı zırhlar, kılıçlarında yıldırım. Bulutların tepesinde kendi kendine dönen bir kale.
+
+  **Selin:** "Fırtına Kralı Zephyros. Uriel'in sağ koluydu. Bin yıl önce Aethon'u zincirlemeye o da yardım etti. Sonra isyan etti; kendi kardeşlerine. Şimdi bu fırtınada kimseyi geçirmiyor."
+c5_fortress.after: |
+  Zephyros'un altı kanadı var, ikisi kırık. Zırhında başmeleklerin mührü kazınıp silinmiş. Yenildiğinde kılıcını yere saplıyor.
+
+  **Zephyros:** "Taşıyıcı. Sen de mi Uriel'in köpeğisin? Hayır. Avucunda... ah. Avucunda onun sesi var."
+
+  **Zephyros:** "Bin yıl önce Aethon'u zincire vurduk. Haklıydık; her şeyi durduracaktı. Ama Uriel bir emir daha verdi: Aethon'un yasını da zincire vurun. Kimse onun için ağlamayacak, kimse onu anmayacak. Bir tanrının sevgisini cezalandırdık. Ben buna karşı çıktım. Bana katılan kardeşlerimle göğü yardık; Aethon'a ulaşmak için. Yarık bizim eserimiz."
+
+  **Zephyros:** "Yanlış yaptık. Yarık Aethon'a ulaşmadı; onun yerine yasını serbest bıraktı. Yarığın dibinde, Kaos Ana. Ve yarık her yıl büyüyor, yıldızları yiyor. Ben bunu durdurmak için bin yıldır burada fırtına tutuyorum."
+c5_fortress.forgive: "Affet."
+c5_fortress.forgive.result: |
+  "Bir tanrının yasını hatırlamak için isyan ettin. Yanlış yoldan. Ama doğru bir şey için."
+
+  Zephyros kılıcını yerden çekip sana uzatıyor. "O zaman bunu al. Uriel'in karşısına çıktığında ona bin yıl önce ne kaybettiğimizi hatırlat."
+
+  Fırtına açılıyor; Yarık Kenarı'na güvenli bir yol beliriyor.
+c5_fortress.fell: "Düşür: \"Yıldızları sen yedirdin.\""
+c5_fortress.fell.result: |
+  "Yarığı sen açtın. Yıldızları sen yedirdin."
+
+  Zephyros başını eğiyor. "Evet." Kanatlarının ışığı sönüyor. Fırtına dağılıyor ama kontrolsüz; kalenin yarısı aşağı düşüyor.
+
+c5_edge: "Yarığın Kenarı"
+c5_edge.body: |
+  Yarık bir uçurum. Ama yukarı doğru. Gökyüzünün ortasında, bulutların üstünde, aşağıya değil yukarıya açılan bir yarık. İçi kehribar ışıkla dolu ve o ışık titriyor, nefes alıyor. Kenarında boşluk yaratıkları, kaos elementalleri, kaos lordları kıvranıyor.
+
+  **Selin:** "Gemi buradan öteye gidemez. Gerisini yürüyeceksin. Yarığın içine. Orada nefes almak için bir iksir lazım; simya işi."
+c5_edge.x.ihra: |
+  Ihra yarığın kenarında durup içine bakıyor. Yüzünde korku değil, tanıma var. "Bu ses. Bu Neris'in ninnisi. Hocam her gece hastalarına söylerdi. Yarığın içinden geliyor. Ama kırık. Biri onu hatırlamaya çalışıyor ve hatırlayamıyor."
+c5_edge.after: |
+  İksirin tadı bakır gibi. Bir nefes alıyorsun ve yarığın ışığı ciğerlerine doluyor. Yürüyebilirsin.
+
+c5_lullaby: "Kırık Ninni"
+c5_lullaby.body: |
+  Ihra kaos elementallerinin uğultusunu dinliyor. "Her birinin içinde ninninin bir parçası var. Biri bir dizesini, biri bir notasını yutmuş. Getir onları bana. Gerisini ben hatırlarım."
+c5_lullaby.after: |
+  Ihra parçaları birleştiriyor, mırıldanıyor, duruyor, yeniden başlıyor. Sonunda gözlerini kapatıp söylüyor; yarığın kenarında, bin yıl sonra ilk kez, doğru notalarla. Kehribar ışık bir an dalgalanıyor; dinliyor.
+
+c5_core: "Yasın Anası"
+c5_core.body: |
+  Yarığın en dibinde, kehribar ışığın ortasında bir varlık. Dev, şekilsiz, binlerce kolu var ve kolların her biri bir şeye uzanıyor: bir yıldıza, bir ışığa, bir hatıraya. Ortasında bir yüz. Neris'in yüzü. Ama bozuk; Aethon'un hatırladığı gibi değil, unutmaktan korktuğu gibi.
+
+  Kaos Ana bir canavar değil. Aethon'un Neris'i kaybettiği an. O an, şekil almış.
+c5_core.after: |
+  Dövüş onun çaresizliğiydi; her koluyla bir şeyi tutmaya çalışıyordu. Yenildiğinde kolları sana dolanıyor, ama sıkmak için değil; tutunmak için.
+
+  **Kaos Ana** (binlerce sesle, hiçbiri tam değil): *"Gitme. Gitme. Gitme. Gitme."*
+
+  **Ses** (Kıvılcım avucunda yanıyor): *"...O benim. O benim bir parçam. Lütfen. Ona zarar verme."*
+c5_core.console_crystal: "Teselli et: Anı Kristali'ni göster."
+c5_core.console_crystal.result: |
+  Kristali Kaos Ana'nın yüzüne tutuyorsun. Neris'in gerçek yüzü, gerçek sesi: *"Seni istedim. Bir hayat boyu. Ve aldım. Bu yeterdi."*
+
+  Kolları birer birer gevşiyor. Binlerce ses susuyor, biri hariç. Yüzü düzeliyor. Kaos Ana küçülüyor, bir kadın boyuna iniyor, sonra bir ışığa, sonra Kıvılcımın içine akıyor.
+
+  Avucunda bir tanrı ağlıyor.
+
+  Yarık büyümeyi durduruyor.
+c5_core.console_song: "Teselli et: ninniyi söyle."
+c5_core.console_song.result: |
+  Ihra öne çıkıyor ve söylüyor. Neris'in ninnisi, yarığın içinde ilk kez doğru notalarla.
+
+  Kaos Ana'nın kolları birer birer gevşiyor. Binlerce ses susuyor, biri hariç. Yüzü düzeliyor. Kaos Ana küçülüyor, bir kadın boyuna iniyor, sonra bir ışığa, sonra Kıvılcımın içine akıyor.
+
+  Avucunda bir tanrı ağlıyor.
+
+  Yarık büyümeyi durduruyor.
+c5_core.shatter: "Parçala."
+c5_core.shatter.result: |
+  Kolları kesiyor, yüzü dağıtıyorsun. Kaos Ana dağılıyor. Yarık bir an titriyor, sonra kendi üstüne çöküyor; küçülüyor ama kapanmıyor. Kehribar ışık soğuk beyaza dönüyor.
+
+  Ses bağırmıyor. Hiçbir şey söylemiyor. Sadece Kıvılcım buz kesiyor.
+
+c5_temple: "Neris'in Odası"
+c5_temple.body: |
+  Yarığın öbür tarafında gökyüzünün üstü: başmeleklerin dünyasının kalıntısı, Göksel Tapınak. Beyaz mermer, sonsuz sütunlar, yıkık kubbeler. Düşmüş melekler sütunların arasında dolaşıyor, kanatları kararmış. Tapınak muhafızları kapılarda, ışık avcıları koridorlarda.
+c5_temple.after: |
+  Tapınağın derinliğinde, bütün kapıları altınla kaplı bir koridorun sonunda tek bir kapı var. Ahşap. Basit. Tapınağın içinde yeri yok gibi duran, bir köy evinin kapısı.
+c5_temple.x.room_fresco: |
+  Çantandaki fresk ısınıyor. Kapı açılıyor.
+
+  İçeride kristalde gördüğün oda: pencere, yatak, şifa otlarıyla dolu raflar. Yatak boş. Raflar tozlu değil. Birisi bu odayı bin yıldır temizliyor.
+
+  Rafta bir mektup, Uriel'in el yazısıyla:
+
+  *"Ona tapınakları yıkacağımı söyledim. Adını unutturacağımı. Yasını zincirleyeceğimi. Yaptım. Ama bu odayı yıkamadım. Her gün temizliyorum. Kimse bilmiyor. Onun avucundaki parçayı da buraya, kendi rafına koydum. Morvath bütün dünyayı aradı ve bulamadı. Kimse bulamayacak. — U."*
+
+  Rafın üstünde küçük, boş bir kutu. Kapağı açık. Altındaki döşemede avuç büyüklüğünde yanık bir delik. Delikten aşağı bakınca bulutlar, bulutların altında bir orman görünüyor. Yeşilorman.
+
+  Yarık büyüdükçe tapınak sarsılmış. Ve bir gece kutu devrilmiş. Sen o geceyi hatırlıyorsun.
+c5_temple.x.room_crystal: |
+  Çantandaki Anı Kristali ısınıyor. Kapı açılıyor.
+
+  İçeride kristalde gördüğün oda: pencere, yatak, şifa otlarıyla dolu raflar. Yatak boş. Raflar tozlu değil. Birisi bu odayı bin yıldır temizliyor.
+
+  Rafta bir mektup, Uriel'in el yazısıyla:
+
+  *"Ona tapınakları yıkacağımı söyledim. Adını unutturacağımı. Yasını zincirleyeceğimi. Yaptım. Ama bu odayı yıkamadım. Her gün temizliyorum. Kimse bilmiyor. Onun avucundaki parçayı da buraya, kendi rafına koydum. Morvath bütün dünyayı aradı ve bulamadı. Kimse bulamayacak. — U."*
+
+  Rafın üstünde küçük, boş bir kutu. Kapağı açık. Altındaki döşemede avuç büyüklüğünde yanık bir delik. Delikten aşağı bakınca bulutlar, bulutların altında bir orman görünüyor. Yeşilorman.
+
+  Yarık büyüdükçe tapınak sarsılmış. Ve bir gece kutu devrilmiş. Sen o geceyi hatırlıyorsun.
+c5_temple.x.closed: |
+  Kapı açılmıyor. Ne zorla, ne sözle. Önünde bir başmelek tüyü buluyorsun; beyaz, sıcak. Biri az önce buradaymış.
+
+c5_dome: "Gardiyan"
+c5_dome.body: |
+  Kubbenin altında, yarık ışığının en parlak olduğu yerde, Uriel bekliyor. Altı kanadı da sağlam, beyaz, ışıktan. Elinde Aethon'u bağlayan zincirin bir ucu; zincir kubbenin tabanından aşağı, dünyanın kenarına, Ebediyet Kıyısı'na kadar uzanıyor. Kılıcının kabzasında Beşinci Taç Parçası.
+
+  **Uriel:** "Dört parça. Avucunda bir tanrının sesi. Ve buraya kadar geldin. Ya kahramansın ya da en tehlikeli hainsin. Bu dövüş hangisi olduğunu bana söyleyecek."
+c5_dome.after: |
+  Uriel diz çöküyor, ama gülümsüyor.
+
+  **Uriel:** "Güçlüsün. İyi. Şimdi beni dikkatle dinle. Avucundaki ses. Sana yol gösteren, 'Al', 'Yut', 'Bir olalım' diyen ses. Ona hiç adını sordun mu?"
+
+  Kıvılcım avucunda atıyor. Hızlı. Çok hızlı.
+
+  **Uriel:** "Ses, Aethon'dur. Zincirdeki tanrı. Parça onun bir parçası; Neris'in avucuna koyduğu parça. Bin yıldır birinin onu bulmasını bekledi. Seni bekledi. Ve seni her parçaya yönlendirdi. Çünkü yedi parça bir araya gelirse zincir kopar. Ve Aethon ilk istediğini bitirir: bütün zamanı durdurur. Bütün ölümü. Bütün hayatı."
+
+  **Ses** (ilk kez kendi adıyla; alçak, yorgun): *"...Evet. Benim. Söylemeliydim. Ama sen beni dinler miydin?"*
+c5_dome.x.told: |
+  **Uriel:** "Ama sen sesini bir cüceye anlattın. İlk geceden. Demek ki onu hep kuşkuyla dinledin. İyi. Kuşku bir tanrıya karşı en iyi kalkandır."
+c5_dome.x.hid: |
+  **Uriel:** "Sesini kimseye anlatmadın. Bin yıl önce Morvath da anlatmamıştı."
+c5_dome.x.devoured: |
+  **Uriel:** "Parçaları yuttun. Avucundaki tanrı artık senin kanında, kalbinin atışında. Ne kadar Aethon, ne kadar sensin?"
+c5_dome.x.shadow: |
+  Uriel Kıvılcımın içindeki gölgeyi görüyor. "Bir yıldız yiyenin artığı da sende. Onu biri için aldın, değil mi?" Sesi yumuşuyor.
+c5_dome.ally: "Müttefik ol."
+c5_dome.ally.result: |
+  "Aethon'u bin yıldır zincirde tutuyorsun. Ve Neris'in odasını bin yıldır temizliyorsun. İkisini birden yapan biri bana yardım edebilir."
+
+  Uriel'in yüzü değişiyor. Uzun süre susuyor. "Evet. Seninle geleceğim. Sonuna kadar. Ama son kararını verirken yanında olacağım; yanlış seçersen kılıcım seninle olmayacak."
+c5_dome.ally_mercy: "Müttefik ol: \"Bunca yolda kimseyi bırakmadım.\""
+c5_dome.ally_mercy.result: |
+  "Sesimi kimseye anlatmadım, doğru. Ama bu yolda düşeni kaldırdım, ölüyü uğurladım, yavruyu kurtardım. Bunu bir tanrı istediği için yapmadım."
+
+  Uriel uzun süre sana bakıyor. "Evet. Seninle geleceğim. Sonuna kadar. Ama son kararını verirken yanında olacağım; yanlış seçersen kılıcım seninle olmayacak."
+c5_dome.ally_devoured: "Müttefik ol: \"Ne kadar ben olduğumu göreceksin.\""
+c5_dome.ally_devoured.result: |
+  "Parçaları yuttum. Ama yol boyunca kime el uzattığıma bak. O ben'im, tanrı değil."
+
+  Uriel uzun süre sana bakıyor. "Göreceğiz. Seninle geleceğim. Sonuna kadar. Ama yanlış seçersen kılıcım seninle olmayacak."
+c5_dome.oppose: "Karşı dur: \"Bu adalet değil.\""
+c5_dome.oppose.result: |
+  "Bir tanrıyı bin yıl zincirde tutmak adalet değil."
+
+  **Uriel:** "Öyleyse git. Ama bil ki dünyanın kenarına vardığında seni orada bekleyeceğim."
+
+c5_shard: "Beşinci Parça"
+c5_shard.body: |
+  Uriel parçayı kılıcının kabzasından söküp önüne bırakıyor. Kubbenin ışığı parçanın etrafında dönüyor.
+c5_shard.seal: "Mühürle"
+c5_shard.seal.result: |
+  Parçayı Uriel'in kendi zincirinin bir halkasına mühürlüyorsun. Uriel bunu görünce başını sallıyor.
+c5_shard.devour: "Yut"
+c5_shard.devour.result: |
+  Başmeleğin gözü önünde parçayı yutuyorsun. Kanatlarının ışığı soluklaşıyor. "Ah," diyor Uriel. Sadece "ah."
+
+  **Ses:** *"Beş. Az kaldı."*
+c5_shard.release: "Bırak"
+c5_shard.release.result: |
+  Parçayı kubbenin tepesinde kırıyorsun. Işık yarığın kehribarına karışıyor ve yarık, bin yıldır ilk kez, kenarlarından bir parmak kapanıyor.
+
+c5_fall: "Başmeleklerin Düşüşü"
+c5_fall.body: |
+  Parça alındığı anda tapınak sallanıyor. Zephyros'la birlikte bin yıl önce isyan eden ve sonra karanlığa düşen başmelekler beş parçanın ışığını hissedip iniyor. Aethon'u serbest bırakmak istiyorlar; ama artık yas için değil, güç için. Tacı kendileri takmak için.
+c5_fall.x.zephyros_forgiven: |
+  Zephyros fırtınasıyla geliyor ve düşmüş kardeşlerinin en gencini savaşın ortasında durduruyor: "Yeter, kardeşim. Yeter."
+c5_fall.x.zephyros_fallen: |
+  Fırtına Kalesi'nin şövalyeleri de düşmüşlerin yanında saf tutuyor.
+c5_fall.x.uriel_ally: |
+  Uriel kardeşlerine karşı savaşıyor. Bin yılın sonunda. Ve savaşırken ağlıyor.
+c5_fall.x.uriel_foe: |
+  Uriel savaşı izliyor. Kanatlarını açmıyor. Sonunda yalnızca "İyi dövüştün" deyip gidiyor.
+c5_fall.after: |
+  Savaştan sonra Uriel'in zinciri gökten yere uzanıyor. Ebediyet Kıyısı'na. Dünyanın kenarına. Zincirin öbür ucunda bir tanrı.
+
+  **Ses:** *"Gel. Artık ne olduğumu biliyorsun. Gel ve ne yapacağına karar ver. Bin yıldır bekledim; birkaç gün daha bekleyebilirim."*
+
+  **Selin** (dümende): "Gemi Boşluğun Kıyısı'na inebilir. Kül Denizi'ne. Ama bu gemi o denizi geçemez. Oradan ötesi..."
+c5_fall.x.kaedrin: |
+  Savaştan sonra Kaedrin yere oturuyor. Çok yaşlı, çok yorgun. Son sözleri: *"Pip'e söyle. Saatini kurmasın. Ve eğer kurarsa... onu affetsin. Ben kendimi affettim. Az önce."*
+c5_fall.x.ilvar_map: |
+  "...Ilvar'ın haritası var. Yıldızların gösterdiği yol."
+c5_fall.x.lost_map: |
+  "...Kayıp Şehir'den aldığın haritanın bir kopyası var. Eksik ama yeterli."

@@ -1,0 +1,209 @@
+# Chapter V: The Wound in the Sky (Sky Rift, levels 700–850). DD-367.
+
+c5_isles: "The Ship to the Sky"
+c5_isles.body: |
+  You don't walk to the rift. You fly. The only person who ever built a ship that flies to the sky is Pip's old teacher: Selin Windborn. An old gnome woman; her hair always swept back by the wind, burn scars on both arms. Her workshop sits on a mountaintop, but the mountaintop isn't attached to the ground; it's an island hanging in the air.
+
+  **Selin:** "The Floating Isles are earth that fell from the sky. When the rift opened, the archangels' world shattered and its pieces fell. But not all the way. They stayed in the air. This is between earth and sky. You want a ship? Timber for the keel, ore for the propeller, and some craft. And we need to get rid of the cloud giants; they break my masts every night."
+c5_isles.x.pip: |
+  **Selin:** "Pip! Child! Still talking? You are. Of course you are."
+c5_isles.x.merged: |
+  Pip looks at Selin for a long time. "Teacher. I was there when you died. In another time." Selin asks nothing. She just takes Pip's hand.
+c5_isles.x.kaedrin: |
+  Selin looks at Kaedrin, then at you. "That isn't Pip. That's what Pip could become. I've seen that face in a lot of nightmares."
+c5_isles.x.gone: |
+  Selin listens to you. She asks about Pip. When she hears your answer, she closes her workshop door. "The ship is there. Take it. Don't talk to me."
+c5_isles.after: |
+  The ship lifts off. The island shrinks; the clouds fall away below. Selin at the helm, goggles on her forehead. "Hold on. It's worse up there."
+
+c5_fortress: "The Rebel General"
+c5_fortress.body: |
+  As the ship climbs, the sky turns black. Storm dragons among the clouds. Sky knights; winged armour, lightning on their swords. Above the clouds, a fortress turning on itself.
+
+  **Selin:** "Zephyros, the Storm King. He was Uriel's right hand. A thousand years ago he helped chain Aethon. Then he rebelled; against his own brothers and sisters. Now he lets no one through this storm."
+c5_fortress.after: |
+  Zephyros has six wings, two of them broken. The archangels' seal has been scratched off his armour. Defeated, he drives his sword into the ground.
+
+  **Zephyros:** "Bearer. Are you Uriel's hound too? No. In your hand... ah. In your hand is his voice."
+
+  **Zephyros:** "A thousand years ago we chained Aethon. We were right; he would have stopped everything. But Uriel gave one more order: chain his grief too. No one will weep for him, no one will remember him. We punished a god's love. I opposed it. With the brothers and sisters who joined me, we split the sky; to reach Aethon. The rift is our work."
+
+  **Zephyros:** "We were wrong. The rift didn't reach Aethon; it set his grief free instead. At the bottom of the rift, the Chaos Mother. And the rift grows every year and eats the stars. I've held a storm here for a thousand years to stop it."
+c5_fortress.forgive: "Forgive him."
+c5_fortress.forgive.result: |
+  "You rebelled to remember a god's grief. The wrong way. But for a right thing."
+
+  Zephyros pulls his sword from the ground and holds it out to you. "Then take this. When you stand before Uriel, remind him what we lost a thousand years ago."
+
+  The storm opens; a safe path to the Rift Edge appears.
+c5_fortress.fell: "Bring him down: \"You fed it the stars.\""
+c5_fortress.fell.result: |
+  "You opened the rift. You fed it the stars."
+
+  Zephyros bows his head. "Yes." The light of his wings goes out. The storm breaks apart, but uncontrolled; half the fortress falls.
+
+c5_edge: "The Edge of the Rift"
+c5_edge.body: |
+  The rift is a chasm. But upward. In the middle of the sky, above the clouds, a crack that opens not down but up. It is full of amber light, and that light trembles, breathes. Void creatures, chaos elementals and chaos lords writhe at its edge.
+
+  **Selin:** "The ship can't go past here. You'll walk the rest. Into the rift. You'll need a potion to breathe in there; alchemist's work."
+c5_edge.x.ihra: |
+  Ihra stops at the edge of the rift and looks in. On her face is not fear but recognition. "That sound. That's Neris's lullaby. My teacher sang it to her patients every night. It's coming from inside the rift. But it's broken. Someone is trying to remember it and can't."
+c5_edge.after: |
+  The potion tastes of copper. You take a breath and the rift's light fills your lungs. You can walk.
+
+c5_lullaby: "The Broken Lullaby"
+c5_lullaby.body: |
+  Ihra listens to the hum of the chaos elementals. "Each of them holds a piece of the lullaby. One swallowed a line, one a note. Bring them to me. I'll remember the rest."
+c5_lullaby.after: |
+  Ihra puts the pieces together, hums, stops, starts again. At last she closes her eyes and sings; at the edge of the rift, for the first time in a thousand years, with the right notes. The amber light ripples for a moment; it is listening.
+
+c5_core: "The Mother of Grief"
+c5_core.body: |
+  At the very bottom of the rift, in the middle of the amber light, a being. Huge, shapeless, with thousands of arms, each reaching for something: a star, a light, a memory. In its middle, a face. Neris's face. But broken; not as Aethon remembered her, but as he feared to forget her.
+
+  The Chaos Mother is not a monster. She is the moment Aethon lost Neris. That moment, given shape.
+c5_core.after: |
+  The fight was her despair; with every arm she tried to hold on to something. Defeated, her arms wrap around you, not to crush but to cling.
+
+  **Chaos Mother** (with a thousand voices, none of them whole): *"Don't go. Don't go. Don't go. Don't go."*
+
+  **Voice** (the Spark burning in your palm): *"...That's me. That's part of me. Please. Don't hurt her."*
+c5_core.console_crystal: "Comfort her: show the Memory Crystal."
+c5_core.console_crystal.result: |
+  You hold the crystal up to the Chaos Mother's face. Neris's real face, her real voice: *"I wanted you. For one lifetime. And I had it. That was enough."*
+
+  Her arms loosen one by one. The thousand voices fall silent, all but one. Her face heals. The Chaos Mother shrinks, to the height of a woman, then to a light, then flows into the Spark.
+
+  A god weeps in your palm.
+
+  The rift stops growing.
+c5_core.console_song: "Comfort her: sing the lullaby."
+c5_core.console_song.result: |
+  Ihra steps forward and sings. Neris's lullaby, inside the rift for the first time with the right notes.
+
+  The Chaos Mother's arms loosen one by one. The thousand voices fall silent, all but one. Her face heals. She shrinks, to the height of a woman, then to a light, then flows into the Spark.
+
+  A god weeps in your palm.
+
+  The rift stops growing.
+c5_core.shatter: "Shatter her."
+c5_core.shatter.result: |
+  You cut the arms and scatter the face. The Chaos Mother breaks apart. The rift trembles for a moment, then collapses on itself; it shrinks but doesn't close. The amber light turns cold white.
+
+  The Voice doesn't scream. It says nothing at all. The Spark simply turns to ice.
+
+c5_temple: "Neris's Room"
+c5_temple.body: |
+  On the other side of the rift is the top of the sky: the ruins of the archangels' world, the Celestial Temple. White marble, endless columns, broken domes. Fallen angels wander among the columns, their wings darkened. Temple guardians at the doors, light hunters in the halls.
+c5_temple.after: |
+  Deep in the temple, at the end of a corridor whose every door is covered in gold, there is a single door. Wooden. Simple. A village house door, out of place in a temple.
+c5_temple.x.room_fresco: |
+  The fresco in your bag grows warm. The door opens.
+
+  Inside is the room you saw in the crystal: a window, a bed, shelves full of healing herbs. The bed is empty. The shelves are not dusty. Someone has cleaned this room for a thousand years.
+
+  On a shelf, a letter in Uriel's hand:
+
+  *"I told him I would tear down the temples. Make his name forgotten. Chain his grief. I did. But I could not tear down this room. I clean it every day. No one knows. The shard from her palm I put here too, on her own shelf. Morvath searched the whole world and never found it. No one will. — U."*
+
+  On the shelf, a small empty box. Its lid open. In the floor beneath it, a scorched hole the size of a palm. Looking down through the hole you see clouds, and below the clouds a forest. The Greenwood.
+
+  As the rift grew, the temple shook. And one night the box tipped over. You remember that night.
+c5_temple.x.room_crystal: |
+  The Memory Crystal in your bag grows warm. The door opens.
+
+  Inside is the room you saw in the crystal: a window, a bed, shelves full of healing herbs. The bed is empty. The shelves are not dusty. Someone has cleaned this room for a thousand years.
+
+  On a shelf, a letter in Uriel's hand:
+
+  *"I told him I would tear down the temples. Make his name forgotten. Chain his grief. I did. But I could not tear down this room. I clean it every day. No one knows. The shard from her palm I put here too, on her own shelf. Morvath searched the whole world and never found it. No one will. — U."*
+
+  On the shelf, a small empty box. Its lid open. In the floor beneath it, a scorched hole the size of a palm. Looking down through the hole you see clouds, and below the clouds a forest. The Greenwood.
+
+  As the rift grew, the temple shook. And one night the box tipped over. You remember that night.
+c5_temple.x.closed: |
+  The door won't open. Not by force, not by word. In front of it you find an archangel's feather; white, warm. Someone was here a moment ago.
+
+c5_dome: "The Warden"
+c5_dome.body: |
+  Under the dome, where the rift's light is brightest, Uriel waits. All six wings whole, white, made of light. In one hand, one end of the chain that binds Aethon; the chain runs down through the dome's floor to the edge of the world, to the Edge of Eternity. In the hilt of his sword, the Fifth Crown Shard.
+
+  **Uriel:** "Four shards. A god's voice in your hand. And you've come this far. Either you are a hero or the most dangerous traitor. This fight will tell me which."
+c5_dome.after: |
+  Uriel kneels, but he is smiling.
+
+  **Uriel:** "You're strong. Good. Now listen to me carefully. The voice in your hand. The one that guides you, the one that says 'Take', 'Devour', 'Let us be one'. Did you ever ask its name?"
+
+  The Spark beats in your palm. Fast. Very fast.
+
+  **Uriel:** "The Voice is Aethon. The god in the chain. The shard is a piece of him; the piece he placed in Neris's palm. For a thousand years it waited for someone to find it. It waited for you. And it led you to every shard. Because if the seven shards come together, the chain breaks. And Aethon finishes what he first wanted: he stops all time. All death. All life."
+
+  **Voice** (for the first time with its own name; low, tired): *"...Yes. It's me. I should have told you. But would you have listened?"*
+c5_dome.x.told: |
+  **Uriel:** "But you told a dwarf about your voice. From the very first night. So you always listened to it with doubt. Good. Doubt is the best shield against a god."
+c5_dome.x.hid: |
+  **Uriel:** "You never told anyone about your voice. A thousand years ago, Morvath didn't either."
+c5_dome.x.devoured: |
+  **Uriel:** "You devoured the shards. The god in your hand is in your blood now, in your heartbeat. How much of you is Aethon, and how much is you?"
+c5_dome.x.shadow: |
+  Uriel sees the shadow inside the Spark. "A star eater's remnant is in you too. You took it for someone, didn't you?" His voice softens.
+c5_dome.ally: "Become his ally."
+c5_dome.ally.result: |
+  "You've held Aethon in chains for a thousand years. And you've cleaned Neris's room for a thousand years. Someone who does both can help me."
+
+  Uriel's face changes. He is silent for a long time. "Yes. I'll come with you. To the end. But I'll be beside you when you make your last choice; choose wrong, and my sword won't be with you."
+c5_dome.ally_mercy: "Become his ally: \"I left no one behind on this road.\""
+c5_dome.ally_mercy.result: |
+  "It's true, I told no one about my voice. But on this road I lifted the fallen, sent off the dead, saved the young. I didn't do it because a god asked."
+
+  Uriel looks at you for a long time. "Yes. I'll come with you. To the end. But I'll be beside you when you make your last choice; choose wrong, and my sword won't be with you."
+c5_dome.ally_devoured: "Become his ally: \"You'll see how much is me.\""
+c5_dome.ally_devoured.result: |
+  "I devoured the shards. But look at who I reached out to along the way. That's me, not the god."
+
+  Uriel looks at you for a long time. "We'll see. I'll come with you. To the end. But choose wrong, and my sword won't be with you."
+c5_dome.oppose: "Stand against him: \"This isn't justice.\""
+c5_dome.oppose.result: |
+  "Keeping a god in chains for a thousand years is not justice."
+
+  **Uriel:** "Then go. But know this: when you reach the edge of the world, I'll be waiting for you there."
+
+c5_shard: "The Fifth Shard"
+c5_shard.body: |
+  Uriel pries the shard from his sword hilt and sets it before you. The dome's light circles around it.
+c5_shard.seal: "Seal it"
+c5_shard.seal.result: |
+  You seal the shard into a link of Uriel's own chain. Seeing it, Uriel nods.
+c5_shard.devour: "Devour it"
+c5_shard.devour.result: |
+  You devour the shard before the archangel's eyes. The light of his wings dims. "Ah," says Uriel. Only "ah."
+
+  **Voice:** *"Five. Almost there."*
+c5_shard.release: "Release it"
+c5_shard.release.result: |
+  You break the shard at the top of the dome. The light mixes with the rift's amber, and the rift, for the first time in a thousand years, closes a finger's width at its edges.
+
+c5_fall: "The Fall of the Archangels"
+c5_fall.body: |
+  The moment the shard is taken, the temple shakes. The archangels who rebelled with Zephyros a thousand years ago and then fell into darkness feel the light of five shards and descend. They want to free Aethon; but no longer for grief, for power. To wear the crown themselves.
+c5_fall.x.zephyros_forgiven: |
+  Zephyros comes with his storm and, in the middle of the battle, stops the youngest of his fallen kin: "Enough, brother. Enough."
+c5_fall.x.zephyros_fallen: |
+  The knights of the Storm Fortress stand with the fallen too.
+c5_fall.x.uriel_ally: |
+  Uriel fights against his own kin. At the end of a thousand years. And he weeps as he fights.
+c5_fall.x.uriel_foe: |
+  Uriel watches the battle. He doesn't open his wings. At the end he only says "You fought well," and leaves.
+c5_fall.after: |
+  After the battle, Uriel's chain stretches from the sky to the ground. To the Edge of Eternity. To the edge of the world. At the chain's other end, a god.
+
+  **Voice:** *"Come. Now you know what I am. Come and decide what you'll do. I've waited a thousand years; I can wait a few more days."*
+
+  **Selin** (at the helm): "The ship can go down to the Shore of the Void. To the Ash Sea. But this ship can't cross that sea. Beyond it..."
+c5_fall.x.kaedrin: |
+  After the battle Kaedrin sits down on the ground. Very old, very tired. His last words: *"Tell Pip. Not to wind his clock. And if he does... to forgive himself. I forgave myself. Just now."*
+c5_fall.x.ilvar_map: |
+  "...You have Ilvar's chart. The road the stars show."
+c5_fall.x.lost_map: |
+  "...You have a copy of the chart from the Lost City. Incomplete, but enough."

@@ -1,0 +1,166 @@
+# IV. Bölüm: Saati Durduran (Yıldızsız Topraklar, Sv 600–700). DD-367.
+
+c4_plains: "Gökyüzü Olmayan Yer"
+c4_plains.body: |
+  Burada gece ve gündüz aynı. Güneş doğuyor, evet, ama gökyüzünün geri kalanı kapkara; ne bulut ne mavi ne yıldız. Gün ışığı bir fener gibi, yalnızca önüne düşen yeri aydınlatıyor.
+
+  Gölge atlılar ovada dolaşıyor. Boşluk kurtları; ağızları açılıyor, ses çıkmıyor. Ve yıldız kemirenler, ışığı yiyen yaratıklar.
+
+  Ovanın ortasında yıkık bir gözlemevi kubbesi. İçinde, dizlerine kadar kâğıda gömülmüş, yaşlı bir karanlık elf: Gözlemci Ilvar. Gölgesi yok.
+
+  **Ilvar:** "Bir yıldız daha. Bu gece bir yıldız daha söndü. Dört yüz on iki. Benim ömrümde dört yüz on iki yıldız söndü. Kaydettim, her birini. Herkes yıldızların bin yıl önce söndüğünü sanır. Yanlış. Hâlâ sönüyorlar. Birisi onları yiyor. Eski gözlemevimde. Ona Omh diyorum. Yıldız Yiyen. Lambam için ot getir; karanlıkta yazamıyorum."
+c4_plains.x.dark_elf: |
+  Ilvar sana bakıyor. "Soyumuz yıldızlara bakarak yolunu bulurdu. Karanlıkta görürüz. Ama yıldız olmayınca karanlıkta görmek, sadece daha fazla karanlık görmek demek."
+c4_plains.after: |
+  Lamba yanıyor. Pip Ilvar'ın kayıtlarını karıştırıyor ve birden duruyor.
+
+  **Pip:** "Bir dakika. Bir dakika. Yıldızların söndüğü tarihler... yarığın büyüdüğü tarihlerle aynı! Yarık büyüdükçe yıldız sönüyor. Yani Omh bir yaratık değil belki. Omh bir yara. Gökyüzündeki yaranın aşağıdaki ağzı."
+
+  **Ilvar:** "Gözlemevine gideceksen ben de geliyorum. İki yüz yıldır bu anı bekliyorum."
+
+c4_observatory: "Yıldız Yiyen"
+c4_observatory.body: |
+  Söndürülmüş Gözlemevi'nin teleskopları kör, kubbesi yarık. İçeride karanlık karanlıkta hareket ediyor. Ilvar yıldız haritalarını açıyor. "Adını söylediğim her yıldız onun içinde bir an parlayacak. Ve acı çekecek."
+c4_observatory.after: |
+  Omh yenildiğinde patlamıyor, ölmüyor; dağılıyor. Dağılırken içinden yüzlerce küçük ışık yükseliyor: yutulmuş yıldızlar. Kubbedeki yarıktan göğe çıkıyorlar.
+
+  Ama bir şey yanlış gidiyor. Omh'un son parçası Ilvar'a uzanıyor.
+c4_observatory.save_ilvar: "Ilvar'ı kurtar: karanlığı Kıvılcıma çek."
+c4_observatory.save_ilvar.result: |
+  Omh'un son parçasını Kıvılcımla kendine çekiyorsun. Acı veriyor; bir an karanlığı içinde hissediyorsun. Ilvar kurtuluyor.
+
+  Ilvar sana yıldız haritasını uzatıyor. "Bunu sakla. Bir gün yıldızsız bir denizi geçmen gerekecek."
+
+  Kıvılcımın içinde artık küçük bir gölge var.
+c4_observatory.save_stars: "Yıldızları kurtar."
+c4_observatory.save_stars.result: |
+  Ilvar'ı bırakıyorsun; son yıldızlar kaçıyor.
+
+  Ilvar gülümsüyor. "Doğru seçim. Ben bir adamım; onlar yıldız." Omh onu alıyor. Kâğıtları havada savruluyor.
+
+  O gece Yıldızsız Topraklar'da birkaç yıldız görünüyor.
+
+c4_lost_map: "Kaybolan Harita"
+c4_lost_map.body: |
+  Ilvar'ın haritası onunla gitti. Ama Pip bir not buluyor: Ilvar yıllar önce bir kopyasını Kayıp Şehir'in kütüphanesine bırakmış. Kütüphanenin sayfalarını zaman hırsızları çalmış.
+c4_lost_map.after: |
+  Sayfalar tamam. Haritanın kenarında Ilvar'ın el yazısı: *"Bulan kişiye: yıldızlar dönerse beni de sayın."*
+
+c4_city: "Durmuş Şehir"
+c4_city.body: |
+  Kayıp Şehir zamanın içinde kaybolmuş. Sokaklarda insanlar var, yürümenin ortasında duruyorlar. Bir kadın bir kapıyı açmak üzere, eli tokmakta. Bir çocuk bir topa vurmak üzere, ayağı havada. Bir köpek havlamak üzere, ağzı açık. Hiçbiri kıpırdamıyor. Bin yıldır.
+
+  Aralarında zaman hırsızları dolaşıyor; donmuş insanların anlarını çalıyorlar.
+
+  Şehrin ortasında bir kule: Saat Kulesi. Yelkovanı on ikiye bir dakika kala durmuş.
+
+  **Pip** (bir süredir sessiz): "Bu kuleyi biliyorum. Bilmemem lazım ama biliyorum. Rüyalarımda, çocukluğumdan beri. Her rüyada içine giriyorum ve bir saat kuruyorum. Ve saat durduğunda ağlıyorum. Neden ağladığımı bilmiyorum. Bana bir saat çarkı yap. Sadece... elimde olsun."
+c4_city.after: |
+  Pip çarkı cebine koyuyor. Kulenin kapısı açık. Merdivenlerden tık tık bir ses iniyor; durmuş bir saatin yapmaması gereken bir ses.
+
+c4_tower: "Zaman Lordu"
+c4_tower.body: |
+  Kulenin tepesinde dev bir saat mekanizması: çarklar, yaylar, sarkaçlar, hepsi durmuş. Ortasında, mekanizmanın içine örülmüş, borular ve kablolar sırtından çıkmış, yaşlı bir gnom. Sakalı yerlere kadar. Gözlüğü kafasından büyük.
+
+  Pip donakalıyor.
+c4_tower.after: |
+  Kaedrin zamanı oynatarak savaşıyordu; darbelerini geri alıyor, yaralarını ileri sarıyordu. Yenildiğinde mekanizmanın içine çöküyor. Gözlüğünü çıkarıyor. Yüzü Pip'in yüzü. Yaşlı, yorgun, bin yıllık.
+
+  **Kaedrin:** "Merhaba, Pip. Ah, ne kadar gençsin. Ne kadar çok konuşuyorsun. Ben de çok konuşurdum."
+
+  **Kaedrin:** "Taşıyıcı, açıklayayım. Ben Pip'im. Başka bir zamandan. Bir zaman ki orada sen öldün; burada, bu kulede. Seni kurtarmak istedim. Göğü Ölçen Aletimle zamanı geri sardım. Ve geri sardım. Her seferinde sen yine öldün. Her seferinde ben biraz daha yaşlandım. Sonunda zamanı tamamen durdurdum. Bütün şehirle birlikte. Durmuş zaman geriye akar; ben de bin yıl geriye aktım ve seni bekledim. Bu sefer sen kazandın."
+
+  Göğsünde, mekanizmanın ortasında, Dördüncü Taç Parçası atıyor: zamanı durduran güç.
+
+  **Kaedrin:** "Demek ki artık durdurmak zorunda değilim."
+
+c4_two_pips: "İki Pip"
+c4_two_pips.body: |
+  Pip ağlıyor. Rüyalarında olduğu gibi.
+
+  **Pip:** "Ben bunu mu yapacağım? Ben mi? Bütün bir şehri? Bütün o insanları? Seni kurtarmak için?"
+
+  **Kaedrin:** "Belki. Belki değil. Senin zamanın benimkinden farklı. Şimdilik."
+
+  Kıvılcım Dördüncü Parçaya uzanıyor.
+
+  **Ses:** *"Zaman. Ah, zaman. Bunu en iyi ben bilirim. Al onu. Kaedrin'i bırak. Pip'i bırak. Onlar sadece birer gnom."*
+c4_two_pips.keep_pip: "Kaedrin'i serbest bırak; Pip seninle kalsın."
+c4_two_pips.keep_pip.result: |
+  Mekanizmayı durduruyorsun. Kaedrin huzurla ölürken Pip'e dönüyor.
+
+  **Kaedrin:** "Saatini kurma, Pip. Ne olursa olsun. Arkadaşın ölse bile. Söz ver."
+
+  **Pip:** "...Söz veremem."
+
+  **Kaedrin:** "Biliyorum. Ben de veremezdim."
+
+  Pip, Kaedrin'in sekizinci prototipini sırtına alıyor. Mekanizma durunca şehir yeniden akıyor: kadın kapıyı açıyor, çocuk topa vuruyor, köpek havlıyor. Onlar için bir saniye geçmiş. Bin yıl sonra.
+c4_two_pips.merge: "Kaedrin'i Pip'le birleştir."
+c4_two_pips.merge.result: |
+  Kıvılcımın gücünden bir parça veriyorsun; avucun sızlıyor. Kaedrin'in bin yıllık bilgisi Pip'in genç bedenine akıyor. Birleşme acılı.
+
+  Geriye kalan Pip daha az konuşuyor, daha çok biliyor.
+
+  **Pip:** "Garip. Seni bin yıldır tanıyorum ve dün tanıştık. İkisi de doğru."
+
+  Mekanizma durunca şehir yeniden akıyor; bin yıl sonra sokaklar insan sesiyle doluyor.
+c4_two_pips.send_pip: "Pip'i eve gönder, Kaedrin seninle gelsin."
+c4_two_pips.send_pip.result: |
+  Pip'in hiç Kaedrin olmaması için onu Sundermere'ye, Hedda'nın yanına gönderiyorsun.
+
+  **Pip:** "Beni yolluyor musun? Ben... tamam. Anlıyorum. Ama anlamak istemiyorum."
+
+  Kaedrin mekanizmadan ayrılıyor; hızla yaşlanacak ama seninle geliyor. "Sana parçaların sırrını anlatacağım: yedisi bir araya gelirse zaman yeniden durur."
+
+  Şehir yeniden akıyor.
+c4_two_pips.abandon: "Parçayı al, ikisini de bırak."
+c4_two_pips.abandon.result: |
+  Parçayı Kaedrin'in göğsünden çekiyorsun. Kaedrin kumdan bir heykele dönüp dağılıyor. Pip donmuş şehirle birlikte donuyor; bir an, sonra sonsuza dek.
+
+  Kıvılcım güçleniyor.
+
+  **Ses:** *"Ağlama. Bir gnom için ağlanmaz."*
+
+  Şehir yeniden akıyor. Meydanda yalnızca bir gnom kıpırdamıyor.
+
+c4_shard: "Dördüncü Parça"
+c4_shard.body: |
+  Dördüncü Parça avucunda tik tak atıyor; kalbinle değil, kulenin saatiyle aynı ritimde.
+c4_shard.seal: "Mühürle"
+c4_shard.seal.result: |
+  Parçayı Kaedrin'in kendi çarklarının arasına, durmuş bir anın içine mühürlüyorsun. Mühür zamanın dışında kalıyor.
+c4_shard.devour: "Yut"
+c4_shard.devour.result: |
+  Zamanı avucunda hissediyorsun. Bir saniye uzuyor, kısalıyor. Kalbinin atışları arasındaki boşluk bir an sonsuz oluyor.
+
+  **Ses:** *"Dört. Artık sen de durdurabilirsin. Bunu biliyor musun?"*
+c4_shard.release: "Bırak"
+c4_shard.release.result: |
+  Parçayı Saat Kulesi'nin tepesinde kırıyorsun. Işık kadranın içine akıyor; yelkovan on ikiye geliyor. Saat çalıyor. Bin yıldır ilk kez. Şehrin bütün çanları onunla birlikte.
+
+c4_timeless: "Zamansız Kaedrin"
+c4_timeless.body: |
+  Parça alındıktan sonra kule çöküyor ama zaman tam düzelmiyor. Bin yıl boyunca geri sarılan her an, her ölüm, her deneme kulenin içinde birikmiş. Bir Kaedrin'in değil, bütün Kaedrin'lerin yankısı: Zamansız Kaedrin.
+c4_timeless.x.merged: |
+  Pip yankıları tanıyor. "Bu sefer sağdan gelecek. Bunu biliyorum çünkü bunu ben yapardım."
+c4_timeless.x.pip: |
+  Pip yankılara bakamıyor. Ama sonunda en yaşlısına bir şey söylüyor: "Sana söz veremem. Ama deneyeceğim."
+c4_timeless.x.kaedrin: |
+  Kaedrin kendi yankılarına karşı savaşıyor. "Bunlar benim hatalarım. Hepsini ben yaptım. Bari son kez düzelteyim."
+c4_timeless.x.gone: |
+  Yankılar Pip'in sesiyle konuşuyor. Bütün savaş boyunca.
+c4_timeless.after: |
+  Kuleden indiğinizde gökyüzüne bakıyorsun. Yarık artık gündüz bile görünüyor. Kocaman. İçinden sıcak, kehribar bir ışık sızıyor.
+
+  Göğü Ölçen Alet artık yalnızca yukarıyı gösteriyor. Bir sonraki parça yarığın içinde. Göğün içinde.
+
+  **Ses:** *"Eve yaklaşıyoruz."*
+c4_timeless.x.ilvar_yours: |
+  Ilvar kulenin yıkıntısına tırmanıyor ve iki yüz yıllık hayatında ilk kez Yıldızsız Topraklar'ın göğünde bir yıldız görüyor. Tek bir yıldız, kuzeyde.
+
+  **Ilvar:** "Bu yeni. Kayıtlarımda yok. Senin bıraktığın bir şey mi?" Başını sallıyorsun. "Evet."
+c4_timeless.x.ilvar_other: |
+  Ilvar kulenin yıkıntısına tırmanıyor ve iki yüz yıllık hayatında ilk kez Yıldızsız Topraklar'ın göğünde bir yıldız görüyor. Tek bir yıldız, kuzeyde.
+
+  **Ilvar:** "Bu yeni. Senin bıraktığın bir şey mi?" Başını sallıyorsun: "Hayır. Başka biri."

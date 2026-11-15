@@ -2,6 +2,8 @@ package story
 
 import (
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -205,4 +207,27 @@ func copyMap(m map[string]string) map[string]string {
 		out[k] = v
 	}
 	return out
+}
+
+func TestLoadTextFilesAndDirs(t *testing.T) {
+	dir := t.TempDir()
+	write := func(path, s string) {
+		require.NoError(t, os.MkdirAll(filepath.Dir(path), 0o700))
+		require.NoError(t, os.WriteFile(path, []byte(s), 0o600))
+	}
+	write(filepath.Join(dir, "en.yaml"), "a: A\n")
+	write(filepath.Join(dir, "tr", "01.yaml"), "a: Ä\n")
+	write(filepath.Join(dir, "tr", "02.yaml"), "b: B\n")
+	tx, err := LoadText(dir)
+	require.NoError(t, err)
+	require.Equal(t, map[string]string{"a": "Ä", "b": "B"}, tx.ByLang["tr"])
+	require.Equal(t, "A", tx.ByLang["en"]["a"])
+
+	write(filepath.Join(dir, "tr", "03.yaml"), "b: again\n")
+	_, err = LoadText(dir)
+	require.ErrorContains(t, err, "b twice")
+
+	tx, err = LoadText(filepath.Join(dir, "none"))
+	require.NoError(t, err)
+	require.Empty(t, tx.ByLang)
 }

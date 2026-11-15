@@ -1,6 +1,6 @@
 # Story mode (DD-313, DD-367). The full text: docs/story/. Scene text:
-# content/story/<lang>.yaml (en + tr complete; other languages fall back
-# to en key by key).
+# content/story/<lang>/*.yaml, one file per chapter (en + tr complete; other
+# languages fall back to en key by key).
 #
 # chapters: code + min_level (titles: content/i18n story.<code>, .body)
 # scenes, read in this order:
@@ -20,8 +20,9 @@
 # <code>.x.<extra>, <code>.<option> (label), <code>.<option>.result.
 # Flags and counters: docs/story/README.md.
 #
-# quests: story quests (category story), same shape as quests.yaml; the
-# quest board offers each one only while its scene is current.
+# quests: story quests (category story), written by
+# scripts/gen_story_quests.py; the quest board offers each one only while its
+# scene is current.
 
 chapters:
   - code: prologue
@@ -29,6 +30,24 @@ chapters:
   - code: chapter_1
     min_level: 2
     requires: prologue
+  - code: chapter_2
+    min_level: 100
+    requires: chapter_1
+  - code: chapter_3
+    min_level: 300
+    requires: chapter_2
+  - code: chapter_4
+    min_level: 600
+    requires: chapter_3
+  - code: chapter_5
+    min_level: 700
+    requires: chapter_4
+  - code: chapter_6
+    min_level: 850
+    requires: chapter_5
+  - code: endings
+    min_level: 1000
+    requires: chapter_6
 
 scenes:
   # --- Prologue: Külden Uyanış -------------------------------------------
@@ -215,6 +234,647 @@ scenes:
       - { key: mirel_free, when: { mirel: serbest }, after: true }
       - { key: mirel_jailed, when: { mirel: tutuklu }, after: true }
 
+  # --- Chapter II: Taçsız Ülke (Kırık Taç, 100–300) -------------------------
+  - code: c2_plains
+    chapter: chapter_2
+    min_level: 100
+    quests: [story_c2_plains]
+    after: true
+    extras:
+      - { key: mirel_companion, when: { mirel: yoldas } }
+      - { key: mirel_free, when: { mirel: serbest } }
+      - { key: mirel_jailed, when: { mirel: tutuklu } }
+
+  - code: c2_orrin
+    chapter: chapter_2
+    min_level: 128
+    quests: [story_c2_orrin]
+    after: true
+    extras:
+      - { key: isolde, when: { isolde: surgun }, after: true }
+    options:
+      - { code: rebels, set: { ova: asiler } }
+      - { code: loyal, set: { ova: sadiklar } }
+      - { code: neutral, set: { ova: tarafsiz } }
+
+  - code: c2_burnt
+    chapter: chapter_2
+    min_level: 160
+    quests: [story_c2_burnt]
+    after: true
+    extras:
+      - { key: covenant, when: { taraf: kor_ahdi } }
+      - { key: wardens, when: { taraf: yesilorman } }
+      - { key: guard, when: { taraf: demirkale } }
+
+  - code: c2_fireroot
+    chapter: chapter_2
+    min_level: 178
+    quests: [story_c2_fireroot]
+    optional_quests: [story_c2_rootseal]
+    after: true
+    options:
+      - { code: save, requires_quest: story_c2_rootseal, set: { ana_agac: kurtarildi }, add: { merhamet: 1 } }
+      - { code: burn, set: { ana_agac: yandi }, reputation: { ember_covenant: 300 } }
+
+  - code: c2_desert
+    chapter: chapter_2
+    min_level: 220
+    quests: [story_c2_desert]
+    after: true
+    extras:
+      - { key: ansel_letter, when: { ana_agac: kurtarildi, taraf: kor_ahdi } }
+      - { key: liora_silent, when: { ana_agac: yandi, taraf: yesilorman } }
+      - { key: tamsin_left, when: { ana_agac: yandi } }
+
+  - code: c2_palace
+    chapter: chapter_2
+    min_level: 228
+    quests: [story_c2_palace]
+    after: true
+    extras:
+      - { key: mirel, when: { mirel: yoldas }, after: true }
+    options:
+      - { code: free, set: { seth_ka: ozgur }, add: { merhamet: 1 } }
+      - { code: bind, set: { seth_ka: bagli } }
+
+  - code: c2_inner_gate
+    chapter: chapter_2
+    min_level: 250
+    when: { seth_ka: bagli }
+    quests: [story_c2_inner_gate]
+    after: true
+
+  - code: c2_crypt
+    chapter: chapter_2
+    min_level: 278
+    quests: [story_c2_crypt]
+    after: true
+    extras:
+      - { key: seth, when: { seth_ka: ozgur } }
+      - { key: hedda, when: { hedda_klan: kurtarildi } }
+      - { key: isolde, when: { isolde: hukumdar } }
+
+  - code: c2_tribute
+    chapter: chapter_2
+    min_level: 280
+    quests: [story_c2_tribute]
+    after: true
+    extras:
+      - { key: rebels, when: { ova: asiler } }
+      - { key: loyal, when: { ova: sadiklar } }
+      - { key: neutral, when: { ova: tarafsiz } }
+      - { key: isolde, when: { isolde: hukumdar }, after: true }
+    options:
+      - { code: gate, set: { brannoc: yasiyor } }
+      - { code: village, when: { isolde: "!hukumdar" }, set: { brannoc: oldu }, add: { merhamet: 1 } }
+      - { code: village_isolde, when: { isolde: hukumdar }, set: { brannoc: yasiyor }, add: { merhamet: 1 } }
+
+  - code: c2_aldric
+    chapter: chapter_2
+    min_level: 295
+    quests: [story_c2_aldric]
+    after: true
+    extras:
+      - { key: mirel_companion, when: { mirel: yoldas } }
+      - { key: mirel_free, when: { mirel: serbest } }
+      - { key: mirel_jailed, when: { mirel: tutuklu } }
+    options:
+      - { code: queen, set: { tac_varisi: mirel } }
+      - { code: council, set: { tac_varisi: orrin } }
+      - { code: empty, set: { tac_varisi: bos } }
+
+  - code: c2_shard
+    chapter: chapter_2
+    min_level: 295
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c2_tyrant
+    chapter: chapter_2
+    min_level: 300
+    quests: [story_c2_tyrant]
+    after: true
+    extras:
+      - { key: queen, when: { tac_varisi: mirel }, after: true }
+      - { key: council, when: { tac_varisi: orrin }, after: true }
+      - { key: empty, when: { tac_varisi: bos }, after: true }
+
+  # --- Chapter III: Ejderlerin Yası (Ejdersırtı, 300–600) ---------------------
+  - code: c3_coast
+    chapter: chapter_3
+    min_level: 320
+    quests: [story_c3_coast]
+    after: true
+    extras:
+      - { key: drakari, race: [drakari] }
+
+  - code: c3_fleet
+    chapter: chapter_3
+    min_level: 328
+    quests: [story_c3_fleet]
+    after: true
+    options:
+      - { code: share, set: { yssa: dost } }
+      - { code: families, set: { yssa: rakip }, add: { merhamet: 1 } }
+
+  - code: c3_slopes
+    chapter: chapter_3
+    min_level: 360
+    quests: [story_c3_slopes]
+    after: true
+
+  - code: c3_brood
+    chapter: chapter_3
+    min_level: 378
+    quests: [story_c3_brood]
+    after: true
+    options:
+      - { code: save_egg, set: { yumurta: kurtarildi }, add: { merhamet: 1 } }
+      - { code: sell, set: { yumurta: satildi } }
+      - { code: smash, set: { yumurta: kirildi } }
+
+  - code: c3_mist
+    chapter: chapter_3
+    min_level: 420
+    quests: [story_c3_mist]
+    after: true
+    extras:
+      - { key: liora, when: { taraf: yesilorman } }
+      - { key: letter, when: { taraf: "!yesilorman" } }
+
+  - code: c3_grove
+    chapter: chapter_3
+    min_level: 428
+    quests: [story_c3_grove]
+    after: true
+    extras:
+      - { key: seed, when: { ana_agac: kurtarildi }, after: true }
+    options:
+      - { code: wake, when: { ana_agac: kurtarildi }, set: { sylwen: uyandi }, add: { merhamet: 1 } }
+      - { code: wake_barren, when: { ana_agac: "!kurtarildi" }, set: { sylwen: uyandi } }
+      - { code: sleep, set: { sylwen: uyudu } }
+
+  - code: c3_caves
+    chapter: chapter_3
+    min_level: 460
+    quests: [story_c3_caves]
+    after: true
+
+  - code: c3_heart
+    chapter: chapter_3
+    min_level: 478
+    quests: [story_c3_heart]
+    after: true
+    extras:
+      - { key: ihra, when: { ihra: yoldas }, after: true }
+      - { key: fresco, when: { duvar_resmi: alindi }, after: true }
+      - { key: ansel, when: { taraf: kor_ahdi }, after: true }
+    options:
+      - { code: keep, set: { ani_kristali: alindi } }
+      - { code: smash, set: { ani_kristali: kirildi } }
+
+  - code: c3_volcano
+    chapter: chapter_3
+    min_level: 520
+    quests: [story_c3_volcano]
+    after: true
+    extras:
+      - { key: tamsin_with_you, when: { ana_agac: kurtarildi } }
+      - { key: tamsin_order, when: { ana_agac: "!kurtarildi" } }
+      - { key: covenant, when: { taraf: kor_ahdi } }
+      - { key: burned, when: { ana_agac: yandi } }
+
+  - code: c3_ignar
+    chapter: chapter_3
+    min_level: 528
+    quests: [story_c3_ignar]
+    after: true
+    options:
+      - { code: stop, set: { ansel: durduruldu } }
+      - { code: let_win, set: { ansel: kazandi } }
+      - { code: save, when: { ana_agac: kurtarildi }, set: { ansel: kurtarildi }, add: { merhamet: 1 } }
+      - { code: save_faith, when: { ana_agac: "!kurtarildi", taraf: kor_ahdi }, set: { ansel: kurtarildi }, add: { merhamet: 1 } }
+
+  - code: c3_peaks
+    chapter: chapter_3
+    min_level: 560
+    quests: [story_c3_peaks]
+    after: true
+    extras:
+      - { key: sold, when: { yumurta: satildi } }
+      - { key: sylwen, when: { sylwen: uyandi } }
+
+  - code: c3_throne
+    chapter: chapter_3
+    min_level: 578
+    quests: [story_c3_throne]
+    after: true
+    extras:
+      - { key: saved, when: { yumurta: kurtarildi }, after: true }
+      - { key: broken, when: { yumurta: kirildi }, after: true }
+      - { key: sold, when: { yumurta: satildi }, after: true }
+
+  - code: c3_shard
+    chapter: chapter_3
+    min_level: 578
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c3_lair
+    chapter: chapter_3
+    min_level: 600
+    quests: [story_c3_lair]
+    after: true
+    extras:
+      - { key: saved, when: { yumurta: kurtarildi } }
+      - { key: broken, when: { yumurta: kirildi } }
+      - { key: sold, when: { yumurta: satildi } }
+      - { key: yssa_friend, when: { yssa: dost }, after: true }
+      - { key: yssa_rival, when: { yssa: rakip }, after: true }
+
+  - code: c3_onward
+    chapter: chapter_3
+    min_level: 600
+    extras:
+      - { key: scale, when: { yumurta: kurtarildi } }
+      - { key: voice_silent, when: { ani_kristali: kirildi } }
+      - { key: voice, when: { ani_kristali: "!kirildi" } }
+
+  # --- Chapter IV: Saati Durduran (Yıldızsız Topraklar, 600–700) --------------
+  - code: c4_plains
+    chapter: chapter_4
+    min_level: 610
+    quests: [story_c4_plains]
+    after: true
+    extras:
+      - { key: dark_elf, race: [dark_elf] }
+
+  - code: c4_observatory
+    chapter: chapter_4
+    min_level: 628
+    quests: [story_c4_observatory]
+    after: true
+    options:
+      - { code: save_ilvar, set: { ilvar: yasiyor }, add: { merhamet: 1 } }
+      - { code: save_stars, set: { ilvar: kayip } }
+
+  - code: c4_lost_map
+    chapter: chapter_4
+    min_level: 650
+    when: { ilvar: kayip }
+    quests: [story_c4_lost_map]
+    after: true
+
+  - code: c4_city
+    chapter: chapter_4
+    min_level: 660
+    quests: [story_c4_city]
+    after: true
+
+  - code: c4_tower
+    chapter: chapter_4
+    min_level: 678
+    quests: [story_c4_tower]
+    after: true
+
+  - code: c4_two_pips
+    chapter: chapter_4
+    min_level: 678
+    options:
+      - { code: keep_pip, set: { pip: pip } }
+      - { code: merge, set: { pip: ikisi_bir }, add: { merhamet: 1 } }
+      - { code: send_pip, set: { pip: kaedrin } }
+      - { code: abandon, set: { pip: yok } }
+
+  - code: c4_shard
+    chapter: chapter_4
+    min_level: 678
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c4_timeless
+    chapter: chapter_4
+    min_level: 700
+    quests: [story_c4_timeless]
+    after: true
+    extras:
+      - { key: merged, when: { pip: ikisi_bir } }
+      - { key: pip, when: { pip: pip } }
+      - { key: kaedrin, when: { pip: kaedrin } }
+      - { key: gone, when: { pip: yok } }
+      - { key: ilvar_yours, when: { ilvar: yasiyor, birak: ">=2" }, after: true }
+      - { key: ilvar_other, when: { ilvar: yasiyor, birak: "<2" }, after: true }
+
+  # --- Chapter V: Gökteki Yara (Gök Yarığı, 700–850) ---------------------------
+  - code: c5_isles
+    chapter: chapter_5
+    min_level: 710
+    quests: [story_c5_isles]
+    after: true
+    extras:
+      - { key: pip, when: { pip: pip } }
+      - { key: merged, when: { pip: ikisi_bir } }
+      - { key: kaedrin, when: { pip: kaedrin } }
+      - { key: gone, when: { pip: yok } }
+
+  - code: c5_fortress
+    chapter: chapter_5
+    min_level: 728
+    quests: [story_c5_fortress]
+    after: true
+    options:
+      - { code: forgive, set: { zephyros: affedildi }, add: { merhamet: 1 } }
+      - { code: fell, set: { zephyros: dustu } }
+
+  - code: c5_edge
+    chapter: chapter_5
+    min_level: 760
+    quests: [story_c5_edge]
+    after: true
+    extras:
+      - { key: ihra, when: { ihra: yoldas } }
+
+  - code: c5_lullaby
+    chapter: chapter_5
+    min_level: 770
+    when: { ihra: yoldas }
+    quests: [story_c5_lullaby]
+    after: true
+
+  - code: c5_core
+    chapter: chapter_5
+    min_level: 778
+    quests: [story_c5_core]
+    after: true
+    options:
+      - { code: console_crystal, when: { ani_kristali: alindi }, set: { kaos_ana: teselli }, add: { merhamet: 1 } }
+      - { code: console_song, when: { ihra: yoldas }, requires_quest: story_c5_lullaby, set: { kaos_ana: teselli }, add: { merhamet: 1 } }
+      - { code: shatter, set: { kaos_ana: parcalandi } }
+
+  - code: c5_temple
+    chapter: chapter_5
+    min_level: 820
+    quests: [story_c5_temple]
+    after: true
+    extras:
+      - { key: room_fresco, when: { duvar_resmi: alindi }, after: true }
+      - { key: room_crystal, when: { duvar_resmi: "!alindi", ani_kristali: alindi }, after: true }
+      - { key: closed, when: { duvar_resmi: "!alindi", ani_kristali: "!alindi" }, after: true }
+
+  - code: c5_dome
+    chapter: chapter_5
+    min_level: 828
+    quests: [story_c5_dome]
+    after: true
+    extras:
+      - { key: told, when: { ses_sir: anlatti }, after: true }
+      - { key: hid, when: { ses_sir: sakladi }, after: true }
+      - { key: devoured, when: { yut: ">=3" }, after: true }
+      - { key: shadow, when: { ilvar: yasiyor }, after: true }
+    options:
+      - { code: ally, when: { ses_sir: anlatti, yut: "<3" }, set: { uriel: muttefik } }
+      - { code: ally_mercy, when: { ses_sir: sakladi, merhamet: ">=6" }, set: { uriel: muttefik } }
+      - { code: ally_devoured, when: { ses_sir: anlatti, yut: ">=3", merhamet: ">=7" }, set: { uriel: muttefik } }
+      - { code: oppose, set: { uriel: dusman } }
+
+  - code: c5_shard
+    chapter: chapter_5
+    min_level: 828
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c5_fall
+    chapter: chapter_5
+    min_level: 850
+    quests: [story_c5_fall]
+    after: true
+    extras:
+      - { key: zephyros_forgiven, when: { zephyros: affedildi } }
+      - { key: zephyros_fallen, when: { zephyros: dustu } }
+      - { key: uriel_ally, when: { uriel: muttefik } }
+      - { key: uriel_foe, when: { uriel: dusman } }
+      - { key: kaedrin, when: { pip: kaedrin }, after: true }
+      - { key: ilvar_map, when: { ilvar: yasiyor }, after: true }
+      - { key: lost_map, when: { ilvar: kayip }, after: true }
+
+  # --- Chapter VI: Son Kalenin Bekçisi (Boşluğun Kıyısı, 850–1000) ------------
+  - code: c6_sea
+    chapter: chapter_6
+    min_level: 860
+    quests: [story_c6_sea]
+    after: true
+    extras:
+      - { key: yssa_friend, when: { yssa: dost } }
+      - { key: yssa_rival, when: { yssa: rakip } }
+
+  - code: c6_leviathan
+    chapter: chapter_6
+    min_level: 870
+    extras:
+      - { key: seth, when: { seth_ka: bagli } }
+    options:
+      - { code: true_name, when: { seth_ka: bagli }, set: { leviathan: gecit }, add: { merhamet: 1 } }
+      - { code: stars, set: { leviathan: gecit }, add: { merhamet: 1 } }
+      - { code: fight, set: { leviathan: savas } }
+
+  - code: c6_throne
+    chapter: chapter_6
+    min_level: 878
+    quests: [story_c6_throne]
+    after: true
+    extras:
+      - { key: trial, when: { leviathan: gecit } }
+      - { key: war, when: { leviathan: savas } }
+
+  - code: c6_shore
+    chapter: chapter_6
+    min_level: 880
+    extras:
+      - { key: caelum_lost, when: { kul_olusu: yok_edildi } }
+      - { key: caelum_gone, when: { kul_olusu: arindi } }
+      - { key: seth, when: { seth_ka: ozgur } }
+      - { key: names, when: { leviathan: gecit } }
+      - { key: ihra_alone, when: { ihra: yok } }
+      - { key: ihra_secret, when: { ihra: yoldas } }
+
+  - code: c6_walls
+    chapter: chapter_6
+    min_level: 900
+    quests: [story_c6_walls]
+    after: true
+    extras:
+      - { key: varn_peace, when: { varn_ruhu: huzurda }, after: true }
+      - { key: varn_bound, when: { varn_ruhu: bagli }, after: true }
+
+  - code: c6_bastion
+    chapter: chapter_6
+    min_level: 928
+    quests: [story_c6_bastion]
+    after: true
+    extras:
+      - { key: ihra, when: { ihra: yoldas }, after: true }
+      - { key: ihra_alone, when: { ihra: yok }, after: true }
+    options:
+      - { code: peace, set: { morvath: huzurda }, add: { merhamet: 1 } }
+      - { code: destroy, set: { morvath: yikildi } }
+
+  - code: c6_shard
+    chapter: chapter_6
+    min_level: 928
+    options:
+      - { code: seal, add: { muhur: 1 } }
+      - { code: devour, add: { yut: 1 } }
+      - { code: release, add: { birak: 1 } }
+
+  - code: c6_gate
+    chapter: chapter_6
+    min_level: 950
+    quests: [story_c6_gate]
+    after: true
+    extras:
+      - { key: hedda_clan, when: { hedda_klan: kurtarildi } }
+      - { key: hedda_alone, when: { hedda_klan: yikildi } }
+      - { key: brannoc, when: { taraf: demirkale, brannoc: yasiyor } }
+      - { key: guard, when: { taraf: demirkale, brannoc: oldu } }
+      - { key: liora, when: { taraf: yesilorman, ana_agac: "!yandi" } }
+      - { key: liora_burned, when: { taraf: yesilorman, ana_agac: yandi } }
+      - { key: covenant, when: { taraf: kor_ahdi, ansel: "!durduruldu" } }
+      - { key: isolde, when: { isolde: hukumdar } }
+      - { key: isolde_rebels, when: { isolde: surgun, ova: asiler } }
+      - { key: nell }
+      - { key: queen, when: { tac_varisi: mirel } }
+      - { key: council, when: { tac_varisi: orrin } }
+      - { key: rivals, when: { tac_varisi: bos } }
+      - { key: mirel_debt, when: { mirel: tutuklu, tac_varisi: "!mirel" } }
+      - { key: fleet, when: { yssa: dost } }
+      - { key: dragons, when: { yumurta: kurtarildi } }
+      - { key: sylwen, when: { sylwen: uyandi } }
+      - { key: ignar_star, when: { ansel: kurtarildi } }
+      - { key: red_sun, when: { ansel: kazandi } }
+      - { key: uriel, when: { uriel: muttefik } }
+      - { key: zephyros, when: { zephyros: affedildi } }
+      - { key: ilvar, when: { ilvar: yasiyor } }
+      - { key: pip, when: { pip: pip } }
+      - { key: pip_merged, when: { pip: ikisi_bir } }
+      - { key: pip_returns, when: { pip: kaedrin } }
+      - { key: pip_shadow, when: { pip: yok } }
+
+  - code: c6_edge
+    chapter: chapter_6
+    min_level: 978
+    quests: [story_c6_edge]
+    after: true
+    extras:
+      - { key: uriel_ally, when: { uriel: muttefik }, after: true }
+      - { key: uriel_foe, when: { uriel: dusman }, after: true }
+      - { key: ihra_morvath, when: { ihra: yoldas, morvath: huzurda }, after: true }
+      - { key: pip, when: { pip: ikisi_bir }, after: true }
+
+  # --- Endings (1000) -------------------------------------------------------
+  - code: e_unbound
+    chapter: endings
+    min_level: 1000
+    quests: [story_e_unbound]
+    after: true
+    extras:
+      - { key: uriel_ally, when: { uriel: muttefik } }
+      - { key: uriel_foe, when: { uriel: dusman } }
+      - { key: ihra_morvath, when: { ihra: yoldas, morvath: huzurda } }
+
+  - code: e_choice
+    chapter: endings
+    min_level: 1000
+    options:
+      - { code: chain, set: { son: zincir } }
+      - { code: crown, set: { son: tac } }
+      - { code: breath, set: { son: nefes } }
+      - code: lullaby
+        when: { merhamet: ">=8", ihra: yoldas, ani_kristali: alindi, kaos_ana: teselli, pip: "!yok" }
+        set: { son: ninni }
+
+  - code: e_ending
+    chapter: endings
+    min_level: 1000
+    extras:
+      - { key: chain_strong, when: { son: zincir, muhur: ">=4" } }
+      - { key: chain_cracked, when: { son: zincir, muhur: "<4" } }
+      - { key: chain_uriel, when: { son: zincir, uriel: dusman } }
+      - { key: crown_keeper, when: { son: tac, yut: ">=4", merhamet: ">=6" } }
+      - { key: crown_ash, when: { son: tac, yut: ">=4", merhamet: "<6" } }
+      - { key: crown_saved, when: { son: tac, yut: "<4", pip: "kaedrin|ikisi_bir" } }
+      - { key: crown_half, when: { son: tac, yut: "<4", pip: "!kaedrin|ikisi_bir" } }
+      - { key: crown_uriel, when: { son: tac, uriel: dusman } }
+      - { key: breath_full, when: { son: nefes, birak: ">=4" } }
+      - { key: breath_half, when: { son: nefes, birak: "<4" } }
+      - { key: breath_uriel, when: { son: nefes, uriel: dusman } }
+      - { key: lullaby, when: { son: ninni } }
+
+  - code: e_epilogue
+    chapter: endings
+    min_level: 1000
+    extras:
+      - { key: hedda_clan, when: { hedda_klan: kurtarildi } }
+      - { key: hedda_alone, when: { hedda_klan: yikildi } }
+      - { key: hedda_told, when: { ses_sir: anlatti } }
+      - { key: pip, when: { pip: pip } }
+      - { key: pip_merged, when: { pip: ikisi_bir } }
+      - { key: pip_kaedrin, when: { pip: kaedrin } }
+      - { key: pip_gone, when: { pip: yok } }
+      - { key: mirel_queen, when: { tac_varisi: mirel } }
+      - { key: mirel_road, when: { tac_varisi: orrin, mirel: yoldas } }
+      - { key: mirel_inn, when: { tac_varisi: bos } }
+      - { key: mirel_guild, when: { mirel: tutuklu, tac_varisi: "!mirel" } }
+      - { key: ihra_lullaby, when: { son: ninni } }
+      - { key: ihra_bastion, when: { son: "!ninni", morvath: huzurda, ihra: yoldas } }
+      - { key: ihra_temple, when: { morvath: yikildi, ihra: yoldas } }
+      - { key: ihra_void, when: { ihra: yok, morvath: huzurda } }
+      - { key: isolde_lady, when: { isolde: hukumdar } }
+      - { key: isolde_bridge, when: { isolde: surgun } }
+      - { key: isolde_father, when: { varn_ruhu: huzurda } }
+      - { key: brannoc_alive, when: { brannoc: yasiyor } }
+      - { key: brannoc_statue, when: { brannoc: oldu } }
+      - { key: sylwen_forest, when: { sylwen: uyandi, ana_agac: kurtarildi } }
+      - { key: sylwen_garden, when: { sylwen: uyandi, ana_agac: "!kurtarildi" } }
+      - { key: sylwen_dream, when: { sylwen: uyudu } }
+      - { key: ansel_star, when: { ansel: kurtarildi } }
+      - { key: ansel_sun, when: { ansel: kazandi } }
+      - { key: ansel_cell, when: { ansel: durduruldu } }
+      - { key: yssa_fleet, when: { yssa: dost } }
+      - { key: yssa_ship, when: { yssa: rakip } }
+      - { key: dragon_kor, when: { yumurta: kurtarildi } }
+      - { key: dragon_sold, when: { yumurta: satildi } }
+      - { key: dragon_grave, when: { yumurta: kirildi } }
+      - { key: ilvar_book, when: { ilvar: yasiyor } }
+      - { key: ilvar_star, when: { ilvar: kayip } }
+      - { key: selin }
+      - { key: uriel_tea, when: { uriel: muttefik } }
+      - { key: uriel_gone, when: { uriel: dusman, son: "!zincir" } }
+      - { key: zephyros_flies, when: { zephyros: affedildi } }
+      - { key: zephyros_ruin, when: { zephyros: dustu } }
+      - { key: leviathan_sleeps, when: { leviathan: gecit, son: "nefes|ninni" } }
+      - { key: leviathan_wound, when: { leviathan: savas } }
+      - { key: seth_free, when: { seth_ka: ozgur } }
+      - { key: seth_bound, when: { seth_ka: bagli } }
+      - { key: nell }
+      - { key: grosk }
+      - { key: toran }
+      - { key: last_chain, when: { son: zincir } }
+      - { key: last_keeper, when: { son: tac, yut: ">=4", merhamet: ">=6" } }
+      - { key: last_keeper_pip, when: { son: tac, yut: "<4", pip: "kaedrin|ikisi_bir" } }
+      - { key: last_ash, when: { son: tac, yut: ">=4", merhamet: "<6" } }
+      - { key: last_half, when: { son: tac, yut: "<4", pip: "!kaedrin|ikisi_bir" } }
+      - { key: last_breath, when: { son: nefes } }
+      - { key: last_lullaby, when: { son: ninni } }
+
 quests:
   - code: story_p_bread
     display_name_key: quest.story_p_bread
@@ -397,3 +1057,503 @@ quests:
     reward_gold_copper: 80480
     sort_order: 2160
 
+  - code: story_c2_plains
+    display_name_key: quest.story_c2_plains
+    category: story
+    min_level: 100
+    objectives:
+      - { event: "mob_killed:plains_lion", count: 10 }
+      - { event: "gather_herbalism", count: 15 }
+    reward_xp: 11993
+    reward_gold_copper: 50300
+    sort_order: 2170
+
+  - code: story_c2_orrin
+    display_name_key: quest.story_c2_orrin
+    category: story
+    min_level: 128
+    objectives:
+      - { event: "dungeon_cleared:rebel_camp", count: 1 }
+    reward_xp: 30354
+    reward_gold_copper: 116547
+    sort_order: 2180
+
+  - code: story_c2_burnt
+    display_name_key: quest.story_c2_burnt
+    category: story
+    min_level: 160
+    objectives:
+      - { event: "mob_killed:ash_wolf", count: 10 }
+      - { event: "mob_killed", count: 20 }
+      - { event: "gather_woodcutting", count: 15 }
+    reward_xp: 27736
+    reward_gold_copper: 101800
+    sort_order: 2190
+
+  - code: story_c2_fireroot
+    display_name_key: quest.story_c2_fireroot
+    category: story
+    min_level: 178
+    objectives:
+      - { event: "dungeon_cleared:fire_root", count: 1 }
+    reward_xp: 57288
+    reward_gold_copper: 191126
+    sort_order: 2200
+
+  - code: story_c2_rootseal
+    display_name_key: quest.story_c2_rootseal
+    category: story
+    min_level: 178
+    objectives:
+      - { event: "item_crafted", count: 5 }
+    reward_xp: 34372
+    reward_gold_copper: 119454
+    sort_order: 2210
+
+  - code: story_c2_desert
+    display_name_key: quest.story_c2_desert
+    category: story
+    min_level: 220
+    objectives:
+      - { event: "mob_killed:desert_viper", count: 10 }
+      - { event: "mob_killed", count: 15 }
+      - { event: "gather_herbalism", count: 15 }
+    reward_xp: 53894
+    reward_gold_copper: 164136
+    sort_order: 2220
+
+  - code: story_c2_palace
+    display_name_key: quest.story_c2_palace
+    category: story
+    min_level: 228
+    objectives:
+      - { event: "dungeon_cleared:buried_palace", count: 1 }
+    reward_xp: 97174
+    reward_gold_copper: 277070
+    sort_order: 2230
+
+  - code: story_c2_inner_gate
+    display_name_key: quest.story_c2_inner_gate
+    category: story
+    min_level: 250
+    objectives:
+      - { event: "mob_killed:mummy_priest", count: 10 }
+      - { event: "item_crafted", count: 3 }
+    reward_xp: 71662
+    reward_gold_copper: 198828
+    sort_order: 2240
+
+  - code: story_c2_crypt
+    display_name_key: quest.story_c2_crypt
+    category: story
+    min_level: 278
+    objectives:
+      - { event: "dungeon_cleared:royal_crypt", count: 1 }
+    reward_xp: 152354
+    reward_gold_copper: 373040
+    sort_order: 2250
+
+  - code: story_c2_tribute
+    display_name_key: quest.story_c2_tribute
+    category: story
+    min_level: 280
+    objectives:
+      - { event: "mob_killed:royal_skeleton", count: 15 }
+      - { event: "mob_killed:soul_drinker", count: 10 }
+    reward_xp: 92947
+    reward_gold_copper: 235670
+    sort_order: 2260
+
+  - code: story_c2_aldric
+    display_name_key: quest.story_c2_aldric
+    category: story
+    min_level: 295
+    objectives:
+      - { event: "mob_killed:crownless_king", count: 1 }
+    reward_xp: 104996
+    reward_gold_copper: 254860
+    sort_order: 2270
+
+  - code: story_c2_tyrant
+    display_name_key: quest.story_c2_tyrant
+    category: story
+    min_level: 300
+    objectives:
+      - { event: "raid_cleared:crownless_palace", count: 1 }
+    reward_xp: 182050
+    reward_gold_copper: 418186
+    sort_order: 2280
+
+  - code: story_c3_coast
+    display_name_key: quest.story_c3_coast
+    category: story
+    min_level: 320
+    objectives:
+      - { event: "mob_killed:storm_bird", count: 10 }
+      - { event: "mob_killed:siren", count: 6 }
+      - { event: "gather_fishing", count: 20 }
+    reward_xp: 127281
+    reward_gold_copper: 287934
+    sort_order: 2290
+
+  - code: story_c3_fleet
+    display_name_key: quest.story_c3_fleet
+    category: story
+    min_level: 328
+    objectives:
+      - { event: "dungeon_cleared:sunken_fleet", count: 1 }
+    reward_xp: 225024
+    reward_gold_copper: 478078
+    sort_order: 2300
+
+  - code: story_c3_slopes
+    display_name_key: quest.story_c3_slopes
+    category: story
+    min_level: 360
+    objectives:
+      - { event: "mob_killed:young_dragon", count: 10 }
+      - { event: "mob_killed", count: 25 }
+    reward_xp: 169004
+    reward_gold_copper: 343575
+    sort_order: 2310
+
+  - code: story_c3_brood
+    display_name_key: quest.story_c3_brood
+    category: story
+    min_level: 378
+    objectives:
+      - { event: "dungeon_cleared:brood_cavern", count: 1 }
+    reward_xp: 317256
+    reward_gold_copper: 591460
+    sort_order: 2320
+
+  - code: story_c3_mist
+    display_name_key: quest.story_c3_mist
+    category: story
+    min_level: 420
+    objectives:
+      - { event: "mob_killed:mist_stalker", count: 10 }
+      - { event: "mob_killed:shadow_elf", count: 8 }
+      - { event: "gather_herbalism", count: 20 }
+    reward_xp: 246783
+    reward_gold_copper: 432954
+    sort_order: 2330
+
+  - code: story_c3_grove
+    display_name_key: quest.story_c3_grove
+    category: story
+    min_level: 428
+    objectives:
+      - { event: "dungeon_cleared:lost_grove", count: 1 }
+    reward_xp: 431036
+    reward_gold_copper: 712613
+    sort_order: 2340
+
+  - code: story_c3_caves
+    display_name_key: quest.story_c3_caves
+    category: story
+    min_level: 460
+    objectives:
+      - { event: "mob_killed:crystal_spider", count: 12 }
+      - { event: "mob_killed:light_elemental", count: 10 }
+      - { event: "gather_mining", count: 20 }
+      - { event: "item_crafted", count: 3 }
+    reward_xp: 309627
+    reward_gold_copper: 496255
+    sort_order: 2350
+
+  - code: story_c3_heart
+    display_name_key: quest.story_c3_heart
+    category: story
+    min_level: 478
+    objectives:
+      - { event: "dungeon_cleared:crystal_heart", count: 1 }
+    reward_xp: 568268
+    reward_gold_copper: 841066
+    sort_order: 2360
+
+  - code: story_c3_volcano
+    display_name_key: quest.story_c3_volcano
+    category: story
+    min_level: 520
+    objectives:
+      - { event: "mob_killed:fire_giant", count: 10 }
+      - { event: "mob_killed:volcano_shaman", count: 10 }
+      - { event: "gather_mining", count: 20 }
+    reward_xp: 421807
+    reward_gold_copper: 596448
+    sort_order: 2370
+
+  - code: story_c3_ignar
+    display_name_key: quest.story_c3_ignar
+    category: story
+    min_level: 528
+    objectives:
+      - { event: "dungeon_cleared:volcano_heart", count: 1 }
+    reward_xp: 730788
+    reward_gold_copper: 976425
+    sort_order: 2380
+
+  - code: story_c3_peaks
+    display_name_key: quest.story_c3_peaks
+    category: story
+    min_level: 560
+    objectives:
+      - { event: "mob_killed:dragon_knight", count: 12 }
+      - { event: "mob_killed:dragon_sorcerer", count: 10 }
+      - { event: "gather_woodcutting", count: 20 }
+      - { event: "item_crafted", count: 1 }
+    reward_xp: 509339
+    reward_gold_copper: 666576
+    sort_order: 2390
+
+  - code: story_c3_throne
+    display_name_key: quest.story_c3_throne
+    category: story
+    min_level: 578
+    objectives:
+      - { event: "dungeon_cleared:dragon_throne", count: 1 }
+    reward_xp: 920380
+    reward_gold_copper: 1118355
+    sort_order: 2400
+
+  - code: story_c3_lair
+    display_name_key: quest.story_c3_lair
+    category: story
+    min_level: 600
+    objectives:
+      - { event: "raid_cleared:dragon_king_lair", count: 1 }
+    reward_xp: 1012824
+    reward_gold_copper: 1182810
+    sort_order: 2410
+
+  - code: story_c4_plains
+    display_name_key: quest.story_c4_plains
+    category: story
+    min_level: 610
+    objectives:
+      - { event: "mob_killed:void_wolf", count: 12 }
+      - { event: "mob_killed", count: 30 }
+      - { event: "gather_herbalism", count: 20 }
+    reward_xp: 634036
+    reward_gold_copper: 757814
+    sort_order: 2420
+
+  - code: story_c4_observatory
+    display_name_key: quest.story_c4_observatory
+    category: story
+    min_level: 628
+    objectives:
+      - { event: "dungeon_cleared:darkened_observatory", count: 1 }
+    reward_xp: 1138772
+    reward_gold_copper: 1266565
+    sort_order: 2430
+
+  - code: story_c4_lost_map
+    display_name_key: quest.story_c4_lost_map
+    category: story
+    min_level: 650
+    objectives:
+      - { event: "mob_killed:ghost_noble", count: 10 }
+      - { event: "mob_killed", count: 10 }
+    reward_xp: 746655
+    reward_gold_copper: 833562
+    sort_order: 2440
+
+  - code: story_c4_city
+    display_name_key: quest.story_c4_city
+    category: story
+    min_level: 660
+    objectives:
+      - { event: "mob_killed:ghost_noble", count: 12 }
+      - { event: "mob_killed:cursed_sorcerer", count: 10 }
+      - { event: "gather_mining", count: 20 }
+      - { event: "item_crafted", count: 3 }
+    reward_xp: 776663
+    reward_gold_copper: 852872
+    sort_order: 2450
+
+  - code: story_c4_tower
+    display_name_key: quest.story_c4_tower
+    category: story
+    min_level: 678
+    objectives:
+      - { event: "dungeon_cleared:clock_tower", count: 1 }
+    reward_xp: 1387652
+    reward_gold_copper: 1420798
+    sort_order: 2460
+
+  - code: story_c4_timeless
+    display_name_key: quest.story_c4_timeless
+    category: story
+    min_level: 700
+    objectives:
+      - { event: "raid_cleared:time_lord_tower", count: 1 }
+    reward_xp: 1507243
+    reward_gold_copper: 1490510
+    sort_order: 2470
+
+  - code: story_c5_isles
+    display_name_key: quest.story_c5_isles
+    category: story
+    min_level: 710
+    objectives:
+      - { event: "mob_killed:storm_dragon", count: 10 }
+      - { event: "mob_killed:wind_elemental", count: 10 }
+      - { event: "gather_woodcutting", count: 25 }
+      - { event: "gather_mining", count: 25 }
+      - { event: "item_crafted", count: 2 }
+    reward_xp: 938218
+    reward_gold_copper: 951602
+    sort_order: 2480
+
+  - code: story_c5_fortress
+    display_name_key: quest.story_c5_fortress
+    category: story
+    min_level: 728
+    objectives:
+      - { event: "dungeon_cleared:storm_fortress", count: 1 }
+    reward_xp: 1668664
+    reward_gold_copper: 1580830
+    sort_order: 2490
+
+  - code: story_c5_edge
+    display_name_key: quest.story_c5_edge
+    category: story
+    min_level: 760
+    objectives:
+      - { event: "mob_killed:void_creature", count: 15 }
+      - { event: "mob_killed:chaos_elemental", count: 12 }
+      - { event: "gather_herbalism", count: 25 }
+      - { event: "item_crafted", count: 1 }
+    reward_xp: 1119672
+    reward_gold_copper: 1053873
+    sort_order: 2500
+
+  - code: story_c5_lullaby
+    display_name_key: quest.story_c5_lullaby
+    category: story
+    min_level: 770
+    objectives:
+      - { event: "mob_killed:chaos_elemental", count: 4 }
+    reward_xp: 1158435
+    reward_gold_copper: 1074742
+    sort_order: 2510
+
+  - code: story_c5_core
+    display_name_key: quest.story_c5_core
+    category: story
+    min_level: 778
+    objectives:
+      - { event: "dungeon_cleared:rift_core", count: 1 }
+    reward_xp: 1983418
+    reward_gold_copper: 1746455
+    sort_order: 2520
+
+  - code: story_c5_temple
+    display_name_key: quest.story_c5_temple
+    category: story
+    min_level: 820
+    objectives:
+      - { event: "mob_killed:temple_guardian", count: 12 }
+      - { event: "mob_killed:light_hunter", count: 10 }
+      - { event: "gather_mining", count: 25 }
+    reward_xp: 1365024
+    reward_gold_copper: 1181106
+    sort_order: 2530
+
+  - code: story_c5_dome
+    display_name_key: quest.story_c5_dome
+    category: story
+    min_level: 828
+    objectives:
+      - { event: "dungeon_cleared:celestial_dome", count: 1 }
+    reward_xp: 2333488
+    reward_gold_copper: 1917492
+    sort_order: 2540
+
+  - code: story_c5_fall
+    display_name_key: quest.story_c5_fall
+    category: story
+    min_level: 850
+    objectives:
+      - { event: "raid_cleared:archangels_fall", count: 1 }
+    reward_xp: 2499107
+    reward_gold_copper: 1994418
+    sort_order: 2550
+
+  - code: story_c6_sea
+    display_name_key: quest.story_c6_sea
+    category: story
+    min_level: 860
+    objectives:
+      - { event: "mob_killed:ash_leviathan", count: 12 }
+      - { event: "mob_killed:undying_soldier", count: 15 }
+      - { event: "gather_fishing", count: 25 }
+    reward_xp: 1546070
+    reward_gold_copper: 1268574
+    sort_order: 2560
+
+  - code: story_c6_throne
+    display_name_key: quest.story_c6_throne
+    category: story
+    min_level: 878
+    objectives:
+      - { event: "dungeon_cleared:sunken_throne", count: 1 }
+    reward_xp: 2720421
+    reward_gold_copper: 2093774
+    sort_order: 2570
+
+  - code: story_c6_walls
+    display_name_key: quest.story_c6_walls
+    category: story
+    min_level: 900
+    objectives:
+      - { event: "mob_killed:eternal_sentinel", count: 12 }
+      - { event: "mob_killed:void_titan", count: 10 }
+      - { event: "gather_mining", count: 30 }
+      - { event: "item_crafted", count: 3 }
+    reward_xp: 1741645
+    reward_gold_copper: 1358100
+    sort_order: 2580
+
+  - code: story_c6_bastion
+    display_name_key: quest.story_c6_bastion
+    category: story
+    min_level: 928
+    objectives:
+      - { event: "dungeon_cleared:bastion_keep", count: 1 }
+    reward_xp: 3145732
+    reward_gold_copper: 2275150
+    sort_order: 2590
+
+  - code: story_c6_gate
+    display_name_key: quest.story_c6_gate
+    category: story
+    min_level: 950
+    objectives:
+      - { event: "mob_killed:void_dragon", count: 10 }
+      - { event: "mob_killed", count: 40 }
+    reward_xp: 2007248
+    reward_gold_copper: 1472832
+    sort_order: 2600
+
+  - code: story_c6_edge
+    display_name_key: quest.story_c6_edge
+    category: story
+    min_level: 978
+    objectives:
+      - { event: "dungeon_cleared:eternal_throne", count: 1 }
+    reward_xp: 3610913
+    reward_gold_copper: 2461480
+    sort_order: 2610
+
+  - code: story_e_unbound
+    display_name_key: quest.story_e_unbound
+    category: story
+    min_level: 1000
+    objectives:
+      - { event: "raid_cleared:fallen_god_throne", count: 1 }
+    reward_xp: 3828602
+    reward_gold_copper: 2545001
+    sort_order: 2620

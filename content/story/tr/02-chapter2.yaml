@@ -1,0 +1,257 @@
+# II. Bölüm: Taçsız Ülke (Kırık Taç Krallığı, Sv 100–300). DD-367.
+
+c2_plains: "Kralı Ölmüş Ülke"
+c2_plains.body: |
+  Taç Ovaları uçsuz bucaksız: sarı otlar, rüzgâr, dağınık köyler. Her köyün meydanında aynı şey var: boş bir taht. Taştan yapılmış, kimsenin oturmadığı, her yıl yeniden boyanan bir taht.
+
+  **Köy Yaşlısı:** "Kral Aldric üç yüz yıl önce öldü. Ama ölmedi. Taç Mezarlığı'nda, kriptanın altındaki sarayında hâlâ oturuyor. Her yıl ona haraç gönderiyoruz; ekinimizin onda biri. Göndermezsek ölüler gelir. Kara Mızrak Leydi Corva haracı toplar. Orrin ise haracı yakar ve toplayanı asar. Biz ikisinin ortasındayız."
+
+  Ovada iki ordu var. **Kara Mızraklar**, Leydi Corva'nın siyah zırhlı askerleri: düzen, yasa, haraç. Corva gümüş saçlı, sesini hiç yükseltmeyen biri.
+
+  **Leydi Corva:** "Haraç zulüm değil, barıştır. Ölü kral doyduğu sürece ova yaşar. Ben bir varis arıyorum. Aldric'in kanından biri tahta oturursa lanet kalkar. Efsane böyle der."
+
+  Ovanın doğusunda **Asiler**: kendini kral ilan etmiş ama tahta oturmayı reddeden Orrin'in adamları. Yardımcısı iri kemikli bir tauren kadın, Sera Boynuzyürek.
+
+  **Sera Boynuzyürek:** "Corva 'barış' diyor. Barış dediği şey, ölü bir adamın çocuklarımızın ekmeğini yemesi. Orrin bunu bitirecek. Ama önce ovayı yaşatmamız lazım. Aslanlar sürülere dadandı, köyler aç."
+c2_plains.x.mirel_companion: |
+  Ovaya ayak bastığın andan itibaren Mirel'in saçlarındaki gümüş parlamaya başlıyor. Köylüler onu gördüğünde susuyor, bazıları diz çöküyor. "Neden böyle bakıyorlar bana?"
+c2_plains.x.mirel_free: |
+  Mirel'i Corva'nın çadırında buluyorsun, bir kılıcın ucu boğazında. "Bu kız bize kim olduğunu söylemiyor ama saçları söylüyor." Mirel sana bakıp gülümsüyor: "Borcumu ödeyecektim ışıklı, ama önce sen bana yardım et."
+c2_plains.x.mirel_jailed: |
+  Mirel Orrin'in kampında; asilerin en iyi casusu olmuş. Seni görünce soğukça bakıyor. "Demirkale'nin zindanında iki ay yattım. Sen bunu bilmiyordun bile, değil mi? Burada kimse beni kafese koymuyor."
+c2_plains.after: |
+  Köylüler aslan postlarını meydana seriyor, ayçiçeklerini kazanlara dolduruyor. O akşam iki ordunun da habercisi kapını çalıyor. Corva seni çadırına, Orrin kampına çağırıyor.
+
+c2_orrin: "Asi Kral Orrin"
+c2_orrin.body: |
+  Asiler Kampı'nın kapısında yağmacı büyücüler, savaş ayıları. Orrin seni yalnızca bir yolla kabul edecek: düelloyla.
+
+  **Sera:** "Orrin gücüne bakmadan kimseyle konuşmaz. Yen onu, sözünü dinlesin. Yenil, kamptan çık."
+c2_orrin.after: |
+  Orrin yere düştüğünde gülüyor. Kırk yaşlarında, sakalı kırlaşmış, yüzü yara dolu. Bir köylü; elleri hâlâ çiftçi elleri.
+
+  **Orrin:** "İyi dövüşüyorsun. Otur. İç. Biliyorum ne düşündüğünü: 'Orrin kendini kral ilan etmiş, ne kibir.' Kral değilim. Hiç olmak istemedim. Taht boş durursa ova ona bir kral arar. Ben o tahtı yıkmak istiyorum. Kralı değil, tahtı. Kimsenin kendini o tahta oturtamayacağı bir ova."
+
+  **Orrin:** "Corva bir varis arıyor. Bulursa lanet kalkacak, belki. Ve yeni bir kral olacak. Ve o kralın torununun torunu da bir gün haraç isteyecek."
+c2_orrin.x.isolde: |
+  Kampta tanıdık bir yüz: Isolde Varn, Orrin'in kılıç ustası olmuş. "Demirkale babamın kalesini aldı. Ben de kalesi alınmış insanların yanına geldim." Seni affetmedi ama sana yardım edecek.
+c2_orrin.rebels: "Asiler: \"Haracı bitireceğiz.\""
+c2_orrin.rebels.result: |
+  "Haracı bitireceğiz. Ölü kralı da."
+
+  Orrin kupasını kaldırıyor. Corva'nın kapıları sana kapanıyor. O yıl haraç yakılacak; bunun bir bedeli olacak.
+c2_orrin.loyal: "Sadıklar: \"Varisi bulalım.\""
+c2_orrin.loyal.result: |
+  "Ova kan dökmeden de kurtulabilir. Varisi bulalım."
+
+  Orrin başını sallıyor. "Saygı duyarım. Ama yolumuz ayrı." Corva'nın kara mızrakları seni ovada selamlıyor.
+c2_orrin.neutral: "Tarafsız: \"Kralı ben bulacağım.\""
+c2_orrin.neutral.result: |
+  "İkiniz de haklısınız. İkiniz de yanılıyorsunuz. Kralı ben bulacağım; sonra konuşuruz."
+
+  Orrin gülüyor, Corva kaşlarını kaldırıyor. İkisi de sana yarım güveniyor.
+
+c2_burnt: "Yanık Orman"
+c2_burnt.body: |
+  Orman yanmış. Ağaç gövdeleri kapkara, toprak kül. Ama ateş sönmemiş; köklerin altında, toprağın derinliğinde hâlâ yanıyor. Kül Kurtları kömürlerin arasında dolaşıyor, Kömür Treantları ağır ağır yürüyor. Ve aralarında kırmızı cüppeli Yanık Şamanlar. Kor Ahdi.
+
+  **Rahibe Tamsin** (bir kayanın arkasında seni bekliyor): "Ansel'in emri. Bu orman bir zamanlar yaşlı bir tanrıçanın yuvasıydı: Yanık Ana Ağaç. Kökleri Mena'nın en eski damarına bağlı. Ansel o damarı yakıp ateşini Ignar'a göndermek istiyor. Bir yıldır bu orman ağlıyor. Ben artık dayanamıyorum."
+c2_burnt.x.covenant: |
+  Tamsin fısıldıyor: "Sen Ahdin içindesin. Ansel seni dinler." Ahdin buradaki komutanı ise sana ateşi besleme emri veriyor.
+c2_burnt.x.wardens: |
+  Liora bir bekçi birliğiyle geliyor. Gözleri kıpkırmızı. "Bunu affetmeyeceğim."
+c2_burnt.x.guard: |
+  Brannoc'tan bir mektup: "Kor Ahdi'nin işi Demirkale'yi ilgilendirmez. Ama ateş yayılırsa ilgilendirir. Kendi bildiğini yap."
+c2_burnt.after: |
+  Kütükler bir hendek oluyor, ateş hendeğin öbür yanında kalıyor. Ama köklerin derinliği hâlâ kızıl. Tamsin Ateş Kökü'ne giden yolu gösteriyor. "Ana Ağaç orada. Yarı yanmış. Ve öfkeli."
+
+c2_fireroot: "Ana Ağacın Tohumu"
+c2_fireroot.body: |
+  Ateş Kökü'nün mağarası bir kalp gibi atıyor. Tamsin elinde eski bir tarif tutuyor. "Kök Mührü. Zanaatinle dövülmüş mühürler ateşi kökten keser. Ya da kesmez; hiç denenmedi."
+c2_fireroot.after: |
+  Ana Ağaç yarı yanmış bir dev. Gövdesinde ateş, dallarında kül; ama göğsünün ortasında, kalbinin olduğu yerde, yeşil bir şey hâlâ atıyor. Bir tohum. Dövüş onun öfkesiydi, acısının kendisi. Düştüğünde fısıldıyor:
+
+  **Yanık Ana Ağaç:** *"Bin yıl... köklerim tacın parçasının üstünden geçti... ısındım... yandım... al tohumumu ya da ateşime ver... ikisi birden olmaz."*
+c2_fireroot.save: "Tohumu kurtar: Kök Mühürleriyle ateşi kes."
+c2_fireroot.save.result: |
+  Mühürleri köklere çakıyorsun. Orman bir anda sessizleşiyor; ateş köklerden çekilip sönüyor. Tohum avucunda ılık, yeşil.
+
+  Tamsin ağlıyor. Yüz yıl sonra ilk kez bir kuş ötüyor.
+c2_fireroot.burn: "Ateşe ver: son ateşi Ignar'a akıt."
+c2_fireroot.burn.result: |
+  Kökler parlıyor; ateş güneye, Volkan Kalbi'ne doğru akıyor. Ana Ağaç tamamen yanıyor. Tohum kül oluyor.
+
+  Kor Ahdi bunu unutmayacak. Tamsin de unutmayacak; o gece cüppesini ateşe atıp gidiyor.
+
+c2_desert: "Kendi Mezarında Uyanık"
+c2_desert.body: |
+  Ovanın güneyinde toprak beyazlaşıyor: Tuz Çölü. Kum Akrepleri, Çöl Yılanları, gökyüzüne kadar yükselen Tuz Elementalleri. Ve çölün ortasında, kumun altına gömülmüş bir saray.
+
+  Geceleri bir şey seni çağırıyor; Kıvılcım değil, başka bir ses. Kuru, yaşlı, sabırlı.
+
+  **Seth-Ka** (rüyanda): *"Tacın çocuğu. Gel. Gel. Sana bir şey satacağım. Benim satacak çok şeyim var ve kimse almaya gelmiyor."*
+c2_desert.x.ansel_letter: |
+  Ansel'den soğuk bir mektup gelmiş: "Ana Ağacın ateşini kestin. Seni bir kez affediyorum."
+c2_desert.x.liora_silent: |
+  Liora bu yolculukta seninle hiç konuşmuyor. Mektuplarına cevap gelmiyor.
+c2_desert.x.tamsin_left: |
+  Bir kervanda Tamsin'i görüyorsun; kırmızı cüppesi yok. "Ahdi bıraktım. Bir ormanı yaktık. Bunu hiçbir güneş aklamaz."
+c2_desert.after: |
+  Kumun altından bir kapı çıkıyor; taçtan da eski taşlar, Aethon'dan önceki tanrıların resimleri. Gömülü Saray'ın merdivenleri aşağı iniyor.
+
+c2_palace: "Firavun"
+c2_palace.body: |
+  Mumya rahipler koridorlarda tütsü yakıyor, her gece efendilerinin bandajlarını yeniliyor. En dipteki tahtta bir firavun oturuyor; seni görünce kalkıyor. Konuşmadan önce gücünü görmek istiyor.
+c2_palace.after: |
+  Seth-Ka yenildiğinde tahtına geri oturuyor; bandajları arasından gülüyor.
+
+  **Seth-Ka:** "Güzel. Yeterince güçlüsün. Dinle şimdi. Ben Aethon tahtta otururken de kraldım. Parçalar düştüğünde birinin buraya, kralların ovasına düştüğünü gördüm. Aldric'in dedesinin dedesi onu buldu. Her kral onu başına taktı. Her kral biraz daha az insan oldu. Aldric en sonuncusuydu."
+
+  **Seth-Ka:** "Bir şey daha biliyorum. Aldric'in kızı kaçtı, üç yüz yıl önce. Bir hizmetçi onu kuzeye götürdü. O kızın soyu bugün hâlâ yaşıyor. Ve o soydan olanların saçları erken ağarır. Tacın kırı, derler."
+
+  **Seth-Ka:** "Şimdi bedeli. Bin yıldır uyanığım. Rahiplerim beni bırakmıyor; her gece beni ölümden geri çağırıyorlar. Bunu bitir. Ya da bitirme, ve ben sana her istediğinde bir sır daha satayım."
+c2_palace.x.mirel: |
+  Mirel saçlarını tutuyor. Sesi titriyor. "Annemin saçları da gümüştü. Annemin annesinin de."
+c2_palace.free: "Özgür bırak: mühürleri kır."
+c2_palace.free.result: |
+  Rahiplerin mühürlerini kırıyorsun. Firavun gözlerini kapıyor. "Teşekkürler, tacın çocuğu. Mezarım nihayet mezar olacak."
+
+  Toz olmadan önce kulağına bir söz fısıldıyor: Kraliyet Kriptası'nın iç kapısının sözü.
+c2_palace.bind: "Bağlı tut: bilgisi lazım olacak."
+c2_palace.bind.result: |
+  Rahipleri koruyorsun. "Akıllı," diyor Seth-Ka. "Acımasız ama akıllı. Ne zaman gelirsen, bir soru."
+
+  Kriptanın iç kapısını ise kendin bulman gerekecek.
+
+c2_inner_gate: "İç Kapı"
+c2_inner_gate.body: |
+  Seth-Ka sözü vermedi; kriptanın iç kapısı kapalı. Kapı taşları çölün mumya rahiplerinin elinde, ve kilidin anahtarı yalnızca zanaatle yapılabilir.
+c2_inner_gate.after: |
+  Taşlar yerine oturuyor, anahtar dönüyor. Kriptanın derinliğinden soğuk bir nefes yükseliyor.
+
+c2_crypt: "Kardeşin Laneti"
+c2_crypt.body: |
+  Taç Mezarlığı sisli bir tepede. Kraliyet İskeletleri dolaşıyor, Ruh Emiciler sisin içinde. Kara Şövalyeler, Aldric'in ölü muhafızları, kriptanın girişini tutuyor.
+
+  Kriptanın önünde bir prens heykeli; yüzü kazınmış. Altındaki yazı: **MALACHAR — KARDEŞİNİ ÖLDÜREN.**
+c2_crypt.x.seth: |
+  Seth-Ka'nın sözünü söylüyorsun. Kriptanın iç kapısı kendiliğinden açılıyor.
+c2_crypt.x.hedda: |
+  Usta Bodri'den bir paket gelmiş: Demir Dağ cücelerinin ördüğü bir zincir zırh. Not: "Thrain'in son sözü: 'Hedda'ya söyle, demiri sevmeyi bırakmasın.' İşte."
+c2_crypt.x.isolde: |
+  Isolde'den bir haberci: Kuzey Kalesi'nden elli asker yola çıkmış, ovada seni bekliyor.
+c2_crypt.after: |
+  Malachar kriptanın en dibinde, kendi heykelinin önünde diz çökmüş.
+
+  **Malachar:** "Kardeşim tacı başına taktığında ona yalvardım: Çıkar. Çıkarmadı. Bir gece onu uykusunda öldürdüm. Taç onun başında kaldı. Benim yaptığım tek şey onu ölümsüz yapmak oldu. Tacı ben alamadım; kanım yetmedi. Sadece kralın kanı alabilir. Sadece bir varis."
+
+  **Malachar:** "Ben de öldüm sonra. Kendi kılıcımla. Üç yüz yıldır biri gelsin, kardeşimi yeniden öldürsün diye bekliyorum. Bu sefer doğru düzgün."
+
+c2_tribute: "Kanlı Haraç"
+c2_tribute.body: |
+  Kriptadan dönerken ovanın üstünde kara bir bulut. Haraç günü geldi.
+
+  Demirkale'den beklenmedik bir yardım: Komutan Brannoc Ağırkalkan, iki yüz muhafızla ovaya gelmiş.
+
+  **Brannoc:** "Demirkale'nin işi değil dedim. Ama bir şehrin muhafızı başka bir şehrin yandığını seyredemez. Yaşlandım galiba."
+
+  Ölüler iki yönden geliyor: biri batıda, Brannoc'un tuttuğu kale kapısına; diğeri doğuda, köylülerin sığındığı bir köye.
+c2_tribute.x.rebels: |
+  Haraç bu yıl yakıldı. Aldric'in ölüleri ovaya iniyor.
+c2_tribute.x.loyal: |
+  Corva haracı topladı, ama ölüler bu yıl kabul etmedi: sen parçaya yaklaştın, ölü kral seni hissetti.
+c2_tribute.x.neutral: |
+  Haraç yarım toplandı, yarım yakıldı. Ölüler her iki tarafa da iniyor.
+c2_tribute.x.isolde: |
+  Isolde'nin elli askeri kapıda, Brannoc'un yanında saf tutuyor.
+c2_tribute.after: |
+  İlk dalga kırıldı. İkincisi geliyor; iki yöne birden. Bir yere yetişebilirsin, ikisine değil.
+c2_tribute.gate: "Brannoc'la kapıyı tut."
+c2_tribute.gate.result: |
+  Kapıyı tutuyorsunuz. Brannoc yaşıyor. Ama doğudaki köy yanıyor; köylülerden otuzu ölüyor. Sabah dumanın içinde bir çocuk ayakkabısı buluyorsun.
+c2_tribute.village: "Köyü kurtar."
+c2_tribute.village.result: |
+  Köye koşuyorsun, köylüleri kurtarıyorsun. Brannoc kapıyı tek başına tutuyor, ölüler geri çekilene kadar.
+
+  Sabah onu kapının önünde buluyorsun; kılıcı elinde, ayakta. Ölmüş.
+
+  Cesedini Demirkale'ye götürüyorsun. Hedda, Nell ve bütün muhafızlar cenazesinde.
+c2_tribute.village_isolde: "Köyü kurtar."
+c2_tribute.village_isolde.result: |
+  Köye koşuyorsun, köylüleri kurtarıyorsun. Kapıda Brannoc ve Isolde'nin askerleri sabaha kadar dayanıyor.
+
+  Sabah Brannoc'u kapının önünde buluyorsun; yaralı, oturmuş, Isolde'nin bir askeri bacağını sarıyor. "Yaşlandım dedim ya. Ölmeye bile üşendim."
+
+c2_aldric: "Taçsız Kral"
+c2_aldric.body: |
+  Kriptanın altında bir saray daha. Altın, mermer, örümcek ağı. Ve tahtta, başında yedi köşeli bir tacın tek bir köşesiyle, Kral Aldric.
+
+  **Aldric:** "Varis. Varis geldi mi? Kanımı hissediyorum. Kim o?"
+c2_aldric.x.mirel_companion: |
+  Mirel bir adım öne çıkıyor. Elleri titriyor. "Benim. Sanırım."
+c2_aldric.x.mirel_free: |
+  Mirel Corva'yla birlikte geliyor; Corva onu kılıçla değil, elinden tutarak getirmiş. "Varis bu. Tahtı ona ver."
+c2_aldric.x.mirel_jailed: |
+  Mirel Orrin'in yanında, asilerle birlikte geliyor. "Tahtı istemiyorum. Tahtı yakmak istiyorum." Orrin gülümsüyor.
+c2_aldric.after: |
+  Aldric ayağa kalkıyor. Ve kılıcı varise değil, sana dönük.
+
+  **Aldric:** "Ama sen... Sen tacın kendisini taşıyorsun. Avucunda. Ver onu. Tacı tamamlayayım ve bütün dünya benim olsun."
+
+  **Ses** (sabırsız): *"Ondan al. Al. O parça benim."*
+
+  Aldric düştüğünde parça başından yuvarlanıyor; taş zeminde kırılmış bir yıldız gibi parlıyor. İkinci Taç Parçası. Mirel'in saçları parlıyor. Aldric ölmeden önce torununun torununun torununa bakıyor.
+
+  **Aldric:** "Gümüş saç. Benim kızımınki gibi. Tahtım... senin."
+c2_aldric.queen: "Mirel tahta otursun."
+c2_aldric.queen.result: |
+  Mirel tahta oturduğunda kriptadaki bütün ölüler toz oluyor. Ovadaki boş tahtlar ilk kez boş değil.
+
+  Mirel sana bakıyor. "Bir hırsız kraliçe. Gülme."
+c2_aldric.council: "Taht kırılsın, ova bir konsey olsun."
+c2_aldric.council.result: |
+  Mirel kanıyla laneti kaldırıyor ama tahta oturmuyor; taht ikiye çatlıyor.
+
+  Orrin ilk kez gerçekten gülümsüyor. "Kralı olmayan bir krallık. İşte bu." Corva tek kelime etmeden çıkıp gidiyor.
+c2_aldric.empty: "Taht boş kalsın."
+c2_aldric.empty.result: |
+  Mirel'i hiçbir şeye zorlamıyorsun. Lanet yarım kalkıyor: ölüler diniyor, ama ova bölük pörçük kalıyor.
+
+  Mirel omuz silkiyor. "Bir taht beni beklemiş, ben tahtı beklemedim. Ödeştik."
+
+c2_shard: "İkinci Parça"
+c2_shard.body: |
+  Aldric'in sarayında, kırık tahtın önünde, İkinci Taç Parçası avucunda. Kıvılcım ona doğru eğiliyor.
+
+  **Ses:** *"İki kardeş. Bir araya gelmek istiyorlar."*
+c2_shard.seal: "Mühürle"
+c2_shard.seal.result: |
+  Pip'in ve Ihra'nın bildiği sözlerle parçayı Aldric'in kılıcının kabzasına mühürlüyorsun. Kıvılcım bir an soğuyor.
+c2_shard.devour: "Yut"
+c2_shard.devour.result: |
+  Parçayı avucuna alıyorsun. Aldric'in bütün anıları bir anda içinden geçiyor: savaşlar, ihanetler, kardeşinin yüzü.
+
+  **Ses:** *"İki. İki kardeş. Daha çok."*
+c2_shard.release: "Bırak"
+c2_shard.release.result: |
+  Parçayı kırıyorsun. Işık ovanın üstüne dağılıyor; sabaha karşı otlar hiç olmadığı kadar yeşil.
+
+  Ses hiçbir şey söylemiyor.
+
+c2_tyrant: "Taçsız Kral'ın Sarayı"
+c2_tyrant.body: |
+  Parçayı aldıktan sonra saray çöküyor. Ama tahtın altından bir şey yükseliyor: üç yüz yıl boyunca her kralın başında biriken açlık. İçinde Aldric yok; sadece tacın kendisi. Taçsız Tiran.
+
+  **Pip:** "Bu bir canlı değil. Bu bir hafıza. Tacın hafızası. Taç ne olduğunu hatırlıyor ve yeniden bir kral istiyor."
+c2_tyrant.after: |
+  Tiran dağıldığında Pip gökyüzüne bakıyor; yarık bir parmak daha büyümüş.
+
+  **Pip:** "Aletim bu sefer denizin ötesini gösteriyor. Ejdersırtı Adaları. Orada üçüncü bir parça var. Ve... bir ejder. Çok büyük bir ejder. Gitmek istemiyorum. Gidiyoruz, değil mi?"
+
+  **Ses:** *"Ejderler. Ah, ejderler. Bana en çok onlar tapardı."*
+c2_tyrant.x.queen: |
+  Mirel kraliçe olarak taç giymiyor; Hedda'nın ona yolladığı basit bir demir çember takıyor. "Taç bir daha başıma geçmeyecek."
+c2_tyrant.x.council: |
+  Orrin kırık tahtın taşlarından bir köprü yaptırıyor. "Artık ovanın iki yakası birbirine geçebilir."
+c2_tyrant.x.empty: |
+  Corva ile Orrin aynı masaya oturuyor. Kavga ediyorlar. Ama aynı masadalar.

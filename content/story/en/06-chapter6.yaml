@@ -1,0 +1,253 @@
+# Chapter VI: Keeper of the Last Bastion (Shore of the Void, levels 850–1000). DD-367.
+
+c6_sea: "The Ash Sea"
+c6_sea.body: |
+  The sea isn't water but ash. Grey, fine, rolling. You can't walk on it; you sink. Selin reworks her ship to float on the ash; slow, dangerous.
+
+  Ash leviathans swim through it. Undying soldiers walk beneath it. And in the middle of the sea, buried under the ash, a throne. On it, a giant: the Leviathan King.
+c6_sea.x.yssa_friend: |
+  A red sail on the horizon. The Red Wind, and nine more ships behind her. The Red Fleet.
+
+  **Yssa:** "Bought with Drask's gold. I told you I owed you. Ash is a sea too, isn't it? Wind is wind everywhere."
+c6_sea.x.yssa_rival: |
+  The Red Wind comes alone. Yssa is on deck.
+
+  **Yssa:** "This voyage is expensive. Very expensive. ...But don't pay this time. The daughter of one of Drask's crew is in my crew. She joined me the night she heard her father's song. This time it's free."
+c6_sea.after: |
+  The ash soldiers fall back. A voice rises from the middle of the sea; a voice that shakes the whole sea.
+
+  **Leviathan King:** *"Mortals. Mortals on my sea. This is the road of the dead. Of the dead who cannot die. Since the crown broke, death is half. Souls die but cannot go. I carry them, to the far shore, to the void. For a thousand years. It never ends."*
+
+c6_leviathan: "The Leviathan King"
+c6_leviathan.body: |
+  The Leviathan's eyes rise from the ash; each as big as an island. To cross, you'll have to persuade it or fight it.
+
+  The chart in your bag stirs; a road the stars show, through the waters where the Leviathan is slowest.
+c6_leviathan.x.seth: |
+  That night the pharaoh of the Buried Palace appears in your dream; you still have a question owed.
+
+  **Seth-Ka:** *"The Leviathan's secret: it is dead too. The crown's first victim. When Aethon stopped the stars, the ocean stopped too, and its greatest creature drowned. Tell it its true name: Thalassar. And it will let you pass."*
+c6_leviathan.true_name: "Say its true name: \"Thalassar.\""
+c6_leviathan.true_name.result: |
+  "Thalassar."
+
+  The sea stops for a moment. The Leviathan's eyes blink; for the first time in a thousand years.
+
+  "You will keep carrying the souls. But I can lighten your load. When I complete the crown and make my choice, death can be whole again."
+
+  *"In a thousand years no one has called me by my name. No one has promised me this. Pass. And don't forget your promise."*
+c6_leviathan.stars: "Ask for passage: show the road of stars."
+c6_leviathan.stars.result: |
+  You unroll the chart; the stars draw a road across the ash.
+
+  "You will keep carrying the souls. But I can lighten your load. When I complete the crown and make my choice, death can be whole again."
+
+  The Leviathan looks at you for a long time. *"In a thousand years no one has promised me this. Pass. But first I want to see your strength. And don't forget your promise."*
+c6_leviathan.fight: "Fight your way through."
+c6_leviathan.fight.result: |
+  You draw your sword. The Leviathan's eyes darken. *"So be it, mortal."* Waves of ash rise.
+
+c6_throne: "The Sunken Throne"
+c6_throne.body: |
+  You descend to the throne buried under the ash. The Leviathan King is waiting there.
+c6_throne.x.trial: |
+  This isn't a battle but a trial. After every blow the Leviathan waits, weighing your strength.
+c6_throne.x.war: |
+  This is a real battle. Every blow of the Leviathan weighs as much as a sea.
+c6_throne.after: |
+  At last the Leviathan draws back. The Ash Sea opens a road for you; on the far shore, in the shadow of a black fortress, souls are waiting.
+
+c6_shore: "The Shore of the Dead"
+c6_shore.body: |
+  On the far shore of the Ash Sea, in the shadow of the Last Bastion, souls are waiting. The undying dead of a thousand years. Carried by the Leviathan, but never released into the void. Among them, familiar faces.
+c6_shore.x.caelum_lost: |
+  A soul, half there, pale blue, faceless. What is left of Caelum. It doesn't know you; it is looking for Ihra. The Spark grows heavy as you pass it.
+c6_shore.x.caelum_gone: |
+  A whisper among the souls: "A priest passed through here. Smiling. Into the void. He truly went."
+c6_shore.x.seth: |
+  Seth-Ka's soul is here, at the very front of the line. No bandages; the face of a young king. "Child of the crown! I'm waiting in line. I lived three thousand years; I can wait a few more days. But keep your promise."
+c6_shore.x.names: |
+  As the Leviathan sets the souls down on the shore, it says a name to each one. Something it hasn't done in a thousand years.
+c6_shore.x.ihra_alone: |
+  Among the souls, a woman: tall, dried skin, two pale blue lights for eyes. Ihra. Not a ghost, still undead; walking toward the Last Bastion.
+
+  **Ihra:** "You. You destroyed Caelum, and I left. But my road led here. To the place I've fled for a thousand years. There's someone in the Last Bastion. I have to see him. Don't come with me. Or do; what does it matter."
+
+  Ihra enters the fortress before you.
+c6_shore.x.ihra_secret: |
+  Ihra looks at the fortress and her face changes.
+
+  **Ihra:** "I never told you this. A thousand years ago Neris had two students. Me, and a young soldier. When Neris died and the crown broke, that young soldier decided to gather the shards. He became the First Bearer. His name was Morvath. I loved him. He loved me. And one day he went to the Edge of Eternity and never came back."
+
+c6_walls: "The Walls of the Last Bastion"
+c6_walls.body: |
+  The Last Bastion stands at the mouth of the void. On one side the world, on the other nothing. Its walls are black stone, a thousand years old. And the walls hold not the outside but the inside: the road to the Edge of Eternity. Eternal sentinels, void titans, soul reapers; all Morvath's soldiers.
+
+  By the gate, a small stone hut. Inside, an undead clerk among papers and ink: Oen the Scribe.
+
+  **Oen:** "Morvath's diary. A thousand years, one line a day. Would you like to read it? No one ever wanted to. No one ever came."
+
+  *Day 1. I have gathered six shards. I couldn't find the seventh; it wasn't in Neris's grave. Still I go to the Edge of Eternity. I will save Aethon. I didn't tell Ihra. If I had, she would have stopped me.*
+
+  *Day 3. I saw Aethon. In chains. He said: "Give me the crown. I will bring Neris back." Then I looked into his eyes. He won't bring Neris back. He'll make sure no one ever leaves again. He'll stop everything. Everyone, forever.*
+
+  *Day 4. I scattered the shards again. Some to the ocean, some to the sky. I kept one; I set it in the fortress stones. The gate stands by it.*
+
+  *Day 700. I saw Ihra in a dream. Dead. No. Not dead. Worse.*
+
+  *The last day of a thousand years. The voice stopped. Aethon's voice. I heard it every night for a thousand years. Tonight I didn't. So he has found someone else. So they are coming.*
+
+  To open the gate you'll need a siege hook; smith's work.
+c6_walls.after: |
+  The hook catches in the battlements. The gate groans.
+c6_walls.x.varn_peace: |
+  For a moment a figure in rusted armour appears on the walls. Lord Varn. A soul at peace; only for a moment.
+
+  **Varn:** "No one was to pass. That was my oath. You pass. For you, I break it."
+
+  The gate opens a crack.
+c6_walls.x.varn_bound: |
+  Echoes of Varn's garrison appear on the walls: ghost guards, cursed archers. The souls you left in the Northern Keep have followed the shard all the way here. You have to force the gate open.
+
+c6_bastion: "The First Bearer"
+c6_bastion.body: |
+  At the heart of the fortress there is no throne, only a watch post. A single chair, a sword, a window. Through the window you can see the Edge of Eternity: the end of the world, a chasm of light, and at its edge a chained figure.
+
+  Morvath is a thousand years old. His armour black, no face; under his helm only two amber lights. Above the gate, in the fortress stones, beats the Sixth Crown Shard.
+
+  **Morvath:** "The seventh shard. At last. A thousand years."
+c6_bastion.after: |
+  Morvath fought with every skill of a thousand years and was never angry, not for a moment. Defeated, he lays down his sword.
+
+  **Morvath:** "You got past me. You're stronger than I was. Now tell me one thing: when you reach Aethon, what will you give him?"
+c6_bastion.x.ihra: |
+  Ihra steps forward. The two lights inside the helm tremble.
+
+  **Morvath:** "...Ihra?"
+
+  **Ihra:** "A thousand years. A thousand years and not one letter."
+
+  **Morvath:** "I had the scribe write. Every day."
+
+  **Ihra:** "Not to me."
+
+  **Morvath:** "I couldn't write to you. I left to protect you, then I stayed to protect you. And to protect you, I never saw you."
+
+  Ihra lifts off his helm. Beneath it there is no face; only the pale light of a thousand-year-old soul. Ihra lays her hands on it.
+c6_bastion.x.ihra_alone: |
+  Ihra got here before you. She kneels beside Morvath.
+
+  **Ihra:** "I came too late. But so did you."
+
+  Ihra doesn't speak to you. But she leaves the last choice to you.
+c6_bastion.peace: "Give him peace: let the oath end."
+c6_bastion.peace.result: |
+  You draw the sixth shard from the fortress stones. The fortress trembles but doesn't fall. Morvath's armour turns to dust; from beneath it rises the soul of an old man, who takes Ihra's hand.
+
+  The thousand-year watch is over.
+c6_bastion.destroy: "Destroy it: let the keeper never wake again."
+c6_bastion.destroy.result: |
+  You break the fortress stones, and Morvath with them. The walls come down.
+
+  Morvath's last words: "Stop him. Do what I couldn't."
+
+c6_shard: "The Sixth Shard"
+c6_shard.body: |
+  The sixth shard is in your palm. With the Spark, six lights pull toward each other to become a crown.
+
+  **Voice:** *"Almost. So close."*
+c6_shard.seal: "Seal it"
+c6_shard.seal.result: |
+  You seal the shard into Morvath's sword, with the memory of the thousand-year watch.
+c6_shard.devour: "Devour it"
+c6_shard.devour.result: |
+  All the weariness of the thousand-year watch flows into you in a second. For a moment you see through Morvath's eyes: Aethon's face, a thousand years ago.
+
+  **Voice:** *"Six. Only you are left, my little shard. And you."*
+c6_shard.release: "Release it"
+c6_shard.release.result: |
+  You break the shard at the top of the fortress. The light falls into the void, and in the void, for the first time, a star lights up.
+
+c6_gate: "Those Who Hold the Gate"
+c6_gate.body: |
+  When the sixth shard is drawn, the gate opens and the void begins to pour into the fortress. Everything it kept outside for a thousand years: void dragons, throne watchers, eternal mages, god shadows. Someone has to hold the gate while you walk to the Edge of Eternity.
+
+  And you are not alone.
+c6_gate.x.hedda_clan: |
+  Hammering from behind the fortress. Hedda Stonehand, with Master Bodri and the dwarves of the Iron Mountains. They forge the fallen walls back up where they stand. "The Stonehand line fled once. It won't flee again."
+c6_gate.x.hedda_alone: |
+  Hedda comes alone. Older now. "I have no clan. But I have my hammer."
+c6_gate.x.brannoc: |
+  Commander Brannoc, on his wounded leg, with a hundred guards. "You wouldn't let me put it in my vault. So I didn't let you come all this way alone."
+c6_gate.x.guard: |
+  The Ironhold Guard arrives; at the front, a young guard carrying Brannoc's shield. "The commander told us: 'If they ever come back, stand behind them.'"
+c6_gate.x.liora: |
+  Liora Leafsong and the Wardens. Roots burst from between the fortress stones and hold back the void.
+c6_gate.x.liora_burned: |
+  Liora Leafsong and the Wardens. Roots burst from between the fortress stones and hold back the void. "You burned my forest. But the void is worse than fire."
+c6_gate.x.covenant: |
+  The priests of the Ember Covenant arrive, lighting the fortress fires.
+c6_gate.x.isolde: |
+  Isolde Varn, with her father's sword and the rebuilt garrison of the Northern Keep; living soldiers. "My father's garrison let no one pass. Neither will ours."
+c6_gate.x.isolde_rebels: |
+  Isolde comes with Orrin's rebels, her sword in a sheath made from the stones of the broken throne.
+c6_gate.x.nell: |
+  Nell Cauldron comes with a cart. Full of food. "Fighters don't fight hungry. I brought the Rusty Ladle's cauldron."
+c6_gate.x.queen: |
+  Queen Mirel, in her iron circlet; Black Spears and rebels together. "A thief queen brought her own kingdom. Don't laugh."
+c6_gate.x.council: |
+  Orrin and Sera Hornheart, with volunteers from the plains' council. "We're not kings. We all came."
+c6_gate.x.rivals: |
+  Corva and Orrin come separately but at the same moment. Without looking at each other, they hold the same gate.
+c6_gate.x.mirel_debt: |
+  Mirel arrives with an arrow, and fires her first shot not at you but at a god shadow behind you. "Debt paid, bright one. We're even now."
+c6_gate.x.fleet: |
+  The Red Fleet pulls in at the foot of the fortress from the ash sea and turns its cannons on the gate.
+c6_gate.x.dragons: |
+  You call on the scale Moru gave you. In the sky, small but red, a dragon: Kor. Behind it Moru, and behind him, risen from where she slept, the Mother Dragon Vyrna. "You saved my child. Let me win you a day."
+c6_gate.x.sylwen: |
+  Sylwen comes like a forest; she weaves roots, mists and leaves over the void.
+c6_gate.x.ignar_star: |
+  Ansel and Ignar. Ignar shines like a star. "I promised. When the stars return, I'll be with them. I don't know if they return today. But I'm here."
+c6_gate.x.red_sun: |
+  The red sun rises in the sky; Ignar and the Ember Covenant rain fire on the void. Effective. Terrible.
+c6_gate.x.uriel: |
+  Uriel spreads his six wings and lands before the gate. "I held the other end of this gate for a thousand years. I can hold this end too."
+c6_gate.x.zephyros: |
+  A storm turns above the fortress; Zephyros and the knights of the Storm Fortress.
+c6_gate.x.ilvar: |
+  Ilvar stands on top of the fortress with his star chart, counting the new stars falling into the void. "One. Two. Three. Recording."
+c6_gate.x.pip: |
+  Pip carries Kaedrin's eighth prototype on his back. For a moment, only a moment, he puts his hands on its gears. Then he pulls them away. "I won't wind it. I promised. Myself."
+c6_gate.x.pip_merged: |
+  Pip doesn't hold the gate. He comes with you. "I know how time works. You'll need that beside Aethon."
+c6_gate.x.pip_returns: |
+  Pip arrives behind Hedda, on top of a cart, with an invention you have never seen. "You sent me away. So I came. Both can be true."
+c6_gate.x.pip_shadow: |
+  Beside the gate, for a moment no one notices, the shadow of a gnome. Then it is gone.
+c6_gate.after: |
+  The gate holds. Behind you, the sound of steel, fire, roots and song. Before you, a chasm of light.
+
+  You walk.
+
+c6_edge: "The Edge of Eternity"
+c6_edge.body: |
+  Beyond the gate there is no road. The edge of a chasm of light. Nothing beneath your feet; but you walk, because the shards in your palm carry you.
+
+  At the end of the chasm, right on its edge, a throne. Not of stone, but of time; carved into a moment that doesn't move. On it, chained, sits Aethon.
+
+  A god. But not a big one; the height of a man. Tired. Long silver hair; a face young and old at once. Amber eyes. The eyes of the light in your palm.
+
+  **Aethon:** "At last. At last I see you. You heard my voice. For a thousand years no one had heard it, not since Morvath."
+c6_edge.after: |
+  The chain let through only part of his strength; but even that part was the size of a mountain. Defeated, Aethon laughs; a tired, relieved laugh.
+
+  **Aethon:** "Good. You really are strong. What now, Bearer? I've waited a thousand years. Give me the shards. And I'll bring Neris back."
+c6_edge.x.uriel_ally: |
+  Uriel behind you, sword drawn. "A thousand years ago I didn't believe you, Aethon. I don't today either."
+c6_edge.x.uriel_foe: |
+  Uriel on the far side of the chasm. Waiting.
+c6_edge.x.ihra_morvath: |
+  Ihra and Morvath are beside you. When Aethon sees them, his face changes. "Ihra. Morvath. Neris's children." His voice breaks.
+c6_edge.x.pip: |
+  **Pip:** "Aethon, let me tell you something. I stopped time. For a thousand years. As a gnome. And here's what I learned: stopped time doesn't come back. It flows backward. But no one inside it remembers."

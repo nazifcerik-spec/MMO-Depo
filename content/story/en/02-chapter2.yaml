@@ -1,0 +1,257 @@
+# Chapter II: The Crownless Land (Kingdom of the Broken Crown, levels 100–300). DD-367.
+
+c2_plains: "The Land Whose King Died"
+c2_plains.body: |
+  The Crown Plains run on forever: yellow grass, wind, scattered villages. Every village square holds the same thing: an empty throne. Made of stone, sat on by no one, repainted every year.
+
+  **Village Elder:** "King Aldric died three hundred years ago. But he didn't die. He still sits in his palace beneath the crypt in the Crown Graveyard. Every year we send him tribute; a tenth of our harvest. If we don't, the dead come. Lady Corva of the Black Spears collects the tribute. Orrin burns it and hangs the collectors. We are caught between the two."
+
+  Two armies hold the plains. The **Black Spears**, Lady Corva's black-armoured soldiers: order, law, tribute. Corva is silver-haired and never raises her voice.
+
+  **Lady Corva:** "Tribute is not tyranny, it is peace. As long as the dead king is fed, the plains live. I am looking for an heir. If one of Aldric's blood sits on the throne, the curse lifts. So the legend says."
+
+  To the east, the **Rebels**: the men of Orrin, who declared himself king and refuses to sit on the throne. His second is a big-boned tauren woman, Sera Hornheart.
+
+  **Sera Hornheart:** "Corva says 'peace'. Her peace is a dead man eating our children's bread. Orrin will end it. But first the plains have to live. Lions have taken to the herds, and the villages are hungry."
+c2_plains.x.mirel_companion: |
+  From the moment you set foot on the plains, the silver in Mirel's hair begins to shine. Villagers fall silent when they see her; some kneel. "Why are they looking at me like that?"
+c2_plains.x.mirel_free: |
+  You find Mirel in Corva's tent, a sword point at her throat. "This girl won't tell us who she is, but her hair does." Mirel looks at you and smiles: "I was going to repay my debt, bright one, but help me first."
+c2_plains.x.mirel_jailed: |
+  Mirel is in Orrin's camp; she has become the rebels' best spy. She gives you a cold look. "I spent two months in Ironhold's dungeon. You didn't even know, did you? Here, nobody puts me in a cage."
+c2_plains.after: |
+  The villagers spread lion hides across the square and fill their pots with sunflowers. That evening messengers from both armies knock at your door. Corva calls you to her tent, Orrin to his camp.
+
+c2_orrin: "Orrin the Rebel King"
+c2_orrin.body: |
+  At the gate of the Rebel Camp stand raider mages and war bears. Orrin will receive you only one way: in a duel.
+
+  **Sera:** "Orrin doesn't talk to anyone without seeing their strength. Beat him and he'll hear you. Lose, and you leave the camp."
+c2_orrin.after: |
+  Orrin laughs as he hits the ground. Forty or so, beard going grey, face full of scars. A farmer; his hands are still a farmer's hands.
+
+  **Orrin:** "You fight well. Sit. Drink. I know what you're thinking: 'Orrin made himself king, what arrogance.' I'm no king. Never wanted to be. When the throne stands empty, the plains go looking for a king for it. I want to break that throne. Not the king; the throne. Plains where no one can seat themselves on it."
+
+  **Orrin:** "Corva is looking for an heir. If she finds one, the curse lifts, maybe. And there'll be a new king. And one day that king's great-grandson will want tribute too."
+c2_orrin.x.isolde: |
+  A familiar face in the camp: Isolde Varn, now Orrin's swordmaster. "Ironhold took my father's keep. So I came to the people whose keeps were taken." She hasn't forgiven you, but she will help you.
+c2_orrin.rebels: "The Rebels: \"We'll end the tribute.\""
+c2_orrin.rebels.result: |
+  "We'll end the tribute. And the dead king."
+
+  Orrin raises his cup. Corva's doors close to you. This year the tribute will burn; that will have a price.
+c2_orrin.loyal: "The Loyalists: \"Let's find the heir.\""
+c2_orrin.loyal.result: |
+  "The plains can be saved without bloodshed. Let's find the heir."
+
+  Orrin nods. "I respect that. But our roads part here." Corva's black spears salute you on the plains.
+c2_orrin.neutral: "Neither: \"I'll find the king myself.\""
+c2_orrin.neutral.result: |
+  "You're both right. You're both wrong. I'll find the king myself; then we'll talk."
+
+  Orrin laughs; Corva raises an eyebrow. Each of them trusts you halfway.
+
+c2_burnt: "The Burnt Forest"
+c2_burnt.body: |
+  The forest has burned. The trunks are pitch black, the ground is ash. But the fire hasn't died; under the roots, deep in the earth, it still burns. Ash wolves roam the embers, cinder treants walk slowly. And among them, red-robed scorched shamans. The Ember Covenant.
+
+  **Priestess Tamsin** (waiting for you behind a rock): "Ansel's order. This forest was once the home of an old goddess: the Burnt Mother Tree. Her roots reach Mena's oldest vein. Ansel wants to burn that vein and send its fire to Ignar. For a year now this forest has been weeping. I can't bear it anymore."
+c2_burnt.x.covenant: |
+  Tamsin whispers: "You are inside the Covenant. Ansel listens to you." The Covenant's commander here, meanwhile, orders you to feed the fire.
+c2_burnt.x.wardens: |
+  Liora arrives with a band of wardens. Her eyes are red. "I will not forgive this."
+c2_burnt.x.guard: |
+  A letter from Brannoc: "The Covenant's business is not Ironhold's. But if the fire spreads, it is. Do as you see fit."
+c2_burnt.after: |
+  The logs become a trench, and the fire stays on the far side of it. But the depth of the roots still glows red. Tamsin shows you the way to the Fire Root. "The Mother Tree is there. Half burned. And angry."
+
+c2_fireroot: "The Mother Tree's Seed"
+c2_fireroot.body: |
+  The cave of the Fire Root beats like a heart. Tamsin holds an old recipe. "Root Seals. Seals forged by your craft can cut the fire at the root. Or not; no one has ever tried."
+c2_fireroot.after: |
+  The Mother Tree is a half-burned giant. Fire in her trunk, ash in her branches; but in the middle of her chest, where her heart would be, something green still beats. A seed. The fight was her rage, her pain itself. As she falls, she whispers:
+
+  **Burnt Mother Tree:** *"A thousand years... my roots ran over the crown's shard... I grew warm... I burned... take my seed, or give it to my fire... not both."*
+c2_fireroot.save: "Save the seed: cut the fire with the Root Seals."
+c2_fireroot.save.result: |
+  You drive the seals into the roots. The forest falls silent at once; the fire draws back from the roots and dies. The seed lies in your palm, warm and green.
+
+  Tamsin weeps. For the first time in a hundred years, a bird sings.
+c2_fireroot.burn: "Give it to the fire: send the last flame to Ignar."
+c2_fireroot.burn.result: |
+  The roots blaze; the fire flows south, toward the Volcano Heart. The Mother Tree burns completely. The seed turns to ash.
+
+  The Covenant will not forget this. Neither will Tamsin; that night she throws her robe into the fire and leaves.
+
+c2_desert: "Awake in His Own Tomb"
+c2_desert.body: |
+  South of the plains the ground turns white: the Salt Desert. Sand scorpions, desert vipers, salt elementals rising to the sky. And in the middle of the desert, buried under the sand, a palace.
+
+  At night something calls you; not the Spark, another voice. Dry, old, patient.
+
+  **Seth-Ka** (in your dream): *"Child of the crown. Come. Come. I will sell you something. I have so much to sell and no one comes to buy."*
+c2_desert.x.ansel_letter: |
+  A cold letter from Ansel: "You cut the Mother Tree's fire. I forgive you once."
+c2_desert.x.liora_silent: |
+  Liora does not speak to you on this journey. Your letters go unanswered.
+c2_desert.x.tamsin_left: |
+  You see Tamsin with a caravan; her red robe is gone. "I left the Covenant. We burned a forest. No sun will wash that clean."
+c2_desert.after: |
+  A door rises out of the sand: stones older than the crown, paintings of the gods before Aethon. The stairs of the Buried Palace lead down.
+
+c2_palace: "The Pharaoh"
+c2_palace.body: |
+  Mummy priests burn incense in the corridors and renew their master's bandages every night. On the throne at the very bottom sits a pharaoh; he rises when he sees you. Before he speaks, he wants to see your strength.
+c2_palace.after: |
+  Defeated, Seth-Ka sits back down on his throne and laughs through his bandages.
+
+  **Seth-Ka:** "Good. You are strong enough. Now listen. I was a king when Aethon sat on his throne. When the shards fell, I saw one fall here, on the plain of kings. Aldric's great-great-grandfather found it. Every king wore it on his head. Every king became a little less human. Aldric was the last."
+
+  **Seth-Ka:** "I know one more thing. Aldric's daughter fled, three hundred years ago. A servant took her north. Her line still lives today. And those of that line go grey early. The crown's grey, they call it."
+
+  **Seth-Ka:** "Now, the price. I have been awake for a thousand years. My priests won't let me go; every night they call me back from death. End it. Or don't, and I'll sell you another secret whenever you ask."
+c2_palace.x.mirel: |
+  Mirel holds her hair. Her voice shakes. "My mother's hair was silver too. And her mother's."
+c2_palace.free: "Set him free: break the seals."
+c2_palace.free.result: |
+  You break the priests' seals. The pharaoh closes his eyes. "Thank you, child of the crown. My tomb will finally be a tomb."
+
+  Before he turns to dust he whispers a word in your ear: the word of the Royal Crypt's inner gate.
+c2_palace.bind: "Keep him bound: his knowledge will be needed."
+c2_palace.bind.result: |
+  You protect the priests. "Clever," says Seth-Ka. "Cruel, but clever. Whenever you come, one question."
+
+  The crypt's inner gate you will have to find yourself.
+
+c2_inner_gate: "The Inner Gate"
+c2_inner_gate.body: |
+  Seth-Ka gave you no word; the crypt's inner gate is shut. Its gate stones are in the hands of the desert's mummy priests, and the key to its lock can only be made by craft.
+c2_inner_gate.after: |
+  The stones settle into place, the key turns. A cold breath rises from the depths of the crypt.
+
+c2_crypt: "The Brother's Curse"
+c2_crypt.body: |
+  The Crown Graveyard lies on a misty hill. Royal skeletons wander; soul drinkers drift in the fog. Black knights, Aldric's dead guard, hold the crypt's entrance.
+
+  Before the crypt stands the statue of a prince; its face has been scraped away. The inscription beneath: **MALACHAR — WHO KILLED HIS BROTHER.**
+c2_crypt.x.seth: |
+  You speak Seth-Ka's word. The crypt's inner gate opens by itself.
+c2_crypt.x.hedda: |
+  A package from Master Bodri: chainmail woven by the dwarves of the Iron Mountains. A note: "Thrain's last words: 'Tell Hedda not to stop loving iron.' There."
+c2_crypt.x.isolde: |
+  A messenger from Isolde: fifty soldiers have set out from the Northern Keep and wait for you on the plains.
+c2_crypt.after: |
+  Malachar kneels at the very bottom of the crypt, before his own statue.
+
+  **Malachar:** "When my brother put the crown on, I begged him: take it off. He didn't. One night I killed him in his sleep. The crown stayed on his head. All I did was make him undying. I couldn't take the crown; my blood wasn't enough. Only the king's blood can. Only an heir."
+
+  **Malachar:** "I died later too. By my own sword. For three hundred years I've waited for someone to come and kill my brother again. Properly, this time."
+
+c2_tribute: "Bloody Tribute"
+c2_tribute.body: |
+  As you return from the crypt, a black cloud hangs over the plains. Tribute day has come.
+
+  Unexpected help from Ironhold: Commander Brannoc Heavyshield has come to the plains with two hundred guards.
+
+  **Brannoc:** "I said it wasn't Ironhold's business. But a city's guard can't watch another city burn. I must be getting old."
+
+  The dead come from two directions: one to the west, toward the keep gate Brannoc holds; the other to the east, toward a village where the farmers have taken shelter.
+c2_tribute.x.rebels: |
+  This year the tribute was burned. Aldric's dead are coming down to the plains.
+c2_tribute.x.loyal: |
+  Corva collected the tribute, but this year the dead refused it: you came close to the shard, and the dead king felt you.
+c2_tribute.x.neutral: |
+  The tribute was half collected, half burned. The dead come down on both sides.
+c2_tribute.x.isolde: |
+  Isolde's fifty soldiers stand at the gate beside Brannoc.
+c2_tribute.after: |
+  The first wave is broken. The second is coming; in two directions at once. You can reach one place, not both.
+c2_tribute.gate: "Hold the gate with Brannoc."
+c2_tribute.gate.result: |
+  You hold the gate. Brannoc lives. But the village to the east burns; thirty of the farmers die. In the morning you find a child's shoe in the smoke.
+c2_tribute.village: "Save the village."
+c2_tribute.village.result: |
+  You run to the village and save the farmers. Brannoc holds the gate alone until the dead fall back.
+
+  In the morning you find him in front of the gate; sword in hand, standing. Dead.
+
+  You carry his body to Ironhold. Hedda, Nell and every guard of the city come to his funeral.
+c2_tribute.village_isolde: "Save the village."
+c2_tribute.village_isolde.result: |
+  You run to the village and save the farmers. At the gate, Brannoc and Isolde's soldiers hold until morning.
+
+  In the morning you find Brannoc in front of the gate; wounded, sitting, one of Isolde's soldiers binding his leg. "Told you I'm getting old. Too lazy even to die."
+
+c2_aldric: "The Crownless King"
+c2_aldric.body: |
+  Beneath the crypt lies another palace. Gold, marble, cobwebs. And on the throne, a single point of a seven-pointed crown on his head: King Aldric.
+
+  **Aldric:** "The heir. Has the heir come? I feel my blood. Who is it?"
+c2_aldric.x.mirel_companion: |
+  Mirel steps forward. Her hands are shaking. "Me. I think."
+c2_aldric.x.mirel_free: |
+  Mirel comes with Corva; Corva has brought her not at sword point but by the hand. "This is the heir. Give her the throne."
+c2_aldric.x.mirel_jailed: |
+  Mirel comes at Orrin's side, with the rebels. "I don't want the throne. I want to burn it." Orrin smiles.
+c2_aldric.after: |
+  Aldric rises. And his sword points not at the heir but at you.
+
+  **Aldric:** "But you... you carry the crown itself. In your hand. Give it to me. Let me complete the crown, and the whole world will be mine."
+
+  **Voice** (impatient): *"Take it from him. Take it. That shard is mine."*
+
+  When Aldric falls, the shard rolls from his head and shines on the stone floor like a broken star. The Second Crown Shard. Mirel's hair glows. Before he dies, Aldric looks at his great-great-great-granddaughter.
+
+  **Aldric:** "Silver hair. Like my daughter's. My throne... is yours."
+c2_aldric.queen: "Let Mirel take the throne."
+c2_aldric.queen.result: |
+  When Mirel sits on the throne, every dead thing in the crypt turns to dust. For the first time the empty thrones of the plains are not empty.
+
+  Mirel looks at you. "A thief queen. Don't laugh."
+c2_aldric.council: "Break the throne; let the plains rule as a council."
+c2_aldric.council.result: |
+  Mirel lifts the curse with her blood but does not sit on the throne; the throne cracks in two.
+
+  For the first time, Orrin truly smiles. "A kingdom without a king. That's it." Corva walks out without a word.
+c2_aldric.empty: "Let the throne stay empty."
+c2_aldric.empty.result: |
+  You force Mirel into nothing. The curse lifts halfway: the dead rest, but the plains stay divided.
+
+  Mirel shrugs. "A throne waited for me; I didn't wait for it. We're even."
+
+c2_shard: "The Second Shard"
+c2_shard.body: |
+  In Aldric's palace, before the broken throne, the Second Crown Shard lies in your palm. The Spark leans toward it.
+
+  **Voice:** *"Two siblings. They want to come together."*
+c2_shard.seal: "Seal it"
+c2_shard.seal.result: |
+  With the words Pip and Ihra know, you seal the shard into the hilt of Aldric's sword. For a moment the Spark grows cold.
+c2_shard.devour: "Devour it"
+c2_shard.devour.result: |
+  You take the shard into your palm. All of Aldric's memories pass through you at once: wars, betrayals, his brother's face.
+
+  **Voice:** *"Two. Two siblings. More."*
+c2_shard.release: "Release it"
+c2_shard.release.result: |
+  You break the shard. The light scatters over the plains; by morning the grass is greener than it has ever been.
+
+  The Voice says nothing.
+
+c2_tyrant: "The Palace of the Crownless King"
+c2_tyrant.body: |
+  After you take the shard, the palace collapses. But something rises from beneath the throne: the hunger that gathered in every king's head for three hundred years. There is no Aldric in it; only the crown itself. The Crownless Tyrant.
+
+  **Pip:** "That's not alive. It's a memory. The crown's memory. The crown remembers what it is and wants a king again."
+c2_tyrant.after: |
+  When the Tyrant scatters, Pip looks at the sky; the rift has grown another finger.
+
+  **Pip:** "This time my device points across the sea. The Dragonspine Isles. There's a third shard there. And... a dragon. A very big dragon. I don't want to go. We're going, aren't we?"
+
+  **Voice:** *"Dragons. Ah, dragons. They worshipped me most of all."*
+c2_tyrant.x.queen: |
+  Mirel wears no crown as queen; she wears a plain iron circlet Hedda sent her. "A crown will never sit on my head again."
+c2_tyrant.x.council: |
+  Orrin has a bridge built from the stones of the broken throne. "Now the two banks of the plains can cross to each other."
+c2_tyrant.x.empty: |
+  Corva and Orrin sit at the same table. They argue. But they are at the same table.

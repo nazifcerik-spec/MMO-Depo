@@ -342,6 +342,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 162. **Hikâye tercihleri + önsöz ve I. Bölüm (bitti)** — Sprint 162, DD-367. Migration 0070 (`progression.story_scene`, görev kategorisi `story`). `content/story.yaml` sahneler (`when` koşulu, hikâye görevleri, `extras`, `options`: bayrak/sayaç/itibar/`requires_quest`) + `quests`; metin `content/story/{tr,en}.yaml` (diğer diller İngilizceye). `internal/story`: bayraklar seçilen seçeneklerden yeniden oynatılır, `GET /character/{id}/story`, `POST .../story/{scene}/advance`, `GET /v1/story/text`; `quest.WithStoryGate` hikâye görevlerini yalnız mevcut sahnede sunar; `progression.GrantReputation`; hedef `raid_cleared:<baskın>`. İstemci: hikâye günlüğü (sahne metni, görev kabul/teslim, tercih onayı + sonuç), görev ekranında Hikâye bölümü. İçerik: önsöz + I. Bölüm (23 sahne, 17 görev).
 
+163. **Hikâyenin tamamı: II.–VI. Bölüm ve sonlar (bitti)** — Sprint 163, DD-368. `content/story.yaml` 79 sahne + 63 hikâye görevi (Sv 1–1000), 'ya da' şartları ayrı seçeneklerle, sonlar `e_choice` (`son` bayrağı, gizli Son Ninni) → `e_ending` (sayaçlara göre varyant) → `e_epilogue` (kişi sonları + son sayfa). Metin `content/story/<dil>/NN-*.yaml` (tr + en, 602 anahtar), `python scripts/gen_story_quests.py`, `python scripts/story_text_check.py`. `TestShippedStoryEveryPathEnds` (6000 rastgele oyun, her son varyantı ulaşılabilir). Bölüm başlıkları + görev adları 7 dilde.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı
