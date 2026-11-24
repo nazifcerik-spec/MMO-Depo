@@ -12,6 +12,7 @@ class FakeBackend {
   bool deletionRequested = false;
   int refreshCalls = 0;
   int accessGen = 0;
+  String accountId = 'acct-1';
 
   /// Access tokens the server currently accepts.
   final validAccess = <String>{};
@@ -216,7 +217,7 @@ class FakeBackend {
     validAccess.add(access);
     validRefresh = 'refresh-$accessGen';
     return {
-      'account_id': 'acct-1',
+      'account_id': accountId,
       'session_id': 'sess-1',
       'access_token': access,
       'access_expires_at': DateTime.now().toUtc().add(const Duration(minutes: 15)).toIso8601String(),

@@ -141,17 +141,17 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
             padding: const EdgeInsets.only(bottom: Space.md),
             child: Text(l.raidLeaderOnly, style: text.bodySmall),
           ),
-        if (active != null) ...[_runCard(l, text, active), const SizedBox(height: Space.lg)],
+        if (active != null) ...[NarrowColumn(child: _runCard(l, text, active)), const SizedBox(height: Space.lg)],
         if (active == null && (!_cur.inParty || _cur.isLeader)) ...[
-          _findCard(l, text),
+          NarrowColumn(child: _findCard(l, text)),
           const SizedBox(height: Space.lg),
         ],
         if (active == null && !_cur.inParty) ...[..._boardSection(l, text), const SizedBox(height: Space.lg)],
         if (active == null && _near.isEmpty) Text(l.dungeonNoneHere, style: text.bodySmall),
-        for (final r in _near) ...[
-          _raidCard(l, text, r, canOpen: active == null && _cur.isLeader),
-          const SizedBox(height: Space.md),
-        ],
+        TileGrid(
+          spacing: Space.md,
+          children: [for (final r in _near) _raidCard(l, text, r, canOpen: active == null && _cur.isLeader)],
+        ),
       ];
     });
   }

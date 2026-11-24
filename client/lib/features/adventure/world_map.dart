@@ -50,15 +50,22 @@ class _WorldMapViewState extends State<WorldMapView> {
     super.dispose();
   }
 
-  /// Opens on the character's region (again after it moves).
-  void _center(Size viewport) {
+  /// Opens on the character's region (again after it moves). A wide screen
+  /// shows the whole width, larger, from the map's top edge at most.
+  void _center(Size viewport, double mapWidth) {
     if (_centeredOn == widget.here) return;
     final r = widget.map.regions[widget.here];
     if (r == null) return;
     _centeredOn = widget.here;
+    final wide = isWide(context);
+    final scale = wide ? (viewport.width / mapWidth).clamp(_scale, 1.4) : _scale;
+    final x = wide && mapWidth * scale <= viewport.width
+        ? (viewport.width - mapWidth * scale) / 2
+        : viewport.width / 2 - r.mapX * scale;
+    final y = viewport.height / 2 - r.mapY * scale;
     _view.value = Matrix4.identity()
-      ..translateByDouble(viewport.width / 2 - r.mapX * _scale, viewport.height / 2 - r.mapY * _scale, 0, 1)
-      ..scaleByDouble(_scale, _scale, 1, 1);
+      ..translateByDouble(x, wide && y > 0 ? 0 : y, 0, 1)
+      ..scaleByDouble(scale, scale, 1, 1);
   }
 
   @override
@@ -69,7 +76,7 @@ class _WorldMapViewState extends State<WorldMapView> {
     final height = regions.map((r) => r.mapY).reduce((a, b) => a > b ? a : b) + 120;
     return LayoutBuilder(
       builder: (context, box) {
-        _center(box.biggest);
+        _center(box.biggest, width);
         return ClipRect(
           child: InteractiveViewer(
             transformationController: _view,

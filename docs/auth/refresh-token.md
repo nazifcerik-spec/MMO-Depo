@@ -85,6 +85,8 @@ Eski (revoked) refresh token gelirse:
   - `audit.security_signal severity=critical`.
 - **Aksiyon (v2)**: family model — sadece o family compromise (tek device).
 
+- **Web (DD-369)**: ilk kullanımdan sonraki 30 sn içinde aynı token tekrar gelirse replay sayılmaz (kaybolan yanıt: yarıda kalan sayfa yenilemesi, ikinci sekme); aynı oturuma yeni çift verilir, pencere uzamaz.
+
 ## 7. Rate Limit
 - Per session_id: 60 refresh/hour (normal ~4/hour; 15dk access TTL sayesinde).
 - Per account: 300/hour (multi-device).

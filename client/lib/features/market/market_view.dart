@@ -243,38 +243,44 @@ class _MarketPanelState extends State<MarketPanel> with PanelState {
             padding: const EdgeInsets.only(top: Space.xl),
             child: Text(l.marketEmpty, textAlign: TextAlign.center, style: text.bodySmall),
           ),
-        for (final x in _results)
-          Card(
-            margin: const EdgeInsets.only(bottom: Space.sm),
-            child: ListTile(
-              title: Text(_name(x), style: TextStyle(color: rarityColor(x.rarity))),
-              subtitle: Text(
-                x.isAuction
-                    ? [
-                        x.currentBid == null
-                            ? l.auctionNoBids(goldString(x.minNextBid ?? 0))
-                            : l.auctionTopBid(goldString(x.currentBid!), x.bidCount),
-                        if (x.bidderId == me) l.auctionYouLead,
-                        shortDuration(l, x.expiresAt.difference(DateTime.now())),
-                      ].join(' · ')
-                    : l.listingLine(x.sellerName, goldString(x.unitPrice)),
+        TileGrid(
+          minTileWidth: 400,
+          spacing: 0,
+          children: [
+            for (final x in _results)
+              Card(
+                margin: const EdgeInsets.only(bottom: Space.sm),
+                child: ListTile(
+                  title: Text(_name(x), style: TextStyle(color: rarityColor(x.rarity))),
+                  subtitle: Text(
+                    x.isAuction
+                        ? [
+                            x.currentBid == null
+                                ? l.auctionNoBids(goldString(x.minNextBid ?? 0))
+                                : l.auctionTopBid(goldString(x.currentBid!), x.bidCount),
+                            if (x.bidderId == me) l.auctionYouLead,
+                            shortDuration(l, x.expiresAt.difference(DateTime.now())),
+                          ].join(' · ')
+                        : l.listingLine(x.sellerName, goldString(x.unitPrice)),
+                  ),
+                  trailing: x.isAuction
+                      ? FilledButton.tonal(
+                          key: ValueKey('bid-${x.id}'),
+                          style: compactButton,
+                          onPressed: x.sellerCharacterId != me && x.bidderId != me && (x.minNextBid ?? 0) <= _gold
+                              ? () => _bid(x)
+                              : null,
+                          child: Text(l.bid),
+                        )
+                      : FilledButton.tonal(
+                          style: compactButton,
+                          onPressed: x.sellerCharacterId != me && x.totalPrice <= _gold ? () => _buy(x) : null,
+                          child: GoldText(x.totalPrice, size: 13),
+                        ),
+                ),
               ),
-              trailing: x.isAuction
-                  ? FilledButton.tonal(
-                      key: ValueKey('bid-${x.id}'),
-                      style: compactButton,
-                      onPressed: x.sellerCharacterId != me && x.bidderId != me && (x.minNextBid ?? 0) <= _gold
-                          ? () => _bid(x)
-                          : null,
-                      child: Text(l.bid),
-                    )
-                  : FilledButton.tonal(
-                      style: compactButton,
-                      onPressed: x.sellerCharacterId != me && x.totalPrice <= _gold ? () => _buy(x) : null,
-                      child: GoldText(x.totalPrice, size: 13),
-                    ),
-            ),
-          ),
+          ],
+        ),
         if (_hasMore) TextButton(onPressed: _more, child: Text(l.loadMore)),
       ],
     );

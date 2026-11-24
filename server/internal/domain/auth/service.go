@@ -26,6 +26,11 @@ type ServiceConfig struct {
 	SessionTTL   time.Duration
 	Now          func() time.Time // clock injection for tests
 
+	// RefreshGrace: a rotated refresh token still gets a new pair this soon
+	// after its first use (DD-369). Browsers lose rotation responses — a
+	// reload in flight, a second tab — and that is not a theft. 0 = none.
+	RefreshGrace time.Duration
+
 	// MinPasswordLen: hard minimum per NIST — no complexity mandate.
 	MinPasswordLen int
 
@@ -37,6 +42,9 @@ type ServiceConfig struct {
 	TermsVersion string
 }
 
+// DefaultRefreshGrace is the production RefreshGrace.
+const DefaultRefreshGrace = 30 * time.Second
+
 // DefaultServiceConfig returns Faz 00 baseline values.
 func DefaultServiceConfig() ServiceConfig {
 	return ServiceConfig{
@@ -44,6 +52,7 @@ func DefaultServiceConfig() ServiceConfig {
 		AccessTTL:      15 * time.Minute,
 		RefreshTTL:     30 * 24 * time.Hour,
 		SessionTTL:     30 * 24 * time.Hour,
+		RefreshGrace:   DefaultRefreshGrace,
 		Now:            time.Now,
 		MinPasswordLen: 8,
 		TermsVersion:   DefaultTermsVersion,
@@ -240,7 +249,10 @@ func (s *Service) Refresh(ctx context.Context, refreshToken string) (*LoginResul
 
 	// REUSE DETECTION — DD-189. If used_at is set, this is the compromise
 	// path: attacker replayed a rotated token. Revoke the whole session tree.
-	if tok.UsedAt != nil {
+	// Within RefreshGrace of the first use it is a lost response instead: the
+	// session continues with another pair (used_at keeps the first use, so
+	// the window never slides).
+	if tok.UsedAt != nil && now.Sub(*tok.UsedAt) >= s.cfg.RefreshGrace {
 		_ = s.repo.RevokeSession(ctx, tok.SessionID, "refresh_reuse", now)
 		_ = s.repo.RevokeRefreshTokensForSession(ctx, tok.SessionID, "refresh_reuse", now)
 		s.log.WarnContext(ctx, "refresh token reuse detected — session revoked",
@@ -272,8 +284,10 @@ func (s *Service) Refresh(ctx context.Context, refreshToken string) (*LoginResul
 	}
 
 	// Mark this token used, issue the next pair.
-	if err := s.repo.MarkRefreshTokenUsed(ctx, tok.ID, now); err != nil {
-		return nil, err
+	if tok.UsedAt == nil {
+		if err := s.repo.MarkRefreshTokenUsed(ctx, tok.ID, now); err != nil {
+			return nil, err
+		}
 	}
 	_ = s.repo.TouchSession(ctx, session.ID, now)
 

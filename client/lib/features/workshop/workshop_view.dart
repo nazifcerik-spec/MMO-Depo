@@ -153,48 +153,54 @@ class _CraftPanelState extends State<_CraftPanel> with PanelState {
     return frame(
       () => [
         if (_job case final job?)
-          CraftJobCard(job: job, onCollect: () => _collect(job), onComplete: () => setState(() {})),
-        for (final p in _professions)
-          Card(
-            margin: const EdgeInsets.only(bottom: Space.md),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(Radii.md),
-              onTap: _skills[p] == null ? null : () => _open(p),
-              child: Padding(
-                padding: const EdgeInsets.all(Space.lg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
+          NarrowColumn(
+            child: CraftJobCard(job: job, onCollect: () => _collect(job), onComplete: () => setState(() {})),
+          ),
+        TileGrid(
+          spacing: Space.md,
+          children: [
+            for (final p in _professions)
+              Card(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(Radii.md),
+                  onTap: _skills[p] == null ? null : () => _open(p),
+                  child: Padding(
+                    padding: const EdgeInsets.all(Space.lg),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        CircleArt(asset: 'assets/professions/$p.webp', size: 40, fallback: const SizedBox()),
-                        const SizedBox(width: Space.md),
-                        Expanded(child: Text(professionName(l, p), style: text.titleMedium)),
-                        if (_skills[p] == null)
-                          FilledButton.tonal(style: compactButton, onPressed: () => _learn(p), child: Text(l.learn))
-                        else ...[
-                          Text(l.recipeCount(_recipeCount[p] ?? 0), style: text.bodySmall),
-                          const Icon(Icons.chevron_right, color: Palette.textSecondary),
+                        Row(
+                          children: [
+                            CircleArt(asset: 'assets/professions/$p.webp', size: 40, fallback: const SizedBox()),
+                            const SizedBox(width: Space.md),
+                            Expanded(child: Text(professionName(l, p), style: text.titleMedium)),
+                            if (_skills[p] == null)
+                              FilledButton.tonal(style: compactButton, onPressed: () => _learn(p), child: Text(l.learn))
+                            else ...[
+                              Text(l.recipeCount(_recipeCount[p] ?? 0), style: text.bodySmall),
+                              const Icon(Icons.chevron_right, color: Palette.textSecondary),
+                            ],
+                          ],
+                        ),
+                        if (_skills[p] case final s?) ...[
+                          const SizedBox(height: Space.sm),
+                          StatBar(
+                            label: l.levelShort(s.level),
+                            value: s.xpToNext <= 0 ? 1 : s.xp / s.xpToNext,
+                            color: Palette.epic,
+                            valueText: l.xpValue(s.xp, s.xpToNext),
+                          ),
+                        ] else ...[
+                          const SizedBox(height: Space.xs),
+                          Text(l.learnHint, style: text.bodySmall),
                         ],
                       ],
                     ),
-                    if (_skills[p] case final s?) ...[
-                      const SizedBox(height: Space.sm),
-                      StatBar(
-                        label: l.levelShort(s.level),
-                        value: s.xpToNext <= 0 ? 1 : s.xp / s.xpToNext,
-                        color: Palette.epic,
-                        valueText: l.xpValue(s.xp, s.xpToNext),
-                      ),
-                    ] else ...[
-                      const SizedBox(height: Space.xs),
-                      Text(l.learnHint, style: text.bodySmall),
-                    ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+          ],
+        ),
       ],
     );
   }
@@ -268,48 +274,56 @@ class _ShopPanelState extends State<_ShopPanel> with PanelState {
           ],
         ),
         const SizedBox(height: Space.md),
-        for (final o in _stock)
-          Card(
-            margin: const EdgeInsets.only(bottom: Space.sm),
-            child: ListTile(
-              leading: ItemArt(
-                code: o.templateCode,
-                icon: itemIcon(o.itemClass, o.itemSubclass),
-                color: Palette.textSecondary,
+        TileGrid(
+          spacing: Space.sm,
+          children: [
+            for (final o in _stock)
+              Card(
+                child: ListTile(
+                  leading: ItemArt(
+                    code: o.templateCode,
+                    icon: itemIcon(o.itemClass, o.itemSubclass),
+                    color: Palette.textSecondary,
+                  ),
+                  title: Text(itemName(o.templateCode)),
+                  subtitle: GoldText(o.price, size: 13),
+                  trailing: FilledButton.tonal(
+                    style: compactButton,
+                    onPressed: o.price <= _gold ? () => _buy(o) : null,
+                    child: Text(l.buy),
+                  ),
+                ),
               ),
-              title: Text(itemName(o.templateCode)),
-              subtitle: GoldText(o.price, size: 13),
-              trailing: FilledButton.tonal(
-                style: compactButton,
-                onPressed: o.price <= _gold ? () => _buy(o) : null,
-                child: Text(l.buy),
-              ),
-            ),
-          ),
+          ],
+        ),
         if (_buybacks.isNotEmpty) ...[
           const SizedBox(height: Space.lg),
           Text(l.buybacks, style: text.titleMedium),
           const SizedBox(height: Space.xs),
           Text(l.buybackHint, style: text.bodySmall),
           const SizedBox(height: Space.md),
-          for (final b in _buybacks)
-            Card(
-              margin: const EdgeInsets.only(bottom: Space.sm),
-              child: ListTile(
-                title: Text(
-                  b.stack > 1
-                      ? '${itemName(b.templateCode, b.prefix, b.suffix)} ×${b.stack}'
-                      : itemName(b.templateCode, b.prefix, b.suffix),
-                  style: TextStyle(color: rarityColor(b.rarity)),
+          TileGrid(
+            spacing: Space.sm,
+            children: [
+              for (final b in _buybacks)
+                Card(
+                  child: ListTile(
+                    title: Text(
+                      b.stack > 1
+                          ? '${itemName(b.templateCode, b.prefix, b.suffix)} ×${b.stack}'
+                          : itemName(b.templateCode, b.prefix, b.suffix),
+                      style: TextStyle(color: rarityColor(b.rarity)),
+                    ),
+                    subtitle: Text(l.remaining(shortDuration(l, b.expiresAt.difference(now)))),
+                    trailing: FilledButton.tonal(
+                      style: compactButton,
+                      onPressed: b.price <= _gold ? () => _buyBack(b) : null,
+                      child: GoldText(b.price, size: 13),
+                    ),
+                  ),
                 ),
-                subtitle: Text(l.remaining(shortDuration(l, b.expiresAt.difference(now)))),
-                trailing: FilledButton.tonal(
-                  style: compactButton,
-                  onPressed: b.price <= _gold ? () => _buyBack(b) : null,
-                  child: GoldText(b.price, size: 13),
-                ),
-              ),
-            ),
+            ],
+          ),
         ],
       ],
     );

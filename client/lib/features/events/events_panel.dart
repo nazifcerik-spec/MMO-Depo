@@ -72,23 +72,33 @@ class _EventsPanelState extends State<EventsPanel> with PanelState {
     final l = AppLocalizations.of(context);
     return frame(
       () => [
-        for (final s in _seasonal)
-          _SeasonalCard(
-            s: s,
-            onClaim: s.claimedToday || busy ? null : () => _claim(s),
-            onInfo: () => _info(_SeasonalInfo(s: s)),
-          ),
+        TileGrid(
+          spacing: 0,
+          children: [
+            for (final s in _seasonal)
+              _SeasonalCard(
+                s: s,
+                onClaim: s.claimedToday || busy ? null : () => _claim(s),
+                onInfo: () => _info(_SeasonalInfo(s: s)),
+              ),
+          ],
+        ),
         if (_events.isEmpty)
           Padding(
             padding: const EdgeInsets.only(top: Space.xl),
             child: MessageView(message: l.eventsEmpty, icon: Icons.public),
           ),
-        for (final e in _events)
-          _WorldEventCard(
-            e: e,
-            onEnlist: e.open && !e.enlisted && widget.level >= e.minLevel && !busy ? () => _enlist(e) : null,
-            onInfo: () => _info(_WorldEventInfo(e: e)),
-          ),
+        TileGrid(
+          spacing: 0,
+          children: [
+            for (final e in _events)
+              _WorldEventCard(
+                e: e,
+                onEnlist: e.open && !e.enlisted && widget.level >= e.minLevel && !busy ? () => _enlist(e) : null,
+                onInfo: () => _info(_WorldEventInfo(e: e)),
+              ),
+          ],
+        ),
       ],
     );
   }

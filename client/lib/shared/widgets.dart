@@ -6,6 +6,9 @@ import '../features/character/models.dart';
 import '../l10n/app_localizations.dart';
 import 'content_names.dart';
 import 'motion.dart';
+import 'layout.dart';
+
+export 'layout.dart';
 
 /// Bundled art [asset] in a circle of [size], decoded at the size shown;
 /// [fallback] when the file is missing.
@@ -277,20 +280,7 @@ String goldString(int copper) {
 void toast(BuildContext context, Widget content) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: content));
-}
-
-/// Mobile-first column: full width on phones, centred 520px on wide screens.
-class PageFrame extends StatelessWidget {
-  const PageFrame({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) => Align(
-    alignment: Alignment.topCenter,
-    child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: child),
-  );
+    ..showSnackBar(SnackBar(content: content, width: isWide(context) ? columnWidth : null));
 }
 
 /// Centered message with an optional retry action (errors, empty states).

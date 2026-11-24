@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
+import 'browser.dart';
 import 'token_store.dart';
 
 /// Server error envelope `{"error": {code, message, field}}` or a transport
@@ -137,25 +138,42 @@ class ApiClient {
     await store.writeRefreshToken(_refresh!);
   }
 
-  Future<void> _clearSession() async {
+  void _forgetLocal() {
     _access = null;
     _accessExpires = null;
     _refresh = null;
     accountId = null;
     characterId = null;
+  }
+
+  Future<void> _clearSession() async {
+    _forgetLocal();
     await store.clear();
   }
 
   /// Single-flight: concurrent 401s share one refresh, otherwise the second
   /// call would present an already-rotated token and trip reuse detection.
+  /// Browser tabs share the stored session, so they take turns and use the
+  /// token the last one stored (DD-369).
   Future<void> _refreshSession() {
     return _refreshing ??= () async {
       try {
-        final token = _refresh;
-        if (token == null) throw const ApiError(401, 'E_SESSION_EXPIRED');
-        final body = await post('/v1/auth/refresh', {'refresh_token': token}, auth: false);
-        await _applySession(body);
+        await browserLock('mena.session', () async {
+          if (_refresh == null) throw const ApiError(401, 'E_SESSION_EXPIRED');
+          final token = await store.readRefreshToken() ?? _refresh!;
+          final body = await post('/v1/auth/refresh', {'refresh_token': token}, auth: false);
+          if (accountId != null && body['account_id'] != accountId) {
+            // Another tab signed in to a different account: leave its session
+            // alone (with its rotated token) and end this tab's.
+            await store.writeRefreshToken(body['refresh_token'] as String);
+            _forgetLocal();
+            onSessionLost?.call();
+            throw const ApiError(401, 'E_SESSION_EXPIRED');
+          }
+          await _applySession(body);
+        });
       } on ApiError catch (e) {
+        if (_refresh == null) rethrow;
         if (!e.isNetwork) {
           await _clearSession();
           onSessionLost?.call();

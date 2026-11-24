@@ -3598,6 +3598,15 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-369 — Web sürümü: geniş ekran, paylaşılan oturum, GitHub Pages
+
+**Context:** İstemci web'de çalışıyordu ama telefon içindi: masaüstünde 520 px sütun ve ekran boyu alt menü, varsayılan sayfa başlığı, dikey kilit. Yenileme anahtarı tek kullanımlık olduğundan art arda F5 ya da ikinci sekme oturumu kapatabiliyordu. Yayındaki API tarayıcı kaynaklarını reddediyordu.
+**Decision:** 900 px ve üstü geniş yerleşim (shared/layout.dart): yan menü (1280 px'te etiketli), oyun sekmeleri 1160 px, diğer sayfalar 720 px; Panes (liste + ayar paneli), TileGrid (eşit boy kartlar), NarrowColumn. Altında telefon yerleşimi birebir aynı. Fare ile sürükleyerek kaydırma; harita geniş ekranda ortalı. Web kabuğu: açılış ekranı, manifest (yön serbest). Oturum: sekmeler Web Locks ile sırayla yeniler ve depodaki son anahtarı kullanır, başka hesaba geçen sekme diğerinin oturumunu bozmaz; sunucuda RefreshGrace 30 sn (ilk kullanımdan sonra aynı anahtara yeni çift; pencere uzamaz, sonrası DD-189). Yenilenen sayfa o sekmede oynanan karaktere döner (sessionStorage). Okunamayan güvenli depo (gizli pencere, http) uygulamayı kilitlemez. Yayın scripts/release-web.ps1 → gh-pages dalı (https://nazifcerik-spec.github.io/MMO-Depo/, normal commit, force push yok); CORS_ALLOWED_ORIGINS varsayılanı bu kaynak.
+**Consequences:** Çalınan bir yenileme anahtarı ilk kullanımdan sonraki 30 sn içinde fark edilmeden kullanılabilir (kabul edilen risk). CI web derlemesini de sınar. Telefon uygulaması ve APK yayını değişmedi. Web sürümü servis çalışanı kullanmaz: yeni sürüm sayfa yenilenince gelir.
+**Tarih:** 2026-11-25
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

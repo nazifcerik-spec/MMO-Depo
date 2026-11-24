@@ -109,6 +109,7 @@ class _AuthScreenState extends State<AuthScreen> {
       ),
       body: SafeArea(
         child: PageFrame(
+          maxWidth: columnWidth,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(Space.screen),
             child: AutofillGroup(

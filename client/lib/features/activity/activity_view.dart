@@ -216,18 +216,24 @@ class _ActivityViewState extends State<ActivityView> {
       onRefresh: _load,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.xxl),
-        children: a == null ? _picker(l) : _running(l, a),
+        children: a == null
+            ? _picker(l)
+            : [
+                NarrowColumn(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: _running(l, a)),
+                ),
+              ],
       ),
     );
   }
 
   List<Widget> _picker(AppLocalizations l) {
     final text = Theme.of(context).textTheme;
-    return [
+    final main = <Widget>[
       Text(l.activityChoose, style: text.titleMedium),
       const SizedBox(height: Space.md),
       GridView.count(
-        crossAxisCount: 3,
+        crossAxisCount: isWide(context) ? activityKinds.length : 3,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         mainAxisSpacing: Space.sm,
@@ -246,6 +252,8 @@ class _ActivityViewState extends State<ActivityView> {
       ),
       if (_skills[_kind] case final g?) ..._resources(l, g),
       const SizedBox(height: Space.xl),
+    ];
+    final side = <Widget>[
       Text(l.durationLabel, style: text.bodySmall),
       const SizedBox(height: Space.sm),
       Wrap(
@@ -269,6 +277,7 @@ class _ActivityViewState extends State<ActivityView> {
         label: Text(l.startActivity(activityName(l, _kind))),
       ),
     ];
+    return [Panes(main: main, side: side)];
   }
 
   /// Level bar + the resources the level unlocks (best first) and the next

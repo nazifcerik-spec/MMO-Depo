@@ -460,6 +460,7 @@ class _InventoryViewState extends State<InventoryView> {
     final cells = _cells(bag);
     final text = Theme.of(context).textTheme;
     final selecting = _selected.isNotEmpty;
+    final wide = isWide(context);
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -468,160 +469,167 @@ class _InventoryViewState extends State<InventoryView> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.xxl),
           children: [
-            Text(l.equipment, style: text.titleMedium),
-            const SizedBox(height: Space.md),
-            GridView.count(
-              crossAxisCount: 6,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: Space.sm,
-              crossAxisSpacing: Space.sm,
-              children: [
-                for (final slot in equipSlots)
-                  if (_equipped[slot] case final e?)
-                    _shining(
-                      e.instanceId,
-                      ItemCell(
-                        rarity: e.rarity,
-                        icon: itemIcon(e.itemClass),
-                        code: e.templateCode,
-                        semantic: '${slotName(l, slot)}: ${itemName(e.templateCode, e.prefix, e.suffix)}',
-                        onTap: () => _openEquipped(slot, e),
-                      ),
-                    )
-                  else
-                    ItemCell(label: slotName(l, slot)),
+            Panes(
+              sideFirst: true,
+              side: [
+                Text(l.equipment, style: text.titleMedium),
+                const SizedBox(height: Space.md),
+                GridView.count(
+                  crossAxisCount: wide ? 4 : 6,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: Space.sm,
+                  crossAxisSpacing: Space.sm,
+                  children: [
+                    for (final slot in equipSlots)
+                      if (_equipped[slot] case final e?)
+                        _shining(
+                          e.instanceId,
+                          ItemCell(
+                            rarity: e.rarity,
+                            icon: itemIcon(e.itemClass),
+                            code: e.templateCode,
+                            semantic: '${slotName(l, slot)}: ${itemName(e.templateCode, e.prefix, e.suffix)}',
+                            onTap: () => _openEquipped(slot, e),
+                          ),
+                        )
+                      else
+                        ItemCell(label: slotName(l, slot)),
+                  ],
+                ),
+                if (!wide) const SizedBox(height: Space.xl),
               ],
-            ),
-            const SizedBox(height: Space.xl),
-            SizedBox(
-              height: 48,
-              child: selecting
-                  ? _SelectionBar(
-                      count: _selected.length,
-                      onClear: () => setState(_selected.clear),
-                      onSelectAll: () => setState(() {
-                        _selected.addAll([
-                          for (final i in bag.items)
-                            if (!i.isLocked) i.instanceId,
-                        ]);
-                      }),
-                      onSell: _sellSelected,
-                      onDestroy: _destroySelected,
-                    )
-                  : Row(
-                      children: [
-                        Expanded(child: Text(l.bag, style: text.titleMedium)),
-                        TextButton.icon(
-                          key: const Key('open-bank'),
-                          onPressed: _openBank,
-                          icon: const Icon(Icons.account_balance_outlined, size: 18),
-                          label: Text(l.bankTitle),
-                        ),
-                        Flexible(
-                          child: PopupMenuButton<BagSort>(
-                            tooltip: l.sortLabel,
-                            initialValue: _sort,
-                            onSelected: (v) => setState(() => _sort = v),
-                            itemBuilder: (_) => [
-                              for (final v in BagSort.values) PopupMenuItem(value: v, child: Text(_sortName(l, v))),
-                            ],
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: Space.xs),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(Icons.sort, size: 18, color: Palette.textSecondary),
-                                  const SizedBox(width: Space.xs),
-                                  Flexible(
-                                    child: Text(
-                                      _sortName(l, _sort),
-                                      style: text.bodySmall,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
+              main: [
+                SizedBox(
+                  height: 48,
+                  child: selecting
+                      ? _SelectionBar(
+                          count: _selected.length,
+                          onClear: () => setState(_selected.clear),
+                          onSelectAll: () => setState(() {
+                            _selected.addAll([
+                              for (final i in bag.items)
+                                if (!i.isLocked) i.instanceId,
+                            ]);
+                          }),
+                          onSell: _sellSelected,
+                          onDestroy: _destroySelected,
+                        )
+                      : Row(
+                          children: [
+                            Expanded(child: Text(l.bag, style: text.titleMedium)),
+                            TextButton.icon(
+                              key: const Key('open-bank'),
+                              onPressed: _openBank,
+                              icon: const Icon(Icons.account_balance_outlined, size: 18),
+                              label: Text(l.bankTitle),
+                            ),
+                            Flexible(
+                              child: PopupMenuButton<BagSort>(
+                                tooltip: l.sortLabel,
+                                initialValue: _sort,
+                                onSelected: (v) => setState(() => _sort = v),
+                                itemBuilder: (_) => [
+                                  for (final v in BagSort.values) PopupMenuItem(value: v, child: Text(_sortName(l, v))),
                                 ],
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: Space.xs),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.sort, size: 18, color: Palette.textSecondary),
+                                      const SizedBox(width: Space.xs),
+                                      Flexible(
+                                        child: Text(
+                                          _sortName(l, _sort),
+                                          style: text.bodySmall,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
-                    style: text.bodySmall?.copyWith(
-                      // Full bag (DD-246): buying, crafting and new runs are refused.
-                      color: bag.weightGrams > bag.weightCapGrams || bag.slotsUsed >= bag.slotCap
-                          ? Palette.warning
-                          : null,
-                      fontFeatures: numeric,
-                    ),
-                  ),
                 ),
-                Semantics(
-                  label: l.gold,
-                  child: GoldText(_gold, size: 14, key: const Key('bag-gold')),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${l.slotsUsed(bag.slotsUsed, bag.slotCap)} · ${l.weightKg((bag.weightGrams / 1000).toStringAsFixed(1), (bag.weightCapGrams / 1000).toStringAsFixed(0))}',
+                        style: text.bodySmall?.copyWith(
+                          // Full bag (DD-246): buying, crafting and new runs are refused.
+                          color: bag.weightGrams > bag.weightCapGrams || bag.slotsUsed >= bag.slotCap
+                              ? Palette.warning
+                              : null,
+                          fontFeatures: numeric,
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: l.gold,
+                      child: GoldText(_gold, size: 14, key: const Key('bag-gold')),
+                    ),
+                  ],
+                ),
+                if (bag.items.any((i) => !i.wearable)) _WearLegend(),
+                const SizedBox(height: Space.md),
+                LayoutBuilder(
+                  builder: (context, box) {
+                    final cols = wide ? 8 : 5; // items per row
+                    final step = (box.maxWidth + Space.sm) / cols; // cell + gap; cells are square
+                    // From the global position against the grid's current place:
+                    // the header changes when selection starts, so the pointer's
+                    // own local coordinates would be stale.
+                    BagItem? at(Offset global) {
+                      final p = (context.findRenderObject()! as RenderBox).globalToLocal(global);
+                      if (p.dx < 0 || p.dy < 0 || p.dx >= box.maxWidth) return null;
+                      final i = (p.dy ~/ step) * cols + (p.dx ~/ step);
+                      return i < cells.length ? cells[i] : null;
+                    }
+
+                    return GestureDetector(
+                      onLongPressStart: (d) => _dragSelect(at(d.globalPosition), start: true),
+                      onLongPressMoveUpdate: (d) => _dragSelect(at(d.globalPosition)),
+                      onLongPressEnd: (_) => _dragAdds = null,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cells.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: cols,
+                          mainAxisSpacing: Space.sm,
+                          crossAxisSpacing: Space.sm,
+                        ),
+                        itemBuilder: (_, i) {
+                          final item = cells[i];
+                          if (item == null) return const ItemCell();
+                          return _shining(
+                            item.instanceId,
+                            ItemCell(
+                              rarity: item.rarity,
+                              icon: itemIcon(item.itemClass, item.itemSubclass),
+                              code: item.templateCode,
+                              stack: item.stack,
+                              locked: item.isLocked,
+                              selected: _selected.contains(item.instanceId),
+                              wear: item.wear,
+                              semantic: [
+                                '${displayName(item)} ×${item.stack}',
+                                if (!item.wearable) ?wearLine(l, item)?.$1,
+                              ].join(' · '),
+                              onTap: () => selecting ? _toggle(item) : _openBagItem(item),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
               ],
-            ),
-            if (bag.items.any((i) => !i.wearable)) _WearLegend(),
-            const SizedBox(height: Space.md),
-            LayoutBuilder(
-              builder: (context, box) {
-                const cols = 5; // five items per row
-                final step = (box.maxWidth + Space.sm) / cols; // cell + gap; cells are square
-                // From the global position against the grid's current place:
-                // the header changes when selection starts, so the pointer's
-                // own local coordinates would be stale.
-                BagItem? at(Offset global) {
-                  final p = (context.findRenderObject()! as RenderBox).globalToLocal(global);
-                  if (p.dx < 0 || p.dy < 0 || p.dx >= box.maxWidth) return null;
-                  final i = (p.dy ~/ step) * cols + (p.dx ~/ step);
-                  return i < cells.length ? cells[i] : null;
-                }
-
-                return GestureDetector(
-                  onLongPressStart: (d) => _dragSelect(at(d.globalPosition), start: true),
-                  onLongPressMoveUpdate: (d) => _dragSelect(at(d.globalPosition)),
-                  onLongPressEnd: (_) => _dragAdds = null,
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: cells.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: cols,
-                      mainAxisSpacing: Space.sm,
-                      crossAxisSpacing: Space.sm,
-                    ),
-                    itemBuilder: (_, i) {
-                      final item = cells[i];
-                      if (item == null) return const ItemCell();
-                      return _shining(
-                        item.instanceId,
-                        ItemCell(
-                          rarity: item.rarity,
-                          icon: itemIcon(item.itemClass, item.itemSubclass),
-                          code: item.templateCode,
-                          stack: item.stack,
-                          locked: item.isLocked,
-                          selected: _selected.contains(item.instanceId),
-                          wear: item.wear,
-                          semantic: [
-                            '${displayName(item)} ×${item.stack}',
-                            if (!item.wearable) ?wearLine(l, item)?.$1,
-                          ].join(' · '),
-                          onTap: () => selecting ? _toggle(item) : _openBagItem(item),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
             ),
           ],
         ),

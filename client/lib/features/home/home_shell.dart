@@ -38,7 +38,8 @@ import '../social/social_screen.dart';
 import '../workshop/workshop_repository.dart';
 import '../workshop/workshop_view.dart';
 
-/// In-game shell for one character: bottom navigation, the live event
+/// In-game shell for one character: bottom navigation (a side rail on wide
+/// screens, DD-369), the live event
 /// socket (foreground only), and push toasts. Tabs are built on first visit
 /// and kept alive afterwards so switching tabs never refetches.
 class HomeShell extends StatefulWidget {
@@ -311,12 +312,14 @@ class _HomeShellState extends State<HomeShell> {
     final accent = theme.colorScheme.primary;
     final body = SafeArea(
       child: PageFrame(
+        maxWidth: gameWidth,
         child: IndexedStack(
           index: _tab,
           children: [for (var i = 0; i < tabs.length; i++) _visited.contains(i) ? _page(i) : const SizedBox()],
         ),
       ),
     );
+    final wide = isWide(context);
     return Theme(
       data: theme,
       child: Scaffold(
@@ -365,7 +368,14 @@ class _HomeShellState extends State<HomeShell> {
         body: Stack(
           children: [
             Positioned.fill(
-              child: profile == null ? body : BackgroundArt(code: profile.background, child: body),
+              child: Row(
+                children: [
+                  if (wide) _rail(tabs, accent),
+                  Expanded(
+                    child: profile == null ? body : BackgroundArt(code: profile.background, child: body),
+                  ),
+                ],
+              ),
             ),
             if (_tutorial) ...[
               const Positioned.fill(child: ModalBarrier(color: Colors.black38, dismissible: false)),
@@ -373,26 +383,54 @@ class _HomeShellState extends State<HomeShell> {
                 left: Space.md,
                 right: Space.md,
                 bottom: Space.md,
-                child: TutorialCard(onTab: _showTab, onClose: _endTutorial),
+                child: NarrowColumn(
+                  child: TutorialCard(onTab: _showTab, onClose: _endTutorial),
+                ),
               ),
             ],
           ],
         ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _tab,
-          backgroundColor: Palette.bgSurface,
-          indicatorColor: accent.withValues(alpha: 0.18),
-          onDestinationSelected: _showTab,
-          destinations: [
-            for (final (icon, selected, label) in tabs)
-              NavigationDestination(
-                icon: Icon(icon),
-                selectedIcon: Icon(selected, color: accent),
-                label: label,
+        bottomNavigationBar: wide
+            ? null
+            : NavigationBar(
+                selectedIndex: _tab,
+                backgroundColor: Palette.bgSurface,
+                indicatorColor: accent.withValues(alpha: 0.18),
+                onDestinationSelected: _showTab,
+                destinations: [
+                  for (final (icon, selected, label) in tabs)
+                    NavigationDestination(
+                      icon: Icon(icon),
+                      selectedIcon: Icon(selected, color: accent),
+                      label: label,
+                    ),
+                ],
               ),
-          ],
-        ),
       ),
+    );
+  }
+
+  /// The tabs on wide screens; with room for it, labels sit beside the icons.
+  Widget _rail(List<(IconData, IconData, String)> tabs, Color accent) {
+    final extended = MediaQuery.sizeOf(context).width >= 1280;
+    return NavigationRail(
+      selectedIndex: _tab,
+      onDestinationSelected: _showTab,
+      extended: extended,
+      minExtendedWidth: 200,
+      labelType: extended ? NavigationRailLabelType.none : NavigationRailLabelType.all,
+      backgroundColor: Palette.bgSurface,
+      indicatorColor: accent.withValues(alpha: 0.18),
+      selectedLabelTextStyle: TextStyle(color: accent, fontWeight: FontWeight.w600),
+      unselectedLabelTextStyle: const TextStyle(color: Palette.textSecondary),
+      destinations: [
+        for (final (icon, selected, label) in tabs)
+          NavigationRailDestination(
+            icon: Icon(icon),
+            selectedIcon: Icon(selected, color: accent),
+            label: Text(label),
+          ),
+      ],
     );
   }
 }

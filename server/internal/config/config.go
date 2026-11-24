@@ -65,8 +65,9 @@ type Config struct {
 	APNsSandbox        bool   `envconfig:"APNS_SANDBOX" default:"true"`
 
 	// Browser origins allowed to call the API (Flutter web). Comma-separated;
-	// dev additionally accepts any http://localhost:<port>.
-	CORSAllowedOrigins []string `envconfig:"CORS_ALLOWED_ORIGINS" default:""`
+	// the default is the published web client (DD-369). Dev additionally
+	// accepts any http://localhost:<port>.
+	CORSAllowedOrigins []string `envconfig:"CORS_ALLOWED_ORIGINS" default:"https://nazifcerik-spec.github.io"`
 
 	// Load balancers / reverse proxies (IPs or CIDRs, comma-separated) whose
 	// X-Forwarded-For is honoured. Empty = use the peer address (direct exposure).

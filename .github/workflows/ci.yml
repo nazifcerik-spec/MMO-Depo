@@ -119,6 +119,8 @@ jobs:
       - run: flutter test --coverage
       - name: coverage gate
         run: sh ../scripts/coverage_gate.sh lcov coverage/lcov.info 80
+      - name: web build (DD-369)
+        run: flutter build web --release
 
   alerts:
     runs-on: ubuntu-latest

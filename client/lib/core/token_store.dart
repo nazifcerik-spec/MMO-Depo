@@ -9,6 +9,8 @@ abstract class TokenStore {
 }
 
 /// Keychain (iOS) / EncryptedSharedPreferences (Android) / WebCrypto (web).
+/// A browser may refuse it (private window, plain-http address): the session
+/// then lives only as long as the page.
 class SecureTokenStore implements TokenStore {
   SecureTokenStore([FlutterSecureStorage? storage]) : _storage = storage ?? const FlutterSecureStorage();
 
@@ -16,13 +18,31 @@ class SecureTokenStore implements TokenStore {
   final FlutterSecureStorage _storage;
 
   @override
-  Future<String?> readRefreshToken() => _storage.read(key: _key);
+  Future<String?> readRefreshToken() async {
+    try {
+      return await _storage.read(key: _key);
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
-  Future<void> writeRefreshToken(String token) => _storage.write(key: _key, value: token);
+  Future<void> writeRefreshToken(String token) async {
+    try {
+      await _storage.write(key: _key, value: token);
+    } catch (_) {
+      // Kept in memory by ApiClient.
+    }
+  }
 
   @override
-  Future<void> clear() => _storage.delete(key: _key);
+  Future<void> clear() async {
+    try {
+      await _storage.delete(key: _key);
+    } catch (_) {
+      // Nothing stored.
+    }
+  }
 }
 
 /// In-memory store for tests.

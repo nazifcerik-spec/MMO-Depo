@@ -190,6 +190,38 @@ func TestRefresh_ReuseDetectedRevokesSession(t *testing.T) {
 	require.ErrorIs(t, err, auth.ErrSessionRevoked)
 }
 
+// DD-369: a reload or a second tab presents the token it still holds; inside
+// the grace the session goes on, after it the replay revokes everything, and
+// repeating inside the window does not extend it.
+func TestRefresh_GraceForLostResponses(t *testing.T) {
+	seed, _ := auth.GenerateSeed()
+	signer, err := auth.NewSigner(seed, "otter-test", 15*time.Minute)
+	require.NoError(t, err)
+	now := time.Now()
+	svc := auth.NewService(auth.NewMemoryRepo(), signer, auth.ServiceConfig{
+		Argon2Params: fastParams, AccessTTL: 15 * time.Minute, RefreshTTL: 24 * time.Hour, SessionTTL: 24 * time.Hour,
+		RefreshGrace: 30 * time.Second, Now: func() time.Time { return now }, MinPasswordLen: 8,
+	}, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	first := mustRegister(t, svc)
+	ctx := context.Background()
+
+	second, err := svc.Refresh(ctx, first.RefreshToken)
+	require.NoError(t, err)
+	now = now.Add(20 * time.Second)
+	third, err := svc.Refresh(ctx, first.RefreshToken)
+	require.NoError(t, err, "inside the grace")
+	require.Equal(t, first.SessionID, third.SessionID)
+	require.NotEqual(t, second.RefreshToken, third.RefreshToken)
+	_, _, err = svc.Verify(ctx, second.AccessToken)
+	require.NoError(t, err, "the other tab keeps playing")
+
+	now = now.Add(10 * time.Second)
+	_, err = svc.Refresh(ctx, first.RefreshToken)
+	require.ErrorIs(t, err, auth.ErrRefreshTokenReuse, "30 s after the first use, not the last")
+	_, err = svc.Refresh(ctx, third.RefreshToken)
+	require.ErrorIs(t, err, auth.ErrSessionRevoked)
+}
+
 func TestRefresh_UnknownToken(t *testing.T) {
 	svc, _, _ := newTestService(t)
 	_, err := svc.Refresh(context.Background(), "unknown-token-nonexistent")

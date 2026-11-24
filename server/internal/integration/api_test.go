@@ -208,9 +208,15 @@ func TestHTTPAuthAndCharacters(t *testing.T) {
 	require.NotEmpty(t, login["refresh_token"])
 	refreshed := anon.ok("POST", "/v1/auth/refresh", map[string]any{"refresh_token": login["refresh_token"]})
 	user := &hc{t: t, base: base, token: refreshed["access_token"].(string)}
-	// Reusing a rotated refresh token revokes the whole session (DD-189).
+	// Reusing a rotated refresh token is a lost response for 30 s (DD-369),
+	// then it revokes the whole session (DD-189).
 	other := anon.ok("POST", "/v1/auth/login", map[string]any{"email_or_username": "l" + suffix, "password": "pass-" + suffix + "-word"})
 	stolen := &hc{t: t, base: base, token: anon.ok("POST", "/v1/auth/refresh", map[string]any{"refresh_token": other["refresh_token"]})["access_token"].(string)}
+	anon.ok("POST", "/v1/auth/refresh", map[string]any{"refresh_token": other["refresh_token"]})
+	p, ctx := pool(t)
+	_, err := p.Exec(ctx, `UPDATE identity.refresh_token SET used_at = used_at - interval '1 minute'
+		WHERE session_id = $1 AND used_at IS NOT NULL`, other["session_id"])
+	require.NoError(t, err)
 	anon.fail("POST", "/v1/auth/refresh", map[string]any{"refresh_token": other["refresh_token"]}, 401, "")
 	stolen.fail("GET", "/v1/character", nil, 401, "E_SESSION_REVOKED")
 	user.ok("POST", "/v1/auth/resend-verification", map[string]any{})

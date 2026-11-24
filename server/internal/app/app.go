@@ -99,6 +99,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		AccessTTL:      cfg.AuthAccessTTL,
 		RefreshTTL:     cfg.AuthRefreshTTL,
 		SessionTTL:     cfg.AuthSessionTTL,
+		RefreshGrace:   auth.DefaultRefreshGrace,
 		Now:            time.Now,
 		MinPasswordLen: cfg.AuthMinPasswordLen,
 		PublicBaseURL:  cfg.PublicBaseURL,

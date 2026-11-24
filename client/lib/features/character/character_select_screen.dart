@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
+import '../../core/browser.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets.dart';
 import '../auth/account_dialogs.dart';
@@ -23,6 +26,8 @@ class CharacterSelectScreen extends StatefulWidget {
 }
 
 class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
+  static const _playing = 'mena.playing';
+
   CharacterList? _list;
   Object? _error;
   String? _entering;
@@ -43,7 +48,15 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
     setState(() => _error = null);
     try {
       final list = await widget.repo.list();
-      if (mounted) setState(() => _list = list);
+      if (!mounted) return;
+      setState(() => _list = list);
+      // A page reload goes back to the character this tab was playing (DD-369).
+      final playing = tabRead(_playing);
+      if (playing == null || _entering != null) return;
+      tabStore(_playing, null);
+      for (final c in list.characters) {
+        if (c.id == playing && c.playable) unawaited(_enter(c));
+      }
     } on ApiError catch (e) {
       if (mounted) setState(() => _error = e);
     }
@@ -61,11 +74,13 @@ class _CharacterSelectScreenState extends State<CharacterSelectScreen> {
     try {
       final sheet = await widget.repo.enter(c.id);
       if (!mounted) return;
+      tabStore(_playing, c.id);
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => HomeShell(auth: widget.auth, characters: widget.repo, initial: sheet),
         ),
       );
+      tabStore(_playing, null);
       if (mounted) await _load(); // level/state may have changed while playing
     } on ApiError catch (e) {
       if (mounted && widget.auth.status == AuthStatus.signedIn) {

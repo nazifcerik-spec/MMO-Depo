@@ -369,16 +369,18 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
       final a = _active;
       if (a != null) {
         return [
-          _RunningCard(
-            icon: Icons.gps_fixed,
-            title: ContentNames.of('mob', a.target),
-            startedAt: a.startedAt,
-            endsAt: a.expiresAt,
-            doneLabel: l.huntDone,
-            onCollect: () => _collect(a),
-            onRestart: () => _restart(a),
-            onAbandon: () => _abandon(a),
-            onComplete: () => setState(() {}),
+          NarrowColumn(
+            child: _RunningCard(
+              icon: Icons.gps_fixed,
+              title: ContentNames.of('mob', a.target),
+              startedAt: a.startedAt,
+              endsAt: a.expiresAt,
+              doneLabel: l.huntDone,
+              onCollect: () => _collect(a),
+              onRestart: () => _restart(a),
+              onAbandon: () => _abandon(a),
+              onComplete: () => setState(() {}),
+            ),
           ),
         ];
       }
@@ -386,7 +388,7 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
       final here = _mobs.where(_inReach).toList();
       final away = _mobs.where((m) => !_inReach(m)).toList();
       final hunting = [for (final r in _reach) ContentNames.of('region', r)];
-      return [
+      final main = <Widget>[
         Text(l.huntChoose, style: text.titleMedium),
         const SizedBox(height: Space.xs),
         Text(
@@ -395,21 +397,25 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
           style: text.bodySmall,
         ),
         const SizedBox(height: Space.md),
-        for (final m in here) ...[
-          _MobTile(
-            mob: m,
-            selected: m.code == _mob,
-            overLevel: m.level > widget.level,
-            xp: widget.repo.huntXP.xp(m.xpReward, widget.level, m.level),
-            xpFactor: widget.repo.huntXP.factor(widget.level, m.level),
-            onTap: () => setState(() {
-              _mob = m.code;
-              _mobPicked = true;
-            }),
-          ),
-          const SizedBox(height: Space.sm),
-        ],
-        const SizedBox(height: Space.lg),
+        TileGrid(
+          children: [
+            for (final m in here)
+              _MobTile(
+                mob: m,
+                selected: m.code == _mob,
+                overLevel: m.level > widget.level,
+                xp: widget.repo.huntXP.xp(m.xpReward, widget.level, m.level),
+                xpFactor: widget.repo.huntXP.factor(widget.level, m.level),
+                onTap: () => setState(() {
+                  _mob = m.code;
+                  _mobPicked = true;
+                }),
+              ),
+          ],
+        ),
+        const SizedBox(height: Space.xl),
+      ];
+      final side = <Widget>[
         Text(l.durationLabel, style: text.bodySmall),
         const SizedBox(height: Space.sm),
         Wrap(
@@ -434,7 +440,15 @@ class _HuntPanelState extends State<_HuntPanel> with PanelState {
           icon: const Icon(Icons.gps_fixed),
           label: Text(l.startHunt),
         ),
-        if (away.isNotEmpty) ...[const SizedBox(height: Space.lg), _AwayMobs(mobs: away)],
+      ];
+      return [
+        Panes(
+          main: main,
+          side: side,
+          after: [
+            if (away.isNotEmpty) ...[const SizedBox(height: Space.lg), _AwayMobs(mobs: away)],
+          ],
+        ),
       ];
     });
   }
@@ -721,71 +735,77 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
       final a = _active;
       if (a != null) {
         return [
-          _RunningCard(
-            icon: Icons.castle_outlined,
-            title: ContentNames.of('dungeon', a.target),
-            startedAt: a.startedAt,
-            endsAt: a.expiresAt,
-            doneLabel: l.dungeonDone,
-            hint: l.dungeonWaitHint,
-            collectBeforeEnd: false,
-            onCollect: () => _collect(a),
-            onAbandon: () => _abandon(a),
-            onComplete: () => setState(() {}),
+          NarrowColumn(
+            child: _RunningCard(
+              icon: Icons.castle_outlined,
+              title: ContentNames.of('dungeon', a.target),
+              startedAt: a.startedAt,
+              endsAt: a.expiresAt,
+              doneLabel: l.dungeonDone,
+              hint: l.dungeonWaitHint,
+              collectBeforeEnd: false,
+              onCollect: () => _collect(a),
+              onAbandon: () => _abandon(a),
+              onComplete: () => setState(() {}),
+            ),
           ),
         ];
       }
       final text = Theme.of(context).textTheme;
       return [
         if (_dungeons.isEmpty) Text(l.dungeonNoneHere, style: text.bodySmall),
-        for (final d in _dungeons) ...[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(Space.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
+        TileGrid(
+          spacing: Space.md,
+          children: [
+            for (final d in _dungeons)
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(Space.lg),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      dungeonArt(d.code, 44),
-                      const SizedBox(width: Space.md),
-                      Expanded(child: Text(ContentNames.of('dungeon', d.code), style: text.titleMedium)),
+                      Row(
+                        children: [
+                          dungeonArt(d.code, 44),
+                          const SizedBox(width: Space.md),
+                          Expanded(child: Text(ContentNames.of('dungeon', d.code), style: text.titleMedium)),
+                          Text(
+                            l.levelReq(d.minLevel),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: d.minLevel > widget.level ? Palette.danger : Palette.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Space.xs),
                       Text(
-                        l.levelReq(d.minLevel),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: d.minLevel > widget.level ? Palette.danger : Palette.textSecondary,
-                        ),
+                        '${l.dungeonEncounters(d.encounters, ContentNames.of('mob', d.bossMobCode))} · ${shortDuration(l, d.duration)}',
+                        style: text.bodySmall,
+                      ),
+                      const SizedBox(height: Space.sm),
+                      Wrap(
+                        spacing: Space.sm,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(l.bonus, style: text.bodySmall),
+                          GoldText(d.bonusGold, size: 13),
+                          _DungeonXp(xp: d.xp, factor: widget.repo.dungeonXP.factor(widget.level, d.minLevel)),
+                        ],
+                      ),
+                      const SizedBox(height: Space.md),
+                      FilledButton.tonal(
+                        onPressed: d.minLevel > widget.level ? null : () => _enter(d),
+                        child: Text(l.dungeonEnter),
                       ),
                     ],
                   ),
-                  const SizedBox(height: Space.xs),
-                  Text(
-                    '${l.dungeonEncounters(d.encounters, ContentNames.of('mob', d.bossMobCode))} · ${shortDuration(l, d.duration)}',
-                    style: text.bodySmall,
-                  ),
-                  const SizedBox(height: Space.sm),
-                  Wrap(
-                    spacing: Space.sm,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(l.bonus, style: text.bodySmall),
-                      GoldText(d.bonusGold, size: 13),
-                      _DungeonXp(xp: d.xp, factor: widget.repo.dungeonXP.factor(widget.level, d.minLevel)),
-                    ],
-                  ),
-                  const SizedBox(height: Space.md),
-                  FilledButton.tonal(
-                    onPressed: d.minLevel > widget.level ? null : () => _enter(d),
-                    child: Text(l.dungeonEnter),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: Space.md),
-        ],
+          ],
+        ),
+        const SizedBox(height: Space.md),
         Text(l.dungeonsElsewhere, style: text.bodySmall),
       ];
     });

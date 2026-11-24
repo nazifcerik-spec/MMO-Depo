@@ -344,6 +344,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 163. **Hikâyenin tamamı: II.–VI. Bölüm ve sonlar (bitti)** — Sprint 163, DD-368. `content/story.yaml` 79 sahne + 63 hikâye görevi (Sv 1–1000), 'ya da' şartları ayrı seçeneklerle, sonlar `e_choice` (`son` bayrağı, gizli Son Ninni) → `e_ending` (sayaçlara göre varyant) → `e_epilogue` (kişi sonları + son sayfa). Metin `content/story/<dil>/NN-*.yaml` (tr + en, 602 anahtar), `python scripts/gen_story_quests.py`, `python scripts/story_text_check.py`. `TestShippedStoryEveryPathEnds` (6000 rastgele oyun, her son varyantı ulaşılabilir). Bölüm başlıkları + görev adları 7 dilde.
 
+164. **Web sürümü (bitti)** — Sprint 164, DD-369. `shared/layout.dart` (`isWide` ≥ 900 px, `PageFrame`, `Panes`, `TileGrid`, `NarrowColumn`): yan menü, çok sütunlu sekmeler; altında telefon yerleşimi aynı. Web kabuğu (açılış ekranı, manifest), fare ile sürükleme, `core/browser.dart` (Web Locks, sekme deposu): sekmeler oturumu paylaşır, F5 karaktere döner; sunucu `auth.RefreshGrace` 30 sn. Yayın: `powershell -ExecutionPolicy Bypass -File scripts/release-web.ps1 -Version x.y.z` → https://nazifcerik-spec.github.io/MMO-Depo/ (`gh-pages`). `CORS_ALLOWED_ORIGINS` varsayılanı bu kaynak.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

@@ -238,6 +238,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final s = _sheet;
+    final wide = isWide(context);
     final r = s.resources;
     final text = Theme.of(context).textTheme;
 
@@ -278,184 +279,192 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
             ],
           ),
           const SizedBox(height: Space.lg),
-          _Section(
-            children: [
-              // The full-body portrait beside the bars (DD-344).
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+          Panes(
+            sideWidth: 460,
+            main: [
+              _Section(
                 children: [
-                  BodyPortrait(race: s.raceCode, look: s.look, onEdit: _editLook),
-                  const SizedBox(width: Space.md),
-                  Expanded(
-                    child: Column(
+                  // The full-body portrait beside the bars (DD-344).
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      BodyPortrait(race: s.raceCode, look: s.look, onEdit: _editLook),
+                      const SizedBox(width: Space.md),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            bar(l.hp, 'hp', Palette.danger),
+                            if (s.resourceKind.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: Space.sm),
+                                child: StatBar(
+                                  label: ContentNames.of('resource', s.resourceKind).toUpperCase(),
+                                  value: 1,
+                                  color: Palette.info,
+                                  valueText: '${s.resourceMax}',
+                                  stacked: true,
+                                ),
+                              )
+                            else
+                              bar(l.mp, 'mp', Palette.info),
+                            bar(l.stamina, 'stamina', Palette.success),
+                            bar(l.energy, 'energy', Palette.warning),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_buff case FoodBuff(expiresAt: final until?) when until.isAfter(DateTime.now()))
+                    Row(
                       children: [
-                        bar(l.hp, 'hp', Palette.danger),
-                        if (s.resourceKind.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: Space.sm),
-                            child: StatBar(
-                              label: ContentNames.of('resource', s.resourceKind).toUpperCase(),
-                              value: 1,
-                              color: Palette.info,
-                              valueText: '${s.resourceMax}',
-                              stacked: true,
+                        const Icon(Icons.restaurant_outlined, size: 16, color: Palette.success),
+                        const SizedBox(width: Space.xs),
+                        Expanded(
+                          child: Text(
+                            l.fedActive(
+                              _buff!.attackPct,
+                              _buff!.defensePct,
+                              shortDuration(l, until.difference(DateTime.now())),
                             ),
-                          )
-                        else
-                          bar(l.mp, 'mp', Palette.info),
-                        bar(l.stamina, 'stamina', Palette.success),
-                        bar(l.energy, 'energy', Palette.warning),
+                            style: text.bodySmall?.copyWith(color: Palette.success),
+                          ),
+                        ),
                       ],
                     ),
+                  const Divider(height: Space.xl, color: Palette.borderSubtle),
+                  if (_leveling case final lv?)
+                    LevelingCard(summary: lv, onPromote: _promote, onAttributes: _attributes, onTalents: _talents)
+                  else
+                    StatBar(
+                      label: l.xp,
+                      value: s.xpProgress,
+                      color: Palette.epic,
+                      valueText: l.xpValue(s.xp, s.xpToNext),
+                    ),
+                ],
+              ),
+              if (widget.boosts case final b?) ...[const SizedBox(height: Space.lg), b],
+              const SizedBox(height: Space.lg),
+              _Section(
+                title: l.attributes,
+                children: [
+                  _Grid(
+                    entries: [
+                      (l.statStr, '${s.primary['str'] ?? 0}'),
+                      (l.statAgi, '${s.primary['agi'] ?? 0}'),
+                      (l.statInt, '${s.primary['int'] ?? 0}'),
+                      (l.statVit, '${s.primary['vit'] ?? 0}'),
+                      (l.statCha, '${s.primary['cha'] ?? 0}'),
+                      (l.statLuck, '${s.primary['luck'] ?? 0}'),
+                    ],
                   ),
                 ],
               ),
-              if (_buff case FoodBuff(expiresAt: final until?) when until.isAfter(DateTime.now()))
-                Row(
+              const SizedBox(height: Space.lg),
+              _Section(
+                title: l.combat,
+                children: [CombatStats(sheet: s)],
+              ),
+            ],
+            side: [
+              if (widget.live case final live?) ...[
+                if (!wide) const SizedBox(height: Space.lg),
+                _Section(
+                  title: l.tabParty,
+                  children: [PartyPanel(repo: _groups, live: live, onChat: widget.onPartyChat, reload: _partyReload)],
+                ),
+              ],
+              if (_skills?.isNotEmpty ?? false) ...[
+                const SizedBox(height: Space.lg),
+                _Section(
+                  key: const Key('skills-section'),
+                  title: l.skills,
+                  collapsible: true, // folded until opened (DD-301)
                   children: [
-                    const Icon(Icons.restaurant_outlined, size: 16, color: Palette.success),
-                    const SizedBox(width: Space.xs),
-                    Expanded(
-                      child: Text(
-                        l.fedActive(
-                          _buff!.attackPct,
-                          _buff!.defensePct,
-                          shortDuration(l, until.difference(DateTime.now())),
-                        ),
-                        style: text.bodySmall?.copyWith(color: Palette.success),
-                      ),
-                    ),
+                    for (final k in skillKit([...?_skills?.where(_onPath)], s.level, equipment: s.equipmentTags))
+                      _SkillRow(skill: k, level: s.level, equipment: s.equipmentTags),
                   ],
                 ),
-              const Divider(height: Space.xl, color: Palette.borderSubtle),
-              if (_leveling case final lv?)
-                LevelingCard(summary: lv, onPromote: _promote, onAttributes: _attributes, onTalents: _talents)
-              else
-                StatBar(label: l.xp, value: s.xpProgress, color: Palette.epic, valueText: l.xpValue(s.xp, s.xpToNext)),
-            ],
-          ),
-          if (widget.boosts case final b?) ...[const SizedBox(height: Space.lg), b],
-          const SizedBox(height: Space.lg),
-          _Section(
-            title: l.attributes,
-            children: [
-              _Grid(
-                entries: [
-                  (l.statStr, '${s.primary['str'] ?? 0}'),
-                  (l.statAgi, '${s.primary['agi'] ?? 0}'),
-                  (l.statInt, '${s.primary['int'] ?? 0}'),
-                  (l.statVit, '${s.primary['vit'] ?? 0}'),
-                  (l.statCha, '${s.primary['cha'] ?? 0}'),
-                  (l.statLuck, '${s.primary['luck'] ?? 0}'),
+              ],
+              if (_race case final race?) ...[
+                const SizedBox(height: Space.lg),
+                _Section(
+                  key: const Key('race-section'),
+                  title: l.raceAbilities,
+                  collapsible: true,
+                  children: [RaceAbilities(race: race)],
+                ),
+              ],
+              const SizedBox(height: Space.lg),
+              // Page buttons: two per row on wide screens.
+              TileGrid(
+                minTileWidth: 200,
+                children: [
+                  if (widget.onOpenDaily != null)
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenDaily,
+                      icon: const Icon(Icons.card_giftcard_outlined),
+                      label: Text(l.dailyOpen),
+                    ),
+                  if (widget.onOpenShop != null)
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenShop,
+                      icon: const Icon(Icons.storefront_outlined),
+                      label: Text(l.shopOpen),
+                    ),
+                  if (widget.onOpenHelpers != null)
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenHelpers,
+                      icon: const Icon(Icons.groups_2_outlined),
+                      label: Text(l.helpersOpen),
+                    ),
+                  if (widget.onOpenPets != null)
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenPets,
+                      icon: const Icon(Icons.pets),
+                      label: Text(l.petsOpen),
+                    ),
+                  if (widget.onOpenStory != null)
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenStory,
+                      icon: const Icon(Icons.auto_stories_outlined),
+                      label: Text(l.storyOpen),
+                    ),
+                  if (widget.onOpenProgress != null) ...[
+                    OutlinedButton.icon(
+                      onPressed: widget.onOpenProgress,
+                      icon: const Icon(Icons.emoji_events_outlined),
+                      label: Text(l.progress),
+                    ),
+                    if (widget.onOpenRanking != null)
+                      OutlinedButton.icon(
+                        key: const Key('open-ranking'),
+                        onPressed: widget.onOpenRanking,
+                        icon: const Icon(Icons.leaderboard_outlined),
+                        label: Text(l.ranking),
+                      ),
+                    if (widget.onOpenGuide != null)
+                      OutlinedButton.icon(
+                        key: const Key('open-guide'),
+                        onPressed: widget.onOpenGuide,
+                        icon: const Icon(Icons.menu_book_outlined),
+                        label: Text(l.guide),
+                      ),
+                  ],
                 ],
               ),
-            ],
-          ),
-          const SizedBox(height: Space.lg),
-          _Section(
-            title: l.combat,
-            children: [CombatStats(sheet: s)],
-          ),
-          if (widget.live case final live?) ...[
-            const SizedBox(height: Space.lg),
-            _Section(
-              title: l.tabParty,
-              children: [PartyPanel(repo: _groups, live: live, onChat: widget.onPartyChat, reload: _partyReload)],
-            ),
-          ],
-          if (_skills?.isNotEmpty ?? false) ...[
-            const SizedBox(height: Space.lg),
-            _Section(
-              key: const Key('skills-section'),
-              title: l.skills,
-              collapsible: true, // folded until opened (DD-301)
-              children: [
-                for (final k in skillKit([...?_skills?.where(_onPath)], s.level, equipment: s.equipmentTags))
-                  _SkillRow(skill: k, level: s.level, equipment: s.equipmentTags),
+              if (widget.onLogout != null) ...[
+                const SizedBox(height: Space.lg),
+                OutlinedButton.icon(
+                  key: const Key('sheet-logout'),
+                  onPressed: widget.onLogout,
+                  style: OutlinedButton.styleFrom(foregroundColor: Palette.danger),
+                  icon: const Icon(Icons.logout),
+                  label: Text(l.logout),
+                ),
               ],
-            ),
-          ],
-          if (_race case final race?) ...[
-            const SizedBox(height: Space.lg),
-            _Section(
-              key: const Key('race-section'),
-              title: l.raceAbilities,
-              collapsible: true,
-              children: [RaceAbilities(race: race)],
-            ),
-          ],
-          if (widget.onOpenDaily != null) ...[
-            const SizedBox(height: Space.lg),
-            OutlinedButton.icon(
-              onPressed: widget.onOpenDaily,
-              icon: const Icon(Icons.card_giftcard_outlined),
-              label: Text(l.dailyOpen),
-            ),
-          ],
-          if (widget.onOpenShop != null) ...[
-            const SizedBox(height: Space.sm),
-            OutlinedButton.icon(
-              onPressed: widget.onOpenShop,
-              icon: const Icon(Icons.storefront_outlined),
-              label: Text(l.shopOpen),
-            ),
-          ],
-          if (widget.onOpenHelpers != null) ...[
-            const SizedBox(height: Space.sm),
-            OutlinedButton.icon(
-              onPressed: widget.onOpenHelpers,
-              icon: const Icon(Icons.groups_2_outlined),
-              label: Text(l.helpersOpen),
-            ),
-          ],
-          if (widget.onOpenPets != null) ...[
-            const SizedBox(height: Space.sm),
-            OutlinedButton.icon(onPressed: widget.onOpenPets, icon: const Icon(Icons.pets), label: Text(l.petsOpen)),
-          ],
-          if (widget.onOpenStory != null) ...[
-            const SizedBox(height: Space.sm),
-            OutlinedButton.icon(
-              onPressed: widget.onOpenStory,
-              icon: const Icon(Icons.auto_stories_outlined),
-              label: Text(l.storyOpen),
-            ),
-          ],
-          if (widget.onOpenProgress != null) ...[
-            const SizedBox(height: Space.lg),
-            OutlinedButton.icon(
-              onPressed: widget.onOpenProgress,
-              icon: const Icon(Icons.emoji_events_outlined),
-              label: Text(l.progress),
-            ),
-            if (widget.onOpenRanking != null) ...[
-              const SizedBox(height: Space.sm),
-              OutlinedButton.icon(
-                key: const Key('open-ranking'),
-                onPressed: widget.onOpenRanking,
-                icon: const Icon(Icons.leaderboard_outlined),
-                label: Text(l.ranking),
-              ),
             ],
-            if (widget.onOpenGuide != null) ...[
-              const SizedBox(height: Space.sm),
-              OutlinedButton.icon(
-                key: const Key('open-guide'),
-                onPressed: widget.onOpenGuide,
-                icon: const Icon(Icons.menu_book_outlined),
-                label: Text(l.guide),
-              ),
-            ],
-          ],
-          if (widget.onLogout != null) ...[
-            const SizedBox(height: Space.lg),
-            OutlinedButton.icon(
-              key: const Key('sheet-logout'),
-              onPressed: widget.onLogout,
-              style: OutlinedButton.styleFrom(foregroundColor: Palette.danger),
-              icon: const Icon(Icons.logout),
-              label: Text(l.logout),
-            ),
-          ],
+          ),
         ],
       ),
     );

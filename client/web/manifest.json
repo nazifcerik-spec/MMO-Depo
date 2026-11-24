@@ -1,12 +1,16 @@
 {
+    "id": ".",
     "name": "MeNa World",
     "short_name": "MeNa World",
+    "description": "Sen yokken de süren bir fantastik macera. An idle fantasy RPG.",
+    "lang": "tr",
     "start_url": ".",
+    "scope": ".",
     "display": "standalone",
+    "orientation": "any",
     "background_color": "#0F1013",
     "theme_color": "#0F1013",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "categories": ["games"],
     "prefer_related_applications": false,
     "icons": [
         {
