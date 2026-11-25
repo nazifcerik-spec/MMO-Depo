@@ -47,6 +47,17 @@ func TestProgressionRecord(t *testing.T) {
 	titles, err := svc.Titles(w.ctx, p.ID, p.Account)
 	require.NoError(t, err)
 	require.Equal(t, "prospector", titles[0].Code)
+	all, err := svc.AllTitles(w.ctx, p.ID, p.Account)
+	require.NoError(t, err)
+	for _, g := range all { // every title says how it is earned (DD-372)
+		require.NotEmpty(t, g.Event, g.Code)
+		require.Equal(t, g.Code == "prospector", g.Owned, g.Code)
+		if g.Code == "prospector" {
+			require.Equal(t, "gather_mining", g.Event)
+			require.Equal(t, int64(500), g.Target)
+		}
+	}
+	require.Greater(t, len(all), 50)
 	require.ErrorIs(t, svc.SetActiveTitle(w.ctx, p.ID, p.Account, "bossbane"), progression.ErrTitleNotOwned)
 	require.NoError(t, svc.SetActiveTitle(w.ctx, p.ID, p.Account, "prospector"))
 	sum, err = svc.Summary(w.ctx, p.ID, p.Account)

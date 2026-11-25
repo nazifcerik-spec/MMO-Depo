@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../codex/codex.dart';
 import 'progression_repository.dart';
 import '../../shared/content_names.dart';
 
@@ -23,7 +24,10 @@ class ProgressionScreen extends StatefulWidget {
 class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
   ProgressionSummary? _summary;
   List<Achievement> _achievements = const [];
-  List<OwnedTitle> _titles = const [];
+  List<TitleGoal> _titles = const [];
+
+  /// Other classes' masteries are folded until asked for.
+  bool _allMasteries = false;
 
   @override
   void initState() {
@@ -42,7 +46,7 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
         if (a.unlocked) return b.unlockedAt!.compareTo(a.unlockedAt!);
         return (b.progress / b.target).compareTo(a.progress / a.target);
       });
-    _titles = r[2] as List<OwnedTitle>;
+    _titles = r[2] as List<TitleGoal>;
   }
 
   Future<void> _setTitle(String code) => run(() async {
@@ -122,6 +126,7 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
                 ),
                 for (final b in m.bonuses)
                   Text(bonusText(l, b), style: const TextStyle(color: Palette.success, fontSize: 13)),
+                _Sources(events: m.sources),
               ],
             ),
           ),
@@ -135,10 +140,26 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
       for (final r in _summary?.reputation ?? const <Reputation>[])
         Card(
           margin: const EdgeInsets.only(bottom: Space.md),
-          child: ListTile(
-            title: Text(ContentNames.of('faction', r.faction)),
-            subtitle: Text('${ContentNames.of('reptier', r.tierName)} · ${r.rep}'),
-            trailing: Text(l.repDailyLeft(r.dailyLeft), style: Theme.of(context).textTheme.bodySmall),
+          child: Padding(
+            padding: const EdgeInsets.all(Space.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        ContentNames.of('faction', r.faction),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                    Text(l.repDailyLeft(r.dailyLeft), style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
+                Text('${ContentNames.of('reptier', r.tierName)} · ${r.rep}'),
+                _Sources(events: r.sources),
+              ],
+            ),
           ),
         ),
     ];
@@ -146,27 +167,172 @@ class _ProgressionScreenState extends State<ProgressionScreen> with PanelState {
 
   List<Widget> _titleRows() {
     final l = AppLocalizations.of(context);
-    final active = _titles.where((t) => t.active).map((t) => t.code).firstOrNull ?? '';
+    final text = Theme.of(context).textTheme;
+    List<TitleGoal> of(String source, {bool? own}) => [
+      for (final t in _titles)
+        if (t.source == source && (own == null || t.ownClass == own)) t,
+    ];
+    final others = of('class_mastery', own: false);
+    Widget header(String s) => Padding(
+      padding: const EdgeInsets.fromLTRB(0, Space.lg, 0, Space.sm),
+      child: Text(s, style: text.titleSmall?.copyWith(color: Palette.accent)),
+    );
+    Widget cards(List<TitleGoal> list) => TileGrid(
+      spacing: Space.md,
+      children: [for (final t in list) _TitleCard(key: ValueKey('title-${t.code}'), t: t, onSet: _setTitle)],
+    );
     return [
-      RadioGroup<String>(
-        groupValue: active,
-        onChanged: (v) {
-          if (v != null && v != active) _setTitle(v);
-        },
+      Text(l.titlesEarned(_titles.where((t) => t.owned).length, _titles.length), style: text.titleMedium),
+      for (final (name, list) in [
+        (l.titlesAchievement, of('achievement')),
+        (l.titlesLevel, of('level')),
+        (l.titlesMastery, of('class_mastery', own: true)),
+      ])
+        if (list.isNotEmpty) ...[header(name), cards(list)],
+      if (others.isNotEmpty) ...[
+        InkWell(
+          key: const Key('titles-other'),
+          onTap: () => setState(() => _allMasteries = !_allMasteries),
+          child: Row(
+            children: [
+              Expanded(child: header(l.titlesOther)),
+              Text('${others.length}', style: text.bodySmall),
+              Icon(_allMasteries ? Icons.expand_less : Icons.expand_more, color: Palette.textSecondary),
+            ],
+          ),
+        ),
+        if (_allMasteries) cards(others),
+      ],
+    ];
+  }
+}
+
+/// A mastery is reached at its level, not "once".
+int goalCount(String event, int target) => event.startsWith('class_mastery:') ? 1000 : target;
+
+/// What raises a track or a faction, as tags.
+class _Sources extends StatelessWidget {
+  const _Sources({required this.events});
+
+  final List<String> events;
+
+  @override
+  Widget build(BuildContext context) {
+    // "any dungeon" and "any boss" open the same list: once is enough.
+    final refs = <String, CodexRef>{};
+    for (final e in events) {
+      final r = eventRef(e);
+      if (r != null) refs['${r.kind}/${r.code}'] = r;
+    }
+    if (refs.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: Space.sm),
+        Text(AppLocalizations.of(context).codexGroup('sources'), style: Theme.of(context).textTheme.bodySmall),
+        const SizedBox(height: Space.xs),
+        LinkTags(refs.values),
+      ],
+    );
+  }
+}
+
+/// One title: what earns it in words, how far the character is, what it is
+/// about as tags, and Use once earned. Every card has the same size.
+class _TitleCard extends StatelessWidget {
+  const _TitleCard({super.key, required this.t, required this.onSet});
+
+  final TitleGoal t;
+  final ValueChanged<String> onSet;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    final done = t.owned || t.target <= 0;
+    const goal = TextStyle(fontSize: 13, height: 1.3);
+    final tags = [?eventRef(t.event), if (t.achievement.isNotEmpty) CodexRef('achievement', t.achievement)];
+    final rewards = [if (t.points > 0) l.pointsShort(t.points), if (t.rewardGold > 0) goldString(t.rewardGold)];
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(Space.lg),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            RadioListTile<String>(value: '', title: Text(l.noTitle)),
-            for (final t in _titles)
-              RadioListTile<String>(value: t.code, title: Text(ContentNames.of('title', t.code))),
+            Row(
+              children: [
+                Icon(
+                  t.owned ? Icons.workspace_premium : Icons.workspace_premium_outlined,
+                  size: 20,
+                  color: t.owned ? Palette.accent : Palette.textMuted,
+                ),
+                const SizedBox(width: Space.sm),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => showCodex(context, CodexRef('title', t.code)),
+                    child: Text(
+                      ContentNames.of('title', t.code),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: text.titleMedium,
+                    ),
+                  ),
+                ),
+                if (rewards.isNotEmpty) Text(rewards.join(' · '), style: text.bodySmall),
+              ],
+            ),
+            const SizedBox(height: Space.sm),
+            SizedBox(
+              height: 3 * 1.3 * MediaQuery.textScalerOf(context).scale(13),
+              child: Text(goalText(l, t.event, t.target), maxLines: 3, overflow: TextOverflow.ellipsis, style: goal),
+            ),
+            const SizedBox(height: Space.sm),
+            StatBar(
+              label: t.owned ? l.titleOwned : l.titleLocked,
+              value: done ? 1 : t.progress / t.target,
+              color: done ? Palette.success : Palette.accent,
+              valueText: done ? '${t.target}/${t.target}' : '${t.progress}/${t.target}',
+              stacked: true,
+            ),
+            const SizedBox(height: Space.sm),
+            Row(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SizedBox(
+                      height: 48, // the button's height, shown or not
+                      child: Row(
+                        children: [
+                          for (final r in tags) ...[
+                            ConstrainedBox(constraints: const BoxConstraints(maxWidth: 220), child: LinkTag(r)),
+                            const SizedBox(width: Space.xs),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                if (t.owned) ...[
+                  const SizedBox(width: Space.sm),
+                  t.active
+                      ? OutlinedButton(
+                          style: OutlinedButton.styleFrom(minimumSize: const Size(72, 40)),
+                          onPressed: () => onSet(''),
+                          child: Text(l.titleRemove),
+                        )
+                      : FilledButton.tonal(
+                          style: compactButton,
+                          onPressed: () => onSet(t.code),
+                          child: Text(l.titleWear),
+                        ),
+                ],
+              ],
+            ),
           ],
         ),
       ),
-      if (_titles.isEmpty)
-        Padding(
-          padding: const EdgeInsets.all(Space.lg),
-          child: Text(l.noTitlesYet, style: Theme.of(context).textTheme.bodySmall),
-        ),
-    ];
+    );
   }
 }
 
@@ -237,7 +403,15 @@ class _AchievementTile extends StatelessWidget {
                 valueText: '${a.progress}/${a.target}',
               ),
             ],
+            if (a.event.isNotEmpty) ...[
+              const SizedBox(height: Space.xs),
+              Text(goalText(l, a.event, goalCount(a.event, a.target)), style: text.bodySmall),
+            ],
             if (rewards.isNotEmpty) ...[const SizedBox(height: Space.xs), Text(rewards, style: text.bodySmall)],
+            if (a.event.isNotEmpty || a.rewardTitle != null) ...[
+              const SizedBox(height: Space.sm),
+              LinkTags([?eventRef(a.event), if (a.rewardTitle case final t?) CodexRef('title', t)]),
+            ],
           ],
         ),
       ),

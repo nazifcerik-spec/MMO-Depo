@@ -10,6 +10,7 @@ import '../story/story_repository.dart';
 import '../story/story_screen.dart';
 import '../daily/daily_reward.dart';
 import '../guide/guide.dart';
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/browser.dart';
@@ -213,6 +214,7 @@ class _HomeShellState extends State<HomeShell> {
     _wide = wide;
     if (_namesRequested) return;
     _namesRequested = true;
+    Codex.use(widget.auth.api); // linked tags (DD-372)
     // Content names in the device language (DD-230); tabs rebuild with them.
     ContentNames.load(widget.auth.api, Localizations.localeOf(context).languageCode).then((_) {
       if (mounted) setState(() {});

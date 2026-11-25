@@ -14,7 +14,7 @@ import '../adventure/adventure_models.dart';
 import '../adventure/adventure_repository.dart';
 import '../inventory/inventory_models.dart';
 import '../inventory/item_images.dart';
-import '../inventory/item_tags.dart';
+import '../codex/codex.dart';
 import '../inventory/item_widgets.dart';
 import 'pet_species_sheet.dart';
 
@@ -319,11 +319,13 @@ class _PetsScreenState extends State<PetsScreen> with PanelState {
 
   /// The raids whose boss can drop the species' egg, from its item tags.
   Future<List<PetEggSource>> _sources(PetSpecies s) async {
-    final info = await ItemInfo.load(widget.repo.api, 'pet_egg_${s.code}');
+    final page = await Codex.page('item', 'pet_egg_${s.code}');
     final raids = {for (final r in await widget.adventure.raids()) r.dungeon.code: r.dungeon};
     return [
-      for (final d in info?.dungeons ?? const <({String code, bool raid})>[])
-        if (raids[d.code] case final r?) (boss: r.bossMobCode, region: r.regionCode),
+      for (final g in page?.groups ?? const <CodexGroup>[])
+        if (g.key == 'dropped_in')
+          for (final d in g.refs)
+            if (raids[d.code] case final r?) (boss: r.bossMobCode, region: r.regionCode),
     ];
   }
 

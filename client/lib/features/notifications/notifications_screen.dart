@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/panel.dart';
@@ -282,6 +283,7 @@ class RewardTile extends StatelessWidget {
                 children: [
                   for (final i in items)
                     _RewardChip(
+                      code: i['code'] as String? ?? '',
                       label: stackLabel(
                         itemName(i['code'] as String? ?? '', i['prefix'] as String?, i['suffix'] as String?),
                         (i['count'] as num?)?.toInt() ?? 1,
@@ -316,26 +318,15 @@ class _DeleteButton extends StatelessWidget {
 }
 
 class _RewardChip extends StatelessWidget {
-  const _RewardChip({required this.label, required this.rarity});
+  const _RewardChip({required this.code, required this.label, required this.rarity});
 
+  final String code;
   final String label;
   final String rarity;
 
   @override
   Widget build(BuildContext context) {
-    final c = rarityColor(rarity);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 2),
-      decoration: BoxDecoration(
-        color: Palette.bgElevated,
-        borderRadius: BorderRadius.circular(Radii.sm),
-        border: Border.all(color: c.withValues(alpha: 0.8)),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 12, color: c, fontWeight: FontWeight.w600),
-      ),
-    );
+    return LinkTag(CodexRef('item', code), label: label, color: rarityColor(rarity));
   }
 }
 

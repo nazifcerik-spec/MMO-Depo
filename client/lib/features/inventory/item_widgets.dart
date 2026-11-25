@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
+import '../codex/codex.dart';
 import 'inventory_models.dart';
 import 'item_images.dart';
 
@@ -281,9 +282,10 @@ class SetSection extends StatelessWidget {
       key: const Key('item-set'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${ContentNames.of('itemset', set.code)}  $count/${set.pieces.length}',
-          style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w700),
+        LinkTag(
+          CodexRef('itemset', set.code),
+          label: '${ContentNames.of('itemset', set.code)}  $count/${set.pieces.length}',
+          color: Palette.epic,
         ),
         for (final (pieces, mods) in set.bonuses)
           Text(

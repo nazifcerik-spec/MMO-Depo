@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:otter/features/adventure/adventure_repository.dart';
 import 'package:otter/features/pets/pets_screen.dart';
+import 'package:otter/features/codex/codex.dart';
 import 'package:otter/l10n/app_localizations.dart';
 
 import 'fake_backend.dart';
@@ -12,6 +13,7 @@ void main() {
     be.petEggs.add({'item_id': 'egg-1', 'template_code': 'pet_egg_ember_fox', 'species': 'ember_fox', 'quantity': 1});
     final api = be.api();
     await tester.runAsync(() => api.login('grim', 'correct-horse'));
+    Codex.use(api);
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

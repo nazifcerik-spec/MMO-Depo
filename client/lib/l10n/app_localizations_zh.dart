@@ -4066,4 +4066,224 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profilePet => '宠物';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': '职业',
+      'family': '装备类型',
+      'items': '物品',
+      'set': '套装',
+      'pieces': '部件',
+      'gathered': '采集专业',
+      'nodes': '资源',
+      'grows': '产地',
+      'dropped_by': '掉落怪物',
+      'drops': '掉落物',
+      'dropped_in': '掉落地点',
+      'sold_by': '出售商人',
+      'sells': '出售',
+      'crafted_by': '制作专业',
+      'makes': '可制作',
+      'materials': '材料',
+      'used_in': '用于制作',
+      'used_by': '使用的专业',
+      'sets': '套装',
+      'egg': '蛋',
+      'hatches': '孵化出',
+      'boss': '首领',
+      'boss_of': '镇守之地',
+      'enemies': '敌人',
+      'fought_in': '出现的地下城',
+      'region': '地区',
+      'dungeons': '地下城',
+      'raids': '团队副本',
+      'mobs': '怪物',
+      'hunted_in': '狩猎地区',
+      'within': '所属地区',
+      'contains': '包含地区',
+      'roads': '道路通往',
+      'professions': '专业',
+      'quests': '任务',
+      'requires': '前置任务',
+      'leads_to': '后续',
+      'achievements': '成就',
+      'titles': '称号',
+      'sources': '提升方式',
+      'reputation': '声望',
+      'mastery': '精通',
+      'events': '活动',
+      'promotes_from': '前置职业',
+      'branches': '进阶',
+      'equipment': '可用装备',
+      'skills': '技能',
+      'races': '种族',
+      'other': '相关',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': '物品',
+      'mob': '怪物',
+      'boss': '团队首领',
+      'dungeon': '地下城',
+      'raid': '团队副本',
+      'region': '地区',
+      'profession': '专业',
+      'vendor': '商人',
+      'quest': '任务',
+      'title': '称号',
+      'achievement': '成就',
+      'class': '职业',
+      'skill': '技能',
+      'pet': '宠物',
+      'itemset': '套装',
+      'track': '精通',
+      'faction': '阵营',
+      'worldevent': '世界活动',
+      'race': '种族',
+      'equipment': '装备类型',
+      'list': '列表',
+      'other': '信息',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': '所有怪物',
+      'dungeons': '地下城与团队副本',
+      'crafts': '制作专业',
+      'other': '列表',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return '达到 $n 级。';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return '以$name专精达到 $n 级：需先进阶为该专精。';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return '击杀 $n 只怪物。狩猎、地下城和团队副本均计入。';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return '在狩猎中击杀 $name × $n。';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return '在地下城或团队副本中击败 $n 个首领。';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return '通关 $n 次地下城。团队副本不计入。';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return '通关该地下城 $n 次：$name。';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return '与队伍一起完成 $n 次团队副本。';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return '与队伍完成该团队副本 $n 次：$name。';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return '制作 $n 件物品。所有制作专业均计入。';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return '制作 $name × $n。';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return '用$name采集 $n 份资源。';
+  }
+
+  @override
+  String get codexHow => '获取方式';
+
+  @override
+  String get codexGoals => '目标';
+
+  @override
+  String get codexBonuses => '加成';
+
+  @override
+  String codexRewards(String list) {
+    return '奖励：$list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return '还有 $n 个';
+  }
+
+  @override
+  String get codexFailed => '无法加载信息。';
+
+  @override
+  String get codexOpen => '详情';
+
+  @override
+  String codexPieces(int n) {
+    return '（$n 件）';
+  }
+
+  @override
+  String codexTier(int n) {
+    return '$n 阶';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '已获得 $n/$total 个称号';
+  }
+
+  @override
+  String get titlesAchievement => '成就称号';
+
+  @override
+  String get titlesLevel => '等级称号';
+
+  @override
+  String get titlesMastery => '本职业精通称号';
+
+  @override
+  String get titlesOther => '其他职业精通称号';
+
+  @override
+  String get titleWear => '使用';
+
+  @override
+  String get titleRemove => '移除';
+
+  @override
+  String get titleLocked => '未获得';
+
+  @override
+  String get titleOwned => '已获得';
 }

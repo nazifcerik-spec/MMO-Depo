@@ -69,7 +69,12 @@ func (h *Handler) Titles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	list, err := h.svc.Titles(r.Context(), char, acct)
-	reply(w, r, map[string]any{"count": len(list), "titles": list}, err)
+	var all []TitleGoal
+	if err == nil {
+		all, err = h.svc.AllTitles(r.Context(), char, acct)
+	}
+	// `titles` stays the earned ones; `all` adds how each title is earned.
+	reply(w, r, map[string]any{"count": len(list), "titles": list, "all": all}, err)
 }
 
 func (h *Handler) SetActiveTitle(w http.ResponseWriter, r *http.Request) {

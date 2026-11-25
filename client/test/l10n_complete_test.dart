@@ -9,7 +9,10 @@ void main() {
   Map<String, dynamic> arb(String lang) =>
       jsonDecode(File('lib/l10n/app_$lang.arb').readAsStringSync()) as Map<String, dynamic>;
   final placeholder = RegExp(r'\{([A-Za-z_]\w*)[,}]');
-  Set<String> names(String s) => placeholder.allMatches(s).map((m) => m[1]!).toSet();
+  final branch = RegExp(r'(\w+)\{[^{}]*\}');
+  // A select message must carry the same branches; the rest the same placeholders.
+  Set<String> names(String s) =>
+      (s.contains(', select,') ? branch : placeholder).allMatches(s).map((m) => m[1]!).toSet();
 
   final en = arb('en');
   final keys = en.keys.where((k) => !k.startsWith('@')).toList();

@@ -306,6 +306,8 @@ class _RaidPanelState extends State<_RaidPanel> with PanelState {
             Text('${l.raidGroup(r.groupMin, r.groupMax)} · ${shortDuration(l, d.duration)}', style: text.bodySmall),
             Text(l.dungeonEncounters(d.encounters, ContentNames.of('mob', d.bossMobCode)), style: text.bodySmall),
             const SizedBox(height: Space.sm),
+            LinkTags([CodexRef('dungeon', r.code, sub: 'raid'), CodexRef('mob', d.bossMobCode, sub: 'boss')]),
+            const SizedBox(height: Space.sm),
             Wrap(
               spacing: Space.sm,
               crossAxisAlignment: WrapCrossAlignment.center,

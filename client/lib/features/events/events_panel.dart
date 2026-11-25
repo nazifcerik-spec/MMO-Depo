@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/contract_progress.dart';
@@ -244,6 +245,7 @@ class _WorldEventInfo extends StatelessWidget {
         Text(l.eventHowTitle, style: text.titleSmall),
         const SizedBox(height: Space.sm),
         for (var i = 0; i < steps.length; i++) _Step(n: i + 1, text: steps[i]),
+        if (e.region case final r?) LinkTags([CodexRef('region', r)]),
         const SizedBox(height: Space.lg),
         Text(l.eventRewardsTitle, style: text.titleSmall),
         const SizedBox(height: Space.sm),

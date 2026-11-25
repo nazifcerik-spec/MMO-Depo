@@ -4114,4 +4114,224 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profilePet => 'Pet';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': 'Sınıflar',
+      'family': 'Ekipman türü',
+      'items': 'Eşyalar',
+      'set': 'Set',
+      'pieces': 'Parçalar',
+      'gathered': 'Toplama mesleği',
+      'nodes': 'Kaynaklar',
+      'grows': 'Bulunduğu yer',
+      'dropped_by': 'Düşüren canavarlar',
+      'drops': 'Düşürdükleri',
+      'dropped_in': 'Düştüğü yerler',
+      'sold_by': 'Satıcı',
+      'sells': 'Sattıkları',
+      'crafted_by': 'Üreten meslek',
+      'makes': 'Ürettikleri',
+      'materials': 'Malzemeler',
+      'used_in': 'Yapımında kullanıldığı eşyalar',
+      'used_by': 'Kullanan meslekler',
+      'sets': 'Setler',
+      'egg': 'Yumurtası',
+      'hatches': 'Çıkan pet',
+      'boss': 'Boss',
+      'boss_of': 'Boss olduğu yerler',
+      'enemies': 'Düşmanlar',
+      'fought_in': 'Karşına çıktığı zindanlar',
+      'region': 'Bölge',
+      'dungeons': 'Zindanlar',
+      'raids': 'Baskınlar',
+      'mobs': 'Canavarlar',
+      'hunted_in': 'Avlandığı bölgeler',
+      'within': 'Bağlı olduğu bölge',
+      'contains': 'İçindeki bölgeler',
+      'roads': 'Yol olan bölgeler',
+      'professions': 'Meslekler',
+      'quests': 'Görevler',
+      'requires': 'Önce bitmesi gereken',
+      'leads_to': 'Devamı',
+      'achievements': 'Başarımlar',
+      'titles': 'Unvanlar',
+      'sources': 'Nelerle yükselir',
+      'reputation': 'İtibar',
+      'mastery': 'Ustalık',
+      'events': 'Etkinlikler',
+      'promotes_from': 'Önceki sınıf',
+      'branches': 'Terfiler',
+      'equipment': 'Kullanabildiği ekipman',
+      'skills': 'Yetenekler',
+      'races': 'Irklar',
+      'other': 'İlgili',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': 'Eşya',
+      'mob': 'Canavar',
+      'boss': 'Baskın bossu',
+      'dungeon': 'Zindan',
+      'raid': 'Baskın',
+      'region': 'Bölge',
+      'profession': 'Meslek',
+      'vendor': 'Satıcı',
+      'quest': 'Görev',
+      'title': 'Unvan',
+      'achievement': 'Başarım',
+      'class': 'Sınıf',
+      'skill': 'Yetenek',
+      'pet': 'Pet',
+      'itemset': 'Eşya seti',
+      'track': 'Ustalık',
+      'faction': 'Grup',
+      'worldevent': 'Dünya etkinliği',
+      'race': 'Irk',
+      'equipment': 'Ekipman türü',
+      'list': 'Liste',
+      'other': 'Bilgi',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': 'Tüm canavarlar',
+      'dungeons': 'Zindanlar ve baskınlar',
+      'crafts': 'Üretim meslekleri',
+      'other': 'Liste',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return '$n. seviyeye ulaş.';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return '$name uzmanlığıyla $n. seviyeye ulaş: önce bu uzmanlığa terfi etmelisin.';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return '$n canavar öldür. Av, zindan ve baskındaki öldürmeler sayılır.';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return 'Avda şu canavarı öldür: $name × $n.';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return 'Zindan ya da baskınlarda $n boss yen.';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return '$n zindan temizle. Baskınlar sayılmaz.';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return 'Şu zindanı $n kez temizle: $name.';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return 'Partiyle $n baskın tamamla.';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return 'Şu baskını partiyle $n kez tamamla: $name.';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return '$n eşya üret. Bütün üretim meslekleri sayılır.';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return 'Şu eşyayı üret: $name × $n.';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return '$name mesleğiyle $n kaynak topla.';
+  }
+
+  @override
+  String get codexHow => 'Nasıl kazanılır';
+
+  @override
+  String get codexGoals => 'Yapılacaklar';
+
+  @override
+  String get codexBonuses => 'Bonuslar';
+
+  @override
+  String codexRewards(String list) {
+    return 'Ödül: $list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return '$n tane daha';
+  }
+
+  @override
+  String get codexFailed => 'Bilgi yüklenemedi.';
+
+  @override
+  String get codexOpen => 'Bilgi';
+
+  @override
+  String codexPieces(int n) {
+    return '($n parça)';
+  }
+
+  @override
+  String codexTier(int n) {
+    return 'Kademe $n';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '$total unvandan $n tanesi kazanıldı';
+  }
+
+  @override
+  String get titlesAchievement => 'Başarım unvanları';
+
+  @override
+  String get titlesLevel => 'Seviye unvanları';
+
+  @override
+  String get titlesMastery => 'Sınıfının ustalık unvanları';
+
+  @override
+  String get titlesOther => 'Diğer sınıfların ustalık unvanları';
+
+  @override
+  String get titleWear => 'Kullan';
+
+  @override
+  String get titleRemove => 'Kaldır';
+
+  @override
+  String get titleLocked => 'Kazanılmadı';
+
+  @override
+  String get titleOwned => 'Kazanıldı';
 }

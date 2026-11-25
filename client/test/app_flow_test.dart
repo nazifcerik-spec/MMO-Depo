@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:otter/features/guide/guide.dart';
+import 'package:otter/features/codex/codex.dart';
 import 'package:otter/features/adventure/adventure_models.dart';
 import 'package:otter/shared/content_names.dart';
 import 'package:otter/features/character/class_catalog.dart';
@@ -738,16 +739,34 @@ void main() {
     expect(find.text('That slot is empty: equipping adds all of these.'), findsOneWidget);
     // Tags (DD-339): who uses it from what level, and where it comes from.
     expect(find.byKey(const Key('item-tags')), findsOneWidget);
-    for (final t in [
-      'Lvl 5',
-      'Warrior',
-      'Grey Wolf · Lvl 6',
-      'Raid: Old Keep',
-      'Blacksmithing · skill 3',
-      'Smelting',
-    ]) {
-      expect(find.text(t), findsOneWidget, reason: t);
+    for (final t in ['Warrior', 'Grey Wolf · Lvl 6', 'Old Keep · Lvl 5', 'Blacksmithing · skill 3']) {
+      expect(find.widgetWithText(LinkTag, t), findsOneWidget, reason: t);
     }
+    // Every tag is a link (DD-372): monster → region, and back again.
+    await tester.ensureVisible(find.text('Grey Wolf · Lvl 6'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Grey Wolf · Lvl 6'));
+    await tester.pumpAndSettle();
+    expect(find.text('Monster · Lvl 6'), findsOneWidget);
+    expect(find.text('HP 120 · ATK 9 · DEF 4'), findsOneWidget);
+    expect(find.widgetWithText(LinkTag, 'Wolves · Lvl 4'), findsOneWidget);
+    await tester.tap(find.widgetWithText(LinkTag, 'Greenwood · Lvl 2'));
+    await tester.pumpAndSettle();
+    expect(find.text('This page could not be loaded.'), findsOneWidget, reason: 'an unknown page says so');
+    await tester.tap(find.byKey(const Key('codex-back')));
+    await tester.pumpAndSettle();
+    expect(find.text('Monster · Lvl 6'), findsOneWidget);
+    await tester.tapAt(const Offset(20, 20));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('codex-page')), findsNothing);
+    // A long group folds.
+    await tester.ensureVisible(find.text('8 more'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('8 more'));
+    await tester.pumpAndSettle();
+    expect(find.text('Thing 19'), findsOneWidget);
+    await tester.ensureVisible(find.text('Equip'));
+    await tester.pumpAndSettle();
     final sheets = be.sheetGets;
     await tester.tap(find.text('Equip'));
     await tester.pumpAndSettle();
@@ -1248,6 +1267,8 @@ void main() {
     expect(find.text('Party of 3–5 · 1h 00m'), findsOneWidget);
     expect(find.text('Boss: 2 gear pieces guaranteed'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('Open raid'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Open raid'));
     await tester.pumpAndSettle();
     expect(find.text('Members (1/5)'), findsOneWidget);
@@ -1272,6 +1293,8 @@ void main() {
     expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Collect')).onPressed, isNull);
 
     be.raidRun!['expires_at'] = DateTime.now().toUtc().toIso8601String();
+    await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000); // back to the top first
+    await tester.pumpAndSettle();
     await tester.fling(find.byType(ListView).last, const Offset(0, 400), 1000);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Collect'));
@@ -2152,6 +2175,7 @@ void main() {
       reason: 'unlocked first',
     );
     expect(find.text('37/100'), findsOneWidget);
+    expect(find.text('Kill 100 monsters. Hunts, dungeons and raids all count.'), findsOneWidget);
     await tester.scrollUntilVisible(find.textContaining('Title: Prospector'), 200, scrollable: _list);
 
     await tester.tap(find.text('Mastery'));
@@ -2159,20 +2183,48 @@ void main() {
     expect(find.text('Tier 1/10'), findsOneWidget);
     expect(find.text('150 / 500'), findsOneWidget);
     expect(find.text('+1/h Mining yield'), findsOneWidget);
+    expect(find.widgetWithText(LinkTag, 'Mining'), findsOneWidget, reason: 'what raises it');
 
     await tester.tap(find.text('Reputation'));
     await tester.pumpAndSettle();
     expect(find.text('Neutral · 40'), findsOneWidget);
     expect(find.text('+1460 today'), findsOneWidget);
+    expect(find.widgetWithText(LinkTag, 'All monsters'), findsOneWidget);
 
     await tester.tap(find.text('Titles'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Prospector'));
+    // Every title says what earns it, with its progress and links (DD-372).
+    expect(find.text('1 of 5 titles earned'), findsOneWidget);
+    Finder card(String code) => find.byKey(ValueKey('title-$code'));
+    Finder inCard(String code, String text) => find.descendant(of: card(code), matching: find.text(text));
+    expect(inCard('prospector', 'Gather 500 resources with Mining.'), findsOneWidget);
+    expect(inCard('prospector', 'Earned'), findsOneWidget);
+    expect(inCard('the_slayer', 'Kill 1000 monsters. Hunts, dungeons and raids all count.'), findsOneWidget);
+    expect(inCard('the_slayer', '37/1000'), findsOneWidget);
+    expect(inCard('the_slayer', 'Use'), findsNothing);
+    final size = tester.getSize(card('prospector'));
+    expect(tester.getSize(card('the_slayer')), size, reason: 'same-kind cards share one size');
+    await tester.tap(inCard('the_slayer', 'All monsters'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(LinkTag, 'Grey Wolf · Lvl 6').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Monster · Lvl 6'), findsOneWidget);
+    await tester.tap(find.byTooltip('Close'));
+    await tester.pumpAndSettle();
+    await tester.tap(inCard('prospector', 'Use'));
     await tester.pumpAndSettle();
     expect(be.activeTitle, 'prospector');
-    await tester.tap(find.text('No title'));
+    await tester.tap(inCard('prospector', 'Remove'));
     await tester.pumpAndSettle();
     expect(be.activeTitle, isNull);
+    await tester.scrollUntilVisible(card('veteran'), 200, scrollable: _list);
+    expect(inCard('veteran', 'Reach level 100.'), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('titles-other')), 200, scrollable: _list);
+    expect(tester.getSize(card('master_of_shadows')), size);
+    await tester.tap(find.byKey(const Key('titles-other')));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(card('flame_sovereign'), 200, scrollable: _list);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('events: seasonal claim once, enlist with confirm, level gate, closed result', (tester) async {

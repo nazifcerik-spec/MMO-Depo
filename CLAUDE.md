@@ -348,6 +348,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 165. **Web yan menüsü + oyuncu profili (bitti)** — Sprint 165, DD-370..371. Geniş ekranda `GameMenu` (30 yer, 7 grup, boyanmış simgeler `assets/menu/`, kimlik + can/XP/altın + o anki iş; < 1180 px yalnız simge), sayfalar menünün yanında kendi `Navigator`'ında; ilk sayfa `OverviewView`. `internal/player`: `GET /v1/character/{id}/action`, `GET /v1/players/{ad}`; `PlayerScreen` (sohbet/arkadaş/parti/lonca/sıralamadan, web'de `…/@Ad`). Kredi mağazasındaki bonus düğmeleri düzeltildi.
 
+166. **Köprülü etiketler + unvan şartları (bitti)** — Sprint 166, DD-372..373. `contentpack/codex.go` (her içeriğe bağlantılı bilgi sayfası, iki yönlü), `GET /v1/codex/{kind}/{code}`; istemci `features/codex/codex.dart` (`LinkTag`, `showCodex`). **Kural: yeni içerik türü = codex sayfası + gösterildiği yerde `LinkTag`; tıklanmayan etiket yok.** Unvanlar sekmesi 55 unvanı şartı, ilerlemesi ve etiketleriyle gösterir (`progression.AllTitles`). AGP 9.1.1 + Kotlin 2.4.10 (Flutter 3.50 alt sınırı).
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

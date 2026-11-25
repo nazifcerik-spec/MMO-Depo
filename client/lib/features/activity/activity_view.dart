@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/config.dart';
@@ -538,6 +539,7 @@ class GatherNodeTile extends StatelessWidget {
                     ),
                   ),
                   Text(trailing, style: const TextStyle(fontSize: 12, color: Palette.textSecondary)),
+                  CodexButton(CodexRef('item', node.code)),
                 ],
               ),
             ),

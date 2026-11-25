@@ -72,6 +72,53 @@ class FakeBackend {
   int vaultCopper = 0;
   Map<String, dynamic>? rankingPage;
 
+  /// Content pages by `kind/code` (DD-372).
+  final codexGets = <String>[];
+  late final codex = <String, Map<String, dynamic>>{
+    'item/sword_iron': {
+      'sub': 'weapon',
+      'level': 5,
+      'traits': {'slot': 'mainhand', 'subclass': 'sword'},
+      'groups': [
+        _group('classes', [_ref('class', 'warrior', sub: 'warrior')]),
+        _group('crafted_by', [_ref('profession', 'blacksmithing', skill: 3)]),
+        _group('dropped_by', [_ref('mob', 'grey_wolf', level: 6)]),
+        _group('dropped_in', [_ref('dungeon', 'old_keep', sub: 'raid', level: 5)]),
+        _group('items', [for (var i = 0; i < 20; i++) _ref('item', 'thing_$i')]),
+      ],
+    },
+    'mob/grey_wolf': {
+      'level': 6,
+      'facts': {'hp': 120, 'attack': 9, 'defense': 4, 'xp': 30},
+      'groups': [
+        _group('hunted_in', [_ref('region', 'greenwood', sub: 'zone', level: 2)]),
+        _group('quests', [_ref('quest', 'main_04_wolves', sub: 'main', level: 4)]),
+      ],
+    },
+    'list/mobs': {
+      'groups': [
+        _group('mobs', [_ref('mob', 'grey_wolf', level: 6)]),
+      ],
+    },
+    'title/the_slayer': {
+      'goals': [
+        {'event': 'mob_killed', 'count': 1000},
+      ],
+      'groups': [
+        _group('achievements', [_ref('achievement', 'slayer_1000')]),
+      ],
+    },
+  };
+
+  static Map<String, dynamic> _group(String key, List<Map<String, dynamic>> refs) => {'key': key, 'refs': refs};
+  static Map<String, dynamic> _ref(String kind, String code, {String? sub, int? level, int? skill}) => {
+    'kind': kind,
+    'code': code,
+    'sub': ?sub,
+    'level': ?level,
+    'skill': ?skill,
+  };
+
   /// What the character is doing (DD-370) and the public pages by name (DD-371).
   Map<String, dynamic>? action;
   final profiles = <String, Map<String, dynamic>>{};
@@ -892,31 +939,21 @@ class FakeBackend {
       activeHunt = null;
       return json(200, {'state': 'cancelled'});
     }
-    if (path.startsWith('/v1/items/pet_egg_') && path.endsWith('/info')) {
-      return json(200, {
-        'level': 1,
-        'dungeons': [
-          {'code': 'north_keep_siege', 'raid': true},
-        ],
-      });
-    }
-    if (path.startsWith('/v1/items/') && path.endsWith('/info')) {
-      return json(200, {
-        'level': 5,
-        'slot': 'mainhand',
-        'classes': ['warrior'],
-        'mobs': [
-          {'code': 'grey_wolf', 'level': 6},
-        ],
-        'dungeons': [
-          {'code': 'old_keep', 'raid': true},
-        ],
-        'crafted': [
-          {'profession': 'blacksmithing', 'skill': 3},
-        ],
-        'vendors': ['general_ironhold'],
-        'used_by': ['smelting'],
-      });
+    if (path.startsWith('/v1/codex/')) {
+      final at = path.substring('/v1/codex/'.length);
+      codexGets.add(at);
+      final page =
+          codex[at] ??
+          (at.startsWith('item/pet_egg_')
+              ? {
+                  'groups': [
+                    _group('dropped_in', [_ref('dungeon', 'north_keep_siege', sub: 'raid', level: 100)]),
+                  ],
+                }
+              : null);
+      if (page == null) return error(404, 'E_NOT_FOUND');
+      final parts = at.split('/');
+      return json(200, {'kind': parts[0], 'code': parts[1], ...page});
     }
     if (path == '/v1/world/content') {
       return json(200, {
@@ -1484,10 +1521,18 @@ class FakeBackend {
               'active_bonuses': [
                 {'kind': 'flat', 'target': 'gather_yield_mining', 'amount': 1},
               ],
+              'sources': ['gather_mining'],
             },
           ],
           'reputation': [
-            {'faction': 'ironhold_guard', 'rep_xp': 40, 'tier': 3, 'tier_name': 'neutral', 'daily_gain_left': 1460},
+            {
+              'faction': 'ironhold_guard',
+              'rep_xp': 40,
+              'tier': 3,
+              'tier_name': 'neutral',
+              'daily_gain_left': 1460,
+              'sources': ['mob_killed'],
+            },
           ],
         });
       case 'achievements':
@@ -1496,6 +1541,7 @@ class FakeBackend {
             {
               'code': 'slayer_100',
               'category': 'combat',
+              'event': 'mob_killed',
               'points': 10,
               'progress': 37,
               'target': 100,
@@ -1518,6 +1564,7 @@ class FakeBackend {
               'target': 500,
               'reward_gold_copper': 5000,
               'reward_title_code': 'prospector',
+              'event': 'gather_mining',
               'unlocked_at': now,
             },
           ],
@@ -1526,6 +1573,26 @@ class FakeBackend {
         return json(200, {
           'titles': [
             for (final t in ownedTitles) {'code': t, 'unlocked_at': now, 'active': t == activeTitle},
+          ],
+          'all': [
+            for (final (code, source, event, target, progress, ach, own) in [
+              ('prospector', 'achievement', 'gather_mining', 500, 500, 'miner_500', false),
+              ('the_slayer', 'achievement', 'mob_killed', 1000, 37, 'slayer_1000', false),
+              ('veteran', 'level', 'level', 100, 3, '', false),
+              ('master_of_shadows', 'class_mastery', 'class_mastery:nightblade', 1000, 0, 'mastery_nightblade', true),
+              ('flame_sovereign', 'class_mastery', 'class_mastery:pyromancer', 1000, 0, 'mastery_pyromancer', false),
+            ])
+              {
+                'code': code,
+                'source': source,
+                'event': event,
+                'target': target,
+                'progress': progress,
+                'achievement': ach,
+                'own_class': own,
+                'owned': ownedTitles.contains(code),
+                'active': code == activeTitle,
+              },
           ],
         });
       case 'titles/active':

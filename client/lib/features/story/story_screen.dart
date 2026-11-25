@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
@@ -257,7 +258,13 @@ class _StoryScreenState extends State<StoryScreen> with PanelState {
                       children: [
                         Text(_optionLabel(s.code, o.code)),
                         if (o.requiresQuest != null)
-                          Text(l.storyNeedsQuest(questName(o.requiresQuest!)), style: text.bodySmall),
+                          Padding(
+                            padding: const EdgeInsets.only(top: Space.xs),
+                            child: LinkTag(
+                              CodexRef('quest', o.requiresQuest!),
+                              label: l.storyNeedsQuest(questName(o.requiresQuest!)),
+                            ),
+                          ),
                       ],
                     ),
                   ),

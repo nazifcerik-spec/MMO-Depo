@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/panel.dart';
@@ -312,6 +313,7 @@ class _ShopPanelState extends State<_ShopPanel> with PanelState {
                   ),
                   title: Text(itemName(o.templateCode)),
                   subtitle: GoldText(o.price, size: 13),
+                  onTap: () => showCodex(context, CodexRef('item', o.templateCode)),
                   trailing: FilledButton.tonal(
                     style: compactButton,
                     onPressed: o.price <= _gold ? () => _buy(o) : null,

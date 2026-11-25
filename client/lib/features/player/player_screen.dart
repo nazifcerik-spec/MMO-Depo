@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/browser.dart';
@@ -223,11 +224,14 @@ class PlayerBanner extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (p.title.isNotEmpty)
-                          Text(
-                            ContentNames.of('title', p.title),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: text.bodyMedium?.copyWith(color: accent, fontWeight: FontWeight.w600),
+                          InkWell(
+                            onTap: () => showCodex(context, CodexRef('title', p.title)),
+                            child: Text(
+                              ContentNames.of('title', p.title),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: text.bodyMedium?.copyWith(color: accent, fontWeight: FontWeight.w600),
+                            ),
                           ),
                         Text(p.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: text.headlineMedium),
                         Row(
@@ -365,8 +369,8 @@ class _Worn extends StatelessWidget {
               if (gear[slot] case final g?)
                 Tooltip(
                   message: itemName(g.templateCode, g.prefix, g.suffix),
-                  triggerMode: TooltipTriggerMode.tap,
                   child: ItemCell(
+                    onTap: () => showCodex(context, CodexRef('item', g.templateCode)),
                     rarity: g.rarity,
                     icon: itemIcon(g.itemClass, g.itemSubclass),
                     code: g.templateCode,
@@ -399,18 +403,21 @@ class _Work extends StatelessWidget {
         const SizedBox(height: Space.md),
         if (list.isEmpty) Text(l.profileNoWork, style: text.bodySmall),
         for (final (code, level) in list)
-          Padding(
-            padding: const EdgeInsets.only(bottom: Space.sm),
-            child: Row(
-              children: [
-                CircleArt(asset: 'assets/professions/$code.webp', size: 32, fallback: const SizedBox()),
-                const SizedBox(width: Space.sm),
-                Expanded(child: Text(professionName(l, code), overflow: TextOverflow.ellipsis)),
-                Text(
-                  l.levelShort(level),
-                  style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
-                ),
-              ],
+          InkWell(
+            onTap: () => showCodex(context, CodexRef('profession', code)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: Space.xs),
+              child: Row(
+                children: [
+                  CircleArt(asset: 'assets/professions/$code.webp', size: 32, fallback: const SizedBox()),
+                  const SizedBox(width: Space.sm),
+                  Expanded(child: Text(professionName(l, code), overflow: TextOverflow.ellipsis)),
+                  Text(
+                    l.levelShort(level),
+                    style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),
+                  ),
+                ],
+              ),
             ),
           ),
       ],
@@ -437,6 +444,7 @@ class _PetCard extends StatelessWidget {
             PetArt(species: species, stage: petStage(level), size: 64, color: Palette.accent),
             const SizedBox(width: Space.md),
             Expanded(child: Text(petName(species))),
+            CodexButton(CodexRef('pet', species)),
             Text(
               l.levelShort(level),
               style: const TextStyle(fontWeight: FontWeight.w700, fontFeatures: numeric),

@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"maps"
+	"slices"
 	"strings"
 	"time"
 
@@ -14,6 +16,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/otter/server/internal/economy"
+	"github.com/otter/server/internal/leveling"
 	"github.com/otter/server/internal/notification"
 )
 
@@ -404,15 +407,17 @@ type MasteryView struct {
 	MaxTier     int16         `json:"max_tier"`
 	NextTierXP  int64         `json:"next_tier_xp"`
 	ActiveBonus []BonusEffect `json:"active_bonuses"`
+	Sources     []string      `json:"sources"` // event kinds that feed it (DD-372)
 }
 
 type ReputationView struct {
-	Faction   string `json:"faction"`
-	NameKey   string `json:"display_name_key"`
-	Rep       int    `json:"rep_xp"`
-	Tier      int16  `json:"tier"`
-	TierName  string `json:"tier_name"`
-	DailyLeft int    `json:"daily_gain_left"`
+	Faction   string   `json:"faction"`
+	NameKey   string   `json:"display_name_key"`
+	Rep       int      `json:"rep_xp"`
+	Tier      int16    `json:"tier"`
+	TierName  string   `json:"tier_name"`
+	DailyLeft int      `json:"daily_gain_left"`
+	Sources   []string `json:"sources"` // event kinds that feed it (DD-372)
 }
 
 type Summary struct {
@@ -479,7 +484,7 @@ func (s *Service) Summary(ctx context.Context, char, account uuid.UUID) (*Summar
 		tier := MasteryTier(xp[t.Code], t.Curve, t.MaxTier)
 		sum.Mastery = append(sum.Mastery, MasteryView{Track: t.Code, NameKey: t.NameKey, Category: t.Category,
 			XP: xp[t.Code], Tier: tier, MaxTier: t.MaxTier, NextTierXP: NextTierXP(tier, t.Curve, t.MaxTier),
-			ActiveBonus: t.effects(tier)})
+			ActiveBonus: t.effects(tier), Sources: slices.Sorted(maps.Keys(t.Sources))})
 	}
 
 	type repRow struct {
@@ -513,7 +518,7 @@ func (s *Service) Summary(ctx context.Context, char, account uuid.UUID) (*Summar
 		tier := RepTier(r.rep)
 		sum.Reputation = append(sum.Reputation, ReputationView{
 			Faction: f.Code, NameKey: f.NameKey, Rep: r.rep, Tier: tier, TierName: RepTierNames[tier],
-			DailyLeft: f.DailyCap - used,
+			DailyLeft: f.DailyCap - used, Sources: slices.Sorted(maps.Keys(f.Sources)),
 		})
 	}
 	return sum, nil
@@ -524,6 +529,7 @@ type AchievementView struct {
 	NameKey    string     `json:"display_name_key"`
 	DescKey    string     `json:"description_key"`
 	Category   string     `json:"category"`
+	Event      string     `json:"event"` // what it counts (DD-372)
 	Points     int16      `json:"points"`
 	Progress   int32      `json:"progress"`
 	Target     int32      `json:"target"`
@@ -563,7 +569,7 @@ func (s *Service) Achievements(ctx context.Context, char, account uuid.UUID) ([]
 		if a.Hidden && p.at == nil {
 			continue
 		}
-		out = append(out, AchievementView{Code: a.Code, NameKey: a.NameKey, DescKey: a.DescKey, Category: a.Category,
+		out = append(out, AchievementView{Code: a.Code, NameKey: a.NameKey, DescKey: a.DescKey, Category: a.Category, Event: a.Trigger,
 			Points: a.Points, Progress: p.cur, Target: a.Target, UnlockedAt: p.at, TitleCode: a.RewardTitle,
 			RewardGold: a.RewardGold})
 	}
@@ -594,6 +600,94 @@ func (s *Service) Titles(ctx context.Context, char, account uuid.UUID) ([]TitleV
 		t.DisplayKey = s.cat.titles[t.Code]
 		return t, err
 	})
+}
+
+// TitleGoal is a title of the game and how it is earned (DD-372): the event
+// to reach Target of. Level titles count character levels ("level"), class
+// mastery titles the level as that specialization ("class_mastery:<spec>").
+type TitleGoal struct {
+	Code        string `json:"code"`
+	Source      string `json:"source"` // achievement | level | class_mastery
+	Event       string `json:"event"`
+	Target      int64  `json:"target"`
+	Progress    int64  `json:"progress"`
+	Achievement string `json:"achievement,omitempty"` // the achievement that grants it
+	RewardGold  int64  `json:"reward_gold_copper,omitempty"`
+	Points      int16  `json:"points,omitempty"`
+	OwnClass    bool   `json:"own_class,omitempty"` // a mastery of the character's class tree
+	Owned       bool   `json:"owned"`
+	Active      bool   `json:"active"`
+}
+
+// AllTitles lists every title with its requirement and the character's
+// progress: achievement titles, level titles, then class masteries with the
+// character's own class first.
+func (s *Service) AllTitles(ctx context.Context, char, account uuid.UUID) ([]TitleGoal, error) {
+	owned, err := s.Titles(ctx, char, account)
+	if err != nil {
+		return nil, err
+	}
+	var level int64
+	var class, spec string
+	if err := s.pool.QueryRow(ctx, `
+		SELECT level, class_code, COALESCE(spec_code, class_code) FROM character.character WHERE id = $1`, char).
+		Scan(&level, &class, &spec); err != nil {
+		return nil, err
+	}
+	achievements, err := s.Achievements(ctx, char, account)
+	if err != nil {
+		return nil, err
+	}
+	out := titleGoals(achievements, leveling.Current(), level, class, spec)
+	for i := range out {
+		for _, t := range owned {
+			if t.Code == out[i].Code {
+				out[i].Owned, out[i].Active = true, t.Active
+			}
+		}
+	}
+	return out, nil
+}
+
+// titleGoals orders the titles: achievements, levels, masteries.
+func titleGoals(achievements []AchievementView, cfg *leveling.Config, level int64, class, spec string) []TitleGoal {
+	var out, mine, others []TitleGoal
+	mastery := map[string]AchievementView{}
+	for _, a := range achievements {
+		if a.TitleCode == nil {
+			continue
+		}
+		if strings.HasPrefix(a.Event, EventClassMastery+":") {
+			mastery[*a.TitleCode] = a
+			continue
+		}
+		out = append(out, TitleGoal{Code: *a.TitleCode, Source: "achievement", Event: a.Event, Target: int64(a.Target),
+			Progress: int64(a.Progress), Achievement: a.Code, RewardGold: a.RewardGold, Points: a.Points})
+	}
+	for _, l := range slices.Sorted(maps.Keys(cfg.Titles)) {
+		out = append(out, TitleGoal{Code: cfg.Titles[l], Source: "level", Event: "level", Target: int64(l),
+			Progress: min(level, int64(l))})
+	}
+	for i := range cfg.Classes {
+		k, ok := cfg.Class(cfg.Classes[i].Code)
+		if !ok || k.Mastery == nil {
+			continue
+		}
+		g := TitleGoal{Code: k.Mastery.Title, Source: "class_mastery", Event: EventClassMastery + ":" + k.Code,
+			Target: int64(cfg.Milestones.Mastery), OwnClass: k.Root() == class}
+		if k.Code == spec {
+			g.Progress = min(level, g.Target)
+		}
+		if a, ok := mastery[g.Code]; ok {
+			g.Achievement, g.RewardGold, g.Points = a.Code, a.RewardGold, a.Points
+		}
+		if g.OwnClass {
+			mine = append(mine, g)
+		} else {
+			others = append(others, g)
+		}
+	}
+	return append(append(out, mine...), others...)
 }
 
 // SetActiveTitle equips an unlocked title; empty code clears it.

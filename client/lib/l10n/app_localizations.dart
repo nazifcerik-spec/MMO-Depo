@@ -7262,6 +7262,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pet'**
   String get profilePet;
+
+  /// No description provided for @codexGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, classes{Classes} family{Equipment type} items{Items} set{Set} pieces{Pieces} gathered{Gathered with} nodes{Resources} grows{Found in} dropped_by{Dropped by} drops{Drops} dropped_in{Drops in} sold_by{Sold by} sells{Sells} crafted_by{Crafted with} makes{Crafts} materials{Materials} used_in{Used to craft} used_by{Professions that use it} sets{Sets} egg{Egg} hatches{Hatches into} boss{Boss} boss_of{Boss of} enemies{Enemies} fought_in{Fought in} region{Region} dungeons{Dungeons} raids{Raids} mobs{Monsters} hunted_in{Hunted in} within{Part of} contains{Contains} roads{Roads to} professions{Professions} quests{Quests} requires{Requires first} leads_to{Leads to} achievements{Achievements} titles{Titles} sources{Raised by} reputation{Reputation} mastery{Mastery} events{Events} promotes_from{Promoted from} branches{Promotions} equipment{Usable equipment} skills{Skills} races{Races} other{Related}}'**
+  String codexGroup(String key);
+
+  /// No description provided for @codexKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, item{Item} mob{Monster} boss{Raid boss} dungeon{Dungeon} raid{Raid} region{Region} profession{Profession} vendor{Vendor} quest{Quest} title{Title} achievement{Achievement} class{Class} skill{Skill} pet{Pet} itemset{Item set} track{Mastery} faction{Faction} worldevent{World event} race{Race} equipment{Equipment type} list{List} other{Info}}'**
+  String codexKind(String kind);
+
+  /// No description provided for @codexList.
+  ///
+  /// In en, this message translates to:
+  /// **'{code, select, mobs{All monsters} dungeons{Dungeons and raids} crafts{Crafting professions} other{List}}'**
+  String codexList(String code);
+
+  /// No description provided for @goalLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach level {n}.'**
+  String goalLevel(int n);
+
+  /// No description provided for @goalMastery.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach level {n} as {name}: promote into this specialization and stay in it.'**
+  String goalMastery(int n, String name);
+
+  /// No description provided for @goalKillAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Kill {n} monsters. Hunts, dungeons and raids all count.'**
+  String goalKillAny(int n);
+
+  /// No description provided for @goalKill.
+  ///
+  /// In en, this message translates to:
+  /// **'Kill {n} × {name} on hunts.'**
+  String goalKill(int n, String name);
+
+  /// No description provided for @goalBoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Defeat {n} bosses in dungeons or raids.'**
+  String goalBoss(int n);
+
+  /// No description provided for @goalDungeonAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear {n} dungeons. Raids do not count.'**
+  String goalDungeonAny(int n);
+
+  /// No description provided for @goalDungeon.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear this dungeon {n} times: {name}.'**
+  String goalDungeon(int n, String name);
+
+  /// No description provided for @goalRaidAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete {n} raids with a party.'**
+  String goalRaidAny(int n);
+
+  /// No description provided for @goalRaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete this raid {n} times with a party: {name}.'**
+  String goalRaid(int n, String name);
+
+  /// No description provided for @goalCraftAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft {n} items. Every crafting profession counts.'**
+  String goalCraftAny(int n);
+
+  /// No description provided for @goalCraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft {n} × {name}.'**
+  String goalCraft(int n, String name);
+
+  /// No description provided for @goalGather.
+  ///
+  /// In en, this message translates to:
+  /// **'Gather {n} resources with {name}.'**
+  String goalGather(int n, String name);
+
+  /// No description provided for @codexHow.
+  ///
+  /// In en, this message translates to:
+  /// **'How to earn it'**
+  String get codexHow;
+
+  /// No description provided for @codexGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'Objectives'**
+  String get codexGoals;
+
+  /// No description provided for @codexBonuses.
+  ///
+  /// In en, this message translates to:
+  /// **'Bonuses'**
+  String get codexBonuses;
+
+  /// No description provided for @codexRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards: {list}'**
+  String codexRewards(String list);
+
+  /// No description provided for @codexMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} more'**
+  String codexMore(int n);
+
+  /// No description provided for @codexFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'This page could not be loaded.'**
+  String get codexFailed;
+
+  /// No description provided for @codexOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get codexOpen;
+
+  /// No description provided for @codexPieces.
+  ///
+  /// In en, this message translates to:
+  /// **'({n} pieces)'**
+  String codexPieces(int n);
+
+  /// No description provided for @codexTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier {n}'**
+  String codexTier(int n);
+
+  /// No description provided for @titlesEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} titles earned'**
+  String titlesEarned(int n, int total);
+
+  /// No description provided for @titlesAchievement.
+  ///
+  /// In en, this message translates to:
+  /// **'From achievements'**
+  String get titlesAchievement;
+
+  /// No description provided for @titlesLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'From levels'**
+  String get titlesLevel;
+
+  /// No description provided for @titlesMastery.
+  ///
+  /// In en, this message translates to:
+  /// **'Your class\'s mastery'**
+  String get titlesMastery;
+
+  /// No description provided for @titlesOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other classes\' mastery'**
+  String get titlesOther;
+
+  /// No description provided for @titleWear.
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get titleWear;
+
+  /// No description provided for @titleRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get titleRemove;
+
+  /// No description provided for @titleLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Not earned'**
+  String get titleLocked;
+
+  /// No description provided for @titleOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned'**
+  String get titleOwned;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

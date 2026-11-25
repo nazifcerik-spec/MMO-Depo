@@ -4,6 +4,7 @@ import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
+import '../codex/codex.dart';
 import '../inventory/item_widgets.dart';
 import 'pets_screen.dart';
 
@@ -223,18 +224,8 @@ class PetSpeciesSheet extends StatelessWidget {
                                 spacing: Space.xs,
                                 runSpacing: Space.xs,
                                 children: [
-                                  if (r.region.isNotEmpty)
-                                    chip(
-                                      ContentNames.of('region', r.region),
-                                      icon: Icons.place_outlined,
-                                      iconColor: Palette.info,
-                                    ),
-                                  if (r.boss.isNotEmpty)
-                                    chip(
-                                      ContentNames.of('mob', r.boss),
-                                      icon: Icons.whatshot,
-                                      iconColor: Palette.danger,
-                                    ),
+                                  if (r.region.isNotEmpty) LinkTag(CodexRef('region', r.region)),
+                                  if (r.boss.isNotEmpty) LinkTag(CodexRef('mob', r.boss, sub: 'boss')),
                                 ],
                               ),
                             ),

@@ -3625,6 +3625,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-372 — Köprülü etiketler: her içeriğin bilgi sayfası
+
+**Context:** Etiketler yalnız yazıydı; bir eşyayı düşüren canavarın ya da üreten mesleğin ne olduğuna bakmak için başka ekrana gitmek gerekiyordu. Kullanıcı bundan sonraki bütün geliştirmelerde bağlantılı her içeriğin etiket olmasını ve her etiketin tıklanınca o şeyin bilgisini açmasını istedi.
+**Decision:** Sunucu `contentpack.BuildCodex`: 20 tür içeriğe (eşya, canavar, zindan/baskın, bölge, meslek, satıcı, görev, unvan, başarım, sınıf, ırk, yetenek, pet, set, ustalık, itibar, dünya etkinliği, ekipman türü, liste) sayfa; `link` iki yönü birden kurar (düşürdüğü ↔ düşüren). `GET /v1/codex/{kind}/{code}` (5 dk önbellek). Seed'deki başarım, itibar, ustalık ve etkinlikler veritabanından okunur. İstemci `features/codex/codex.dart`: `LinkTag`, `showCodex` (sayfa içinde geri), `CodexTags`, `CodexButton`, `goalText`; eşya ayrıntısı, harita kartı, görev, av, zindan, baskın, tarif, toplama, set, pet, profil, hikâye, etkinlik, ganimet, kazanım ve dükkân satırları bağlandı. 7 dilde metin.
+**Consequences:** Kural: yeni içerik türü = codex sayfası + gösterildiği yerde `LinkTag`; tıklanmayan etiket yok. `TestCodexShipped` her etiketin var olan ve adı olan bir sayfaya gittiğini denetler. Baskın sayfası yumurtalarını listelemez (pet indeksi keşfedilmeyeni saklar, DD-342); yumurta baskınlarını gösterir. `ItemTags`/`item_tags.dart` kalktı; `/v1/items/{code}/info` eski sürümler için duruyor.
+**Tarih:** 2026-11-26
+
+---
+
+## DD-373 — Unvanların nasıl kazanıldığı
+
+**Context:** Unvanlar sekmesi yalnız kazanılmış unvanları gösteriyordu; hangi unvanın neyle kazanıldığı hiçbir yerde yazmıyordu.
+**Decision:** `GET /character/{id}/titles` `all`: 55 unvanın tamamı, şartı (`event` + `target`), ilerleme, veren başarım, puan ve altın (`progression.AllTitles`; sıra başarım → seviye → kendi sınıfının ustalıkları → diğerleri). İstemcide eşit boylu kart: açıklama cümlesi, ilerleme çubuğu, etiketler (canavar, zindan, meslek, sınıf, başarım), Kullan / Kaldır. Başarımlar da ne istediğini yazar; ustalık ve itibar kartlarında 'Nelerle yükselir' etiketleri.
+**Consequences:** `titles` alanı kazanılanlar olarak kaldı (eski istemciler). Şu an hiçbir unvan belirli tek bir canavar istemiyor; istendiğinde olay kodu (`mob_killed:<kod>`) yeterli, etiket kendiliğinden o canavara gider.
+**Tarih:** 2026-11-26
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

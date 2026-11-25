@@ -7,6 +7,7 @@ import '../features/activity/activity_models.dart';
 import '../l10n/app_localizations.dart';
 import 'motion.dart';
 import 'widgets.dart';
+import '../features/codex/codex.dart';
 
 /// Shows a reveal result (activity / hunt / dungeon) as a bottom sheet.
 Future<void> showLootSheet(
@@ -142,6 +143,7 @@ class _LootSheetState extends State<LootSheet> with SingleTickerProviderStateMix
                   i++,
                   n,
                   _LootRow(
+                    code: s.item.templateCode,
                     label: stackLabel(itemName(s.item.templateCode, s.item.prefix, s.item.suffix), s.count),
                     rarity: s.item.rarity,
                   ),
@@ -193,8 +195,10 @@ class _LevelBadge extends StatelessWidget {
 }
 
 class _LootRow extends StatelessWidget {
-  const _LootRow({required this.label, required this.rarity});
+  const _LootRow({required this.label, required this.rarity, this.code});
 
+  /// The item, opened on tap; null for a bare rarity count.
+  final String? code;
   final String label;
   final String rarity;
 
@@ -213,7 +217,10 @@ class _LootRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.diamond_outlined, color: c, size: 20),
+          if (code case final item?)
+            codexArt(CodexRef('item', item), 24)
+          else
+            Icon(Icons.diamond_outlined, color: c, size: 20),
           const SizedBox(width: Space.md),
           Expanded(
             child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -225,8 +232,11 @@ class _LootRow extends StatelessWidget {
         ],
       ),
     );
+    final linked = code == null
+        ? row
+        : GestureDetector(onTap: () => showCodex(context, CodexRef('item', code!)), child: row);
     // The rarest drops flare once as they land.
-    if (rarity != 'legendary' && rarity != 'mythic') return row;
-    return GlowPulse(trigger: rarity, color: c, radius: Radii.md, playOnStart: true, child: row);
+    if (rarity != 'legendary' && rarity != 'mythic') return linked;
+    return GlowPulse(trigger: rarity, color: c, radius: Radii.md, playOnStart: true, child: linked);
   }
 }

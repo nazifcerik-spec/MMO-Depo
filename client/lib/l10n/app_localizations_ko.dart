@@ -4070,4 +4070,224 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get profilePet => '펫';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': '직업',
+      'family': '장비 종류',
+      'items': '아이템',
+      'set': '세트',
+      'pieces': '구성품',
+      'gathered': '채집 직업',
+      'nodes': '자원',
+      'grows': '발견 장소',
+      'dropped_by': '드롭 몬스터',
+      'drops': '전리품',
+      'dropped_in': '드롭 장소',
+      'sold_by': '판매 상인',
+      'sells': '판매품',
+      'crafted_by': '제작 직업',
+      'makes': '제작품',
+      'materials': '재료',
+      'used_in': '제작에 사용',
+      'used_by': '사용하는 직업',
+      'sets': '세트',
+      'egg': '알',
+      'hatches': '부화하는 펫',
+      'boss': '보스',
+      'boss_of': '보스로 등장',
+      'enemies': '적',
+      'fought_in': '등장 던전',
+      'region': '지역',
+      'dungeons': '던전',
+      'raids': '레이드',
+      'mobs': '몬스터',
+      'hunted_in': '사냥 지역',
+      'within': '상위 지역',
+      'contains': '하위 지역',
+      'roads': '연결된 길',
+      'professions': '전문 기술',
+      'quests': '퀘스트',
+      'requires': '선행 퀘스트',
+      'leads_to': '다음 퀘스트',
+      'achievements': '업적',
+      'titles': '칭호',
+      'sources': '상승 방법',
+      'reputation': '평판',
+      'mastery': '숙련',
+      'events': '이벤트',
+      'promotes_from': '이전 직업',
+      'branches': '승급',
+      'equipment': '사용 장비',
+      'skills': '스킬',
+      'races': '종족',
+      'other': '관련',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': '아이템',
+      'mob': '몬스터',
+      'boss': '레이드 보스',
+      'dungeon': '던전',
+      'raid': '레이드',
+      'region': '지역',
+      'profession': '전문 기술',
+      'vendor': '상인',
+      'quest': '퀘스트',
+      'title': '칭호',
+      'achievement': '업적',
+      'class': '직업',
+      'skill': '스킬',
+      'pet': '펫',
+      'itemset': '아이템 세트',
+      'track': '숙련',
+      'faction': '세력',
+      'worldevent': '월드 이벤트',
+      'race': '종족',
+      'equipment': '장비 종류',
+      'list': '목록',
+      'other': '정보',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': '모든 몬스터',
+      'dungeons': '던전과 레이드',
+      'crafts': '제작 직업',
+      'other': '목록',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return '$n레벨에 도달하세요.';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return '$name 전문화로 $n레벨에 도달하세요: 먼저 이 전문화로 승급해야 합니다.';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return '몬스터 $n마리를 처치하세요. 사냥, 던전, 레이드 모두 인정됩니다.';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return '사냥에서 $name × $n을(를) 처치하세요.';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return '던전이나 레이드에서 보스 $n명을 처치하세요.';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return '던전을 $n회 클리어하세요. 레이드는 제외됩니다.';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return '이 던전을 $n회 클리어하세요: $name.';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return '파티와 함께 레이드를 $n회 완료하세요.';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return '파티와 함께 이 레이드를 $n회 완료하세요: $name.';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return '아이템 $n개를 제작하세요. 모든 제작 직업이 인정됩니다.';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return '$name × $n을(를) 제작하세요.';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return '$name(으)로 자원 $n개를 채집하세요.';
+  }
+
+  @override
+  String get codexHow => '획득 방법';
+
+  @override
+  String get codexGoals => '목표';
+
+  @override
+  String get codexBonuses => '보너스';
+
+  @override
+  String codexRewards(String list) {
+    return '보상: $list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return '$n개 더';
+  }
+
+  @override
+  String get codexFailed => '정보를 불러오지 못했습니다.';
+
+  @override
+  String get codexOpen => '자세히';
+
+  @override
+  String codexPieces(int n) {
+    return '($n세트)';
+  }
+
+  @override
+  String codexTier(int n) {
+    return '$n단계';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '칭호 $total개 중 $n개 획득';
+  }
+
+  @override
+  String get titlesAchievement => '업적 칭호';
+
+  @override
+  String get titlesLevel => '레벨 칭호';
+
+  @override
+  String get titlesMastery => '내 직업 숙련 칭호';
+
+  @override
+  String get titlesOther => '다른 직업 숙련 칭호';
+
+  @override
+  String get titleWear => '사용';
+
+  @override
+  String get titleRemove => '해제';
+
+  @override
+  String get titleLocked => '미획득';
+
+  @override
+  String get titleOwned => '획득';
 }

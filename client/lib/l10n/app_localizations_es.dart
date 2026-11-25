@@ -4116,4 +4116,224 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profilePet => 'Mascota';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': 'Clases',
+      'family': 'Tipo de equipo',
+      'items': 'Objetos',
+      'set': 'Conjunto',
+      'pieces': 'Piezas',
+      'gathered': 'Se recolecta con',
+      'nodes': 'Recursos',
+      'grows': 'Se encuentra en',
+      'dropped_by': 'Lo sueltan',
+      'drops': 'Botín',
+      'dropped_in': 'Cae en',
+      'sold_by': 'Lo vende',
+      'sells': 'Vende',
+      'crafted_by': 'Se fabrica con',
+      'makes': 'Fabrica',
+      'materials': 'Materiales',
+      'used_in': 'Se usa para fabricar',
+      'used_by': 'Profesiones que lo usan',
+      'sets': 'Conjuntos',
+      'egg': 'Huevo',
+      'hatches': 'Eclosiona en',
+      'boss': 'Jefe',
+      'boss_of': 'Jefe de',
+      'enemies': 'Enemigos',
+      'fought_in': 'Aparece en',
+      'region': 'Región',
+      'dungeons': 'Mazmorras',
+      'raids': 'Bandas',
+      'mobs': 'Monstruos',
+      'hunted_in': 'Se caza en',
+      'within': 'Forma parte de',
+      'contains': 'Contiene',
+      'roads': 'Caminos a',
+      'professions': 'Profesiones',
+      'quests': 'Misiones',
+      'requires': 'Requiere antes',
+      'leads_to': 'Continúa en',
+      'achievements': 'Logros',
+      'titles': 'Títulos',
+      'sources': 'Sube con',
+      'reputation': 'Reputación',
+      'mastery': 'Maestría',
+      'events': 'Eventos',
+      'promotes_from': 'Asciende desde',
+      'branches': 'Ascensos',
+      'equipment': 'Equipo que usa',
+      'skills': 'Habilidades',
+      'races': 'Razas',
+      'other': 'Relacionado',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': 'Objeto',
+      'mob': 'Monstruo',
+      'boss': 'Jefe de banda',
+      'dungeon': 'Mazmorra',
+      'raid': 'Banda',
+      'region': 'Región',
+      'profession': 'Profesión',
+      'vendor': 'Vendedor',
+      'quest': 'Misión',
+      'title': 'Título',
+      'achievement': 'Logro',
+      'class': 'Clase',
+      'skill': 'Habilidad',
+      'pet': 'Mascota',
+      'itemset': 'Conjunto de objetos',
+      'track': 'Maestría',
+      'faction': 'Facción',
+      'worldevent': 'Evento mundial',
+      'race': 'Raza',
+      'equipment': 'Tipo de equipo',
+      'list': 'Lista',
+      'other': 'Información',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': 'Todos los monstruos',
+      'dungeons': 'Mazmorras y bandas',
+      'crafts': 'Profesiones de fabricación',
+      'other': 'Lista',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return 'Alcanza el nivel $n.';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return 'Alcanza el nivel $n como $name: primero asciende a esta especialización.';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return 'Mata $n monstruos. Cuentan cacerías, mazmorras y bandas.';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return 'Mata $n × $name en cacerías.';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return 'Derrota a $n jefes en mazmorras o bandas.';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return 'Completa $n mazmorras. Las bandas no cuentan.';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return 'Completa esta mazmorra $n veces: $name.';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return 'Completa $n bandas en grupo.';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return 'Completa esta banda $n veces en grupo: $name.';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return 'Fabrica $n objetos. Cuentan todas las profesiones.';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return 'Fabrica $n × $name.';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return 'Recolecta $n recursos con $name.';
+  }
+
+  @override
+  String get codexHow => 'Cómo conseguirlo';
+
+  @override
+  String get codexGoals => 'Objetivos';
+
+  @override
+  String get codexBonuses => 'Bonificaciones';
+
+  @override
+  String codexRewards(String list) {
+    return 'Recompensa: $list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return '$n más';
+  }
+
+  @override
+  String get codexFailed => 'No se pudo cargar la página.';
+
+  @override
+  String get codexOpen => 'Detalles';
+
+  @override
+  String codexPieces(int n) {
+    return '($n piezas)';
+  }
+
+  @override
+  String codexTier(int n) {
+    return 'Rango $n';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '$n de $total títulos conseguidos';
+  }
+
+  @override
+  String get titlesAchievement => 'Por logros';
+
+  @override
+  String get titlesLevel => 'Por nivel';
+
+  @override
+  String get titlesMastery => 'Maestría de tu clase';
+
+  @override
+  String get titlesOther => 'Maestría de otras clases';
+
+  @override
+  String get titleWear => 'Usar';
+
+  @override
+  String get titleRemove => 'Quitar';
+
+  @override
+  String get titleLocked => 'No conseguido';
+
+  @override
+  String get titleOwned => 'Conseguido';
 }

@@ -4115,4 +4115,224 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilePet => 'Pet';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': 'Classes',
+      'family': 'Equipment type',
+      'items': 'Items',
+      'set': 'Set',
+      'pieces': 'Pieces',
+      'gathered': 'Gathered with',
+      'nodes': 'Resources',
+      'grows': 'Found in',
+      'dropped_by': 'Dropped by',
+      'drops': 'Drops',
+      'dropped_in': 'Drops in',
+      'sold_by': 'Sold by',
+      'sells': 'Sells',
+      'crafted_by': 'Crafted with',
+      'makes': 'Crafts',
+      'materials': 'Materials',
+      'used_in': 'Used to craft',
+      'used_by': 'Professions that use it',
+      'sets': 'Sets',
+      'egg': 'Egg',
+      'hatches': 'Hatches into',
+      'boss': 'Boss',
+      'boss_of': 'Boss of',
+      'enemies': 'Enemies',
+      'fought_in': 'Fought in',
+      'region': 'Region',
+      'dungeons': 'Dungeons',
+      'raids': 'Raids',
+      'mobs': 'Monsters',
+      'hunted_in': 'Hunted in',
+      'within': 'Part of',
+      'contains': 'Contains',
+      'roads': 'Roads to',
+      'professions': 'Professions',
+      'quests': 'Quests',
+      'requires': 'Requires first',
+      'leads_to': 'Leads to',
+      'achievements': 'Achievements',
+      'titles': 'Titles',
+      'sources': 'Raised by',
+      'reputation': 'Reputation',
+      'mastery': 'Mastery',
+      'events': 'Events',
+      'promotes_from': 'Promoted from',
+      'branches': 'Promotions',
+      'equipment': 'Usable equipment',
+      'skills': 'Skills',
+      'races': 'Races',
+      'other': 'Related',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': 'Item',
+      'mob': 'Monster',
+      'boss': 'Raid boss',
+      'dungeon': 'Dungeon',
+      'raid': 'Raid',
+      'region': 'Region',
+      'profession': 'Profession',
+      'vendor': 'Vendor',
+      'quest': 'Quest',
+      'title': 'Title',
+      'achievement': 'Achievement',
+      'class': 'Class',
+      'skill': 'Skill',
+      'pet': 'Pet',
+      'itemset': 'Item set',
+      'track': 'Mastery',
+      'faction': 'Faction',
+      'worldevent': 'World event',
+      'race': 'Race',
+      'equipment': 'Equipment type',
+      'list': 'List',
+      'other': 'Info',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': 'All monsters',
+      'dungeons': 'Dungeons and raids',
+      'crafts': 'Crafting professions',
+      'other': 'List',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return 'Reach level $n.';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return 'Reach level $n as $name: promote into this specialization and stay in it.';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return 'Kill $n monsters. Hunts, dungeons and raids all count.';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return 'Kill $n × $name on hunts.';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return 'Defeat $n bosses in dungeons or raids.';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return 'Clear $n dungeons. Raids do not count.';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return 'Clear this dungeon $n times: $name.';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return 'Complete $n raids with a party.';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return 'Complete this raid $n times with a party: $name.';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return 'Craft $n items. Every crafting profession counts.';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return 'Craft $n × $name.';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return 'Gather $n resources with $name.';
+  }
+
+  @override
+  String get codexHow => 'How to earn it';
+
+  @override
+  String get codexGoals => 'Objectives';
+
+  @override
+  String get codexBonuses => 'Bonuses';
+
+  @override
+  String codexRewards(String list) {
+    return 'Rewards: $list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return '$n more';
+  }
+
+  @override
+  String get codexFailed => 'This page could not be loaded.';
+
+  @override
+  String get codexOpen => 'Details';
+
+  @override
+  String codexPieces(int n) {
+    return '($n pieces)';
+  }
+
+  @override
+  String codexTier(int n) {
+    return 'Tier $n';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '$n of $total titles earned';
+  }
+
+  @override
+  String get titlesAchievement => 'From achievements';
+
+  @override
+  String get titlesLevel => 'From levels';
+
+  @override
+  String get titlesMastery => 'Your class\'s mastery';
+
+  @override
+  String get titlesOther => 'Other classes\' mastery';
+
+  @override
+  String get titleWear => 'Use';
+
+  @override
+  String get titleRemove => 'Remove';
+
+  @override
+  String get titleLocked => 'Not earned';
+
+  @override
+  String get titleOwned => 'Earned';
 }

@@ -622,6 +622,7 @@ func NewRouter(d Deps) http.Handler {
 				if d.ContentLoader != nil {
 					r.Get("/world/content", regionContentHandler(d.ContentLoader)) // region cards (DD-338)
 					r.Get("/items/{code}/info", itemInfoHandler(d.ContentLoader))  // item tags (DD-339)
+					r.Get("/codex/{kind}/{code}", codexHandler(d.ContentLoader))   // linked tags (DD-372)
 				}
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).
 					Post("/travel/{travel_id}/complete", d.WorldHandler.Complete)
@@ -792,6 +793,20 @@ func itemInfoHandler(loader *contentpack.Loader) http.HandlerFunc {
 		}
 		w.Header().Set("Cache-Control", "public, max-age=300")
 		apierr.WriteJSON(w, http.StatusOK, info)
+	}
+}
+
+// codexHandler serves GET /v1/codex/{kind}/{code}: one piece of content and
+// everything connected to it (DD-372).
+func codexHandler(loader *contentpack.Loader) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		page := loader.CodexPage(chi.URLParam(r, "kind"), chi.URLParam(r, "code"))
+		if page == nil {
+			apierr.Write(w, r, http.StatusNotFound, "E_NOT_FOUND", "unknown content")
+			return
+		}
+		w.Header().Set("Cache-Control", "public, max-age=300")
+		apierr.WriteJSON(w, http.StatusOK, page)
 	}
 }
 

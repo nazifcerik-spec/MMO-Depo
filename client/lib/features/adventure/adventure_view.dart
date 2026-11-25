@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../core/api_client.dart';
 import '../../core/config.dart';
@@ -658,6 +659,7 @@ class _MobTile extends StatelessWidget {
                     },
                   ),
                 ),
+                CodexButton(CodexRef('mob', mob.code)),
               ],
             ),
           ),
@@ -807,6 +809,8 @@ class _DungeonPanelState extends State<_DungeonPanel> with PanelState {
                         '${l.dungeonEncounters(d.encounters, ContentNames.of('mob', d.bossMobCode))} · ${shortDuration(l, d.duration)}',
                         style: text.bodySmall,
                       ),
+                      const SizedBox(height: Space.sm),
+                      LinkTags([CodexRef('dungeon', d.code), CodexRef('mob', d.bossMobCode)]),
                       const SizedBox(height: Space.sm),
                       Wrap(
                         spacing: Space.sm,

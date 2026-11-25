@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../codex/codex.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/content_names.dart';
@@ -499,19 +500,18 @@ class _RecipeTileState extends State<RecipeTile> {
               ),
             const SizedBox(height: Space.xs),
             Wrap(
-              spacing: Space.sm,
+              spacing: Space.xs,
+              runSpacing: Space.xs,
               children: [
                 for (final e in r.inputs.entries)
-                  Text(
-                    '${itemName(e.key)} ${widget.have[e.key] ?? 0}/${e.value}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFeatures: numeric,
-                      color: (widget.have[e.key] ?? 0) >= e.value ? Palette.success : Palette.danger,
-                    ),
+                  LinkTag(
+                    CodexRef('item', e.key),
+                    label: '${itemName(e.key)} ${widget.have[e.key] ?? 0}/${e.value}',
+                    color: (widget.have[e.key] ?? 0) >= e.value ? Palette.success : Palette.danger,
                   ),
               ],
             ),
+            const SizedBox(height: Space.xs),
             Wrap(
               spacing: Space.sm,
               crossAxisAlignment: WrapCrossAlignment.center,
@@ -610,6 +610,8 @@ class _Details extends StatelessWidget {
             if (info.maxStack > 1) row(l.stackSize, '${info.maxStack}'),
           ],
           row(l.skillXpReward, '+${recipe.xpReward}'),
+          const SizedBox(height: Space.sm),
+          LinkTag(CodexRef('item', recipe.output)),
         ],
       ),
     );

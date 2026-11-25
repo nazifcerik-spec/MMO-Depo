@@ -6,6 +6,7 @@ import '../../shared/contract_progress.dart';
 import '../../shared/motion.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../codex/codex.dart';
 import 'quest_repository.dart';
 import '../../shared/content_names.dart';
 
@@ -186,7 +187,12 @@ class QuestCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: Space.sm),
-                Expanded(child: Text(questName(q.code), style: text.titleMedium)),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => showCodex(context, CodexRef('quest', q.code)),
+                    child: Text(questName(q.code), style: text.titleMedium),
+                  ),
+                ),
                 if (onAbandon != null)
                   IconButton(
                     tooltip: l.abandon,
@@ -209,6 +215,9 @@ class QuestCard extends StatelessWidget {
                       )
                     : Text('• ${objectiveText(l, o.event)} ×${o.count}', style: text.bodyMedium),
               ),
+            const SizedBox(height: Space.sm),
+            // What the objectives are about (DD-372).
+            LinkTags([for (final o in q.objectives) ?eventRef(o.event)]),
             const SizedBox(height: Space.sm),
             Row(
               children: [

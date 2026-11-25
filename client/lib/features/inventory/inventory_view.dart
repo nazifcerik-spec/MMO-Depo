@@ -13,7 +13,7 @@ import '../market/market_view.dart';
 import 'bank_screen.dart';
 import 'inventory_models.dart';
 import 'inventory_repository.dart';
-import 'item_tags.dart';
+import '../codex/codex.dart';
 import 'item_widgets.dart';
 
 enum _ItemAction { use, equip, unequip, sell, list, destroy, enchant }
@@ -334,7 +334,7 @@ class _InventoryViewState extends State<InventoryView> {
                   style: const TextStyle(color: Palette.epic, fontWeight: FontWeight.w600),
                 ),
               if (set != null) ...[const SizedBox(height: Space.lg), SetSection(set: set, worn: _wornCodes)],
-              ItemTags(api: widget.repo.api, code: item.templateCode, equipment: true),
+              CodexTags(kind: 'item', code: item.templateCode),
               const SizedBox(height: Space.xl),
               FilledButton(onPressed: () => Navigator.pop(c, _ItemAction.unequip), child: Text(l.unequip)),
             ],
@@ -965,7 +965,7 @@ class _ItemDetail extends StatelessWidget {
               row(l.weight, Text(l.weightGrams(item.weightGramsPer * item.stack))),
               if (price != null) row(l.sellValue, GoldText(price, size: 14)),
               if (item.isBound) row(l.bound, const Icon(Icons.link, size: 16, color: Palette.textSecondary)),
-              ItemTags(api: api, code: item.templateCode, equipment: item.equippable),
+              CodexTags(kind: 'item', code: item.templateCode),
               const SizedBox(height: Space.xl),
               if (item.isLocked)
                 Text(

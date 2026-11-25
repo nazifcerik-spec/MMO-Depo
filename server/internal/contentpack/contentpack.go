@@ -295,6 +295,7 @@ type Loader struct {
 	strings   atomic.Pointer[Strings]
 	regions   atomic.Pointer[map[string]*RegionContent]
 	items     atomic.Pointer[map[string]*ItemInfo]
+	codex     atomic.Pointer[Codex]
 }
 
 // Strings returns the content names of the last successful Load (nil before).
@@ -305,6 +306,15 @@ func (l *Loader) Strings() *Strings { return l.strings.Load() }
 func (l *Loader) ItemInfo(code string) *ItemInfo {
 	if m := l.items.Load(); m != nil {
 		return (*m)[code]
+	}
+	return nil
+}
+
+// CodexPage returns one content page as of the last successful Load (nil
+// when unknown or before the first Load), DD-372.
+func (l *Loader) CodexPage(kind, code string) *CodexPage {
+	if c := l.codex.Load(); c != nil {
+		return c.Page(kind, code)
 	}
 	return nil
 }
@@ -423,6 +433,12 @@ func (l *Loader) Load(ctx context.Context) (LoadResult, error) {
 	l.regions.Store(&rc)
 	ii := BuildItemInfo(p, leveling.Current())
 	l.items.Store(&ii)
+	seeds, err := l.codexSeeds(ctx)
+	if err != nil {
+		return res, fmt.Errorf("contentpack: codex: %w", err)
+	}
+	cx := BuildCodex(p, leveling.Current(), seeds)
+	l.codex.Store(&cx)
 
 	l.Log.InfoContext(ctx, "content pack loaded",
 		slog.String("dir", l.Dir),

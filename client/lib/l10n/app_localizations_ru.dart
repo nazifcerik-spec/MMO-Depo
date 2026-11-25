@@ -4114,4 +4114,224 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profilePet => 'Питомец';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': 'Классы',
+      'family': 'Тип снаряжения',
+      'items': 'Предметы',
+      'set': 'Комплект',
+      'pieces': 'Части',
+      'gathered': 'Добывается профессией',
+      'nodes': 'Ресурсы',
+      'grows': 'Где находится',
+      'dropped_by': 'Выпадает из',
+      'drops': 'Добыча',
+      'dropped_in': 'Где выпадает',
+      'sold_by': 'Продавец',
+      'sells': 'Продаёт',
+      'crafted_by': 'Создаётся профессией',
+      'makes': 'Создаёт',
+      'materials': 'Материалы',
+      'used_in': 'Нужен для создания',
+      'used_by': 'Используют профессии',
+      'sets': 'Комплекты',
+      'egg': 'Яйцо',
+      'hatches': 'Вылупляется',
+      'boss': 'Босс',
+      'boss_of': 'Босс в',
+      'enemies': 'Враги',
+      'fought_in': 'Встречается в',
+      'region': 'Регион',
+      'dungeons': 'Подземелья',
+      'raids': 'Рейды',
+      'mobs': 'Монстры',
+      'hunted_in': 'Где охотиться',
+      'within': 'Часть региона',
+      'contains': 'Включает',
+      'roads': 'Дороги в',
+      'professions': 'Профессии',
+      'quests': 'Задания',
+      'requires': 'Сначала нужно',
+      'leads_to': 'Продолжение',
+      'achievements': 'Достижения',
+      'titles': 'Титулы',
+      'sources': 'Растёт от',
+      'reputation': 'Репутация',
+      'mastery': 'Мастерство',
+      'events': 'События',
+      'promotes_from': 'Предыдущий класс',
+      'branches': 'Повышения',
+      'equipment': 'Доступное снаряжение',
+      'skills': 'Умения',
+      'races': 'Расы',
+      'other': 'Связано',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': 'Предмет',
+      'mob': 'Монстр',
+      'boss': 'Рейдовый босс',
+      'dungeon': 'Подземелье',
+      'raid': 'Рейд',
+      'region': 'Регион',
+      'profession': 'Профессия',
+      'vendor': 'Торговец',
+      'quest': 'Задание',
+      'title': 'Титул',
+      'achievement': 'Достижение',
+      'class': 'Класс',
+      'skill': 'Умение',
+      'pet': 'Питомец',
+      'itemset': 'Комплект',
+      'track': 'Мастерство',
+      'faction': 'Фракция',
+      'worldevent': 'Мировое событие',
+      'race': 'Раса',
+      'equipment': 'Тип снаряжения',
+      'list': 'Список',
+      'other': 'Сведения',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': 'Все монстры',
+      'dungeons': 'Подземелья и рейды',
+      'crafts': 'Ремёсла',
+      'other': 'Список',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return 'Достигните $n-го уровня.';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return 'Достигните $n-го уровня со специализацией «$name»: сначала получите её повышением.';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return 'Убейте монстров: $n. Считаются охота, подземелья и рейды.';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return 'Убейте на охоте: $name × $n.';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return 'Победите боссов подземелий или рейдов: $n.';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return 'Пройдите подземелий: $n. Рейды не считаются.';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return 'Пройдите подземелье $n раз: $name.';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return 'Завершите рейдов с группой: $n.';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return 'Завершите рейд с группой $n раз: $name.';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return 'Создайте предметов: $n. Подходят все ремёсла.';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return 'Создайте: $name × $n.';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return 'Соберите ресурсов: $n. Профессия: $name.';
+  }
+
+  @override
+  String get codexHow => 'Как получить';
+
+  @override
+  String get codexGoals => 'Цели';
+
+  @override
+  String get codexBonuses => 'Бонусы';
+
+  @override
+  String codexRewards(String list) {
+    return 'Награда: $list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return 'Ещё $n';
+  }
+
+  @override
+  String get codexFailed => 'Не удалось загрузить сведения.';
+
+  @override
+  String get codexOpen => 'Подробнее';
+
+  @override
+  String codexPieces(int n) {
+    return '($n шт.)';
+  }
+
+  @override
+  String codexTier(int n) {
+    return 'Ступень $n';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return 'Получено титулов: $n из $total';
+  }
+
+  @override
+  String get titlesAchievement => 'За достижения';
+
+  @override
+  String get titlesLevel => 'За уровень';
+
+  @override
+  String get titlesMastery => 'Мастерство вашего класса';
+
+  @override
+  String get titlesOther => 'Мастерство других классов';
+
+  @override
+  String get titleWear => 'Использовать';
+
+  @override
+  String get titleRemove => 'Снять';
+
+  @override
+  String get titleLocked => 'Не получен';
+
+  @override
+  String get titleOwned => 'Получен';
 }

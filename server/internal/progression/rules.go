@@ -56,7 +56,8 @@ const (
 	EventBossKilled     = "boss_killed"
 	EventDungeonCleared = "dungeon_cleared" // also "dungeon_cleared:<code>"
 	EventItemCrafted    = "item_crafted"
-	EventGatherPrefix   = "gather_" // gather_mining, gather_fishing, ...
+	EventGatherPrefix   = "gather_"       // gather_mining, gather_fishing, ...
+	EventClassMastery   = "class_mastery" // ":<spec>"; granted at the mastery level, never recorded
 )
 
 // MasteryTier returns the tier reached with `xp` given per-tier increments

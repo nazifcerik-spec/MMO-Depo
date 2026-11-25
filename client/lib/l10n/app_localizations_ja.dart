@@ -4069,4 +4069,224 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get profilePet => 'ペット';
+
+  @override
+  String codexGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'classes': 'クラス',
+      'family': '装備の種類',
+      'items': 'アイテム',
+      'set': 'セット',
+      'pieces': '構成品',
+      'gathered': '採集職',
+      'nodes': '資源',
+      'grows': '見つかる場所',
+      'dropped_by': '落とすモンスター',
+      'drops': 'ドロップ',
+      'dropped_in': 'ドロップ場所',
+      'sold_by': '販売商人',
+      'sells': '販売品',
+      'crafted_by': '製作職',
+      'makes': '製作品',
+      'materials': '素材',
+      'used_in': '使う製作品',
+      'used_by': '使う職業',
+      'sets': 'セット',
+      'egg': '卵',
+      'hatches': '孵化するペット',
+      'boss': 'ボス',
+      'boss_of': 'ボスとして登場',
+      'enemies': '敵',
+      'fought_in': '登場ダンジョン',
+      'region': '地域',
+      'dungeons': 'ダンジョン',
+      'raids': 'レイド',
+      'mobs': 'モンスター',
+      'hunted_in': '狩り場',
+      'within': '所属地域',
+      'contains': '含まれる地域',
+      'roads': '道の行き先',
+      'professions': '職業',
+      'quests': 'クエスト',
+      'requires': '前提クエスト',
+      'leads_to': '続き',
+      'achievements': '実績',
+      'titles': '称号',
+      'sources': '上げ方',
+      'reputation': '評判',
+      'mastery': '熟練',
+      'events': 'イベント',
+      'promotes_from': '前のクラス',
+      'branches': '昇格先',
+      'equipment': '使える装備',
+      'skills': 'スキル',
+      'races': '種族',
+      'other': '関連',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'item': 'アイテム',
+      'mob': 'モンスター',
+      'boss': 'レイドボス',
+      'dungeon': 'ダンジョン',
+      'raid': 'レイド',
+      'region': '地域',
+      'profession': '職業',
+      'vendor': '商人',
+      'quest': 'クエスト',
+      'title': '称号',
+      'achievement': '実績',
+      'class': 'クラス',
+      'skill': 'スキル',
+      'pet': 'ペット',
+      'itemset': '装備セット',
+      'track': '熟練',
+      'faction': '勢力',
+      'worldevent': 'ワールドイベント',
+      'race': '種族',
+      'equipment': '装備の種類',
+      'list': '一覧',
+      'other': '情報',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String codexList(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'mobs': 'すべてのモンスター',
+      'dungeons': 'ダンジョンとレイド',
+      'crafts': '製作職',
+      'other': '一覧',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String goalLevel(int n) {
+    return 'レベル$nに到達する。';
+  }
+
+  @override
+  String goalMastery(int n, String name) {
+    return '$nameの専門職でレベル$nに到達する。まずこの専門職へ昇格が必要。';
+  }
+
+  @override
+  String goalKillAny(int n) {
+    return 'モンスターを$n体倒す。狩り、ダンジョン、レイドすべて数える。';
+  }
+
+  @override
+  String goalKill(int n, String name) {
+    return '狩りで$nameを$n体倒す。';
+  }
+
+  @override
+  String goalBoss(int n) {
+    return 'ダンジョンかレイドでボスを$n体倒す。';
+  }
+
+  @override
+  String goalDungeonAny(int n) {
+    return 'ダンジョンを$n回クリアする。レイドは数えない。';
+  }
+
+  @override
+  String goalDungeon(int n, String name) {
+    return 'このダンジョンを$n回クリアする：$name。';
+  }
+
+  @override
+  String goalRaidAny(int n) {
+    return 'パーティーでレイドを$n回達成する。';
+  }
+
+  @override
+  String goalRaid(int n, String name) {
+    return 'パーティーでこのレイドを$n回達成する：$name。';
+  }
+
+  @override
+  String goalCraftAny(int n) {
+    return 'アイテムを$n個製作する。どの製作職でもよい。';
+  }
+
+  @override
+  String goalCraft(int n, String name) {
+    return '$nameを$n個製作する。';
+  }
+
+  @override
+  String goalGather(int n, String name) {
+    return '$nameで資源を$n個集める。';
+  }
+
+  @override
+  String get codexHow => '入手方法';
+
+  @override
+  String get codexGoals => '目標';
+
+  @override
+  String get codexBonuses => 'ボーナス';
+
+  @override
+  String codexRewards(String list) {
+    return '報酬：$list';
+  }
+
+  @override
+  String codexMore(int n) {
+    return 'あと$n件';
+  }
+
+  @override
+  String get codexFailed => '情報を読み込めませんでした。';
+
+  @override
+  String get codexOpen => '詳細';
+
+  @override
+  String codexPieces(int n) {
+    return '（$n部位）';
+  }
+
+  @override
+  String codexTier(int n) {
+    return '段階$n';
+  }
+
+  @override
+  String titlesEarned(int n, int total) {
+    return '称号 $n/$total 獲得';
+  }
+
+  @override
+  String get titlesAchievement => '実績の称号';
+
+  @override
+  String get titlesLevel => 'レベルの称号';
+
+  @override
+  String get titlesMastery => '自分のクラスの熟練称号';
+
+  @override
+  String get titlesOther => '他クラスの熟練称号';
+
+  @override
+  String get titleWear => '使う';
+
+  @override
+  String get titleRemove => '外す';
+
+  @override
+  String get titleLocked => '未獲得';
+
+  @override
+  String get titleOwned => '獲得済み';
 }

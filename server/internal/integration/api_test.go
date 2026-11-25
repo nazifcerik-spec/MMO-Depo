@@ -356,7 +356,13 @@ func TestHTTPGameplayLoop(t *testing.T) {
 	// Progression, quests, events, class skills.
 	p.ok("GET", p.path("/progression"), nil)
 	p.ok("GET", p.path("/achievements"), nil)
-	p.ok("GET", p.path("/titles"), nil)
+	require.NotEmpty(t, p.ok("GET", p.path("/titles"), nil)["all"])
+	// Linked tags (DD-372): what the titles and quests name has a page.
+	for _, code := range []string{"title/the_slayer", "achievement/slayer_1000", "list/mobs", "mob/young_boar",
+		"profession/mining", "faction/ironhold_guard", "track/combat", "worldevent/greenwood_incursion", "item/sword_iron"} {
+		require.NotEmpty(t, p.ok("GET", "/v1/codex/"+code, nil)["kind"], code)
+	}
+	p.fail("GET", "/v1/codex/mob/nothing", nil, 404, "E_NOT_FOUND")
 	p.fail("POST", p.path("/titles/active"), map[string]any{"title_code": "bossbane"}, 409, "E_TITLE_NOT_OWNED")
 	p.ok("GET", p.path("/quests"), nil)
 	p.ok("POST", p.path("/quests/main_01_first_hunt/accept"), map[string]any{})

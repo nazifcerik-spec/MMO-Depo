@@ -23,6 +23,7 @@ class MasteryTrack {
     required this.maxTier,
     required this.nextTierXp,
     required this.bonuses,
+    this.sources = const [],
   });
 
   factory MasteryTrack.fromJson(Map<String, dynamic> j) => MasteryTrack(
@@ -35,6 +36,7 @@ class MasteryTrack {
     bonuses: [
       for (final b in (j['active_bonuses'] as List? ?? const []).cast<Map<String, dynamic>>()) BonusEffect.fromJson(b),
     ],
+    sources: (j['sources'] as List? ?? const []).cast<String>(),
   );
 
   final String track;
@@ -47,6 +49,9 @@ class MasteryTrack {
   final int nextTierXp;
   final List<BonusEffect> bonuses;
 
+  /// The events that raise it (DD-372).
+  final List<String> sources;
+
   double get progress => tier >= maxTier || nextTierXp <= 0 ? 1 : (xp / nextTierXp).clamp(0, 1).toDouble();
 }
 
@@ -57,6 +62,7 @@ class Reputation {
     required this.tier,
     required this.tierName,
     required this.dailyLeft,
+    this.sources = const [],
   });
 
   factory Reputation.fromJson(Map<String, dynamic> j) => Reputation(
@@ -65,6 +71,7 @@ class Reputation {
     tier: (j['tier'] as num?)?.toInt() ?? 0,
     tierName: j['tier_name'] as String? ?? '',
     dailyLeft: (j['daily_gain_left'] as num?)?.toInt() ?? 0,
+    sources: (j['sources'] as List? ?? const []).cast<String>(),
   );
 
   final String faction;
@@ -72,6 +79,9 @@ class Reputation {
   final int tier;
   final String tierName;
   final int dailyLeft;
+
+  /// The events that raise it (DD-372).
+  final List<String> sources;
 }
 
 class ProgressionSummary {
@@ -107,6 +117,7 @@ class Achievement {
     required this.progress,
     required this.target,
     required this.rewardGold,
+    this.event = '',
     this.unlockedAt,
     this.rewardTitle,
   });
@@ -118,6 +129,7 @@ class Achievement {
     progress: (j['progress'] as num?)?.toInt() ?? 0,
     target: (j['target'] as num?)?.toInt() ?? 1,
     rewardGold: (j['reward_gold_copper'] as num?)?.toInt() ?? 0,
+    event: j['event'] as String? ?? '',
     unlockedAt: DateTime.tryParse(j['unlocked_at'] as String? ?? ''),
     rewardTitle: j['reward_title_code'] as String?,
   );
@@ -128,17 +140,62 @@ class Achievement {
   final int progress;
   final int target;
   final int rewardGold;
+
+  /// What it counts ("mob_killed", "class_mastery:warlord").
+  final String event;
   final DateTime? unlockedAt;
   final String? rewardTitle;
 
   bool get unlocked => unlockedAt != null;
 }
 
-class OwnedTitle {
-  const OwnedTitle(this.code, {required this.active});
+/// A title and how it is earned (DD-372).
+class TitleGoal {
+  const TitleGoal({
+    required this.code,
+    required this.source,
+    required this.event,
+    required this.target,
+    required this.progress,
+    required this.owned,
+    required this.active,
+    this.achievement = '',
+    this.rewardGold = 0,
+    this.points = 0,
+    this.ownClass = false,
+  });
+
+  factory TitleGoal.fromJson(Map<String, dynamic> j) => TitleGoal(
+    code: j['code'] as String,
+    source: j['source'] as String? ?? 'achievement',
+    event: j['event'] as String? ?? '',
+    target: (j['target'] as num?)?.toInt() ?? 0,
+    progress: (j['progress'] as num?)?.toInt() ?? 0,
+    owned: j['owned'] == true,
+    active: j['active'] == true,
+    achievement: j['achievement'] as String? ?? '',
+    rewardGold: (j['reward_gold_copper'] as num?)?.toInt() ?? 0,
+    points: (j['points'] as num?)?.toInt() ?? 0,
+    ownClass: j['own_class'] == true,
+  );
 
   final String code;
+
+  /// achievement | level | class_mastery
+  final String source;
+  final String event;
+  final int target;
+  final int progress;
+  final bool owned;
   final bool active;
+
+  /// The achievement that grants it; empty when none does.
+  final String achievement;
+  final int rewardGold;
+  final int points;
+
+  /// A mastery of the character's own class tree.
+  final bool ownClass;
 }
 
 /// Achievements, mastery, reputation and titles for one character.
@@ -158,9 +215,9 @@ class ProgressionRepository {
       Achievement.fromJson(a),
   ];
 
-  Future<List<OwnedTitle>> titles() async => [
-    for (final t in ((await api.get('$_c/titles'))['titles'] as List? ?? const []).cast<Map<String, dynamic>>())
-      OwnedTitle(t['code'] as String, active: t['active'] == true),
+  Future<List<TitleGoal>> titles() async => [
+    for (final t in ((await api.get('$_c/titles'))['all'] as List? ?? const []).cast<Map<String, dynamic>>())
+      TitleGoal.fromJson(t),
   ];
 
   /// Empty [code] clears the active title.
