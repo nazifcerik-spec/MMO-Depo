@@ -66,6 +66,10 @@ class ApiClient {
   /// Sent as `X-Character-Id` once a character has been entered.
   String? characterId;
 
+  /// Fired after a signed-in call that changes something succeeds (the side
+  /// menu's job card follows it, DD-370).
+  void Function()? onMutation;
+
   /// Fired when the refresh token is rejected (expired, revoked, reused).
   void Function()? onSessionLost;
 
@@ -234,7 +238,9 @@ class ApiClient {
         await _backoff(attempt);
         continue;
       }
-      return _decode(res);
+      final out = _decode(res);
+      if (auth && method != 'GET') onMutation?.call();
+      return out;
     }
   }
 

@@ -46,6 +46,7 @@ import (
 	"github.com/otter/server/internal/party"
 	"github.com/otter/server/internal/partyxp"
 	"github.com/otter/server/internal/pet"
+	"github.com/otter/server/internal/player"
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
@@ -454,6 +455,7 @@ func Build(ctx context.Context, o Options) (http.Handler, error) {
 		SupportHandler:     support.NewHandler(supportSvc),
 		ReportHandler:      report.NewHandler(reportSvc),
 		LeaderboardHandler: leaderboard.NewHandler(leaderboard.NewService(pool)),
+		PlayerHandler:      player.NewHandler(player.NewService(pool)),
 		ClientErrHandler:   clienterr.NewHandler(clientErrSvc),
 		PrivacyHandler: privacy.NewHandler(pool, authSvc, cfg.ContentPath, privacy.Legal{
 			Operator: cfg.LegalOperator, SupportEmail: cfg.SupportEmail, TermsVersion: auth.DefaultTermsVersion,

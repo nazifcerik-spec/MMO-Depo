@@ -96,6 +96,13 @@ void main() {
 
   // Art in a folder pubspec does not list never reaches the app (the quest
   // medallions shipped that way until DD-338).
+  test('every place of the side menu has art (DD-370)', () {
+    final shell = File('lib/features/home/home_shell.dart').readAsStringSync();
+    final codes = RegExp(r"MenuPlace\(\s*'(\w+)'").allMatches(shell).map((m) => m[1]!).toSet();
+    expect(codes.length, 30);
+    expect(codes.where((c) => !File('assets/menu/$c.webp').existsSync()), isEmpty);
+  });
+
   test('every asset folder is bundled', () {
     final pubspec = File('pubspec.yaml').readAsStringSync();
     final missing = [

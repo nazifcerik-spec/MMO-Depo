@@ -30,7 +30,18 @@ part 'raid_panel.dart';
 /// Adventure tab: hunts, dungeons, travel and events behind one segmented control.
 /// Panels are built on first selection and kept alive.
 class AdventureView extends StatefulWidget {
-  const AdventureView({super.key, required this.repo, required this.dataVersion, required this.level, this.live});
+  const AdventureView({
+    super.key,
+    required this.repo,
+    required this.dataVersion,
+    required this.level,
+    this.live,
+    this.section,
+  });
+
+  /// The open section; with it, wide screens hide the segments (the side menu
+  /// picks, DD-370).
+  final ValueNotifier<int>? section;
 
   final AdventureRepository repo;
   final ValueNotifier<int> dataVersion;
@@ -46,14 +57,28 @@ class AdventureView extends StatefulWidget {
 }
 
 class _AdventureViewState extends State<AdventureView> {
-  int _seg = 0;
-  final _visited = <int>{0};
+  late int _seg = widget.section?.value ?? 0;
+  late final _visited = <int>{_seg};
+
+  @override
+  void initState() {
+    super.initState();
+    widget.section?.addListener(_follow);
+  }
+
+  void _follow() => _show(widget.section!.value);
+
+  void _show(int i) => setState(() {
+    _seg = i;
+    _visited.add(i);
+  });
 
   /// Bumped when the character arrives somewhere: the hunt list follows (DD-273).
   final _moved = ValueNotifier<int>(0);
 
   @override
   void dispose() {
+    widget.section?.removeListener(_follow);
     _moved.dispose();
     super.dispose();
   }
@@ -71,26 +96,24 @@ class _AdventureViewState extends State<AdventureView> {
     ];
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.sm),
-          child: SizedBox(
-            width: double.infinity,
-            child: SegmentedButton<int>(
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(value: 0, label: Text(l.segHunt), icon: const Icon(Icons.gps_fixed, size: 18)),
-                ButtonSegment(value: 1, label: Text(l.segDungeon), icon: const Icon(Icons.castle_outlined, size: 18)),
-                ButtonSegment(value: 2, label: Text(l.segTravel), icon: const Icon(Icons.map_outlined, size: 18)),
-                ButtonSegment(value: 3, label: Text(l.segEvents), icon: const Icon(Icons.public, size: 18)),
-              ],
-              selected: {_seg},
-              onSelectionChanged: (s) => setState(() {
-                _seg = s.first;
-                _visited.add(_seg);
-              }),
+        if (widget.section == null || !isWide(context))
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.sm),
+            child: SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<int>(
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(value: 0, label: Text(l.segHunt), icon: const Icon(Icons.gps_fixed, size: 18)),
+                  ButtonSegment(value: 1, label: Text(l.segDungeon), icon: const Icon(Icons.castle_outlined, size: 18)),
+                  ButtonSegment(value: 2, label: Text(l.segTravel), icon: const Icon(Icons.map_outlined, size: 18)),
+                  ButtonSegment(value: 3, label: Text(l.segEvents), icon: const Icon(Icons.public, size: 18)),
+                ],
+                selected: {_seg},
+                onSelectionChanged: (s) => widget.section == null ? _show(s.first) : widget.section!.value = s.first,
+              ),
             ),
           ),
-        ),
         Expanded(
           child: IndexedStack(
             index: _seg,

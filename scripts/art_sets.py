@@ -780,6 +780,41 @@ POTIONS = [
     ('potion_mp_huge', 'a big faceted blue crystal flask with many gold spikes and swirling mana inside'),
 ]
 
+# The side menu's places on wide screens (DD-370): client MenuPlace codes.
+MENU = [
+    ('overview', 'a cosy stone tavern house with a lit round window at dusk'),
+    ('character', 'a knight helmet with a red plume, seen from the front'),
+    ('bag', 'a bulging brown leather adventurer backpack with buckles'),
+    ('bank', 'an iron vault door standing slightly open with gold light inside'),
+    ('quests', 'a parchment pinned to a wooden board with a red wax seal'),
+    ('story', 'an open glowing storybook with a tiny golden crown rising from its pages'),
+    ('hunt', 'a crossed spear and bow over a beast claw mark'),
+    ('dungeon', 'a dark skull-shaped cave gate with two torches'),
+    ('travel', 'a rolled treasure map with a brass compass on it'),
+    ('events', 'a fiery comet falling over a dark mountain'),
+    ('gather', 'a wicker basket full of herbs, ore and mushrooms'),
+    ('craft', 'a blacksmith hammer striking an anvil with sparks'),
+    ('helpers', 'two clasped hands, one in a work glove, one in a leather bracer'),
+    ('vendor', 'a small merchant stall with a red and white striped awning'),
+    ('market', 'golden balance scales weighing coins against a gem'),
+    ('trade', 'two hands exchanging a gold pouch and a blue potion'),
+    ('credits', 'a big faceted violet gem on a velvet cushion'),
+    ('chat', 'a horn and a raven perched beside it, calling'),
+    ('friends', 'two wooden ale mugs clinking with foam'),
+    ('mail', 'a sealed letter carried by a white dove'),
+    (None, 'a plain banner'),  # the guild's cell came out as another game's crest: redone below
+    ('ranking', 'a golden laurel trophy cup on three stone steps'),
+    ('progress', 'a shining golden star medal on a red ribbon'),
+    ('pets', 'a curled baby dragon asleep beside a cracked speckled egg'),
+    ('profile', 'an ornate oval portrait frame with a hooded hero silhouette'),
+    ('notifications', 'a ringing bronze bell with light rays'),
+    ('guide', 'a wise owl with a lantern standing on a closed book'),
+    ('support', 'a glowing oil lamp held up by a gloved hand'),
+    ('switch', 'two theatre masks, one steel and one wooden, side by side'),
+    ('logout', 'an arched wooden door open to a moonlit road'),
+    ('guild', 'a green triangular pennant embroidered with a silver oak tree, hung on a birch pole'),
+]
+
 MEDALLION = ('Each cell is one round medallion that fills its square, with an ornate gold rim, on a near-black '
              'background. Stylized hand-painted high-fantasy MMORPG icon art, bold readable shapes that stay clear '
              'when tiny, vivid colours, dramatic glow and rim lighting.')
@@ -802,6 +837,9 @@ SETS = {
     'professions': dict(dir='professions', mode='medallion', size=160, entries=lambda: PROFESSIONS,
                         head='fantasy crafting profession emblem icons. ' + MEDALLION + ' Each emblem shows the '
                              'tools of one craft, warm workshop light:'),
+    'menu': dict(dir='menu', mode='medallion', size=96, entries=lambda: MENU,
+                 head='fantasy game menu icons. ' + MEDALLION + ' Each medallion shows one thing, large and simple, '
+                      'recognisable at a glance:'),
     'helpers': dict(dir='helpers', mode='portrait', size=192, entries=lambda: HELPERS,
                     head='fantasy character portraits of friendly hired workers. Each portrait is head and '
                          'shoulders, face centered, looking at the viewer, on a dark simple vignette background. '

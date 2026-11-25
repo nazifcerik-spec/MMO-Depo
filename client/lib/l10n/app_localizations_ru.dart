@@ -4030,4 +4030,88 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errStoryMoved => 'История продвинулась; страница обновлена.';
+
+  @override
+  String get menuOverview => 'Обзор';
+
+  @override
+  String get menuWork => 'Труд';
+
+  @override
+  String get menuTrade => 'Торговля';
+
+  @override
+  String get menuCommunity => 'Сообщество';
+
+  @override
+  String get menuGrowth => 'Развитие';
+
+  @override
+  String get menuHero => 'Герой';
+
+  @override
+  String get jobNow => 'Сейчас';
+
+  @override
+  String get jobIdle => 'Без дела. Начните что-нибудь, чтобы получать награды, пока вас нет.';
+
+  @override
+  String get jobReady => 'Можно забрать';
+
+  @override
+  String get jobGo => 'Открыть';
+
+  @override
+  String get overviewToday => 'Сегодня';
+
+  @override
+  String get overviewRecent => 'Последние награды';
+
+  @override
+  String get overviewNoRewards => 'Пока ничего не собрано.';
+
+  @override
+  String get overviewDailyReady => 'Ежедневная награда ждёт';
+
+  @override
+  String get overviewDailyDone => 'Ежедневная награда получена';
+
+  @override
+  String overviewQuests(int count) {
+    return 'Заданий к сдаче: $count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return 'Непрочитанных уведомлений: $count';
+  }
+
+  @override
+  String get profileTitle => 'Профиль игрока';
+
+  @override
+  String get profileMine => 'Мой профиль';
+
+  @override
+  String get profileFind => 'Найти игрока';
+
+  @override
+  String get profileNotFound => 'Такого игрока нет.';
+
+  @override
+  String get profileCopyLink => 'Скопировать ссылку';
+
+  @override
+  String get profileLinkCopied => 'Ссылка скопирована.';
+
+  @override
+  String profileRank(int rank) {
+    return 'Место №$rank';
+  }
+
+  @override
+  String get profileNoWork => 'Профессий пока нет.';
+
+  @override
+  String get profilePet => 'Питомец';
 }

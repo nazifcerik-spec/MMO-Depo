@@ -71,6 +71,10 @@ class FakeBackend {
   Map<String, dynamic>? lastReport;
   int vaultCopper = 0;
   Map<String, dynamic>? rankingPage;
+
+  /// What the character is doing (DD-370) and the public pages by name (DD-371).
+  Map<String, dynamic>? action;
+  final profiles = <String, Map<String, dynamic>>{};
   Map<String, String>? lastRankingQuery;
   List<Map<String, dynamic>>? warriorSkills;
 
@@ -310,6 +314,10 @@ class FakeBackend {
     if (path.startsWith('/v1/character/char-1/cosmetics')) {
       if (path.endsWith('/select')) avatar = body['code'] as String;
       return json(200, {'avatar': avatar, 'background': 'bg01', 'owned': ownedCosmetics});
+    }
+    if (path.startsWith('/v1/players/')) {
+      final p = profiles[Uri.decodeComponent(path.split('/').last)];
+      return p == null ? error(404, 'E_NOT_FOUND') : json(200, p);
     }
     if (path.startsWith('/v1/character/char-1/boosts')) {
       if (path.endsWith('/dev-ad')) {
@@ -1351,6 +1359,8 @@ class FakeBackend {
     switch ((req.method, path)) {
       case ('GET', '/v1/support/tickets'):
         return json(200, {'tickets': tickets});
+      case ('GET', '/v1/character/char-1/action'):
+        return json(200, {'action': action});
       case ('GET', '/v1/leaderboard'):
         lastRankingQuery = req.url.queryParameters;
         return json(200, rankingPage ?? {'entries': []});

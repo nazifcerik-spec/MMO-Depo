@@ -7106,6 +7106,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The story has moved on; the page was refreshed.'**
   String get errStoryMoved;
+
+  /// No description provided for @menuOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get menuOverview;
+
+  /// No description provided for @menuWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get menuWork;
+
+  /// No description provided for @menuTrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade'**
+  String get menuTrade;
+
+  /// No description provided for @menuCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get menuCommunity;
+
+  /// No description provided for @menuGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth'**
+  String get menuGrowth;
+
+  /// No description provided for @menuHero.
+  ///
+  /// In en, this message translates to:
+  /// **'Hero'**
+  String get menuHero;
+
+  /// No description provided for @jobNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Right now'**
+  String get jobNow;
+
+  /// No description provided for @jobIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Idle. Start something to earn while you are away.'**
+  String get jobIdle;
+
+  /// No description provided for @jobReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to collect'**
+  String get jobReady;
+
+  /// No description provided for @jobGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get jobGo;
+
+  /// No description provided for @overviewToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get overviewToday;
+
+  /// No description provided for @overviewRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest rewards'**
+  String get overviewRecent;
+
+  /// No description provided for @overviewNoRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing collected yet.'**
+  String get overviewNoRewards;
+
+  /// No description provided for @overviewDailyReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Your daily reward is waiting'**
+  String get overviewDailyReady;
+
+  /// No description provided for @overviewDailyDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reward collected'**
+  String get overviewDailyDone;
+
+  /// No description provided for @overviewQuests.
+  ///
+  /// In en, this message translates to:
+  /// **'Quests ready to turn in: {count}'**
+  String overviewQuests(int count);
+
+  /// No description provided for @overviewUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread notifications: {count}'**
+  String overviewUnread(int count);
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Player profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get profileMine;
+
+  /// No description provided for @profileFind.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a player'**
+  String get profileFind;
+
+  /// No description provided for @profileNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No such player.'**
+  String get profileNotFound;
+
+  /// No description provided for @profileCopyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get profileCopyLink;
+
+  /// No description provided for @profileLinkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied.'**
+  String get profileLinkCopied;
+
+  /// No description provided for @profileRank.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank #{rank}'**
+  String profileRank(int rank);
+
+  /// No description provided for @profileNoWork.
+  ///
+  /// In en, this message translates to:
+  /// **'No profession yet.'**
+  String get profileNoWork;
+
+  /// No description provided for @profilePet.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet'**
+  String get profilePet;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

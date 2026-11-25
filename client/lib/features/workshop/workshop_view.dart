@@ -23,7 +23,11 @@ String professionName(AppLocalizations l, String code) => switch (code) {
 /// Workshop tab: crafting and the general vendor behind one segmented control.
 /// Both panels reload on [dataVersion] (materials and gold change elsewhere).
 class WorkshopView extends StatefulWidget {
-  const WorkshopView({super.key, required this.repo, required this.dataVersion});
+  const WorkshopView({super.key, required this.repo, required this.dataVersion, this.section});
+
+  /// The open section; with it, wide screens hide the segments (the side menu
+  /// picks, DD-370).
+  final ValueNotifier<int>? section;
 
   final WorkshopRepository repo;
   final ValueNotifier<int> dataVersion;
@@ -33,8 +37,27 @@ class WorkshopView extends StatefulWidget {
 }
 
 class _WorkshopViewState extends State<WorkshopView> {
-  int _seg = 0;
-  final _visited = <int>{0};
+  late int _seg = widget.section?.value ?? 0;
+  late final _visited = <int>{_seg};
+
+  @override
+  void initState() {
+    super.initState();
+    widget.section?.addListener(_follow);
+  }
+
+  void _follow() => _show(widget.section!.value);
+
+  void _show(int i) => setState(() {
+    _seg = i;
+    _visited.add(i);
+  });
+
+  @override
+  void dispose() {
+    widget.section?.removeListener(_follow);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,25 +73,27 @@ class _WorkshopViewState extends State<WorkshopView> {
     ];
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.sm),
-          child: SizedBox(
-            width: double.infinity,
-            child: SegmentedButton<int>(
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(value: 0, label: Text(l.segCraft), icon: const Icon(Icons.handyman_outlined, size: 18)),
-                ButtonSegment(value: 1, label: Text(l.segShop), icon: const Icon(Icons.storefront_outlined, size: 18)),
-                ButtonSegment(value: 2, label: Text(l.segMarket), icon: const Icon(Icons.balance_outlined, size: 18)),
-              ],
-              selected: {_seg},
-              onSelectionChanged: (s) => setState(() {
-                _seg = s.first;
-                _visited.add(_seg);
-              }),
+        if (widget.section == null || !isWide(context))
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Space.screen, Space.sm, Space.screen, Space.sm),
+            child: SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<int>(
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(value: 0, label: Text(l.segCraft), icon: const Icon(Icons.handyman_outlined, size: 18)),
+                  ButtonSegment(
+                    value: 1,
+                    label: Text(l.segShop),
+                    icon: const Icon(Icons.storefront_outlined, size: 18),
+                  ),
+                  ButtonSegment(value: 2, label: Text(l.segMarket), icon: const Icon(Icons.balance_outlined, size: 18)),
+                ],
+                selected: {_seg},
+                onSelectionChanged: (s) => widget.section == null ? _show(s.first) : widget.section!.value = s.first,
+              ),
             ),
           ),
-        ),
         Expanded(
           child: IndexedStack(
             index: _seg,

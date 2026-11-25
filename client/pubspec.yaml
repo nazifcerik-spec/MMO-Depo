@@ -36,6 +36,7 @@ flutter:
     - assets/class_nodes/ # promotion + specialization emblems: <class>.webp (DD-332)
     - assets/regions/ # map region medallions: <region>.webp (DD-332)
     - assets/professions/ # crafting profession emblems: <profession>.webp (DD-332)
+    - assets/menu/
     - assets/helpers/ # helper NPC portraits: <helper>.webp (DD-332)
     - assets/mobs/ # mob medallions: <mob_code>.webp (DD-336)
     - assets/pets/ # pet evolution stages: <species>_<1|2|3>.webp (DD-334)

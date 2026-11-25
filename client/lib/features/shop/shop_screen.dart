@@ -223,6 +223,7 @@ class _ShopScreenState extends State<ShopScreen> with PanelState, SingleTickerPr
                               title: Text(boostName(l, it.code.replaceFirst('boost_', ''))),
                               subtitle: Text(l.boostDesc),
                               trailing: FilledButton(
+                                style: compactButton,
                                 key: Key('buy-${it.code}'),
                                 onPressed: s.credits >= it.price ? () => _buy(it, l.shopBuy) : null,
                                 child: Text(l.shopPrice(it.price)),

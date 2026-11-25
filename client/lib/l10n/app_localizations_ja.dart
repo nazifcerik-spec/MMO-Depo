@@ -3985,4 +3985,88 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get errStoryMoved => '物語が進んだため、画面を更新した。';
+
+  @override
+  String get menuOverview => '概要';
+
+  @override
+  String get menuWork => '仕事';
+
+  @override
+  String get menuTrade => '交易';
+
+  @override
+  String get menuCommunity => 'コミュニティ';
+
+  @override
+  String get menuGrowth => '成長';
+
+  @override
+  String get menuHero => '英雄';
+
+  @override
+  String get jobNow => '現在';
+
+  @override
+  String get jobIdle => '待機中。離れている間も稼げるよう、何か始めましょう。';
+
+  @override
+  String get jobReady => '受け取り可能';
+
+  @override
+  String get jobGo => '開く';
+
+  @override
+  String get overviewToday => '今日';
+
+  @override
+  String get overviewRecent => '最近の報酬';
+
+  @override
+  String get overviewNoRewards => 'まだ報酬はありません。';
+
+  @override
+  String get overviewDailyReady => 'デイリー報酬を受け取れます';
+
+  @override
+  String get overviewDailyDone => 'デイリー報酬は受取済み';
+
+  @override
+  String overviewQuests(int count) {
+    return '報告できるクエスト：$count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return '未読の通知：$count';
+  }
+
+  @override
+  String get profileTitle => 'プレイヤープロフィール';
+
+  @override
+  String get profileMine => 'マイプロフィール';
+
+  @override
+  String get profileFind => 'プレイヤーを探す';
+
+  @override
+  String get profileNotFound => 'そのプレイヤーはいません。';
+
+  @override
+  String get profileCopyLink => 'リンクをコピー';
+
+  @override
+  String get profileLinkCopied => 'リンクをコピーしました。';
+
+  @override
+  String profileRank(int rank) {
+    return '$rank位';
+  }
+
+  @override
+  String get profileNoWork => 'まだ職業がありません。';
+
+  @override
+  String get profilePet => 'ペット';
 }

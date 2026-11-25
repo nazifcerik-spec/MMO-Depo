@@ -11,6 +11,7 @@ import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
 import '../inventory/inventory_repository.dart';
+import '../player/player_screen.dart';
 import 'trade_panel.dart';
 import 'group_panels.dart';
 import 'group_repository.dart';
@@ -24,7 +25,11 @@ class SocialScreen extends StatefulWidget {
     required this.live,
     required this.dataVersion,
     this.channel = 'global',
+    this.tab = 0,
   });
+
+  /// The tab it opens on: chat, friends, mail, guild, trade.
+  final int tab;
 
   /// The chat channel it opens on ('party' from the party section).
   final String channel;
@@ -40,7 +45,7 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> with SingleTickerProviderStateMixin {
-  late final _tabs = TabController(length: 5, vsync: this);
+  late final _tabs = TabController(length: 5, vsync: this, initialIndex: widget.tab);
   late final _groups = GroupRepository(widget.repo.api, widget.repo.characterId);
   final _chat = GlobalKey<_ChatPanelState>();
 
@@ -269,6 +274,7 @@ class _ChatPanelState extends State<_ChatPanel> with AutomaticKeepAliveClientMix
                     }
                     return InkWell(
                       key: ValueKey('chat-line-${m.id}'),
+                      onTap: () => openPlayer(context, widget.repo.api, me, m.fromName), // DD-371
                       // Someone else's line: hold to report it (DD-355).
                       onLongPress: mine
                           ? null
@@ -568,6 +574,7 @@ class _FriendsPanelState extends State<_FriendsPanel> with PanelState, Automatic
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(f.name),
+            onTap: () => openPlayer(context, widget.repo.api, widget.repo.characterId, f.name),
             subtitle: Text('${l.levelShort(f.level)} · ${className(l, f.classCode)}'),
             trailing: PopupMenuButton<_FriendAction>(
               tooltip: l.more,

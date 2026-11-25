@@ -3986,4 +3986,88 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get errStoryMoved => '이야기가 진행되어 화면을 새로 고쳤다.';
+
+  @override
+  String get menuOverview => '개요';
+
+  @override
+  String get menuWork => '생업';
+
+  @override
+  String get menuTrade => '거래';
+
+  @override
+  String get menuCommunity => '커뮤니티';
+
+  @override
+  String get menuGrowth => '성장';
+
+  @override
+  String get menuHero => '영웅';
+
+  @override
+  String get jobNow => '지금';
+
+  @override
+  String get jobIdle => '쉬는 중입니다. 자리를 비운 동안에도 얻으려면 일을 시작하세요.';
+
+  @override
+  String get jobReady => '수령 가능';
+
+  @override
+  String get jobGo => '열기';
+
+  @override
+  String get overviewToday => '오늘';
+
+  @override
+  String get overviewRecent => '최근 보상';
+
+  @override
+  String get overviewNoRewards => '아직 받은 보상이 없습니다.';
+
+  @override
+  String get overviewDailyReady => '일일 보상이 기다리고 있습니다';
+
+  @override
+  String get overviewDailyDone => '일일 보상 수령 완료';
+
+  @override
+  String overviewQuests(int count) {
+    return '제출 가능한 퀘스트: $count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return '읽지 않은 알림: $count';
+  }
+
+  @override
+  String get profileTitle => '플레이어 프로필';
+
+  @override
+  String get profileMine => '내 프로필';
+
+  @override
+  String get profileFind => '플레이어 찾기';
+
+  @override
+  String get profileNotFound => '그런 플레이어가 없습니다.';
+
+  @override
+  String get profileCopyLink => '링크 복사';
+
+  @override
+  String get profileLinkCopied => '링크를 복사했습니다.';
+
+  @override
+  String profileRank(int rank) {
+    return '$rank위';
+  }
+
+  @override
+  String get profileNoWork => '아직 전문 기술이 없습니다.';
+
+  @override
+  String get profilePet => '펫';
 }

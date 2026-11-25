@@ -4030,4 +4030,88 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errStoryMoved => 'Hikâye ilerledi; sayfa yenilendi.';
+
+  @override
+  String get menuOverview => 'Genel bakış';
+
+  @override
+  String get menuWork => 'Emek';
+
+  @override
+  String get menuTrade => 'Ticaret';
+
+  @override
+  String get menuCommunity => 'Topluluk';
+
+  @override
+  String get menuGrowth => 'Gelişim';
+
+  @override
+  String get menuHero => 'Kahraman';
+
+  @override
+  String get jobNow => 'Şu an';
+
+  @override
+  String get jobIdle => 'Boştasın. Sen yokken de kazanmak için bir iş başlat.';
+
+  @override
+  String get jobReady => 'Toplamaya hazır';
+
+  @override
+  String get jobGo => 'Aç';
+
+  @override
+  String get overviewToday => 'Bugün';
+
+  @override
+  String get overviewRecent => 'Son kazanımlar';
+
+  @override
+  String get overviewNoRewards => 'Henüz bir şey toplamadın.';
+
+  @override
+  String get overviewDailyReady => 'Günlük ödülün seni bekliyor';
+
+  @override
+  String get overviewDailyDone => 'Günlük ödül alındı';
+
+  @override
+  String overviewQuests(int count) {
+    return 'Teslime hazır görev: $count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return 'Okunmamış bildirim: $count';
+  }
+
+  @override
+  String get profileTitle => 'Oyuncu profili';
+
+  @override
+  String get profileMine => 'Profilim';
+
+  @override
+  String get profileFind => 'Oyuncu bul';
+
+  @override
+  String get profileNotFound => 'Böyle bir oyuncu yok.';
+
+  @override
+  String get profileCopyLink => 'Bağlantıyı kopyala';
+
+  @override
+  String get profileLinkCopied => 'Bağlantı kopyalandı.';
+
+  @override
+  String profileRank(int rank) {
+    return 'Sıra #$rank';
+  }
+
+  @override
+  String get profileNoWork => 'Henüz mesleği yok.';
+
+  @override
+  String get profilePet => 'Pet';
 }

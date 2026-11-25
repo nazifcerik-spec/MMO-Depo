@@ -46,6 +46,7 @@ import (
 	"github.com/otter/server/internal/observability"
 	"github.com/otter/server/internal/party"
 	"github.com/otter/server/internal/pet"
+	"github.com/otter/server/internal/player"
 	"github.com/otter/server/internal/privacy"
 	"github.com/otter/server/internal/progression"
 	"github.com/otter/server/internal/quest"
@@ -105,6 +106,7 @@ type Deps struct {
 	SupportHandler     *support.Handler     // DD-234: player support tickets
 	ReportHandler      *report.Handler      // DD-355: player reports
 	LeaderboardHandler *leaderboard.Handler // DD-357: character score and tables
+	PlayerHandler      *player.Handler      // DD-370, DD-371: current action and public profiles
 	ClientErrHandler   *clienterr.Handler   // DD-235: app crash reports
 	Metrics            *observability.Metrics
 	CORSOrigins        []string
@@ -260,6 +262,12 @@ func NewRouter(d Deps) http.Handler {
 		if h := d.LeaderboardHandler; h != nil {
 			r.With(appmw.RequireAuth(d.AuthService, d.Logger)).Get("/leaderboard", h.Board)
 		}
+		// --- Public player pages (DD-371) ---
+		if h := d.PlayerHandler; h != nil {
+			r.With(appmw.RequireAuth(d.AuthService, d.Logger), appmw.RateLimit(d.RateLimitStore, appmw.Policy{
+				Endpoint: "GET /v1/players", PerAccount: ptrBucket(ratelimit.PerMinute(60)),
+			}, d.Logger)).Get("/players/{name}", h.Profile)
+		}
 		// --- Player reports (DD-355) ---
 		if h := d.ReportHandler; h != nil {
 			r.With(appmw.RequireAuth(d.AuthService, d.Logger), appmw.RateLimit(d.RateLimitStore, appmw.Policy{
@@ -298,6 +306,9 @@ func NewRouter(d Deps) http.Handler {
 				// Every route below acts on {id}: enforce ownership once, here.
 				r.Use(appmw.RequireCharacterParam(d.CharacterService, "id", d.Logger))
 				r.Get("/sheet", charHandler.Sheet)
+				if h := d.PlayerHandler; h != nil {
+					r.Get("/action", h.Action)
+				}
 				r.Get("/wallet", econHandler.Wallet)
 				r.Post("/enter", charHandler.Enter)
 				r.With(appmw.Idempotency(d.IdempotencyStore, d.Logger)).

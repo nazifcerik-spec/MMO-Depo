@@ -49,3 +49,22 @@ String? tabRead(String key) {
     return null;
   }
 }
+
+/// The web address of a player's page; null outside a browser.
+String? profileUrl(String name) => '${web.document.baseURI}@${Uri.encodeComponent(name)}';
+
+const _linkKey = 'mena.profile';
+
+/// The player named by the address the page was opened with (`…/@Name`),
+/// once; null without one. The address goes back to the game's, and the name
+/// waits in the tab's storage while the player signs in.
+String? takeProfileLink() {
+  final last = Uri.tryParse(web.window.location.href)?.pathSegments.lastOrNull ?? '';
+  if (last.length > 1 && last.startsWith('@')) {
+    tabStore(_linkKey, last.substring(1));
+    web.window.history.replaceState(null, '', web.document.baseURI);
+  }
+  final name = tabRead(_linkKey);
+  tabStore(_linkKey, null);
+  return name;
+}

@@ -5,6 +5,14 @@ import 'package:otter/core/api_client.dart';
 import 'package:otter/core/token_store.dart';
 import 'package:otter/features/auth/auth_controller.dart';
 import 'package:otter/features/guide/guide.dart';
+import 'package:otter/features/inventory/bank_screen.dart';
+import 'package:otter/features/inventory/inventory_models.dart' show equipSlots;
+import 'package:otter/features/inventory/item_widgets.dart';
+import 'package:otter/features/pets/pets_screen.dart' show PetArt;
+import 'package:otter/features/player/player_repository.dart';
+import 'package:otter/features/player/player_screen.dart';
+import 'package:otter/features/ranking/ranking_screen.dart';
+import 'package:otter/l10n/app_localizations.dart';
 import 'package:otter/shared/layout.dart';
 
 import 'fake_backend.dart';
@@ -44,8 +52,9 @@ void main() {
     expect(last.top, greaterThan(first.bottom));
   });
 
-  testWidgets('wide screens: rail instead of the bottom bar, panes in every tab (DD-369)', (tester) async {
+  testWidgets('wide screens: the side menu opens every place beside it (DD-370)', (tester) async {
     _size(tester, 1440, 900);
+    final now = DateTime.now().toUtc();
     final be = FakeBackend()
       ..characters.add({
         'id': 'char-1',
@@ -54,7 +63,20 @@ void main() {
         'class_code': 'rogue',
         'level': 3,
         'state': 'active',
-      });
+      })
+      ..action = {
+        'kind': 'hunt',
+        'detail': 'young_boar',
+        'started_at': now.subtract(const Duration(minutes: 10)).toIso8601String(),
+        'ends_at': now.add(const Duration(hours: 1)).toIso8601String(),
+      }
+      ..profiles['Grim'] = {
+        'character_id': 'char-1',
+        'name': 'Grim',
+        'race_code': 'orc',
+        'class_code': 'rogue',
+        'level': 3,
+      };
     final store = MemoryTokenStore();
     await be.api(store).login('grim', 'correct-horse');
     await tester.pumpWidget(
@@ -65,35 +87,116 @@ void main() {
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Grim'));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(NavigationRail), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
-    for (final tab in ['Gather', 'Bag', 'Adventure', 'Workshop', 'Character']) {
-      await tester.tap(find.descendant(of: find.byType(NavigationRail), matching: find.text(tab)));
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull, reason: tab);
-    }
-    // Every Adventure and Workshop segment lays out too.
-    for (final (tab, segments) in [
-      ('Adventure', ['Dungeon', 'Travel', 'Events', 'Hunt']),
-      ('Workshop', ['Shop', 'Market', 'Craft']),
-    ]) {
-      await tester.tap(find.descendant(of: find.byType(NavigationRail), matching: find.text(tab)));
-      await tester.pumpAndSettle();
-      for (final s in segments) {
-        await tester.tap(find.descendant(of: find.byType(SegmentedButton<int>), matching: find.text(s)).hitTestable());
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull, reason: s);
+    await tester.pump();
+    // The job card's clock never settles: pump through instead.
+    Future<void> settle() async {
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
       }
     }
 
-    // Narrowing the window goes back to the phone layout.
+    await settle();
+    expect(find.byKey(const Key('game-menu')), findsOneWidget);
+    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(AppBar), findsNothing, reason: 'the menu replaces the top bar');
+    expect(find.byType(PlayerBanner), findsOneWidget, reason: 'the overview comes first');
+    expect(find.byKey(const Key('job-card')).hitTestable(), findsOneWidget);
+    expect(find.textContaining('Boar'), findsWidgets);
+
+    Finder entry(String code) => find.byKey(ValueKey('menu-$code'));
+    Future<void> open(String code) async {
+      await tester.ensureVisible(entry(code));
+      await tester.pump();
+      await tester.tap(entry(code));
+      await settle();
+      expect(tester.takeException(), isNull, reason: code);
+      expect(find.byKey(const Key('game-menu')), findsOneWidget, reason: '$code keeps the menu');
+    }
+
+    for (final code in [
+      'character', 'bag', 'bank', 'quests', 'story', 'hunt', 'dungeon', 'travel', 'events', 'gather', 'craft', //
+      'helpers', 'vendor', 'market', 'trade', 'credits', 'chat', 'friends', 'mail', 'guild', 'ranking', 'progress',
+      'pets', 'profile', 'notifications', 'guide', 'support', 'overview',
+    ]) {
+      await open(code);
+    }
+    expect(find.byType(SegmentedButton<int>).hitTestable(), findsNothing);
+
+    // A page opened from the menu replaces the last one, and goes back to the tab.
+    await open('ranking');
+    await open('bank');
+    expect(find.byType(RankingScreen), findsNothing);
+    await tester.tap(find.byType(BackButton).hitTestable());
+    await settle();
+    expect(find.byType(BankScreen), findsNothing);
+    expect(find.byType(PlayerBanner), findsOneWidget);
+
+    // The job card goes where the job is collected.
+    await tester.tap(find.byKey(const Key('job-card')).first);
+    await settle();
+    expect(find.text('Hunt').hitTestable(), findsWidgets);
+
+    // Less room: icons only. Less still: the phone layout, on the same tab.
+    tester.view.physicalSize = const Size(1000, 900);
+    await settle();
+    expect(tester.getSize(find.byKey(const Key('game-menu'))).width, 76);
     tester.view.physicalSize = const Size(500, 900);
-    await tester.pumpAndSettle();
-    expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.byType(NavigationRail), findsNothing);
+    await settle();
+    expect(find.byKey(const Key('game-menu')), findsNothing);
+    expect(tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex, 3);
+    expect(tester.takeException(), isNull);
   });
+
+  for (final w in [390.0, 1280.0]) {
+    testWidgets('a player page shows the character and its deeds at $w (DD-371)', (tester) async {
+      _size(tester, w, 900);
+      final be = FakeBackend()
+        ..profiles['Şule'] = {
+          'character_id': 'other',
+          'name': 'Şule',
+          'race_code': 'human',
+          'class_code': 'mage',
+          'spec_code': 'pyromancer',
+          'level': 712,
+          'title': 'x',
+          'avatar': 'av07',
+          'background': 'bg03',
+          'guild_name': 'Gece Nöbeti',
+          'guild_tag': 'GN',
+          'score': 12345,
+          'rank': 4,
+          'achievement_points': 10,
+          'professions': [
+            {'code': 'mining', 'level': 40},
+          ],
+          'equipment': {
+            'mainhand': {'template_code': 'sword_iron', 'item_class': 'weapon', 'rarity': 'epic'},
+          },
+          'pet': {'species': 'flamewing', 'level': 40},
+        };
+      final api = be.api(MemoryTokenStore());
+      await api.login('grim', 'correct-horse');
+      Widget app(String name) => MaterialApp(
+        locale: const Locale('en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: PlayerScreen(key: ValueKey(name), repo: PlayerRepository(api, 'char-1'), name: name),
+      );
+      await tester.pumpWidget(app('Şule'));
+      await tester.pumpAndSettle();
+      expect(find.text('Şule'), findsOneWidget);
+      expect(find.text('<GN> Gece Nöbeti'), findsOneWidget);
+      expect(find.text('Rank #4'), findsOneWidget);
+      expect(find.text('12345'), findsOneWidget);
+      expect(find.byType(ItemCell), findsNWidgets(equipSlots.length));
+      await tester.scrollUntilVisible(find.byType(PetArt), 200, scrollable: find.byType(Scrollable).first);
+      expect(tester.takeException(), isNull);
+
+      await tester.pumpWidget(app('Nobody'));
+      await tester.pumpAndSettle();
+      expect(find.text('No such player.'), findsOneWidget);
+    });
+  }
 
   test('browser tabs share the session: the stored token is used, another account is left alone', () async {
     final be = FakeBackend();

@@ -4032,4 +4032,88 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errStoryMoved => 'La historia ha avanzado; se actualizó la página.';
+
+  @override
+  String get menuOverview => 'Resumen';
+
+  @override
+  String get menuWork => 'Oficios';
+
+  @override
+  String get menuTrade => 'Comercio';
+
+  @override
+  String get menuCommunity => 'Comunidad';
+
+  @override
+  String get menuGrowth => 'Progreso';
+
+  @override
+  String get menuHero => 'Héroe';
+
+  @override
+  String get jobNow => 'Ahora mismo';
+
+  @override
+  String get jobIdle => 'Sin tarea. Empieza algo para ganar mientras no estás.';
+
+  @override
+  String get jobReady => 'Listo para recoger';
+
+  @override
+  String get jobGo => 'Abrir';
+
+  @override
+  String get overviewToday => 'Hoy';
+
+  @override
+  String get overviewRecent => 'Últimas recompensas';
+
+  @override
+  String get overviewNoRewards => 'Aún no has recogido nada.';
+
+  @override
+  String get overviewDailyReady => 'Tu recompensa diaria te espera';
+
+  @override
+  String get overviewDailyDone => 'Recompensa diaria recogida';
+
+  @override
+  String overviewQuests(int count) {
+    return 'Misiones listas para entregar: $count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return 'Notificaciones sin leer: $count';
+  }
+
+  @override
+  String get profileTitle => 'Perfil de jugador';
+
+  @override
+  String get profileMine => 'Mi perfil';
+
+  @override
+  String get profileFind => 'Buscar jugador';
+
+  @override
+  String get profileNotFound => 'No existe ese jugador.';
+
+  @override
+  String get profileCopyLink => 'Copiar enlace';
+
+  @override
+  String get profileLinkCopied => 'Enlace copiado.';
+
+  @override
+  String profileRank(int rank) {
+    return 'Puesto n.º $rank';
+  }
+
+  @override
+  String get profileNoWork => 'Aún sin oficios.';
+
+  @override
+  String get profilePet => 'Mascota';
 }

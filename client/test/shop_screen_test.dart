@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:otter/app/theme.dart';
 import 'package:otter/features/shop/shop_screen.dart';
 import 'package:otter/l10n/app_localizations.dart';
 
 import 'fake_backend.dart';
 
 Widget _app(Widget home) => MaterialApp(
+  theme: buildTheme(), // its buttons are full width unless styled compact
   localizationsDelegates: AppLocalizations.localizationsDelegates,
   supportedLocales: AppLocalizations.supportedLocales,
   home: Scaffold(body: home),

@@ -3607,6 +3607,24 @@ Hepsi 5 sn'ye yuvarlanır. Üreteçler `gen_crafting.py`, `gen_cooking.py` (ergi
 
 ---
 
+## DD-370 — Web: bütün yerler tek yan menüde
+
+**Context:** Geniş ekranda beş sekme vardı; görev, banka, hikâye, pet, lonca, sıralama gibi yerler karakter sayfasındaki düğmelerin ve üst bar simgelerinin arkasındaydı. Kullanıcı bütün modüllerin tek menüde toplandığı bir web sitesi istedi (örnek verilen başka bir oyunun görünümü kopyalanmadı; tasarım ve görseller MeNa World'ün kendisi).
+**Decision:** `GameMenu` (geniş ekran, < 1180 px yalnız simge): başta avatar, ad, seviye, altın, can, XP; altında o anki iş (`JobCard`, canlı süre, dokununca işin yerine gider); 7 grupta 30 yer, her birinin boyanmış madalyonu (`assets/menu/`, `art_sets.py menu`). Sayfalar menünün yanında kendi `Navigator`'ında açılır, menü kalır; yeni sayfa öncekinin yerini alır, tarayıcı geri tuşu sayfayı kapatır. İlk sayfa Genel bakış (afiş, bugün, son kazanımlar, bonuslar). Sunucu `GET /v1/character/{id}/action` (tek-iş tablolarından). `ApiClient.onMutation` ile iş kartı yenilenir; yoklama yok.
+**Consequences:** Telefon yerleşimi değişmedi. Geniş ekranda üst bar, Macera/Atölye bölüm düğmeleri ve karakter sayfasındaki sayfa düğmeleri gizlenir (menüde var). Kredi mağazasındaki bonus düğmeleri gerçek temada çizilemiyordu (tam genişlik düğme satır sonunda); düzeltildi, testi gerçek temayla koşuyor.
+**Tarih:** 2026-11-25
+
+---
+
+## DD-371 — Oyuncu profili
+
+**Context:** Oyuncular birbirinin ne giydiğini ve ne başardığını göremiyordu.
+**Decision:** `internal/player`: `GET /v1/players/{ad}` (giriş gerekir, hesap başı 60/dk): ırk, sınıf, seviye, unvan, avatar + arka plan, lonca, puan + sıra, başarım/ustalık/temizleme sayıları, meslekler, giyilen ekipman (örnek kimliği ve efsun yok), aktif pet. Hesap kimliği, e-posta, kullanıcı adı, konum ve son görülme yok; silinen ya da kilitli hesabın karakteri 404. İstemci `PlayerScreen`: sohbet satırı, arkadaş, parti/lonca üyesi ve sıralama satırından açılır, sıralamada 'Oyuncu bul'; arkadaş ekle + şikâyet. Web'de `…/@Ad` adresi girişten sonra profili açar, bağlantı kopyalanabilir.
+**Consequences:** Profil oyun içi bilgiyle sınırlı; gizleme ayarı yok (istenirse ayrı karar). Sıralamada kendi satırına dokunmak profili açar, puan dökümü üstteki karttan.
+**Tarih:** 2026-11-25
+
+---
+
 ---
 
 ## Bekleyen (Open) Kararlar — Phase 01'e Devredildi

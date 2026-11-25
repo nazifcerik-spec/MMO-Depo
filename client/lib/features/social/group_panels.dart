@@ -9,6 +9,7 @@ import '../../shared/content_names.dart';
 import '../../shared/contract_progress.dart';
 import '../../shared/panel.dart';
 import '../../shared/widgets.dart';
+import '../player/player_screen.dart';
 import '../workshop/workshop_view.dart' show professionName;
 import '../inventory/inventory_repository.dart';
 import 'group_repository.dart';
@@ -241,6 +242,7 @@ class _PartyPanelState extends State<PartyPanel> with PanelState, _LiveReload {
               color: m.id == p.leaderId ? Palette.accent : Palette.textSecondary,
             ),
             title: Text(m.name),
+            onTap: () => openPlayer(context, widget.repo.api, widget.repo.characterId, m.name), // DD-371
             subtitle: Text(
               '${l.levelShort(m.level)} · ${className(l, m.classCode)}\n${memberActivity(l, m.activity)}',
               key: Key('member-${m.id}'),
@@ -459,6 +461,7 @@ class _GuildPanelState extends State<GuildPanel> with PanelState, _LiveReload, A
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(m.name),
+            onTap: () => openPlayer(context, widget.repo.api, widget.repo.characterId, m.name), // DD-371
             subtitle: Text(
               '${guildRankName(l, m.rank ?? GuildRanks.initiate)} · ${l.levelShort(m.level)} · ${className(l, m.classCode)}',
             ),

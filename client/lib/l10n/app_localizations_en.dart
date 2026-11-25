@@ -4031,4 +4031,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errStoryMoved => 'The story has moved on; the page was refreshed.';
+
+  @override
+  String get menuOverview => 'Overview';
+
+  @override
+  String get menuWork => 'Work';
+
+  @override
+  String get menuTrade => 'Trade';
+
+  @override
+  String get menuCommunity => 'Community';
+
+  @override
+  String get menuGrowth => 'Growth';
+
+  @override
+  String get menuHero => 'Hero';
+
+  @override
+  String get jobNow => 'Right now';
+
+  @override
+  String get jobIdle => 'Idle. Start something to earn while you are away.';
+
+  @override
+  String get jobReady => 'Ready to collect';
+
+  @override
+  String get jobGo => 'Open';
+
+  @override
+  String get overviewToday => 'Today';
+
+  @override
+  String get overviewRecent => 'Latest rewards';
+
+  @override
+  String get overviewNoRewards => 'Nothing collected yet.';
+
+  @override
+  String get overviewDailyReady => 'Your daily reward is waiting';
+
+  @override
+  String get overviewDailyDone => 'Daily reward collected';
+
+  @override
+  String overviewQuests(int count) {
+    return 'Quests ready to turn in: $count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return 'Unread notifications: $count';
+  }
+
+  @override
+  String get profileTitle => 'Player profile';
+
+  @override
+  String get profileMine => 'My profile';
+
+  @override
+  String get profileFind => 'Find a player';
+
+  @override
+  String get profileNotFound => 'No such player.';
+
+  @override
+  String get profileCopyLink => 'Copy link';
+
+  @override
+  String get profileLinkCopied => 'Link copied.';
+
+  @override
+  String profileRank(int rank) {
+    return 'Rank #$rank';
+  }
+
+  @override
+  String get profileNoWork => 'No profession yet.';
+
+  @override
+  String get profilePet => 'Pet';
 }

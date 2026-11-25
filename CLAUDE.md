@@ -346,6 +346,8 @@ cd client && flutter test && flutter run --dart-define=API_BASE_URL=http://local
 
 164. **Web sürümü (bitti)** — Sprint 164, DD-369. `shared/layout.dart` (`isWide` ≥ 900 px, `PageFrame`, `Panes`, `TileGrid`, `NarrowColumn`): yan menü, çok sütunlu sekmeler; altında telefon yerleşimi aynı. Web kabuğu (açılış ekranı, manifest), fare ile sürükleme, `core/browser.dart` (Web Locks, sekme deposu): sekmeler oturumu paylaşır, F5 karaktere döner; sunucu `auth.RefreshGrace` 30 sn. Yayın: `powershell -ExecutionPolicy Bypass -File scripts/release-web.ps1 -Version x.y.z` → https://nazifcerik-spec.github.io/MMO-Depo/ (`gh-pages`). `CORS_ALLOWED_ORIGINS` varsayılanı bu kaynak.
 
+165. **Web yan menüsü + oyuncu profili (bitti)** — Sprint 165, DD-370..371. Geniş ekranda `GameMenu` (30 yer, 7 grup, boyanmış simgeler `assets/menu/`, kimlik + can/XP/altın + o anki iş; < 1180 px yalnız simge), sayfalar menünün yanında kendi `Navigator`'ında; ilk sayfa `OverviewView`. `internal/player`: `GET /v1/character/{id}/action`, `GET /v1/players/{ad}`; `PlayerScreen` (sohbet/arkadaş/parti/lonca/sıralamadan, web'de `…/@Ad`). Kredi mağazasındaki bonus düğmeleri düzeltildi.
+
 Client (Flutter) parallel track; ilk sprint auth flow + character sheet.
 
 ## Yasak / Uyarı

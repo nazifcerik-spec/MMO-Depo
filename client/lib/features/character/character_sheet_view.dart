@@ -40,6 +40,7 @@ class CharacterSheetView extends StatefulWidget {
     this.onOpenShop,
     this.boosts,
     this.onSheet,
+    this.onGold,
     this.live,
     this.onPartyChat,
     this.onLogout,
@@ -85,6 +86,9 @@ class CharacterSheetView extends StatefulWidget {
 
   /// Every fresh sheet (the shell tracks the level from it).
   final ValueChanged<CharacterSheet>? onSheet;
+
+  /// Every fresh gold amount, in copper (the side menu shows it).
+  final ValueChanged<int>? onGold;
 
   @override
   State<CharacterSheetView> createState() => _CharacterSheetViewState();
@@ -154,6 +158,7 @@ class _CharacterSheetViewState extends State<CharacterSheetView> {
         _gold = results[1] as int;
       });
       widget.onSheet?.call(_sheet);
+      widget.onGold?.call(_gold!);
     }
     try {
       final lv = await _levelingRepo.summary();

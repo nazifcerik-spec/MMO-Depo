@@ -7,6 +7,7 @@ import '../../shared/content_names.dart';
 import '../../shared/widgets.dart';
 import '../character/class_catalog.dart';
 import '../character/models.dart';
+import '../player/player_screen.dart';
 import '../social/social_repository.dart';
 import '../social/social_screen.dart' show showReportDialog;
 
@@ -168,7 +169,16 @@ class _RankingScreenState extends State<RankingScreen> {
     };
     final me = _page?.me;
     return Scaffold(
-      appBar: AppBar(title: Text(l.ranking)),
+      appBar: AppBar(
+        title: Text(l.ranking),
+        actions: [
+          IconButton(
+            tooltip: l.profileFind,
+            icon: const Icon(Icons.person_search_outlined),
+            onPressed: () => findPlayer(context, widget.repo.api, widget.repo.characterId),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: PageFrame(
           child: Column(
@@ -248,6 +258,7 @@ class _RankingScreenState extends State<RankingScreen> {
                               child: _Row(
                                 entry: e,
                                 highlighted: mine,
+                                onTap: () => openPlayer(context, widget.repo.api, widget.repo.characterId, e.name),
                                 onLongPress: mine ? null : () => showReportDialog(context, widget.social, e.name),
                               ),
                             );

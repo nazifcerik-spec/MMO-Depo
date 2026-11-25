@@ -3982,4 +3982,88 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errStoryMoved => '故事已推进，页面已刷新。';
+
+  @override
+  String get menuOverview => '总览';
+
+  @override
+  String get menuWork => '劳作';
+
+  @override
+  String get menuTrade => '交易';
+
+  @override
+  String get menuCommunity => '社区';
+
+  @override
+  String get menuGrowth => '成长';
+
+  @override
+  String get menuHero => '英雄';
+
+  @override
+  String get jobNow => '当前';
+
+  @override
+  String get jobIdle => '空闲中。开始一项工作，离线也能获得收益。';
+
+  @override
+  String get jobReady => '可以领取';
+
+  @override
+  String get jobGo => '打开';
+
+  @override
+  String get overviewToday => '今日';
+
+  @override
+  String get overviewRecent => '最近收获';
+
+  @override
+  String get overviewNoRewards => '还没有收获。';
+
+  @override
+  String get overviewDailyReady => '每日奖励待领取';
+
+  @override
+  String get overviewDailyDone => '每日奖励已领取';
+
+  @override
+  String overviewQuests(int count) {
+    return '可交付任务：$count';
+  }
+
+  @override
+  String overviewUnread(int count) {
+    return '未读通知：$count';
+  }
+
+  @override
+  String get profileTitle => '玩家资料';
+
+  @override
+  String get profileMine => '我的资料';
+
+  @override
+  String get profileFind => '查找玩家';
+
+  @override
+  String get profileNotFound => '没有这个玩家。';
+
+  @override
+  String get profileCopyLink => '复制链接';
+
+  @override
+  String get profileLinkCopied => '链接已复制。';
+
+  @override
+  String profileRank(int rank) {
+    return '排名第 $rank';
+  }
+
+  @override
+  String get profileNoWork => '尚无专业。';
+
+  @override
+  String get profilePet => '宠物';
 }
